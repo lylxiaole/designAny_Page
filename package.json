@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start_Designer_Dev": "cross-env NODE_ENV=development webpack serve --config webpack.reportConfig.js --mode development",
-    "start_Designer_Pro": "cross-env NODE_ENV=production webpack serve --config webpack.reportConfig.js --mode production", 
-    "build_Designer": "cross-env NODE_ENV=production webpack --config webpack.reportConfig.js --mode production" 
+    "start_Designer_Dev": "cross-env NODE_ENV=development webpack serve --config webpack.designerConfig.js --mode development",
+    "start_Designer_Pro": "cross-env NODE_ENV=production webpack serve --config webpack.designerConfig.js --mode production", 
+    "build_Designer": "cross-env NODE_ENV=production webpack --config webpack.designerConfig.js --mode production" 
   },
   "repository": {
     "type": "git",

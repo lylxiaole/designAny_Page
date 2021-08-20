@@ -1,7 +1,6 @@
 import PageBase from '@src/views/PageBase'
 import React from 'react'
 import { Row, Col } from 'antd'
-import $ from 'jquery'
 import Form, { ButtonItem, Item, GroupItem, SimpleItem } from 'devextreme-react/form'
 import styles from './index.scss'
 import { rtnData } from './dataAdapter'
@@ -9,7 +8,7 @@ import { Getproduction, GetData } from './service'
 
 import ProductClassList from './tables/productClassList'
 import TotalList from './tables/totalList'
-import ProcessProductDetail1 from './tables/ProcessProductDetail1' 
+import ProcessProductDetail1 from './tables/ProcessProductDetail1'
 import saveAs from 'file-saver'
 
 function FilterDom(props: any) {
@@ -79,7 +78,6 @@ function FilterDom(props: any) {
   )
 }
 
-
 export default class Index extends PageBase<any, any> {
   private GridProductDetailRef = React.createRef<Element>()
 
@@ -140,17 +138,17 @@ export default class Index extends PageBase<any, any> {
 
     let data = {
       shiftDay: params.chooseDate,
-      productCode: production.key,
+      productCode: production.key
     }
 
     let productDetailData: any = (await GetData(data)) as rtnData
     // let mateiralConsume = await GetMateiralConsume(data)
     //分类表格数据
-    let productClassList = productDetailData.productClassList;
-    var serverData: any = [];
-    var columnList: any = [];
+    let productClassList = productDetailData.productClassList
+    var serverData: any = []
+    var columnList: any = []
     for (var i = 0; i < productClassList.length; i++) {
-      if (productClassList[i].line == "一线") {
+      if (productClassList[i].line == '一线') {
         for (let key in productClassList[i]) {
           if (key != 'id' && key != 'line' && key != 'class') {
             productClassList[i][key + '1'] = productClassList[i][key]
@@ -166,48 +164,48 @@ export default class Index extends PageBase<any, any> {
     }
     for (var i = 0; i < productClassList.length; i++) {
       if (columnList.indexOf(productClassList[i].class + '-' + productClassList[i].effc) == -1) {
-        serverData.push(productClassList[i]);
+        serverData.push(productClassList[i])
         columnList.push(productClassList[i].class + '-' + productClassList[i].effc)
       } else {
         for (var j = 0; j < serverData.length; j++) {
           if (serverData[j].class + '-' + serverData[j].effc == productClassList[i].class + '-' + productClassList[i].effc) {
-            serverData[j] = JSON.parse((JSON.stringify(serverData[j]) + JSON.stringify(productClassList[i])).replace(/}{/, ','));
+            serverData[j] = JSON.parse((JSON.stringify(serverData[j]) + JSON.stringify(productClassList[i])).replace(/}{/, ','))
           }
         }
       }
     }
     // console.log(JSON.stringify(serverData[0]));//分类表格数据
-     //小计数据拼接
-    let cloneproductLevel = JSON.parse(JSON.stringify(productDetailData.productLevel));
-    let productLevel:any = [];
-    if(cloneproductLevel[0].line == '一线'){
-      productLevel[0] = cloneproductLevel[0];
-      productLevel[1] = cloneproductLevel[1];
-    }else{
-      productLevel[0] = cloneproductLevel[1];
-      productLevel[1] = cloneproductLevel[0];
+    //小计数据拼接
+    let cloneproductLevel = JSON.parse(JSON.stringify(productDetailData.productLevel))
+    let productLevel: any = []
+    if (cloneproductLevel[0].line == '一线') {
+      productLevel[0] = cloneproductLevel[0]
+      productLevel[1] = cloneproductLevel[1]
+    } else {
+      productLevel[0] = cloneproductLevel[1]
+      productLevel[1] = cloneproductLevel[0]
     }
-    let json_row1 = { 
-      "line": "",
-      "class": "A级品", 
-      "effc1": "<21.5%", 
-      "aDayShift1": 'A级品数量', 
-      "aSubDayShift1": productLevel[0].aQuantity, 
-      "cDayShift1": '', 
-      "aNightShift1": 'A级品率', 
-      "aSubNightShift1": (productLevel[0].aRate * 100).toFixed(2)+'%', 
-      "cNightShift1": 'A-数量', 
-      "subtotal1": productLevel[0].aSubQuantity,
-      "percent1": "",
-      "effc2": "<21.5%", 
-      "aDayShift2": 'A级品数量', 
-      "aSubDayShift2": productLevel[1].aQuantity, 
-      "cDayShift2": '', 
-      "aNightShift2": 'A级品率', 
-      "aSubNightShift2": (productLevel[1].aRate * 100).toFixed(2)+'%', 
-      "cNightShift2": 'A-数量', 
-      "subtotal2": productLevel[1].aSubQuantity, 
-      "percent2": '',
+    let json_row1 = {
+      line: '',
+      class: 'A级品',
+      effc1: '<21.5%',
+      aDayShift1: 'A级品数量',
+      aSubDayShift1: productLevel[0].aQuantity,
+      cDayShift1: '',
+      aNightShift1: 'A级品率',
+      aSubNightShift1: (productLevel[0].aRate * 100).toFixed(2) + '%',
+      cNightShift1: 'A-数量',
+      subtotal1: productLevel[0].aSubQuantity,
+      percent1: '',
+      effc2: '<21.5%',
+      aDayShift2: 'A级品数量',
+      aSubDayShift2: productLevel[1].aQuantity,
+      cDayShift2: '',
+      aNightShift2: 'A级品率',
+      aSubNightShift2: (productLevel[1].aRate * 100).toFixed(2) + '%',
+      cNightShift2: 'A-数量',
+      subtotal2: productLevel[1].aSubQuantity,
+      percent2: ''
       // "id":"",
       // "effc":"",
       // "aDayShift":0,
@@ -219,27 +217,27 @@ export default class Index extends PageBase<any, any> {
       // "subtotal":500,
       // "percent":0,
     }
-    let json_row2 = { 
-      "line": "",
-      "class": "≥"+productLevel[0].nameValue, 
-      "effc1": "<21.5%", 
-      "aDayShift1": "≥"+productLevel[0].nameValue+'A级品数量', 
-      "aSubDayShift1": productLevel[0].aCompareQuantity, 
-      "cDayShift1": '', 
-      "aNightShift1": "≥"+productLevel[0].nameValue+'A级品率', 
-      "aSubNightShift1": (productLevel[0].aCompareRate * 100).toFixed(2)+'%', 
-      "cNightShift1": 'A-数量比率', 
-      "subtotal1": productLevel[0].aSubRate,
-      "percent1": "",
-      "effc2": "<21.5%", 
-      "aDayShift2": "≥"+productLevel[0].nameValue+'A级品数量', 
-      "aSubDayShift2": productLevel[1].aCompareQuantity, 
-      "cDayShift2": '', 
-      "aNightShift2": "≥"+productLevel[0].nameValue+'A级品率', 
-      "aSubNightShift2": (productLevel[1].aCompareRate * 100).toFixed(2)+'%', 
-      "cNightShift2": 'A-数量比率', 
-      "subtotal2": (productLevel[1].aSubRate * 100).toFixed(2)+'%', 
-      "percent2": '',
+    let json_row2 = {
+      line: '',
+      class: '≥' + productLevel[0].nameValue,
+      effc1: '<21.5%',
+      aDayShift1: '≥' + productLevel[0].nameValue + 'A级品数量',
+      aSubDayShift1: productLevel[0].aCompareQuantity,
+      cDayShift1: '',
+      aNightShift1: '≥' + productLevel[0].nameValue + 'A级品率',
+      aSubNightShift1: (productLevel[0].aCompareRate * 100).toFixed(2) + '%',
+      cNightShift1: 'A-数量比率',
+      subtotal1: productLevel[0].aSubRate,
+      percent1: '',
+      effc2: '<21.5%',
+      aDayShift2: '≥' + productLevel[0].nameValue + 'A级品数量',
+      aSubDayShift2: productLevel[1].aCompareQuantity,
+      cDayShift2: '',
+      aNightShift2: '≥' + productLevel[0].nameValue + 'A级品率',
+      aSubNightShift2: (productLevel[1].aCompareRate * 100).toFixed(2) + '%',
+      cNightShift2: 'A-数量比率',
+      subtotal2: (productLevel[1].aSubRate * 100).toFixed(2) + '%',
+      percent2: ''
       // "id":"",
       // "effc":"",
       // "aDayShift":0,
@@ -251,33 +249,32 @@ export default class Index extends PageBase<any, any> {
       // "subtotal":500,
       // "percent":0,
     }
-    serverData.push(json_row1);
-    serverData.push(json_row2);
+    serverData.push(json_row1)
+    serverData.push(json_row2)
     // console.log(serverData)
-   //小计数据
-    let totalServerData = productDetailData.productTotalList;
+    //小计数据
+    let totalServerData = productDetailData.productTotalList
     if (serverData.length >= totalServerData.length) {
       for (var i = 0; i < serverData.length; i++) {
         if (totalServerData[i] == undefined) {
         } else {
-          serverData[i] = JSON.parse((JSON.stringify(serverData[i]) + JSON.stringify(totalServerData[i])).replace(/}{/, ','));
+          serverData[i] = JSON.parse((JSON.stringify(serverData[i]) + JSON.stringify(totalServerData[i])).replace(/}{/, ','))
         }
       }
     } else {
       for (var i = 0; i < totalServerData.length; i++) {
         if (serverData[i] == undefined) {
-
         } else {
-          totalServerData[i] = JSON.parse((JSON.stringify(serverData[i]) + JSON.stringify(totalServerData[i])).replace(/}{/, ','));
+          totalServerData[i] = JSON.parse((JSON.stringify(serverData[i]) + JSON.stringify(totalServerData[i])).replace(/}{/, ','))
         }
       }
       serverData = totalServerData
     }
     //外观降级表格数据
-    let productAppearanceList = productDetailData.productAppearanceList;
+    let productAppearanceList = productDetailData.productAppearanceList
     for (var i = 0; i < productAppearanceList.length; i++) {
-      productAppearanceList[i].process = '降级原因';
-      if (productAppearanceList[i].line == "一线") {
+      productAppearanceList[i].process = '降级原因'
+      if (productAppearanceList[i].line == '一线') {
         for (let key in productAppearanceList[i]) {
           if (key != 'id' && key != 'line' && key != 'class') {
             productAppearanceList[i][key + '1'] = productAppearanceList[i][key]
@@ -292,7 +289,7 @@ export default class Index extends PageBase<any, any> {
       }
     }
 
-    this.setState({ ProductClass: serverData, totalServerData: totalServerData ,productAppearanceList:productAppearanceList})
+    this.setState({ ProductClass: serverData, totalServerData: totalServerData, productAppearanceList: productAppearanceList })
   }
 
   private dateToStr(datetime: any) {
@@ -309,8 +306,7 @@ export default class Index extends PageBase<any, any> {
   }
 
   onExportExcel = (e: any) => {
-    let jqarr = $($(this.GridProductDetailRef.current as any).find('table'))
-      .add($(this.GridProductDetail1Ref.current as any).find('table'))
+    let jqarr = $($(this.GridProductDetailRef.current as any).find('table')).add($(this.GridProductDetail1Ref.current as any).find('table'))
     // .add($(this.GridProductDetail2Ref.current as any).find('table'))
 
     // *******************************************
@@ -329,14 +325,14 @@ export default class Index extends PageBase<any, any> {
 
         // $(o).attr('data-tableexport-value', '-5')
       })
-      // *******************************************
-      ; ($(jqarr) as any).tableExport({
-        type: 'excel',
-        mso: {
-          fileFormat: 'xls'
-        },
-        preventInjection: false
-      })
+    // *******************************************
+    ;($(jqarr) as any).tableExport({
+      type: 'excel',
+      mso: {
+        fileFormat: 'xls'
+      },
+      preventInjection: false
+    })
 
     // var blob = new Blob([xmlssData], { type: 'application/vnd.ms-excel;charset=utf-8' })
     // ;(saveAs as any)(blob, 'myfilename.xlsx')
