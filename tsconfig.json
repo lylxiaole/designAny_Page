@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    // 这可以对 `this` 上的数据 property 进行更严格的推断
+    "strict": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictFunctionTypes": false,
+
+
+    "strictNullChecks": false,
+    "paths": {
+      "@src/*": [
+        "src/*"
+      ],
+      "@/*": [
+        "/*",
+      ],
+    }
+  },
+  "exclude": [ // 不编译这些目录里的文件
+    "node_modules",
+    "dist*"
+  ],
+  "include": ["**/*.ts", "**/*.d.ts", "**/*.tsx", "**/*.vue"]
+}
