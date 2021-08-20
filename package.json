@@ -1,5 +1,5 @@
 {
-  "name": "webpack_learning",
+  "name": "designer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/lyl_personal_production/webpack_learning.git"
+    "url": "https://gitee.com/lyl_low-code_production/design-engine-page.git"
   },
   "author": "",
   "license": "ISC",
