@@ -10,7 +10,7 @@ export const routes = [
     icon: '',
     hidden: true,
     path: '/error',
-    component: require('@src/views/Error').default
+    component: () => import('@src/views/Error')
   }
 ]
 

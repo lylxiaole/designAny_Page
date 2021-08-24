@@ -7,8 +7,10 @@ import '../themeBase/global.less'
 
 export default function initSystem(inroutes, configs, state) {
   initConfig(configs)
-  initRoutes(inroutes)
+  let router = initRoutes(inroutes)
   initStore(state)
+
+  return { router: router }
 }
 
 export function getConfigByName(configName) {

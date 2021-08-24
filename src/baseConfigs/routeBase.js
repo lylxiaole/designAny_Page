@@ -1,82 +1,42 @@
-import { HashRouter, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import React, { Suspense, lazy } from 'react'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { routes } from './baseInfo'
 
-const createRoute = (routes) => {
-  return (
-    <Switch>
-      {routes.map((route, index) => createFixRoute(route, index))}
-      <Redirect from="/*" to="/" />
-    </Switch>
-  )
+// ***********************路由钩子处理*************************************
+const router_beforeEach = async (to, from, next) => {
+  // if (to.name !== 'Login' && !isAuthenticated)
+  // next({ name: 'Login' })
+  // else next()
+  next()
 }
-//该组件通过递归的方式，将所有route中带有children路由的父路由进行解构,最终用createBasicRoute函数来渲染
-const createFixRoute = (route, index) => {
-  const { path, component: RouteComponent, children } = route
-  if (children) {
-    return (
-      <Route
-        key={index}
-        path={path}
-        children={(props) => {
-          let redirectPath = null
-          return (
-            <RouteComponent {...props}>
-              <Switch>
-                {children.map((child, index2) => {
-                  const { path: childPath, redirect } = child
-                  if (redirect) {
-                    redirectPath = childPath
-                  }
-                  return createFixRoute({ ...child, path: path + childPath }, `${index}-${index2}`)
-                })}
-                <Redirect from={`${path}`} to={`${path}${redirectPath || children[0].path}`} />
-              </Switch>
-            </RouteComponent>
-          )
-        }}
-      />
-    )
-  } else {
-    return createBasicRoute(route, index)
+const router_beforeResolve = async (to) => {
+  return true
+  // TODO 获取数据或执行任何其他操作（如果用户无法进入页面时你希望避免执行的操作）的理想位置。
+}
+
+const router_afterEach = async (to, from, failure) => {
+  if (!failure) {
+    // TODO  分析、更改页面标题、声明页面等辅助功能以及许多其他事情都很有用。
   }
 }
-
-const createBasicRoute = (route, index) => {
-  //  最基础的Router 用法
-  const { path, component: Component } = route
-  return (
-    <Route
-      exact
-      key={index}
-      path={path}
-      component={(props) => {
-        props.history.listen((path) => {
-          //  路由监听
-        })
-        return <Component {...props} />
-      }}
-    />
-  )
-}
-
-let localRoutes = []
+// ***********************路由注册*************************************
 
 let routeConfigs = []
 export function initRoutes(inroutes) {
   let newroutes = routes.concat(inroutes)
   routeConfigs = newroutes
-  localRoutes = (
-    <Suspense fallback={<div />}>
-      <HashRouter children={createRoute(newroutes)} />
-    </Suspense>
-  )
+  window.console.log('routeConfigs:', routeConfigs)
+  let router = createRouter({
+    // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+    history: createWebHashHistory(),
+    routes: routeConfigs // `routes: routes` 的缩写
+  })
+  router.beforeEach(router_beforeEach)
+  router.beforeResolve(router_beforeResolve)
+  router.afterEach(router_afterEach)
+
+  return router
 }
 
 export function getRoutes() {
-  return localRoutes
-}
-
-export function getRouteConfigs() {
   return routeConfigs
 }

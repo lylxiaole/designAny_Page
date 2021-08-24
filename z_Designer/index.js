@@ -1,14 +1,16 @@
-import React from 'react'
-import ReactDom from 'react-dom'
+import { createApp } from 'vue'
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig } from '@src/baseConfigs'
-
-import { getStore, IReduxAction } from '@src/baseConfigs'
 
 // ***********系统环境初始化*********************************
 let configs = (await _axios.get('configs.json')).data
 import routes from './routes'
 import appState from './appState'
-initSystem(routes, configs, appState)
+let system = initSystem(routes, configs, appState)
 // ********************************************
-ReactDom.render(getRoutes(), document.getElementById('app'))
+import App from './views/App.vue'
+const app = createApp(App)
+//确保 _use_ 路由实例使
+//整个应用支持路由。
+app.use(system.router)
+app.mount('#app')
