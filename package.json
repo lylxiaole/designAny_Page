@@ -106,6 +106,7 @@
     "uuid": "^8.3.2",
     "vue": "^3.1.5",
     "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.11"
+    "vue-router": "^4.0.11",
+    "vuex": "^4.0.2"
   }
 }

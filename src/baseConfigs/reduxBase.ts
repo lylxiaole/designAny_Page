@@ -1,5 +1,5 @@
 import { createStore, Store } from 'redux'
-import { appState } from './baseInfo'
+import { systemAppStore } from './baseInfo'
 export class IReduxAction {
   type: string
   payload: any
@@ -13,7 +13,7 @@ function baseReducer(state = localState, action: IReduxAction) {
 
 let localStore: Store = null
 export function initStore(instate: any) {
-  let clonestate = { ...appState } as any
+  let clonestate = { ...systemAppStore } as any
   for (const key in instate) {
     clonestate[key] = instate[key] as any
   }

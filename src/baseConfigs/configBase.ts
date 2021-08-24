@@ -28,3 +28,16 @@ export function initConfig(iconfigs: any) {
 export function getConfig() {
   return localConfigs
 }
+
+export function getConfigByName(configName) {
+  const configs = getConfig()
+  // window.console.log('getConfigByName:', configs)
+  // window.console.log('getConfigByName:', configs)
+  const config = configs[configName]
+  // window.console.log('getConfigByName:', encodeURI(config))
+  if (config) {
+    return config
+  } else {
+    throw new Error(`从配置文件中读取指定配置:${configName} 失败...`)
+  }
+}

@@ -2,39 +2,22 @@
   <h1>{{ msg }}</h1>
 
   <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a
-      href="https://marketplace.visualstudio.com/items?itemName=octref.vetur"
-      target="_blank"
-    >
-      Vetur
-    </a>
-    or
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    (if using
-    <code>&lt;script setup&gt;</code>)
+    systemCount:
+    {{systemCount}}
   </p>
-
-  <p>See <code>README.md</code> for more information.</p>
 
   <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Docs
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
+    appCount:
+    {{appCount}}
   </p>
 
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+  <button type="button" @click="btnClick">addCount</button>
+
 </template>
 
 <script lang="ts">
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import { ref, defineComponent } from 'vue'
 export default defineComponent({
   name: 'HelloWorld',
@@ -45,8 +28,16 @@ export default defineComponent({
     }
   },
   setup: () => {
-    const count = ref(0)
-    return { count }
+    const store = useStore()
+    window.console.log('store:', store)
+    const systemCount = computed(() => store.state.system.systemCount)
+    const appCount = computed(() => store.state.app.appCount)
+    const btnClick = (e) => {
+      store.commit('app/addAppCount', 1)
+      store.commit('system/addSystemCount', 3)
+    }
+
+    return { systemCount, appCount, btnClick }
   }
 })
 </script>
