@@ -1,12 +1,15 @@
 import { createApp } from 'vue'
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig } from '@src/baseConfigs'
-
 // ***********系统环境初始化*********************************
 let configs = (await _axios.get('configs.json')).data
 import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
+// ********************************************
+import './assets/css/main.css'
+import './assets/css/color-dark.css'
+import './assets/css/icon.css'
 // ********************************************
 import App from './views/App.vue'
 const app = createApp(App)
