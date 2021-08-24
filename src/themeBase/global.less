@@ -1,5 +1,26 @@
-@import 'devextreme/dist/css/dx.light.css' ;
-@import "antd/lib/style/themes/default.less";
-@import 'antd/dist/antd.less';
- 
+// @import 'devextreme/dist/css/dx.light.css';
+// @import 'antd/lib/style/themes/default.less';
+// @import 'antd/dist/antd.less';
+// @import '~antd/dist/antd.dark.less'; // 引入官方提供的暗色 less 样式入口文件
+// @import '~antd/dist/antd.compact.less'; // 引入官方提供的紧凑 less 样式入口文件
+
 @table-border-color: #cdcdcd;
+@layout-header-color: #000000;
+
+.ant-modal-close-x {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+}
+
+.ant-modal-header {
+  padding: 8px 16px !important;
+}
+.ant-modal-footer {
+  padding: 8px 16px !important;
+}
+
+.ant-modal-close {
+  height: 40px !important;
+}

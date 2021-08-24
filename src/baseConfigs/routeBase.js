@@ -61,9 +61,11 @@ const createBasicRoute = (route, index) => {
 }
 
 let localRoutes = []
+
+let routeConfigs = []
 export function initRoutes(inroutes) {
   let newroutes = routes.concat(inroutes)
-
+  routeConfigs = newroutes
   localRoutes = (
     <Suspense fallback={<div />}>
       <HashRouter children={createRoute(newroutes)} />
@@ -73,4 +75,8 @@ export function initRoutes(inroutes) {
 
 export function getRoutes() {
   return localRoutes
+}
+
+export function getRouteConfigs() {
+  return routeConfigs
 }

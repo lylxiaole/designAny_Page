@@ -1,12 +1,14 @@
 import { initConfig, getConfig } from './configBase'
 import { initRoutes, getRoutes } from './routeBase'
 import { IRouteClass } from './routeClass'
+import { initStore, getStore, IReduxAction } from './reduxBase'
 
 import '../themeBase/global.less'
 
-export default function initSystem(inroutes, configs) {
+export default function initSystem(inroutes, configs, state) {
   initConfig(configs)
   initRoutes(inroutes)
+  initStore(state)
 }
 
 export function getConfigByName(configName) {
@@ -22,6 +24,7 @@ export function getConfigByName(configName) {
   }
 }
 
-export { getRoutes } from './routeBase'
+export { getRoutes, getRouteConfigs } from './routeBase'
 export { getConfig } from './configBase'
 export { IRouteClass }
+export { initStore, getStore, IReduxAction } from './reduxBase'

@@ -13,3 +13,9 @@ export const routes = [
     component: require('@src/views/Error').default
   }
 ]
+
+export const appState = {
+  username: '',
+  compact: true, //是否是紧凑布局
+  colorStyle: 'dark' //主题颜色
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ajaxGet, ajaxPost, ajaxPut, ajaxDelete } from '../utils/axiosEnhancer'
 import { notifySuccess, notifyWarning, notifyError, alertSuccess, alertWarning, confirmNotify, confirmError } from '../utils/devExtremeUtils'
-
+import ComponentBase from './ComponentBase'
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 interface requestMethod {
@@ -21,7 +21,7 @@ interface popupMethod {
   confirmError: (message: string) => Promise<boolean>
 }
 
-export default class PageBase<P = {}, S = {}, SS = any> extends React.Component<P, S, SS> {
+export default class PageBase<P = {}, S = {}, SS = any> extends ComponentBase<P, S, SS> {
   protected requestMethod: requestMethod = { ajaxGet: ajaxGet, ajaxPost: ajaxPost, ajaxPut: ajaxPut, ajaxDelete: ajaxDelete }
   protected popupMethod: popupMethod = {
     notifySuccess: notifySuccess,
