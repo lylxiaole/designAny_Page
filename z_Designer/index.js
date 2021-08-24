@@ -6,7 +6,7 @@ let configs = (await _axios.get('configs.json')).data
 import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
-// ********************************************
+// **************引用全局样式******************************
 import './assets/css/main.css'
 import './assets/css/color-dark.css'
 import './assets/css/icon.css'
@@ -17,5 +17,4 @@ const app = createApp(App)
 //整个应用支持路由。
 app.use(system.router)
 app.use(system.store)
-
 app.mount('#app')
