@@ -54,7 +54,7 @@ export default {
     const collapse = computed(() => store.state.collapse)
     // 侧边栏折叠
     const collapseChage = () => {
-      store.commit('handleCollapse', !collapse.value)
+      store.commit('system/handleCollapse', !collapse.value)
     }
 
     onMounted(() => {
