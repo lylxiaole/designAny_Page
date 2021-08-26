@@ -337,6 +337,8 @@ module.exports = function initConifg(distDir, projectDir, templateFile, devPort)
   baseconfig.output.path = path.resolve(__dirname, `dists/${distDir}`)
   baseconfig.resolve.modules.push(path.resolve(__dirname, projectDir))
   // baseconfig.resolve.alias['@'] = path.resolve(__dirname, projectDir)
+  console.log('baseconfig.resolve.alias', path.resolve(__dirname, projectDir))
   baseconfig.resolve.alias['@'] = path.resolve(__dirname, projectDir)
+  baseconfig.resolve.alias['@src'] = path.resolve(__dirname, 'src')
   return baseconfig
 }

@@ -7,9 +7,9 @@ import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
 // **************引用全局样式******************************
-import './assets/css/main.css'
-import './assets/css/color-dark.css'
-import './assets/css/icon.css'
+import '@/assets/css/main.css'
+import '@/assets/css/color-dark.css'
+import '@/assets/css/icon.css'
 // ********************************************
 import App from './views/App.vue'
 const app = createApp(App)

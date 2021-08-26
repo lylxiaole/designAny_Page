@@ -38,9 +38,9 @@ export default {
     }
 
     const store = useStore()
-    const tagsList = computed(() => store.state.tagsList)
+    const tagsList = computed(() => store.state.system.tagsList)
     const showTags = computed(() => tagsList.value.length > 0)
-
+    window.console.log('tagsList:', tagsList)
     // 关闭单个标签
     const closeTags = (index) => {
       const delItem = tagsList.value[index]
