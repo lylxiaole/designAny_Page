@@ -51,7 +51,7 @@ export default {
     const message = 2
 
     const store = useStore()
-    const collapse = computed(() => store.state.collapse)
+    const collapse = computed(() => store.state.system.collapse)
     // 侧边栏折叠
     const collapseChage = () => {
       store.commit('system/handleCollapse', !collapse.value)
