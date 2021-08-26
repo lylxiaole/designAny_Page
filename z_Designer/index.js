@@ -7,6 +7,10 @@ import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
 // **************创建应用******************************
+require('@/assets/css/icon.css')
+// require('@/assets/css/main.css')
+// require('@/assets/css/color-dark.css')
+
 import App from './views/App.vue'
 const app = createApp(App)
 // ***************添加应用插件*****************************

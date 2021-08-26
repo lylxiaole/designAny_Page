@@ -84,12 +84,19 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+@headerHeight: 70px;
+.el-icon-s-fold {
+  line-height: @headerHeight;
+}
+.el-icon-s-unfold {
+  line-height: @headerHeight;
+}
 .header {
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  height: 70px;
+  height: @headerHeight;
   font-size: 22px;
   color: #fff;
 }
@@ -97,12 +104,12 @@ export default {
   float: left;
   padding: 0 21px;
   cursor: pointer;
-  line-height: 70px;
+  height: @headerHeight;
 }
 .header .logo {
   float: left;
   width: 250px;
-  line-height: 70px;
+  line-height: @headerHeight;
 }
 .header-right {
   float: right;
@@ -110,7 +117,7 @@ export default {
 }
 .header-user-con {
   display: flex;
-  height: 70px;
+  height: @headerHeight;
   align-items: center;
 }
 .btn-fullscreen {

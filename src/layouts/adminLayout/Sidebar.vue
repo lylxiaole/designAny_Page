@@ -22,7 +22,7 @@
         </template>
         <template v-else>
           <el-menu-item :index="item.index" :key="item.index">
-            <i :class="item.icon"></i>
+            <i class="menuIcon" :class="item.icon"></i>
             <template #title>{{ item.title }}</template>
           </el-menu-item>
         </template>
@@ -133,7 +133,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .sidebar {
   display: block;
   position: absolute;
@@ -147,7 +147,19 @@ export default {
 }
 .sidebar-el-menu:not(.el-menu--collapse) {
   width: 250px;
+  .menuIcon {
+    font-size: 25px;
+    margin-right: 13px;
+  }
 }
+
+.sidebar-el-menu.el-menu--collapse {
+  .menuIcon {
+    font-size: 25px;
+    margin-top: 15px;
+  }
+}
+
 .sidebar > ul {
   height: 100%;
 }
