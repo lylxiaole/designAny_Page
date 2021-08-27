@@ -3,9 +3,10 @@ import { initRoutes, getRoutes } from './routeBase'
 import { initStore, getStore } from './vuexBase'
 import { initLocale } from './localeBase'
 
-import '../themeBase/global.less'
 import '../styles/element-variables.scss'
+import '../themeBase/global.less'
 import '../styles/index.scss' // global css
+require('element-ui/lib/theme-chalk/index.css')
 
 export default function initSystem(inroutes, configs, state) {
   initConfig(configs)
