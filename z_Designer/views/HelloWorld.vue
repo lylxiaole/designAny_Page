@@ -1,6 +1,7 @@
 <template>
   <div class="errPage-container">
     hellowWorld
+    <input />
   </div>
 </template>
 

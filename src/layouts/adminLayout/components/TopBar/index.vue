@@ -76,7 +76,7 @@ export default class index extends Vue {
     if (isExternal(routePath)) {
       return routePath
     }
-    return routePath + ''
+    return routePath
   }
   private async logout() {
     try {
@@ -87,8 +87,9 @@ export default class index extends Vue {
     }
   }
 
-  private async linkClick(routePath) {
-    this.currentRoutePath = routePath
+  private linkClick(routePath) {
+    this.$set(this.$data, 'currentRoutePath', routePath)
+    this.$nextTick()
   }
 
   mounted() {
