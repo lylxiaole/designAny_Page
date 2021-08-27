@@ -1,5 +1,5 @@
-import store from '@/store'
-
+import { getStore } from '@src/baseConfigs'
+const store = getStore()
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design
 

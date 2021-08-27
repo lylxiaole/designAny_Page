@@ -17,6 +17,7 @@
     "strictFunctionTypes": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@src/*": [
         "src/*"

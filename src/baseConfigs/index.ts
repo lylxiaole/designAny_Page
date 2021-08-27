@@ -1,6 +1,6 @@
 import { initConfig, getConfigByName } from './configBase'
 import { initRoutes, getRoutes } from './routeBase'
-import { initStore } from './vuexBase'
+import { initStore, getStore } from './vuexBase'
 import { initLocale } from './localeBase'
 import '../themeBase/global.less'
 
@@ -14,6 +14,7 @@ export default function initSystem(inroutes, configs, state) {
 
 export { getConfigByName }
 export { getRoutes }
+export { getStore }
 
 export interface IRouteClass {
   meta?: any

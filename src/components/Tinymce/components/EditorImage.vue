@@ -4,17 +4,8 @@
       upload
     </el-button>
     <el-dialog :visible.sync="dialogVisible">
-      <el-upload
-        :multiple="true"
-        :file-list="fileList"
-        :show-file-list="true"
-        :on-remove="handleRemove"
-        :on-success="handleSuccess"
-        :before-upload="beforeUpload"
-        class="editor-slide-upload"
-        action="https://httpbin.org/post"
-        list-type="picture-card"
-      >
+      <el-upload :multiple="true" :file-list="fileList" :show-file-list="true" :on-remove="handleRemove" :on-success="handleSuccess"
+        :before-upload="beforeUpload" class="editor-slide-upload" action="https://httpbin.org/post" list-type="picture-card">
         <el-button size="small" type="primary">
           Click upload
         </el-button>
@@ -49,12 +40,14 @@ export default {
   },
   methods: {
     checkAllSuccess() {
-      return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)
+      return Object.keys(this.listObj).every((item) => this.listObj[item].hasSuccess)
     },
     handleSubmit() {
-      const arr = Object.keys(this.listObj).map(v => this.listObj[v])
+      const arr = Object.keys(this.listObj).map((v) => this.listObj[v])
       if (!this.checkAllSuccess()) {
-        this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
+        this.$message(
+          'Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!'
+        )
         return
       }
       this.$emit('successCBK', arr)
@@ -91,7 +84,7 @@ export default {
       return new Promise((resolve, reject) => {
         const img = new Image()
         img.src = _URL.createObjectURL(file)
-        img.onload = function() {
+        img.onload = function () {
           _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
         }
         resolve(true)
@@ -104,7 +97,7 @@ export default {
 <style lang="scss" scoped>
 .editor-slide-upload {
   margin-bottom: 20px;
-  /deep/ .el-upload--picture-card {
+  ::v-deep .el-upload--picture-card {
     width: 100%;
   }
 }

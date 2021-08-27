@@ -9,7 +9,7 @@ let system = initSystem(routes, configs, appState)
 // **************创建应用******************************
 import Element from 'element-ui'
 require('element-ui/lib/theme-chalk/index.css')
-require('@src/assets/css/iconfont.css')
+require('@/assets/css/iconfont.css')
 Vue.use(Element)
 
 import App from './views/App.vue'

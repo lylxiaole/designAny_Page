@@ -12,6 +12,6 @@ export default class App extends Vue {
 }
 </script>
 <style>
-@import '@src/assets/css/main.css';
-@import '@src/assets/css/color-dark.css';
+@import '@/assets/css/main.css';
+@import '@/assets/css/color-dark.css';
 </style>

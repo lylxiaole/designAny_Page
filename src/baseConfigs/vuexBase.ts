@@ -13,3 +13,7 @@ export function initStore(instore: any) {
   localStore = new Vuex.Store({ modules })
   return localStore
 }
+
+export function getStore(instore: any) {
+  return localStore
+}
