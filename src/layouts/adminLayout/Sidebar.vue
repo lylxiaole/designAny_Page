@@ -12,8 +12,9 @@
             <template v-for="subItem in item.subs">
               <el-sub-menu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
                 <template #title>{{ subItem.title }}</template>
-                <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i" :index="threeItem.index">
-                  {{ threeItem.title }}</el-menu-item>
+                <el-menu-item @click="onItemClick(item)" v-for="(threeItem, i) in subItem.subs" :key="i" :index="threeItem.index">
+                  {{ threeItem.title }}
+                </el-menu-item>
               </el-sub-menu>
               <el-menu-item v-else :index="subItem.index" :key="subItem.index">{{ subItem.title }}
               </el-menu-item>
@@ -21,7 +22,7 @@
           </el-sub-menu>
         </template>
         <template v-else>
-          <el-menu-item :index="item.index" :key="item.index">
+          <el-menu-item @click="onItemClick(item)" :index="item.index" :key="item.index">
             <i class="menuIcon iconfont" :class="item.icon" />
             <template #title>{{ item.title }}</template>
           </el-menu-item>
@@ -81,10 +82,16 @@ export default {
     const store = useStore()
     const collapse = computed(() => store.state.system.collapse)
 
+    const onItemClick = (item) => {
+      console.log(item)
+      return false
+    }
+
     return {
       items,
       onRoutes,
-      collapse
+      collapse,
+      onItemClick
     }
   }
 }

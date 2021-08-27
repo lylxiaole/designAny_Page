@@ -1,18 +1,19 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <div>
+    <h1>{{ msg }}</h1>
 
-  <p>
-    systemCount:
-    {{systemCount}}
-  </p>
+    <p>
+      systemCount:
+      {{systemCount}}
+    </p>
 
-  <p>
-    appCount:
-    {{appCount}}
-  </p>
+    <p>
+      appCount:
+      {{appCount}}
+    </p>
 
-  <button type="button" @click="btnClick">addCount</button>
-
+    <button type="button" @click="btnClick">addCount</button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -24,7 +25,7 @@ export default defineComponent({
   props: {
     msg: {
       type: String,
-      required: true
+      required: false
     }
   },
   setup: () => {

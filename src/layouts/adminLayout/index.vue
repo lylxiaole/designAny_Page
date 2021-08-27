@@ -31,8 +31,9 @@ export default {
   },
   setup() {
     const store = useStore()
-    const tagsList = computed(() => store.state.system.tagsList.map((item) => item.name))
+    const tagsList = computed(() => store.state.system.tagsList.map((item) => item.path))
     const collapse = computed(() => store.state.system.collapse)
+    window.console.log('tagsList:', tagsList.value)
     onMounted(() => {})
     return {
       tagsList,
