@@ -31,6 +31,9 @@ export default {
     TopBar
   },
   mixins: [ResizeMixin],
+  mounted() {
+    console.log('123123123')
+  },
   computed: {
     ...mapState({
       sidebar: (state) => state.app.sidebar,

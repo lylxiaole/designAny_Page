@@ -32,7 +32,6 @@
     "**/*.ts",
     "**/*.d.ts",
     "**/*.tsx",
-    ,
-    "src/utils/index.js"    "**/*.vue"
+    "**/*.vue"
   ]
 }
