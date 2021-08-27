@@ -40,7 +40,7 @@ export default {
     const store = useStore()
     const tagsList = computed(() => store.state.system.tagsList)
     const showTags = computed(() => tagsList.value.length > 0)
-    window.console.log('tagsList:', tagsList)
+    // window.console.log('tagsList:', tagsList)
     // 关闭单个标签
     const closeTags = (index) => {
       const delItem = tagsList.value[index]
@@ -89,12 +89,6 @@ export default {
     const handleTags = (command) => {
       command === 'other' ? closeOther() : closeAll()
     }
-
-    // 关闭当前页面的标签页
-    // store.commit("closeCurrentTag", {
-    //     $router: router,
-    //     $route: route
-    // });
 
     return {
       isActive,

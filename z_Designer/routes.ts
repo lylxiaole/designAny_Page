@@ -4,22 +4,17 @@ import adminLayout from '@src/layouts/adminLayout/index.vue'
 const routes: IRouteClass[] = [
   {
     path: '/',
-    redirect: '/home/index'
-  },
-  {
-    name: 'home',
-    path: '/home',
+    redirect: 'index',
     component: adminLayout,
     children: [
       {
-        icon: '',
-        path: '/home/index',
+        icon: 'icon-all-fill',
+        path: '/index',
         name: 'index',
         meta: {
           title: '系统首页'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ './views/HelloWorld.vue'),
-        children: []
+        component: () => import(/* webpackChunkName: "HelloWorld" */ './views/HelloWorld.vue')
       }
     ]
   }

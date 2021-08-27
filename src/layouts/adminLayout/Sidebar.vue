@@ -6,7 +6,7 @@
         <template v-if="item.subs">
           <el-sub-menu :index="item.index" :key="item.index">
             <template #title>
-              <i :class="item.icon"></i>
+              <i class="iconfont" :class="item.icon" />
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.subs">
@@ -22,7 +22,7 @@
         </template>
         <template v-else>
           <el-menu-item :index="item.index" :key="item.index">
-            <i class="menuIcon" :class="item.icon"></i>
+            <i class="menuIcon iconfont" :class="item.icon" />
             <template #title>{{ item.title }}</template>
           </el-menu-item>
         </template>
@@ -35,87 +35,46 @@
 import { computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+
+import { getRoutes } from '@src/baseConfigs'
+
+function loopMenuItem(menus, topLayoutPath, parentRoutePath = undefined) {
+  let res = []
+  if (!menus) {
+    return res
+  }
+  for (let index = 0; index < menus.length; index++) {
+    const menu = menus[index]
+    if (!menu.path || menu.path === topLayoutPath) {
+      res = res.concat(loopMenuItem(menu.children, topLayoutPath))
+      continue
+    }
+
+    let routepath = (parentRoutePath ? parentRoutePath : '') + menu.path
+    if (routepath.indexOf(topLayoutPath) < 0) {
+      continue
+    }
+    if (menu.hidden) {
+      continue
+    }
+
+    res.push({
+      icon: menu.icon,
+      title: menu.meta?.title,
+      index: routepath,
+      subs: menu.children ? loopMenuItem(menu.children, topLayoutPath, routepath) : undefined
+    })
+  }
+  return res
+}
+
 export default {
   setup() {
-    const items = [
-      {
-        icon: 'el-icon-lx-home',
-        index: '/dashboard',
-        title: '系统首页'
-      },
-      {
-        icon: 'el-icon-lx-cascades',
-        index: '/table',
-        title: '基础表格'
-      },
-      {
-        icon: 'el-icon-lx-copy',
-        index: '/tabs',
-        title: 'tab选项卡'
-      },
-      {
-        icon: 'el-icon-lx-calendar',
-        index: '3',
-        title: '表单相关',
-        subs: [
-          {
-            index: '/form',
-            title: '基本表单'
-          },
-          {
-            index: '/upload',
-            title: '文件上传'
-          },
-          {
-            index: '4',
-            title: '三级菜单',
-            subs: [
-              {
-                index: '/editor',
-                title: '富文本编辑器'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        icon: 'el-icon-lx-emoji',
-        index: '/icon',
-        title: '自定义图标'
-      },
-      {
-        icon: 'el-icon-pie-chart',
-        index: '/charts',
-        title: 'schart图表'
-      },
-      {
-        icon: 'el-icon-lx-global',
-        index: '/i18n',
-        title: '国际化功能'
-      },
-      {
-        icon: 'el-icon-lx-warn',
-        index: '7',
-        title: '错误处理',
-        subs: [
-          {
-            index: '/permission',
-            title: '权限测试'
-          },
-          {
-            index: '/404',
-            title: '404页面'
-          }
-        ]
-      },
-      {
-        icon: 'el-icon-lx-redpacket_fill',
-        index: '/donate',
-        title: '支持作者'
-      }
-    ]
-
     const route = useRoute()
+    window.console.log('route', route)
+    debugger
+    let allRoutes = getRoutes()
+    let items = loopMenuItem(allRoutes, '/')
 
     const onRoutes = computed(() => {
       return route.path
@@ -148,15 +107,16 @@ export default {
 .sidebar-el-menu:not(.el-menu--collapse) {
   width: 250px;
   .menuIcon {
-    font-size: 25px;
-    margin-right: 13px;
+    font-size: 16px;
+    margin-right: 18px;
   }
 }
 
 .sidebar-el-menu.el-menu--collapse {
   .menuIcon {
     font-size: 25px;
-    margin-top: 15px;
+    width: 100%;
+    height: 100%;
   }
 }
 
