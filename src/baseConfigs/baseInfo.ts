@@ -69,7 +69,7 @@ export const systemAppStore = {
       state.collapse = data
     },
     set_permission_routes(state, data) {
-      window.console.log('set_permission_routes', data)
+      // window.console.log('set_permission_routes', data)
       state.permission_routes = data
     },
     set_fixedHeader(state, data) {

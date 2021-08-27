@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@src/styles/variables.module.scss'
@@ -19,7 +19,7 @@ import variables from '@src/styles/variables.module.scss'
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters(['permission_routes', 'sidebar']),
+    ...mapState(['system/permission_routes', 'system/sidebar']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
