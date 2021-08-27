@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 import { systemAppStore } from './baseInfo'
 Vue.use(Vuex)
 
-let localStore: any = null
+let localStore: Store<any> = null
 
-export function initStore(instore: any) {
+export function initStore(instore: any): Store<any> {
   let modules = {}
   modules['system'] = systemAppStore
   modules['app'] = instore
@@ -14,6 +14,6 @@ export function initStore(instore: any) {
   return localStore
 }
 
-export function getStore(instore: any) {
+export function getStore(): Store<any> {
   return localStore
 }

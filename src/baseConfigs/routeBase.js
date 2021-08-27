@@ -37,7 +37,6 @@ export function initRoutes(inroutes) {
   // router.beforeEach(router_beforeEach)
   // router.beforeResolve(router_beforeResolve)
   // router.afterEach(router_afterEach)
-
   return router
 }
 

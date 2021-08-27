@@ -25,9 +25,12 @@ export const systemAppStore = {
       opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
       withoutAnimation: false
     },
+    permission_routes: [],
     device: 'desktop',
+    fixedHeader: true,
     systemCount: 3,
-    colorStyle: 'dark' //主题颜色
+    tagsView: true,
+    themeColor: '#000000' //主题颜色
   },
   mutations: {
     addSystemCount(state, data) {
@@ -64,6 +67,42 @@ export const systemAppStore = {
     // 侧边栏折叠
     handleCollapse(state, data) {
       state.collapse = data
+    },
+    set_permission_routes(state, data) {
+      window.console.log('set_permission_routes', data)
+      state.permission_routes = data
+    },
+    set_fixedHeader(state, data) {
+      state.fixedHeader = data
+    },
+    set_sidebarLogo(state, data) {
+      state.sidebarLogo = data
+    },
+    set_themeChange(state, data) {
+      state.themeColor = data
+    },
+
+    set_tagsView(state, data) {
+      state.tagsView = data
+    },
+
+    TOGGLE_SIDEBAR: (state) => {
+      state.sidebar.opened = !state.sidebar.opened
+      state.sidebar.withoutAnimation = false
+      if (state.sidebar.opened) {
+        Cookies.set('sidebarStatus', 1)
+      } else {
+        Cookies.set('sidebarStatus', 0)
+      }
+    },
+
+    closeSideBar: (state, withoutAnimation) => {
+      Cookies.set('sidebarStatus', 0)
+      state.sidebar.opened = false
+      state.sidebar.withoutAnimation = withoutAnimation
+    },
+    toggleDevice: (state, device) => {
+      state.device = device
     }
   },
   actions: {}

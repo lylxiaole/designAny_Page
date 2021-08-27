@@ -1,5 +1,5 @@
 import { getStore } from '@src/baseConfigs'
-const store = getStore()
+
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design
 // console.error('123123123')
@@ -10,7 +10,7 @@ export default {
       console.error('123123123')
 
       if (this.device === 'mobile' && this.sidebar.opened) {
-        store.dispatch('app/closeSideBar', { withoutAnimation: false })
+        getStore().dispatch('app/closeSideBar', { withoutAnimation: false })
       }
     }
   },
@@ -25,8 +25,8 @@ export default {
 
     const isMobile = this.$_isMobile()
     if (isMobile) {
-      store.dispatch('app/toggleDevice', 'mobile')
-      store.dispatch('app/closeSideBar', { withoutAnimation: true })
+      getStore().commit('system/toggleDevice', 'mobile')
+      getStore().commit('system/closeSideBar', { withoutAnimation: true })
     }
   },
   methods: {
@@ -39,10 +39,10 @@ export default {
     $_resizeHandler() {
       if (!document.hidden) {
         const isMobile = this.$_isMobile()
-        store.dispatch('app/toggleDevice', isMobile ? 'mobile' : 'desktop')
+        getStore().commit('system/toggleDevice', isMobile ? 'mobile' : 'desktop')
 
         if (isMobile) {
-          store.dispatch('app/closeSideBar', { withoutAnimation: true })
+          getStore().commit('system/closeSideBar', { withoutAnimation: true })
         }
       }
     }

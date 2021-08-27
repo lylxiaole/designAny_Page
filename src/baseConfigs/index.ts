@@ -8,6 +8,9 @@ export default function initSystem(inroutes, configs, state) {
   initConfig(configs)
   let router = initRoutes(inroutes)
   let store = initStore(state)
+
+  store.commit('system/set_permission_routes', getRoutes())
+
   let i18n = initLocale()
   return { router, store, i18n }
 }

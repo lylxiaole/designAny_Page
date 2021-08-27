@@ -14,7 +14,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '系统首页'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ './views/HelloWorld.vue')
+        component: () => import('./views/HelloWorld.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -23,7 +23,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '系统二页'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ '@src/views/vmain.vue')
+        component: () => import('@src/views/vmain.vue')
       }
     ]
   }

@@ -38,44 +38,32 @@ export default {
   computed: {
     fixedHeader: {
       get() {
-        return this.$store.state.settings.fixedHeader
+        return this.$store.state.system.fixedHeader
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'fixedHeader',
-          value: val
-        })
+        this.$store.commit('system/set_fixedHeader', val)
       }
     },
     tagsView: {
       get() {
-        return this.$store.state.settings.tagsView
+        return this.$store.state.system.tagsView
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'tagsView',
-          value: val
-        })
+        this.$store.commit('system/set_tagsView', val)
       }
     },
     sidebarLogo: {
       get() {
-        return this.$store.state.settings.sidebarLogo
+        return this.$store.state.system.sidebarLogo
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'sidebarLogo',
-          value: val
-        })
+        this.$store.commit('system/set_sidebarLogo', val)
       }
     }
   },
   methods: {
     themeChange(val) {
-      this.$store.dispatch('settings/changeSetting', {
-        key: 'theme',
-        value: val
-      })
+      this.$store.commit('system/set_themeChange', val)
     }
   }
 }

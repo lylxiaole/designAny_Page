@@ -19,7 +19,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { isExternal } from '@src/utils/validate'
 import AppLink from '../Sidebar/Link.vue'
-import path from 'path'
 
 // **********************************
 @Component({
@@ -29,7 +28,7 @@ export default class index extends Vue {
   private currentRoutePath: string = ''
 
   private get permission_routes(): any[] {
-    return this.cuteRoutes(this.$store.getters.permission_routes)
+    return this.cuteRoutes(this.$store.state.system.permission_routes)
   }
 
   private cuteBackgroundColor(targetRoute) {
@@ -73,7 +72,7 @@ export default class index extends Vue {
     if (isExternal(routePath)) {
       return routePath
     }
-    return path.resolve('', routePath)
+    return routePath + ''
   }
   private async logout() {
     window.console.log('logout')
@@ -91,7 +90,7 @@ export default class index extends Vue {
   }
 
   mounted() {
-    window.console.log('currentRoute', this.$router.currentRoute)
+    // window.console.log('currentRoute', this.$router.currentRoute)
   }
   destroyed() {}
 }

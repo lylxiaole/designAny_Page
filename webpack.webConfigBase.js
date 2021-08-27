@@ -166,7 +166,12 @@ let baseconfig = {
       {
         // 对非文本文件采用 file-loader 加载
         test: /\.(gif|png|jpe?g|eot|woff|ttf|svg|pdf|woff2)$/,
-        use: ['file-loader']
+        use: {
+          loader: 'file-loader',
+          options: {
+            esModule: false
+          }
+        }
       },
       {
         test: /\.vue$/,

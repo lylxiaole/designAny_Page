@@ -7,8 +7,8 @@ import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
 // **************创建应用******************************
-import Element from 'element-ui'
 require('element-ui/lib/theme-chalk/index.css')
+import Element from 'element-ui'
 require('@/assets/css/iconfont.css')
 Vue.use(Element)
 
