@@ -1,5 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import Vue from 'vue'
+import Router from 'vue-router'
 import { routes } from './baseInfo'
+Vue.use(Router)
 
 // ***********************路由钩子处理*************************************
 const router_beforeEach = async (to, from, next) => {
@@ -19,17 +21,17 @@ const router_afterEach = async (to, from, failure) => {
   }
 }
 // ***********************路由注册*************************************
-
 let routeConfigs = []
 export function initRoutes(inroutes) {
   let newroutes = routes.concat(inroutes)
   routeConfigs = newroutes
-  window.console.log('routeConfigs:', routeConfigs)
-  let router = createRouter({
-    // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
-    history: createWebHashHistory(),
-    routes: routeConfigs // `routes: routes` 的缩写
+
+  let router = new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: routeConfigs
   })
+
   router.beforeEach(router_beforeEach)
   router.beforeResolve(router_beforeResolve)
   router.afterEach(router_afterEach)

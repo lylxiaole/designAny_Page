@@ -1,13 +1,15 @@
-import { createStore, Store } from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 import { systemAppStore } from './baseInfo'
+Vue.use(Vuex)
 
-let localStore: Store<any> = null
+let localStore: any = null
 
 export function initStore(instore: any) {
   let modules = {}
   modules['system'] = systemAppStore
   modules['app'] = instore
 
-  localStore = createStore({ modules })
+  localStore = new Vuex.Store({ modules })
   return localStore
 }

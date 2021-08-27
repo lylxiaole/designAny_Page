@@ -14,6 +14,8 @@ import App from './views/App.vue'
 
 const app = new Vue({
   el: '#app',
+  router: system.router,
+  store: system.store,
   render: (h) => h(App)
 })
 window.console.log('app', app)
@@ -23,6 +25,3 @@ import installElementPlus from '@src/plugins/elementPc'
 installElementPlus(app)
 //确保 _use_ 路由实例使
 //整个应用支持路由。
-app.use(system.router)
-app.use(system.store)
-app.mount('#app')
