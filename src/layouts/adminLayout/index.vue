@@ -8,7 +8,7 @@
         <app-main style="width:100%;height:100%;overflow:hidden" />
       </div>
       <right-panel>
-        <settings />
+        <!-- <settings /> -->
       </right-panel>
     </div>
   </div>
