@@ -2,7 +2,10 @@ import { initConfig, getConfigByName } from './configBase'
 import { initRoutes, getRoutes } from './routeBase'
 import { initStore, getStore } from './vuexBase'
 import { initLocale } from './localeBase'
+
 import '../themeBase/global.less'
+import '../styles/element-variables.scss'
+import '../styles/index.scss' // global css
 
 export default function initSystem(inroutes, configs, state) {
   initConfig(configs)

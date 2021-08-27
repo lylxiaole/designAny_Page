@@ -139,7 +139,7 @@ let baseconfig = {
       },
       {
         //模块化的sass|scss,自定义的全局样式请加:global
-        test: /\.s[ac]ss$/i,
+        test: /\.module\.s[ac]ss$/i,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -152,16 +152,14 @@ let baseconfig = {
             }
           },
           'sass-loader'
-        ],
-        exclude: /node_modules/
-        // 排除 node_modules 目录下的文件
+        ]
       },
 
       {
         //非模块化的sass|scss
         test: /\.s[ac]ss$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-        include: /node_modules/
+        exclude: /\.module\.s[ac]ss$/
       },
       {
         // 对非文本文件采用 file-loader 加载
