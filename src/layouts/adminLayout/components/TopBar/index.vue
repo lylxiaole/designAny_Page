@@ -4,7 +4,7 @@
       <img style="height: 20pt;margin-top:5pt" src="@src/assets/controllerImgs/logo.png" />
     </div>
     <template v-for="route in permission_routes">
-      <div style="float:left" :key="route.path" @click="linkClick" :style="{'float':'left','background-color':cuteBackgroundColor(route)}"
+      <div style="float:left" :key="route.path" @click="linkClick(route.path)" :style="{'float':'left','background-color':cuteBackgroundColor(route)}"
         class="item canChooseItem">
         <app-link v-if="route.meta" :to="resolvePath(route.path)">
           {{route.meta.title}}
@@ -32,9 +32,14 @@ export default class index extends Vue {
   }
 
   private cuteBackgroundColor(targetRoute) {
-    window.console.log('target route:', targetRoute.path)
-    window.console.log('current route:', this.$router.currentRoute.path)
-    if (targetRoute.path === this.$router.currentRoute.path) {
+    let currentRoutePath = this.currentRoutePath
+    if (!currentRoutePath) {
+      currentRoutePath = this.$router.currentRoute.path
+    }
+    // window.console.log('target route:', targetRoute.path)
+    // window.console.log('current route:', currentRoutePath)
+
+    if (targetRoute.path === currentRoutePath) {
       return '#83C346'
     } else {
       return ''
@@ -42,7 +47,6 @@ export default class index extends Vue {
   }
 
   private get currentRoute(): any {
-    window.console.log('ssssadasd', this.$router.currentRoute)
     return this.$router.currentRoute
   }
 
@@ -75,7 +79,6 @@ export default class index extends Vue {
     return routePath + ''
   }
   private async logout() {
-    window.console.log('logout')
     try {
       await this.$store.dispatch('user/logout')
     } catch (error) {
@@ -84,9 +87,8 @@ export default class index extends Vue {
     }
   }
 
-  private async linkClick() {
-    await this.$nextTick()
-    this.$forceUpdate()
+  private async linkClick(routePath) {
+    this.currentRoutePath = routePath
   }
 
   mounted() {
