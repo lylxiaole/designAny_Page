@@ -4,7 +4,7 @@ import adminLayout from '@src/layouts/adminLayout/index.vue'
 const routes: IRouteClass[] = [
   {
     path: '/',
-    redirect: '/index',
+    redirect: 'index',
     component: adminLayout,
     children: [
       {

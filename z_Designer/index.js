@@ -12,9 +12,9 @@ require('element-ui/lib/theme-chalk/index.css')
 require('@/assets/css/iconfont.css')
 Vue.use(Element)
 
-window.console.log('system:', system)
-
 import App from './views/App.vue'
+Vue.config.productionTip = false
+
 new Vue({
   el: '#app',
   router: system.router,

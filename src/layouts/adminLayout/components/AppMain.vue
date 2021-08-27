@@ -13,12 +13,13 @@ export default {
   name: 'AppMain',
   computed: {
     cachedViews() {
-      return this.$store.state.tagsView.cachedViews
+      window.console.log('cachedViews:', this.$store.state.system.tagsList)
+      return this.$store.state.system.tagsList
     },
     key() {
       return this.$route.path
-    },
-  },
+    }
+  }
 }
 </script>
 

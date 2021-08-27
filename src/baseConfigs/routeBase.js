@@ -8,6 +8,7 @@ const router_beforeEach = async (to, from, next) => {
   // if (to.name !== 'Login' && !isAuthenticated)
   // next({ name: 'Login' })
   // else next()
+  window.console.log('router_beforeEach:', from, to)
   next()
 }
 const router_beforeResolve = async (to) => {
@@ -25,7 +26,6 @@ let routeConfigs = []
 export function initRoutes(inroutes) {
   let newroutes = routes.concat(inroutes)
   routeConfigs = newroutes
-
   let router = new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
