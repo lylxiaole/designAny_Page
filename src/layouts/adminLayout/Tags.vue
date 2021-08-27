@@ -3,12 +3,12 @@
     <ul>
       <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index">
         <router-link :to="item.path" class="tags-li-title">{{item.title}}</router-link>
-        <span class="tags-li-icon" @click="closeTags(index)">
+        <span v-if="canCloseTag" class="tags-li-icon" @click="closeTags(index)">
           <i class="el-icon-close"></i>
         </span>
       </li>
     </ul>
-    <div class="tags-close-box">
+    <!-- <div class="tags-close-box">
       <el-dropdown @command="handleTags">
         <el-button size="mini" type="primary">
           标签选项
@@ -21,7 +21,7 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -40,16 +40,18 @@ export default {
     const store = useStore()
     const tagsList = computed(() => store.state.system.tagsList)
     const showTags = computed(() => tagsList.value.length > 0)
-    // window.console.log('tagsList:', tagsList)
+    const canCloseTag = computed(() => tagsList.value.length > 1)
     // 关闭单个标签
     const closeTags = (index) => {
+      window.console.log('closeTags:', index)
+      debugger
       const delItem = tagsList.value[index]
       store.commit('system/delTagsItem', { index })
       const item = tagsList.value[index] ? tagsList.value[index] : tagsList.value[index - 1]
       if (item) {
         delItem.path === route.fullPath && router.push(item.path)
       } else {
-        router.push('/')
+        router.replace('/')
       }
     }
 
@@ -91,6 +93,7 @@ export default {
     }
 
     return {
+      canCloseTag,
       isActive,
       tagsList,
       showTags,

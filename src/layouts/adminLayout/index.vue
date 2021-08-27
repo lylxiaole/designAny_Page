@@ -33,9 +33,7 @@ export default {
     const store = useStore()
     const tagsList = computed(() => store.state.system.tagsList.map((item) => item.name))
     const collapse = computed(() => store.state.system.collapse)
-    onMounted(() => {
-      window.console.log('onMounted:', store)
-    })
+    onMounted(() => {})
     return {
       tagsList,
       collapse

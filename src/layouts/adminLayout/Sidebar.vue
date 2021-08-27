@@ -71,8 +71,6 @@ function loopMenuItem(menus, topLayoutPath, parentRoutePath = undefined) {
 export default {
   setup() {
     const route = useRoute()
-    window.console.log('route', route)
-    debugger
     let allRoutes = getRoutes()
     let items = loopMenuItem(allRoutes, '/')
 
