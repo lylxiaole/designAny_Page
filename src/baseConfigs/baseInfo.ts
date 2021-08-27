@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie'
+
 export let configs: any = {
   apiAddr: 'http://192.168.1.1:8080',
   LOGINED_USER_SESSION: 'LOGINED_USER_SESSION',
@@ -19,6 +21,11 @@ export const systemAppStore = {
   state: {
     tagsList: [],
     collapse: false,
+    sidebar: {
+      opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+      withoutAnimation: false
+    },
+    device: 'desktop',
     systemCount: 3,
     colorStyle: 'dark' //主题颜色
   },

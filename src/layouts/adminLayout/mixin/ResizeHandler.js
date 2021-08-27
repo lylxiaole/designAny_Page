@@ -2,10 +2,13 @@ import { getStore } from '@src/baseConfigs'
 const store = getStore()
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design
+// console.error('123123123')
 
 export default {
   watch: {
     $route(route) {
+      console.error('123123123')
+
       if (this.device === 'mobile' && this.sidebar.opened) {
         store.dispatch('app/closeSideBar', { withoutAnimation: false })
       }
@@ -18,6 +21,8 @@ export default {
     window.removeEventListener('resize', this.$_resizeHandler)
   },
   mounted() {
+    console.error('123123123')
+
     const isMobile = this.$_isMobile()
     if (isMobile) {
       store.dispatch('app/toggleDevice', 'mobile')

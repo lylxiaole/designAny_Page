@@ -7,7 +7,7 @@
       <div style="height:calc(100% - 30pt);width:100%;overflow:hidden">
         <app-main style="width:100%;height:100%;overflow:hidden" />
       </div>
-      <right-panel v-if="showSettings">
+      <right-panel>
         <settings />
       </right-panel>
     </div>
@@ -31,16 +31,12 @@ export default {
     TopBar
   },
   mixins: [ResizeMixin],
-  mounted() {
-    console.log('123123123')
-  },
+  mounted() {},
   computed: {
     ...mapState({
-      sidebar: (state) => state.app.sidebar,
-      device: (state) => state.app.device,
-      showSettings: (state) => state.settings.showSettings,
-      needTagsView: (state) => state.settings.tagsView,
-      fixedHeader: (state) => state.settings.fixedHeader
+      sidebar: (state) => state.system.sidebar,
+      device: (state) => state.system.device,
+      showSettings: (state) => state.settings.showSettings
     }),
     classObj() {
       return {

@@ -19,6 +19,8 @@ const router_beforeResolve = async (to) => {
 const router_afterEach = async (to, from, failure) => {
   if (!failure) {
     // TODO  分析、更改页面标题、声明页面等辅助功能以及许多其他事情都很有用。
+  } else {
+    window.console.log('router_afterEach error')
   }
 }
 // ***********************路由注册*************************************
@@ -32,9 +34,9 @@ export function initRoutes(inroutes) {
     routes: routeConfigs
   })
 
-  router.beforeEach(router_beforeEach)
-  router.beforeResolve(router_beforeResolve)
-  router.afterEach(router_afterEach)
+  // router.beforeEach(router_beforeEach)
+  // router.beforeResolve(router_beforeResolve)
+  // router.afterEach(router_afterEach)
 
   return router
 }
