@@ -7,21 +7,16 @@ import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
 // **************创建应用******************************
+import Element from 'element-ui'
+require('element-ui/lib/theme-chalk/index.css')
 require('@/assets/css/iconfont.css')
-// require('@/assets/css/main.css')
-// require('@/assets/css/color-dark.css')
-import App from './views/App.vue'
+Vue.use(Element)
 
-const app = new Vue({
+import App from './views/App.vue'
+new Vue({
   el: '#app',
   router: system.router,
   store: system.store,
+  i18n: system.i18n,
   render: (h) => h(App)
 })
-window.console.log('app', app)
-
-// ***************添加应用插件*****************************
-import installElementPlus from '@src/plugins/elementPc'
-installElementPlus(app)
-//确保 _use_ 路由实例使
-//整个应用支持路由。

@@ -1,44 +1,102 @@
 <template>
-  <div class="about">
-    <v-header />
-    <v-sidebar />
-    <div class="content-box" :class="{ 'content-collapse': collapse }">
-      <v-tags></v-tags>
-      <div class="content">
-        <router-view v-slot="{ Component }">
-          <transition name="move" mode="out-in">
-            <keep-alive :include="tagsList">
-              <component :is="Component" />
-            </keep-alive>
-          </transition>
-        </router-view>
-        <!-- <el-backtop target=".content"></el-backtop> -->
+  <div :class="classObj" class="app-wrapper" style="overflow:hidden">
+    <div class="main-container" style="height:100%;overflow:hidden;margin-left:0px">
+      <div style="height:30pt;width:100%;overflow:hidden">
+        <TopBar style="width:100%;height:100%;overflow:auto" />
       </div>
+      <div style="height:calc(100% - 30pt);width:100%;overflow:hidden">
+        <app-main style="width:100%;height:100%;overflow:hidden" />
+      </div>
+      <right-panel v-if="showSettings">
+        <settings />
+      </right-panel>
     </div>
   </div>
 </template>
+
 <script>
-import { computed, onMounted } from 'vue'
-import { useStore } from 'vuex'
-import vHeader from './Header.vue'
-import vSidebar from './Sidebar.vue'
-import vTags from './Tags.vue'
+import RightPanel from '@/components/RightPanel'
+import { AppMain, Navbar, Settings, Sidebar, TagsView, TopBar } from './components'
+import ResizeMixin from './mixin/ResizeHandler'
+import { mapState } from 'vuex'
 export default {
+  name: 'Layout',
   components: {
-    vHeader,
-    vSidebar,
-    vTags
+    AppMain,
+    Navbar,
+    RightPanel,
+    Settings,
+    Sidebar,
+    TagsView,
+    TopBar
   },
-  setup() {
-    const store = useStore()
-    const tagsList = computed(() => store.state.system.tagsList.map((item) => item.path))
-    const collapse = computed(() => store.state.system.collapse)
-    window.console.log('tagsList:', tagsList.value)
-    onMounted(() => {})
-    return {
-      tagsList,
-      collapse
+  mixins: [ResizeMixin],
+  computed: {
+    ...mapState({
+      sidebar: (state) => state.app.sidebar,
+      device: (state) => state.app.device,
+      showSettings: (state) => state.settings.showSettings,
+      needTagsView: (state) => state.settings.tagsView,
+      fixedHeader: (state) => state.settings.fixedHeader
+    }),
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
+        mobile: this.device === 'mobile'
+      }
+    }
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '~@/styles/mixin.scss';
+@import '~@/styles/variables.scss';
+
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &.mobile.openSidebar {
+    position: fixed;
+    top: 0;
+  }
+}
+
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - #{$sideBarWidth});
+  transition: width 0.28s;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - 54px);
+}
+
+.mobile .fixed-header {
+  width: 100%;
+}
+</style>
+
