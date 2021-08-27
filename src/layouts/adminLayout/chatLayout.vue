@@ -23,8 +23,8 @@ export default class chatLayout extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import '~@/styles/mixin.scss';
-@import '~@/styles/variables.scss';
+@import '~@src/styles/mixin.scss';
+@import '~@src/styles/variables.scss';
 
 .app-wrapper {
   @include clearfix;

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import RightPanel from '@/components/RightPanel'
+import RightPanel from '@src/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView, TopBar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
@@ -57,8 +57,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/mixin.scss';
-@import '~@/styles/variables.scss';
+@import '~@src/styles/mixin.scss';
+@import '~@src/styles/variables.scss';
 
 .app-wrapper {
   @include clearfix;

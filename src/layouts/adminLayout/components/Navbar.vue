@@ -46,14 +46,13 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb/index.vue'
-import Hamburger from '@/components/Hamburger/index.vue'
-import ErrorLog from '@/components/ErrorLog/index.vue'
-import Screenfull from '@/components/Screenfull/index.vue'
-import SizeSelect from '@/components/SizeSelect/index.vue'
-import Search from '@/components/HeaderSearch/index.vue'
+import Breadcrumb from '@src/components/Breadcrumb/index.vue'
+import Hamburger from '@src/components/Hamburger/index.vue'
+import ErrorLog from '@src/components/ErrorLog/index.vue'
+import Screenfull from '@src/components/Screenfull/index.vue'
+import SizeSelect from '@src/components/SizeSelect/index.vue'
+import Search from '@src/components/HeaderSearch/index.vue'
 import TagsView from './TagsView/index.vue'
-import { RouterHelper, routePaths } from '@/router'
 
 @Component({
   components: {
