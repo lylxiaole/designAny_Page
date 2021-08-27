@@ -4,7 +4,8 @@
       <img style="height: 20pt;margin-top:5pt" src="@/assets/controllerImgs/logo.png" />
     </div>
     <template v-for="route in permission_routes">
-      <div style="float:left" @click="linkClick" :style="{'float':'left','background-color':cuteBackgroundColor(route)}" class="item canChooseItem">
+      <div style="float:left" :key="route.path" @click="linkClick" :style="{'float':'left','background-color':cuteBackgroundColor(route)}"
+        class="item canChooseItem">
         <app-link v-if="route.meta" :to="resolvePath(route.path)">
           {{route.meta.title}}
         </app-link>
@@ -16,8 +17,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import VuexStore from '@/store'
-import { isExternal } from '@/utils/validate'
+import { isExternal } from '@src/utils/validate'
 import AppLink from '../Sidebar/Link.vue'
 import path from 'path'
 
