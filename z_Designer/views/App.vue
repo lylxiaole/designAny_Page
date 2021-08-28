@@ -1,7 +1,6 @@
 <template>
   <div id="app" oncontextmenu="self.event.returnValue=false;self.event.preventDefault()">
     <router-view />
-    你好
   </div>
 </template>
 
