@@ -13,7 +13,6 @@ export default {
   name: 'AppMain',
   computed: {
     cachedViews() {
-      window.console.log('cachedViews:', this.$store.state.system.tagsList)
       return this.$store.state.system.tagsList
     },
     key() {

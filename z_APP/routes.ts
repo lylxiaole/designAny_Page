@@ -1,11 +1,11 @@
 import { IRouteClass } from '@src/baseConfigs'
-import adminLayout from '@src/layouts/adminLayout/index.vue'
+import appLayout from '@src/layouts/appLayout/index.vue'
 
 const routes: IRouteClass[] = [
   {
     path: '/',
     redirect: '/index',
-    component: adminLayout,
+    component: appLayout,
     children: [
       {
         icon: 'icon-all-fill',
