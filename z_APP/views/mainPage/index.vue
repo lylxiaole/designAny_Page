@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div style="height:100%;width:100%">
     <!-- <van-nav-bar title="标题" :left-arrow="showLeftArrow" @click-left="onClickLeft" /> -->
-    <div>
-      <firstPage />
-      <flowmeter />
-      <position />
-      <equipmentAccount />
-      <alarmInformation />
+    <div class="contentCom">
+      <firstPage v-show="active===0" />
+      <flowmeter v-show="active===1" />
+      <position v-show="active===2" />
+      <equipmentAccount v-show="active===3" />
+      <alarmInformation v-show="active===4" />
     </div>
-    <van-tabbar v-model="active" @change="onTabChange">
+    <van-tabbar class="bottomBar" v-model="active" @change="onTabChange">
       <van-tabbar-item icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item icon="search">流量计</van-tabbar-item>
       <van-tabbar-item icon="friends-o">报警信息</van-tabbar-item>
@@ -41,14 +41,21 @@ export default class Index extends PageBase {
     return true
   }
 
-  private active: string = null
   private onClickLeft() {
     this.$router.back()
   }
+  // ***************底部Tab*********************************************
+  private active: number = 0
   private onTabChange(index: number) {
-    window.console.log('onTabChange:', index)
+    window.console.log('onTabChange:', this.active)
   }
 }
 </script>
-<style>
+<style scoped>
+.contentCom {
+  height: calc(100% - 8rem);
+}
+.bottomBar {
+  height: 8rem;
+}
 </style>
