@@ -86,14 +86,34 @@
       </template>
     </van-cell>
     <!-- **************************************************************************** -->
-    <van-cell title="最近报警信息" is-link arrow-direction="right" value="更多">
+    <van-cell title="最近报警信息">
+      <template #right-icon>
+        <div class="moreBtn">
+          <span>更多</span>
+          <van-icon name="arrow" />
+        </div>
+      </template>
       <template #label>
         <alarmInfoCard v-for="item in alarmInfoList" :key="item.key" :cardInfo="item" />
       </template>
     </van-cell>
     <!-- **************************************************************************** -->
-    <van-cell title="维保/巡检计划" is-link arrow-direction="right" value="更多">
+    <van-cell title="维保/巡检计划">
+      <template #right-icon>
+        <div class="moreBtn">
+          <span>更多</span>
+          <van-icon name="arrow" />
+        </div>
+      </template>
       <template #label>
+        <van-grid :column-num="2">
+          <van-grid-item>
+            <equipment></equipment>
+          </van-grid-item>
+          <van-grid-item>
+            <equipment></equipment>
+          </van-grid-item>
+        </van-grid>
       </template>
     </van-cell>
   </van-cell-group>
@@ -103,10 +123,11 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import alarmInfoCard from './alarmInfoCard.vue'
-
+import equipment from './equipment.vue'
 @Component({
   components: {
-    alarmInfoCard: alarmInfoCard
+    alarmInfoCard: alarmInfoCard,
+    equipment: equipment
   }
 })
 export default class Index extends PageBase {
@@ -114,10 +135,33 @@ export default class Index extends PageBase {
   private alarmInfoList: any[] = []
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 .jiliangCard {
   height: 10rem;
   box-sizing: border-box;
   margin: 1rem;
+}
+
+.moreBtn {
+  display: flex;
+  vertical-align: middle;
+  text-align: center;
+  height: 1.5rem;
+  span {
+    line-height: 1.5rem;
+  }
+  i {
+    line-height: 1.5rem;
+  }
+  i:before {
+    vertical-align: middle;
+    text-align: center;
+  }
+  .van-hairline--top::after {
+    border-top-width: 0px !important;
+  }
+  .van-grid-item__content::after {
+    border: 0px !important;
+  }
 }
 </style>

@@ -10,6 +10,11 @@ let system = initSystem(routes, configs, appState)
 import Vant from 'vant'
 require('vant/lib/index.css')
 Vue.use(Vant)
+// import { Lazyload } from 'vant'
+// // 注册时可以配置额外的选项
+// Vue.use(Lazyload, {
+//   lazyComponent: true
+// })
 
 import App from './views/App.vue'
 Vue.config.productionTip = false

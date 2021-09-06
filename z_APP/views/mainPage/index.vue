@@ -69,5 +69,6 @@ export default class Index extends PageBase {
 }
 .contentCom {
   height: calc(100% - 13rem);
+  overflow-y: auto;
 }
 </style>
