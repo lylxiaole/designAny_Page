@@ -1,6 +1,15 @@
 <template>
   <div style="height:100%;width:100%">
-    <!-- <van-nav-bar title="标题" :left-arrow="showLeftArrow" @click-left="onClickLeft" /> -->
+    <van-row class="headerCom">
+      <van-row>
+        <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+      </van-row>
+      <van-row>
+        <van-col span="8">计量表</van-col>
+        <van-col span="8">正常</van-col>
+        <van-col span="8">异常</van-col>
+      </van-row>
+    </van-row>
     <div class="contentCom">
       <firstPage v-show="active===0" />
       <flowmeter v-show="active===1" />
@@ -52,10 +61,13 @@ export default class Index extends PageBase {
 }
 </script>
 <style scoped>
-.contentCom {
-  height: calc(100% - 8rem);
+.headerCom {
+  height: 8rem;
 }
 .bottomBar {
-  height: 8rem;
+  height: 5rem;
+}
+.contentCom {
+  height: calc(100% - 13rem);
 }
 </style>
