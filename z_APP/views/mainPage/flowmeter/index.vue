@@ -1,22 +1,10 @@
 <template>
-  <div>
-    <van-row style="height:15rem;padding:3rem;box-sizing:border-box">
-      <van-row>
-        <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
-      </van-row>
-      <van-row>
-        <van-col span="8">计量表</van-col>
-        <van-col span="8">正常</van-col>
-        <van-col span="8">异常</van-col>
-      </van-row>
-    </van-row>
-
-    <van-cell-group>
-      <van-field label="文本" placeholder="请输入用户名" />
+  <div style="height:100%">
+    <van-cell-group style="height:3rem">
+      <van-field placeholder="请输入用户名" />
     </van-cell-group>
-
-    <van-list>
-      <van-cell v-for="item in list" :key="item" :title="item" />
+    <van-list style="height:calc(100% - 3rem);overflow-y:auto">
+      <jiliangCard class="jiliangCard" v-for="item in list" :key="item" :cardInfo="item" />
     </van-list>
   </div>
 </template>
@@ -24,10 +12,123 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-@Component
+import jiliangCard from './jiliangCard.vue'
+@Component({
+  components: {
+    jiliangCard: jiliangCard
+  }
+})
 export default class Index extends PageBase {
-  private list: any[] = []
+  private list: any[] = [
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    },
+    {
+      temp: '30C',
+      instantaneousFlow: '100L',
+      density: '300m3',
+      cumulativeFlow: '20000L'
+    }
+  ]
 }
 </script>
-<style>
+<style scoped>
+.jiliangCard {
+  height: 10rem;
+  box-sizing: border-box;
+  margin: 1rem;
+}
 </style>
