@@ -1,4 +1,3 @@
-<script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getConfigByName } from '@src/baseConfigs'
 import { ElNotification } from 'element-ui/types/notification'
@@ -29,4 +28,3 @@ export default class ComponentBase extends Vue {
 
   mounted() {}
 }
-</script>

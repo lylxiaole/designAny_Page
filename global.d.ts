@@ -18,6 +18,7 @@ declare module '*.less' {
 }
 
 declare module '*.vue' {
-  const classes: { readonly [key: string]: string }
+  const classes: { readonly [key: string]: string; new () }
+
   export default classes
 }

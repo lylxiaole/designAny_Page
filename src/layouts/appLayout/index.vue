@@ -9,15 +9,10 @@
 </template>
 
 <script>
-import RightPanel from '@src/components/RightPanel'
-import { AppMain, Navbar, Settings, Sidebar, TagsView, TopBar } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
-import { func } from 'prop-types'
 export default {
   name: 'appLayout',
   components: {},
-  mixins: [ResizeMixin],
   mounted() {},
   computed: {
     tabbars: function() {
