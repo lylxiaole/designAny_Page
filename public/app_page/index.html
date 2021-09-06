@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="./assets/jquery.min.js"></script>
+    <script type="text/javascript" src="./assets/FileSaver.min.js"></script>
+    <script type="text/javascript" src="./assets/xlsx.core.min.js"></script>
+    <script type="text/javascript" src="./assets/tableExport.min.js"></script>
+
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="./<%=htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" type="text/css" />
+    <% } %>
+
+
+</head>
+
+<body>
+    <div style="width: 100%;height: 100%;overflow: hidden;" id="app"></div>
+    <!--导入 Webpack 输出的 JavaScript 文件-->
+    <% for (var chunk in htmlWebpackPlugin.files.js) { %>
+    <script type="text/javascript" src="./<%=htmlWebpackPlugin.files.js[chunk] %>"></script>
+    <% } %>
+</body>
+
+</html>

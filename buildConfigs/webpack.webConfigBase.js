@@ -4,7 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
-
+let currentDir = path.resolve(__dirname).replace('\\buildConfigs', '')
+console.log('currentDir xxxxxxxxxxxxxxxxxxxx:', currentDir)
 // ******************web打包***************************************************
 let baseconfig = {
   target: 'web',
@@ -15,7 +16,7 @@ let baseconfig = {
   output: {
     clean: true,
     // 输出文件都放到 dist 目录下
-    // path: path.resolve(__dirname, './dists/dist_report'),
+    // path: path.resolve(currentDir, './dists/dist_report'),
     // 把所有依赖的模块合并输出到一个 bundle.js 文件
     filename: '[name][chunkhash:8].js',
     chunkFilename: '[name].[chunkhash:8].chunk.js',
@@ -39,7 +40,7 @@ let baseconfig = {
           }
         },
         // 只命中src目录里的js文件，加快 Webpack 搜索速度
-        include: __dirname,
+        include: currentDir,
         exclude: /node_modules/
       },
       {
@@ -49,7 +50,7 @@ let baseconfig = {
         options: {
           appendTsSuffixTo: [/\.vue$/]
         },
-        include: __dirname,
+        include: currentDir,
         exclude: /node_modules/
       },
       {
@@ -58,13 +59,13 @@ let baseconfig = {
         use: ['source-map-loader'],
         // 要把 source-map-loader 的执行顺序放到最前面，如果在 source-map-loader 之前有 Loader 转换了该 JavaScript 文件，会导致 Source Map 映射错误
         enforce: 'pre',
-        include: [path.resolve(__dirname, 'node_modules/')]
+        include: [path.resolve(currentDir, 'node_modules/')]
       },
       {
         //样式不需要模块化-我们项目只用less或者scss模块化
         test: /\.(stylus)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'stylus-loader'],
-        include: __dirname
+        include: currentDir
       },
 
       {
@@ -243,9 +244,9 @@ let baseconfig = {
   resolve: {
     modules: [
       // 寻找模块的根目录，array 类型，默认以 node_modules 为根目录
-      path.resolve(__dirname, 'node_modules'),
-      path.resolve(__dirname, 'src')
-      // path.resolve(__dirname, 'z_Report')
+      path.resolve(currentDir, 'node_modules'),
+      path.resolve(currentDir, 'src')
+      // path.resolve(currentDir, 'z_Report')
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'], // 模块的后缀名，import时不需要后缀名
     symlinks: true, // 是否跟随文件软链接去搜寻模块的路径
@@ -254,8 +255,8 @@ let baseconfig = {
     enforceExtension: false, // 是否强制导入语句必须要写明文件后缀
 
     alias: {
-      '@src': path.resolve(__dirname, 'src'), //引入模块时，自动寻找
-      // '@': path.resolve(__dirname, 'z_Report')
+      '@src': path.resolve(currentDir, 'src'), //引入模块时，自动寻找
+      // '@': path.resolve(currentDir, 'z_Report')
       path: false, // require.resolve('path-browserify'),
       stream: false, //require.resolve("stream-browserify"),
       http: false, //require.resolve("stream-http"),
@@ -296,7 +297,7 @@ let baseconfig = {
     //   // 代理到后端服务接口
     //   '/api': 'http://localhost:3000'
     // },
-    // contentBase: path.resolve(__dirname, 'dists/dist_report'),
+    // contentBase: path.resolve(currentDir, 'dists/dist_report'),
     compress: true,
     port: 9000,
     hot: true,
@@ -323,25 +324,25 @@ module.exports = function initConifg(distDir, projectDir, templateFile, devPort)
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'public/assets'),
+          from: path.resolve(currentDir, 'public/assets'),
           to: 'assets'
         },
         {
-          from: path.resolve(__dirname, `${projectDir}/configs.json`),
+          from: path.resolve(currentDir, `${projectDir}/configs.json`),
           to: `../${distDir}`
         }
       ]
     })
   )
-  baseconfig.entry.index = path.resolve(__dirname, `${projectDir}/index.js`)
-  baseconfig.devServer.contentBase = path.resolve(__dirname, `dists/${distDir}`)
+  baseconfig.entry.index = path.resolve(currentDir, `${projectDir}/index.js`)
+  baseconfig.devServer.contentBase = path.resolve(currentDir, `dists/${distDir}`)
 
   baseconfig.devServer.port = devPort
-  baseconfig.output.path = path.resolve(__dirname, `dists/${distDir}`)
-  baseconfig.resolve.modules.push(path.resolve(__dirname, projectDir))
-  // baseconfig.resolve.alias['@'] = path.resolve(__dirname, projectDir)
-  console.log('baseconfig.resolve.alias', path.resolve(__dirname, projectDir))
-  baseconfig.resolve.alias['@'] = path.resolve(__dirname, projectDir)
-  baseconfig.resolve.alias['@src'] = path.resolve(__dirname, 'src')
+  baseconfig.output.path = path.resolve(currentDir, `dists/${distDir}`)
+  baseconfig.resolve.modules.push(path.resolve(currentDir, projectDir))
+  // baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
+  console.log('baseconfig.resolve.alias', path.resolve(currentDir, projectDir))
+  baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
+  baseconfig.resolve.alias['@src'] = path.resolve(currentDir, 'src')
   return baseconfig
 }
