@@ -3,18 +3,12 @@ import { initRoutes, getRoutes } from './routeBase'
 import { initStore, getStore } from './vuexBase'
 import { initLocale } from './localeBase'
 
-import '../styles/element-variables.scss'
 import '../themeBase/global.less'
-import '../styles/index.scss' // global css
-require('element-ui/lib/theme-chalk/index.css')
 
 export default function initSystem(inroutes, configs, state) {
   initConfig(configs)
   let router = initRoutes(inroutes)
   let store = initStore(state)
-
-  store.commit('system/set_permission_routes', getRoutes())
-
   let i18n = initLocale()
   return { router, store, i18n }
 }

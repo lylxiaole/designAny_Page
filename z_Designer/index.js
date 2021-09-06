@@ -6,9 +6,10 @@ let configs = (await _axios.get('configs.json')).data
 import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
+system.store.commit('system/set_permission_routes', getRoutes())
 // **************创建应用******************************
 import Element from 'element-ui'
-require('@/assets/css/iconfont.css')
+require('element-ui/lib/theme-chalk/index.css')
 Vue.use(Element)
 
 import App from './views/App.vue'
