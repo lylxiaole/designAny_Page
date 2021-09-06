@@ -1,6 +1,6 @@
 <template>
   <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
+    <transition name="van-slide-right">
       <keep-alive>
         <router-view />
       </keep-alive>

@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 let currentDir = path.resolve(__dirname).replace('\\buildConfigs', '')
-console.log('currentDir xxxxxxxxxxxxxxxxxxxx:', currentDir)
 // ******************web打包***************************************************
 let baseconfig = {
   target: 'web',
