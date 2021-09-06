@@ -7,9 +7,9 @@ import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
 // **************创建应用******************************
-import Element from 'element-ui'
-require('@/assets/css/iconfont.css')
-Vue.use(Element)
+import Vant from 'vant'
+require('vant/lib/index.css')
+Vue.use(Vant)
 
 import App from './views/App.vue'
 Vue.config.productionTip = false

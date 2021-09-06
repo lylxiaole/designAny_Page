@@ -1,0 +1,40 @@
+import { ajaxGet, ajaxPost } from '@src/utils/axiosEnhancer'
+import { getConfigByName } from '@src/baseConfigs'
+
+const apiAddr = () => getConfigByName('apiAddr')
+/**
+ * 计量表状态统计.
+ * {
+    "action":"getJlbzthz"
+   }
+ */
+export async function jlbjk(data: any): Promise<any> {
+  let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
+  const resp = await ajaxPost(url, data)
+  if (resp.result === true) {
+    return resp.rtnData
+  } else {
+    throw new Error(resp.rtnMessage)
+  }
+}
+
+/**
+ * 设备维保信息查询（当天的一条和当天的统计）
+ * 设备巡检信息查询（当天的一条和当天的统计）
+ * 物理区域查询
+ * 采集站状态
+ * 报警信息查询（最近3条）
+ * 流量计数据模糊查询（如果数据过多，接口需要分页）
+ * 计量表状态查询
+ *
+ *
+ */
+export async function jkzl(data: any): Promise<any> {
+  let url = `${apiAddr()}/jkzl/jkzl.ashx`
+  const resp = await ajaxPost(url, data)
+  if (resp.result === true) {
+    return resp.rtnData
+  } else {
+    throw new Error(resp.rtnMessage)
+  }
+}
