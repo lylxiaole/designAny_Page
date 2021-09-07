@@ -1,8 +1,15 @@
 <template>
   <div style="height:100%">
-    <van-cell-group style="height:3rem">
-      <van-field placeholder="请输入用户名" />
-    </van-cell-group>
+    <van-row>
+      <van-col :span="12">
+        <van-field v-model="searchStr" placeholder="请输入位号或计量表名称" />
+      </van-col>
+      <van-col :span="12">
+        <van-dropdown-menu>
+          <van-dropdown-item v-model="currentArea" :options="areaList" @change="chooseAreaChanged" />
+        </van-dropdown-menu>
+      </van-col>
+    </van-row>
     <van-list style="height:calc(100% - 3rem);overflow-y:auto">
       <jiliangCard class="jiliangCard" v-for="item in list" :key="item" :cardInfo="item" />
     </van-list>
@@ -123,6 +130,14 @@ export default class Index extends PageBase {
       cumulativeFlow: '20000L'
     }
   ]
+  // **********模糊搜索条件*****************************************
+  private searchStr: string = '模糊搜索'
+  // ******************区域筛选条件***********************************
+  private currentArea: number = 0
+  private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
+  private chooseAreaChanged(e: any) {
+    this.currentArea = e
+  }
 }
 </script>
 <style scoped>

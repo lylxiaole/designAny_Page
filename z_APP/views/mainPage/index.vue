@@ -56,9 +56,7 @@ export default class Index extends PageBase {
   }
   // ***************底部Tab*********************************************
   private active: number = 0
-  private onTabChange(index: number) {
-    window.console.log('onTabChange:', this.active)
-  }
+  private onTabChange(index: number) {}
 }
 </script>
 <style scoped>
