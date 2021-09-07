@@ -1,13 +1,22 @@
 <template>
   <div style="height:100%;width:100%">
     <van-row class="headerCom">
-      <van-row>
+      <van-row style="height:40%">
         <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
       </van-row>
-      <van-row>
-        <van-col span="8">计量表</van-col>
-        <van-col span="8">正常</van-col>
-        <van-col span="8">异常</van-col>
+      <van-row style="height:60%">
+        <van-col span="8" style="height:100%">
+          <div class="headerTitle">计量表</div>
+          <div class="headerTitle" style="margin-top:1rem">{{302}}</div>
+        </van-col>
+        <van-col span="8" style="height:100%">
+          <div class="headerTitle">正常</div>
+          <div class="headerTitle" style="margin-top:1rem">{{302}}</div>
+        </van-col>
+        <van-col span="8" style="height:100%">
+          <div class="headerTitle">异常</div>
+          <div class="headerTitle" style="margin-top:1rem">{{302}}</div>
+        </van-col>
       </van-row>
     </van-row>
     <div class="contentCom">
@@ -16,7 +25,6 @@
       <alarmInformation v-show="active===2" />
       <position v-show="active===3" />
       <equipmentAccount v-show="active===4" />
-
     </div>
     <van-tabbar class="bottomBar" v-model="active" @change="onTabChange">
       <van-tabbar-item icon="home-o">首页</van-tabbar-item>
@@ -69,5 +77,11 @@ export default class Index extends PageBase {
 .contentCom {
   height: calc(100% - 13rem);
   overflow-y: auto;
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+.headerTitle {
+  text-align: center;
 }
 </style>

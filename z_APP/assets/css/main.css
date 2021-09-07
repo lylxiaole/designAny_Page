@@ -14,10 +14,7 @@ body,
 
 body {
   font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'microsoft yahei', arial, STHeiTi, sans-serif;
-}
-
-a {
-  text-decoration: none;
+  background-color: #cdcdcd;
 }
 
 .content-box {
@@ -173,4 +170,15 @@ a {
 
 .v-note-wrapper .v-note-panel {
   min-height: 500px;
+}
+
+.van-cell__title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.middleAlign {
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
