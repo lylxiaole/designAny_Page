@@ -155,4 +155,15 @@ export default class Index extends PageBase {
     height: 2.2rem !important;
   }
 }
+
+/deep/ .van-dropdown-item {
+  .van-popup {
+    margin: 0rem 0.5rem !important;
+    width: calc(100% - 1rem);
+    .van-cell__title {
+      font-size: 0.6rem !important;
+      font-weight: 400 !important;
+    }
+  }
+}
 </style>
