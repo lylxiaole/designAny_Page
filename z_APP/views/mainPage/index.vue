@@ -2,7 +2,9 @@
   <div style="height:100%;width:100%">
     <van-row class="headerCom">
       <van-row style="height:40%">
-        <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+        <div style="height:100%;width:100%;text-align:left" class="middleAlign">
+          <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg" style="margin-left:3rem" />
+        </div>
       </van-row>
       <van-row style="height:60%">
         <van-col span="8" style="height:100%">
@@ -70,6 +72,8 @@ export default class Index extends PageBase {
 <style scoped>
 .headerCom {
   height: 8rem;
+  background-color: #738fff;
+  color: white;
 }
 .bottomBar {
   height: 5rem;
