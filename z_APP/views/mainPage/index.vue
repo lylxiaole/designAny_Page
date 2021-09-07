@@ -13,9 +13,10 @@
     <div class="contentCom">
       <firstPage v-show="active===0" />
       <flowmeter v-show="active===1" />
-      <position v-show="active===2" />
-      <equipmentAccount v-show="active===3" />
-      <alarmInformation v-show="active===4" />
+      <alarmInformation v-show="active===2" />
+      <position v-show="active===3" />
+      <equipmentAccount v-show="active===4" />
+
     </div>
     <van-tabbar class="bottomBar" v-model="active" @change="onTabChange">
       <van-tabbar-item icon="home-o">首页</van-tabbar-item>

@@ -127,8 +127,8 @@ export default class Index extends PageBase {
 </script>
 <style scoped>
 .jiliangCard {
-  height: 10rem;
+  height: 6rem;
   box-sizing: border-box;
-  margin: 1rem;
+  margin: 0.3rem;
 }
 </style>
