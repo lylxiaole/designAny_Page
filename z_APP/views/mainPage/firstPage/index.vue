@@ -108,10 +108,10 @@
       <template #label>
         <van-grid :column-num="2">
           <van-grid-item>
-            <equipment></equipment>
+            <equipment :cardInfo="{}"></equipment>
           </van-grid-item>
           <van-grid-item>
-            <equipment></equipment>
+            <equipment :cardInfo="{}"></equipment>
           </van-grid-item>
         </van-grid>
       </template>
@@ -157,11 +157,11 @@ export default class Index extends PageBase {
     vertical-align: middle;
     text-align: center;
   }
-  .van-hairline--top::after {
-    border-top-width: 0px !important;
-  }
-  .van-grid-item__content::after {
-    border: 0px !important;
-  }
+}
+.van-hairline--top::after {
+  border-top-width: 0px !important;
+}
+.van-grid-item__content::after {
+  border: 0px !important;
 }
 </style>

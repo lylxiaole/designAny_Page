@@ -5135,6 +5135,14 @@
     "jsbn" "~0.1.0"
     "safer-buffer" "^2.1.0"
 
+"echarts@^5.2.0":
+  "integrity" "sha512-7CrCKGRjFdpLIJ/Yt1gpHeqs5PiCem2GHPdWZPwKl7WSYeZu0Qzm1bcCFe9/b4dfVaL1zlY4JmdzaVwKksVeqg=="
+  "resolved" "https://registry.npmjs.org/echarts/-/echarts-5.2.0.tgz"
+  "version" "5.2.0"
+  dependencies:
+    "tslib" "2.3.0"
+    "zrender" "5.2.0"
+
 "editorconfig@^0.15.3":
   "integrity" "sha512-M9wIMFx96vq0R4F+gRpY3o2exzb8hEj/n9S8unZtHSvYjibBp/iMufSzvmOcV/laG0ZtuTVGtiJggPOSW2r93g=="
   "resolved" "https://registry.npmjs.org/editorconfig/-/editorconfig-0.15.3.tgz"
@@ -12660,6 +12668,11 @@
   "resolved" "https://registry.nlark.com/tslib/download/tslib-2.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.1.0.tgz"
   "version" "2.1.0"
 
+"tslib@2.3.0":
+  "integrity" "sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg=="
+  "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.0.tgz"
+  "version" "2.3.0"
+
 "tslint@^5.16.0":
   "integrity" "sha1-5AHortoBUrxE3QfmFANPP4DGe30="
   "resolved" "https://registry.npm.taobao.org/tslint/download/tslint-5.20.1.tgz"
@@ -13720,3 +13733,10 @@
     "is-ci" "^1.0.10"
     "normalize-path" "^1.0.0"
     "strip-indent" "^2.0.0"
+
+"zrender@5.2.0":
+  "integrity" "sha512-87v3gvB0lcWy48ObA/DwrhQ95ADMMRhECVrXmHDFCBNvbxHFfEDZtrZh4VmVjLAeFAjimY4PyZ65rbLCivdszA=="
+  "resolved" "https://registry.npmjs.org/zrender/-/zrender-5.2.0.tgz"
+  "version" "5.2.0"
+  dependencies:
+    "tslib" "2.3.0"
