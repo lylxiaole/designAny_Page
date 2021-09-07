@@ -1,42 +1,39 @@
 <template>
   <div>
     <van-row>
-      <van-col :span="12">
-        <van-field v-model="end_time" placeholder="选择时间" readonly="readonly" @click="showPopup = true" />
-      </van-col>
-      <van-col :span="12">
-
-      </van-col>
+      <van-dropdown-menu>
+        <van-dropdown-item v-model="chooseTime" :options="timeList" @change="chooseTimeChanged" />
+        <van-dropdown-item v-model="chooseStatus" :options="statusList" @change="chooseStatusChanged" />
+      </van-dropdown-menu>
     </van-row>
-    <!-- ****************************************************************** -->
-    <van-popup v-model="showPopup" label="离开时间" position="bottom" :overlay="true">
-      <van-datetime-picker type="date" v-model="currentDate_end" @cancel="onCancelChooseTime" @confirm="onSureChooseTime" />
-    </van-popup>
-
+    <van-cell title="设备维保信息">
+      <template #label>
+        <van-list>
+          <maintenanceCard v-for="item in list" :key="item" :cardInfo="item" />
+        </van-list>
+      </template>
+    </van-cell>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
+import maintenanceCard from './maintenanceCard.vue'
 import moment from 'moment'
 import { parseTime } from '@src/utils'
-@Component
+@Component({ components: { maintenanceCard: maintenanceCard } })
 export default class Index extends PageBase {
-  private showPopup: boolean = false
-  private list: any[] = []
-
   // *******************时间选择****************************************************
-  private end_time: string = ''
-  private currentDate_end: Date = null
-  private onCancelChooseTime(e: any) {
-    this.showPopup = false
-  }
-  private onSureChooseTime(e: any) {
-    this.showPopup = false
-    this.end_time = moment(this.currentDate_end).format('LL')
-    window.console.log('onSureChooseTime:', this.end_time)
-  }
+  private chooseTime: number = 0
+  private timeList: any[] = [{ text: '2021-08-09', value: 0 }, { text: '2021-07-09', value: 1 }, { text: '2021-06-09', value: 2 }]
+  private chooseTimeChanged(e: any) {}
+  // *******************状态选择****************************************************
+  private chooseStatus: number = 0
+  private statusList: any[] = [{ text: '全部', value: 0 }, { text: '未开始', value: 1 }, { text: '已结束', value: 2 }]
+  private chooseStatusChanged(e: any) {}
+  // *******************状态选择****************************************************
+  private list: any[] = []
 }
 </script>
 <style>
