@@ -5,7 +5,6 @@
         <van-field v-model="end_time" placeholder="选择时间" readonly="readonly" @click="showTimePopup = true" />
       </van-col>
       <van-col :span="12">
-
       </van-col>
     </van-row>
     <!-- ***************时间选择*************************************************** -->

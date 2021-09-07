@@ -2,18 +2,20 @@
   <div>
     <van-cell title="报警信息">
       <template #label>
-        <div style="width:100%;height:20rem" id="alarmChart"></div>
+        <div style="width:100%;height:15rem;display:flex" id="alarmChart"></div>
       </template>
     </van-cell>
     <van-cell title="最近报警信息">
       <template #right-icon>
-        <div class="moreBtn">
-          <span>更多</span>
+        <div class="moreBtn" @click="showMachinesPopup=true">
+          <span>{{currentMachine}}</span>
           <van-icon name="arrow" />
         </div>
       </template>
       <template #label>
-        <alarmInfoCard :cardInfo="nearestOne"></alarmInfoCard>
+        <div>
+          <alarmInfoCard :cardInfo="nearestOne"></alarmInfoCard>
+        </div>
       </template>
     </van-cell>
     <van-cell title="最近报警信息">
@@ -23,6 +25,10 @@
         </van-list>
       </template>
     </van-cell>
+    <!-- ************************************************** -->
+    <van-popup v-model="showMachinesPopup" position="bottom" :overlay="true">
+      <van-picker show-toolbar :columns="machineList" @confirm="onSureChooseMachine" @cancel="onCancelChooseMachine" />
+    </van-popup>
   </div>
 </template>
 
@@ -30,40 +36,83 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import alarmInfoCard from './alarmInfoCard.vue'
-
 import * as echarts from 'echarts'
-// 引入柱状图图表，图表后缀都为 Chart
-import { BarChart } from 'echarts/charts'
-// 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
-import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components'
-// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import { CanvasRenderer } from 'echarts/renderers'
-// 注册必须的组件
-echarts.use([TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer] as any)
-
+import resizer from 'element-resize-detector'
 @Component({ components: { alarmInfoCard: alarmInfoCard } })
 export default class Index extends PageBase {
   private nearestOne: any = {}
   private nearestList: any[] = []
   private mychart: any = null
+  private currentResizer: any = null
   mounted() {
     let renderArea = $(this.$el).find('#alarmChart')
     this.mychart = echarts.init(renderArea[0])
+
     this.mychart.setOption({
-      xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
       },
-      yAxis: {
-        type: 'value'
+      calculable: true,
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        width: '100%',
+        containLabel: true
       },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: 'bar'
+          name: '直接访问',
+          type: 'bar',
+          barWidth: '60%',
+          data: [10, 52, 200, 334, 390, 330, 220]
         }
       ]
     })
+
+    this.listenChartDomSize()
+  }
+  beforeDestroy() {
+    this.unlisenDomSize()
+  }
+  // *********监听尺寸变化 ***************************************
+  listenChartDomSize() {
+    this.currentResizer = resizer()
+    this.currentResizer.listenTo($(this.$el).find('#alarmChart'), (element) => {
+      this.mychart.resize()
+    })
+  }
+  unlisenDomSize() {
+    this.currentResizer.removeAllListeners($(this.$el).find('#alarmChart'))
+  }
+  // *****************选择设备*******************************************************
+  private showMachinesPopup: boolean = false
+  private machineList: any[] = ['TCL-1001', 'TCL-1002', 'TCL-1003']
+  private currentMachine = 'TCL-1001'
+  private onCancelChooseMachine(e: any) {
+    this.showMachinesPopup = false
+  }
+  private onSureChooseMachine(e: any) {
+    this.showMachinesPopup = false
+    this.currentMachine = e
   }
 }
 </script>
