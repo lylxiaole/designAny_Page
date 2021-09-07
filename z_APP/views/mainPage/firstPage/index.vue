@@ -116,7 +116,7 @@
         </div>
       </template>
       <template #label>
-        <van-grid :column-num="2">
+        <van-grid :column-num="2" :border="false">
           <van-grid-item class="firstGridItem">
             <equipment :cardInfo="{}"></equipment>
           </van-grid-item>
@@ -168,14 +168,8 @@ export default class Index extends PageBase {
     text-align: center;
   }
 }
-.van-hairline--top::after {
-  border-top-width: 0px !important;
-}
-/deep/ .van-grid-item__content::after {
-  border-width: 0px !important;
-}
 
-/deep/ .firstGridItem .van-grid-item__content::after {
-  border-width: 0px 1px 0px 0px !important;
+/deep/ .firstGridItem .van-grid-item__content {
+  border-right: 1px solid #808080 !important;
 }
 </style>

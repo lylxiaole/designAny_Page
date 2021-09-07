@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-row>
-      <van-dropdown-menu>
+      <van-dropdown-menu active-color="#1989fa">
         <van-dropdown-item v-model="chooseTime" :options="timeList" @change="chooseTimeChanged" />
         <van-dropdown-item v-model="chooseStatus" :options="statusList" @change="chooseStatusChanged" />
       </van-dropdown-menu>
@@ -9,7 +9,7 @@
     <van-cell title="设备维保信息">
       <template #label>
         <van-list>
-          <maintenanceCard v-for="item in list" :key="item" :cardInfo="item" />
+          <maintenanceCard v-for="item in list" :key="item" :cardInfo="item" style="margin-top:0.3rem;border-top: 1px solid #808080;color:#313131" />
         </van-list>
       </template>
     </van-cell>
@@ -33,8 +33,51 @@ export default class Index extends PageBase {
   private statusList: any[] = [{ text: '全部', value: 0 }, { text: '未开始', value: 1 }, { text: '已结束', value: 2 }]
   private chooseStatusChanged(e: any) {}
   // *******************状态选择****************************************************
-  private list: any[] = []
+  private list: any[] = [
+    {
+      code: 'HT-4009',
+      status: '未开始',
+      result: '已结束',
+      desc: '维保到期xxxxxxxxxxxx',
+      startTime: '08-18 12:00:00',
+      endTime: '08-19 12:00:00'
+    },
+    {
+      code: 'HT-4009',
+      status: '未开始',
+      result: '已结束',
+      desc: '维保到期xxxxxxxxxxxx',
+      startTime: '08-18 12:00:00',
+      endTime: '08-19 12:00:00'
+    },
+    {
+      code: 'HT-4009',
+      status: '未开始',
+      result: '已结束',
+      desc: '维保到期xxxxxxxxxxxx',
+      startTime: '08-18 12:00:00',
+      endTime: '08-19 12:00:00'
+    },
+    {
+      code: 'HT-4009',
+      status: '未开始',
+      result: '已结束',
+      desc: '维保到期xxxxxxxxxxxx',
+      startTime: '08-18 12:00:00',
+      endTime: '08-19 12:00:00'
+    }
+  ]
 }
 </script>
-<style>
+<style lang="less" scoped>
+/deep/ .van-dropdown-item {
+  .van-popup {
+    margin: 0rem 0.5rem !important;
+    width: calc(100% - 1rem);
+    .van-cell__title {
+      font-size: 0.6rem !important;
+      font-weight: 400 !important;
+    }
+  }
+}
 </style>

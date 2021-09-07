@@ -45,50 +45,52 @@ export default class Index extends PageBase {
   private mychart: any = null
   private currentResizer: any = null
   mounted() {
-    let renderArea = $(this.$el).find('#alarmChart')
-    this.mychart = echarts.init(renderArea[0])
+    this.$nextTick(() => {
+      let renderArea = $(this.$el).find('#alarmChart')
+      this.mychart = echarts.init(renderArea[0])
 
-    this.mychart.setOption({
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-        }
-      },
-      calculable: true,
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        width: '100%',
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          axisTick: {
-            alignWithLabel: true
+      this.mychart.setOption({
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
           }
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
-      series: [
-        {
-          name: '直接访问',
-          type: 'bar',
-          barWidth: '60%',
-          data: [10, 52, 200, 334, 390, 330, 220]
-        }
-      ]
-    })
+        },
+        calculable: true,
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          width: '100%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            axisTick: {
+              alignWithLabel: true
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: '直接访问',
+            type: 'bar',
+            barWidth: '60%',
+            data: [10, 52, 200, 334, 390, 330, 220]
+          }
+        ]
+      })
 
-    this.listenChartDomSize()
+      this.listenChartDomSize()
+    })
   }
   beforeDestroy() {
     this.unlisenDomSize()

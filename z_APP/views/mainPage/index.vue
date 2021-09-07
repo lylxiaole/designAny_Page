@@ -1,21 +1,22 @@
 <template>
   <div style="height:100%;width:100%">
     <van-row class="headerCom">
-      <van-row style="height:40%">
-        <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg" style="margin:auto 0" />
+      <van-row style="height:40%;display: table;">
+        <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          style="display: table-cell;vertical-align: middle;padding-left:1.5rem" />
       </van-row>
-      <van-row style="height:60%">
-        <van-col span="8" style="height:100%">
+      <van-row style="height:60%;box-sizing:border-box;padding-bottom:1rem">
+        <van-col span="8" style="height:100%;border-right:1px solid #fff;padding-top:0.5rem">
           <div class="headerTitle">计量表</div>
-          <div class="headerTitle" style="margin-top:1rem">{{302}}</div>
+          <div class="headerTitle" style="margin-top:0.3rem">{{302}}</div>
         </van-col>
-        <van-col span="8" style="height:100%">
+        <van-col span="8" style="height:100%;border-right:1px solid #fff;padding-top:0.5rem">
           <div class="headerTitle">正常</div>
-          <div class="headerTitle" style="margin-top:1rem">{{302}}</div>
+          <div class="headerTitle" style="margin-top:0.3rem">{{302}}</div>
         </van-col>
-        <van-col span="8" style="height:100%">
+        <van-col span="8" style="height:100%;padding-top:0.5rem">
           <div class="headerTitle">异常</div>
-          <div class="headerTitle" style="margin-top:1rem">{{302}}</div>
+          <div class="headerTitle" style="margin-top:0.3rem">{{302}}</div>
         </van-col>
       </van-row>
     </van-row>

@@ -14,7 +14,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '我的应用'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ './views/mainPage/index.vue')
+        component: () => import('./views/mainPage/index.vue')
       }
     ]
   }
