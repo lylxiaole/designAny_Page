@@ -184,7 +184,6 @@ export default class Index extends PageBase {
     formData.append('action', 'getWranInfo')
     formData.append('rq', getDateStr(new Date()))
     let res = await jkzl(formData)
-    window.console.log('getWranInfo:', res)
     this.alarmInfoList = []
     if (!res) {
       return
@@ -214,7 +213,6 @@ export default class Index extends PageBase {
     formData.append('action', 'getWBJL')
     formData.append('rq', getDateStr(new Date()))
     let res = await jkzl(formData)
-    window.console.log('getWBJL:', res)
     if (!res) {
       this.WBPlanData = {}
       return
@@ -239,7 +237,6 @@ export default class Index extends PageBase {
     formData.append('action', 'getXJJL')
     formData.append('rq', getDateStr(new Date()))
     let res = await jkzl(formData)
-    window.console.log('getXJJL:', res)
     if (!res) {
       this.XJPlanData = {}
       return

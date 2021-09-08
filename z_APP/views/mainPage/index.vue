@@ -90,7 +90,6 @@ export default class Index extends PageBase {
   }
   // ***************底部Tab*********************************************
   private get active(): number {
-    window.console.log('active:', this.$store.state)
     return this.$store.state.app.bottomBarActive
   }
   private set active(val: number) {

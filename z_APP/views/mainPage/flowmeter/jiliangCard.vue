@@ -1,5 +1,5 @@
 <template>
-  <van-row style="border-radius:0.2rem;">
+  <van-row style="border-radius:0.2rem;" @click="onCardClick">
     <!-- *******左侧******************** -->
     <van-col :span="6"
       style="background-color:red;height:100%;color:white;padding:0.3rem 0.4rem;border-top-left-radius: 0.2rem 0.2rem;border-bottom-left-radius: 0.2rem 0.2rem;">
@@ -41,6 +41,9 @@ export default class Index extends PageBase {
 
   @Prop({ default: {} })
   cardInfo: any
+
+  @Emit('onCardClick')
+  private onCardClick() {}
 }
 </script>
 <style>

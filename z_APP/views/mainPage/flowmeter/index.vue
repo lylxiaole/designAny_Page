@@ -11,7 +11,7 @@
       </van-col>
     </van-row>
     <van-list style="height:calc(100% - 2.3rem);width:100%">
-      <jiliangCard class="jiliangCard" v-for="item in list" :key="item" :cardInfo="item" @click="onClickCard" />
+      <jiliangCard class="jiliangCard" v-for="item in list" :key="item.jlbid" :cardInfo="item" @onCardClick="onClickCard" />
     </van-list>
   </div>
 </template>
@@ -20,12 +20,44 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import jiliangCard from './jiliangCard.vue'
+import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+
 @Component({
   components: {
     jiliangCard: jiliangCard
   }
 })
 export default class Index extends PageBase {
+  mounted() {
+    this.getJlbTagInfo()
+  }
+  // **********模糊搜索条件*****************************************
+  private flowmeterList: any[] = []
+  private async getJlbTagInfo() {
+    var formData = new FormData()
+    formData.append('action', 'getJlbTagInfo')
+    let res = await jkzl(formData)
+    this.flowmeterList = []
+    if (!res) {
+      return
+    }
+    window.console.log('res:', res)
+    for (let index = 0; index < res.length; index++) {
+      const element = res[index]
+      this.flowmeterList.push({
+        jlbid: element.jlbid,
+        temp: element.dataVals.wd + '℃',
+        instantaneousFlow: element.dataVals.sjllbl + 'L',
+        density: element.dataVals.md,
+        cumulativeFlow: element.dataVals.ljll + 'L'
+      })
+    }
+    this.list = this.flowmeterList
+  }
+  private onClickCard() {
+    this.$router.push({ name: 'flowmeterDetail' })
+  }
+  // **********模糊搜索条件*****************************************
   private list: any[] = [
     {
       temp: '30C',
@@ -130,7 +162,6 @@ export default class Index extends PageBase {
       cumulativeFlow: '20000L'
     }
   ]
-  // **********模糊搜索条件*****************************************
   private searchStr: string = '模糊搜索'
   // ******************区域筛选条件***********************************
   private currentArea: number = 0
@@ -139,9 +170,6 @@ export default class Index extends PageBase {
     this.currentArea = e
   }
   // *******************************************************
-  private onClickCard() {
-    this.$router.push({ name: 'flowmeterDetail' })
-  }
 }
 </script>
 <style lang="less" scoped>
