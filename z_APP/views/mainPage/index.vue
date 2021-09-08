@@ -28,11 +28,11 @@
       <equipmentAccount v-show="active===4" />
     </div>
     <van-tabbar class="bottomBar" v-model="active" @change="onTabChange">
-      <van-tabbar-item icon="home-o">首页</van-tabbar-item>
-      <van-tabbar-item icon="search">流量计</van-tabbar-item>
-      <van-tabbar-item icon="friends-o">报警信息</van-tabbar-item>
-      <van-tabbar-item icon="setting-o">位置</van-tabbar-item>
-      <van-tabbar-item icon="setting-o">设备台账</van-tabbar-item>
+      <van-tabbar-item :icon="firstPageBarIcon_normal">首页</van-tabbar-item>
+      <van-tabbar-item :icon="flowmeterBarIcon_normal">流量计</van-tabbar-item>
+      <van-tabbar-item :icon="alarmInfoBarIcon_normal">报警信息</van-tabbar-item>
+      <van-tabbar-item :icon="positionBarIcon_normal">位置</van-tabbar-item>
+      <van-tabbar-item :icon="equipmentBarIcon_normal">设备台账</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -45,6 +45,13 @@ import position from './position/index.vue'
 import equipmentAccount from './equipmentAccount/index.vue'
 import alarmInformation from './alarmInformation/index.vue'
 import PageBase from '@src/views/PageBase'
+// *****************************************************************
+const alarmInfoBarIcon_normal = require('../../assets/img/alarmInfoBarIcon.png')
+const equipmentBarIcon_normal = require('../../assets/img/equipmentBarIcon.png')
+const firstPageBarIcon_normal = require('../../assets/img/firstPageBarIcon.png')
+const flowmeterBarIcon_normal = require('../../assets/img/flowmeterBarIcon.png')
+const positionBarIcon_normal = require('../../assets/img/positionBarIcon.png')
+// *****************************************************************
 
 @Component({
   components: {
@@ -56,6 +63,14 @@ import PageBase from '@src/views/PageBase'
   }
 })
 export default class Index extends PageBase {
+  private alarmInfoBarIcon_normal: any = alarmInfoBarIcon_normal
+  private equipmentBarIcon_normal: any = equipmentBarIcon_normal
+  private firstPageBarIcon_normal: any = firstPageBarIcon_normal
+  private flowmeterBarIcon_normal: any = flowmeterBarIcon_normal
+  private positionBarIcon_normal: any = positionBarIcon_normal
+
+  // ********************************************************************************
+
   private get showLeftArrow() {
     return true
   }

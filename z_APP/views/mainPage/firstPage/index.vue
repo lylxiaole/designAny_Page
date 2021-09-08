@@ -5,7 +5,7 @@
         <van-row>
           <van-col :span="6">
             <div class="middleAlign">
-              <van-image round width="3rem" height="3rem" alt="你好" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+              <van-image round width="3rem" height="3rem" :src="zhuangxieIcon" />
             </div>
             <div class="middleAlign">
               装卸作业区
@@ -13,7 +13,7 @@
           </van-col>
           <van-col :span="6">
             <div class="middleAlign">
-              <van-image round width="3rem" height="3rem" alt="你好" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+              <van-image round width="3rem" height="3rem" :src="youpinIcon" />
             </div>
             <div class="middleAlign">
               油品作业区
@@ -21,7 +21,7 @@
           </van-col>
           <van-col :span="6">
             <div class="middleAlign">
-              <van-image round width="3rem" height="3rem" alt="你好" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+              <van-image round width="3rem" height="3rem" :src="matouIcon" />
             </div>
             <div class="middleAlign">
               码头作业区
@@ -29,7 +29,7 @@
           </van-col>
           <van-col :span="6">
             <div class="middleAlign">
-              <van-image round width="3rem" height="3rem" alt="你好" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+              <van-image round width="3rem" height="3rem" :src="chengpinIcon" />
             </div>
             <div class="middleAlign">
               成品作业区
@@ -134,6 +134,9 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import alarmInfoCard from '../alarmInformation/alarmInfoCard.vue'
 import equipment from './equipment.vue'
+const caijiStateNormal = require('../../../assets/img/caijiStateNormal.png')
+const caijiStateError = require('../../../assets/img/caijiStateError.png')
+
 @Component({
   components: {
     alarmInfoCard: alarmInfoCard,
@@ -141,6 +144,22 @@ import equipment from './equipment.vue'
   }
 })
 export default class Index extends PageBase {
+  // 装卸
+  private get zhuangxieIcon() {
+    return caijiStateNormal
+  }
+  // 油品
+  private get youpinIcon() {
+    return caijiStateNormal
+  }
+  // 码头
+  private get matouIcon() {
+    return caijiStateError
+  }
+  // 成品
+  private get chengpinIcon() {
+    return caijiStateError
+  }
   private currentRate: number = 100
   private alarmInfoList: any[] = []
 }
