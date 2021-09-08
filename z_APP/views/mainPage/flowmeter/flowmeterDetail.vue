@@ -2,20 +2,22 @@
   <div>
     <van-cell title="计量表实时信息">
       <template #label>
-        <van-tabs :before-change="beforeChange" id="mainTabs">
-          <van-tab title="温度">
-            <div style="width:100%;height:100%;" id="wenduChart"></div>
-          </van-tab>
-          <van-tab title="密度">
-            <div style="width:100%;height:100%;" id="miduChart"></div>
-          </van-tab>
-          <van-tab title="瞬间流量">
-            <div style="width:100%;height:100%;" id="shunjianChart"></div>
-          </van-tab>
-          <van-tab title="累计流量">
-            <div style="width:100%;height:100%;" id="leijiChart"></div>
-          </van-tab>
-        </van-tabs>
+        <div style="height:12rem">
+          <van-tabs style="height:100%" :before-change="beforeChange" id="mainTabs" :swipeable="true" :lazy-render="false">
+            <van-tab title="温度">
+              <div style="width:100%;height:calc(100% - 44px);" id="wenduChart"></div>
+            </van-tab>
+            <van-tab title="密度">
+              <div style="width:100%;height:calc(100% - 44px);" id="miduChart"></div>
+            </van-tab>
+            <van-tab title="瞬间流量">
+              <div style="width:100%;height:calc(100% - 44px);" id="shunjianChart"></div>
+            </van-tab>
+            <van-tab title="累计流量">
+              <div style="width:100%;height:calc(100% - 44px);" id="leijiChart"></div>
+            </van-tab>
+          </van-tabs>
+        </div>
       </template>
     </van-cell>
     <van-list>
@@ -80,6 +82,7 @@ export default class Index extends PageBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
+        height: '100%',
         width: '100%',
         containLabel: true
       },
