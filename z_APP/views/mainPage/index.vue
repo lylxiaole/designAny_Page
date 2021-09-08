@@ -73,7 +73,6 @@ export default class Index extends PageBase {
   mounted() {
     this.getFlowmeterStatus()
   }
-
   // ***********计量表状态*******************************************************
   private flowmeterStatus: any = {}
   private async getFlowmeterStatus() {
@@ -82,17 +81,21 @@ export default class Index extends PageBase {
     let res = await jlbjk(formData)
     this.flowmeterStatus = res[0]
   }
-
   // ***********************************************************************************
   private get showLeftArrow() {
     return true
   }
-
   private onClickLeft() {
     this.$router.back()
   }
   // ***************底部Tab*********************************************
-  private active: number = 0
+  private get active(): number {
+    window.console.log('active:', this.$store.state)
+    return this.$store.state.app.bottomBarActive
+  }
+  private set active(val: number) {
+    this.$store.commit('app/changeBottomBarActive', val)
+  }
   private onTabChange(index: number) {}
 }
 </script>

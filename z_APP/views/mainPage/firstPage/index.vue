@@ -56,7 +56,7 @@
     <!-- **************************************************************************** -->
     <van-cell style="margin-top:0.5rem" title="最近报警信息">
       <template #right-icon>
-        <div class="moreBtn">
+        <div class="moreBtn" @click="leadToAlarmInfo">
           <span>更多</span>
           <van-icon name="arrow" />
         </div>
@@ -68,7 +68,7 @@
     <!-- **************************************************************************** -->
     <van-cell style="margin-top:0.5rem" title="维保/巡检计划">
       <template #right-icon>
-        <div class="moreBtn">
+        <div class="moreBtn" @click="leadToPlanInfo">
           <span>更多</span>
           <van-icon name="arrow" />
         </div>
@@ -112,7 +112,6 @@ export default class Index extends PageBase {
     this.getWBJL()
     this.getXJJL()
   }
-
   // ***********采集站状态*********************************************************************
   private collectionStatus: any[] = []
   // 装卸
@@ -204,6 +203,10 @@ export default class Index extends PageBase {
       })
     }
   }
+
+  private leadToAlarmInfo() {
+    this.$store.commit('app/changeBottomBarActive', 2)
+  }
   // ***********维保计划*********************************************************************
   private WBPlanData: any = {}
   private async getWBJL() {
@@ -225,6 +228,9 @@ export default class Index extends PageBase {
       result: res.data.wbjg,
       time: res.data.wbjssj
     }
+  }
+  private leadToPlanInfo() {
+    this.$store.commit('app/changeBottomBarActive', 4)
   }
   // ***********巡检计划*********************************************************************
   private XJPlanData: any = {}
