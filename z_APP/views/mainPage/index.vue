@@ -45,6 +45,7 @@ import position from './position/index.vue'
 import equipmentAccount from './equipmentAccount/index.vue'
 import alarmInformation from './alarmInformation/index.vue'
 import PageBase from '@src/views/PageBase'
+import { jkzl } from '../../serviceAPIs/service'
 // *****************************************************************
 const alarmInfoBarIcon_normal = require('../../assets/img/alarmInfoBarIcon.png')
 const equipmentBarIcon_normal = require('../../assets/img/equipmentBarIcon.png')
@@ -68,9 +69,22 @@ export default class Index extends PageBase {
   private firstPageBarIcon_normal: any = firstPageBarIcon_normal
   private flowmeterBarIcon_normal: any = flowmeterBarIcon_normal
   private positionBarIcon_normal: any = positionBarIcon_normal
-
   // ********************************************************************************
+  mounted() {
+    this.getTestData()
+  }
 
+  private async getTestData() {
+    try {
+      var formData = new FormData()
+      formData.append('action', 'getQyztHz')
+      let res = await jkzl(formData)
+      window.console.log('res:', res)
+    } catch (error) {
+      window.console.log('error:', error)
+    }
+  }
+  // ********************************************************************************
   private get showLeftArrow() {
     return true
   }
