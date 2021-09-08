@@ -21,11 +21,11 @@
       </van-row>
     </van-row>
     <div class="contentCom">
-      <firstPage v-show="active===0" />
-      <flowmeter v-show="active===1" />
-      <alarmInformation v-show="active===2" />
-      <position v-show="active===3" />
-      <equipmentAccount v-show="active===4" />
+      <firstPage v-if="active===0" />
+      <flowmeter v-if="active===1" />
+      <alarmInformation v-if="active===2" />
+      <position v-if="active===3" />
+      <equipmentAccount v-if="active===4" />
     </div>
     <van-tabbar class="bottomBar" v-model="active" @change="onTabChange">
       <van-tabbar-item :icon="firstPageBarIcon_normal">首页</van-tabbar-item>
