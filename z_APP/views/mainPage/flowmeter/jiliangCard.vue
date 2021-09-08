@@ -1,7 +1,8 @@
 <template>
-  <van-row>
+  <van-row style="border-radius:0.2rem;">
     <!-- *******左侧******************** -->
-    <van-col :span="6" style="background-color:red;height:100%;color:white;padding:0.3rem 0.4rem">
+    <van-col :span="6"
+      style="background-color:red;height:100%;color:white;padding:0.3rem 0.4rem;border-top-left-radius: 0.2rem 0.2rem;border-bottom-left-radius: 0.2rem 0.2rem;">
       <van-row style="height:40%">
         <div class="middleAlign" style="height:100%;width:100%">FT3007</div>
       </van-row>
@@ -10,7 +11,7 @@
       </van-row>
     </van-col>
     <!-- *********右侧********************************* -->
-    <van-col :span="18" style="padding:0.3rem 0.4rem;color:#808080">
+    <van-col :span="18" style="padding:0.3rem 0.4rem;color:#808080;">
       <van-row style="position:relative">
         <span style="float:left">温度:</span>
         <span style="float:right">{{cardInfo.temp}}</span>

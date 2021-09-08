@@ -11,7 +11,7 @@
       </van-col>
     </van-row>
     <van-list style="height:calc(100% - 2.3rem);width:100%">
-      <jiliangCard class="jiliangCard" v-for="item in list" :key="item" :cardInfo="item" />
+      <jiliangCard class="jiliangCard" v-for="item in list" :key="item" :cardInfo="item" @click="onClickCard" />
     </van-list>
   </div>
 </template>
@@ -137,6 +137,10 @@ export default class Index extends PageBase {
   private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
   private chooseAreaChanged(e: any) {
     this.currentArea = e
+  }
+  // *******************************************************
+  private onClickCard() {
+    this.$router.push({ name: 'flowmeterDetail' })
   }
 }
 </script>

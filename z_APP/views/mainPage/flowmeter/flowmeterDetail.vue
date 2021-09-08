@@ -1,0 +1,272 @@
+<template>
+  <div>
+    <van-cell title="计量表实时信息">
+      <template #label>
+        <van-tabs :before-change="beforeChange" id="mainTabs">
+          <van-tab title="温度">
+            <div style="width:100%;height:100%;" id="wenduChart"></div>
+          </van-tab>
+          <van-tab title="密度">
+            <div style="width:100%;height:100%;" id="miduChart"></div>
+          </van-tab>
+          <van-tab title="瞬间流量">
+            <div style="width:100%;height:100%;" id="shunjianChart"></div>
+          </van-tab>
+          <van-tab title="累计流量">
+            <div style="width:100%;height:100%;" id="leijiChart"></div>
+          </van-tab>
+        </van-tabs>
+      </template>
+    </van-cell>
+    <van-list>
+      <detailCard v-for="item in dataList" :key="item" :title="item" @click="onClickCard" />
+    </van-list>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import PageBase from '@src/views/PageBase'
+import detailCard from './detailCard.vue'
+import * as echarts from 'echarts'
+import resizer from 'element-resize-detector'
+@Component({ components: { detailCard: detailCard } })
+export default class Index extends PageBase {
+  mounted() {
+    this.drawCharts()
+  }
+  beforeDestroy() {
+    this.unlisenDomSize()
+  }
+  // *********画chart********************************************
+  private wenduChart: any = null
+  private miduChart: any = null
+  private shunjianChart: any = null
+  private leijiChart: any = null
+
+  private async drawCharts() {
+    await this.$nextTick()
+    let wenduRenderArea = $(this.$el).find('#wenduChart')
+    this.wenduChart = echarts.init(wenduRenderArea[0])
+
+    let miduRenderArea = $(this.$el).find('#miduChart')
+    this.miduChart = echarts.init(miduRenderArea[0])
+
+    let shunjianRenderArea = $(this.$el).find('#shunjianChart')
+    this.shunjianChart = echarts.init(shunjianRenderArea[0])
+
+    let leijiRenderArea = $(this.$el).find('#leijiChart')
+    this.leijiChart = echarts.init(leijiRenderArea[0])
+    // ************************************
+    this.setWenduOption()
+    this.setMiduOption()
+    this.setShunjianOption()
+    this.setLeijiOption()
+    // ************************************
+    this.listenChartDomSize()
+  }
+
+  private setWenduOption() {
+    this.wenduChart.setOption({
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      calculable: true,
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        width: '100%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: '直接访问',
+          type: 'bar',
+          barWidth: '60%',
+          data: [10, 52, 200, 334, 390, 330, 220]
+        }
+      ]
+    })
+  }
+  private setMiduOption() {
+    this.miduChart.setOption({
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      calculable: true,
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        width: '100%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: '直接访问',
+          type: 'bar',
+          barWidth: '60%',
+          data: [10, 52, 200, 334, 390, 330, 220]
+        }
+      ]
+    })
+  }
+  private setShunjianOption() {
+    this.shunjianChart.setOption({
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      calculable: true,
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        width: '100%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: '直接访问',
+          type: 'bar',
+          barWidth: '60%',
+          data: [10, 52, 200, 334, 390, 330, 220]
+        }
+      ]
+    })
+  }
+  private setLeijiOption() {
+    this.leijiChart.setOption({
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      calculable: true,
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        width: '100%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: '直接访问',
+          type: 'bar',
+          barWidth: '60%',
+          data: [10, 52, 200, 334, 390, 330, 220]
+        }
+      ]
+    })
+  }
+  // *********监听尺寸变化 ***************************************
+  private currentResizer: any = null
+
+  listenChartDomSize() {
+    this.currentResizer = resizer()
+    this.currentResizer.listenTo($(this.$el).find('#mainTabs'), (element) => {
+      this.wenduChart.resize()
+      this.miduChart.resize()
+      this.shunjianChart.resize()
+      this.leijiChart.resize()
+    })
+  }
+  unlisenDomSize() {
+    this.currentResizer.removeAllListeners($(this.$el).find('#mainTabs'))
+  }
+  // *****************详细信息列表*******************************
+  private dataList: any[] = []
+  private onClickCard() {
+    this.$router.push({ name: 'flowmeterDetailChart' })
+  }
+}
+</script>
+<style  lang="less" scoped>
+.moreBtn {
+  display: flex;
+  vertical-align: middle;
+  text-align: center;
+  height: 1.5rem;
+  span {
+    line-height: 1.5rem;
+  }
+  i {
+    line-height: 1.5rem;
+  }
+  i:before {
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+</style>
