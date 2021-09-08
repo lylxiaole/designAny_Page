@@ -41,58 +41,16 @@
     <!-- **************************************************************************** -->
     <van-cell style="margin-top:0.5rem" title="物理区域">
       <template #label>
-        <van-row>
-          <van-col :span="8" style="padding:0.8rem">
+        <van-grid :column-num="3" :border="false">
+          <van-grid-item v-for="item in realLocationStatus" :key="item.QYMC">
             <div class="middleAlign">
-              <van-circle v-model="currentRate" :rate="30" :speed="100" text="30%" size="4rem" />
+              <van-circle :value="item.zclv" :rate="100" :speed="100" :text="item.zclvPersent" size="4rem" />
             </div>
             <div class="middleAlign">
-              装卸作业区(3)
+              {{item.QYMC}}
             </div>
-          </van-col>
-          <van-col :span="8" style="padding:0.8rem">
-            <div class="middleAlign">
-              <van-circle v-model="currentRate" :rate="30" :speed="100" text="30%" size="4rem" />
-            </div>
-            <div class="middleAlign">
-              装卸作业区(3)
-            </div>
-          </van-col>
-          <van-col :span="8" style="padding:0.8rem">
-            <div class="middleAlign">
-              <van-circle v-model="currentRate" :rate="30" :speed="100" text="30%" size="4rem" />
-            </div>
-            <div class="middleAlign">
-              装卸作业区(3)
-            </div>
-          </van-col>
-        </van-row>
-        <van-row>
-          <van-col :span="8" style="padding:0.8rem">
-            <div class="middleAlign">
-              <van-circle v-model="currentRate" :rate="30" :speed="100" text="30%" size="4rem" />
-            </div>
-            <div class="middleAlign">
-              装卸作业区(3)
-            </div>
-          </van-col>
-          <van-col :span="8" style="padding:0.8rem">
-            <div class="middleAlign">
-              <van-circle v-model="currentRate" :rate="30" :speed="100" text="30%" size="4rem" />
-            </div>
-            <div class="middleAlign">
-              装卸作业区(3)
-            </div>
-          </van-col>
-          <van-col :span="8" style="padding:0.8rem">
-            <div class="middleAlign">
-              <van-circle v-model="currentRate" :rate="30" :speed="100" text="30%" size="4rem" />
-            </div>
-            <div class="middleAlign">
-              装卸作业区(3)
-            </div>
-          </van-col>
-        </van-row>
+          </van-grid-item>
+        </van-grid>
       </template>
     </van-cell>
     <!-- **************************************************************************** -->
@@ -104,7 +62,7 @@
         </div>
       </template>
       <template #label>
-        <alarmInfoCard v-for="item in alarmInfoList" :key="item.key" :cardInfo="item" />
+        <alarmInfoCard v-for="item in alarmInfoList" :key="item.key" :cardInfo="item" style="margin-top:0.8rem" />
       </template>
     </van-cell>
     <!-- **************************************************************************** -->
@@ -118,10 +76,10 @@
       <template #label>
         <van-grid :column-num="2" :border="false">
           <van-grid-item class="firstGridItem">
-            <equipment :cardInfo="{}"></equipment>
+            <equipment :cardInfo="WBPlanData"></equipment>
           </van-grid-item>
           <van-grid-item>
-            <equipment :cardInfo="{}"></equipment>
+            <equipment :cardInfo="XJPlanData"></equipment>
           </van-grid-item>
         </van-grid>
       </template>
@@ -134,6 +92,9 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import alarmInfoCard from '../alarmInformation/alarmInfoCard.vue'
 import equipment from './equipment.vue'
+import moment from 'moment'
+import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+import { getDateStr } from '@src/utils/dateUtils'
 const caijiStateNormal = require('../../../assets/img/caijiStateNormal.png')
 const caijiStateError = require('../../../assets/img/caijiStateError.png')
 
@@ -144,24 +105,149 @@ const caijiStateError = require('../../../assets/img/caijiStateError.png')
   }
 })
 export default class Index extends PageBase {
+  mounted() {
+    this.getCollectionStatus()
+    this.getQyztHz()
+    this.getWranInfo()
+    this.getWBJL()
+    this.getXJJL()
+  }
+
+  // ***********采集站状态*********************************************************************
+  private collectionStatus: any[] = []
   // 装卸
   private get zhuangxieIcon() {
-    return caijiStateNormal
+    let find = this.collectionStatus.find((o) => o.sjwz === '装卸作业区')
+    if (find && find.ycbs === '0') {
+      return caijiStateNormal
+    } else {
+      return caijiStateError
+    }
   }
   // 油品
   private get youpinIcon() {
-    return caijiStateNormal
+    let find = this.collectionStatus.find((o) => o.sjwz === '油品作业区')
+    if (find && find.ycbs === '0') {
+      return caijiStateNormal
+    } else {
+      return caijiStateError
+    }
   }
   // 码头
   private get matouIcon() {
-    return caijiStateError
+    let find = this.collectionStatus.find((o) => o.sjwz === '码头作业区')
+    if (find && find.ycbs === '0') {
+      return caijiStateNormal
+    } else {
+      return caijiStateError
+    }
   }
   // 成品
   private get chengpinIcon() {
-    return caijiStateError
+    let find = this.collectionStatus.find((o) => o.sjwz === '成品作业区')
+    if (find && find.ycbs === '0') {
+      return caijiStateNormal
+    } else {
+      return caijiStateError
+    }
   }
-  private currentRate: number = 100
+  private async getCollectionStatus() {
+    var formData = new FormData()
+    formData.append('action', 'getXwjsczt')
+    let res = await jkzl(formData)
+    if (!res) {
+      this.collectionStatus = []
+      return
+    }
+    this.collectionStatus = res
+  }
+  // ***********物理区域查询*********************************************************************
+  private realLocationStatus: any[] = []
+  private async getQyztHz() {
+    var formData = new FormData()
+    formData.append('action', 'getQyztHz')
+    let res = await jkzl(formData)
+    if (!res) {
+      this.realLocationStatus = []
+      return
+    }
+    for (let index = 0; index < res.length; index++) {
+      let element = res[index]
+      element.zclv = parseFloat(element.zclv)
+      element.zclvPersent = element.zclv + '%'
+    }
+    this.realLocationStatus = res
+  }
+  // ***********报警信息查询*********************************************************************
   private alarmInfoList: any[] = []
+  private async getWranInfo() {
+    var formData = new FormData()
+    formData.append('action', 'getWranInfo')
+    formData.append('rq', getDateStr(new Date()))
+    let res = await jkzl(formData)
+    window.console.log('getWranInfo:', res)
+    this.alarmInfoList = []
+    if (!res) {
+      return
+    }
+
+    for (let index = 0; index < res.length; index++) {
+      const element = res[index]
+      let startTime = moment(element.KSSJ)
+      let endTime = moment(element.JSSJ)
+
+      this.alarmInfoList.push({
+        code: element.WEIHAO,
+        time: element.KSSJ,
+        desc: element.CWXXZW,
+        timeLength: endTime.diff(startTime, 'hour') + '小时'
+      })
+    }
+  }
+  // ***********维保计划*********************************************************************
+  private WBPlanData: any = {}
+  private async getWBJL() {
+    var formData = new FormData()
+    formData.append('action', 'getWBJL')
+    formData.append('rq', getDateStr(new Date()))
+    let res = await jkzl(formData)
+    window.console.log('getWBJL:', res)
+    if (!res) {
+      this.WBPlanData = {}
+      return
+    }
+    this.WBPlanData = {
+      type: '维保',
+      count: res.count,
+      desc: res.data.bz,
+      timeLength: res.data.yjwbsc + '分钟',
+      status: res.data.wbzt,
+      result: res.data.wbjg,
+      time: res.data.wbjssj
+    }
+  }
+  // ***********巡检计划*********************************************************************
+  private XJPlanData: any = {}
+  private async getXJJL() {
+    var formData = new FormData()
+    formData.append('action', 'getXJJL')
+    formData.append('rq', getDateStr(new Date()))
+    let res = await jkzl(formData)
+    window.console.log('getXJJL:', res)
+    if (!res) {
+      this.XJPlanData = {}
+      return
+    }
+    this.XJPlanData = {
+      type: '巡检',
+      count: res.count,
+      desc: res.data.bz,
+      timeLength: res.data.yjxjsc + '分钟',
+      status: res.data.xjzt,
+      result: res.data.xjjg,
+      time: res.data.xjjssj
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

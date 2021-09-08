@@ -8,15 +8,15 @@
       <van-row style="height:60%;box-sizing:border-box;padding-bottom:1rem">
         <van-col span="8" style="height:100%;border-right:1px solid #fff;padding-top:0.5rem">
           <div class="headerTitle">计量表</div>
-          <div class="headerTitle" style="margin-top:0.3rem">{{302}}</div>
+          <div class="headerTitle" style="margin-top:0.3rem">{{flowmeterStatus.zgs}}</div>
         </van-col>
         <van-col span="8" style="height:100%;border-right:1px solid #fff;padding-top:0.5rem">
           <div class="headerTitle">正常</div>
-          <div class="headerTitle" style="margin-top:0.3rem">{{302}}</div>
+          <div class="headerTitle" style="margin-top:0.3rem">{{flowmeterStatus.zcsl}}</div>
         </van-col>
         <van-col span="8" style="height:100%;padding-top:0.5rem">
           <div class="headerTitle">异常</div>
-          <div class="headerTitle" style="margin-top:0.3rem">{{302}}</div>
+          <div class="headerTitle" style="margin-top:0.3rem">{{flowmeterStatus.zgs-flowmeterStatus.zcsl}}</div>
         </van-col>
       </van-row>
     </van-row>
@@ -45,7 +45,7 @@ import position from './position/index.vue'
 import equipmentAccount from './equipmentAccount/index.vue'
 import alarmInformation from './alarmInformation/index.vue'
 import PageBase from '@src/views/PageBase'
-import { jkzl } from '../../serviceAPIs/service'
+import { jkzl, jlbjk } from '../../serviceAPIs/service'
 // *****************************************************************
 const alarmInfoBarIcon_normal = require('../../assets/img/alarmInfoBarIcon.png')
 const equipmentBarIcon_normal = require('../../assets/img/equipmentBarIcon.png')
@@ -71,20 +71,19 @@ export default class Index extends PageBase {
   private positionBarIcon_normal: any = positionBarIcon_normal
   // ********************************************************************************
   mounted() {
-    this.getTestData()
+    this.getFlowmeterStatus()
   }
 
-  private async getTestData() {
-    try {
-      var formData = new FormData()
-      formData.append('action', 'getQyztHz')
-      let res = await jkzl(formData)
-      window.console.log('res:', res)
-    } catch (error) {
-      window.console.log('error:', error)
-    }
+  // ***********计量表状态*******************************************************
+  private flowmeterStatus: any = {}
+  private async getFlowmeterStatus() {
+    var formData = new FormData()
+    formData.append('action', 'getJlbzthz')
+    let res = await jlbjk(formData)
+    this.flowmeterStatus = res[0]
   }
-  // ********************************************************************************
+
+  // ***********************************************************************************
   private get showLeftArrow() {
     return true
   }

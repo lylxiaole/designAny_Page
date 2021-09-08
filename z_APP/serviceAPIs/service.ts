@@ -11,11 +11,7 @@ const apiAddr = () => getConfigByName('apiAddr')
 export async function jlbjk(data: any): Promise<any> {
   let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
   const resp = await ajaxPost(url, data)
-  if (resp.result === true) {
-    return resp.rtnData
-  } else {
-    throw new Error(resp.rtnMessage)
-  }
+  return resp
 }
 
 /**
@@ -32,9 +28,5 @@ export async function jlbjk(data: any): Promise<any> {
 export async function jkzl(data: any): Promise<any> {
   let url = `${apiAddr()}/jkzl/jkzl.ashx`
   const resp = await ajaxPost(url, data)
-  if (resp.result === true) {
-    return resp.rtnData
-  } else {
-    throw new Error(resp.rtnMessage)
-  }
+  return resp
 }

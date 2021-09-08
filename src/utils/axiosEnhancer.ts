@@ -81,7 +81,7 @@ axiosInstance.interceptors.response.use(
     // Do something with response data
 
     // 后台接口做了处理,401时返回的也是200,需要在这里处理.
-    if (response.data.code === 401) {
+    if (response.data&&response.data.code === 401) {
       toLogin();
       return Promise.reject(new Error(response.data.message));
     }

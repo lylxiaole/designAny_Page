@@ -4,7 +4,7 @@
       <span>{{cardInfo.type}}数量:{{cardInfo.count}}条</span>
     </van-row>
     <van-row style="font-size:0.8rem;font-weight:400;color:#808080;margin-top:0.4rem">
-      <span>原因表明处{{cardInfo.desc}}</span>
+      <span>{{cardInfo.desc}}</span>
     </van-row>
     <van-row style="font-size:1.2rem;font-weight:600;color:#EF3131;margin-top:0.4rem">
       <span>{{cardInfo.timeLength}}</span>
