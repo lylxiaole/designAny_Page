@@ -9,7 +9,8 @@
     <van-cell title="设备维保信息">
       <template #label>
         <van-list>
-          <maintenanceCard v-for="item in list" :key="item" :cardInfo="item" style="margin-top:0.3rem;border-top: 1px solid #808080;color:#313131" />
+          <maintenanceCard v-for="item in list" :key="item.key" :cardInfo="item"
+            style="margin-top:0.3rem;border-top: 1px solid #808080;color:#313131" />
         </van-list>
       </template>
     </van-cell>
@@ -35,6 +36,7 @@ export default class Index extends PageBase {
   // *******************状态选择****************************************************
   private list: any[] = [
     {
+      key: 1,
       code: 'HT-4009',
       status: '未开始',
       result: '已结束',
@@ -43,6 +45,7 @@ export default class Index extends PageBase {
       endTime: '08-19 12:00:00'
     },
     {
+      key: 2,
       code: 'HT-4009',
       status: '未开始',
       result: '已结束',
@@ -51,6 +54,7 @@ export default class Index extends PageBase {
       endTime: '08-19 12:00:00'
     },
     {
+      key: 4,
       code: 'HT-4009',
       status: '未开始',
       result: '已结束',
@@ -59,6 +63,7 @@ export default class Index extends PageBase {
       endTime: '08-19 12:00:00'
     },
     {
+      key: 5,
       code: 'HT-4009',
       status: '未开始',
       result: '已结束',
