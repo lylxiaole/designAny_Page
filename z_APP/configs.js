@@ -1,0 +1,5 @@
+window.__globalConfig = {
+  projectName: 'app',
+  apiAddr: 'http://118.31.76.90:8580/ashx',
+  LOGINED_USER_SESSION: 'LOGINED_USER_SESSION'
+}

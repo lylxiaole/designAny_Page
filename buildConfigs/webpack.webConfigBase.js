@@ -328,7 +328,7 @@ module.exports = function initConifg(distDir, projectDir, templateFile, devPort)
           to: 'assets'
         },
         {
-          from: path.resolve(currentDir, `${projectDir}/configs.json`),
+          from: path.resolve(currentDir, `${projectDir}/configs.js`),
           to: `../${distDir}`
         }
       ]
