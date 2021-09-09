@@ -204,7 +204,7 @@ export default class Index extends PageBase {
   }
 
   private leadToAlarmInfo() {
-    this.$store.commit('app/changeBottomBarActive', 2)
+    this.$router.push({ path: '/index/alarmInformation' })
   }
   // ***********维保计划*********************************************************************
   private WBPlanData: any = {}
@@ -228,7 +228,7 @@ export default class Index extends PageBase {
     }
   }
   private leadToPlanInfo() {
-    this.$store.commit('app/changeBottomBarActive', 4)
+    this.$router.push({ path: '/index/equipmentAccount' })
   }
   // ***********巡检计划*********************************************************************
   private XJPlanData: any = {}

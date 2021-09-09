@@ -21,13 +21,13 @@
       </van-row>
     </van-row>
     <div class="contentCom">
-      <firstPage v-show="active===0" />
-      <flowmeter v-show="active===1" />
-      <alarmInformation v-show="active===2" />
-      <position v-show="active===3" />
-      <equipmentAccount v-show="active===4" />
+      <transition name="van-slide-top">
+        <keep-alive>
+          <router-view />
+        </keep-alive>
+      </transition>
     </div>
-    <van-tabbar class="bottomBar" v-model="active" @change="onTabChange">
+    <van-tabbar class="bottomBar" :value="active()" @change="onTabChange">
       <van-tabbar-item :icon="firstPageBarIcon_normal">首页</van-tabbar-item>
       <van-tabbar-item :icon="flowmeterBarIcon_normal">流量计</van-tabbar-item>
       <van-tabbar-item :icon="alarmInfoBarIcon_normal">报警信息</van-tabbar-item>
@@ -89,13 +89,41 @@ export default class Index extends PageBase {
     this.$router.back()
   }
   // ***************底部Tab*********************************************
-  private get active(): number {
-    return this.$store.state.app.bottomBarActive
+  private active(): number {
+    if (this.$router.currentRoute.path.indexOf('/index/firstPage') > -1) {
+      return 0
+    } else if (this.$router.currentRoute.path.indexOf('/index/flowmeter') > -1) {
+      return 1
+    } else if (this.$router.currentRoute.path.indexOf('/index/alarmInformation') > -1) {
+      return 2
+    } else if (this.$router.currentRoute.path.indexOf('/index/position') > -1) {
+      return 3
+    } else if (this.$router.currentRoute.path.indexOf('/index/equipmentAccount') > -1) {
+      return 4
+    }
   }
-  private set active(val: number) {
-    this.$store.commit('app/changeBottomBarActive', val)
+
+  private onTabChange(index: number) {
+    switch (index) {
+      case 0:
+        this.$router.push({ path: '/index/firstPage' })
+        break
+      case 1:
+        this.$router.push({ path: '/index/flowmeter' })
+        break
+      case 2:
+        this.$router.push({ path: '/index/alarmInformation' })
+        break
+      case 3:
+        this.$router.push({ path: '/index/position' })
+        break
+      case 4:
+        this.$router.push({ path: '/index/equipmentAccount' })
+        break
+      default:
+        break
+    }
   }
-  private onTabChange(index: number) {}
 }
 </script>
 <style scoped>
@@ -110,6 +138,7 @@ export default class Index extends PageBase {
 .contentCom {
   height: calc(100% - 13rem);
   overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   padding: 0.5rem;
 }

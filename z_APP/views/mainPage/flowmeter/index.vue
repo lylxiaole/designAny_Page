@@ -55,7 +55,7 @@ export default class Index extends PageBase {
     this.list = this.flowmeterList
   }
   private onClickCard() {
-    this.$router.push({ name: 'flowmeterDetail' })
+    this.$router.push({ path: '/index/flowmeterDetail' })
   }
   // **********模糊搜索条件*****************************************
   private list: any[] = [

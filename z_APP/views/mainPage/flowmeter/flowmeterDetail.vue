@@ -262,7 +262,7 @@ export default class Index extends PageBase {
   private async getDataList() {}
 
   private onClickCard() {
-    this.$router.push({ name: 'flowmeterDetailChart' })
+    this.$router.push({ path: '/index/flowmeterDetailChart' })
   }
 }
 </script>
