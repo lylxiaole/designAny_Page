@@ -3,7 +3,7 @@
     <van-cell title="计量表实时信息">
       <template #label>
         <div style="height:12rem">
-          <van-tabs style="height:100%" :before-change="beforeChange" id="mainTabs" :swipeable="true" :lazy-render="false">
+          <van-tabs style="height:100%" @rendered="tabrendered" id="mainTabs" :swipeable="true" :lazy-render="true">
             <van-tab title="温度">
               <div style="width:100%;height:calc(100% - 44px);" id="wenduChart"></div>
             </van-tab>
@@ -35,39 +35,63 @@ import resizer from 'element-resize-detector'
 @Component({ components: { detailCard: detailCard } })
 export default class Index extends PageBase {
   mounted() {
-    this.drawCharts()
+    this.listenChartDomSize()
+    this.getDataList()
   }
   beforeDestroy() {
     this.unlisenDomSize()
   }
-  // *********画chart********************************************
+  // *********监听尺寸变化 ***************************************
+  private currentResizer: any = null
+  listenChartDomSize() {
+    this.currentResizer = resizer()
+    this.currentResizer.listenTo($(this.$el).find('#mainTabs'), (element) => {
+      if (this.wenduChart) {
+        this.wenduChart.resize()
+      }
+      if (this.miduChart) {
+        this.miduChart.resize()
+      }
+      if (this.shunjianChart) {
+        this.shunjianChart.resize()
+      }
+      if (this.leijiChart) {
+        this.leijiChart.resize()
+      }
+    })
+  }
+  unlisenDomSize() {
+    this.currentResizer.removeAllListeners($(this.$el).find('#mainTabs'))
+  }
+  // *********延迟渲染,按需渲染echarts********************************************
   private wenduChart: any = null
   private miduChart: any = null
   private shunjianChart: any = null
   private leijiChart: any = null
-
-  private async drawCharts() {
+  private async tabrendered(name: string, title: string) {
     await this.$nextTick()
-    let wenduRenderArea = $(this.$el).find('#wenduChart')
-    this.wenduChart = echarts.init(wenduRenderArea[0])
-
-    let miduRenderArea = $(this.$el).find('#miduChart')
-    this.miduChart = echarts.init(miduRenderArea[0])
-
-    let shunjianRenderArea = $(this.$el).find('#shunjianChart')
-    this.shunjianChart = echarts.init(shunjianRenderArea[0])
-
-    let leijiRenderArea = $(this.$el).find('#leijiChart')
-    this.leijiChart = echarts.init(leijiRenderArea[0])
-    // ************************************
-    this.setWenduOption()
-    this.setMiduOption()
-    this.setShunjianOption()
-    this.setLeijiOption()
-    // ************************************
-    this.listenChartDomSize()
+    if (title === '温度') {
+      let wenduRenderArea = $(this.$el).find('#wenduChart')
+      this.wenduChart = echarts.init(wenduRenderArea[0])
+      this.setWenduOption()
+      this.wenduChart.resize()
+    } else if (title === '密度') {
+      let miduRenderArea = $(this.$el).find('#miduChart')
+      this.miduChart = echarts.init(miduRenderArea[0])
+      this.setMiduOption()
+      this.miduChart.resize()
+    } else if (title === '瞬间流量') {
+      let shunjianRenderArea = $(this.$el).find('#shunjianChart')
+      this.shunjianChart = echarts.init(shunjianRenderArea[0])
+      this.setShunjianOption()
+      this.shunjianChart.resize()
+    } else if (title === '累计流量') {
+      let leijiRenderArea = $(this.$el).find('#leijiChart')
+      this.leijiChart = echarts.init(leijiRenderArea[0])
+      this.setLeijiOption()
+      this.leijiChart.resize()
+    }
   }
-
   private setWenduOption() {
     this.wenduChart.setOption({
       tooltip: {
@@ -233,23 +257,10 @@ export default class Index extends PageBase {
       ]
     })
   }
-  // *********监听尺寸变化 ***************************************
-  private currentResizer: any = null
-
-  listenChartDomSize() {
-    this.currentResizer = resizer()
-    this.currentResizer.listenTo($(this.$el).find('#mainTabs'), (element) => {
-      this.wenduChart.resize()
-      this.miduChart.resize()
-      this.shunjianChart.resize()
-      this.leijiChart.resize()
-    })
-  }
-  unlisenDomSize() {
-    this.currentResizer.removeAllListeners($(this.$el).find('#mainTabs'))
-  }
-  // *****************详细信息列表*******************************
+  // *****************初始化列表数据*******************************
   private dataList: any[] = []
+  private async getDataList() {}
+
   private onClickCard() {
     this.$router.push({ name: 'flowmeterDetailChart' })
   }

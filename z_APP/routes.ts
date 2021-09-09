@@ -11,10 +11,39 @@ const routes: IRouteClass[] = [
         icon: 'icon-all-fill',
         path: '/index',
         name: 'index',
-        meta: {
-          title: '我的应用'
-        },
-        component: () => import('./views/mainPage/index.vue')
+        component: () => import('./views/mainPage/index.vue'),
+        children: [
+          {
+            icon: 'icon-all-fill',
+            path: '/firstPage',
+            name: 'firstPage',
+            component: () => import('./views/mainPage/firstPage/index.vue')
+          },
+          {
+            icon: 'icon-all-fill',
+            path: '/flowmeter',
+            name: 'flowmeter',
+            component: () => import('./views/mainPage/flowmeter/index.vue')
+          },
+          {
+            icon: 'icon-all-fill',
+            path: '/position',
+            name: 'position',
+            component: () => import('./views/mainPage/position/index.vue')
+          },
+          {
+            icon: 'icon-all-fill',
+            path: '/equipmentAccount',
+            name: 'equipmentAccount',
+            component: () => import('./views/mainPage/equipmentAccount/index.vue')
+          },
+          {
+            icon: 'icon-all-fill',
+            path: '/alarmInformation',
+            name: 'alarmInformation',
+            component: () => import('./views/mainPage/alarmInformation/index.vue')
+          }
+        ]
       },
       {
         icon: 'icon-all-fill',
