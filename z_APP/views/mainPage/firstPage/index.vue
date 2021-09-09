@@ -42,11 +42,11 @@
     <van-cell style="margin-top:0.5rem" title="物理区域">
       <template #label>
         <van-grid :column-num="3" :border="false">
-          <van-grid-item v-for="item in realLocationStatus" :key="item.QYMC">
-            <div class="middleAlign">
-              <van-circle :value="item.zclv" :rate="100" :speed="100" :text="item.zclvPersent" size="4rem" />
+          <van-grid-item style="height:8rem" v-for="item in realLocationStatus" :key="item.QYMC">
+            <div class="middleAlign" style="height:4rem">
+              <van-circle :value="item.zclv" :rate="100" :speed="100" :text="item.zclvPersent" :stroke-width="80" layer-color="#f2f6f9" size="4rem" />
             </div>
-            <div class="middleAlign">
+            <div class="middleAlign" style="height:1.5rem;margin-top:0.5rem">
               {{item.QYMC}}
             </div>
           </van-grid-item>

@@ -3,15 +3,15 @@
     <!-- *******左侧******************** -->
     <van-col :span="6"
       style="background-color:red;height:100%;color:white;padding:0.3rem 0.4rem;border-top-left-radius: 0.2rem 0.2rem;border-bottom-left-radius: 0.2rem 0.2rem;">
-      <van-row style="height:40%">
+      <van-row style="height:1.5rem">
         <div class="middleAlign" style="height:100%;width:100%">{{cardInfo.wh}}</div>
       </van-row>
-      <van-row style="height:60%">
+      <van-row style="height:calc(100% - 1.5rem)">
         <van-image round width="100%" height="100%" :src="cardIcon" fit="scale-down" />
       </van-row>
     </van-col>
     <!-- *********右侧********************************* -->
-    <van-col :span="18" style="padding:0.3rem 0.4rem;color:#808080;">
+    <van-col :span="18" style="padding:0.3rem 0.4rem;color:#808080;height:100%;">
       <van-row style="position:relative">
         <span style="float:left">温度:</span>
         <span style="float:right">{{cardInfo.temp}}</span>

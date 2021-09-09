@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%">
-    <van-row style="height:2.3rem">
+    <van-row style="height:4rem;background-color:white;padding:0.9rem 0.4rem;box-sizing:border-box">
       <van-col :span="12" style="height:2.2rem">
         <van-field v-model="searchStr" class="smallInput" placeholder="请输入位号或计量表名称" />
       </van-col>
@@ -10,7 +10,7 @@
         </van-dropdown-menu>
       </van-col>
     </van-row>
-    <van-list style="height:calc(100% - 2.3rem);width:100%">
+    <van-list style="height:calc(100% - 4rem);width:100%">
       <jiliangCard class="jiliangCard" v-for="item in list" :key="item.jlbid" :cardInfo="item" @onCardClick="onClickCard" />
     </van-list>
   </div>
@@ -87,17 +87,21 @@ export default class Index extends PageBase {
 </script>
 <style lang="less" scoped>
 .jiliangCard {
-  height: 6.2rem;
+  height: 6.8rem;
   box-sizing: border-box;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
   background-color: white;
 }
 .smallInput {
+  height: 2.1rem;
   padding: 0.3rem 0.4rem;
+  border: 1px solid #979797;
+  border-radius: 5px;
 }
 /deep/ .van-dropdown-menu {
   .van-dropdown-menu__bar {
-    height: 2.2rem !important;
+    box-shadow: none !important;
+    height: 2.1rem !important;
   }
 }
 

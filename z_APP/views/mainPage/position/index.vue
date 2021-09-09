@@ -3,9 +3,9 @@
     <van-cell title="流程">
       <template #label>
         <van-grid :column-num="3" :border="false">
-          <van-grid-item v-for="item in positionList" :key="item.QYMC" @click="onItemClick(item)">
-            <van-image width="100%" fit="cover" v-show="item.VAL==='0'" :src="positionIconNotFlow" />
-            <van-image width="100%" fit="cover" v-show="item.VAL!=='0'" :src="positionIconFlow" />
+          <van-grid-item style="height:8rem" v-for="item in positionList" :key="item.QYMC" @click="onItemClick(item)">
+            <van-image width="100%" fit="contain" v-show="item.VAL==='0'" :src="positionIconNotFlow" />
+            <van-image width="100%" fit="contain" v-show="item.VAL!=='0'" :src="positionIconFlow" />
             <span>{{item.QYMC}}</span>
           </van-grid-item>
         </van-grid>
