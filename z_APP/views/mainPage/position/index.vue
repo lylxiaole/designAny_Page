@@ -4,7 +4,8 @@
       <template #label>
         <van-grid :column-num="3" :border="false">
           <van-grid-item v-for="item in positionList" :key="item.QYMC" @click="onItemClick(item)">
-            <van-image fit="cover" :src="item.VAL===0?positionIconNotFlow:positionIconFlow" />
+            <van-image fit="cover" v-show="item.VAL===0" :src="positionIconNotFlow" />
+            <van-image fit="cover" v-show="item.VAL!==0" :src="positionIconFlow" />
             <span>{{item.QYMC}}</span>
           </van-grid-item>
         </van-grid>
@@ -21,7 +22,7 @@ import { jkzl, jlbjk } from '../../../serviceAPIs/service'
 @Component
 export default class Index extends PageBase {
   private positionIconNotFlow = require('../../../assets/img/positionIcon.png')
-  private positionIconFlow = require('../../../assets/img/positionIcon.png')
+  private positionIconFlow = require('../../../assets/img/positionIcon.gif')
   mounted() {
     this.getQyzt()
   }
