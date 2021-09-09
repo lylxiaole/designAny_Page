@@ -79,11 +79,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import firstPage from './firstPage/index.vue'
-import flowmeter from './flowmeter/index.vue'
-import position from './position/index.vue'
-import equipmentAccount from './equipmentAccount/index.vue'
-import alarmInformation from './alarmInformation/index.vue'
 import PageBase from '@src/views/PageBase'
 import { jkzl, jlbjk } from '../../serviceAPIs/service'
 import { Route } from 'vue-router'
@@ -101,15 +96,7 @@ const flowmeterBarIcon_solid = require('../../assets/img/flowmeterBarIconSolid.p
 const positionBarIcon_solid = require('../../assets/img/positionBarIconSolid.png')
 // *****************************************************************
 
-@Component({
-  components: {
-    firstPage: firstPage,
-    flowmeter: flowmeter,
-    position: position,
-    equipmentAccount: equipmentAccount,
-    alarmInformation: alarmInformation
-  }
-})
+@Component
 export default class Index extends PageBase {
   private alarmInfoBarIcon_normal: any = alarmInfoBarIcon_normal
   private equipmentBarIcon_normal: any = equipmentBarIcon_normal
