@@ -4,7 +4,7 @@
     <van-col :span="6"
       style="background-color:red;height:100%;color:white;padding:0.3rem 0.4rem;border-top-left-radius: 0.2rem 0.2rem;border-bottom-left-radius: 0.2rem 0.2rem;">
       <van-row style="height:40%">
-        <div class="middleAlign" style="height:100%;width:100%">FT3007</div>
+        <div class="middleAlign" style="height:100%;width:100%">{{cardInfo.wh}}</div>
       </van-row>
       <van-row style="height:60%">
         <van-image round width="100%" height="100%" :src="cardIcon" fit="scale-down" />

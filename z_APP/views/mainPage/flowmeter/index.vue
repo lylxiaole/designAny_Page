@@ -31,7 +31,19 @@ export default class Index extends PageBase {
   mounted() {
     this.getJlbTagInfo()
   }
-  // **********模糊搜索条件*****************************************
+
+  activated() {
+    // **************************************************************************
+    let chooseArea = this.$router.currentRoute.params.area
+    if (chooseArea) {
+      let find = this.areaList.find((o) => o.text === chooseArea)
+      if (find) {
+        this.currentArea = find.value
+      }
+    }
+    // **************************************************************************
+  }
+  // **********获取流量计数据列表*****************************************
   private flowmeterList: any[] = []
   private async getJlbTagInfo() {
     var formData = new FormData()
@@ -41,131 +53,32 @@ export default class Index extends PageBase {
     if (!res) {
       return
     }
-    window.console.log('res:', res)
     for (let index = 0; index < res.length; index++) {
       const element = res[index]
       this.flowmeterList.push({
         jlbid: element.jlbid,
+        wh: element.wh,
         temp: element.dataVals.wd + '℃',
         instantaneousFlow: element.dataVals.sjllbl + 'L',
         density: element.dataVals.md,
         cumulativeFlow: element.dataVals.ljll + 'L'
       })
     }
-    this.list = this.flowmeterList
   }
   private onClickCard() {
     this.$router.push({ path: '/index/flowmeterDetail' })
   }
   // **********模糊搜索条件*****************************************
-  private list: any[] = [
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
-    },
-    {
-      temp: '30C',
-      instantaneousFlow: '100L',
-      density: '300m3',
-      cumulativeFlow: '20000L'
+  private get list(): any[] {
+    if (!this.searchStr) {
+      return this.flowmeterList
     }
-  ]
-  private searchStr: string = '模糊搜索'
-  // ******************区域筛选条件***********************************
+    return this.flowmeterList.filter((o) => o.wh.indexOf(this.searchStr) > -1)
+  }
+  private searchStr: string = ''
   private currentArea: number = 0
   private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
+  // ******************区域筛选条件***********************************
   private chooseAreaChanged(e: any) {
     this.currentArea = e
   }
