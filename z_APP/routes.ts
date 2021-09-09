@@ -19,30 +19,50 @@ const routes: IRouteClass[] = [
         icon: 'icon-all-fill',
         path: '/index/firstPage',
         name: 'firstPage',
+        meta: {
+          title: '首页',
+          needFooter: true
+        },
         component: () => import('./views/mainPage/firstPage/index.vue')
       },
       {
         icon: 'icon-all-fill',
         path: '/index/flowmeter',
         name: 'flowmeter',
+        meta: {
+          title: '流量计',
+          needFooter: true
+        },
         component: () => import('./views/mainPage/flowmeter/index.vue')
       },
       {
         icon: 'icon-all-fill',
         path: '/index/position',
         name: 'position',
+        meta: {
+          title: '位置',
+          needFooter: true
+        },
         component: () => import('./views/mainPage/position/index.vue')
       },
       {
         icon: 'icon-all-fill',
         path: '/index/equipmentAccount',
         name: 'equipmentAccount',
+        meta: {
+          title: '设备台账',
+          needFooter: true
+        },
         component: () => import('./views/mainPage/equipmentAccount/index.vue')
       },
       {
         icon: 'icon-all-fill',
         path: '/index/alarmInformation',
         name: 'alarmInformation',
+        meta: {
+          title: '报警信息',
+          needFooter: true
+        },
         component: () => import('./views/mainPage/alarmInformation/index.vue')
       },
       {
@@ -50,7 +70,9 @@ const routes: IRouteClass[] = [
         path: '/index/flowmeterDetail',
         name: 'flowmeterDetail',
         meta: {
-          title: '我的应用'
+          title: '流量计详情',
+          needFooter: false,
+          needNavBack: true
         },
         component: () => import('./views/mainPage/flowmeter/flowmeterDetail.vue')
       },
@@ -59,7 +81,9 @@ const routes: IRouteClass[] = [
         path: '/index/flowmeterDetailChart',
         name: 'flowmeterDetailChart',
         meta: {
-          title: '我的应用'
+          title: '流量计详情-chart图',
+          needFooter: false,
+          needNavBack: true
         },
         component: () => import('./views/mainPage/flowmeter/detailChart.vue')
       }

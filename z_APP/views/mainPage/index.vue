@@ -1,9 +1,14 @@
 <template>
   <div style="height:100%;width:100%">
-    <van-row class="headerCom">
-      <van-row style="height:40%;display: table;">
-        <van-image round width="1.5rem" height="1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg"
-          style="display: table-cell;vertical-align: middle;padding-left:1.5rem" />
+    <van-row class="headerCom" :style="headerStyle()">
+      <van-row style="height:40%;">
+        <!-- needNavBack -->
+        <van-col :span="12" style="height:100%;display:flex">
+          <van-image round width="1.5rem" height="1.5rem" style="align-self:center;margin-left:1.5rem" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+        </van-col>
+        <van-col :span="12" style="height:100%;display:flex">
+          <span v-if="needNavBack()" style="align-self:center;flex:1;text-align:right;margin-right:1.2rem" @click="pageBackClick">返回</span>
+        </van-col>
       </van-row>
       <van-row style="height:60%;box-sizing:border-box;padding-bottom:1rem">
         <van-col span="8" style="height:100%;border-right:1px solid #fff;padding-top:0.5rem">
@@ -20,14 +25,14 @@
         </van-col>
       </van-row>
     </van-row>
-    <div class="contentCom">
+    <div class="contentCom" :style="contentStyle()">
       <transition name="van-slide-top">
         <keep-alive>
           <router-view />
         </keep-alive>
       </transition>
     </div>
-    <van-tabbar class="bottomBar" :value="active()" @change="onTabChange">
+    <van-tabbar class="bottomBar" :style="bottomBarStyle()" :value="activeItemIndex()" @change="onTabChange">
       <van-tabbar-item :icon="firstPageBarIcon_normal">首页</van-tabbar-item>
       <van-tabbar-item :icon="flowmeterBarIcon_normal">流量计</van-tabbar-item>
       <van-tabbar-item :icon="alarmInfoBarIcon_normal">报警信息</van-tabbar-item>
@@ -82,14 +87,33 @@ export default class Index extends PageBase {
     this.flowmeterStatus = res[0]
   }
   // ***********************************************************************************
-  private get showLeftArrow() {
-    return true
-  }
-  private onClickLeft() {
+  private pageBackClick() {
     this.$router.back()
   }
   // ***************底部Tab*********************************************
-  private active(): number {
+  private needNavBack() {
+    return this.$router.currentRoute.meta.needNavBack
+  }
+  private headerStyle() {
+    return { height: '8rem' }
+  }
+  private contentStyle() {
+    let needFooter = this.$router.currentRoute.meta.needFooter
+    if (needFooter) {
+      return { height: 'calc(100% - 13rem)' }
+    } else {
+      return { height: 'calc(100% - 8rem)' }
+    }
+  }
+  private bottomBarStyle() {
+    let needFooter = this.$router.currentRoute.meta.needFooter
+    if (needFooter) {
+      return { height: '5rem', display: 'flex' }
+    } else {
+      return { height: '0rem', display: 'none' }
+    }
+  }
+  private activeItemIndex(): number {
     if (this.$router.currentRoute.path.indexOf('/index/firstPage') > -1) {
       return 0
     } else if (this.$router.currentRoute.path.indexOf('/index/flowmeter') > -1) {
@@ -102,7 +126,6 @@ export default class Index extends PageBase {
       return 4
     }
   }
-
   private onTabChange(index: number) {
     switch (index) {
       case 0:
@@ -128,19 +151,19 @@ export default class Index extends PageBase {
 </script>
 <style scoped>
 .headerCom {
-  height: 8rem;
+  /* height: 8rem; */
   background-color: #738fff;
   color: white;
 }
-.bottomBar {
-  height: 5rem;
-}
 .contentCom {
-  height: calc(100% - 13rem);
+  /* height: calc(100% - 13rem); */
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;
   padding: 0.5rem;
+}
+.bottomBar {
+  /* height: 5rem; */
 }
 
 .headerTitle {
