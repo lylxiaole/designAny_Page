@@ -195,7 +195,7 @@ let baseconfig = {
       maxInitialRequests: 3, // 最大初始化请求数
       automaticNameDelimiter: '~', // 打包分割符
       name: true,
-      minSize: 128 * 1024, // 形成一个新代码块最小的体积
+      minSize: 256 * 1024, // 形成一个新代码块最小的体积
       maxSize: 512 * 1024,
       cacheGroups: {
         vendors: {

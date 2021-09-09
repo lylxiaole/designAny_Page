@@ -23,7 +23,7 @@ const routes: IRouteClass[] = [
           title: '首页',
           needFooter: true
         },
-        component: () => import(/* webpackChunkName: "firstPage" */ './views/mainPage/firstPage/index.vue')
+        component: () => import('./views/mainPage/firstPage/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -33,7 +33,7 @@ const routes: IRouteClass[] = [
           title: '流量计',
           needFooter: true
         },
-        component: () => import(/* webpackChunkName: "flowmeter" */ './views/mainPage/flowmeter/index.vue')
+        component: () => import('./views/mainPage/flowmeter/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -43,7 +43,7 @@ const routes: IRouteClass[] = [
           title: '位置',
           needFooter: true
         },
-        component: () => import(/* webpackChunkName: "position" */ './views/mainPage/position/index.vue')
+        component: () => import('./views/mainPage/position/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -53,7 +53,7 @@ const routes: IRouteClass[] = [
           title: '设备台账',
           needFooter: true
         },
-        component: () => import(/* webpackChunkName: "equipmentAccount" */ './views/mainPage/equipmentAccount/index.vue')
+        component: () => import('./views/mainPage/equipmentAccount/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -63,7 +63,7 @@ const routes: IRouteClass[] = [
           title: '报警信息',
           needFooter: true
         },
-        component: () => import(/* webpackChunkName: "alarmInformation" */ './views/mainPage/alarmInformation/index.vue')
+        component: () => import('./views/mainPage/alarmInformation/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -74,7 +74,7 @@ const routes: IRouteClass[] = [
           needFooter: false,
           needNavBack: true
         },
-        component: () => import(/* webpackChunkName: "flowmeterDetail" */ './views/mainPage/flowmeter/flowmeterDetail.vue')
+        component: () => import('./views/mainPage/flowmeter/flowmeterDetail.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -85,7 +85,7 @@ const routes: IRouteClass[] = [
           needFooter: false,
           needNavBack: true
         },
-        component: () => import(/* webpackChunkName: "flowmeterDetailChart" */ './views/mainPage/flowmeter/detailChart.vue')
+        component: () => import('./views/mainPage/flowmeter/detailChart.vue')
       }
     ]
   }
