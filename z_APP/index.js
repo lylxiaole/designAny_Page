@@ -4,7 +4,6 @@ import initSystem, { getRoutes, getConfig } from '@src/baseConfigs'
 import { readJsonFile } from '@src/utils'
 // ***********系统环境初始化*********************************
 let configs = window.__globalConfig
-window.console.log(' window.__globalConfig:', window.__globalConfig)
 import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)
