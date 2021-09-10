@@ -9,8 +9,7 @@
     <van-cell title="设备维保信息">
       <template #label>
         <van-list>
-          <maintenanceCard v-for="item in list" :key="item.key" :cardInfo="item"
-            style="margin-top:0.3rem;border-top: 1px solid #808080;color:#313131" />
+          <maintenanceCard v-for="item in list" :key="item.key" :cardInfo="item" style="margin-top:1rem;" />
         </van-list>
       </template>
     </van-cell>

@@ -5,23 +5,26 @@
         <div style="width:100%;height:15rem;display:flex" id="alarmChart"></div>
       </template>
     </van-cell>
-    <van-cell title="最近报警信息">
-      <template #right-icon>
-        <div class="moreBtn" @click="showMachinesPopup=true">
-          <span>{{currentMachine}}</span>
-          <van-icon name="arrow" />
-        </div>
+    <van-cell>
+      <template #title>
+        <van-row style="width:100%">
+          <van-col :span="12">最近报警信息</van-col>
+          <van-col :span="12">
+            <div class="moreBtn" @click="showMachinesPopup=true">
+              <span style="margin-left:auto;margin-right:0.2rem">{{currentMachine}}</span>
+              <van-icon style="margin-right:0rem" name="arrow" />
+            </div>
+          </van-col>
+        </van-row>
       </template>
       <template #label>
-        <div>
-          <alarmInfoCard :cardInfo="nearestOne"></alarmInfoCard>
-        </div>
+        <alarmInfoCard style="margin-top:1rem" :cardInfo="nearestOne"></alarmInfoCard>
       </template>
     </van-cell>
     <van-cell title="最近报警信息">
       <template #label>
         <van-list>
-          <alarmInfoCard v-for="item in nearestList" :key="item" :cardInfo="item" />
+          <alarmInfoCard style="margin-top:1rem" v-for="item in nearestList" :key="item" :cardInfo="item" />
         </van-list>
       </template>
     </van-cell>
@@ -40,8 +43,44 @@ import * as echarts from 'echarts'
 import resizer from 'element-resize-detector'
 @Component({ components: { alarmInfoCard: alarmInfoCard } })
 export default class Index extends PageBase {
-  private nearestOne: any = {}
-  private nearestList: any[] = []
+  private nearestOne: any = {
+    code: 'HT-4009',
+    time: '08-18 12:00:00',
+    desc: '维保到期xxxxxxxxxxxx',
+    timeLength: '3小时'
+  }
+  private nearestList: any[] = [
+    {
+      code: 'HT-4009',
+      time: '08-18 12:00:00',
+      desc: '维保到期xxxxxxxxxxxx',
+      timeLength: '3小时'
+    },
+    {
+      code: 'HT-4009',
+      time: '08-18 12:00:00',
+      desc: '维保到期xxxxxxxxxxxx',
+      timeLength: '3小时'
+    },
+    {
+      code: 'HT-4009',
+      time: '08-18 12:00:00',
+      desc: '维保到期xxxxxxxxxxxx',
+      timeLength: '3小时'
+    },
+    {
+      code: 'HT-4009',
+      time: '08-18 12:00:00',
+      desc: '维保到期xxxxxxxxxxxx',
+      timeLength: '3小时'
+    },
+    {
+      code: 'HT-4009',
+      time: '08-18 12:00:00',
+      desc: '维保到期xxxxxxxxxxxx',
+      timeLength: '3小时'
+    }
+  ]
   private mychart: any = null
   private currentResizer: any = null
   mounted() {
@@ -124,6 +163,8 @@ export default class Index extends PageBase {
   vertical-align: middle;
   text-align: center;
   height: 1.5rem;
+  color: #808080;
+  font-weight: 400;
   span {
     line-height: 1.5rem;
   }
