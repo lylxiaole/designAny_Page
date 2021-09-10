@@ -48,7 +48,8 @@ const routes: IRouteClass[] = [
   },
   {
     path: '/designLogin',
-    component: adminLayout
+    name: 'designLogin',
+    component: import(/* webpackChunkName: "user" */ './views/user/login.vue')
   }
 ]
 
