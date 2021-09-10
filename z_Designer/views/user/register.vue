@@ -5,6 +5,7 @@
       <div class="title-container">
         <h3 class="title">注册</h3>
       </div>
+      <!-- ****用户名******************************************************************************* -->
       <el-form-item prop="username">
         <span class="svg-container">
           <i class="el-icon-user" />
@@ -12,12 +13,14 @@
         <el-input ref="username" v-model="requestEmailFormData.username" placeholder="用户名" name="username" type="text" tabindex="1"
           autocomplete="on" />
       </el-form-item>
+      <!-- ****邮箱******************************************************************************* -->
       <el-form-item prop="email">
         <span class="svg-container">
           <i class="el-icon-message" />
         </span>
         <el-input ref="email" v-model="requestEmailFormData.email" placeholder="邮箱" name="email" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
+      <!-- ****密码******************************************************************************* -->
       <el-form-item prop="pwd">
         <span class="svg-container">
           <i class="el-icon-lock" />
