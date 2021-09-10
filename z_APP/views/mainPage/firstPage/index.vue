@@ -54,24 +54,35 @@
       </template>
     </van-cell>
     <!-- **************************************************************************** -->
-    <van-cell style="margin-top:0.5rem" title="最近报警信息">
-      <template #right-icon>
-        <div class="moreBtn" @click="leadToAlarmInfo">
-          <span>更多</span>
-          <van-icon name="arrow" />
-        </div>
+    <van-cell style="margin-top:0.5rem">
+      <template #title>
+        <van-row style="width:100%">
+          <van-col :span="12">最近报警信息</van-col>
+          <van-col :span="12">
+            <div class="moreBtn" @click="leadToAlarmInfo">
+              <span style="margin-left:auto;margin-right:0.2rem">更多</span>
+              <van-icon style="margin-right:0rem" name="arrow" />
+            </div>
+          </van-col>
+        </van-row>
       </template>
+
       <template #label>
         <alarmInfoCard v-for="item in alarmInfoList" :key="item.key" :cardInfo="item" style="margin-top:0.8rem" />
       </template>
     </van-cell>
     <!-- **************************************************************************** -->
-    <van-cell style="margin-top:0.5rem" title="维保/巡检计划">
-      <template #right-icon>
-        <div class="moreBtn" @click="leadToPlanInfo">
-          <span>更多</span>
-          <van-icon name="arrow" />
-        </div>
+    <van-cell style="margin-top:0.5rem">
+      <template #title>
+        <van-row style="width:100%">
+          <van-col :span="12">维保/巡检计划</van-col>
+          <van-col :span="12">
+            <div class="moreBtn" @click="leadToPlanInfo">
+              <span style="margin-left:auto;margin-right:0.2rem">更多</span>
+              <van-icon style="margin-right:0rem" name="arrow" />
+            </div>
+          </van-col>
+        </van-row>
       </template>
       <template #label>
         <van-grid :column-num="2" :border="false">
@@ -265,6 +276,9 @@ export default class Index extends PageBase {
   vertical-align: middle;
   text-align: center;
   height: 1.5rem;
+  color: #808080;
+  font-weight: 400;
+  font-size: 1rem;
   span {
     line-height: 1.5rem;
   }
@@ -278,6 +292,6 @@ export default class Index extends PageBase {
 }
 
 /deep/ .firstGridItem .van-grid-item__content {
-  border-right: 1px solid #808080 !important;
+  border-right: 1px solid #e6e6e6 !important;
 }
 </style>

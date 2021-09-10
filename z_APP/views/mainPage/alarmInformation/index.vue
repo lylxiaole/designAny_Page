@@ -24,7 +24,8 @@
     <van-cell title="最近报警信息">
       <template #label>
         <van-list>
-          <alarmInfoCard style="margin-top:1rem" v-for="item in nearestList" :key="item" :cardInfo="item" />
+          <alarmInfoCard style="padding-top:0.5rem;margin-bottom:0.5rem;border-top:1px solid #EFEFEF;box-sizing:border-box"
+            v-for="item in nearestList" :key="item" :cardInfo="item" />
         </van-list>
       </template>
     </van-cell>
@@ -165,6 +166,7 @@ export default class Index extends PageBase {
   height: 1.5rem;
   color: #808080;
   font-weight: 400;
+  font-size: 1rem;
   span {
     line-height: 1.5rem;
   }
