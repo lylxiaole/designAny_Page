@@ -1,7 +1,7 @@
 // ****************************************
 import { ajaxGet, ajaxPost } from '@src/utils/axiosEnhancer'
 import { getConfigByName } from '@src/baseConfigs'
-const apiAddr = getConfigByName('apiAddr')
+const apiAddr = () => getConfigByName('apiAddr')
 
 export class BaseClass {
   public Id: string
@@ -26,44 +26,44 @@ export class DesignedAPIGroupDC extends BaseClass {
 
 export default class apiDesignManagerApis {
   public static async AddApiGroup(dc: DesignedAPIGroupDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/AddApiGroup'
+    let url = apiAddr() + 'api/LYLDesigner/AddApiGroup'
     return ajaxPost(url, dc)
   }
   public static async DeleteApiGroup(groupId: string): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/DeleteApiGroup'
+    let url = apiAddr() + 'api/LYLDesigner/DeleteApiGroup'
     return ajaxPost(url, groupId)
   }
   public static async UpdateApiGroup(dc: DesignedAPIGroupDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpdateApiGroup'
+    let url = apiAddr() + 'api/LYLDesigner/UpdateApiGroup'
     return ajaxPost(url, dc)
   }
   public static async GetGroupApisAll(): Promise<DesignedAPIGroupDC[]> {
-    let url = apiAddr + 'api/LYLDesigner/GetGroupApisAll'
+    let url = apiAddr() + 'api/LYLDesigner/GetGroupApisAll'
     return ajaxGet(url)
   }
 
   public static async AddAPI(api: DesignedAPIDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/AddAPI'
+    let url = apiAddr() + 'api/LYLDesigner/AddAPI'
     return ajaxPost(url, api)
   }
 
   public static async DeleteAPI(apiId: string): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/DeleteAPI'
+    let url = apiAddr() + 'api/LYLDesigner/DeleteAPI'
     return ajaxPost(url, apiId)
   }
 
   public static async UpdateAPI(api: DesignedAPIDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpdateAPI'
+    let url = apiAddr() + 'api/LYLDesigner/UpdateAPI'
     return ajaxPost(url, api)
   }
 
   public static async UpdateSertAPIContent(api: ApiContentDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpdateSertAPIContent'
+    let url = apiAddr() + 'api/LYLDesigner/UpdateSertAPIContent'
     return ajaxPost(url, api)
   }
 
   public static async GetApiSimpleInfo(apiId: string): Promise<DesignedAPIDC> {
-    let url = apiAddr + 'api/LYLDesigner/GetApiSimpleInfo?apiId=' + apiId
+    let url = apiAddr() + 'api/LYLDesigner/GetApiSimpleInfo?apiId=' + apiId
     return ajaxGet(url)
   }
 }

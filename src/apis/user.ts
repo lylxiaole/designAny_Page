@@ -1,6 +1,6 @@
 import { ajaxGet, ajaxPost } from '@src/utils/axiosEnhancer'
 import { getConfigByName } from '@src/baseConfigs'
-const apiAddr = getConfigByName('apiAddr')
+const apiAddr = () => getConfigByName('apiAddr')
 
 export enum checkType {
   register = 0,
@@ -32,42 +32,42 @@ export class UserInfoDC {
  * data:{ username: uname, pwd: pwd, machineId: machineId }
  */
 export function login(data) {
-  let url = apiAddr + 'api/user/login'
+  let url = apiAddr() + 'api/user/login'
   return ajaxPost(url, data)
 }
 
 export function autoLogin() {
-  let url = apiAddr + 'api/user/autoLogin'
+  let url = apiAddr() + 'api/user/autoLogin'
   return ajaxPost(url)
 }
 
 export function requestRegisterUser(data: EmailCheckInfo) {
-  let url = apiAddr + 'api/user/requestRegisterUser'
+  let url = apiAddr() + 'api/user/requestRegisterUser'
   return ajaxPost(url, data)
 }
 export function CheckRegisterInfo(data: EmailCheckInfo) {
-  let url = apiAddr + 'api/user/checkRegisterInfo'
+  let url = apiAddr() + 'api/user/checkRegisterInfo'
   return ajaxPost(url, data)
 }
 export function requestChangePwd(data: EmailCheckInfo) {
-  let url = apiAddr + 'api/user/requestChangePwd'
+  let url = apiAddr() + 'api/user/requestChangePwd'
   return ajaxPost(url, data)
 }
 export function CheckChangePwdInfo(data: EmailCheckInfo) {
-  let url = apiAddr + 'api/user/CheckChangePwdInfo'
+  let url = apiAddr() + 'api/user/CheckChangePwdInfo'
   return ajaxPost(url, data)
 }
 
 export function getUserByUserId(userId: string): Promise<UserInfoDC> {
-  let url = apiAddr + 'api/user/getUserByUserId?userId=' + userId
+  let url = apiAddr() + 'api/user/getUserByUserId?userId=' + userId
   return ajaxGet(url)
 }
 export function getSelfInfo(): Promise<UserInfoDC> {
-  let url = apiAddr + 'api/user/getSelfInfo'
+  let url = apiAddr() + 'api/user/getSelfInfo'
   return ajaxGet(url)
 }
 
 export function UpdateSelfInfo(user: UserInfoDC): Promise<boolean> {
-  let url = apiAddr + 'api/user/UpdateSelfInfo'
+  let url = apiAddr() + 'api/user/UpdateSelfInfo'
   return ajaxPost(url, user)
 }

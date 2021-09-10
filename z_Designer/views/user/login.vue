@@ -31,7 +31,7 @@
 
 <script>
 import { validUsername } from '@src/utils/validate'
-
+import { login } from '@src/apis/user'
 export default {
   name: 'login',
   components: {},
@@ -97,26 +97,24 @@ export default {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          // console.log('登录，next', this.redirect, this.otherQuery)
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              // console.log('登录完成,下一个页面:', this.redirect)
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
+    async handleLogin() {
+      try {
+        let valid = await this.$refs.loginForm.validate()
+
+        if (!valid) {
           console.log('error submit!!')
           return false
         }
-      })
+        this.loading = true
+        let requdata = { username: this.loginForm.username.trim(), pwd: this.loginForm.password, machineType: 1 }
+        let token = await login(requdata)
+        this.$store.commit('system/SET_TOKEN', token)
+
+        this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+      } catch (error) {
+      } finally {
+        this.loading = false
+      }
     },
     handleLoginRegister() {
       this.$router.push({ path: '/register' })

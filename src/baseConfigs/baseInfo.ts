@@ -19,7 +19,7 @@ export const routes = [
 export const systemAppStore = {
   namespaced: true,
   state: {
-    token: null,
+    token: window.localStorage.getItem('token'),
     collapse: false,
     sidebar: {
       opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
@@ -53,11 +53,9 @@ export const systemAppStore = {
     set_themeChange(state, data) {
       state.themeColor = data
     },
-
     set_tagsView(state, data) {
       state.tagsView = data
     },
-
     TOGGLE_SIDEBAR: (state) => {
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
@@ -67,7 +65,6 @@ export const systemAppStore = {
         Cookies.set('sidebarStatus', 0)
       }
     },
-
     closeSideBar: (state, withoutAnimation) => {
       Cookies.set('sidebarStatus', 0)
       state.sidebar.opened = false
@@ -75,6 +72,10 @@ export const systemAppStore = {
     },
     toggleDevice: (state, device) => {
       state.device = device
+    },
+    SET_TOKEN: (state, token) => {
+      state.token = token
+      window.localStorage.setItem('token', token)
     }
   },
   actions: {}

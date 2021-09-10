@@ -1,7 +1,7 @@
 // ***************************************************************
 import { ajaxGet, ajaxPost } from '@src/utils/axiosEnhancer'
 import { getConfigByName } from '@src/baseConfigs'
-const apiAddr = getConfigByName('apiAddr')
+const apiAddr = () => getConfigByName('apiAddr')
 
 export enum ColumnDataType {
   String = 1,
@@ -172,32 +172,32 @@ export default class databaseManagerApis {
     var database: DataBaseDC = new DataBaseDC()
     database.DatabaseCode = databaseCode
     database.DatabaseName = databaseName
-    let url = apiAddr + 'api/LYLDesigner/AddDataBase'
+    let url = apiAddr() + 'api/LYLDesigner/AddDataBase'
     return ajaxPost(url, database)
   }
   public static async GetUserDataBases(): Promise<DataBaseDC[]> {
-    let url = apiAddr + 'api/LYLDesigner/GetUserDataBases'
+    let url = apiAddr() + 'api/LYLDesigner/GetUserDataBases'
     return ajaxPost(url)
   }
   public static async UpdateDatabaseName(database: DataBaseDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpdateDatabaseName'
+    let url = apiAddr() + 'api/LYLDesigner/UpdateDatabaseName'
     return ajaxPost(url, database)
   }
   public static async DeleteDatabase(database: DataBaseDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/DeleteDatabase'
+    let url = apiAddr() + 'api/LYLDesigner/DeleteDatabase'
     return ajaxPost(url, database)
   }
   // *****************Table**********************************
   public static async GetTables(databaseId: string): Promise<TableDC[]> {
-    let url = apiAddr + 'api/LYLDesigner/GetTables?databaseId = ' + databaseId
+    let url = apiAddr() + 'api/LYLDesigner/GetTables?databaseId = ' + databaseId
     return ajaxGet(url)
   }
   public static async GetTable(table: TableDC): Promise<TableDC> {
-    let url = apiAddr + 'api/LYLDesigner/GetTable'
+    let url = apiAddr() + 'api/LYLDesigner/GetTable'
     return ajaxPost(url, table)
   }
   public static async GetTablesPage(table: TableDC): Promise<SearchPageResult<TableDC>> {
-    let url = apiAddr + 'api/LYLDesigner/GetTablesPage'
+    let url = apiAddr() + 'api/LYLDesigner/GetTablesPage'
     return ajaxPost(url, table)
   }
   public static async AddTable(databaseId: string, tableName: string, tableCode): Promise<boolean> {
@@ -206,15 +206,15 @@ export default class databaseManagerApis {
     table.TableName = tableName
     table.TableCode = tableCode
 
-    let url = apiAddr + 'api/LYLDesigner/AddTable'
+    let url = apiAddr() + 'api/LYLDesigner/AddTable'
     return ajaxPost(url, table)
   }
   public static async UpdateTable(table: TableDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpdateTable'
+    let url = apiAddr() + 'api/LYLDesigner/UpdateTable'
     return ajaxPost(url, table)
   }
   public static async DeleteTable(table: TableDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/DeleteTable'
+    let url = apiAddr() + 'api/LYLDesigner/DeleteTable'
     return ajaxPost(url, table)
   }
   // *****************Column**********************************
@@ -222,49 +222,49 @@ export default class databaseManagerApis {
     let table: TableDC = new TableDC()
     table.DatabaseId = databaseId
     table.TableId = tableId
-    let url = apiAddr + 'api/LYLDesigner/GetColumns'
+    let url = apiAddr() + 'api/LYLDesigner/GetColumns'
     return ajaxPost(url, table)
   }
   public static async UpDateColumn(col: ColumnDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpDateColumn'
+    let url = apiAddr() + 'api/LYLDesigner/UpDateColumn'
     return ajaxPost(url, col)
   }
   public static async AddColumn(col: ColumnDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/AddColumn'
+    let url = apiAddr() + 'api/LYLDesigner/AddColumn'
     return ajaxPost(url, col)
   }
 
   public static async UpdateColumns(table: TableDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpdateColumns'
+    let url = apiAddr() + 'api/LYLDesigner/UpdateColumns'
     return ajaxPost(url, table)
   }
   public static async DeleteColumn(col: ColumnDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/DeleteColumn'
+    let url = apiAddr() + 'api/LYLDesigner/DeleteColumn'
     return ajaxPost(url, col)
   }
   // *****************Row**********************************
   public static async GetRow(dc: RowDC): Promise<RowDC> {
-    let url = apiAddr + 'api/LYLDesigner/GetRow'
+    let url = apiAddr() + 'api/LYLDesigner/GetRow'
     return ajaxPost(url, dc)
   }
   public static async UpsertTableData(dc: RowDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/UpsertTableData'
+    let url = apiAddr() + 'api/LYLDesigner/UpsertTableData'
     return ajaxPost(url, dc)
   }
   public static async FirstData(dc: RowDC): Promise<ExtRow> {
-    let url = apiAddr + 'api/LYLDesigner/FirstData'
+    let url = apiAddr() + 'api/LYLDesigner/FirstData'
     return ajaxPost(url, dc)
   }
   public static async SearchListData(dc: TableDC): Promise<ExtRow[]> {
-    let url = apiAddr + 'api/LYLDesigner/SearchListData'
+    let url = apiAddr() + 'api/LYLDesigner/SearchListData'
     return ajaxPost(url, dc)
   }
   public static async SearchPageData(dc: TableDC): Promise<SearchPageResult<ExtRow>> {
-    let url = apiAddr + 'api/LYLDesigner/SearchPageData'
+    let url = apiAddr() + 'api/LYLDesigner/SearchPageData'
     return ajaxPost(url, dc)
   }
   public static async DeleteTableData(dc: TableDC): Promise<boolean> {
-    let url = apiAddr + 'api/LYLDesigner/DeleteTableData'
+    let url = apiAddr() + 'api/LYLDesigner/DeleteTableData'
     return ajaxPost(url, dc)
   }
 }

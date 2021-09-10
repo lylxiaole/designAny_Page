@@ -11,6 +11,7 @@
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
+    <script type="text/javascript" src="./configs.js"></script>
 
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="./<%=htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" type="text/css" />

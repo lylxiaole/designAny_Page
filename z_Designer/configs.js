@@ -1,4 +1,4 @@
 window.__globalConfig = {
   projectName: 'super pro',
-  apiAddr: 'http://localhost:65013/'
+  apiAddr: 'http://127.0.0.1:65013/'
 }

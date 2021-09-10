@@ -7,6 +7,7 @@ export interface config {
 let localConfigs: any = {}
 
 export function initConfig(iconfigs: any) {
+  window.console.log('initConfig:', iconfigs)
   let cloneconfig = { ...configs } as any
   for (const key in iconfigs) {
     cloneconfig[key] = iconfigs[key] as any
