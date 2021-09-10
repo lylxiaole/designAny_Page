@@ -6,7 +6,7 @@
     <template v-for="route in permission_routes">
       <div style="float:left" :key="route.path" @click="linkClick(route.path)" :style="{'float':'left','background-color':cuteBackgroundColor(route)}"
         class="item canChooseItem">
-        <app-link v-if="route.meta" :to="resolvePath(route.path)">
+        <app-link v-if="route.meta" :to="resolvePath(route.path)" style="color:white">
           {{route.meta.title}}
         </app-link>
       </div>
@@ -113,5 +113,6 @@ export default class index extends Vue {
 
 .canChooseItem:hover {
   background-color: #83c346;
+  color: white;
 }
 </style>

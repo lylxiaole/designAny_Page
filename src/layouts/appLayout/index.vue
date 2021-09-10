@@ -14,11 +14,7 @@ export default {
   name: 'appLayout',
   components: {},
   mounted() {},
-  computed: {
-    tabbars: function() {
-      return this.$store.state.system.tagsList
-    }
-  },
+  computed: {},
   methods: {
     onClickLeft() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
