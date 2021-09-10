@@ -7,20 +7,20 @@
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <i class="el-icon-user" />
         </span>
         <el-input ref="username" v-model="requestEmailFormData.username" placeholder="用户名" name="username" type="text" tabindex="1"
           autocomplete="on" />
       </el-form-item>
       <el-form-item prop="email">
         <span class="svg-container">
-          <svg-icon icon-class="email" />
+          <i class="el-icon-message" />
         </span>
         <el-input ref="email" v-model="requestEmailFormData.email" placeholder="邮箱" name="email" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
       <el-form-item prop="pwd">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <i class="el-icon-lock" />
         </span>
         <el-input ref="pwd" v-model="requestEmailFormData.pwd" placeholder="密码" name="pwd" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
@@ -33,22 +33,20 @@
       </div>
       <el-form-item prop="checkingCode">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <i class="el-icon-user" />
         </span>
         <el-input ref="checkingCode" v-model="checkEmailFormData.checkingCode" placeholder="验证码" name="checkingCode" type="text" tabindex="1"
           autocomplete="on" />
       </el-form-item>
-
       <el-button type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleCheckEmail"> 验证 </el-button>
     </el-form>
-
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { AxiosResponse } from 'axios'
-import { getAllPlays, requestRegisterUser, CheckRegisterInfo } from '@/api/user'
+import { requestRegisterUser, CheckRegisterInfo } from '@src/apis/user'
 import { ElForm } from 'element-ui/types/form'
 import { validUsername } from '@src/utils/validate'
 import PageBase from '@src/views/PageBase'
@@ -117,18 +115,13 @@ export default class register extends PageBase {
         return
       }
       let success = await CheckRegisterInfo(this.checkEmailFormData)
-      RouterHelper.pushRouter(routePaths.login, null, this)
+      this.$router.push({ path: '/login' })
     } catch (error) {}
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-
+ 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;

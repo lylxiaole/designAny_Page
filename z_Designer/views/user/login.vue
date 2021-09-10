@@ -4,7 +4,6 @@
       <div class="title-container">
         <h3 class="title">登录</h3>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
           <i class="el-icon-user" />
@@ -98,16 +97,6 @@ export default {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
@@ -130,7 +119,7 @@ export default {
       })
     },
     handleLoginRegister() {
-      window.console.log('handleLoginRegister')
+      this.$router.push({ path: '/register' })
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {

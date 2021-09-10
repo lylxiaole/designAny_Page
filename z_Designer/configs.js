@@ -1,5 +1,4 @@
 window.__globalConfig = {
-  projectName: '西宁报表',
-  apiAddr: 'http://118.31.184.21:7073',
-  LOGINED_USER_SESSION: 'LOGINED_USER_SESSION'
+  projectName: 'super pro',
+  apiAddr: 'http://localhost:65013/'
 }

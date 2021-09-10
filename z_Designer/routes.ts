@@ -53,6 +53,14 @@ const routes: IRouteClass[] = [
       title: '登录'
     },
     component: () => import(/* webpackChunkName: "user" */ './views/user/login.vue')
+  },
+  {
+    path: '/register',
+    name: 'register',
+    meta: {
+      title: '登录'
+    },
+    component: () => import(/* webpackChunkName: "user" */ './views/user/register.vue')
   }
 ]
 
