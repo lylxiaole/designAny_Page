@@ -42,7 +42,7 @@
     <van-cell style="margin-top:0.5rem" title="物理区域">
       <template #label>
         <van-grid :column-num="3" :border="false">
-          <van-grid-item style="height:8rem" v-for="item in realLocationStatus" :key="item.QYMC">
+          <van-grid-item style="height:8rem" v-for="item in realLocationStatus" :key="item.QYMC" @click="onAreaItemClick">
             <div class="middleAlign" style="height:4rem">
               <van-circle :value="item.zclv" :rate="100" :speed="100" :text="item.zclvPersent" :stroke-width="80" layer-color="#f2f6f9" size="4rem" />
             </div>
@@ -187,6 +187,9 @@ export default class Index extends PageBase {
       element.zclvPersent = element.zclv + '%'
     }
     this.realLocationStatus = res
+  }
+  private onAreaItemClick(item: any) {
+    this.$router.push({ name: 'flowmeter', params: { area: item.QYMC } })
   }
   // ***********报警信息查询*********************************************************************
   private alarmInfoList: any[] = []
