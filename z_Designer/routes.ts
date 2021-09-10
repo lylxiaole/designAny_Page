@@ -47,9 +47,12 @@ const routes: IRouteClass[] = [
     ]
   },
   {
-    path: '/designLogin',
-    name: 'designLogin',
-    component: import(/* webpackChunkName: "user" */ './views/user/login.vue')
+    path: '/login',
+    name: 'login',
+    meta: {
+      title: '登录'
+    },
+    component: () => import(/* webpackChunkName: "user" */ './views/user/login.vue')
   }
 ]
 

@@ -7,7 +7,7 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <i class="el-icon-user" />
         </span>
         <el-input ref="username" v-model="loginForm.username" placeholder="用户名" name="username" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
@@ -15,23 +15,16 @@
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <i class="el-icon-lock" />
           </span>
           <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="密码" name="password" tabindex="2"
             autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
-
         </el-form-item>
       </el-tooltip>
 
       <el-button :loading="loading" type="primary" style="width:65%;margin-bottom:30px;" @click.native.prevent="handleLogin">账号密码登录</el-button>
-      <el-button type="primary" style="width:30%;margin-bottom:30px;" @click="showDialog=true"> 第三方登录 </el-button>
+      <el-button type="text" style="width:30%;margin-bottom:30px;" @click.native.prevent="handleLoginRegister">注册</el-button>
 
-      <div style="position:relative">
-        <el-button type="text" @click.native.prevent="handleLoginRegister">注册</el-button>
-      </div>
     </el-form>
 
   </div>
