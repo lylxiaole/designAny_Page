@@ -1,13 +1,8 @@
-import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import Store from './store'; 
+import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import Store from './store'
 // import {configs} from './index';
-import {
-  alertSuccess,
-  alertWarning,
-  confirmNotify,
-  notifyError,
-} from './devExtremeUtils'; 
- // import { history } from 'umi';
+import { alertSuccess, alertWarning, confirmNotify, notifyError } from './devExtremeUtils'
+// import { history } from 'umi';
 
 const HttpStatusEnum = [
   { status: 200, desc: '服务器成功返回请求的数据。', name: '' },
@@ -17,18 +12,18 @@ const HttpStatusEnum = [
   {
     status: 400,
     desc: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
-    name: '',
+    name: ''
   },
   { status: 401, desc: '用户没有权限（令牌、用户名、密码错误）。', name: '' },
   {
     status: 403,
     desc: '用户得到授权，但是访问是被禁止的。(权限不足)',
-    name: '',
+    name: ''
   },
   {
     status: 404,
     desc: '发出的请求针对的是不存在的记录，服务器没有进行操作。',
-    name: '',
+    name: ''
   },
   { status: 406, desc: '请求的格式不可得。', name: '' },
   { status: 410, desc: '请求的资源被永久删除，且不会再得到的。', name: '' },
@@ -36,39 +31,39 @@ const HttpStatusEnum = [
   { status: 500, desc: '服务器发生错误，请检查服务器。', name: '' },
   { status: 502, desc: '网关错误。', name: '' },
   { status: 503, desc: '服务不可用，服务器暂时过载或维护。', name: '' },
-  { status: 504, desc: '网关超时。', name: '' },
-];
+  { status: 504, desc: '网关超时。', name: '' }
+]
 
 const axiosInstance = _axios.create({
   //自动给请求的url加上webpack.xx.config.js中配置的url前缀.
   // baseURL: '/',
   headers: {
     'Content-Type': 'application/json',
-    Accept: 'application/json',
+    Accept: 'application/json'
   },
   responseType: 'json',
   timeout: 5000, // 超时时间.毫秒
-  withCredentials: false, // 跨域请求,是否携带cookie
-});
+  withCredentials: false // 跨域请求,是否携带cookie
+})
 
 /**
  * 请求拦截器.
  * 1.在request-header中存入已登录用户的Authorization.后续接口都需要.
  */
 axiosInstance.interceptors.request.use(
-  function(config:any) { 
+  function(config: any) {
     // if (Store.get(configs.LOGINED_USER_SESSION as any)?.token) {
     //   config.headers['Authorization'] = Store.get(configs.LOGINED_USER_SESSION as any).token;
     // }
-    
-    return config;
+
+    return config
   },
-  function(error:any) {
+  function(error: any) {
     // 对请求错误做些什么(服务器没收到请求)
-    console.log('axios request error: ', error);
-    return Promise.reject(error);
-  },
-);
+    console.log('axios request error: ', error)
+    return Promise.reject(error)
+  }
+)
 
 /**
  * 响应拦截器.对401,403进行处理.
@@ -79,54 +74,59 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-
-    // 后台接口做了处理,401时返回的也是200,需要在这里处理.
-    if (response.data&&response.data.code === 401) {
-      toLogin();
-      return Promise.reject(new Error(response.data.message));
+    window.console.log('onResponse:', response.data)
+    if (response.data && response.data.success === false) {
+      return Promise.reject(new Error('请求发生错误:' + response.data.errMsg))
+    } else if (response.data && response.data.errCode === 401) {
+      toLogin()
+      return Promise.reject(new Error(response.data.errMsg))
+    } else {
+      return response.data
     }
-    return response;
   },
-  function(error:any) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+  (error: any) => {
+    window.console.error(error)
+
     if (error === undefined || error.code === 'ECONNABORTED') {
-      notifyError('服务请求超时');
-      return Promise.reject(error);
+      notifyError('服务请求超时')
+      return Promise.reject(error)
     }
 
-    const response: AxiosResponse = error.response;
+    const response: AxiosResponse = error.response
     if (response) {
-      const { status, statusText } = response;
-      const errorText =
-        HttpStatusEnum.find(item => item.status === status)?.desc ?? statusText;
+      const { status, statusText } = response
+
+      let errorText = statusText
+      let findhttpstatus = HttpStatusEnum.find((item) => item.status === status)
+
+      if (findhttpstatus && findhttpstatus.desc) {
+        errorText = findhttpstatus.desc
+      }
 
       if (status === 401) {
-        toLogin();
-        return Promise.reject(error);
+        toLogin()
+        return Promise.reject(error)
       }
 
       if (status === 403) {
-        alertWarning(errorText ?? '权限不足...');
-        return Promise.reject(error);
+        alertWarning(errorText || '权限不足...')
+        return Promise.reject(error)
       }
     } else if (error.request) {
       // The request was made but no response was received
-      console.log(error.request);
+      console.log(error.request)
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
 
-      toLogin();
-      return Promise.reject(error);
+      toLogin()
+      return Promise.reject(error)
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
+      console.log('Error', error.message)
     }
-    console.log(error.config);
-
-    return Promise.reject(error);
-  },
-);
+    return Promise.reject(error)
+  }
+)
 
 function toLogin() {
   // todo:等做登陆时再放开.
@@ -148,15 +148,11 @@ function toLogin() {
  * })
  * ```
  */
-const ajaxPost = async function(
-  url: string,
-  data?: any,
-  config?: AxiosRequestConfig,
-): Promise<any> {
+const ajaxPost = async function(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
   // window.console.log('ajaxPost:',url)
-  const response = await axiosInstance.post(url, data, config);
-  return response.data;
-};
+  const response = await axiosInstance.post(url, data, config)
+  return response.data
+}
 
 /**
  * 发送Get请求.
@@ -170,13 +166,10 @@ const ajaxPost = async function(
  * })
  * ```
  */
-const ajaxGet = async function(
-  url: string,
-  config?: AxiosRequestConfig,
-): Promise<any> {
-  const response = await axiosInstance.get(url, config);
-  return response.data;
-};
+const ajaxGet = async function(url: string, config?: AxiosRequestConfig): Promise<any> {
+  const response = await axiosInstance.get(url, config)
+  return response.data
+}
 
 /**
  * 发送Put请求.
@@ -192,14 +185,10 @@ const ajaxGet = async function(
  * })
  * ```
  */
-const ajaxPut = async function(
-  url: string,
-  data?: any,
-  config?: AxiosRequestConfig,
-): Promise<any> {
-  const response = await axiosInstance.put(url, data, config);
-  return response.data;
-};
+const ajaxPut = async function(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+  const response = await axiosInstance.put(url, data, config)
+  return response.data
+}
 
 /**
  * 发送Delete请求.
@@ -213,12 +202,9 @@ const ajaxPut = async function(
  * })
  * ```
  */
-const ajaxDelete = async function(
-  url: string,
-  config?: AxiosRequestConfig,
-): Promise<any> {
-  const response = await axiosInstance.delete(url, config);
-  return response.data;
-};
+const ajaxDelete = async function(url: string, config?: AxiosRequestConfig): Promise<any> {
+  const response = await axiosInstance.delete(url, config)
+  return response.data
+}
 
-export { ajaxGet, ajaxPost, ajaxPut, ajaxDelete, axiosInstance };
+export { ajaxGet, ajaxPost, ajaxPut, ajaxDelete, axiosInstance }

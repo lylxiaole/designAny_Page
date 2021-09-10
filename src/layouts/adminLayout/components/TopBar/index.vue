@@ -62,6 +62,9 @@ export default class index extends Vue {
 
     for (let index = 0; index < showingChildren.length; index++) {
       const element = showingChildren[index]
+      if (element.hidden) {
+        continue
+      }
       if (element.meta && !element.children) {
         res.push(element)
       }

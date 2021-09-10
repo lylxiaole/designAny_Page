@@ -29,107 +29,105 @@
   </div>
 </template>
 
-<script>
+
+<script lang="ts">
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { validUsername } from '@src/utils/validate'
+import PageBase from '@src/views/PageBase'
 import { login } from '@src/apis/user'
-export default {
-  name: 'login',
-  components: {},
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('请输入合法的用户名'))
-      } else {
-        callback()
-      }
+
+const validateUsername = (rule, value, callback) => {
+  if (!validUsername(value)) {
+    callback(new Error('请输入合法的用户名'))
+  } else {
+    callback()
+  }
+}
+const validatePassword = (rule, value, callback) => {
+  if (value.length < 3) {
+    callback(new Error('密码最少3位'))
+  } else {
+    callback()
+  }
+}
+
+@Component
+export default class loginPage extends PageBase {
+  loginForm: any = {
+    username: '',
+    password: ''
+  }
+  loginRules: any = {
+    username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+    password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+  }
+  passwordType: string = 'password'
+  capsTooltip: boolean = false
+  loading: boolean = false
+  showDialog: boolean = false
+  redirect: string = undefined
+  otherQuery: any = {}
+  // ******************************************************************
+  @Watch('$route', { immediate: true })
+  onRouteChanged(route) {
+    const query = route.query
+    if (query) {
+      this.redirect = query.redirect
+      this.otherQuery = this.getOtherQuery(query)
     }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 3) {
-        callback(new Error('密码最少3位'))
-      } else {
-        callback()
-      }
-    }
-    return {
-      loginForm: {
-        username: '',
-        password: ''
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      passwordType: 'password',
-      capsTooltip: false,
-      loading: false,
-      showDialog: false,
-      redirect: undefined,
-      otherQuery: {}
-    }
-  },
-  watch: {
-    $route: {
-      handler: function(route) {
-        const query = route.query
-        if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
-        }
-      },
-      immediate: true
-    }
-  },
+  }
+
   created() {
     // window.addEventListener('storage', this.afterQRScan)
-  },
+  }
   mounted() {
     if (this.loginForm.username === '') {
-      this.$refs.username.focus()
+      ;(this.$refs.username as any).focus()
     } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
+      ;(this.$refs.passwordas as any).focus()
     }
-  },
+  }
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
-  },
-  methods: {
-    checkCapslock(e) {
-      const { key } = e
-      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
-    },
-    async handleLogin() {
-      try {
-        let valid = await this.$refs.loginForm.validate()
-
-        if (!valid) {
-          console.log('error submit!!')
-          return false
-        }
-        this.loading = true
-        let requdata = { username: this.loginForm.username.trim(), pwd: this.loginForm.password, machineType: 1 }
-        let token = await login(requdata)
-        this.$store.commit('system/SET_TOKEN', token)
-
-        this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-      } catch (error) {
-      } finally {
-        this.loading = false
+  }
+  // ********************************************************
+  checkCapslock(e) {
+    const { key } = e
+    this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
+  }
+  async handleLogin() {
+    try {
+      let valid = await (this.$refs.loginForm as any).validate()
+      if (!valid) {
+        console.log('error submit!!')
+        return false
       }
-    },
-    handleLoginRegister() {
-      this.$router.push({ path: '/register' })
-    },
-    getOtherQuery(query) {
-      return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== 'redirect') {
-          acc[cur] = query[cur]
-        }
-        return acc
-      }, {})
+      this.loading = true
+      let requdata = { username: this.loginForm.username.trim(), pwd: this.loginForm.password, machineType: 1 }
+      let token = await login(requdata)
+      this.$store.commit('system/SET_TOKEN', token)
+
+      this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      this.loading = false
     }
+  }
+  handleLoginRegister() {
+    this.$router.push({ path: '/register' })
+  }
+  getOtherQuery(query) {
+    return Object.keys(query).reduce((acc, cur) => {
+      if (cur !== 'redirect') {
+        acc[cur] = query[cur]
+      }
+      return acc
+    }, {})
   }
 }
 </script>
+ 
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */

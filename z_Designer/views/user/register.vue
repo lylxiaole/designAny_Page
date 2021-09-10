@@ -117,6 +117,7 @@ export default class register extends PageBase {
       if (isvalid == false) {
         return
       }
+      window.console.log('asasas,', this.checkEmailFormData)
       let success = await CheckRegisterInfo(this.checkEmailFormData)
       this.$router.push({ path: '/login' })
     } catch (error) {}

@@ -8,6 +8,7 @@ let currentStore = null
 // ***********************路由钩子处理*************************************
 
 const router_beforeEach = async (to, from, next) => {
+  window.console.log('router_beforeEach:', to)
   // start progress bar
   NProgress.start()
   // set page title
@@ -35,24 +36,15 @@ async function hasTokenOption(to, from, next) {
     return
   }
   // determine whether the user has obtained his permission roles through getInfo
-  if (currentStore.getters.machineId) {
+  if (currentStore.state.system.machineId) {
     /**已经登录并且有用户信息，指定到其它路由 */
     next()
     return
   }
 
   try {
-    //使用token登录获取用户信息，并进行路由跳转
-    // get user info
-    // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-    const { roles } = await currentStore.dispatch('user/getInfo')
-    // generate accessible routes map based on roles
-    const accessRoutes = await currentStore.dispatch('permission/generateRoutes', roles)
-    // dynamically add accessible routes
-    currentRouter.addRoutes(accessRoutes)
-    // hack method to ensure that addRoutes is complete
-    // set the replace: true, so the navigation will not leave a history record
-    next({ ...to, replace: true })
+    // next({ ...to, replace: true })
+    next()
   } catch (error) {
     console.error('页面跳转时发生错误', error)
     // remove token and go to login page to re-login
