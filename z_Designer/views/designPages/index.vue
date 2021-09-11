@@ -1,22 +1,17 @@
 <template>
-  <div class="example">{{ msg }}
-    <div ref="ppap"></div>
+  <div>
+    <div></div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import PageBase from '@src/views/PageBase'
 @Component
-export default class vmain extends Vue {
-  msg: string = '11111111'
-  mounted() {
-    this.msg = 'hahahahah'
-  }
+export default class index extends PageBase {
+  mounted() {}
 }
 </script>
 
 <style>
-.example {
-  color: red;
-}
 </style>
