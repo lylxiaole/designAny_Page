@@ -4,45 +4,44 @@ import adminLayout from '@src/layouts/adminLayout/index.vue'
 const routes: IRouteClass[] = [
   {
     path: '/',
-    redirect: '/index',
+    redirect: '/designApplications',
     component: adminLayout,
     children: [
       {
         icon: 'icon-all-fill',
-        path: '/index',
-        name: 'index',
+        path: '/designApplications',
+        name: 'designApplications',
         meta: {
           title: '我的应用'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ './views/HelloWorld.vue')
+        component: () => import(/* webpackChunkName: "designApplications" */ './views/designApplications/index.vue')
       },
       {
         icon: 'icon-all-fill',
-        path: '/second',
-        name: 'second',
+        path: '/designPages',
+        name: 'designPages',
         meta: {
-          title: '资源管理'
+          title: '我的页面'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ '@src/views/vmain.vue')
-      },
-      ,
-      {
-        icon: 'icon-all-fill',
-        path: '/third',
-        name: 'third',
-        meta: {
-          title: '使用教程'
-        },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ '@src/views/vmain.vue')
+        component: () => import(/* webpackChunkName: "designPages" */ './views/designPages/index.vue')
       },
       {
         icon: 'icon-all-fill',
-        path: '/fourth',
-        name: 'fourth',
+        path: '/designApis',
+        name: 'designApis',
         meta: {
-          title: '社区'
+          title: '我的接口'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ '@src/views/vmain.vue')
+        component: () => import(/* webpackChunkName: "HelloWorld" */ './views/designApis/index.vue')
+      },
+      {
+        icon: 'icon-all-fill',
+        path: '/designDatabases',
+        name: 'designDatabases',
+        meta: {
+          title: '我的数据库'
+        },
+        component: () => import(/* webpackChunkName: "designDatabases" */ './views/designDatabases/index.vue')
       }
     ]
   },

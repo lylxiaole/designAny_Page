@@ -76,6 +76,10 @@ export const systemAppStore = {
     SET_TOKEN: (state, token) => {
       state.token = token
       window.localStorage.setItem('token', token)
+    },
+    CLEAR_TOKEN: (state, token) => {
+      state.token = token
+      window.localStorage.removeItem('token')
     }
   },
   actions: {}

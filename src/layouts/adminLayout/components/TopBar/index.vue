@@ -83,7 +83,7 @@ export default class index extends Vue {
   }
   private async logout() {
     try {
-      await this.$store.dispatch('user/logout')
+      await this.$store.commit('system/CLEAR_TOKEN')
     } catch (error) {
     } finally {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
