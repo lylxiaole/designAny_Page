@@ -55,7 +55,7 @@ axiosInstance.interceptors.request.use(
     // if (Store.get(configs.LOGINED_USER_SESSION as any)?.token) {
     //   config.headers['Authorization'] = Store.get(configs.LOGINED_USER_SESSION as any).token;
     // }
-
+    config.headers['token'] = window.localStorage.getItem('token')
     return config
   },
   function(error: any) {
