@@ -6,9 +6,9 @@
     <template v-for="route in permission_routes">
       <div style="float:left" :key="route.path" @click="linkClick(route.path)" :style="{'float':'left','background-color':cuteBackgroundColor(route)}"
         class="item canChooseItem">
-        <app-link v-if="route.meta" :to="resolvePath(route.path)" style="color:white">
+        <span v-if="route.meta" style="color:white">
           {{route.meta.title}}
-        </app-link>
+        </span>
       </div>
     </template>
     <div style="float:right" class="item" @click="logout">退出</div>
@@ -25,29 +25,18 @@ import AppLink from '../Sidebar/Link.vue'
   components: { AppLink }
 })
 export default class index extends Vue {
-  private currentRoutePath: string = ''
-
   private get permission_routes(): any[] {
     return this.cuteRoutes(this.$store.state.system.permission_routes)
   }
 
   private cuteBackgroundColor(targetRoute) {
-    let currentRoutePath = this.currentRoutePath
-    if (!currentRoutePath) {
-      currentRoutePath = this.$router.currentRoute.path
-    }
-    // window.console.log('target route:', targetRoute.path)
-    // window.console.log('current route:', currentRoutePath)
+    let currentRoutePath = this.$route.path
 
     if (targetRoute.path === currentRoutePath) {
       return '#83C346'
     } else {
       return ''
     }
-  }
-
-  private get currentRoute(): any {
-    return this.$router.currentRoute
   }
 
   private cuteRoutes(routes) {
@@ -75,12 +64,7 @@ export default class index extends Vue {
 
     return res
   }
-  private resolvePath(routePath) {
-    if (isExternal(routePath)) {
-      return routePath
-    }
-    return routePath
-  }
+
   private async logout() {
     try {
       await this.$store.commit('system/CLEAR_TOKEN')
@@ -91,13 +75,10 @@ export default class index extends Vue {
   }
 
   private linkClick(routePath) {
-    this.$set(this.$data, 'currentRoutePath', routePath)
-    this.$nextTick()
+    this.$router.push({ path: routePath })
   }
 
-  mounted() {
-    // window.console.log('currentRoute', this.$router.currentRoute)
-  }
+  mounted() {}
   destroyed() {}
 }
 </script>

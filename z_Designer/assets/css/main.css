@@ -174,3 +174,9 @@ a {
 .v-note-wrapper .v-note-panel {
   min-height: 500px;
 }
+
+.middleAlign {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
