@@ -1,30 +1,7 @@
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import {
-  Property,
-  TimePickerFile_Property,
-  Authority_Property,
-  BindingModels_Property,
-  UploadFile_Property,
-  JavaScriptCode_Property,
-  PageInParams_Property,
-  Behavior_Property,
-  PropertyGroupName,
-  Number_Property,
-  Boolean_Property
-} from '../02common/commonClasses/LayoutProperty'
-import pako from 'pako'
-import layerPopup from '../02common/layer/layerPopup'
-import {
-  ModelInfo,
-  modelSimpleInfo,
-  modelDetailInfo,
-  ModelProperty,
-  propertyValidator,
-  ModelBindingProperty,
-  DecoratorOption,
-  DecoratorRule,
-  modelTypeEnum
-} from '../02common/impResourcesCache/modelAnalysis'
+import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from '../02common/commonClasses/LayoutProperty'
+
+import { ModelInfo, modelSimpleInfo, modelDetailInfo, ModelProperty, propertyValidator, ModelBindingProperty, DecoratorOption, DecoratorRule, modelTypeEnum } from '../02common/impResourcesCache/modelAnalysis'
 
 import { modelAnalysis, functionCache, dictCache, modelMapperCache, pageCache, pageContentTable, pageStatus } from '../02common/impResourcesCache'
 
@@ -32,15 +9,12 @@ import { ComponentBase } from '../04designerComponents'
 import common from '../02common/commonMethod'
 import LayoutBase, { SaveInfo } from '../03designerLayoutBase/LayoutBase'
 import LayoutContainer from '../03designerLayoutBase/LayoutContainner'
-import bus from '@/utils/bus'
+
 import paramInfo from '../02common/commonClasses/pageInParamInfo'
 import modelBingding, { bindingModelVal_InProperty, modelBingValue, modelDataTypeEnum, modelFilter } from '../02common/commonClasses/modelBingding'
 import { CurrentApis } from '../01designerContext'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from '../02common/behavior'
 import { layoutEvent, layoutMethod, param, paramType } from '../02common/commonClasses/layoutEvent'
-import { Form } from 'ant-design-vue'
-import { isArray, isObject, hasOwnProp, isNumber } from 'xe-utils/methods'
-import { Action } from 'vuex'
 
 class PopupInfo {
   popupId: any
@@ -71,23 +45,9 @@ class checkoutInfoClass {
   checkoutUsername: string
 }
 
-class personalCompSetting {
-  com_id: string
-  com_configuration: any
-  id: number
-}
-
-@Component
 export default class PageBase extends LayoutContainer {
   public parentPage: PageBase
-  private personalCompSettings: personalCompSetting[] = []
-  public getCompPersonalSetting(compId: string) {
-    return this.personalCompSettings.find((o) => o.com_id == compId)
-  }
-  //页面引用的模型Id，公式code,枚举Id等资源
-  public resourceObj: PageResourceType = new PageResourceType()
   //是否是组件模板
-  public IsComponentTemplate: boolean = false
   //如果正在以弹窗显示的话，就有这个字段
   public popupInfo: PopupInfo
   public isNeedSave: boolean = false
@@ -107,58 +67,6 @@ export default class PageBase extends LayoutContainer {
     this.SetPropertyVal(property.id, binds)
   }
 
-  private getMobindsFromPageProperty(props: Property[]): modelBingding[] {
-    var property = props.find((o) => o.groupName == PropertyGroupName.normal && o.propertyName == '模型实例')
-    if (!property.value) {
-      property.value = []
-    }
-    var res: modelBingding[] = []
-
-    for (let index = 0; index < property.value.length; index++) {
-      const mb = property.value[index]
-      var newmodelb = new modelBingding()
-
-      newmodelb.modelDataType = !mb.modelDataType ? modelDataTypeEnum.single : mb.modelDataType
-      newmodelb.modelBindingInfo = mb.modelBindingInfo
-
-      newmodelb.modelBindingName = mb.modelBindingName
-      newmodelb.modelBindingType = mb.modelBindingType
-      if (mb.modelFilters && mb.modelFilters.length > 0) {
-        for (let index = 0; index < mb.modelFilters.length; index++) {
-          const element = mb.modelFilters[index]
-          if (!element.combine) {
-            element.combine = 'AND'
-          }
-        }
-        mb.modelFilters[mb.modelFilters.length - 1].combine = undefined
-      }
-      // newmodelb.modelDetailInfo = mb.modelDetailInfo
-      newmodelb.modelFilters = mb.modelFilters
-      newmodelb.modelOrders = mb.modelOrders
-      newmodelb.modelFuncColumns = mb.modelFuncColumns
-      newmodelb.val = mb.val
-
-      res.push(newmodelb)
-    }
-    return res
-  }
-
-  public getModelBindByName(name: string): modelBingding {
-    return this.modelBindings.find((o) => o.modelBindingName == name)
-  }
-
-  /**页面入参 */
-  public get inParams(): paramInfo[] {
-    var property = this.FindProperties(PropertyGroupName.normal, '页面入参')[0]
-    if (!property.value) {
-      property.value = []
-    }
-    return property.value as paramInfo[]
-  }
-  public get authorityCode(): string {
-    return this.FindProperties(PropertyGroupName.normal, '权限设置')[0].value
-  }
-
   public permissions: any[]
 
   private getPermissions(routes: any[], targetPageId: string): any[] {
@@ -168,14 +76,7 @@ export default class PageBase extends LayoutContainer {
 
     for (let index = 0; index < routes.length; index++) {
       const element = routes[index]
-      if (
-        element.meta &&
-        element.meta.query &&
-        element.meta.query.tag &&
-        element.meta.query.tag.obj &&
-        element.meta.query.tag.obj.pageId &&
-        element.meta.query.tag.obj.pageId == targetPageId
-      ) {
+      if (element.meta && element.meta.query && element.meta.query.tag && element.meta.query.tag.obj && element.meta.query.tag.obj.pageId && element.meta.query.tag.obj.pageId == targetPageId) {
         return element.meta.query.tag.obj.pagePermissionList
       }
       if (element.children) {
@@ -938,14 +839,7 @@ export default class PageBase extends LayoutContainer {
     this.resizeChange(this.children)
     return pageData
   }
-  public async LoadPageByData(
-    pageId: string,
-    pageData: SaveInfo,
-    params?: paramInfo[],
-    justLoadData: boolean = false,
-    justLoadPageData = false,
-    preLoadConfigs: PageResourceType = null
-  ) {
+  public async LoadPageByData(pageId: string, pageData: SaveInfo, params?: paramInfo[], justLoadData: boolean = false, justLoadPageData = false, preLoadConfigs: PageResourceType = null) {
     this.Id = pageId
     if (!preLoadConfigs) {
       preLoadConfigs = {
@@ -1238,10 +1132,7 @@ export default class PageBase extends LayoutContainer {
         var xxxx = 1
       } else if (isArray(sourceVal) && targetModelBind.modelDataType == modelDataTypeEnum.single) {
         window.console.warn('模型实例赋值失败,不能将数组类型的值赋给单例模型实例,模型实例名称:' + targetModelBind.modelBindingName)
-      } else if (
-        isArray(sourceVal) == false &&
-        (targetModelBind.modelDataType == modelDataTypeEnum.list || targetModelBind.modelDataType == modelDataTypeEnum.tree)
-      ) {
+      } else if (isArray(sourceVal) == false && (targetModelBind.modelDataType == modelDataTypeEnum.list || targetModelBind.modelDataType == modelDataTypeEnum.tree)) {
         window.console.warn('模型实例赋值失败,不能将单例类型的值赋给数组或树模型实例,模型实例名称:' + targetModelBind.modelBindingName)
       }
       targetModelBind.val.data = this.createIdForModelBind(sourceVal, targetModelBind)

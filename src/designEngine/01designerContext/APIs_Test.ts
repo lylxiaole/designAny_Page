@@ -4,7 +4,6 @@ import { fileInfo, AuthorityCode, APIRequestClass, APIResponseClass, PageOrderCl
 import common from '../02common/commonMethod'
 import { AxiosPromise } from 'axios'
 import { jsonlint } from '../02common/netRequest/jsonlint'
-import { getDistributedUID_Sync } from '@/utils/util'
 import ajaxrequest from '../02common/netRequest/requestAjax'
 
 export default class APIs implements IAPIBase {
@@ -17,9 +16,7 @@ export default class APIs implements IAPIBase {
       id: groupId,
       isShow: isShow
     })
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.put(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.put(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data))
   }
   //更新分组的菜单图标Url
   UpdateGroupIconUrl(groupId: string, iconUrl: string): Promise<APIRequestClass | APIRequestClass[]> {
@@ -27,9 +24,7 @@ export default class APIs implements IAPIBase {
       id: groupId,
       iconUrl: iconUrl
     })
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.put(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.put(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data))
   }
   /****************页面列表相关******************/
   GetTreeList(): Promise<APIRequestClass | APIRequestClass[]> {
@@ -87,9 +82,7 @@ export default class APIs implements IAPIBase {
       pageId: pageId,
       id: oldId
     }
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/user/component/save', data)
-    ) as any
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/user/component/save', data)) as any
   }
 
   CheckOutPage(pageIds: string[]): Promise<APIRequestClass | APIRequestClass[]> {
@@ -149,27 +142,19 @@ export default class APIs implements IAPIBase {
       appId: CurrentContext.AppID
     })
     data.id = newId
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data))
   }
   /**应用页面权限-新增 */
 
   AddPermission(data: any): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/permission', data)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/permission', data))
   }
   DeletePage(pageId: string): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.delete(CurrentContext.SeverAddress + 'genoany-user-manage-service/page', { data: [pageId] })
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.delete(CurrentContext.SeverAddress + 'genoany-user-manage-service/page', { data: [pageId] }))
     // return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.delete(CurrentContext.SeverAddress + 'genoany-user-manage-service/page?id=' + pageId))
   }
   DeleteGroup(groupId: string): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.delete(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group/del', { data: [groupId] })
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.delete(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group/del', { data: [groupId] }))
   }
   UpdatePage(pageId: string, name: string, parentGroupId: string): Promise<APIRequestClass | APIRequestClass[]> {
     if (!parentGroupId) {
@@ -182,9 +167,7 @@ export default class APIs implements IAPIBase {
   }
   RestorPage(pageId: string): Promise<APIRequestClass | APIRequestClass[]> {
     // window.console.log('pageId', pageId)
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/restore', { params: { id: pageId } })
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/restore', { params: { id: pageId } }))
   }
   UpdateGroup(groupId: string, name: string, pageType: number, parentGroupId?: string): Promise<APIRequestClass | APIRequestClass[]> {
     if (!parentGroupId) {
@@ -193,9 +176,7 @@ export default class APIs implements IAPIBase {
 
     var data = new APIRequestClass({ groupName: name, parentId: parentGroupId, pageType: pageType })
     data.id = groupId
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.put(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.put(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/group', data))
   }
 
   RefreshPageIndex(indexInfos: PageOrderClass[]): Promise<APIRequestClass | APIRequestClass[]> {
@@ -206,9 +187,7 @@ export default class APIs implements IAPIBase {
   SavePageData(pageId: string, pagecontent: any, resourceObj: any): Promise<APIRequestClass | APIRequestClass[]> {
     var data = new APIRequestClass({ designContentString: pagecontent, appId: CurrentContext.AppID, resourceObject: resourceObj })
     data.id = pageId
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/change/content', data)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/change/content', data))
   }
   GetPageData(pageId: string): APIRequestClass | APIRequestClass[] {
     var requestUrl = CurrentContext.SeverAddress + 'genoany-user-manage-service/page/page/content?pageId=' + pageId
@@ -219,20 +198,14 @@ export default class APIs implements IAPIBase {
   }
 
   GetPageVersion(pageId: string): Promise<APIRequestClass> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/find/design/content/version?id=' + pageId)
-    ) as any
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/find/design/content/version?id=' + pageId)) as any
   }
 
   LeadOutPage(data: any): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/export/page/data', data)
-    ) as any
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/export/page/data', data)) as any
   }
   LeadInPage(data: any, parentMenuId: string): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/import/page/data', data)
-    ) as any
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/page/import/page/data', data)) as any
   }
 
   /******模型相关**************************************** */
@@ -246,22 +219,14 @@ export default class APIs implements IAPIBase {
     return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-crud-service/model/page', data))
   }
 
-  GetModelPageDetail(
-    pageNumber: number,
-    pageSize: number,
-    groupId?: number,
-    modelName?: string,
-    modelCode?: string
-  ): Promise<APIRequestClass | APIRequestClass[]> {
+  GetModelPageDetail(pageNumber: number, pageSize: number, groupId?: number, modelName?: string, modelCode?: string): Promise<APIRequestClass | APIRequestClass[]> {
     var data = new APIRequestClass({
       pageNumber: pageNumber,
       pageSize: pageSize,
       filter: { groupId: groupId, modelName: modelName, modelCode: modelCode, modelType: 'BASIC' },
       orders: [{ fieldName: 'modifyTime', direction: 'DESC' }]
     })
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-crud-service/model/page/all', data)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-crud-service/model/page/all', data))
   }
 
   GetBaseModelList(pageIndex: number, pageSize: number, modelName?: string, modelCode?: string): Promise<APIRequestClass | APIRequestClass[]> {
@@ -275,9 +240,7 @@ export default class APIs implements IAPIBase {
   }
   GetModelInfoById(modelId: string): Promise<APIRequestClass> {
     // window.console.log('获取模型信息')
-    var res = APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/model?id=' + modelId)
-    )
+    var res = APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/model?id=' + modelId))
     return res as Promise<APIRequestClass>
   }
   GetModelInfoById_sync(modelId: string): APIRequestClass {
@@ -290,17 +253,13 @@ export default class APIs implements IAPIBase {
   }
   GetModelInfoByCode(modelcode: string): Promise<APIRequestClass> {
     //window.console.log('获取模型信息**************by code')
-    var res = APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/model/code?code=' + modelcode)
-    )
+    var res = APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/model/code?code=' + modelcode))
     return res as Promise<APIRequestClass>
   }
 
   GetModelInfosByCodes(modelcodes: string[]): Promise<APIRequestClass> {
     // window.console.log('获取多个模型信息')
-    var res = APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-crud-service/model/code', modelcodes)
-    )
+    var res = APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-crud-service/model/code', modelcodes))
     return res as Promise<APIRequestClass>
   }
   GetModelInfosByCodes_Sync(modelcodes: string[]): APIRequestClass[] {
@@ -310,9 +269,7 @@ export default class APIs implements IAPIBase {
   }
 
   GetModelDeatilInfo(modelId: string): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/property/model?modelId=' + modelId)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/property/model?modelId=' + modelId))
   }
   /********工作流************************************** */
   GetWorkOrderFlowList(pageNumber: number, pageSize: number, workflowName: string): APIRequestClass | APIRequestClass[] {
@@ -354,9 +311,7 @@ export default class APIs implements IAPIBase {
 
   StartWorkOrderFlow_Async(workflowId: string, inparams: any): Promise<APIRequestClass | APIRequestClass[]> {
     var requestData = new APIRequestClass({ workflowId: workflowId, data: inparams })
-    var res = APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-workflow-scheduler-service/workflow/start', requestData)
-    )
+    var res = APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-workflow-scheduler-service/workflow/start', requestData))
     return res as Promise<APIRequestClass>
     // var requestData = new APIRequestClass({ workflowId: workflowId, data: inparams })
     // var requestUrl = CurrentContext.SeverAddress + 'genoany-workflow-scheduler-service/workflow/start'
@@ -796,27 +751,19 @@ export default class APIs implements IAPIBase {
   }
   /** 虚模型详细属性的获取 */
   GetVirtulModelByCode(modelCode: string): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/virtul/code?code=' + modelCode)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/virtul/code?code=' + modelCode))
   }
 
   GetVirtulModelById(modelId: string): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/virtul?id=' + modelId)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-crud-service/virtul?id=' + modelId))
   }
 
   GetAppMenuTree(param: any): Promise<APIRequestClass | APIRequestClass[]> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/app/user/menu', param)
-    )
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.post(CurrentContext.SeverAddress + 'genoany-user-manage-service/app/user/menu', param))
   }
 
   GetUserInfo(userId: number): Promise<APIRequestClass> {
-    return APIResponseClass.analysisResponse(
-      CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-user-manage-service/sys/user?id=' + userId)
-    ) as any
+    return APIResponseClass.analysisResponse(CurrentContext.CurrentAxios.get(CurrentContext.SeverAddress + 'genoany-user-manage-service/sys/user?id=' + userId)) as any
   }
 
   GetAllTreeList(): Promise<APIRequestClass | APIRequestClass[]> {
