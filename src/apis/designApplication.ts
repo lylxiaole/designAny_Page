@@ -16,19 +16,23 @@ export class ApplicationDC {
   public isDeleted: boolean
 }
 
-export function GetApplicationList() {
+export async function GetApplicationList() {
   let url = apiAddr() + 'api/designApplication/GetApplicationList'
-  return ajaxGet(url)
+  const resp = await ajaxGet(url)
+  return resp.data
 }
-export function AddApplication(data: ApplicationDC) {
+export async function AddApplication(data: ApplicationDC) {
   let url = apiAddr() + 'api/designApplication/AddApplication'
-  return ajaxPost(url, data)
+  const resp = await ajaxPost(url, data)
+  return resp.data
 }
-export function DeleteApplication(data: ApplicationDC) {
+export async function DeleteApplication(data: ApplicationDC) {
   let url = apiAddr() + 'api/designApplication/DeleteApplication'
-  return ajaxGet(url)
+  const resp = await ajaxGet(url)
+  return resp.data
 }
-export function UpdateApplication(data: ApplicationDC) {
+export async function UpdateApplication(data: ApplicationDC) {
   let url = apiAddr() + 'api/designApplication/UpdateApplication'
-  return ajaxGet(url)
+  const resp = await ajaxGet(url)
+  return resp.data
 }

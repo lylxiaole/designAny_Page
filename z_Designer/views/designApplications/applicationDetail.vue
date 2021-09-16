@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="currentApplication">
     <div style="box-sizing:border-box;width:500px;margin:0px auto">
       <el-row class="detailrow">
         <el-col :span="12" class="middleAlign" style="text-align:right">应用名称:</el-col>
