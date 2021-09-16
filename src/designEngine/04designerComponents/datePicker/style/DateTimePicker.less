@@ -1,0 +1,168 @@
+@import '../../style/theme/index';
+/deep/ .ant-calendar {
+  &-selected-date &-date:hover,
+  &-selected-start-date &-date:hover,
+  &-selected-end-date &-date:hover {
+    background: @primary-color;
+  }
+
+  &-header {
+    a {
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+  // 时间选择器样式
+  &-time-picker {
+    &-select {
+      li {
+        &:hover {
+          background: @item-hover-bg;
+        }
+
+        &:focus {
+          color: @primary-color;
+        }
+      }
+    }
+  }
+
+  &-date {
+    &:hover {
+      background: @item-hover-bg;
+    }
+    &:active {
+      background: @primary-color;
+    }
+  }
+
+  &-selected-day &-date {
+    background: @primary-color;
+    color: @text-color-inverse !important;
+  }
+
+  &-today &-date {
+    color: @primary-color;
+    border-color: @primary-color;
+    &:active {
+      color: @text-color-inverse;
+    }
+
+    &-selected-date &-selected-day {
+      color: @text-color-inverse;
+    }
+  }
+
+  &-footer {
+    &-btn a {
+      color: @primary-color;
+      &hover {
+        color: @item-hover-bg;
+      }
+    }
+  }
+
+  & &-ok-btn {
+    color: @text-color-inverse;
+    background-color: @primary-color;
+    border-color: @primary-color;
+    &:hover,
+    &:focus {
+      // color: @btn-primary-color;
+      background-color: ~`colorPalette('@{primary-color}', 5) `;
+      border-color: ~`colorPalette('@{primary-color}', 7) `;
+    }
+
+    &:active {
+      // color: @btn-primary-color;
+      background-color: ~`colorPalette('@{primary-color}', 7) `;
+      border: ~`colorPalette('@{primary-color}', 7) `;
+    }
+  }
+
+  &-year-panel {
+    &-year {
+      color: @text-color;
+      &:hover {
+        color: @primary-color;
+        background: @item-hover-bg;
+      }
+    }
+    &-selected-cell &-year {
+      color: @text-color-inverse;
+      background: @primary-color;
+      &:hover {
+        color: @text-color-inverse;
+        background: @primary-color;
+      }
+    }
+  }
+
+  &-decade-panel-decade {
+    &:hover {
+      background: @item-hover-bg;
+    }
+  }
+
+  &-decade-panel-selected-cell &-decade-panel-decade {
+    color: @text-color-inverse;
+    background: @primary-color;
+    &:hover {
+      color: @text-color-inverse;
+      background: @primary-color;
+    }
+  }
+
+  &-month-panel-month {
+    &:hover {
+      background: @item-hover-bg;
+    }
+  }
+
+  &-month-panel-selected-cell &-month-panel-month {
+    color: @text-color-inverse;
+    background: @primary-color;
+
+    &:hover {
+      color: @text-color-inverse;
+      background: @primary-color;
+    }
+  }
+
+  &-week-number &-body {
+    tr {
+      &:hover {
+        background: ~`colorPalette('@{primary-color}', 5) `;
+      }
+      &.ant-calendar-active-week {
+        background: ~`colorPalette('@{primary-color}', 4) `;
+      }
+    }
+  }
+}
+
+/deep/.ant-time-picker {
+  &-input:hover {
+    border-color: @primary-color;
+    border-right-width: 1px !important;
+  }
+
+  &-panel {
+    &-select {
+      li {
+        &:hover {
+          background: @item-hover-bg;
+        }
+        &:focus {
+          color: @primary-color;
+        }
+      }
+    }
+  }
+}
+
+/deep/ ::selection {
+  color: @text-color-inverse;
+  background: @text-selection-bg;
+}

@@ -1,0 +1,109 @@
+import AWS from './ceph'
+function S3UploadResult() {
+  /**
+   * 文件key，例如：“/2019-07-10/test.txt”、“test.txt”。
+   */
+  this.key
+  /**
+   * 文件相对位置，格式遵循restful。格式为：/{bucketName}/{key}?versionId={versionId}
+   */
+  this.relativePath
+  /**
+   * 上传文件时的完整路径。格式遵循restful。格式为：http://{service-address}/{bucketName}/{key}?versionId={version}
+   */
+  this.path
+  // /**
+  //  * 文件md5值
+  //  */
+  // this.md5;
+  /**
+   * 文件版本
+   */
+  this.version
+  /**
+   * 文件Etag
+   */
+  this.etag
+}
+
+var fileserviceAddress = ''
+var geno_token = ''
+
+NpUpload = function(file, sucess, error, callProgress) {
+  let urlfileserviceAddress = new URL(fileserviceAddress)
+  AWS.config.update({
+    endpoint: urlfileserviceAddress.host,
+  })
+
+  var s3 = new AWS.S3({
+    accessKeyId: 'i',
+    secretAccessKey: 'like',
+    region: 'it',
+    s3ForcePathStyle: true,
+    sslEnabled: false,
+    clientSideMonitoring: false,
+    sessionToken: 'Bearer ' + geno_token,
+  })
+
+  if (file) {
+    results.innerHTML = ''
+    let params = {
+      Bucket: urlfileserviceAddress.pathname.substring(1),
+      Key: file.name,
+      Body: file,
+    }
+    let upload = s3
+      .upload(params, {
+        queueSize: 3,
+        connectTimeout: 60 * 1008 * 10,
+        httpoptions: {
+          timeout: 60 * 100 * 10,
+        },
+      })
+      .on('httpUploadProgress', function(e) {
+        let precent = parseInt(e.loaded, 10) / parseInt(e.total, 10)
+        precent = precent.toFixed(2) * 100
+        setTimeout(function() {
+          if (callProgress) {
+            callProgress(e.part, precent)
+          }
+        }, 100)
+      })
+
+    function getUrlParam(url, name) {
+      let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
+      let r = url.search.substr(1).match(reg)
+      if (r != null) return unescape(r[2])
+      return null
+    }
+
+    function initS3UploadResult(data) {
+      let resurl = new URL(data.Location)
+      let res = new S3UploadResult()
+      res.key = data.Key
+      res.relativePath = data.Location.substring(fileserviceAddress.length)
+      res.path = data.Location
+      // res.md5 = '';
+      res.version = getUrlParam(resurl, 'versionId')
+      res.etag = data.ETag
+      return res
+    }
+
+    function sendupload() {
+      upload.send(function(err, data) {
+        //console.log(data)
+        if (err) {
+          if (error) error(err)
+        } else {
+          if (sucess) {
+            var res = initS3UploadResult(data)
+            sucess(res)
+          }
+        }
+      })
+    }
+    sendupload()
+  } else {
+    if (error) error('no file!')
+  }
+}

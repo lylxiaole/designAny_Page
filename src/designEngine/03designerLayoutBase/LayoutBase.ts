@@ -1,0 +1,1015 @@
+import eventBase from './BaseEvents'
+import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
+import { layoutEvent, layoutMethod, param, paramType } from '../02common/commonClasses/layoutEvent'
+import { layoutEventBehaviors } from '../02common/behavior/behaviorTypes'
+import { CurrentApis, fileInfo, CurrentContext } from '../01designerContext'
+
+import { ModelInfo, ModelBindingProperty, ModelPropertyType } from '../02common/impResourcesCache/modelAnalysis'
+import {
+  Property,
+  PropertyType,
+  Text_Property,
+  Behavior_Property,
+  Number_Property,
+  PropertyGroupName,
+  Color_Property,
+  UploadFile_Property,
+  Boolean_Property,
+  EnumModal_Property,
+  Enum_Property
+} from '../02common/commonClasses/LayoutProperty'
+import common from '../02common/commonMethod'
+
+export enum LayoutType {
+  /**系统组件 */
+  system_component = 'system_component',
+  /**组件模板 */
+  component_template = 'component_template',
+  /**功能组件 */
+  functional_component = 'functional_component',
+  /**模型组件 */
+  model_component = 'model_component'
+}
+
+export class LayoutInfo {
+  constructor(
+    _type: LayoutType,
+    _groupName: string,
+    _name: string,
+    _component: any,
+    _icon: any,
+    _sourceId?: string,
+    _modelDetail?: ModelInfo,
+    _compCode?: string
+  ) {
+    this.type = _type
+    this.groupName = _groupName
+    this.name = _name
+    this.component = _component
+    this.sourceId = _sourceId
+    this.icon = _icon
+    this.modelDetail = _modelDetail
+    this.compCode = _compCode
+  }
+  type: LayoutType
+  compCode: string
+  groupName: string = ''
+  name: string = ''
+  component: any
+  icon: any
+  ///
+  sourceId: string
+  modelDetail: ModelInfo
+  bindingProperty: ModelBindingProperty
+  isNew: boolean
+  data: any
+}
+
+type propertyValidatorHandle = (newval: any) => boolean
+class propertyValidatorType {
+  propertyId: string
+  handle: propertyValidatorHandle
+}
+export class SaveInfo {
+  id: string
+  layoutInfo: LayoutInfo
+  properties: Property[]
+  children: SaveInfo[]
+}
+
+export class Point {
+  X: number = -1
+  Y: number = -1
+}
+
+@Component
+export default class LayoutBase extends eventBase {
+  //因为vue的watcher不能区别复杂类型的先后变化，所以我加了一个属性副本，用于对比属性变化
+  protected properties_old: any[] = []
+  private properties: Property[] = []
+
+  public layoutInfo: LayoutInfo
+  public parentLayout: LayoutBase
+  /**子级布局 */
+  protected children: LayoutBase[] = []
+  public isSelected: boolean = false
+
+  /***属性的值验证 */
+  propertyValidators: propertyValidatorType[] = []
+  /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
+  private designerEvents: layoutEvent[] = []
+
+  // selectedComponents
+  get selectedChildren(): LayoutBase[] {
+    return this.children.filter((o) => o.isSelected == true)
+  }
+  public get layoutChildren(): LayoutBase[] {
+    return this.children
+  }
+
+  public get LayoutProperties(): Property[] {
+    return this.properties
+  }
+
+  public get DesignerEvents(): layoutEvent[] {
+    if (!this.designerEvents) {
+      this.designerEvents = []
+    }
+    var property = this.FindPropertyByName(PropertyGroupName.normal, '行为设置')
+
+    if (property && !property.value) {
+      property.value = []
+    }
+    /**布局中的所有事件和行为的对应关系 */
+    var eventBehaviors = property.value as layoutEventBehaviors[]
+
+    for (let index = 0; index < this.designerEvents.length; index++) {
+      const event = this.designerEvents[index]
+      var find = eventBehaviors.find((o) => o.eventName == event.eventName)
+      if (find) {
+        event.behaviorIds = find.behaviorIds
+      }
+    }
+    return this.designerEvents
+  }
+  public set DesignerEvents(val: layoutEvent[]) {
+    var property = this.FindPropertyByName(PropertyGroupName.normal, '行为设置')
+    var newvals: layoutEventBehaviors[] = []
+    for (let index = 0; index < val.length; index++) {
+      const element = val[index]
+      var nval = new layoutEventBehaviors()
+      nval.eventName = element.eventName
+      nval.behaviorIds = element.behaviorIds
+      newvals.push(nval)
+    }
+    property.value = newvals
+  }
+
+  /** 自定义方法,图形化编程会库触发这个方法*/
+  private designerMethods: layoutMethod[] = []
+  public get DesignerMethods(): layoutMethod[] {
+    if (!this.designerMethods) {
+      this.designerMethods = []
+    }
+    return this.designerMethods
+  }
+  /**重写组件的render行为 */
+  private oldrender: Function = null
+  private newrender(createElement: any, hack: any): any {
+    this.$nextTick(() => {
+      this.rendered(this.$el)
+    })
+    return this.oldrender(createElement, hack)
+  }
+
+  created() {
+    if (this.IsDesigning) {
+      this.RegisterProperty('唯一Id', PropertyGroupName.normal, new Text_Property(), common.getUuid(), false, false)
+      this.RegisterProperty('名称', PropertyGroupName.normal, new Text_Property())
+      this.RegisterProperty('宽度', PropertyGroupName.normal, new Number_Property(), 1624, true, true, 'px')
+      this.RegisterProperty('高度', PropertyGroupName.normal, new Number_Property(), 786, true, true, 'px')
+      this.RegisterProperty('左边位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('顶部位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('外边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('外边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('外边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('外边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+
+      this.RegisterProperty('内边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('内边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('内边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('内边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.RegisterProperty('字体', PropertyGroupName.normal, new Number_Property(), 14, true, true, 'px')
+      this.RegisterProperty(
+        '字体样式',
+        PropertyGroupName.normal,
+        new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']),
+        '微软雅黑',
+        true,
+        true
+      )
+      this.RegisterProperty('背景图片', PropertyGroupName.normal, new UploadFile_Property(1, 'image'))
+      this.RegisterProperty('背景色', PropertyGroupName.normal, new Color_Property(), 'white')
+      this.RegisterProperty('是否使用主题', PropertyGroupName.normal, new Boolean_Property(), false)
+      this.RegisterProperty('行为设置', PropertyGroupName.normal, new Behavior_Property())
+    }
+
+    this.onCreated(this)
+  }
+  mounted() {
+    this.oldrender = this.$options.render
+    this.$options.render = this.newrender
+    //开始捕捉鼠标键盘事件
+    if (this.IsDesigning == true) {
+      this.CaptureEvent()
+    }
+
+    this.$nextTick(() => {
+      if (!this.onMounted) {
+        return
+      }
+
+      this.onMounted(this)
+      this.properties_old = common.clone(this.properties)
+      this.$watch('LayoutProperties', this.watch_properties, { deep: true, immediate: false })
+    })
+  }
+
+  updated() {
+    this.$nextTick(() => {
+      this.onUpdated(this)
+    })
+  }
+  destroyed() {
+    // window.console.log('销毁了页面组件:', this.Id)
+    this.onDestroyed(this)
+    this.destorymethod()
+  }
+
+  private async destorymethod() {
+    this.$off()
+    for (let index = 0; index < this.LayoutProperties.length; index++) {
+      const element = this.LayoutProperties[index]
+      element.destory()
+    }
+    for (let index = 0; index < this.layoutChildren.length; index++) {
+      const o = this.layoutChildren[index]
+      o.Destory()
+    }
+
+    $(this.$el).remove()
+    for (const key in (this as any).prototype) {
+      delete (this as any).prototype[key]
+    }
+    for (const key in this) {
+      delete this[key]
+    }
+  }
+
+  rendered(dom: Element) {}
+
+  get Id(): string {
+    if (!this.FindPropertyByName) {
+      return ''
+    }
+    var pro = this.FindPropertyByName('基础设置', '唯一Id')
+    if (!pro) {
+      return ''
+    }
+    return pro.value
+  }
+  set Id(val: string) {
+    if (!this.FindPropertyByName) {
+      return
+    }
+    var pro = this.FindPropertyByName('基础设置', '唯一Id')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, val)
+  }
+
+  get name(): string {
+    var pro = this.FindPropertyByName('基础设置', '名称')
+    if (!pro) {
+      return ''
+    }
+    return pro.value
+  }
+  set name(val: string) {
+    var pro = this.FindPropertyByName('基础设置', '名称')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, val)
+  }
+  get width(): any {
+    var pro = this.FindPropertyByName('基础设置', '宽度')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as any
+  }
+  set width(val: any) {
+    var pro = this.FindPropertyByName('基础设置', '宽度')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get height(): any {
+    var pro = this.FindPropertyByName('基础设置', '高度')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as any
+  }
+  set height(val: any) {
+    var pro = this.FindPropertyByName('基础设置', '高度')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get left(): number {
+    var pro = this.FindPropertyByName('基础设置', '左边位置')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set left(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '左边位置')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get top(): number {
+    var pro = this.FindPropertyByName('基础设置', '顶部位置')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set top(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '顶部位置')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+
+  get margin_left(): number {
+    var pro = this.FindPropertyByName('基础设置', '外边距-左')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set margin_left(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '外边距-左')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get margin_right(): number {
+    var pro = this.FindPropertyByName('基础设置', '外边距-右')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set margin_right(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '外边距-右')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get margin_top(): number {
+    var pro = this.FindPropertyByName('基础设置', '外边距-上')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set margin_top(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '外边距-上')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get margin_bottom(): number {
+    var pro = this.FindPropertyByName('基础设置', '外边距-下')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set margin_bottom(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '外边距-下')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+
+  get padding_left(): number {
+    var pro = this.FindPropertyByName('基础设置', '内边距-左')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set padding_left(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '内边距-左')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get padding_right(): number {
+    var pro = this.FindPropertyByName('基础设置', '内边距-右')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set padding_right(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '内边距-右')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get padding_top(): number {
+    var pro = this.FindPropertyByName('基础设置', '内边距-上')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set padding_top(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '内边距-上')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+  get padding_bottom(): number {
+    var pro = this.FindPropertyByName('基础设置', '内边距-下')
+    if (!pro) {
+      return 0
+    }
+    return parseInt(pro.value) as number
+  }
+  set padding_bottom(val: number) {
+    var pro = this.FindPropertyByName('基础设置', '内边距-下')
+    if (!pro) {
+      return
+    }
+    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+  }
+
+  get fontFamily(): string {
+    // '宋体', '楷体', '黑体', '隶书'
+    var property = this.FindPropertyByName(PropertyGroupName.normal, '字体样式')
+    if (!property) {
+      return ''
+    }
+    switch (property.value) {
+      case '微软雅黑':
+        return 'Microsoft YaHei'
+        break
+      case 'times new roman':
+        return 'Times New Roman'
+        break
+      case '宋体':
+        return 'SimSun'
+        break
+      case '楷体':
+        return 'KaiTi'
+        break
+      case '黑体':
+        return 'SimHei'
+        break
+      case '隶书':
+        return 'LiSu'
+        break
+      default:
+        break
+    }
+    return ''
+  }
+
+  get background(): string {
+    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景色')
+    if (property) {
+      return property.value
+    } else {
+      return '#ffffff'
+    }
+  }
+  set background(val: string) {
+    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景色')
+    if (!property) {
+      return
+    }
+    this.SetPropertyVal(property.id, val)
+  }
+
+  get background_img(): fileInfo {
+    // window.console.log('获取背景图片')
+    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景图片')
+    if (property && property.value && property.value.length > 0) {
+      return property.value[0]
+    } else {
+      return null
+    }
+  }
+  set background_img(val: fileInfo) {
+    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景图片')
+    if (!property) {
+      return
+    }
+    if (val) {
+      this.SetPropertyVal(property.id, [val])
+    } else {
+      this.SetPropertyVal(property.id, [])
+    }
+  }
+
+  get isUseTheme(): boolean {
+    var pro = this.FindPropertyByName(PropertyGroupName.normal, '是否使用主题')
+    if (!pro) {
+      return false
+    }
+    return pro.value as boolean
+  }
+  // *************************privates****************************************************************************
+
+  private _findSelectedLayoutsRecursion(comps: LayoutBase[]): LayoutBase[] {
+    var res: LayoutBase[] = []
+    for (let index = 0; index < comps.length; index++) {
+      const comp = comps[index]
+      if (comp.isSelected == true) {
+        res.push(comp)
+      }
+      if (comp.layoutChildren) {
+        var finds = this._findSelectedLayoutsRecursion(comp.layoutChildren)
+        res = res.concat(finds)
+      }
+    }
+    return res
+  }
+
+  private _findLayoutRecursion(id: string, lays: LayoutBase[]): LayoutBase {
+    //添加空值判断
+    if (!lays) {
+      return null
+    }
+    for (let index = 0; index < lays.length; index++) {
+      const layout = lays[index]
+      if (layout.Id == id) {
+        return layout
+      }
+      var findc = this._findLayoutRecursion(id, layout.layoutChildren)
+      if (findc) {
+        return findc
+      }
+    }
+    return null
+  }
+  // *************************overrides****************************************************************************
+  protected renderChildFromData(data: SaveInfo) {}
+  protected loadCompleted(childrenData: SaveInfo[]) {}
+  // *************************protect方法****************************************************************************
+  /**添加子级 */
+  protected AddChild(child: LayoutBase) {
+    if (!this.children) {
+      this.children = []
+    }
+    if (this.children.indexOf(child) < 0) {
+      this.children.push(child)
+      this.onChildrenCountChange()
+    }
+  }
+
+  protected AddChilds(childs: LayoutBase[]) {
+    if (!this.children) {
+      this.children = []
+    }
+    if (childs && childs.length > 0) {
+      for (let index = 0; index < childs.length; index++) {
+        const child = childs[index]
+        this.AddChild(child)
+      }
+    }
+  }
+
+  protected RemoveChild(child: LayoutBase) {
+    let index = this.children.indexOf(child)
+    if (index < 0) {
+      return
+    }
+    this.removeLayout(child)
+    this.children.splice(index, 1)
+    this.onChildrenCountChange()
+  }
+
+  protected RemoveChilds(childs: LayoutBase[]) {
+    if (childs && childs.length > 0) {
+      for (let index = 0; index < childs.length; index++) {
+        const child = childs[index]
+        this.RemoveChild(child)
+      }
+    } else {
+      return
+    }
+  }
+
+  protected RemoveAllChilds() {
+    if (this.children && this.children.length > 0) {
+      this.RemoveChilds(this.children)
+    } else {
+      return
+    }
+  }
+  public Destory() {
+    if (this.$destroy) {
+      this.$destroy()
+    }
+  }
+
+  protected AddProperty(proper: Property) {
+    let find = this.properties.find((o) => o.propertyName == proper.propertyName && o.groupName == proper.groupName)
+    if (find) {
+      window.console.warn('已经存在相同分组相同名称的属性')
+      return
+    }
+    this.properties.push(proper)
+  }
+  /**添加属性值验证，当属性值变化前进行验证，如果验证不通过则不设置值 */
+  protected AddPropertyValidator(propertyId: string, validatorHandle: propertyValidatorHandle) {
+    var newvaildate = new propertyValidatorType()
+    newvaildate.propertyId = propertyId
+    newvaildate.handle = validatorHandle
+    this.propertyValidators.push(newvaildate)
+  }
+
+  /**触发事件 */
+  protected async TriggeEvent(name: string, inparams: any[]) {
+    var event = this.DesignerEvents.find((o) => o.eventName == name)
+    if (!event) {
+      window.console.error('事件调用失败,该事件不存在')
+      return
+    }
+
+    //TODO 在事件设计的数据中找到事件,并调用事件
+    return
+  }
+
+  protected afterSetPropertyVal(propertyId: string, val: any) {}
+  // *************************对外公布方法****************************************************************************
+  public GetSaveData(): SaveInfo {
+    this.beforeGetSaveData(this)
+    let layoutcloneData: LayoutInfo = null
+    if (this.layoutInfo) {
+      layoutcloneData = common.clone(this.layoutInfo)
+      if (layoutcloneData) {
+        if (layoutcloneData.modelDetail) {
+          layoutcloneData.modelDetail = null
+        }
+        if (layoutcloneData.bindingProperty && layoutcloneData.bindingProperty.modelProperty) {
+          layoutcloneData.bindingProperty.modelProperty = null
+        }
+        if (layoutcloneData.isNew) {
+          layoutcloneData.isNew = false
+        }
+      }
+    }
+    var saveinfo: SaveInfo = {
+      id: this.Id,
+      properties: this.LayoutProperties,
+      children: [],
+      layoutInfo: layoutcloneData
+    }
+    saveinfo.children = this.getChildrenData()
+    return saveinfo
+  }
+  private getChildrenData(): SaveInfo[] {
+    var res: SaveInfo[] = []
+    for (let index = 0; index < this.layoutChildren.length; index++) {
+      const child = this.layoutChildren[index]
+      var childdata = child.GetSaveData()
+      res.push(childdata)
+    }
+    return res
+  }
+
+  protected isLoaded: boolean = false
+  public LoadData(data: SaveInfo) {
+    // window.console.log('LoadData')
+    if (data) {
+      if (this.isLoaded) {
+        return
+      }
+      this.Id = data.id
+      // window.console.log('************加载数据,id:', this.Id)
+      this.LoadingProperties(data.id, data.properties)
+      if (data.layoutInfo) {
+        this.layoutInfo = data.layoutInfo
+      }
+      if (data.children) {
+        this.loadChildrenData(data.children)
+      }
+    }
+
+    if (data) {
+      this.loadCompleted(data.children)
+    } else {
+      this.loadCompleted([])
+    }
+
+    this.isLoaded = true
+  }
+
+  public ReLoadData(data: SaveInfo) {
+    for (let index = 0; index < this.children.length; index++) {
+      const element = this.children[index]
+      element.Destory()
+    }
+    this.children = []
+    this.isLoaded = false
+    this.LoadData(data)
+  }
+
+  private loadChildrenData(childrendatas: SaveInfo[]) {
+    for (let index = 0; index < childrendatas.length; index++) {
+      const o = childrendatas[index]
+      this.renderChildFromData(o)
+    }
+  }
+  /**递归刷新组件的所有表示性Id。危险-慎用:刷新Id后,行为设置等配置有可能会丢失 */
+  public RefreshAllIdRecursion() {
+    // window.console.log('*********************刷新了页面的所有组件Id')
+    this.Id = common.getUuid()
+    for (let index = 0; index < this.LayoutProperties.length; index++) {
+      var property = this.LayoutProperties[index]
+      property.id = common.getUuid()
+    }
+
+    for (let index = 0; index < this.children.length; index++) {
+      var o = this.children[index]
+      o.Id = common.getUuid()
+    }
+
+    for (let index = 0; index < this.layoutChildren.length; index++) {
+      const child = this.layoutChildren[index]
+      child.$once('onMounted', (layout: LayoutBase) => {
+        child.RefreshAllIdRecursion()
+      })
+    }
+  }
+
+  /**递归查找子级中所有选中的布局 */
+  public FindSelectedLayoutsRecursion() {
+    return this._findSelectedLayoutsRecursion(this.layoutChildren)
+  }
+  /**递归查找子级布局 */
+  public FindLayoutRecursion(id: string) {
+    return this._findLayoutRecursion(id, this.layoutChildren)
+  }
+  /**查找直接子级布局 */
+  public FindLayout(id: string) {
+    return this.layoutChildren.find((o) => o.Id == id)
+  }
+  /**注册方法 */
+  public RegisterMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
+    var event = this.DesignerMethods.find((o) => o.eventName == name)
+    if (event) {
+      window.console.error('注册失败,已经有相同名称的事件存在')
+      return
+    }
+    var newmethod = new layoutMethod()
+    newmethod.eventName = name
+    newmethod.description = description
+    newmethod.inParams = inParams
+    newmethod.outParam = outParam
+    newmethod.callback = callback
+    this.DesignerMethods.push(newmethod)
+  }
+  /**注册属性 */
+  public RegisterProperty(
+    name: string,
+    groupName: PropertyGroupName | string,
+    propertyType: PropertyType,
+    defaultVal?: any,
+    canSetting: boolean = true,
+    canBindModel: boolean = true,
+    unit?: string,
+    secondGroup?: string
+  ) {
+    let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
+    if (find) {
+      //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
+      return
+    }
+
+    var newperperty = new Property(name, groupName, propertyType, defaultVal)
+    newperperty.canSetting = canSetting
+    newperperty.secondGroup = secondGroup
+    if (unit) {
+      newperperty.propertyType.unit = unit
+    }
+    newperperty.canBindModel = canBindModel
+    this.properties.push(newperperty)
+  }
+  /**注册事件 */
+  public RegisterEvents(name: string, description: string, inParams: param[], outParam: param) {
+    var event = this.designerEvents.find((o) => o.eventName == name)
+    if (event) {
+      window.console.error('注册失败,已经有相同名称的事件存在')
+      return
+    }
+    var newEvent = new layoutEvent()
+    newEvent.eventName = name
+    newEvent.description = description
+    newEvent.inParams = inParams
+    newEvent.outParam = outParam
+    this.designerEvents.push(newEvent)
+  }
+  /**递归删除子组件 */
+  public RemoveChildRecursion(childId: string) {
+    var find = this.FindLayoutRecursion(childId)
+    var toparent = find.parentLayout.layoutChildren.find((x) => x.Id === childId)
+    find.parentLayout.RemoveChild(toparent)
+  }
+
+  public ExcuteMethod(name: string, inparams: any[]) {
+    if (name == '关闭页面') {
+      //兼容性脚本
+      name = '关闭页面-不触发回调'
+    }
+    var method = this.DesignerMethods.find((o) => o.eventName == name)
+
+    if (!method) {
+      window.console.error('方法调用失败,该方法不存在')
+      return
+    }
+    return method.callback(inparams)
+    //TODO 图形化编程工具会在此处调用注册的方法
+  }
+
+  /**通过已有数据加载 */
+  public LoadingProperties(layoutId: string, layout_properties: Property[]) {
+    this.Id = layoutId
+    if (layout_properties) {
+      for (let index = 0; index < layout_properties.length; index++) {
+        const item = layout_properties[index]
+        let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
+        if (find) {
+          find.id = item.id
+          this.SetPropertyVal(item.id, item.value, true, true)
+        } else {
+          var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
+          newperperty.canSetting = item.canSetting
+          newperperty.canBindModel = item.canBindModel
+          newperperty.id = item.id
+          this.AddProperty(newperperty)
+          this.SetPropertyVal(item.id, item.value, true, true)
+        }
+      }
+    }
+  }
+
+  private watch_properties(newval: Property[]) {
+    // window.console.log('布局属性变化了')
+    for (var j = 0; j < newval.length; j++) {
+      var newproperty = newval[j]
+      var filter_oldproperty = this.properties_old.find((o) => o.id == newproperty.id)
+      if (!filter_oldproperty) {
+        //..新增了一个属性
+        //Update By LH 2020/07/30
+        this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
+        // this.properties_old.push(common.clone(newproperty))
+        this.onPropertyChanged(newproperty.id, newproperty, this)
+      } else if (common.serialize(filter_oldproperty) != common.serialize(newproperty)) {
+        //..修改了一个属性的内容
+        //Update By LH 2020/07/30
+        var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
+        //var newpropertyClone = common.clone(newproperty) as Property
+        // window.console.log('检测到数据变化:', newproperty)
+        /**替换旧的属性 */
+        var index = this.properties_old.indexOf(filter_oldproperty)
+        this.properties_old.splice(index, 1, newpropertyClone)
+        this.onPropertyChanged(newproperty.id, newpropertyClone, this)
+      }
+    }
+  }
+
+  public FindProperties(groupName: string, name: string): Property[] {
+    return this.properties.filter((o) => o.groupName == groupName && o.propertyName == name)
+  }
+  public FindPropertyByName(groupName: string, name: string): Property {
+    return this.properties.find((o) => o.groupName == groupName && o.propertyName == name)
+  }
+  public FindPropertyById(Id: string): Property {
+    return this.properties.find((o) => o.id == Id)
+  }
+  public validatorPropertyValue(propertyId: string, val: any): boolean {
+    var valodators = this.propertyValidators.filter((o) => o.propertyId == propertyId)
+    for (var i = 0; i < valodators.length; i++) {
+      var o = valodators[i]
+      if (o.handle(val) == false) {
+        window.console.error('设置属性值失败，不符合验证要求')
+        return false
+      }
+    }
+    return true
+  }
+  public SetPropertyVal(propertyId: string, val: any, idNeedTriggerPropertyChange: boolean = true, isForce: boolean = false): boolean {
+    var findproperty = this.properties.find((p) => p.id == propertyId)
+    if (!findproperty) {
+      // window.console.error('设置属性值失败，没有找到对应的属性')
+      return false
+    }
+    var isok = this.validatorPropertyValue(propertyId, val)
+    if (isok == false) {
+      return false
+    }
+
+    let convert_value = findproperty.convert(val)
+    if (isForce == false && common.serialize(findproperty.value) == common.serialize(convert_value)) {
+      return false
+    }
+
+    findproperty.value = convert_value
+    if (idNeedTriggerPropertyChange == false) {
+      this.properties_old.find((p) => p.id == propertyId).value = val
+    }
+    if (idNeedTriggerPropertyChange == true) {
+      this.afterSetPropertyVal(propertyId, findproperty.value)
+    }
+
+    return true
+  }
+  public SizeChange_Up(changeVal: number) {
+    if (this.height - changeVal >= 20) {
+      this.top += changeVal
+      this.height -= changeVal
+    }
+  }
+  public SizeChange_Down(changeVal: number) {
+    if (this.height + changeVal >= 20) {
+      this.height += changeVal
+    }
+  }
+  public SizeChange_Left(changeVal: number) {
+    if (this.width - changeVal >= 20) {
+      this.left += changeVal
+      this.width -= changeVal
+    }
+  }
+  public SizeChange_Right(changeVal: number) {
+    if (this.width + changeVal >= 20) {
+      this.width += changeVal
+    }
+  }
+  public SizeChange_Up_Left(changeVal_ver: number, changeVal_hor: number) {
+    this.SizeChange_Up(changeVal_ver)
+    this.SizeChange_Left(changeVal_hor)
+  }
+  public SizeChange_Up_Right(changeVal_ver: number, changeVal_hor: number) {
+    this.SizeChange_Up(changeVal_ver)
+    this.SizeChange_Right(changeVal_hor)
+  }
+  public SizeChange_Down_Left(changeVal_ver: number, changeVal_hor: number) {
+    this.SizeChange_Down(changeVal_ver)
+    this.SizeChange_Left(changeVal_hor)
+  }
+  public SizeChange_Down_Right(changeVal_ver: number, changeVal_hor: number) {
+    this.SizeChange_Down(changeVal_ver)
+    this.SizeChange_Right(changeVal_hor)
+  }
+
+  // *************************对外公布事件****************************************************************************
+  @Emit('onPropertyChanged')
+  protected onPropertyChanged(propertyId: string, property: Property, layout: LayoutBase): void {}
+
+  @Emit('onChildrenCountChange')
+  protected onChildrenCountChange() {}
+
+  @Emit('onCreated')
+  protected onCreated(layout: LayoutBase) {}
+
+  @Emit('beforeGetSaveData')
+  protected beforeGetSaveData(layout: LayoutBase) {}
+
+  @Emit('onMounted')
+  protected onMounted(layout: LayoutBase) {}
+
+  @Emit('onUpdated')
+  protected onUpdated(layout: LayoutBase) {}
+
+  @Emit('onSizeChanged')
+  protected onSizeChanged(e: any) {}
+
+  @Emit('onDestroyed')
+  protected onDestroyed(layout: LayoutBase): void {}
+
+  protected removeLayout(layout: LayoutBase): void {
+    try {
+      // $(layout.$el)
+      //   .parent('.mengb')
+      //   .remove()
+      $(layout.$el).remove()
+      layout.$destroy()
+    } catch (error) {
+      window.console.error(error)
+    }
+  }
+}

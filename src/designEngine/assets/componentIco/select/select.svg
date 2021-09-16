@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>select 选择器备份</title>
+    <desc>Created with Sketch.</desc>
+    <g id="select-选择器备份" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="折线图-copy" transform="translate(5.000000, 10.000000)" fill-rule="nonzero">
+            <path d="M150,0 L150,50 L150,140 L0,140 L0,40 L0,0 L150,0 Z M140,50 L10,50 L10,130 L140,130 L140,50 Z M140,10 L10,10 L10,40 L140,40 L140,10 Z" id="形状结合" fill="#18AEB7"></path>
+            <path d="M104.71787,64.6756127 L115.28213,75.3243873 L69.68,120.564596 L41.7178698,92.8243873 L52.2821302,82.1756127 L69.68,99.4354041 L104.71787,64.6756127 Z M130.089129,15.7425545 L134.33177,19.9851952 L121.603848,32.7131172 L108.875925,19.9851952 L113.118566,15.7425545 L121.603848,24.2278358 L130.089129,15.7425545 Z" id="形状结合" fill="#F6C444"></path>
+        </g>
+    </g>
+</svg>

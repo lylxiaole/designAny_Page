@@ -1,0 +1,29 @@
+﻿body .layui-layer-mobile1 .layui-layer-btn {
+    overflow: hidden
+}
+
+    body .layui-layer-mobile1 .layui-layer-btn a {
+        color: #FFFFFF;
+        font-size: 2em;
+    }
+
+    body .layui-layer-mobile1 .layui-layer-btn .layui-layer-btn1 {
+      
+        background: #19CEA4;
+        width: 6em;
+        height: 3em;
+        line-height: 3em;
+        float: right;
+        text-align: center;
+    }
+
+    body .layui-layer-mobile1 .layui-layer-btn .layui-layer-btn0 {
+        background: rgba(2,2,2,0);
+        width: 6em;
+        height: 3em;
+        line-height: 3em;
+        float: left;
+        text-align: center;
+        color: #19CEA4;
+        border:none;
+    }
