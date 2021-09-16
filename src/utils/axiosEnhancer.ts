@@ -74,7 +74,6 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    window.console.log('onResponse:', response.data)
     if (response.data && response.data.success === false) {
       return Promise.reject(new Error('请求发生错误:' + response.data.errMsg))
     } else if (response.data && response.data.errCode === 401) {
@@ -151,7 +150,7 @@ function toLogin() {
 const ajaxPost = async function(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
   // window.console.log('ajaxPost:',url)
   const response = await axiosInstance.post(url, data, config)
-  return response.data
+  return response
 }
 
 /**
@@ -168,7 +167,7 @@ const ajaxPost = async function(url: string, data?: any, config?: AxiosRequestCo
  */
 const ajaxGet = async function(url: string, config?: AxiosRequestConfig): Promise<any> {
   const response = await axiosInstance.get(url, config)
-  return response.data
+  return response
 }
 
 /**
@@ -187,7 +186,7 @@ const ajaxGet = async function(url: string, config?: AxiosRequestConfig): Promis
  */
 const ajaxPut = async function(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
   const response = await axiosInstance.put(url, data, config)
-  return response.data
+  return response
 }
 
 /**
@@ -204,7 +203,7 @@ const ajaxPut = async function(url: string, data?: any, config?: AxiosRequestCon
  */
 const ajaxDelete = async function(url: string, config?: AxiosRequestConfig): Promise<any> {
   const response = await axiosInstance.delete(url, config)
-  return response.data
+  return response
 }
 
 export { ajaxGet, ajaxPost, ajaxPut, ajaxDelete, axiosInstance }

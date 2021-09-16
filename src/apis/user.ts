@@ -31,43 +31,52 @@ export class UserInfoDC {
 /**
  * data:{ username: uname, pwd: pwd, machineId: machineId }
  */
-export function login(data) {
+export async function login(data) {
   let url = apiAddr() + 'api/user/login'
-  return ajaxPost(url, data)
+  const resp = await ajaxPost(url, data)
+  return resp.data
 }
 
-export function autoLogin() {
+export async function autoLogin() {
   let url = apiAddr() + 'api/user/autoLogin'
-  return ajaxPost(url)
+  const resp = await ajaxPost(url)
+  return resp.data
 }
 
-export function requestRegisterUser(data: EmailCheckInfo) {
+export async function requestRegisterUser(data: EmailCheckInfo) {
   let url = apiAddr() + 'api/user/requestRegisterUser'
-  return ajaxPost(url, data)
+  const resp = await ajaxPost(url, data)
+  return resp.data
 }
-export function CheckRegisterInfo(data: EmailCheckInfo) {
+export async function CheckRegisterInfo(data: EmailCheckInfo) {
   let url = apiAddr() + 'api/user/checkRegisterInfo'
-  return ajaxPost(url, data)
+  const resp = await ajaxPost(url, data)
+  return resp.data
 }
-export function requestChangePwd(data: EmailCheckInfo) {
+export async function requestChangePwd(data: EmailCheckInfo) {
   let url = apiAddr() + 'api/user/requestChangePwd'
-  return ajaxPost(url, data)
+  const resp = await ajaxPost(url, data)
+  return resp.data
 }
-export function CheckChangePwdInfo(data: EmailCheckInfo) {
+export async function CheckChangePwdInfo(data: EmailCheckInfo) {
   let url = apiAddr() + 'api/user/CheckChangePwdInfo'
-  return ajaxPost(url, data)
+  const resp = await ajaxPost(url, data)
+  return resp.data
 }
 
-export function getUserByUserId(userId: string): Promise<UserInfoDC> {
+export async function getUserByUserId(userId: string): Promise<UserInfoDC> {
   let url = apiAddr() + 'api/user/getUserByUserId?userId=' + userId
-  return ajaxGet(url)
+  const resp = await ajaxGet(url)
+  return resp.data
 }
-export function getSelfInfo(): Promise<UserInfoDC> {
+export async function getSelfInfo(): Promise<UserInfoDC> {
   let url = apiAddr() + 'api/user/getSelfInfo'
-  return ajaxGet(url)
+  const resp = await ajaxGet(url)
+  return resp.data
 }
 
-export function UpdateSelfInfo(user: UserInfoDC): Promise<boolean> {
+export async function UpdateSelfInfo(user: UserInfoDC): Promise<boolean> {
   let url = apiAddr() + 'api/user/UpdateSelfInfo'
-  return ajaxPost(url, user)
+  const resp = await ajaxPost(url, user)
+  return resp.data
 }
