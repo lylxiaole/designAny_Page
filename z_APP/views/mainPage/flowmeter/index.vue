@@ -11,7 +11,7 @@
       </van-col>
     </van-row>
     <van-list style="height:calc(100% - 4rem);width:100%">
-      <jiliangCard class="jiliangCard" v-for="item in list" :key="item.jlbid" :cardInfo="item" @onCardClick="onClickCard" />
+      <jiliangCard class="jiliangCard" v-for="item in list" :key="item.jlbid" :cardInfo="item" @onCardClick="onClickCard(item)" />
     </van-list>
   </div>
 </template>
@@ -20,7 +20,7 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import jiliangCard from './jiliangCard.vue'
-import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, jlbzdcx } from '../../../serviceAPIs/service'
 
 @Component({
   components: {
@@ -29,7 +29,7 @@ import { jkzl, jlbjk } from '../../../serviceAPIs/service'
 })
 export default class Index extends PageBase {
   mounted() {
-    this.getJlbTagInfo()
+    this.getAllArea()
   }
 
   activated() {
@@ -43,11 +43,37 @@ export default class Index extends PageBase {
     }
     // **************************************************************************
   }
+
+  // **********模糊搜索条件*****************************************
+  private searchStr: string = ''
+  private currentArea: string = '0'
+  private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
+  private async getAllArea() {
+    this.areaList = []
+    let res = await jlbzdcx()
+    for (let index = 0; index < res.length; index++) {
+      const element = res[index]
+      this.areaList.push({ text: element.QYMC, value: element.QYID })
+    }
+    this.currentArea = this.areaList[0].value
+    await this.getJlbTagInfo()
+  }
+  private chooseAreaChanged(e: any) {
+    this.currentArea = e
+    this.getJlbTagInfo()
+  }
   // **********获取流量计数据列表*****************************************
+  private get list(): any[] {
+    if (!this.searchStr) {
+      return this.flowmeterList
+    }
+    return this.flowmeterList.filter((o) => o.wh.indexOf(this.searchStr) > -1)
+  }
   private flowmeterList: any[] = []
   private async getJlbTagInfo() {
     var formData = new FormData()
     formData.append('action', 'getJlbTagInfo')
+    formData.append('qyid', this.currentArea)
     let res = await jkzl(formData)
     this.flowmeterList = []
     if (!res) {
@@ -61,27 +87,15 @@ export default class Index extends PageBase {
         temp: element.dataVals.wd + '℃',
         instantaneousFlow: element.dataVals.sjllbl + 'L',
         density: element.dataVals.md,
-        cumulativeFlow: element.dataVals.ljll + 'L'
+        cumulativeFlow: element.dataVals.ljll + 'L',
+        isAlarm: element.dataVals.bj.indexOf('有报警') > -1
       })
     }
   }
-  private onClickCard() {
-    this.$router.push({ path: '/index/flowmeterDetail' })
+  private onClickCard(item: any) {
+    this.$router.push({ path: '/index/flowmeterDetail', query: { jlbid: item.jlbid } })
   }
-  // **********模糊搜索条件*****************************************
-  private get list(): any[] {
-    if (!this.searchStr) {
-      return this.flowmeterList
-    }
-    return this.flowmeterList.filter((o) => o.wh.indexOf(this.searchStr) > -1)
-  }
-  private searchStr: string = ''
-  private currentArea: number = 0
-  private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
-  // ******************区域筛选条件***********************************
-  private chooseAreaChanged(e: any) {
-    this.currentArea = e
-  }
+
   // *******************************************************
 }
 </script>

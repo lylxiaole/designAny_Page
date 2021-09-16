@@ -30,3 +30,11 @@ export async function jkzl(data: any): Promise<any> {
   const resp = await ajaxPost(url, data)
   return resp
 }
+/**获取所有物理区域 */
+export async function jlbzdcx(): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getQy')
+  let url = `${apiAddr()}/jlbjk/jlbzdcx.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}

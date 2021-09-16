@@ -32,12 +32,18 @@ import PageBase from '@src/views/PageBase'
 import detailCard from './detailCard.vue'
 import * as echarts from 'echarts'
 import resizer from 'element-resize-detector'
+import { jkzl, jlbjk, jlbzdcx } from '../../../serviceAPIs/service'
+
 @Component({ components: { detailCard: detailCard } })
 export default class Index extends PageBase {
   mounted() {
     this.listenChartDomSize()
     this.getDataList()
   }
+  activated() {
+    this.getDataList()
+  }
+
   beforeDestroy() {
     this.unlisenDomSize()
   }
@@ -259,7 +265,15 @@ export default class Index extends PageBase {
   }
   // *****************初始化列表数据*******************************
   private dataList: any[] = []
-  private async getDataList() {}
+  private async getDataList() {
+    let jlbid = this.$route.query.jlbid as any
+    var formData = new FormData()
+    formData.append('action', 'getJlbTagInfo')
+    formData.append('jlbid', jlbid)
+
+    let res = await jkzl(formData)
+    window.console.log('计量表详细信息:', res)
+  }
 
   private onClickCard() {
     this.$router.push({ path: '/index/flowmeterDetailChart' })
