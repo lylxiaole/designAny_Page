@@ -5,9 +5,9 @@
         <div style="transform:rotate(90deg);" id="chartArea"></div>
       </template>
     </van-cell>
-    <van-list>
+    <!-- <van-list>
       <detailCard v-for="item in dataList" :key="item" :title="item" />
-    </van-list>
+    </van-list> -->
   </div>
 </template>
 
@@ -16,11 +16,18 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import * as echarts from 'echarts'
 import resizer from 'element-resize-detector'
+import { jkzl, jlbjk, jlbzdcx } from '../../../serviceAPIs/service'
+import moment from 'moment'
 @Component
 export default class detailChart extends PageBase {
   mounted() {
     this.drawCharts()
   }
+
+  activated() {
+    this.getDataList()
+  }
+
   beforeDestroy() {
     this.unlisenDomSize()
   }
@@ -90,6 +97,20 @@ export default class detailChart extends PageBase {
   }
   // *****************详细信息列表*******************************
   private dataList: any[] = []
+
+  private async getDataList() {
+    let time = (this.$route.params.item as any).time //日期
+    let id = (this.$route.params.item as any).id //日期
+    let tag = (this.$route.params.item as any).key //日期
+    var formData = new FormData()
+    formData.append('action', 'getCurve')
+    formData.append('jlbid', id)
+    formData.append('rq', moment(time).format('yyyy-MM-DD'))
+    formData.append('tagmc', tag)
+
+    let res = await jkzl(formData)
+    window.console.log('xxxxxxxxxxxxxxxx:', res)
+  }
 }
 </script>
 <style  lang="less" scoped>
