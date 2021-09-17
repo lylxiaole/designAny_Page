@@ -5,19 +5,7 @@ import { layoutEventBehaviors } from '../02common/behavior/behaviorTypes'
 import { CurrentApis, fileInfo, CurrentContext } from '../01designerContext'
 
 import { ModelInfo, ModelBindingProperty, ModelPropertyType } from '../02common/impResourcesCache/modelAnalysis'
-import {
-  Property,
-  PropertyType,
-  Text_Property,
-  Behavior_Property,
-  Number_Property,
-  PropertyGroupName,
-  Color_Property,
-  UploadFile_Property,
-  Boolean_Property,
-  EnumModal_Property,
-  Enum_Property
-} from '../02common/commonClasses/LayoutProperty'
+import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from '../02common/commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
 
 export enum LayoutType {
@@ -26,22 +14,11 @@ export enum LayoutType {
   /**组件模板 */
   component_template = 'component_template',
   /**功能组件 */
-  functional_component = 'functional_component',
-  /**模型组件 */
-  model_component = 'model_component'
+  functional_component = 'functional_component'
 }
 
 export class LayoutInfo {
-  constructor(
-    _type: LayoutType,
-    _groupName: string,
-    _name: string,
-    _component: any,
-    _icon: any,
-    _sourceId?: string,
-    _modelDetail?: ModelInfo,
-    _compCode?: string
-  ) {
+  constructor(_type: LayoutType, _groupName: string, _name: string, _component: any, _icon: any, _sourceId?: string, _modelDetail?: ModelInfo, _compCode?: string) {
     this.type = _type
     this.groupName = _groupName
     this.name = _name
@@ -82,9 +59,7 @@ export class Point {
   Y: number = -1
 }
 
-@Component
 export default class LayoutBase extends eventBase {
-  //因为vue的watcher不能区别复杂类型的先后变化，所以我加了一个属性副本，用于对比属性变化
   protected properties_old: any[] = []
   private properties: Property[] = []
 
@@ -94,10 +69,8 @@ export default class LayoutBase extends eventBase {
   protected children: LayoutBase[] = []
   public isSelected: boolean = false
 
-  /***属性的值验证 */
-  propertyValidators: propertyValidatorType[] = []
   /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
-  private designerEvents: layoutEvent[] = []
+  private _designerEvents: layoutEvent[] = []
 
   // selectedComponents
   get selectedChildren(): LayoutBase[] {
@@ -107,13 +80,13 @@ export default class LayoutBase extends eventBase {
     return this.children
   }
 
-  public get LayoutProperties(): Property[] {
+  public get layoutProperties(): Property[] {
     return this.properties
   }
 
-  public get DesignerEvents(): layoutEvent[] {
-    if (!this.designerEvents) {
-      this.designerEvents = []
+  public get designerEvents(): layoutEvent[] {
+    if (!this._designerEvents) {
+      this._designerEvents = []
     }
     var property = this.FindPropertyByName(PropertyGroupName.normal, '行为设置')
 
@@ -123,16 +96,16 @@ export default class LayoutBase extends eventBase {
     /**布局中的所有事件和行为的对应关系 */
     var eventBehaviors = property.value as layoutEventBehaviors[]
 
-    for (let index = 0; index < this.designerEvents.length; index++) {
-      const event = this.designerEvents[index]
+    for (let index = 0; index < this._designerEvents.length; index++) {
+      const event = this._designerEvents[index]
       var find = eventBehaviors.find((o) => o.eventName == event.eventName)
       if (find) {
         event.behaviorIds = find.behaviorIds
       }
     }
-    return this.designerEvents
+    return this._designerEvents
   }
-  public set DesignerEvents(val: layoutEvent[]) {
+  public set designerEvents(val: layoutEvent[]) {
     var property = this.FindPropertyByName(PropertyGroupName.normal, '行为设置')
     var newvals: layoutEventBehaviors[] = []
     for (let index = 0; index < val.length; index++) {
@@ -146,20 +119,12 @@ export default class LayoutBase extends eventBase {
   }
 
   /** 自定义方法,图形化编程会库触发这个方法*/
-  private designerMethods: layoutMethod[] = []
-  public get DesignerMethods(): layoutMethod[] {
-    if (!this.designerMethods) {
-      this.designerMethods = []
+  private _designerMethods: layoutMethod[] = []
+  public get designerMethods(): layoutMethod[] {
+    if (!this._designerMethods) {
+      this._designerMethods = []
     }
-    return this.designerMethods
-  }
-  /**重写组件的render行为 */
-  private oldrender: Function = null
-  private newrender(createElement: any, hack: any): any {
-    this.$nextTick(() => {
-      this.rendered(this.$el)
-    })
-    return this.oldrender(createElement, hack)
+    return this._designerMethods
   }
 
   created() {
@@ -180,14 +145,7 @@ export default class LayoutBase extends eventBase {
       this.RegisterProperty('内边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
       this.RegisterProperty('内边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
       this.RegisterProperty('字体', PropertyGroupName.normal, new Number_Property(), 14, true, true, 'px')
-      this.RegisterProperty(
-        '字体样式',
-        PropertyGroupName.normal,
-        new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']),
-        '微软雅黑',
-        true,
-        true
-      )
+      this.RegisterProperty('字体样式', PropertyGroupName.normal, new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
       this.RegisterProperty('背景图片', PropertyGroupName.normal, new UploadFile_Property(1, 'image'))
       this.RegisterProperty('背景色', PropertyGroupName.normal, new Color_Property(), 'white')
       this.RegisterProperty('是否使用主题', PropertyGroupName.normal, new Boolean_Property(), false)
@@ -197,28 +155,14 @@ export default class LayoutBase extends eventBase {
     this.onCreated(this)
   }
   mounted() {
-    this.oldrender = this.$options.render
-    this.$options.render = this.newrender
     //开始捕捉鼠标键盘事件
     if (this.IsDesigning == true) {
       this.CaptureEvent()
     }
-
-    this.$nextTick(() => {
-      if (!this.onMounted) {
-        return
-      }
-
-      this.onMounted(this)
-      this.properties_old = common.clone(this.properties)
-      this.$watch('LayoutProperties', this.watch_properties, { deep: true, immediate: false })
-    })
   }
 
   updated() {
-    this.$nextTick(() => {
-      this.onUpdated(this)
-    })
+    this.onUpdated(this)
   }
   destroyed() {
     // window.console.log('销毁了页面组件:', this.Id)
@@ -227,9 +171,8 @@ export default class LayoutBase extends eventBase {
   }
 
   private async destorymethod() {
-    this.$off()
-    for (let index = 0; index < this.LayoutProperties.length; index++) {
-      const element = this.LayoutProperties[index]
+    for (let index = 0; index < this.layoutProperties.length; index++) {
+      const element = this.layoutProperties[index]
       element.destory()
     }
     for (let index = 0; index < this.layoutChildren.length; index++) {
@@ -783,16 +726,7 @@ export default class LayoutBase extends eventBase {
     this.DesignerMethods.push(newmethod)
   }
   /**注册属性 */
-  public RegisterProperty(
-    name: string,
-    groupName: PropertyGroupName | string,
-    propertyType: PropertyType,
-    defaultVal?: any,
-    canSetting: boolean = true,
-    canBindModel: boolean = true,
-    unit?: string,
-    secondGroup?: string
-  ) {
+  public RegisterProperty(name: string, groupName: PropertyGroupName | string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
     let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)

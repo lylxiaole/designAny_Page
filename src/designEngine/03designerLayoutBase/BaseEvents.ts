@@ -1,7 +1,7 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import dragHelper, { dragulaExtand } from '../02common/dragHelper'
 import common from '../02common/commonMethod'
-
+import HookBase from './HookBase'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
   drop_system_component = 'drop_system_component',
@@ -34,7 +34,7 @@ class optionsClass {
   public clickTimer: number = null
 }
 
-export default class BaseEvents {
+export default class BaseEvents extends HookBase {
   protected _dragHelper: dragHelper
   protected _currentDom: Element
   public IsDesigning: boolean = false
