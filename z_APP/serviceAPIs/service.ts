@@ -38,3 +38,23 @@ export async function jlbzdcx(): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
+
+export async function wbjh(wbjhsj: string, wbzt: string): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'GetDataAll')
+  formData.append('wbjhsj', wbjhsj)
+  formData.append(wbzt, wbzt)
+  let url = `${apiAddr()}/sbtz/wbjh.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+
+export async function xjjh(xjjhsj: string, xjzt: string): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getXJJHAll')
+  formData.append('xjjhsj', xjjhsj)
+  formData.append('xjzt', xjzt)
+  let url = `${apiAddr()}/sbtz/xjjh.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
