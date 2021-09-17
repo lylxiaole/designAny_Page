@@ -3,7 +3,7 @@
     <van-cell title="计量表实时信息">
       <template #label>
         <div style="height:12rem">
-          <van-tabs style="height:100%" @rendered="tabrendered" id="mainTabs" :swipeable="true" :lazy-render="true">
+          <van-tabs style="height:100%" v-model="tabsActived" @rendered="tabrendered" id="mainTabs" :swipeable="true" :lazy-render="true">
             <van-tab title="温度">
               <div style="width:100%;height:calc(100% - 44px);" id="wenduChart"></div>
             </van-tab>
@@ -35,6 +35,7 @@ import resizer from 'element-resize-detector'
 import { jkzl, jlbjk, jlbzdcx } from '../../../serviceAPIs/service'
 import { async } from 'q'
 import moment from 'moment'
+import { watch } from 'fs'
 @Component({ components: { detailCard: detailCard } })
 export default class Index extends PageBase {
   // **************定时器***************************************
@@ -48,10 +49,7 @@ export default class Index extends PageBase {
     this.currentjlbid = this.$route.query.jlbid as any
     this.intervalTimer = window.setInterval(() => {
       this.getDataList().then(async () => {
-        await this.tabrendered('', '温度')
-        await this.tabrendered('', '密度')
-        await this.tabrendered('', '瞬间流量')
-        await this.tabrendered('', '累计流量')
+        await this.tabrendered('', this.getTitleByActivedTab(this.tabsActived))
       })
     }, 10000)
   }
@@ -89,6 +87,7 @@ export default class Index extends PageBase {
     this.currentResizer.removeAllListeners($(this.$el).find('#mainTabs'))
   }
   // *********延迟渲染,按需渲染echarts********************************************
+  private tabsActived: number = 0
   private wenduChart: any = null
   private miduChart: any = null
   private shunjianChart: any = null
@@ -98,6 +97,31 @@ export default class Index extends PageBase {
   private miduOption: any = {}
   private shunjianOption: any = {}
   private leijiOption: any = {}
+
+  @Watch('tabsActived')
+  ontabsActivedChanged(newval) {
+    window.console.log('tabsActived:', this.getTitleByActivedTab(this.tabsActived))
+    this.tabrendered('', this.getTitleByActivedTab(this.tabsActived))
+  }
+
+  private getTitleByActivedTab(val) {
+    switch (val) {
+      case 0:
+        return '温度'
+        break
+      case 1:
+        return '密度'
+        break
+      case 2:
+        return '瞬间流量'
+        break
+      case 3:
+        return '累计流量'
+        break
+      default:
+        break
+    }
+  }
 
   private initChartsOption() {
     this.wenduOption = { xAxis: [], datas: [] }
@@ -110,22 +134,30 @@ export default class Index extends PageBase {
     await this.$nextTick()
     if (title === '温度' && $(this.$el).find('#wenduChart').length > 0) {
       let wenduRenderArea = $(this.$el).find('#wenduChart')
-      this.wenduChart = echarts.init(wenduRenderArea[0])
+      if (!this.wenduChart) {
+        this.wenduChart = echarts.init(wenduRenderArea[0])
+      }
       this.setWenduOption()
       this.wenduChart.resize()
     } else if (title === '密度' && $(this.$el).find('#miduChart').length > 0) {
       let miduRenderArea = $(this.$el).find('#miduChart')
-      this.miduChart = echarts.init(miduRenderArea[0])
+      if (!this.miduChart) {
+        this.miduChart = echarts.init(miduRenderArea[0])
+      }
       this.setMiduOption()
       this.miduChart.resize()
     } else if (title === '瞬间流量' && $(this.$el).find('#shunjianChart').length > 0) {
       let shunjianRenderArea = $(this.$el).find('#shunjianChart')
-      this.shunjianChart = echarts.init(shunjianRenderArea[0])
+      if (!this.shunjianChart) {
+        this.shunjianChart = echarts.init(shunjianRenderArea[0])
+      }
       this.setShunjianOption()
       this.shunjianChart.resize()
     } else if (title === '累计流量' && $(this.$el).find('#leijiChart').length > 0) {
       let leijiRenderArea = $(this.$el).find('#leijiChart')
-      this.leijiChart = echarts.init(leijiRenderArea[0])
+      if (!this.leijiChart) {
+        this.leijiChart = echarts.init(leijiRenderArea[0])
+      }
       this.setLeijiOption()
       this.leijiChart.resize()
     }
@@ -295,6 +327,36 @@ export default class Index extends PageBase {
       ]
     })
   }
+
+  // *****************初始化列表数据*******************************
+  private dataList: any[] = []
+  private async getDataList() {
+    var formData = new FormData()
+    formData.append('action', 'getOneJlbTagInfo')
+    formData.append('jlbid', this.currentjlbid)
+
+    let res = await jkzl(formData)
+    this.dataList = []
+
+    for (let index = 0; index < res.length; index++) {
+      const element = res[index]
+      this.cuteChartOptions(element)
+      this.dataList.push({
+        key: element.PHDTAG,
+        count: element.PHDVALUE,
+        time: element.PHDTIME,
+        desc: element.TAGMC,
+        danwei: element.JLDW,
+        id: element.JLBID
+      })
+    }
+
+    // window.console.log('计量表详细信息:', res)
+    // window.console.log('温度:', this.wenduOption)
+    // window.console.log('密度:', this.miduOption)
+    // window.console.log('瞬间流量:', this.shunjianOption)
+    // window.console.log('累计流量:', this.leijiOption)
+  }
   private cuteChartOptions(item) {
     let time = moment(item.PHDTIME).format('HH:mm:ss')
     if (item.PHDTAG.indexOf('TI') > -1) {
@@ -323,40 +385,9 @@ export default class Index extends PageBase {
       }
     }
   }
-  // *****************初始化列表数据*******************************
-
-  private dataList: any[] = []
-  private async getDataList() {
-    var formData = new FormData()
-    formData.append('action', 'getOneJlbTagInfo')
-    formData.append('jlbid', this.currentjlbid)
-
-    let res = await jkzl(formData)
-    this.dataList = []
-
-    for (let index = 0; index < res.length; index++) {
-      const element = res[index]
-      this.cuteChartOptions(element)
-      this.dataList.push({
-        key: element.PHDTAG,
-        count: element.PHDVALUE,
-        time: element.PHDTIME,
-        desc: element.TAGMC,
-        danwei: element.JLDW,
-        id: element.JLBID
-      })
-    }
-
-    window.console.log('计量表详细信息:', res)
-    // window.console.log('温度:', this.wenduOption)
-    // window.console.log('密度:', this.miduOption)
-    // window.console.log('瞬间流量:', this.shunjianOption)
-    // window.console.log('累计流量:', this.leijiOption)
-  }
-
   private onClickCard(item) {
     window.console.log('onClickCard:', item)
-    this.$router.push({ name: 'flowmeterDetailChart', params: { item: item } })
+    this.$router.push({ path: '/index/flowmeterDetailChart', query: item })
   }
 }
 </script>
