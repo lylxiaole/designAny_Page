@@ -379,19 +379,6 @@ export default class APIs implements IAPIBase {
     return allcodes
   }
   /********************************************** */
-  GetServerUUID(): string {
-    return getDistributedUID_Sync(1)
-    // let url = CurrentContext.SeverAddress + 'genoany-common-service/global/unique/id'
-    // return ajaxrequest.ajaxget_sync(url).toString()
-  }
-
-  GetUniqueIds(num: number): string[] {
-    if (num == 1) {
-      return [getDistributedUID_Sync(1)]
-    } else {
-      return getDistributedUID_Sync(num) as string[]
-    }
-  }
 
   GetUniqueIds_Api(num: number): string[] {
     let url = CurrentContext.SeverAddress + 'genoany-common-service/global/unique/ids?number=' + num

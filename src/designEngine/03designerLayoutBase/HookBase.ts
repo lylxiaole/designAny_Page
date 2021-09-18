@@ -7,6 +7,6 @@ export default class HookBase {
   protected created() {}
   protected beforeMounted() {}
   protected mounted() {}
-  protected beforeDestoryed() {}
+  protected beforeDestroy() {}
   protected destoryed() {}
 }

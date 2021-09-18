@@ -6,6 +6,7 @@ import { Property } from '../02common/commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
 import { CurrentApis } from '../01designerContext'
 import { ComponentBase } from '../04designerComponents'
+import { findSystemComp, findSystemCompByCode } from '../04designerComponents'
 
 export default class LayoutContainer extends LayoutBase {
   //横向尺子
@@ -31,7 +32,7 @@ export default class LayoutContainer extends LayoutBase {
         if (this.IsDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
             LayoutContainer.copyComp = this.selectedChildren[0] as ComponentBase
-            this.$message.success('组件已剪切', 2)
+            // this.$message.success('组件已剪切', 2)
             LayoutContainer.isCut = true
             e.stopPropagation()
           }
@@ -41,7 +42,7 @@ export default class LayoutContainer extends LayoutBase {
         if (this.IsDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
             LayoutContainer.copyComp = this.selectedChildren[0] as ComponentBase
-            this.$message.success('组件已复制', 2)
+            // this.$message.success('组件已复制', 2)
             LayoutContainer.isCut = false
             e.stopPropagation()
           }
@@ -64,8 +65,7 @@ export default class LayoutContainer extends LayoutBase {
           //复制操作需要给组件新Id
           compData.id = common.getUuid()
         }
-
-        let compclass = this.findSystemComp(compData.layoutInfo.groupName, compData.layoutInfo.name)
+        let compclass = findSystemComp(compData.layoutInfo.groupName, compData.layoutInfo.name)
         //为了准确性
         let findchildren = this.FindSelectedLayoutsRecursion()
         let newcopyComp: LayoutBase = null
@@ -82,18 +82,18 @@ export default class LayoutContainer extends LayoutBase {
         }
         newcopyComp.LoadData(compData)
 
-        newcopyComp.$once('onMounted', (layout: ComponentBase) => {
-          if (LayoutContainer.isCut == false) {
-            /**粘贴操作需要重新刷新所有Id,并让组件的Id跟渲染钱一致 */
-            newcopyComp.RefreshAllIdRecursion()
-            newcopyComp.Id = compData.id
-          }
+        // newcopyComp.$once('onMounted', (layout: ComponentBase) => {
+        //   if (LayoutContainer.isCut == false) {
+        //     /**粘贴操作需要重新刷新所有Id,并让组件的Id跟渲染钱一致 */
+        //     newcopyComp.RefreshAllIdRecursion()
+        //     newcopyComp.Id = compData.id
+        //   }
 
-          newcopyComp.top = this.mouseY
-          newcopyComp.left = this.mouseX
-          this.$message.success('组件已粘贴', 2)
-          LayoutContainer.copyComp = null
-        })
+        //   newcopyComp.top = this.mouseY
+        //   newcopyComp.left = this.mouseX
+        //   // this.$message.success('组件已粘贴', 2)
+        //   LayoutContainer.copyComp = null
+        // })
         e.stopPropagation()
       }
       this.onMouseMove_Event = this.onMouseMoveE
@@ -123,7 +123,7 @@ export default class LayoutContainer extends LayoutBase {
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {
-          let compclass = this.findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
           if (!compclass) {
             break
           }
@@ -135,7 +135,7 @@ export default class LayoutContainer extends LayoutBase {
         break
       case DragItemTypeEnum.drop_component_template:
         {
-          let compclass = this.findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
           if (!compclass) {
             break
           }
@@ -143,9 +143,9 @@ export default class LayoutContainer extends LayoutBase {
           let compdata = this.getCompTemplateData(compInfo.sourceId)
           if (dropcomp) {
             dropcomp.LoadData(compdata)
-            dropcomp.$once('onMounted', (layout: LayoutBase) => {
-              dropcomp.RefreshAllIdRecursion()
-            })
+            // dropcomp.$once('onMounted', (layout: LayoutBase) => {
+            //   dropcomp.RefreshAllIdRecursion()
+            // })
           }
         }
         break
@@ -158,7 +158,7 @@ export default class LayoutContainer extends LayoutBase {
           let oldcomp = this.FindLayoutRecursion(compId)
           compInfo.groupName = oldcomp.layoutInfo.groupName
           compInfo.name = oldcomp.layoutInfo.name
-          let compclass = this.findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
           if (!compclass) {
             break
           }
@@ -173,7 +173,7 @@ export default class LayoutContainer extends LayoutBase {
         {
           compInfo.groupName = '内容展示'
           compInfo.name = '表单'
-          let compclass = this.findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
           if (!compclass) {
             break
           }
@@ -193,8 +193,8 @@ export default class LayoutContainer extends LayoutBase {
         break
     }
     if (dropcomp) {
-      dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize
-      dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize
+      // dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize
+      // dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize
     }
     // window.console.log('感知到drop', this.Id)
     return false
@@ -368,7 +368,7 @@ export default class LayoutContainer extends LayoutBase {
     if (!this.horRule) {
       let domid = common.getUuid()
       let dom = '<div id="' + domid + '" style="width:9999px;height:2px;background:red;position:absolute" z-index="999"></div>'
-      $(this.$el).append(dom)
+      // $(this.$el).append(dom)
       this.horRule = $('#' + domid)[0]
     }
     $(this.horRule).show()
@@ -379,7 +379,7 @@ export default class LayoutContainer extends LayoutBase {
     if (!this.verRule) {
       let domid = common.getUuid()
       let dom = '<div id="' + domid + '" style="width:2px;height:9999px;background:red;position:absolute" z-index="999"></div>'
-      $(this.$el).append(dom)
+      // $(this.$el).append(dom)
       this.verRule = $('#' + domid)[0]
     }
     $(this.verRule).show()
@@ -424,7 +424,7 @@ export default class LayoutContainer extends LayoutBase {
       return
     }
 
-    let compclass = this.findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
+    let compclass = findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
     if (!compclass) {
       return
     }
@@ -486,10 +486,9 @@ export default class LayoutContainer extends LayoutBase {
   }
 
   /************************************Emits***********************/
-  @Emit('onComponentPropertyChanged')
+
   protected onComponentPropertyChanged(propertyId: string, property: Property, comp: LayoutBase): void {}
 
-  @Emit('onComponentChildrenCountChange')
   protected onComponentChildrenCountChange(): void {}
 
   //是否需要重绘，目前只有表格组件需要重绘

@@ -45,13 +45,7 @@ export default interface IApiBase {
   GetBaseModelList(pageIndex: number, pageSize: number, modelName?: string, modelCode?: string): Promise<APIRequestClass | APIRequestClass[]>
   GetModelPage(pageNumber: number): Promise<APIRequestClass | APIRequestClass[]>
   /**分页获取模型详细信息 */
-  GetModelPageDetail(
-    pageNumber: number,
-    pageSize: number,
-    groupId?: number,
-    modelName?: string,
-    modelCode?: string
-  ): Promise<APIRequestClass | APIRequestClass[]>
+  GetModelPageDetail(pageNumber: number, pageSize: number, groupId?: number, modelName?: string, modelCode?: string): Promise<APIRequestClass | APIRequestClass[]>
   GetModelInfoById(modelId: string): Promise<APIRequestClass>
   GetModelInfoById_sync(modelId: string): APIRequestClass
   GetModelsInfoByIds_sync(modelIds: string[]): APIRequestClass[]
@@ -71,8 +65,7 @@ export default interface IApiBase {
   // UploadFile(file: FormData): AxiosPromise<fileInfo>
   GetAuthorityCodes(): AuthorityCode[]
   /**********************************************/
-  GetServerUUID(): string
-  GetUniqueIds(num: Number): string[]
+
   GetUniqueIds_Api(num: number): string[]
   GetServerTime(): string
   /**通用添加方法 */

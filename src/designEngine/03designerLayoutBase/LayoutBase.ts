@@ -16,7 +16,6 @@ export enum LayoutType {
   /**功能组件 */
   functional_component = 'functional_component'
 }
-
 export class LayoutInfo {
   constructor(_type: LayoutType, _groupName: string, _name: string, _component: any, _icon: any, _sourceId?: string, _modelDetail?: ModelInfo, _compCode?: string) {
     this.type = _type
@@ -41,7 +40,6 @@ export class LayoutInfo {
   isNew: boolean
   data: any
 }
-
 type propertyValidatorHandle = (newval: any) => boolean
 class propertyValidatorType {
   propertyId: string
@@ -53,7 +51,6 @@ export class SaveInfo {
   properties: Property[]
   children: SaveInfo[]
 }
-
 export class Point {
   X: number = -1
   Y: number = -1
@@ -68,22 +65,20 @@ export default class LayoutBase extends eventBase {
   /**子级布局 */
   protected children: LayoutBase[] = []
   public isSelected: boolean = false
-
   /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
   private _designerEvents: layoutEvent[] = []
 
-  // selectedComponents
-  get selectedChildren(): LayoutBase[] {
+  /***属性的值验证 */
+  public propertyValidators: propertyValidatorType[] = []
+  public get selectedChildren(): LayoutBase[] {
     return this.children.filter((o) => o.isSelected == true)
   }
   public get layoutChildren(): LayoutBase[] {
     return this.children
   }
-
   public get layoutProperties(): Property[] {
     return this.properties
   }
-
   public get designerEvents(): layoutEvent[] {
     if (!this._designerEvents) {
       this._designerEvents = []
@@ -160,7 +155,6 @@ export default class LayoutBase extends eventBase {
       this.CaptureEvent()
     }
   }
-
   updated() {
     this.onUpdated(this)
   }
@@ -180,7 +174,7 @@ export default class LayoutBase extends eventBase {
       o.Destory()
     }
 
-    $(this.$el).remove()
+    // $(this.$el).remove()
     for (const key in (this as any).prototype) {
       delete (this as any).prototype[key]
     }
@@ -188,9 +182,7 @@ export default class LayoutBase extends eventBase {
       delete this[key]
     }
   }
-
-  rendered(dom: Element) {}
-
+  // *************************基础属性****************************************************************************
   get Id(): string {
     if (!this.FindPropertyByName) {
       return ''
@@ -339,7 +331,6 @@ export default class LayoutBase extends eventBase {
     }
     this.SetPropertyVal(pro.id, parseInt(val.toString()))
   }
-
   get padding_left(): number {
     var pro = this.FindPropertyByName('基础设置', '内边距-左')
     if (!pro) {
@@ -396,7 +387,6 @@ export default class LayoutBase extends eventBase {
     }
     this.SetPropertyVal(pro.id, parseInt(val.toString()))
   }
-
   get fontFamily(): string {
     // '宋体', '楷体', '黑体', '隶书'
     var property = this.FindPropertyByName(PropertyGroupName.normal, '字体样式')
@@ -427,7 +417,6 @@ export default class LayoutBase extends eventBase {
     }
     return ''
   }
-
   get background(): string {
     var property = this.FindPropertyByName(PropertyGroupName.normal, '背景色')
     if (property) {
@@ -443,7 +432,6 @@ export default class LayoutBase extends eventBase {
     }
     this.SetPropertyVal(property.id, val)
   }
-
   get background_img(): fileInfo {
     // window.console.log('获取背景图片')
     var property = this.FindPropertyByName(PropertyGroupName.normal, '背景图片')
@@ -464,7 +452,6 @@ export default class LayoutBase extends eventBase {
       this.SetPropertyVal(property.id, [])
     }
   }
-
   get isUseTheme(): boolean {
     var pro = this.FindPropertyByName(PropertyGroupName.normal, '是否使用主题')
     if (!pro) {
@@ -473,7 +460,6 @@ export default class LayoutBase extends eventBase {
     return pro.value as boolean
   }
   // *************************privates****************************************************************************
-
   private _findSelectedLayoutsRecursion(comps: LayoutBase[]): LayoutBase[] {
     var res: LayoutBase[] = []
     for (let index = 0; index < comps.length; index++) {
@@ -488,7 +474,6 @@ export default class LayoutBase extends eventBase {
     }
     return res
   }
-
   private _findLayoutRecursion(id: string, lays: LayoutBase[]): LayoutBase {
     //添加空值判断
     if (!lays) {
@@ -520,7 +505,6 @@ export default class LayoutBase extends eventBase {
       this.onChildrenCountChange()
     }
   }
-
   protected AddChilds(childs: LayoutBase[]) {
     if (!this.children) {
       this.children = []
@@ -532,7 +516,6 @@ export default class LayoutBase extends eventBase {
       }
     }
   }
-
   protected RemoveChild(child: LayoutBase) {
     let index = this.children.indexOf(child)
     if (index < 0) {
@@ -542,7 +525,6 @@ export default class LayoutBase extends eventBase {
     this.children.splice(index, 1)
     this.onChildrenCountChange()
   }
-
   protected RemoveChilds(childs: LayoutBase[]) {
     if (childs && childs.length > 0) {
       for (let index = 0; index < childs.length; index++) {
@@ -553,7 +535,6 @@ export default class LayoutBase extends eventBase {
       return
     }
   }
-
   protected RemoveAllChilds() {
     if (this.children && this.children.length > 0) {
       this.RemoveChilds(this.children)
@@ -561,12 +542,7 @@ export default class LayoutBase extends eventBase {
       return
     }
   }
-  public Destory() {
-    if (this.$destroy) {
-      this.$destroy()
-    }
-  }
-
+  public Destory() {}
   protected AddProperty(proper: Property) {
     let find = this.properties.find((o) => o.propertyName == proper.propertyName && o.groupName == proper.groupName)
     if (find) {
@@ -582,10 +558,9 @@ export default class LayoutBase extends eventBase {
     newvaildate.handle = validatorHandle
     this.propertyValidators.push(newvaildate)
   }
-
   /**触发事件 */
   protected async TriggeEvent(name: string, inparams: any[]) {
-    var event = this.DesignerEvents.find((o) => o.eventName == name)
+    var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件调用失败,该事件不存在')
       return
@@ -594,7 +569,6 @@ export default class LayoutBase extends eventBase {
     //TODO 在事件设计的数据中找到事件,并调用事件
     return
   }
-
   protected afterSetPropertyVal(propertyId: string, val: any) {}
   // *************************对外公布方法****************************************************************************
   public GetSaveData(): SaveInfo {
@@ -616,7 +590,7 @@ export default class LayoutBase extends eventBase {
     }
     var saveinfo: SaveInfo = {
       id: this.Id,
-      properties: this.LayoutProperties,
+      properties: this.layoutProperties,
       children: [],
       layoutInfo: layoutcloneData
     }
@@ -632,7 +606,6 @@ export default class LayoutBase extends eventBase {
     }
     return res
   }
-
   protected isLoaded: boolean = false
   public LoadData(data: SaveInfo) {
     // window.console.log('LoadData')
@@ -659,7 +632,6 @@ export default class LayoutBase extends eventBase {
 
     this.isLoaded = true
   }
-
   public ReLoadData(data: SaveInfo) {
     for (let index = 0; index < this.children.length; index++) {
       const element = this.children[index]
@@ -669,35 +641,12 @@ export default class LayoutBase extends eventBase {
     this.isLoaded = false
     this.LoadData(data)
   }
-
   private loadChildrenData(childrendatas: SaveInfo[]) {
     for (let index = 0; index < childrendatas.length; index++) {
       const o = childrendatas[index]
       this.renderChildFromData(o)
     }
   }
-  /**递归刷新组件的所有表示性Id。危险-慎用:刷新Id后,行为设置等配置有可能会丢失 */
-  public RefreshAllIdRecursion() {
-    // window.console.log('*********************刷新了页面的所有组件Id')
-    this.Id = common.getUuid()
-    for (let index = 0; index < this.LayoutProperties.length; index++) {
-      var property = this.LayoutProperties[index]
-      property.id = common.getUuid()
-    }
-
-    for (let index = 0; index < this.children.length; index++) {
-      var o = this.children[index]
-      o.Id = common.getUuid()
-    }
-
-    for (let index = 0; index < this.layoutChildren.length; index++) {
-      const child = this.layoutChildren[index]
-      child.$once('onMounted', (layout: LayoutBase) => {
-        child.RefreshAllIdRecursion()
-      })
-    }
-  }
-
   /**递归查找子级中所有选中的布局 */
   public FindSelectedLayoutsRecursion() {
     return this._findSelectedLayoutsRecursion(this.layoutChildren)
@@ -712,7 +661,7 @@ export default class LayoutBase extends eventBase {
   }
   /**注册方法 */
   public RegisterMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
-    var event = this.DesignerMethods.find((o) => o.eventName == name)
+    var event = this.designerMethods.find((o) => o.eventName == name)
     if (event) {
       window.console.error('注册失败,已经有相同名称的事件存在')
       return
@@ -723,7 +672,7 @@ export default class LayoutBase extends eventBase {
     newmethod.inParams = inParams
     newmethod.outParam = outParam
     newmethod.callback = callback
-    this.DesignerMethods.push(newmethod)
+    this.designerMethods.push(newmethod)
   }
   /**注册属性 */
   public RegisterProperty(name: string, groupName: PropertyGroupName | string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
@@ -762,13 +711,12 @@ export default class LayoutBase extends eventBase {
     var toparent = find.parentLayout.layoutChildren.find((x) => x.Id === childId)
     find.parentLayout.RemoveChild(toparent)
   }
-
   public ExcuteMethod(name: string, inparams: any[]) {
     if (name == '关闭页面') {
       //兼容性脚本
       name = '关闭页面-不触发回调'
     }
-    var method = this.DesignerMethods.find((o) => o.eventName == name)
+    var method = this.designerMethods.find((o) => o.eventName == name)
 
     if (!method) {
       window.console.error('方法调用失败,该方法不存在')
@@ -777,7 +725,6 @@ export default class LayoutBase extends eventBase {
     return method.callback(inparams)
     //TODO 图形化编程工具会在此处调用注册的方法
   }
-
   /**通过已有数据加载 */
   public LoadingProperties(layoutId: string, layout_properties: Property[]) {
     this.Id = layoutId
@@ -799,7 +746,6 @@ export default class LayoutBase extends eventBase {
       }
     }
   }
-
   private watch_properties(newval: Property[]) {
     // window.console.log('布局属性变化了')
     for (var j = 0; j < newval.length; j++) {
@@ -834,6 +780,7 @@ export default class LayoutBase extends eventBase {
   public FindPropertyById(Id: string): Property {
     return this.properties.find((o) => o.id == Id)
   }
+
   public validatorPropertyValue(propertyId: string, val: any): boolean {
     var valodators = this.propertyValidators.filter((o) => o.propertyId == propertyId)
     for (var i = 0; i < valodators.length; i++) {
@@ -849,10 +796,6 @@ export default class LayoutBase extends eventBase {
     var findproperty = this.properties.find((p) => p.id == propertyId)
     if (!findproperty) {
       // window.console.error('设置属性值失败，没有找到对应的属性')
-      return false
-    }
-    var isok = this.validatorPropertyValue(propertyId, val)
-    if (isok == false) {
       return false
     }
 
@@ -911,37 +854,18 @@ export default class LayoutBase extends eventBase {
   }
 
   // *************************对外公布事件****************************************************************************
-  @Emit('onPropertyChanged')
   protected onPropertyChanged(propertyId: string, property: Property, layout: LayoutBase): void {}
-
-  @Emit('onChildrenCountChange')
   protected onChildrenCountChange() {}
-
-  @Emit('onCreated')
   protected onCreated(layout: LayoutBase) {}
-
-  @Emit('beforeGetSaveData')
   protected beforeGetSaveData(layout: LayoutBase) {}
-
-  @Emit('onMounted')
   protected onMounted(layout: LayoutBase) {}
-
-  @Emit('onUpdated')
   protected onUpdated(layout: LayoutBase) {}
-
-  @Emit('onSizeChanged')
   protected onSizeChanged(e: any) {}
-
-  @Emit('onDestroyed')
   protected onDestroyed(layout: LayoutBase): void {}
-
   protected removeLayout(layout: LayoutBase): void {
     try {
-      // $(layout.$el)
-      //   .parent('.mengb')
-      //   .remove()
-      $(layout.$el).remove()
-      layout.$destroy()
+      // $(layout.$el).remove()
+      // layout.$destroy()
     } catch (error) {
       window.console.error(error)
     }

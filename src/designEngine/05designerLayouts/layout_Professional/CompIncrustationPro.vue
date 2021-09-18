@@ -39,7 +39,7 @@ import BaseEvent from '../../03designerLayoutBase/BaseEvents'
 import { ComponentBase } from '../../04designerComponents'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 
-@Component
+// @Component
 export default class CompIncrustationPro extends BaseEvent {
   private Component: ComponentBase = null
   public positionval: string = null
@@ -121,7 +121,7 @@ export default class CompIncrustationPro extends BaseEvent {
             this.Component.parentPage.chooseComps([])
           }
           ;(this.Component.parentLayout as any).chooseComps([this.Component])
-          $(this.$el).focus()
+          // $(this.$el).focus()
           e.stopPropagation()
         }
       }
@@ -129,15 +129,14 @@ export default class CompIncrustationPro extends BaseEvent {
   }
 
   destroyed() {
-    this.$off()
-    $(this.$el).remove()
-
-    for (const key in (this as any).prototype) {
-      delete (this as any).prototype[key]
-    }
-    for (const key in this) {
-      delete this[key]
-    }
+    // this.$off()
+    // $(this.$el).remove()
+    // for (const key in (this as any).prototype) {
+    //   delete (this as any).prototype[key]
+    // }
+    // for (const key in this) {
+    //   delete this[key]
+    // }
   }
 
   public AddComponent(comp: ComponentBase) {
@@ -145,63 +144,62 @@ export default class CompIncrustationPro extends BaseEvent {
       this.Component.Destory()
     }
     this.Component = comp
-    this.Component.$mount(this.$refs.compContent as Element)
-    $(this.Component.$el).css('width', '100%')
-    $(this.Component.$el).css('height', '100%')
-    this.Component.$once('onDestroyed', () => {
-      this.$destroy()
-    })
+    // this.Component.$mount(this.$refs.compContent as Element)
+    // $(this.Component.$el).css('width', '100%')
+    // $(this.Component.$el).css('height', '100%')
+    // this.Component.$once('onDestroyed', () => {
+    //   this.$destroy()
+    // })
   }
 
   public onDragSize(el: Element, dragdata: DragItemData<any>) {
-    if (el == this.$refs['dragIcon'] || el == this.$refs['dragmengb']) {
-      dragdata.type = DragItemTypeEnum.dragmove_component_inpage
-      dragdata.dragData = { compId: this.Component.Id }
-      return
-    }
-    dragdata.type = DragItemTypeEnum.drag_component_size
-
-    let you_xia = this.$refs['semove'] as Element
-    let zuo_xia = this.$refs['swmove'] as Element
-    let you_shang = this.$refs['nemove'] as Element
-    let zuo_shang = this.$refs['nwmove'] as Element
-    let shang = this.$refs['nmove'] as Element
-    let xia = this.$refs['smove'] as Element
-    let zuo = this.$refs['wmove'] as Element
-    let you = this.$refs['emove'] as Element
-    if (el == you_xia) {
-      this._dragHelper.makeDomCanDrag(you_xia)
-      dragdata.dragData = { position: 'you_xia', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(you_xia, common.clone(common.clone(dragdata)))
-    } else if (el == zuo_xia) {
-      this._dragHelper.makeDomCanDrag(zuo_xia)
-      dragdata.dragData = { position: 'zuo_xia', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(zuo_xia, common.clone(dragdata))
-    } else if (el == you_shang) {
-      this._dragHelper.makeDomCanDrag(you_shang)
-      dragdata.dragData = { position: 'you_shang', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(you_shang, common.clone(dragdata))
-    } else if (el == zuo_shang) {
-      this._dragHelper.makeDomCanDrag(zuo_shang)
-      dragdata.dragData = { position: 'zuo_shang', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(zuo_shang, common.clone(dragdata))
-    } else if (el == shang) {
-      this._dragHelper.makeDomCanDrag(shang)
-      dragdata.dragData = { position: 'shang', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(shang, common.clone(dragdata))
-    } else if (el == xia) {
-      this._dragHelper.makeDomCanDrag(xia)
-      dragdata.dragData = { position: 'xia', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(xia, common.clone(dragdata))
-    } else if (el == zuo) {
-      this._dragHelper.makeDomCanDrag(zuo)
-      dragdata.dragData = { position: 'zuo', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(zuo, common.clone(dragdata))
-    } else if (el == you) {
-      this._dragHelper.makeDomCanDrag(you)
-      dragdata.dragData = { position: 'you', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(you, common.clone(dragdata))
-    }
+    //   if (el == this.$refs['dragIcon'] || el == this.$refs['dragmengb']) {
+    //     dragdata.type = DragItemTypeEnum.dragmove_component_inpage
+    //     dragdata.dragData = { compId: this.Component.Id }
+    //     return
+    //   }
+    //   dragdata.type = DragItemTypeEnum.drag_component_size
+    //   let you_xia = this.$refs['semove'] as Element
+    //   let zuo_xia = this.$refs['swmove'] as Element
+    //   let you_shang = this.$refs['nemove'] as Element
+    //   let zuo_shang = this.$refs['nwmove'] as Element
+    //   let shang = this.$refs['nmove'] as Element
+    //   let xia = this.$refs['smove'] as Element
+    //   let zuo = this.$refs['wmove'] as Element
+    //   let you = this.$refs['emove'] as Element
+    //   if (el == you_xia) {
+    //     this._dragHelper.makeDomCanDrag(you_xia)
+    //     dragdata.dragData = { position: 'you_xia', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(you_xia, common.clone(common.clone(dragdata)))
+    //   } else if (el == zuo_xia) {
+    //     this._dragHelper.makeDomCanDrag(zuo_xia)
+    //     dragdata.dragData = { position: 'zuo_xia', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(zuo_xia, common.clone(dragdata))
+    //   } else if (el == you_shang) {
+    //     this._dragHelper.makeDomCanDrag(you_shang)
+    //     dragdata.dragData = { position: 'you_shang', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(you_shang, common.clone(dragdata))
+    //   } else if (el == zuo_shang) {
+    //     this._dragHelper.makeDomCanDrag(zuo_shang)
+    //     dragdata.dragData = { position: 'zuo_shang', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(zuo_shang, common.clone(dragdata))
+    //   } else if (el == shang) {
+    //     this._dragHelper.makeDomCanDrag(shang)
+    //     dragdata.dragData = { position: 'shang', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(shang, common.clone(dragdata))
+    //   } else if (el == xia) {
+    //     this._dragHelper.makeDomCanDrag(xia)
+    //     dragdata.dragData = { position: 'xia', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(xia, common.clone(dragdata))
+    //   } else if (el == zuo) {
+    //     this._dragHelper.makeDomCanDrag(zuo)
+    //     dragdata.dragData = { position: 'zuo', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(zuo, common.clone(dragdata))
+    //   } else if (el == you) {
+    //     this._dragHelper.makeDomCanDrag(you)
+    //     dragdata.dragData = { position: 'you', compId: this.Component.Id }
+    //     this._dragHelper.makeDragItemInfo(you, common.clone(dragdata))
+    //   }
   }
 }
 </script>
