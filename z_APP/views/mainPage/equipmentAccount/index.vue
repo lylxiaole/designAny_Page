@@ -10,10 +10,9 @@
       <van-col :span="8">
         <div style="height:3rem;line-height:3rem;width:100%;position:relative" @click="showChooseDate=true">
           <div style="height:3rem;float:left;line-height:3rem;">{{currentChooseDate}}</div>
-          <div style="height:3rem;float:right;line-height:3rem;">
-            <van-icon name="arrow" />
+          <div style="height:3rem;float:left;line-height:3rem;display:flex;margin-left:4px">
+            <van-icon style="align-self:center" name="arrow" />
           </div>
-
         </div>
       </van-col>
     </van-row>
