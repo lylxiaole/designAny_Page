@@ -121,6 +121,7 @@
     "vant": "^2.12.26",
     "vue": "2.6.10",
     "vue-class-component": "^7.2.6",
+    "vue-context-menu": "^2.0.6",
     "vue-i18n": "^8.25.0",
     "vue-loader": "^15.9.8",
     "vue-property-decorator": "8.4.2",

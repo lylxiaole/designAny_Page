@@ -10,10 +10,10 @@
         <el-col :span="12" class="middleAlign" style="text-align:left;padding-left:20px">{{appType}}</el-col>
       </el-row>
       <el-row class="detailrow middleAlign">
-        <el-button type="primary">设计应用</el-button>
+        <el-button type="primary" @click="startDesignApp">设计应用</el-button>
       </el-row>
       <el-row class="detailrow middleAlign">
-        <el-button type="primary">进入应用</el-button>
+        <el-button type="primary" @click="startDesignApp">进入应用</el-button>
       </el-row>
     </div>
   </div>
@@ -21,11 +21,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '@src/views/PageBase'
+import ComponentBase from '@src/views/ComponentBase'
 import { applicationType } from '@src/apis/designApplication'
 
 @Component
-export default class index extends PageBase {
+export default class index extends ComponentBase {
   @Prop({ default: null })
   private currentApplication: any
 
@@ -56,6 +56,11 @@ export default class index extends PageBase {
   }
 
   mounted() {}
+
+  private async startDesignApp() {
+    window.console.log('startDesignApp:', this.currentApplication)
+    this.$router.push({ path: '/designPages', query: { appId: this.currentApplication.id } })
+  }
 }
 </script>
 

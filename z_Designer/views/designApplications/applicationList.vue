@@ -33,10 +33,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '@src/views/PageBase'
+import ComponentBase from '@src/views/ComponentBase'
 import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication } from '@src/apis/designApplication'
 @Component
-export default class applicationList extends PageBase {
+export default class applicationList extends ComponentBase {
   private allApps: any = []
   private currentApplication: any = null
   mounted() {

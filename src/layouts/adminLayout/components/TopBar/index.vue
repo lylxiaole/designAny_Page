@@ -4,8 +4,8 @@
       <img style="height: 20pt;margin-top:5pt" src="@src/assets/controllerImgs/logo.png" />
     </div>
     <template v-for="route in permission_routes">
-      <div style="float:left" :key="route.path" @click="linkClick(route.path)" :style="{'float':'left','background-color':cuteBackgroundColor(route)}"
-        class="item canChooseItem">
+      <div v-if="!route.hidden" style="float:left" :key="route.path" @click="linkClick(route.path)"
+        :style="{'float':'left','background-color':cuteBackgroundColor(route)}" class="item canChooseItem">
         <span v-if="route.meta" style="color:white">
           {{route.meta.title}}
         </span>

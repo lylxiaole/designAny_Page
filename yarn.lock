@@ -13067,6 +13067,11 @@
   "resolved" "https://registry.npmjs.org/vue-class-component/-/vue-class-component-7.2.6.tgz"
   "version" "7.2.6"
 
+"vue-context-menu@^2.0.6":
+  "integrity" "sha512-wTyyjWbrGq/Rc1iivHl9ryI0IcsodRgg46CAGCm6knADDsTj5qJzo2pPDfi6y2nQreg8llJC2lGGts88tMX1sQ=="
+  "resolved" "https://registry.npmjs.org/vue-context-menu/-/vue-context-menu-2.0.6.tgz"
+  "version" "2.0.6"
+
 "vue-eslint-parser@^2.0.3":
   "integrity" "sha512-ZezcU71Owm84xVF6gfurBQUGg8WQ+WZGxgDEQu1IHFBZNx7BFZg3L1yHxrCBNNwbwFtE1GuvfJKMtb6Xuwc/Bw=="
   "resolved" "https://registry.npmjs.org/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz"
@@ -13162,7 +13167,7 @@
   "resolved" "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^2.0.0", "vue@^2.5.17", "vue@^2.x", "vue@>= 2.6.0", "vue@2.6.10", "vue@2.x":
+"vue@*", "vue@^2.0.0", "vue@^2.3.4", "vue@^2.5.17", "vue@^2.x", "vue@>= 2.6.0", "vue@2.6.10", "vue@2.x":
   "integrity" "sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.10.tgz"
   "version" "2.6.10"

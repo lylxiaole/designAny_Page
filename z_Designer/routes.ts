@@ -16,15 +16,7 @@ const routes: IRouteClass[] = [
         },
         component: () => import(/* webpackChunkName: "designApplications" */ './views/designApplications/index.vue')
       },
-      {
-        icon: 'icon-all-fill',
-        path: '/designPages',
-        name: 'designPages',
-        meta: {
-          title: '我的页面'
-        },
-        component: () => import(/* webpackChunkName: "designPages" */ './views/designPages/index.vue')
-      },
+
       {
         icon: 'icon-all-fill',
         path: '/designApis',
@@ -44,6 +36,16 @@ const routes: IRouteClass[] = [
         component: () => import(/* webpackChunkName: "designDatabases" */ './views/designDatabases/index.vue')
       }
     ]
+  },
+  {
+    icon: 'icon-all-fill',
+    path: '/designPages',
+    name: 'designPages',
+    hidden: true,
+    meta: {
+      title: '我的页面'
+    },
+    component: () => import(/* webpackChunkName: "designPages" */ './views/designPages/index.vue')
   },
   {
     path: '/login',
