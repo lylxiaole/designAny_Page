@@ -1,3 +1,5 @@
+var CircularJSON = require('circular-json-es6')
+
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
@@ -277,20 +279,20 @@ export function debounce(func, wait, immediate) {
  * @param {Object} source
  * @returns {Object}
  */
-export function deepClone(source) {
-  if (!source && typeof source !== 'object') {
-    throw new Error('error arguments:deepClone')
-  }
-  const targetObj = source.constructor === Array ? [] : {}
-  Object.keys(source).forEach((keys) => {
-    if (source[keys] && typeof source[keys] === 'object') {
-      targetObj[keys] = deepClone(source[keys])
-    } else {
-      targetObj[keys] = source[keys]
-    }
-  })
-  return targetObj
-}
+// export function deepClone(source) {
+//   if (!source && typeof source !== 'object') {
+//     throw new Error('error arguments:deepClone')
+//   }
+//   const targetObj = source.constructor === Array ? [] : {}
+//   Object.keys(source).forEach((keys) => {
+//     if (source[keys] && typeof source[keys] === 'object') {
+//       targetObj[keys] = deepClone(source[keys])
+//     } else {
+//       targetObj[keys] = source[keys]
+//     }
+//   })
+//   return targetObj
+// }
 
 /**
  * @param {Array} arr
@@ -365,3 +367,136 @@ export function getUuid() {
   }
   return 'A' + uuid.join('')
 }
+
+//深度clone对象
+export function deepClone(item) {
+  if (item == undefined || item == null || item.constructor == String || item.constructor == Number || item.constructor == Boolean || (item.constructor == Object && Object.keys(item).length == 0) || (item.constructor == Array && item.length == 0)) {
+    /**此处判断条件不能更改，要考虑NaN的情况 */
+    return item
+  }
+  return deserialize(serialize(item))
+  // return clonedeep(item)
+}
+
+//反序列化
+export function deserialize(str) {
+  if (str == undefined || str == null) {
+    /**此处判断条件不能更改，要考虑NaN的情况 */
+    return str
+  }
+  return CircularJSON.parse(str)
+}
+//序列化
+export function serialize(item) {
+  if (item == undefined || item == null) {
+    /**此处判断条件不能更改，要考虑NaN的情况 */
+    return item
+  }
+  return CircularJSON.stringify(item)
+}
+
+export function byteToString(arr) {
+  var str = '',
+    _arr = arr
+  for (var i = 0; i < _arr.length; i++) {
+    var one = _arr[i].toString(2),
+      v = one.match(/^1+?(?=0)/)
+    if (v && one.length == 8) {
+      var bytesLength = v[0].length
+      var store = _arr[i].toString(2).slice(7 - bytesLength)
+      for (var st = 1; st < bytesLength; st++) {
+        store += _arr[st + i].toString(2).slice(2)
+      }
+      str += String.fromCharCode(parseInt(store, 2))
+      i += bytesLength - 1
+    } else {
+      str += String.fromCharCode(_arr[i])
+    }
+  }
+  return str
+}
+
+export function strZip(str) {
+  try {
+    if (!str) {
+      return str
+    }
+    var binaryString = pako.gzip(str, {
+      to: 'string'
+    })
+    return btoa(binaryString)
+  } catch (error) {
+    return str
+  }
+}
+
+export function strUnZip(str) {
+  try {
+    if (!str) {
+      return str
+    }
+    str = atob(str)
+    var x = pako.ungzip(str, {
+      to: 'string'
+    })
+    return x
+  } catch (error) {
+    return str
+  }
+}
+
+/**使用相对路径，转换成文件的绝对路径，供给页面使用 */
+export function BuildingFileUrlForShow(fileserverAddr, relativePath) {
+  if (!relativePath) {
+    return ''
+  }
+  if (relativePath.indexOf('?') < 1) {
+    relativePath += '?'
+  } else {
+    relativePath += '&'
+  }
+  let x = CurrentContext.GetUserToken()
+  return fileserverAddr + relativePath + 'Access-Token=' + CurrentContext.GetUserToken() + '&&Company-Id=' + CurrentContext.GetCompanyId()
+}
+
+/////////////////////////////////////////////////////////////////
+
+/**isMain:防止闪烁 */
+export function showLoading_Async(isMain = false) {
+  if (common.asyncLoadingWindowInfo.length > 1) {
+    return
+  }
+  let newKey = common.getUuid()
+  common.asyncLoadingWindowInfo.push({ key: newKey, layerIndex: -1, isMain: isMain })
+  window.setTimeout(() => {
+    let findh = common.findLoadingInfo(newKey)
+    if (!findh || findh.isMain != isMain) {
+      return
+    }
+    // window.console.log('*********************打开loading:', isMain)
+    findh.layerIndex = window.layer.load(1, {
+      shade: [0.3, '#000'] //0.1透明度的白色背景
+    })
+  }, 150)
+  return newKey
+}
+// isMain:防止闪烁
+export function closeLoading_Async(key, isMain = false) {
+  let findh = common.findLoadingInfo(key)
+  if (!findh || findh.isMain != isMain) {
+    return
+  }
+  window.console.log('*********************关闭loading:', $('body'))
+  window.layer.close(findh.layerIndex)
+  common.removeLoadingInfo(key)
+}
+
+// ////////////////////虚拟dom绘制/////////////////////////////////////////////
+// export function  drawVueOnVirtualDom(comp: Vue): DocumentFragment {
+//   let fragment = window.document.createDocumentFragment()
+//   let divdom = window.document.createElement('div')
+//   fragment.appendChild(divdom)
+//   comp.$mount(divdom)
+
+//   return fragment
+// }

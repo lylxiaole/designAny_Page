@@ -7,9 +7,23 @@
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px">
       <div style="overflow: auto; width: 100%; height: 100%; " @contextmenu.prevent="onTreeRightClick">
-        <el-tree size="small" node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="pageGroups" default-expand-all
-          @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-          @node-drag-end="handleDragEnd" @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" draggable>
+        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
+          @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
+          @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable>
+
+          <div slot-scope="{node,data}">
+            <div v-if="data.type==='page'">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
+                @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
+              </btreeNode>
+            </div>
+            <div v-if="data.type==='group'">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
+                @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
+              </btreeNode>
+            </div>
+          </div>
+
         </el-tree>
 
         <VueContextMenu id="context-menu" ref="ctxMenu" style="cursor: pointer">
@@ -27,8 +41,9 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { DesignPageGroupDC, DesignPageDC, AddPage, AddGroup } from '@src/apis/designPage'
+import { DesignPageGroupDC, DesignPageDC, AddPage, AddGroup, UpdatePageName, UpdateGroupName } from '@src/apis/designPage'
 let VueContextMenu = require('vue-context-menu')
+import btreeNode from '@src/components/Treenode/bTreeNode.vue'
 
 enum rightMenus {
   addPage = '新建页面',
@@ -40,10 +55,15 @@ enum rightMenus {
 }
 @Component({
   components: {
-    VueContextMenu: VueContextMenu
+    VueContextMenu: VueContextMenu,
+    btreeNode: btreeNode
   }
 })
 export default class index extends ComponentBase {
+  private seachVal: string = ''
+  private rightMenus: string[] = []
+  private treeData: any[] = []
+
   @Prop()
   private currentAppId: string
 
@@ -53,8 +73,61 @@ export default class index extends ComponentBase {
     }
   })
   private pageGroups: DesignPageGroupDC[]
-  private seachVal: string = ''
-  private rightMenus: string[] = []
+
+  @Watch('pageGroups', { deep: true })
+  private onPageGroupsChanged(newval: DesignPageGroupDC[]) {
+    this.treeData = this.loopPageGroups(newval, [])
+    window.console.log('xxxxxxxxxxxxx:', this.treeData)
+  }
+  private loopPageGroups(groups: DesignPageGroupDC[], pages: DesignPageDC[]) {
+    let res = []
+
+    for (let index = 0; index < pages.length; index++) {
+      const page = pages[index]
+      res.push({ id: page.id, label: page.name, type: 'page', children: [] })
+    }
+
+    for (let index = 0; index < groups.length; index++) {
+      const group = groups[index]
+
+      let groupchildren = []
+      for (let index = 0; index < group.childrenPages.length; index++) {
+        const childpage = group.childrenPages[index]
+        groupchildren.push({ id: childpage.id, type: 'page', label: childpage.name, children: [] })
+      }
+
+      for (let index = 0; index < group.childrenGroups.length; index++) {
+        const childgroup = group.childrenGroups[index]
+        groupchildren.push({
+          id: childgroup.id,
+          label: childgroup.name,
+          type: 'group',
+          children: this.loopPageGroups(childgroup.childrenGroups, childgroup.childrenPages)
+        })
+      }
+
+      res.push({ id: group.id, label: group.name, type: 'group', children: groupchildren })
+    }
+    return res
+  }
+
+  private searchNodeById(id: string, pageGroups: DesignPageGroupDC[]) {
+    for (let index = 0; index < pageGroups.length; index++) {
+      const group = pageGroups[index]
+      if (group.id === id) {
+        return group
+      }
+      let findPage = group.childrenPages.find((o) => o.id === id)
+      if (findPage) {
+        return findPage
+      }
+      let res = this.searchNodeById(id, group.childrenGroups)
+      if (res) {
+        return res
+      }
+    }
+    return null
+  }
 
   mounted() {}
   // ***************树********************************************
@@ -86,14 +159,41 @@ export default class index extends ComponentBase {
   private async allowDrag(draggingNode) {
     return draggingNode.data.label.indexOf('三级 3-2-2') === -1
   }
+
+  /**当节点名称改变后 */
+  private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {
+    let find = this.searchNodeById(id, this.pageGroups)
+
+    if (nodedata.type === 'page') {
+    } else {
+    }
+  }
+
+  /**当确定节点的新名称 */
+  private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
+    window.console.log('onSureNodeName:', newtitle)
+    let find = this.searchNodeById(id, this.pageGroups)
+    find.name = newtitle
+    if (nodedata.type === 'page') {
+      await UpdatePageName(find)
+    } else {
+      await UpdateGroupName(find)
+    }
+  }
   // ***************右键弹窗**************************************
+  private currentRightClickNode: any = null
   private onTreeNodeRightClick(e: any, data: any) {
     window.console.log('右击菜单树节点', data)
     e.stopPropagation()
     e.preventDefault()
-
+    this.currentRightClickNode = data
     this.rightMenus = []
-    this.rightMenus = [rightMenus.addPage, rightMenus.addGroup]
+    if (data.type === 'page') {
+      this.rightMenus = [rightMenus.saveAs, rightMenus.delete]
+    } else if (data.type === 'group') {
+      this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
+    }
+
     ;(this.$refs.ctxMenu as any).open()
   }
 
@@ -102,6 +202,7 @@ export default class index extends ComponentBase {
 
     e.stopPropagation()
     e.preventDefault()
+    this.currentRightClickNode = null
     this.rightMenus = []
     this.rightMenus = [rightMenus.addGroup]
     ;(this.$refs.ctxMenu as any).open()
@@ -150,11 +251,13 @@ export default class index extends ComponentBase {
   }
 
   private async addGroup() {
-    let res = await AddGroup({ name: '新建分组', appId: this.currentAppId } as any)
+    let parentGroupId = this.currentRightClickNode ? this.currentRightClickNode.id : null
+    let res = await AddGroup({ name: '新建分组', appId: this.currentAppId, parentGroupId: parentGroupId } as any)
     window.console.log('addGroup:', res)
   }
   private async addPage() {
-    let res = await AddPage({ name: '新建页面', appId: this.currentAppId } as any)
+    let parentGroupId = this.currentRightClickNode ? this.currentRightClickNode.id : null
+    let res = await AddPage({ name: '新建页面', appId: this.currentAppId, parentGroupId: parentGroupId } as any)
     window.console.log('addPage:', res)
   }
 }
@@ -162,4 +265,8 @@ export default class index extends ComponentBase {
 
 <style lang="less" scoped>
 @import (less) '@src/assets/iconfont1/iconfont.css';
+
+/deep/.el-tree-node__content {
+  height: 32px !important;
+}
 </style>

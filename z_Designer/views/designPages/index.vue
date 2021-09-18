@@ -24,7 +24,7 @@ import pagelist from './pagelist.vue'
   }
 })
 export default class index extends PageBase {
-  private applicationId: string
+  private applicationId: string = null
   private pageDataList: any[] = []
   mounted() {
     this.applicationId = this.$route.query.appId as string

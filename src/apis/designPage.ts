@@ -67,7 +67,7 @@ export async function AddGroup(group: DesignPageGroupDC): Promise<DesignPageGrou
   const resp = await ajaxPost(url, group)
   return resp.data
 }
-export async function SaveGroupName(group: DesignPageGroupDC): Promise<boolean> {
+export async function UpdateGroupName(group: DesignPageGroupDC): Promise<boolean> {
   let url = apiAddr() + `api/designPage/saveGroupName`
   const resp = await ajaxPost(url, group)
   return resp.data

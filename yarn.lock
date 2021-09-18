@@ -3880,6 +3880,11 @@
     "inherits" "^2.0.1"
     "safe-buffer" "^5.0.1"
 
+"circular-json-es6@^2.0.2":
+  "integrity" "sha512-ODYONMMNb3p658Zv+Pp+/XPa5s6q7afhz3Tzyvo+VRh9WIrJ64J76ZC4GQxnlye/NesTn09jvOiuE8+xxfpwhQ=="
+  "resolved" "https://registry.npmjs.org/circular-json-es6/-/circular-json-es6-2.0.2.tgz"
+  "version" "2.0.2"
+
 "circular-json@^0.3.1":
   "integrity" "sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A=="
   "resolved" "https://registry.npmjs.org/circular-json/-/circular-json-0.3.3.tgz"
