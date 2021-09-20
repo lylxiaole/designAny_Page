@@ -9,7 +9,7 @@
       <div style="overflow: auto; width: 100%; height: 100%; " @contextmenu.prevent="onTreeRightClick">
         <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
           @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
-          @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable>
+          @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
 
           <div slot-scope="{node,data}">
             <div v-if="data.type==='page'">
@@ -32,8 +32,7 @@
         </el-tree>
 
         <VueContextMenu id="context-menu" ref="ctxMenu" style="cursor: pointer">
-          <li v-for="(menu, index) in rightMenus" :key="index" class="themeHover pageListItem" style="padding-left: 5px"
-            @click="onRightMenuChoose(menu)">
+          <li v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px" @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
           </li>
@@ -258,7 +257,7 @@ export default class index extends ComponentBase {
     this.currentRightClickNode = data
     this.rightMenus = []
     if (data.type === 'page') {
-      this.rightMenus = [rightMenus.saveAs, rightMenus.delete]
+      this.rightMenus = [rightMenus.edit, rightMenus.saveAs, rightMenus.delete]
     } else if (data.type === 'group') {
       this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
     }
@@ -284,6 +283,9 @@ export default class index extends ComponentBase {
         iconString = '&#xe626;'
         break
       }
+      case rightMenus.edit:
+        iconString = '&#xe628;'
+        break
       case rightMenus.saveAs: {
         iconString = '&#xe61a;'
         break
@@ -381,5 +383,47 @@ export default class index extends ComponentBase {
 <style lang="less" scoped>
 /deep/.el-tree-node__content {
   height: 32px !important;
+}
+.themeHover:hover {
+  background: #83c346;
+  cursor: pointer;
+  color: white;
+}
+.rightMenuNode {
+  padding-left: 5px;
+}
+
+.pageListItem .iconfont {
+  color: #9e9e9e;
+}
+
+.pageListItem:hover .iconfont {
+  color: white;
+}
+
+.pageFontHover:hover {
+  color: #ffffff;
+}
+
+.ant-tree-node-content-wrapper:hover .pageListItem {
+  background-color: rgba(121, 169, 229, 0.3);
+}
+
+.ant-tree-node-selected .pageListItem {
+  background-color: rgba(121, 169, 229, 0.3) !important;
+}
+
+.ant-tree-node-selected .pageFontHover {
+  color: #ffffff !important;
+}
+
+.gad-plc-menu-icon {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.gad-plc {
+  padding: 10px 0px;
+  position: relative;
 }
 </style>
