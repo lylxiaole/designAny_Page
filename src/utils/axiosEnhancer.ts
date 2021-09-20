@@ -1,8 +1,6 @@
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import Store from './store'
-// import {configs} from './index';
 import { alertSuccess, alertWarning, confirmNotify, notifyError } from './devExtremeUtils'
-// import { history } from 'umi';
+import { getCurrentRoute, getStore } from '@src/baseConfigs'
 
 const HttpStatusEnum = [
   { status: 200, desc: '服务器成功返回请求的数据。', name: '' },
@@ -45,7 +43,6 @@ const axiosInstance = _axios.create({
   timeout: 12000, // 超时时间.毫秒
   withCredentials: false // 跨域请求,是否携带cookie
 })
-
 /**
  * 请求拦截器.
  * 1.在request-header中存入已登录用户的Authorization.后续接口都需要.
@@ -64,7 +61,6 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-
 /**
  * 响应拦截器.对401,403进行处理.
  * //2xx响应.  response.status === 2xx
@@ -75,10 +71,10 @@ axiosInstance.interceptors.response.use(
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     if (response.data && response.data.success === false) {
+      if (response.data.errCode === 401) {
+        toLogin()
+      }
       return Promise.reject(new Error('请求发生错误:' + response.data.errMsg))
-    } else if (response.data && response.data.errCode === 401) {
-      toLogin()
-      return Promise.reject(new Error(response.data.errMsg))
     } else {
       return response.data
     }
@@ -133,6 +129,15 @@ function toLogin() {
   // Store.clear();
   // getDvaApp()._store.dispatch({ type: 'session/removeSession' });
   // window.location.href = '/login';
+  let currentStore = getStore()
+  currentStore.commit('system/CLEAR_TOKEN')
+  let currentRoute = getCurrentRoute()
+  currentRoute.replace({
+    path: '/login',
+    query: {
+      redirect: currentRoute.currentRoute.path
+    }
+  })
 }
 
 /**

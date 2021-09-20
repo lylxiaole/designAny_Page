@@ -16,11 +16,9 @@ export function initStore(instore: any): Store<any> {
   localStore = new Vuex.Store({ modules })
   return localStore
 }
-
-const setKeyValueMutation = (state, data) => {
-  state[data.key] = data.value
-}
-
 export function getStore(): Store<any> {
   return localStore
+}
+const setKeyValueMutation = (state, data) => {
+  state[data.key] = data.value
 }
