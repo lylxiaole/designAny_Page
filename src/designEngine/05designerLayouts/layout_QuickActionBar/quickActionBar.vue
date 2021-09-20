@@ -445,8 +445,7 @@ export default class quickActionBar extends Vue {
 </script>
 
 <style lang="less" scoped>
-@import (less) "../../02common/iconfont1/iconfont.css";
-
+ 
 .verticalAlignCenter {
   display: flex;
   position: relative;

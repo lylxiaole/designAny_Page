@@ -81,10 +81,10 @@ export default class TableComponentListControl extends Vue {
         {
           code: 'parent_group_id',
           type: 'EQ',
-          value: key,
-        },
+          value: key
+        }
       ],
-      modelCode: 'app_component_template',
+      modelCode: 'app_component_template'
     }
     CurrentApis.SimpleListQuery(param).then((res: any) => {
       //window.console.log('查询分组', res)
@@ -196,8 +196,6 @@ export default class TableComponentListControl extends Vue {
 </script>
 
 <style  lang="less" scoped>
-@import (less) '../../02common/iconfont1/iconfont.css';
-
 .ant-card-body {
   padding: 3px;
 }

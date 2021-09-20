@@ -10,6 +10,9 @@ let system = initSystem(routes, configs, appState)
 system.store.commit('system/set_permission_routes', getRoutes())
 registerRouteHook(system.router, system.store)
 // **************创建应用******************************
+require('@src/assets/iconfont1/iconfont.css')
+require('@src/assets/iconfont1/iconfont.js')
+
 import Element from 'element-ui'
 require('element-ui/lib/theme-chalk/index.css')
 Vue.use(Element)

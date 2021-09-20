@@ -15,11 +15,17 @@
             <div v-if="data.type==='page'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
                 @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
+                <template #icon>
+                  <span class="icon iconfont">&#xe627;</span>
+                </template>
               </btreeNode>
             </div>
             <div v-if="data.type==='group'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
                 @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
+                <template #icon>
+                  <span class="icon iconfont">&#xe626;</span>
+                </template>
               </btreeNode>
             </div>
           </div>
@@ -368,8 +374,6 @@ export default class index extends ComponentBase {
 </script>
 
 <style lang="less" scoped>
-@import (less) '@src/assets/iconfont1/iconfont.css';
-
 /deep/.el-tree-node__content {
   height: 32px !important;
 }

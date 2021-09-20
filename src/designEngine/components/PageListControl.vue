@@ -2032,9 +2032,7 @@ export default class PageListControl extends Vue {
 }
 </script>
 
-<style scoped lang="less">
-@import '../assets/globlaTheme.less';
-@import (less) '../02common/iconfont1/iconfont.css';
+<style scoped lang="less"> 
 
 .rightMenuNode {
   padding-left: 5px;

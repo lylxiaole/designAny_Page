@@ -127,7 +127,7 @@ enum rightMenus {
   setMenuIcon = '设置图标',
   delete = '删除',
   leadOut = '导出',
-  leadIn = '导入',
+  leadIn = '导入'
 }
 
 class treeNodeData {
@@ -163,8 +163,8 @@ class treeNodeData {
 @Component({
   components: {
     VueContextMenu: VueContextMenu,
-    btreeNode: btreeNode,
-  },
+    btreeNode: btreeNode
+  }
 })
 export default class PageListControl extends Vue {
   private pageResourceWindowVisible: boolean = false
@@ -214,7 +214,9 @@ export default class PageListControl extends Vue {
   }
   /*********样式重绘********************************************************************* */
   private renderDom(dom: Element) {
-    $(this.$el).find('.ant-tree-switcher').css('z-index', 5)
+    $(this.$el)
+      .find('.ant-tree-switcher')
+      .css('z-index', 5)
   }
   // ***************树节点数据********************************************************************
   private searchNodes(title: string, tree: treeNodeData[]): treeNodeData[] {
@@ -523,11 +525,11 @@ export default class PageListControl extends Vue {
         data: [
           {
             code: 'id',
-            value: CurrentApis.GetServerUUID(),
+            value: CurrentApis.GetServerUUID()
           },
           {
             code: 'page_id',
-            value: newId,
+            value: newId
           },
           //跟后端确认，不需要保存groupId 2020-03-05 modify
           // {
@@ -536,14 +538,14 @@ export default class PageListControl extends Vue {
           // },
           {
             code: 'permission_id',
-            value: '444',
+            value: '444'
           },
           {
             code: 'is_deleted',
-            value: 0,
-          },
+            value: 0
+          }
         ],
-        modelCode: 'app_page_permission',
+        modelCode: 'app_page_permission'
       }
       await CurrentApis.SimpleAdd(param)
       this.insertTreeNode(newId, type, name, parentId)
@@ -760,10 +762,10 @@ export default class PageListControl extends Vue {
                 {
                   code: 'id',
                   type: 'EQ',
-                  value: this.currentRightNode.key,
-                },
+                  value: this.currentRightNode.key
+                }
               ],
-              modelCode: 'app_page',
+              modelCode: 'app_page'
             }
             if (this.currentRightNode.nodeType == pagenNodeType.group) {
               param = {
@@ -771,10 +773,10 @@ export default class PageListControl extends Vue {
                   {
                     code: 'id',
                     type: 'EQ',
-                    value: this.currentRightNode.key,
-                  },
+                    value: this.currentRightNode.key
+                  }
                 ],
-                modelCode: 'app_page_group',
+                modelCode: 'app_page_group'
               }
             }
             let pageId = this.currentRightNode.key
@@ -785,17 +787,17 @@ export default class PageListControl extends Vue {
                   {
                     code: 'page_id',
                     type: 'EQ',
-                    value: pageId,
-                  },
+                    value: pageId
+                  }
                 ],
-                modelCode: 'sys_app_user_menu',
+                modelCode: 'sys_app_user_menu'
               }
               CurrentApis.SimpleDelete(tempparam).then(() => {
                 this.deleteNode(this.currentRightNode)
               })
             })
           },
-          onCancel() {},
+          onCancel() {}
         })
         break
       case rightMenus.saveAs:
@@ -891,7 +893,7 @@ export default class PageListControl extends Vue {
         sysCustomFunctionCodes: pageb.resourceObj.funcCodes,
         sysDictIds: pageb.resourceObj.dictIds,
         sysFileIds: pageb.resourceObj.fileTempIds,
-        workflowIds: pageb.resourceObj.workFlowIds,
+        workflowIds: pageb.resourceObj.workFlowIds
       }
       let res = (await CurrentApis.LeadOutPage(reqdata)) as any
       let fileurl = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, res.relativePath)
@@ -1010,30 +1012,30 @@ export default class PageListControl extends Vue {
       data: [
         {
           code: 'id',
-          value: newId,
+          value: newId
         },
         {
           code: 'app_id',
-          value: newId,
+          value: newId
         },
         {
           code: 'order_index',
-          value: 0,
+          value: 0
         },
         {
           code: 'is_show',
-          value: 1,
+          value: 1
         },
         {
           code: 'user_id',
-          value: 0,
+          value: 0
         },
         {
           code: 'is_deleted',
-          value: 0,
-        },
+          value: 0
+        }
       ],
-      modelCode: 'sys_app_user_menu',
+      modelCode: 'sys_app_user_menu'
     }
     //this.insertTreeNode(newId, pagenNodeType.group, name, parentId)
     CurrentApis.SimpleAdd(param)
@@ -1073,9 +1075,6 @@ export default class PageListControl extends Vue {
 </script>
 
 <style scoped lang="less">
-@import '../assets/globlaTheme.less';
-@import (less) '../02common/iconfont1/iconfont.css';
-
 .rightMenuNode {
   padding-left: 5px;
 }

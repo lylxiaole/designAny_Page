@@ -630,8 +630,7 @@ export default class ComponentTemplateControl extends Vue {
 </script>
 
 <style  lang="less" scoped>
-@import (less) '../02common/iconfont1/iconfont.css';
-
+ 
 .ant-card-body {
   padding: 3px;
 }

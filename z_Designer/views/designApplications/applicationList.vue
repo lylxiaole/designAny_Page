@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width：100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
     <el-row style="height:3rem;" class="middleAlign">
-      <el-button @click="addAppHandle" type="primary">添加应用</el-button>
+      <el-button style="height:25px" @click="addAppHandle" size="mini" type="primary">添加应用</el-button>
     </el-row>
     <el-row style="height:calc(100% - 3rem);overflow-y:auto">
       <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem" style="height:36px;line-height:36px"

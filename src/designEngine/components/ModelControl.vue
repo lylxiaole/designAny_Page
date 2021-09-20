@@ -331,8 +331,7 @@ export default class ModelControl extends Vue {
 }
 </script>
 
-<style  lang="less" scoped>
-@import (less) '../02common/iconfont1/iconfont.css';
+<style  lang="less" scoped> 
 
 .ant-card-body {
   padding: 3px;
