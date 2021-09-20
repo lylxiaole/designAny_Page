@@ -89,7 +89,7 @@ export default class index extends ComponentBase {
   @Watch('currentAppId', { deep: true })
   private async onPageGroupsChanged(currentAppId: string) {
     this.treeData = await GetApplicationPages(currentAppId)
-    window.console.log('onPageGroupsChanged:', this.treeData)
+    // window.console.log('onPageGroupsChanged:', this.treeData)
   }
   // *********pageGroups管理**************************************************
   private searchNodeById(id: string, parentNodes: TreeNodeDC[]): TreeNodeDC {
@@ -211,12 +211,17 @@ export default class index extends ComponentBase {
     await UpdateNodesSort(needOrderNodes)
   }
   private allowDrop(draggingNode, dropNode, type) {
+    // window.console.log('allowDrop 1:', dropNode.data.type)
     if (dropNode.data.type === 'page') {
       if (type === 'inner') {
         return false
       }
+
       return true
     } else if (dropNode.data.type === 'group') {
+      if (type !== 'inner' && !dropNode.data.parentGroupId) {
+        return false
+      }
       return true
     }
   }
@@ -261,7 +266,7 @@ export default class index extends ComponentBase {
     ;(this.$refs.ctxMenu as any).open()
   }
   private onTreeRightClick(e: any) {
-    window.console.log('右击菜单树', e)
+    //window.console.log('右击菜单树', e)
     e.stopPropagation()
     e.preventDefault()
     this.currentRightClickNode = null
@@ -297,7 +302,7 @@ export default class index extends ComponentBase {
     return iconString
   }
   private async onRightMenuChoose(menuName: string) {
-    window.console.log('onRightMenuChoose:', menuName)
+    //window.console.log('onRightMenuChoose:', menuName)
     switch (menuName) {
       case rightMenus.addPage:
         this.addPage()
