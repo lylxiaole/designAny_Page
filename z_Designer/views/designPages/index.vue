@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { GetApplicationPages } from '@src/apis/designPage'
+import {} from '@src/apis/designPage'
 import pagelist from './pagelist.vue'
 
 @Component({
@@ -28,10 +28,6 @@ export default class index extends PageBase {
   private pageDataList: any[] = []
   mounted() {
     this.applicationId = this.$route.query.appId as string
-    this.initDesigner()
-  }
-  private async initDesigner() {
-    this.pageDataList = await GetApplicationPages(this.applicationId)
   }
 }
 </script>

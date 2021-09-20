@@ -10,6 +10,7 @@ export enum pageType {
 export class DesignPageDC extends dataContactBase {
   appId: string
   type: pageType
+  index: number
   name: string
   parentGroupId: string
   designDetail: string
@@ -17,23 +18,36 @@ export class DesignPageDC extends dataContactBase {
 export class DesignPageGroupDC extends dataContactBase {
   appId: string
   name: string
+  index: number
   parentGroupId: string
   childrenGroups: DesignPageGroupDC[]
   childrenPages: DesignPageDC[]
 }
 
-export async function GetApplicationPages(appId: string): Promise<DesignPageGroupDC[]> {
+export class TreeNodeDC {
+  id: string
+  parentGroupId: string
+  label: string
+  type: string
+  index: number
+  children: TreeNodeDC[] = []
+}
+
+export async function GetApplicationPages(appId: string): Promise<TreeNodeDC[]> {
   let url = apiAddr() + `api/designPage/getApplicationPages?appId=${appId}`
   const resp = await ajaxGet(url)
   return resp.data
 }
-
+export async function UpdateNodesSort(nodes: any[]): Promise<boolean> {
+  let url = apiAddr() + `api/designPage/updateNodesSort`
+  const resp = await ajaxPost(url, nodes)
+  return resp.data
+}
 export async function GetPageDetail(pageId: string): Promise<DesignPageDC> {
   let url = apiAddr() + `api/designPage/getPageDetail?pageId=${pageId}`
   const resp = await ajaxGet(url)
   return resp.data
 }
-
 export async function SavePageDetail(page: DesignPageDC): Promise<boolean> {
   let url = apiAddr() + `api/designPage/savePageDetail`
   const resp = await ajaxPost(url, page)
@@ -50,7 +64,6 @@ export async function UpdatePageName(page: DesignPageDC): Promise<boolean> {
   const resp = await ajaxPost(url, page)
   return resp.data
 }
-
 export async function ChangePageGroup(page: DesignPageDC): Promise<boolean> {
   let url = apiAddr() + `api/designPage/changePageGroup`
   const resp = await ajaxPost(url, page)

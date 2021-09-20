@@ -23,7 +23,6 @@
               </btreeNode>
             </div>
           </div>
-
         </el-tree>
 
         <VueContextMenu id="context-menu" ref="ctxMenu" style="cursor: pointer">
@@ -41,9 +40,24 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { DesignPageGroupDC, DesignPageDC, AddPage, AddGroup, UpdatePageName, UpdateGroupName } from '@src/apis/designPage'
+import {
+  DesignPageGroupDC,
+  DesignPageDC,
+  TreeNodeDC,
+  GetApplicationPages,
+  ChangeGroupGroup,
+  ChangePageGroup,
+  AddPage,
+  AddGroup,
+  UpdatePageName,
+  UpdateGroupName,
+  UpdateNodesSort,
+  DeletePage,
+  DeleteGroup
+} from '@src/apis/designPage'
 let VueContextMenu = require('vue-context-menu')
 import btreeNode from '@src/components/Treenode/bTreeNode.vue'
+import { types } from 'util'
 
 enum rightMenus {
   addPage = '新建页面',
@@ -53,6 +67,7 @@ enum rightMenus {
   edit = '编辑',
   delete = '删除'
 }
+
 @Component({
   components: {
     VueContextMenu: VueContextMenu,
@@ -62,122 +77,165 @@ enum rightMenus {
 export default class index extends ComponentBase {
   private seachVal: string = ''
   private rightMenus: string[] = []
-  private treeData: any[] = []
-
+  private treeData: TreeNodeDC[] = []
   @Prop()
   private currentAppId: string
-
-  @Prop({
-    default: () => {
-      return []
-    }
-  })
-  private pageGroups: DesignPageGroupDC[]
-
-  @Watch('pageGroups', { deep: true })
-  private onPageGroupsChanged(newval: DesignPageGroupDC[]) {
-    this.treeData = this.loopPageGroups(newval, [])
-    window.console.log('xxxxxxxxxxxxx:', this.treeData)
+  @Watch('currentAppId', { deep: true })
+  private async onPageGroupsChanged(currentAppId: string) {
+    this.treeData = await GetApplicationPages(currentAppId)
+    window.console.log('onPageGroupsChanged:', this.treeData)
   }
-  private loopPageGroups(groups: DesignPageGroupDC[], pages: DesignPageDC[]) {
-    let res = []
-
-    for (let index = 0; index < pages.length; index++) {
-      const page = pages[index]
-      res.push({ id: page.id, label: page.name, type: 'page', children: [] })
-    }
-
-    for (let index = 0; index < groups.length; index++) {
-      const group = groups[index]
-
-      let groupchildren = []
-      for (let index = 0; index < group.childrenPages.length; index++) {
-        const childpage = group.childrenPages[index]
-        groupchildren.push({ id: childpage.id, type: 'page', label: childpage.name, children: [] })
+  // *********pageGroups管理**************************************************
+  private searchNodeById(id: string, parentNodes: TreeNodeDC[]): TreeNodeDC {
+    for (let index = 0; index < parentNodes.length; index++) {
+      const node = parentNodes[index]
+      if (node.id === id) {
+        return node
       }
-
-      for (let index = 0; index < group.childrenGroups.length; index++) {
-        const childgroup = group.childrenGroups[index]
-        groupchildren.push({
-          id: childgroup.id,
-          label: childgroup.name,
-          type: 'group',
-          children: this.loopPageGroups(childgroup.childrenGroups, childgroup.childrenPages)
-        })
+      let findnode = node.children.find((o) => o.id === id)
+      if (findnode) {
+        return findnode
       }
-
-      res.push({ id: group.id, label: group.name, type: 'group', children: groupchildren })
-    }
-    return res
-  }
-
-  private searchNodeById(id: string, pageGroups: DesignPageGroupDC[]) {
-    for (let index = 0; index < pageGroups.length; index++) {
-      const group = pageGroups[index]
-      if (group.id === id) {
-        return group
-      }
-      let findPage = group.childrenPages.find((o) => o.id === id)
-      if (findPage) {
-        return findPage
-      }
-      let res = this.searchNodeById(id, group.childrenGroups)
+      let res = this.searchNodeById(id, node.children)
       if (res) {
         return res
       }
     }
     return null
   }
-
+  private deleteNodeById(id: string, parentNodes: TreeNodeDC[]) {
+    for (let index = 0; index < parentNodes.length; index++) {
+      const node = parentNodes[index]
+      if (node.id === id) {
+        parentNodes.splice(index, 1)
+        continue
+      }
+      this.deleteNodeById(id, node.children)
+    }
+  }
+  private cuteChildrenMaxIndex(node: TreeNodeDC) {
+    let index = 0
+    for (let index = 0; index < node.children.length; index++) {
+      const childnode = node.children[index]
+      if (childnode.index > index) {
+        index = childnode.index
+      }
+    }
+    return index
+  }
+  private cuteGroupMaxIndex(nodes: TreeNodeDC[]) {
+    let index = 0
+    for (let index = 0; index < nodes.length; index++) {
+      const node = nodes[index]
+      if (node.index > index) {
+        index = node.index
+      }
+    }
+    return index
+  }
+  private makeDesignPageDCByNode(node: TreeNodeDC): DesignPageDC {
+    let data: any = {
+      id: node.id,
+      name: node.label,
+      appId: this.currentAppId,
+      index: node.index,
+      parentGroupId: node.parentGroupId
+    }
+    return data
+  }
+  private makeDesignPageGroupDCByNode(node: TreeNodeDC): DesignPageGroupDC {
+    let data: any = {
+      id: node.id,
+      name: node.label,
+      appId: this.currentAppId,
+      index: node.index,
+      parentGroupId: node.parentGroupId
+    }
+    return data
+  }
+  // ***********************************************************
   mounted() {}
   // ***************树********************************************
-  private async handleDragStart(node, ev) {
-    console.log('drag start', node)
+  private handleDragStart(node, ev) {
+    // console.log('drag start', node)
   }
-  private async handleDragEnter(draggingNode, dropNode, ev) {
-    console.log('tree drag enter: ', dropNode.label)
+  private handleDragEnter(draggingNode, dropNode, ev) {
+    // console.log('tree drag enter: ', dropNode.label)
   }
-  private async handleDragLeave(draggingNode, dropNode, ev) {
-    console.log('tree drag leave: ', dropNode.label)
+  private handleDragLeave(draggingNode, dropNode, ev) {
+    // console.log('tree drag leave: ', dropNode.label)
   }
-  private async handleDragOver(draggingNode, dropNode, ev) {
-    console.log('tree drag over: ', dropNode.label)
+  private handleDragOver(draggingNode, dropNode, ev) {
+    // console.log('tree drag over: ', dropNode.label)
   }
-  private async handleDragEnd(draggingNode, dropNode, dropType, ev) {
-    console.log('tree drag end: ', dropNode && dropNode.label, dropType)
+  private handleDragEnd(draggingNode, dropNode, dropType, ev) {
+    // console.log('tree drag end: ', dropNode && dropNode.label, dropType)
   }
   private async handleDrop(draggingNode, dropNode, dropType, ev) {
-    console.log('tree drop: ', dropNode.label, dropType)
-  }
-  private async allowDrop(draggingNode, dropNode, type) {
-    if (dropNode.data.label === '二级 3-1') {
-      return type !== 'inner'
+    // ****************************************
+    let parentGroupId = null
+    if (dropType === 'inner') {
+      parentGroupId = dropNode.data.id
+    } else if (dropType === 'before') {
+      parentGroupId = dropNode.data.parentGroupId
+    } else if (dropType === 'after') {
+      parentGroupId = dropNode.data.parentGroupId
+    }
+    let dragingNodeData = this.searchNodeById(draggingNode.data.id, this.treeData)
+    dragingNodeData.parentGroupId = parentGroupId
+    if (dragingNodeData.type === 'page') {
+      let data = this.makeDesignPageDCByNode(dragingNodeData)
+      await ChangePageGroup(data)
+    } else if (dragingNodeData.type === 'group') {
+      let data = this.makeDesignPageGroupDCByNode(dragingNodeData)
+      await ChangeGroupGroup(data)
+    }
+    // ****************************************
+    let needOrderNodes = []
+    if (parentGroupId) {
+      let parentNodeData = this.searchNodeById(parentGroupId, this.treeData)
+      needOrderNodes = parentNodeData.children
     } else {
+      needOrderNodes = this.treeData
+    }
+    for (let index = 0; index < needOrderNodes.length; index++) {
+      needOrderNodes[index].index = index
+    }
+    window.console.log('needOrderNodes:', needOrderNodes)
+    await UpdateNodesSort(needOrderNodes)
+  }
+  private allowDrop(draggingNode, dropNode, type) {
+    if (dropNode.data.type === 'page') {
+      if (type === 'inner') {
+        return false
+      }
+      return true
+    } else if (dropNode.data.type === 'group') {
       return true
     }
   }
-  private async allowDrag(draggingNode) {
-    return draggingNode.data.label.indexOf('三级 3-2-2') === -1
-  }
+  private allowDrag(draggingNode) {
+    window.console.log('allowDrag', draggingNode)
 
+    return true
+  }
   /**当节点名称改变后 */
   private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {
-    let find = this.searchNodeById(id, this.pageGroups)
-
+    let find = this.searchNodeById(id, this.treeData)
     if (nodedata.type === 'page') {
     } else {
     }
   }
-
   /**当确定节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
-    window.console.log('onSureNodeName:', newtitle)
-    let find = this.searchNodeById(id, this.pageGroups)
-    find.name = newtitle
+    let find = this.searchNodeById(id, this.treeData)
+    find.label = newtitle
     if (nodedata.type === 'page') {
-      await UpdatePageName(find)
+      let data = this.makeDesignPageDCByNode(find)
+      await UpdatePageName(data)
     } else {
-      await UpdateGroupName(find)
+      let data = this.makeDesignPageGroupDCByNode(find)
+      await UpdateGroupName(data)
     }
   }
   // ***************右键弹窗**************************************
@@ -196,10 +254,8 @@ export default class index extends ComponentBase {
 
     ;(this.$refs.ctxMenu as any).open()
   }
-
   private onTreeRightClick(e: any) {
     window.console.log('右击菜单树', e)
-
     e.stopPropagation()
     e.preventDefault()
     this.currentRightClickNode = null
@@ -213,7 +269,6 @@ export default class index extends ComponentBase {
       case rightMenus.addPage:
         iconString = '&#xe625;'
         break
-
       case rightMenus.addGroup: {
         iconString = '&#xe626;'
         break
@@ -226,7 +281,6 @@ export default class index extends ComponentBase {
         iconString = '&#xe628;'
         break
       }
-
       case rightMenus.delete: {
         iconString = '&#xe62b;'
         break
@@ -245,20 +299,70 @@ export default class index extends ComponentBase {
       case rightMenus.addGroup:
         this.addGroup()
         break
+      case rightMenus.delete:
+        this.deleteNode()
+        break
       default:
         break
     }
   }
-
   private async addGroup() {
     let parentGroupId = this.currentRightClickNode ? this.currentRightClickNode.id : null
-    let res = await AddGroup({ name: '新建分组', appId: this.currentAppId, parentGroupId: parentGroupId } as any)
-    window.console.log('addGroup:', res)
+    let index = 0
+    if (parentGroupId) {
+      let datadc = this.searchNodeById(parentGroupId, this.treeData)
+      index = this.cuteChildrenMaxIndex(datadc) + 1
+    } else {
+      index = this.cuteGroupMaxIndex(this.treeData) + 1
+    }
+    let res = await AddGroup({ name: '新建分组', appId: this.currentAppId, parentGroupId: parentGroupId, index: index } as any)
+    let newnode: TreeNodeDC = {
+      id: res.id,
+      parentGroupId: res.parentGroupId,
+      label: res.name,
+      type: 'group',
+      index: res.index,
+      children: []
+    }
+
+    if (parentGroupId) {
+      let nodedata = this.searchNodeById(parentGroupId, this.treeData)
+      nodedata.children.push(newnode)
+    } else {
+      this.treeData.push(newnode)
+    }
   }
   private async addPage() {
-    let parentGroupId = this.currentRightClickNode ? this.currentRightClickNode.id : null
-    let res = await AddPage({ name: '新建页面', appId: this.currentAppId, parentGroupId: parentGroupId } as any)
-    window.console.log('addPage:', res)
+    //parentGroupId 必定有值,因为页面必须添加到分组底下
+    let parentGroupId = this.currentRightClickNode.id
+    let datadc = this.searchNodeById(parentGroupId, this.treeData)
+    let index = this.cuteChildrenMaxIndex(datadc) + 1
+    let res = await AddPage({ name: '新建页面', appId: this.currentAppId, parentGroupId: parentGroupId, index: index } as any)
+
+    let newnode: TreeNodeDC = {
+      id: res.id,
+      parentGroupId: res.parentGroupId,
+      label: res.name,
+      type: 'page',
+      index: res.index,
+      children: []
+    }
+
+    datadc.children.push(newnode)
+  }
+  private async deleteNode() {
+    let nodeId = this.currentRightClickNode.id
+    let nodeType = this.currentRightClickNode.type
+    let nodedata = this.searchNodeById(nodeId, this.treeData)
+
+    if (nodeType === 'page') {
+      let data = this.makeDesignPageDCByNode(nodedata)
+      await DeletePage(data)
+    } else if (nodeType === 'group') {
+      let data = this.makeDesignPageGroupDCByNode(nodedata)
+      await DeleteGroup(data)
+    }
+    this.deleteNodeById(nodeId, this.treeData)
   }
 }
 </script>
