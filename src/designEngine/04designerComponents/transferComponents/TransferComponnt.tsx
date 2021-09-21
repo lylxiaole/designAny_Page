@@ -1,20 +1,13 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 
-import {
-  Property,
-  Text_Property,
-  Behavior_Property,
-  Enum_Property,
-  PropertyGroupName,
-  BindingModels_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName, BindingModels_Property } from '../../02common/commonClasses/LayoutProperty'
 
 import { AllComponents, ComponentBase } from '../'
-import { param } from '../../02common/commonClasses/layoutEvent'
+import { param } from '../../03designerLayoutBase/commonClasses/layoutEvent'
 import { columnInfo, tableStyle } from '../table/tableCommonTypes'
 
 @Component({
-  name: 'tablemix',
+  name: 'tablemix'
 })
 @Component
 export default class TransferComponent extends ComponentBase {
@@ -47,7 +40,7 @@ export default class TransferComponent extends ComponentBase {
 
     return {
       label: customLabel, // for displayed item
-      value: h.title, // for title and filter matching
+      value: h.title // for title and filter matching
     }
   }
   //
@@ -58,7 +51,7 @@ export default class TransferComponent extends ComponentBase {
         key: i.toString(),
         title: `content${i + 1}`,
         description: `description of content${i + 1}`,
-        disabled: i % 3 < 1,
+        disabled: i % 3 < 1
       })
     }
 
@@ -307,7 +300,7 @@ export default class TransferComponent extends ComponentBase {
         key: i.toString(),
         title: `拉取的数据${i + 1}`,
         description: `description of content${i + 1}`,
-        chosen: false,
+        chosen: false
       }
       if (data.chosen) {
         targetKeys.push(data.key)

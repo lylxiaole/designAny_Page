@@ -1,27 +1,13 @@
-import common from '../commonMethod'
-
-import PageBase from '../../05designerLayouts/PageBase'
+import PageBase from '../PageBase'
+import { getUuid } from '@src/utils'
 import ComponentBase from '../../04designerComponents/ComponentBase'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { behavior, variable, action, actionDetail } from './behaviorTypes'
-import {
-  objectBase,
-  objectType,
-  resourceType,
-  resourceSearchType,
-  object_Method,
-  object_Variable,
-  allCuteSigns,
-  allFilterSigns,
-  resourceSearchAttr,
-} from './01_actionCommon'
+import { objectBase, objectType, resourceType, resourceSearchType, object_Method, object_Variable, allCuteSigns, allFilterSigns, resourceSearchAttr } from './01_actionCommon'
 import factory from './03_actionFactory'
 import { CurrentContext, CurrentApis, pagenNodeType } from '../../01designerContext'
 import { Property } from '../commonClasses/LayoutProperty'
 import { layoutMethod, param, paramType } from '../commonClasses/layoutEvent'
-import paramInfo from '../commonClasses/pageInParamInfo'
-import modelBingding, { getAllFilters, modelDataTypeEnum } from '../commonClasses/modelBingding'
-import modelAnalysis, { modelTypeEnum } from '../impResourcesCache/modelAnalysis'
 import { object_callback, object_FixedVal } from '.'
 
 export class groupNode {
@@ -36,7 +22,7 @@ export class groupNode {
 
 function makeGroupNode(name: string, resType: resourceSearchType): groupNode {
   var newnode = new groupNode()
-  newnode.key = common.getUuid()
+  newnode.key = getUuid()
   newnode.title = name
   newnode.resourceSearchType = resType
   return newnode
@@ -116,7 +102,7 @@ export class pageSearchBase {
 export class behaviorInParamSearch extends pageSearchBase {
   protected async search_inner(searchstr: string): Promise<groupNode> {
     var nodegroup = makeGroupNode('行为入参分组', resourceSearchType.pageContext)
-    var newwfnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '入参', objectType.method, resourceType.behaviorInParam)
+    var newwfnode = pageSearchBase.actionFctory.makeObject(getUuid(), '入参', objectType.method, resourceType.behaviorInParam)
     nodegroup.childrenObjs.push(newwfnode)
     return nodegroup
   }
@@ -202,12 +188,7 @@ export class workflowSearch extends pageSearchBase {
     /********************************** */
     var newwfnode2 = pageSearchBase.actionFctory.makeObject(newObjId, '(异步)', objectType.method, resourceType.workflowsAsync) as object_Method
     this.makeWorkflowInParams(newwfnode2, workflow)
-    let newObjParam = pageSearchBase.actionFctory.makeObject(
-      pageSearchBase.currentPage.Id,
-      '回调行为',
-      objectType.callback,
-      resourceType.callback
-    ) as object_callback
+    let newObjParam = pageSearchBase.actionFctory.makeObject(pageSearchBase.currentPage.Id, '回调行为', objectType.callback, resourceType.callback) as object_callback
     newObjParam.isChoosePageSource = false
     newwfnode2.inputParams.push({ name: '回调行为', obj: newObjParam, isModel: false })
     parentGroup.childrenObjs.push(newwfnode2)
@@ -228,10 +209,10 @@ export class workflowSearch extends pageSearchBase {
     if (parseInt(context.contextType) < 100000000) {
       //context.contextType< 100000000是简单类型，
       //简单类型
-      let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), context.contextCode, objectType.fixedVal, resourceType.fixedVal)
+      let newObjParam = pageSearchBase.actionFctory.makeObject(getUuid(), context.contextCode, objectType.fixedVal, resourceType.fixedVal)
       obj.inputParams.push({ name: context.contextCode, obj: newObjParam, isModel: false })
     } else {
-      let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), context.contextCode, objectType.fixedVal, resourceType.fixedVal)
+      let newObjParam = pageSearchBase.actionFctory.makeObject(getUuid(), context.contextCode, objectType.fixedVal, resourceType.fixedVal)
       obj.inputParams.push({ name: context.contextCode, obj: newObjParam, isModel: true })
     }
   }
@@ -260,7 +241,7 @@ export class enumsSearch extends pageSearchBase {
       const element = alldicts[index]
       var newgroup = makeGroupNode(element.dict_name, resourceSearchType.systemDict)
       // var newwfnode = pageSearchBase.actionFctory.makeObject(
-      //   common.getUuid() + '&' + element.id,
+      //   getUuid() + '&' + element.id,
       //   element.dict_name,
       //   objectType.method,
       //   resourceType.systemDict
@@ -280,12 +261,7 @@ export class enumsSearch extends pageSearchBase {
 
       for (let index = 0; index < dictItems.length; index++) {
         let item = dictItems[index]
-        var newwfnode = pageSearchBase.actionFctory.makeObject(
-          common.getUuid() + '&' + dictId + '&' + item.item_code,
-          item.item_name,
-          objectType.method,
-          resourceType.systemDict
-        )
+        var newwfnode = pageSearchBase.actionFctory.makeObject(getUuid() + '&' + dictId + '&' + item.item_code, item.item_name, objectType.method, resourceType.systemDict)
         group.childrenObjs.push(newwfnode)
       }
     }
@@ -318,12 +294,7 @@ export class customFunctionSearch extends pageSearchBase {
 
   private makeCFGroupNode(customFunction: any): groupNode {
     var customFunctionGroup = makeGroupNode(customFunction.func_name, resourceSearchType.customFunctions)
-    var newObjNode = pageSearchBase.actionFctory.makeObject(
-      common.getUuid(),
-      customFunction.func_code,
-      objectType.method,
-      resourceType.customFunctions
-    ) as object_Method
+    var newObjNode = pageSearchBase.actionFctory.makeObject(getUuid(), customFunction.func_code, objectType.method, resourceType.customFunctions) as object_Method
     newObjNode.dynamic = true
     this.makeCFInParams(newObjNode, customFunction.in_json_param)
     customFunctionGroup.childrenObjs.push(newObjNode)
@@ -335,13 +306,13 @@ export class customFunctionSearch extends pageSearchBase {
     if (jsonParam.properties) {
       let params = jsonParam.properties
       for (var key in params) {
-        let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), key, objectType.fixedVal, resourceType.fixedVal)
+        let newObjParam = pageSearchBase.actionFctory.makeObject(getUuid(), key, objectType.fixedVal, resourceType.fixedVal)
         nodeinfo.inputParams.push({ name: key, obj: newObjParam, isModel: false })
       }
     } else {
       for (let index = 0; index < Object.values(jsonParam).length; index++) {
         const element = Object.values(jsonParam)[index] as any
-        let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), element.name, objectType.fixedVal, resourceType.fixedVal)
+        let newObjParam = pageSearchBase.actionFctory.makeObject(getUuid(), element.name, objectType.fixedVal, resourceType.fixedVal)
         nodeinfo.inputParams.push({ name: element.name, obj: newObjParam, isModel: false })
       }
     }
@@ -368,12 +339,7 @@ export class fileTemplatesSearch extends pageSearchBase {
   private async dealAllFileTemplates(allFileTemplates: any[], group: groupNode) {
     for (let index = 0; index < allFileTemplates.length; index++) {
       const element = allFileTemplates[index]
-      var newgroup = pageSearchBase.actionFctory.makeObject(
-        common.getUuid() + '&' + element.id + '&' + element.file_name + '&' + element.file_url,
-        element.file_name + '(下载)',
-        objectType.method,
-        resourceType.fileTemplate
-      )
+      var newgroup = pageSearchBase.actionFctory.makeObject(getUuid() + '&' + element.id + '&' + element.file_name + '&' + element.file_url, element.file_name + '(下载)', objectType.method, resourceType.fileTemplate)
       group.childrenObjs.push(newgroup)
     }
   }
@@ -399,7 +365,7 @@ export class localStoragesSearch extends pageSearchBase {
     for (let index = 0; index < allLocalStorages.length; index++) {
       const element = allLocalStorages[index]
       // var newgroup = pageSearchBase.actionFctory.makeObject(
-      //   common.getUuid() + '&' + element.id + '&' + element.storage_code + '&' + element.storage_name + '&' + element.expires,
+      //   getUuid() + '&' + element.id + '&' + element.storage_code + '&' + element.storage_name + '&' + element.expires,
       //   element.storage_name,
       //   objectType.method,
       //   resourceType.localStorage
@@ -408,24 +374,19 @@ export class localStoragesSearch extends pageSearchBase {
       var newgroup = makeGroupNode(element.storage_name, resourceSearchType.localStorage)
       let lsArry = [
         {
-          lsName: '获取本地资源',
+          lsName: '获取本地资源'
         },
         {
-          lsName: '设置本地资源',
+          lsName: '设置本地资源'
         },
         {
-          lsName: '删除本地资源',
-        },
+          lsName: '删除本地资源'
+        }
       ]
       lsArry.forEach((item: any) => {
-        var newwfnode = pageSearchBase.actionFctory.makeObject(
-          common.getUuid() + '&' + element.id + '&' + element.storage_code + '&' + element.storage_name + '&' + element.expires,
-          item.lsName,
-          objectType.method,
-          resourceType.localStorage
-        )
+        var newwfnode = pageSearchBase.actionFctory.makeObject(getUuid() + '&' + element.id + '&' + element.storage_code + '&' + element.storage_name + '&' + element.expires, item.lsName, objectType.method, resourceType.localStorage)
         if (item.lsName === '设置本地资源') {
-          let nodep1 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '手动固定值', objectType.fixedVal, resourceType.fixedVal)
+          let nodep1 = pageSearchBase.actionFctory.makeObject(getUuid(), '手动固定值', objectType.fixedVal, resourceType.fixedVal)
           ;(newwfnode as object_Method).inputParams.push({ name: '设置值', obj: nodep1, isModel: false })
         }
         newgroup.childrenObjs.push(newwfnode)
@@ -434,21 +395,11 @@ export class localStoragesSearch extends pageSearchBase {
     }
 
     var newgroupcode = makeGroupNode('应用编码', resourceSearchType.localStorage)
-    var appcode = pageSearchBase.actionFctory.makeObject(
-      common.getUuid() + '&' + common.getUuid() + '&' + 'GenoAny-AppCode' + '&' + '应用编码',
-      '获取本地资源',
-      objectType.method,
-      resourceType.localStorage
-    )
+    var appcode = pageSearchBase.actionFctory.makeObject(getUuid() + '&' + getUuid() + '&' + 'GenoAny-AppCode' + '&' + '应用编码', '获取本地资源', objectType.method, resourceType.localStorage)
     newgroupcode.childrenObjs.push(appcode)
     group.childrenGroups.push(newgroupcode)
     var newgroupuser = makeGroupNode('登录人员信息', resourceSearchType.localStorage)
-    var usercode = pageSearchBase.actionFctory.makeObject(
-      common.getUuid() + '&' + common.getUuid() + '&' + 'State_Info' + '&' + '登录人员信息',
-      '获取本地资源',
-      objectType.method,
-      resourceType.localStorage
-    )
+    var usercode = pageSearchBase.actionFctory.makeObject(getUuid() + '&' + getUuid() + '&' + 'State_Info' + '&' + '登录人员信息', '获取本地资源', objectType.method, resourceType.localStorage)
     newgroupuser.childrenObjs.push(usercode)
     group.childrenGroups.push(newgroupuser)
   }
@@ -460,7 +411,7 @@ export class signsSearch extends pageSearchBase {
   protected async search_inner(searchstr: string): Promise<groupNode> {
     var nodegroup = makeGroupNode('运算符', resourceSearchType.signs)
     allCuteSigns.filter((sign) => {
-      var newwfnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), sign.title, objectType.signs, resourceType.signs)
+      var newwfnode = pageSearchBase.actionFctory.makeObject(getUuid(), sign.title, objectType.signs, resourceType.signs)
       nodegroup.childrenObjs.push(newwfnode)
     })
     return nodegroup
@@ -472,7 +423,7 @@ export class filterSignsSearch extends pageSearchBase {
   protected async search_inner(searchstr: string): Promise<groupNode> {
     var nodegroup = makeGroupNode('运算符', resourceSearchType.signs)
     allFilterSigns.filter((sign) => {
-      var newwfnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), sign.title, objectType.signs, resourceType.filterSigns)
+      var newwfnode = pageSearchBase.actionFctory.makeObject(getUuid(), sign.title, objectType.signs, resourceType.filterSigns)
       nodegroup.childrenObjs.push(newwfnode)
     })
     return nodegroup
@@ -483,24 +434,19 @@ export class filterSignsSearch extends pageSearchBase {
 export class fixedValSearch extends pageSearchBase {
   protected async search_inner(searchstr: string): Promise<groupNode> {
     var groupNode = makeGroupNode('固定值分组', resourceSearchType.fixedVal)
-    var fixedValNode = pageSearchBase.actionFctory.makeObject(
-      common.getUuid() + '&字符串',
-      '固定值-字符串',
-      objectType.fixedVal,
-      resourceType.fixedVal
-    )
+    var fixedValNode = pageSearchBase.actionFctory.makeObject(getUuid() + '&字符串', '固定值-字符串', objectType.fixedVal, resourceType.fixedVal)
     groupNode.childrenObjs.push(fixedValNode)
     //
-    fixedValNode = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&布尔', '固定值-布尔', objectType.fixedVal, resourceType.fixedVal)
+    fixedValNode = pageSearchBase.actionFctory.makeObject(getUuid() + '&布尔', '固定值-布尔', objectType.fixedVal, resourceType.fixedVal)
     groupNode.childrenObjs.push(fixedValNode)
     //
-    fixedValNode = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&整数', '固定值-整数', objectType.fixedVal, resourceType.fixedVal)
+    fixedValNode = pageSearchBase.actionFctory.makeObject(getUuid() + '&整数', '固定值-整数', objectType.fixedVal, resourceType.fixedVal)
     groupNode.childrenObjs.push(fixedValNode)
     //
-    fixedValNode = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&浮点数', '固定值-浮点数', objectType.fixedVal, resourceType.fixedVal)
+    fixedValNode = pageSearchBase.actionFctory.makeObject(getUuid() + '&浮点数', '固定值-浮点数', objectType.fixedVal, resourceType.fixedVal)
     groupNode.childrenObjs.push(fixedValNode)
     //
-    fixedValNode = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&空值', '固定值-空值', objectType.method, resourceType.fixedVal)
+    fixedValNode = pageSearchBase.actionFctory.makeObject(getUuid() + '&空值', '固定值-空值', objectType.method, resourceType.fixedVal)
     groupNode.childrenObjs.push(fixedValNode)
     return groupNode
   }
@@ -512,12 +458,12 @@ export class variableSearch extends pageSearchBase {
     // window.console.log('查询变量')
     var groupinfo = makeGroupNode('当前变量', resourceSearchType.variables)
     /************************************ */
-    var createVaNode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '新建变量', objectType.variable, resourceType.variables)
+    var createVaNode = pageSearchBase.actionFctory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
     groupinfo.childrenObjs.push(createVaNode)
     /*****************************/
     var allVariables = this.findVariableActs(pageSearchBase.currentBehavior.actions)
     allVariables.filter((o) => {
-      var objNode = pageSearchBase.actionFctory.makeObject(common.getUuid(), o.name, objectType.variable, resourceType.variables)
+      var objNode = pageSearchBase.actionFctory.makeObject(getUuid(), o.name, objectType.variable, resourceType.variables)
       if (!groupinfo.childrenObjs.find((obj) => obj.name == o.name)) {
         groupinfo.childrenObjs.push(objNode)
       }
@@ -549,263 +495,42 @@ export class variableSearch extends pageSearchBase {
   }
 }
 
-@resourceSearchAttr(resourceSearchType.pageContext)
-export class pageContextSearch extends pageSearchBase {
-  protected async search_inner(searchstr: string): Promise<groupNode> {
-    // window.console.log('组织页面上下文了')
-    var nodegroup = makeGroupNode('当前页面上下文', resourceSearchType.pageContext)
-    this.makePageContext(pageSearchBase.currentPage, nodegroup)
-    return nodegroup
-  }
-
-  private makePageContext(page: PageBase, groupNode: groupNode) {
-    //父页面
-    if (page && page.parentPage) {
-      var parentPageGroup = makeGroupNode('父页面', resourceSearchType.pageContext)
-      this.makePageContext(page.parentPage, parentPageGroup)
-      groupNode.childrenGroups.push(parentPageGroup)
-    }
-    //页面属性
-    var compPropertiesTreeNode = makeGroupNode('属性', resourceSearchType.pageContext)
-    this.cutePageProperties(compPropertiesTreeNode, page, page.LayoutProperties, page.Id)
-    groupNode.childrenGroups.push(compPropertiesTreeNode)
-    //组件方法
-    var compMethodsTreeNode = makeGroupNode('方法', resourceSearchType.pageContext)
-    this.cutePageMethos(compMethodsTreeNode, page, page.DesignerMethods, page.Id)
-    groupNode.childrenGroups.push(compMethodsTreeNode)
-    //页面入参
-    var nodegroup = makeGroupNode('页面入参', resourceSearchType.pageContext)
-    page.inParams.filter((o) => {
-      var objNode = pageSearchBase.actionFctory.makeObject(o.key, o.paramName, objectType.method, resourceType.pageInParams, page.Id) as object_Method
-      nodegroup.childrenObjs.push(objNode)
-    })
-    groupNode.childrenGroups.push(nodegroup)
-    /**控件资源 */
-    var compsnodegroup = makeGroupNode('控件资源', resourceSearchType.controlsInPage)
-    this.cuteCompsGroup(page.layoutChildren, compsnodegroup, page.Id)
-    groupNode.childrenGroups.push(compsnodegroup)
-    /**模型实例 */
-    var mbgroupinfo = makeGroupNode('模型实例', resourceSearchType.models)
-    this.cutePageModelBinds(page, mbgroupinfo)
-    groupNode.childrenGroups.push(mbgroupinfo)
-    /**页面行为 */
-    var behgroupinfo = makeGroupNode('行为列表', resourceSearchType.models)
-    this.makePageBahaviors(page, behgroupinfo)
-    groupNode.childrenGroups.push(behgroupinfo)
-  }
-
-  public cutePageProperties(group: groupNode, component: LayoutBase, properties: Property[], pageId?: string) {
-    properties
-      .filter((o) => o.canSetting == true)
-      .filter((p) => {
-        var objNode = pageSearchBase.actionFctory.makeObject(p.id, p.propertyName, objectType.method, resourceType.propertiesInPage, pageId)
-        group.childrenObjs.push(objNode)
-      })
-    // })
-  }
-  public cutePageMethos(group: groupNode, component: LayoutBase, methods: layoutMethod[], pageId?: string) {
-    methods.filter((method) => {
-      var objNode = pageSearchBase.actionFctory.makeObject(
-        common.getUuid(),
-        method.eventName,
-        objectType.method,
-        resourceType.methodsInPage,
-        pageId
-      ) as object_Method
-      if (method.inParams) {
-        this.makeMethodInParams(objNode, method.inParams)
-      }
-      objNode.outParam = method.outParam
-      group.childrenObjs.push(objNode)
-    })
-    // })
-  }
-  public cuteComsProperties(group: groupNode, component: LayoutBase, properties: Property[], pageId?: string) {
-    properties
-      .filter((o) => o.canSetting == true)
-      .filter((p) => {
-        var objNode = pageSearchBase.actionFctory.makeObject(p.id, p.propertyName, objectType.method, resourceType.controlProperties, pageId)
-        group.childrenObjs.push(objNode)
-      })
-    // })
-  }
-  public cuteComsMethos(group: groupNode, component: LayoutBase, methods: layoutMethod[], pageId?: string) {
-    methods.filter((method) => {
-      var objNode = pageSearchBase.actionFctory.makeObject(
-        component.Id,
-        method.eventName,
-        objectType.method,
-        resourceType.controlMethods,
-        pageId
-      ) as object_Method
-      if (method.inParams) {
-        this.makeMethodInParams(objNode, method.inParams)
-      }
-      objNode.outParam = method.outParam
-      //区分一下，只在特定的方法上面支持动态参数
-      if (method.eventName == '新建报表' || method.eventName == '查看报表'){
-        objNode.dynamic = true
-      }
-      else{
-        objNode.dynamic = false
-      }
-      group.childrenObjs.push(objNode)
-    })
-    // })
-  }
-  public makeMethodInParams(obj: object_Method, params: param[], pageId?: string) {
-    params.filter((mInparam) => {
-      let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), mInparam.name, objectType.fixedVal, resourceType.fixedVal, pageId)
-      obj.inputParams.push({ name: mInparam.name, obj: newObjParam, isModel: false })
-    })
-  }
-  public cuteCompsGroup(comps: LayoutBase[], group: groupNode, pageId?: string) {
-    comps.filter((comp) => {
-      var compGroup = makeGroupNode(!comp.name ? '未命名' : comp.name, resourceSearchType.controlsInPage)
-      //组件属性
-      var compPropertiesTreeNode = makeGroupNode('属性', resourceSearchType.controlsInPage)
-      this.cuteComsProperties(compPropertiesTreeNode, comp, comp.LayoutProperties, pageId)
-      compGroup.childrenGroups.push(compPropertiesTreeNode)
-      //组件方法
-      var compMethodsTreeNode = makeGroupNode('方法', resourceSearchType.controlsInPage)
-      this.cuteComsMethos(compMethodsTreeNode, comp, comp.DesignerMethods, pageId)
-      compGroup.childrenGroups.push(compMethodsTreeNode)
-      //子组件
-      if (comp.layoutChildren.length > 0) {
-        var childrenGroup = makeGroupNode('子组件', resourceSearchType.controlsInPage)
-        this.cuteCompsGroup(comp.layoutChildren, childrenGroup, pageId)
-        compGroup.childrenGroups.push(childrenGroup)
-      }
-      group.childrenGroups.push(compGroup)
-    })
-  }
-  public cutePageModelBinds(page: PageBase, groupinfo: groupNode) {
-    for (let index = 0; index < page.modelBindings.length; index++) {
-      const modelBinding = page.modelBindings[index]
-      let modelbdName = modelBinding.modelBindingName
-      if (modelBinding.modelBindingType == 2) {
-        let newnode = pageSearchBase.actionFctory.makeObject(modelbdName, modelbdName, objectType.method, resourceType.models, page.Id)
-        groupinfo.childrenObjs.push(newnode)
-      } else {
-        var modelbindGroup = makeGroupNode(modelbdName, resourceSearchType.models)
-        if (modelBinding.modelDetailInfo) {
-          this.makeModelFilterPaths(modelbindGroup, modelBinding, page.Id)
-
-          this.makeModelRulePaths(modelbindGroup, modelBinding, page.Id)
-          this.makeModelPropertyPaths(modelbindGroup, modelBinding, page.Id)
-        }
-        groupinfo.childrenGroups.push(modelbindGroup)
-      }
-    }
-  }
-  private makeModelPropertyPaths(group: groupNode, modelbd: modelBingding, pageId?: string) {
-    let jiegounode = pageSearchBase.actionFctory.makeObject(modelbd.modelBindingName, '结构', objectType.method, resourceType.modelsStructure, pageId)
-    group.childrenObjs.push(jiegounode)
-
-    let newnode = pageSearchBase.actionFctory.makeObject(modelbd.modelBindingName, '属性-全选', objectType.method, resourceType.models, pageId)
-    group.childrenObjs.push(newnode)
-
-    if (!modelbd.modelDetailInfo) {
-      return
-    }
-
-    if (modelbd.modelDetailInfo.modelType == modelTypeEnum.TREE) {
-      return
-    }
-    var properties = modelbd.modelDetailProperties
-    properties.forEach((o) => {
-      let resourceid = modelbd.modelBindingName + '&' + o.propertyCode
-      let objname = '属性-[' + modelAnalysis.getModelPropertyShowName(o) + ']'
-      let newnode = pageSearchBase.actionFctory.makeObject(resourceid, objname, objectType.method, resourceType.modelsProperty, pageId)
-
-      group.childrenObjs.push(newnode)
-    })
-  }
-  private makeModelFilterPaths(group: groupNode, modelbd: modelBingding, pageId?: string) {
-    // window.console.log('---------计算模型实例的筛选条件:', modelbd)
-    if (!modelbd.modelDetailInfo) {
-      return
-    }
-
-    var properties = modelbd.modelDetailProperties
-
-    modelbd.modelFilters.forEach((o) => {
-      let resourceid = modelbd.modelBindingName + '&' + o.id
-      var typestr = getAllFilters().find((f) => f.val == o.type).name
-      var bdProp = properties.find((p) => p.propertyCode == o.code)
-      if (bdProp) {
-        var propertyName = bdProp.propertyName
-        let objname = '筛选条件:' + '[' + propertyName + '-' + typestr + '-' + '筛选值]'
-        let newnode = pageSearchBase.actionFctory.makeObject(resourceid, objname, objectType.method, resourceType.modelsFilter, pageId)
-        group.childrenObjs.push(newnode)
-      }
-    })
-  }
-
-  private makeModelRulePaths(group: groupNode, modelbd: modelBingding, pageId?: string) {
-    if (!modelbd.modelDetailInfo) {
-      return
-    }
-    var properties = modelbd.modelDetailProperties
-
-    properties.forEach((element) => {
-      if (element.ruleId) {
-        let resourceid = modelbd.modelBindingName + '&' + element.propertyCode
-        let objname = '属性规则:[' + element.propertyName + ']'
-        let newnode = pageSearchBase.actionFctory.makeObject(resourceid, objname, objectType.method, resourceType.modelsPropRule, pageId)
-        group.childrenObjs.push(newnode)
-      }
-    })
-  }
-
-  private makePageBahaviors(page: PageBase, group: groupNode) {
-    for (let index = 0; index < page.behaviors.length; index++) {
-      let behav = page.behaviors[index]
-      let newnode = pageSearchBase.actionFctory.makeObject(behav.id, behav.name, objectType.method, resourceType.behaviors, page.Id) as object_Method
-
-      let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), '行为入参', objectType.fixedVal, resourceType.fixedVal)
-      newnode.inputParams.push({ name: '行为入参', obj: newObjParam, isModel: false })
-      group.childrenObjs.push(newnode)
-    }
-  }
-}
-
 @resourceSearchAttr(resourceSearchType.normalPopupWindow)
 export class normalPopupWindowSearch extends pageSearchBase {
   protected async search_inner(searchstr: string): Promise<groupNode> {
     var groupinfo = makeGroupNode('全局通用方法', resourceSearchType.normalPopupWindow)
-    var param = pageSearchBase.actionFctory.makeObject(common.getUuid(), '提示文字', objectType.fixedVal, resourceType.fixedVal)
+    var param = pageSearchBase.actionFctory.makeObject(getUuid(), '提示文字', objectType.fixedVal, resourceType.fixedVal)
     //
-    let newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '确认弹窗', objectType.method, resourceType.normalPopupWindow)
+    let newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '确认弹窗', objectType.method, resourceType.normalPopupWindow)
     ;(newnode as object_Method).inputParams.push({ name: '提示文字', obj: param, isModel: false })
     groupinfo.childrenObjs.push(newnode)
     //
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '警告弹窗', objectType.method, resourceType.normalPopupWindow)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '警告弹窗', objectType.method, resourceType.normalPopupWindow)
     ;(newnode as object_Method).inputParams.push({ name: '提示文字', obj: param, isModel: false })
     groupinfo.childrenObjs.push(newnode)
     //
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '错误弹窗', objectType.method, resourceType.normalPopupWindow)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '错误弹窗', objectType.method, resourceType.normalPopupWindow)
     ;(newnode as object_Method).inputParams.push({ name: '提示文字', obj: param, isModel: false })
     groupinfo.childrenObjs.push(newnode)
     //
     this.makeConfirm(groupinfo)
     //
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), 'Excel上传解析', objectType.method, resourceType.uploadFile)
-    let node = pageSearchBase.actionFctory.makeObject(common.getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
-    let node2 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '回调事件', objectType.callback, resourceType.callback) as object_callback
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), 'Excel上传解析', objectType.method, resourceType.uploadFile)
+    let node = pageSearchBase.actionFctory.makeObject(getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    let node2 = pageSearchBase.actionFctory.makeObject(getUuid(), '回调事件', objectType.callback, resourceType.callback) as object_callback
     node2.isChoosePageSource = false
     ;(newnode as object_Method).inputParams.push({ name: '从第几行开始读取', obj: node, isModel: false })
     ;(newnode as object_Method).inputParams.push({ name: '回调事件', obj: node2, isModel: false })
     groupinfo.childrenObjs.push(newnode)
     ////////////////////////////////////////////////////////////////////////
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '通用上传文件', objectType.method, resourceType.uploadFile_all)
-    let uln1 = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&字符串', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '通用上传文件', objectType.method, resourceType.uploadFile_all)
+    let uln1 = pageSearchBase.actionFctory.makeObject(getUuid() + '&字符串', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     ;(uln1 as object_FixedVal).val = '*'
-    let uln2 = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&整数', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    let uln2 = pageSearchBase.actionFctory.makeObject(getUuid() + '&整数', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     ;(uln2 as object_FixedVal).val = 1
-    let uln3 = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&整数', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    let uln3 = pageSearchBase.actionFctory.makeObject(getUuid() + '&整数', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     ;(uln3 as object_FixedVal).val = 10
-    let uln4 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '回调事件', objectType.callback, resourceType.callback) as object_callback
+    let uln4 = pageSearchBase.actionFctory.makeObject(getUuid(), '回调事件', objectType.callback, resourceType.callback) as object_callback
     uln4.isChoosePageSource = false
     ;(newnode as object_Method).inputParams.push({ name: '文件类型', obj: uln1, isModel: false })
     ;(newnode as object_Method).inputParams.push({ name: '最大文件个数', obj: uln2, isModel: false })
@@ -813,39 +538,39 @@ export class normalPopupWindowSearch extends pageSearchBase {
     ;(newnode as object_Method).inputParams.push({ name: '回调事件', obj: uln4, isModel: false })
     groupinfo.childrenObjs.push(newnode)
     //
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '获取时间', objectType.method, resourceType.serverTimeNow)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '获取时间', objectType.method, resourceType.serverTimeNow)
     groupinfo.childrenObjs.push(newnode)
     //
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid() + '显示', '显示加载窗', objectType.method, resourceType.controlLoadingWindow)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid() + '显示', '显示加载窗', objectType.method, resourceType.controlLoadingWindow)
     groupinfo.childrenObjs.push(newnode)
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid() + '关闭', '关闭加载窗', objectType.method, resourceType.controlLoadingWindow)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid() + '关闭', '关闭加载窗', objectType.method, resourceType.controlLoadingWindow)
     groupinfo.childrenObjs.push(newnode)
     //
-    let newnodedown = pageSearchBase.actionFctory.makeObject(common.getUuid(), '文件下载', objectType.method, resourceType.downloadFile)
-    let nodep1 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    let newnodedown = pageSearchBase.actionFctory.makeObject(getUuid(), '文件下载', objectType.method, resourceType.downloadFile)
+    let nodep1 = pageSearchBase.actionFctory.makeObject(getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     ;(newnodedown as object_Method).inputParams.push({ name: '文件链接', obj: nodep1, isModel: false })
     groupinfo.childrenObjs.push(newnodedown)
     //
-    let newnodebreak = pageSearchBase.actionFctory.makeObject(common.getUuid(), '终止行为(当前)', objectType.method, resourceType.breakBehavior)
+    let newnodebreak = pageSearchBase.actionFctory.makeObject(getUuid(), '终止行为(当前)', objectType.method, resourceType.breakBehavior)
     groupinfo.childrenObjs.push(newnodebreak)
     //
-    let newnodebreakall = pageSearchBase.actionFctory.makeObject(common.getUuid(), '终止行为(所有)', objectType.method, resourceType.breakBehaviorAll)
+    let newnodebreakall = pageSearchBase.actionFctory.makeObject(getUuid(), '终止行为(所有)', objectType.method, resourceType.breakBehaviorAll)
     groupinfo.childrenObjs.push(newnodebreakall)
     //
-    let newnodeopenexe = pageSearchBase.actionFctory.makeObject(common.getUuid(), '打开本地程序', objectType.method, resourceType.callLocalProgram)
-    uln1 = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&字符串', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    let newnodeopenexe = pageSearchBase.actionFctory.makeObject(getUuid(), '打开本地程序', objectType.method, resourceType.callLocalProgram)
+    uln1 = pageSearchBase.actionFctory.makeObject(getUuid() + '&字符串', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     ;(uln1 as object_FixedVal).val = 'GenoAny'
-    uln2 = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&字符串', '文件路径', objectType.fixedVal, resourceType.fixedVal)
+    uln2 = pageSearchBase.actionFctory.makeObject(getUuid() + '&字符串', '文件路径', objectType.fixedVal, resourceType.fixedVal)
     ;(newnodeopenexe as object_Method).inputParams.push({ name: '本地程序名称', obj: uln1, isModel: false })
     ;(newnodeopenexe as object_Method).inputParams.push({ name: '参数', obj: uln2, isModel: false })
     groupinfo.childrenObjs.push(newnodeopenexe)
     //
     //打印模板设计
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '设计模板', objectType.method, resourceType.designReportTemplate)
-    uln1 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '报表数据源', objectType.fixedVal, resourceType.fixedVal)
-    uln2 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '报表模板模型', objectType.fixedVal, resourceType.fixedVal)
-    uln3 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '数据源模型结构', objectType.fixedVal, resourceType.fixedVal)
-    uln4 = pageSearchBase.actionFctory.makeObject(common.getUuid(), '保存回调事件', objectType.callback, resourceType.callback) as object_callback
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '设计模板', objectType.method, resourceType.designReportTemplate)
+    uln1 = pageSearchBase.actionFctory.makeObject(getUuid(), '报表数据源', objectType.fixedVal, resourceType.fixedVal)
+    uln2 = pageSearchBase.actionFctory.makeObject(getUuid(), '报表模板模型', objectType.fixedVal, resourceType.fixedVal)
+    uln3 = pageSearchBase.actionFctory.makeObject(getUuid(), '数据源模型结构', objectType.fixedVal, resourceType.fixedVal)
+    uln4 = pageSearchBase.actionFctory.makeObject(getUuid(), '保存回调事件', objectType.callback, resourceType.callback) as object_callback
     uln4.isChoosePageSource = false
     ;(newnode as object_Method).inputParams.push({ name: '报表模板id', obj: uln2, isModel: false })
     ;(newnode as object_Method).inputParams.push({ name: '保存回调事件', obj: uln4, isModel: false })
@@ -854,43 +579,38 @@ export class normalPopupWindowSearch extends pageSearchBase {
     ;(newnode as object_Method).dynamic = true
     groupinfo.childrenObjs.push(newnode)
     //打印预览
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '打印预览', objectType.method, resourceType.reportPrintPreview)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '打印预览', objectType.method, resourceType.reportPrintPreview)
     ;(newnode as object_Method).inputParams.push({ name: '报表模板id', obj: uln2, isModel: false })
     ;(newnode as object_Method).inputParams.push({ name: '报表数据源', obj: uln1, isModel: false })
     //;(newnode as object_Method).inputParams.push({ name: '数据源模型结构', obj: uln3, isModel: false })
     ;(newnode as object_Method).dynamic = true
     groupinfo.childrenObjs.push(newnode)
     //打印
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '打印', objectType.method, resourceType.reportPrint)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '打印', objectType.method, resourceType.reportPrint)
     ;(newnode as object_Method).inputParams.push({ name: '报表模板id', obj: uln2, isModel: false })
     ;(newnode as object_Method).inputParams.push({ name: '报表数据源', obj: uln1, isModel: false })
     //;(newnode as object_Method).inputParams.push({ name: '数据源模型结构', obj: uln3, isModel: false })
     ;(newnode as object_Method).dynamic = true
     groupinfo.childrenObjs.push(newnode)
     //打开网络文件(刘少彬特需)
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '本地预览网络文件', objectType.method, resourceType.openLocalExeToOpenFile)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '本地预览网络文件', objectType.method, resourceType.openLocalExeToOpenFile)
     ;(newnode as object_Method).inputParams.push({ name: '文件相对路径', obj: uln2, isModel: false })
     groupinfo.childrenObjs.push(newnode)
     //删除报表
-    newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '删除报表', objectType.method, resourceType.deleteReport)
+    newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '删除报表', objectType.method, resourceType.deleteReport)
     ;(newnode as object_Method).inputParams.push({ name: '报表id', obj: uln2, isModel: false })
     groupinfo.childrenObjs.push(newnode)
     return groupinfo
   }
 
   private makeConfirm(group: groupNode) {
-    var newnode = pageSearchBase.actionFctory.makeObject(common.getUuid(), '询问弹窗', objectType.method, resourceType.confirmPopup)
-    var paramstr = pageSearchBase.actionFctory.makeObject(common.getUuid(), '提示文字', objectType.fixedVal, resourceType.fixedVal)
-    var paramIsShowCancel = pageSearchBase.actionFctory.makeObject(
-      common.getUuid() + '&布尔',
-      '显示取消按钮',
-      objectType.fixedVal,
-      resourceType.fixedVal
-    )
+    var newnode = pageSearchBase.actionFctory.makeObject(getUuid(), '询问弹窗', objectType.method, resourceType.confirmPopup)
+    var paramstr = pageSearchBase.actionFctory.makeObject(getUuid(), '提示文字', objectType.fixedVal, resourceType.fixedVal)
+    var paramIsShowCancel = pageSearchBase.actionFctory.makeObject(getUuid() + '&布尔', '显示取消按钮', objectType.fixedVal, resourceType.fixedVal)
     paramIsShowCancel.ref = 'true'
-    var surecb = pageSearchBase.actionFctory.makeObject(common.getUuid(), '取消回调', objectType.callback, resourceType.callback) as object_callback
+    var surecb = pageSearchBase.actionFctory.makeObject(getUuid(), '取消回调', objectType.callback, resourceType.callback) as object_callback
     surecb.isChoosePageSource = false
-    var cancelcb = pageSearchBase.actionFctory.makeObject(common.getUuid(), '取消回调', objectType.callback, resourceType.callback) as object_callback
+    var cancelcb = pageSearchBase.actionFctory.makeObject(getUuid(), '取消回调', objectType.callback, resourceType.callback) as object_callback
     cancelcb.isChoosePageSource = false
     ;(newnode as object_Method).inputParams.push({ name: '询问文字', obj: paramstr, isModel: false })
     ;(newnode as object_Method).inputParams.push({ name: '是否显示取消按钮', obj: paramIsShowCancel, isModel: false })
@@ -907,18 +627,18 @@ export class pagePopupSearch extends pageSearchBase {
     var groupinfo = makeGroupNode('页面弹窗', resourceSearchType.pagePopupWindow)
     var param = {
       filter: {
-        appId: CurrentContext.AppID,
+        appId: CurrentContext.AppID
       },
       orders: [
         {
           direction: 'ASC',
-          fieldName: 'orderIndex',
+          fieldName: 'orderIndex'
         },
         {
           direction: 'ASC',
-          fieldName: 'modifyTime',
-        },
-      ],
+          fieldName: 'modifyTime'
+        }
+      ]
     }
     var resourceArr = await CurrentApis.GetAppMenuTree(param)
     var treelist = []
@@ -935,7 +655,7 @@ export class pagePopupSearch extends pageSearchBase {
         text: element.title,
         type: element.leaf ? '1' : '0',
         obj: element.tag,
-        children: [],
+        children: []
       }
       if (element.children && element.children.length > 0) {
         this.initTreeNode(menu.children, element.children)
@@ -962,26 +682,21 @@ export class pagePopupSearch extends pageSearchBase {
     })
   }
   private makeParam(obj: object_Method) {
-    var node = pageSearchBase.actionFctory.makeObject(common.getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    var node = pageSearchBase.actionFctory.makeObject(getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     obj.inputParams.push({ name: '弹窗样式-宽度', obj: node, isModel: false })
-    node = pageSearchBase.actionFctory.makeObject(common.getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    node = pageSearchBase.actionFctory.makeObject(getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     obj.inputParams.push({ name: '弹窗样式-高度', obj: node, isModel: false })
-    node = pageSearchBase.actionFctory.makeObject(common.getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    node = pageSearchBase.actionFctory.makeObject(getUuid(), '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     obj.inputParams.push({ name: '弹窗样式-标题', obj: node, isModel: false })
     //
-    const node3 = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&布尔', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    const node3 = pageSearchBase.actionFctory.makeObject(getUuid() + '&布尔', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     obj.inputParams.push({ name: '弹窗样式-全屏', obj: node3, isModel: false })
     //
-    node = pageSearchBase.actionFctory.makeObject(common.getUuid() + '&布尔', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
+    node = pageSearchBase.actionFctory.makeObject(getUuid() + '&布尔', '手填固定值', objectType.fixedVal, resourceType.fixedVal)
     node.ref = 'false'
     obj.inputParams.push({ name: '关闭图标触发回调', obj: node, isModel: false })
     //TODO 增加弹窗关闭回调事件
-    const cnnode = pageSearchBase.actionFctory.makeObject(
-      obj.resourceId,
-      '弹窗关闭回调',
-      objectType.callback,
-      resourceType.callback
-    ) as object_callback
+    const cnnode = pageSearchBase.actionFctory.makeObject(obj.resourceId, '弹窗关闭回调', objectType.callback, resourceType.callback) as object_callback
     cnnode.isChoosePageSource = true
     // console.log('node: ', node)
     // console.log('obj: ', obj)
@@ -996,18 +711,18 @@ export class pageRouteSearch extends pageSearchBase {
     var groupinfo = makeGroupNode('页面跳转', resourceSearchType.pageRoute)
     var param = {
       filter: {
-        appId: CurrentContext.AppID,
+        appId: CurrentContext.AppID
       },
       orders: [
         {
           direction: 'ASC',
-          fieldName: 'orderIndex',
+          fieldName: 'orderIndex'
         },
         {
           direction: 'ASC',
-          fieldName: 'modifyTime',
-        },
-      ],
+          fieldName: 'modifyTime'
+        }
+      ]
     }
     var resourceArr = await CurrentApis.GetAppMenuTree(param)
     var treelist = []
@@ -1038,7 +753,7 @@ export class pageRouteSearch extends pageSearchBase {
   }
   // private makeParam(obj: object_Method) {
   //   let inParamName: string = '页面跳转入参'
-  //   let newObjParam2 = pageSearchBase.actionFctory.makeObject(common.getUuid(), inParamName, objectType.variable, resourceType.variables)
+  //   let newObjParam2 = pageSearchBase.actionFctory.makeObject(getUuid(), inParamName, objectType.variable, resourceType.variables)
   //   obj.inputParams.push({ name: inParamName, obj: newObjParam2, isModel: false })
   // }
 
@@ -1049,7 +764,7 @@ export class pageRouteSearch extends pageSearchBase {
         text: element.title,
         type: element.leaf ? '1' : '0',
         obj: element.tag,
-        children: [],
+        children: []
       }
       if (element.children && element.children.length > 0) {
         this.initTreeNode(menu.children, element.children)
@@ -1066,18 +781,18 @@ export class pageResourcesSearch extends pageSearchBase {
     var groupinfo = makeGroupNode('页面资源', resourceSearchType.pageSources)
     var param = {
       filter: {
-        appId: CurrentContext.AppID,
+        appId: CurrentContext.AppID
       },
       orders: [
         {
           direction: 'ASC',
-          fieldName: 'orderIndex',
+          fieldName: 'orderIndex'
         },
         {
           direction: 'ASC',
-          fieldName: 'modifyTime',
-        },
-      ],
+          fieldName: 'modifyTime'
+        }
+      ]
     }
     var resourceArr = await CurrentApis.GetAppMenuTree(param)
     var treelist = []
@@ -1113,7 +828,7 @@ export class pageResourcesSearch extends pageSearchBase {
         text: element.title,
         type: element.leaf ? '1' : '0',
         obj: element.tag,
-        children: [],
+        children: []
       }
       if (element.children && element.children.length > 0) {
         this.initTreeNode(menu.children, element.children)
@@ -1133,16 +848,16 @@ export class modelMapperSearch extends pageSearchBase {
 
     let queryParam = {
       filter: {
-        compares: [],
+        compares: []
       },
       orders: [
         {
           direction: 'DESC',
-          fieldName: 'modifyTime',
-        },
+          fieldName: 'modifyTime'
+        }
       ],
       pageNumber: this.pageIndex,
-      pageSize: this.pageSize,
+      pageSize: this.pageSize
     }
     if (searchstr) {
       queryParam.filter.compares.push({
@@ -1151,13 +866,13 @@ export class modelMapperSearch extends pageSearchBase {
         compare1: {
           compare: 'ALL_LIKE',
           field: 'mapperCode',
-          value: searchstr,
+          value: searchstr
         },
         compare2: {
           compare: 'ALL_LIKE',
           field: 'mapperName',
-          value: searchstr,
-        },
+          value: searchstr
+        }
       })
       // queryParam.filter['mapperName'] = searchstr
       // queryParam.filter['mapperCode'] = searchstr
@@ -1181,12 +896,7 @@ export class modelMapperSearch extends pageSearchBase {
 
   private makeMPGroupNode(modelMapper: any): groupNode {
     var modelMapperGroup = makeGroupNode(modelMapper.mapperName, resourceSearchType.modelMapper)
-    var newObjNode = pageSearchBase.actionFctory.makeObject(
-      common.getUuid(),
-      modelMapper.mapperCode,
-      objectType.variable,
-      resourceType.modelMapper
-    ) as object_Variable
+    var newObjNode = pageSearchBase.actionFctory.makeObject(getUuid(), modelMapper.mapperCode, objectType.variable, resourceType.modelMapper) as object_Variable
     modelMapperGroup.childrenObjs.push(newObjNode)
     return modelMapperGroup
   }
@@ -1195,18 +905,13 @@ export class modelMapperSearch extends pageSearchBase {
 export class consoleSettingsSearch extends pageSearchBase {
   protected async search_inner(searchstr: string): Promise<groupNode> {
     var nodegroup = makeGroupNode('调试输出配置', resourceSearchType.pageContext)
-    let newNode = pageSearchBase.actionFctory.makeObject(
-      common.getUuid(),
-      '调试输出',
-      objectType.method,
-      resourceType.consoleSettings
-    ) as object_Method
+    let newNode = pageSearchBase.actionFctory.makeObject(getUuid(), '调试输出', objectType.method, resourceType.consoleSettings) as object_Method
     newNode.inputParams = []
     let paramSign: string = '输出标记'
-    let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), paramSign, objectType.fixedVal, resourceType.fixedVal)
+    let newObjParam = pageSearchBase.actionFctory.makeObject(getUuid(), paramSign, objectType.fixedVal, resourceType.fixedVal)
     newNode.inputParams.push({ name: paramSign, obj: newObjParam, isModel: false })
     let inParamName: string = '输出参数'
-    let newObjParam2 = pageSearchBase.actionFctory.makeObject(common.getUuid(), inParamName, objectType.variable, resourceType.variables)
+    let newObjParam2 = pageSearchBase.actionFctory.makeObject(getUuid(), inParamName, objectType.variable, resourceType.variables)
     newNode.inputParams.push({ name: inParamName, obj: newObjParam2, isModel: false })
     nodegroup.childrenObjs.push(newNode)
     return nodegroup
@@ -1217,10 +922,10 @@ export class consoleSettingsSearch extends pageSearchBase {
 export class externalLinkSearch extends pageSearchBase {
   protected async search_inner(searchstr: string): Promise<groupNode> {
     var nodegroup = makeGroupNode('外部链接', resourceSearchType.externalLinks)
-    let newNode = pageSearchBase.actionFctory.makeObject(common.getUuid(), 'URL地址', objectType.method, resourceType.externalLinks) as object_Method
+    let newNode = pageSearchBase.actionFctory.makeObject(getUuid(), 'URL地址', objectType.method, resourceType.externalLinks) as object_Method
     newNode.inputParams = []
     let paramSign: string = 'URL地址'
-    let newObjParam = pageSearchBase.actionFctory.makeObject(common.getUuid(), paramSign, objectType.fixedVal, resourceType.fixedVal)
+    let newObjParam = pageSearchBase.actionFctory.makeObject(getUuid(), paramSign, objectType.fixedVal, resourceType.fixedVal)
     newNode.inputParams.push({ name: paramSign, obj: newObjParam, isModel: false })
     nodegroup.childrenObjs.push(newNode)
     return nodegroup
@@ -1229,7 +934,6 @@ export class externalLinkSearch extends pageSearchBase {
 
 var allSearches: pageSearchBase[] = [
   new behaviorInParamSearch(),
-  new pageContextSearch(),
   new workflowSearch(),
   new customFunctionSearch(),
   new signsSearch(),
@@ -1247,7 +951,7 @@ var allSearches: pageSearchBase[] = [
   new pageRouteSearch(),
   new modelMapperSearch(),
   new consoleSettingsSearch(),
-  new externalLinkSearch(),
+  new externalLinkSearch()
 ]
 
 export function clearAllSearchCache() {

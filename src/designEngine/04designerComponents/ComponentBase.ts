@@ -2,17 +2,9 @@ import { SaveInfo } from '../03designerLayoutBase/LayoutBase'
 import LayoutContainner from '../03designerLayoutBase/LayoutContainner'
 import { DragItemData, DragItemTypeEnum } from '../03designerLayoutBase/BaseEvents'
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import { param } from '../02common/commonClasses/layoutEvent'
+import { param } from '../03designerLayoutBase/commonClasses/layoutEvent'
 
-import {
-  Property,
-  Authority_Property,
-  Color_Property,
-  BindingModels_Property,
-  Boolean_Property,
-  PropertyGroupName,
-  Number_Property
-} from '../02common/commonClasses/LayoutProperty'
+import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '../02common/commonClasses/LayoutProperty'
 import PageBase from '../05designerLayouts/PageBase'
 
 import { factory } from '../02common/behavior'

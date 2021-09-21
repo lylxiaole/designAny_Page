@@ -1,14 +1,12 @@
 import { param } from '../commonClasses/layoutEvent'
-import common from '../commonMethod'
-import PageBase from '../../05designerLayouts/PageBase'
+import { deepClone } from '@src/utils'
+import PageBase from '../PageBase'
 import ComponentBase from '../../04designerComponents/ComponentBase'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType, resourceType } from './01_actionCommon'
 import allFuncs, { actResFuncBase, getResouceFunc } from './02_actionResourceFunc'
-import { Modal } from 'ant-design-vue'
-import layerPopup from '../layer/layerPopup'
 export default class factory {
   public currentLayout: LayoutBase
   public currentPage: PageBase
@@ -36,7 +34,7 @@ export default class factory {
       var res = func.getFunc(obj)
       if (res) {
         obj = null
-        return common.clone(res)
+        return deepClone(res)
       } else {
         return res
       }
@@ -142,21 +140,21 @@ export default class factory {
       }
 
       window.console.error('执行行为细节出错', error)
-      if (error && error.message) {
-        if (error.stack) {
-          window.console.error(error.stack)
-        }
-        layerPopup.warning(error.message)
-        throw error.message
-      } else if (error) {
-        if (error.stack) {
-          window.console.error(error.stack)
-        }
-        layerPopup.warning(common.serialize(error))
-        throw common.serialize(error)
-      } else {
-        throw null
-      }
+      // if (error && error.message) {
+      //   if (error.stack) {
+      //     window.console.error(error.stack)
+      //   }
+      //   layerPopup.warning(error.message)
+      //   throw error.message
+      // } else if (error) {
+      //   if (error.stack) {
+      //     window.console.error(error.stack)
+      //   }
+      //   layerPopup.warning(common.serialize(error))
+      //   throw common.serialize(error)
+      // } else {
+      //   throw null
+      // }
     } finally {
       evalStr = null
 

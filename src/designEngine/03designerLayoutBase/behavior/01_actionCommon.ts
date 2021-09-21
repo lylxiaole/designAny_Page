@@ -1,20 +1,13 @@
 import { param } from '../commonClasses/layoutEvent'
-import common from '../commonMethod'
 import { behavior } from './behaviorTypes'
-
+import { getUuid } from '@src/utils'
 class signNodeData {
   key: string
   value: string
   title: string
 }
 //计算符号
-export var allCuteSigns: signNodeData[] = [
-  { value: '=', key: '=', title: '等于' },
-  { value: '+', key: '+', title: '加' },
-  { value: '-', key: '-', title: '减' },
-  { value: '*', key: '*', title: '乘' },
-  { value: '/', key: '/', title: '除' }
-]
+export var allCuteSigns: signNodeData[] = [{ value: '=', key: '=', title: '等于' }, { value: '+', key: '+', title: '加' }, { value: '-', key: '-', title: '减' }, { value: '*', key: '*', title: '乘' }, { value: '/', key: '/', title: '除' }]
 //判断符号
 export var allFilterSigns: signNodeData[] = [
   { value: '==', key: '==', title: '相等于' },
@@ -183,7 +176,7 @@ export class objectBase {
     obj.resourceId = resourceId
     obj.name = name
     obj.objType = objType
-    obj.id = common.getUuid()
+    obj.id = getUuid()
     obj.pageId = pageId
     return obj
   }
