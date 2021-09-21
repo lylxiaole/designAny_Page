@@ -1,20 +1,15 @@
-import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from '../02common/commonClasses/LayoutProperty'
-
+import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
 import { ModelInfo, modelSimpleInfo, modelDetailInfo, ModelProperty, propertyValidator, ModelBindingProperty, DecoratorOption, DecoratorRule, modelTypeEnum } from '../02common/impResourcesCache/modelAnalysis'
-
 import { modelAnalysis, functionCache, dictCache, modelMapperCache, pageCache, pageContentTable, pageStatus } from '../02common/impResourcesCache'
 
 import { ComponentBase } from '../04designerComponents'
 import common from '../02common/commonMethod'
 import LayoutBase, { SaveInfo } from '../03designerLayoutBase/LayoutBase'
 import LayoutContainer from '../03designerLayoutBase/LayoutContainner'
-
-import paramInfo from '../02common/commonClasses/pageInParamInfo'
-import modelBingding, { bindingModelVal_InProperty, modelBingValue, modelDataTypeEnum, modelFilter } from '../02common/commonClasses/modelBingding'
+import paramInfo from './commonClasses/pageInParamInfo'
 import { CurrentApis } from '../01designerContext'
-import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from '../02common/behavior'
-import { layoutEvent, layoutMethod, param, paramType } from '../02common/commonClasses/layoutEvent'
+import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
+import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 
 export default class PageBase extends LayoutContainer {
   public parentPage: PageBase

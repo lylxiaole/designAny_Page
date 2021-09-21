@@ -1,6 +1,4 @@
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import dragHelper, { dragulaExtand } from '../02common/dragHelper'
-import common from '../02common/commonMethod'
 import HookBase from './HookBase'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {

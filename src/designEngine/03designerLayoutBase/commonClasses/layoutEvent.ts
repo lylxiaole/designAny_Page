@@ -2,7 +2,7 @@ export enum paramType {
   number = 'number',
   string = 'string',
   complexType = 'complexType', //复杂类型
-  boolean = 'boolean',
+  boolean = 'boolean'
 }
 
 export class param {

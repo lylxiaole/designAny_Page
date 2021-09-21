@@ -1,11 +1,11 @@
 import eventBase from './BaseEvents'
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import { layoutEvent, layoutMethod, param, paramType } from '../02common/commonClasses/layoutEvent'
-import { layoutEventBehaviors } from '../02common/behavior/behaviorTypes'
+import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
+import { layoutEventBehaviors } from './behavior/behaviorTypes'
 import { CurrentApis, fileInfo, CurrentContext } from '../01designerContext'
 
 import { ModelInfo, ModelBindingProperty, ModelPropertyType } from '../02common/impResourcesCache/modelAnalysis'
-import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from '../02common/commonClasses/LayoutProperty'
+import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from './commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
 
 export enum LayoutType {

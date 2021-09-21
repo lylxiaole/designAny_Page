@@ -13642,6 +13642,11 @@
   dependencies:
     "async-limiter" "~1.0.0"
 
+"xe-utils@^3.3.2":
+  "integrity" "sha512-af7SKaM9j3fL0xxRVBuzPctSWKTWgLHEcYtK9yYVHmUz0mffDxkqf1zQbgxVVjsdQ79KhmW2yuv8OS6CqGOZ7g=="
+  "resolved" "https://registry.npmjs.org/xe-utils/-/xe-utils-3.3.2.tgz"
+  "version" "3.3.2"
+
 "xml-name-validator@^3.0.0":
   "integrity" "sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw=="
   "resolved" "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-3.0.0.tgz"

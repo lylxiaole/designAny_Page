@@ -1,5 +1,5 @@
-import common from '../commonMethod'
-import { isBoolean, isString, isNumber } from 'xe-utils/methods'
+import { getUuid } from '@src/utils'
+import { isBoolean, isString, isNumber } from 'xe-utils'
 
 export enum PropertyTypeEnum {
   boolean = 'boolean',
@@ -37,7 +37,7 @@ export enum PropertyGroupName {
 }
 
 export abstract class PropertyType {
-  public abstract type: PropertyTypeEnum = PropertyTypeEnum.text
+  public type: PropertyTypeEnum = PropertyTypeEnum.text
   public unit: string = '' //属性单位
 }
 
@@ -46,7 +46,7 @@ export class Property {
     this.propertyName = name
     this.groupName = groupname
     this.propertyType = type
-    this.id = common.getUuid()
+    this.id = getUuid()
     this.value = defaultVal
   }
 
