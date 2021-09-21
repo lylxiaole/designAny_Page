@@ -1,35 +1,28 @@
 <template>
   <div>
-    <a-tabs :style="{backgroundColor:background,height:'100%'}" :activeKey="activeKey" @change="tabKeyChanged"
-            :type="tabsType"
-            :tabPosition="tabPosition" @keydown="onTabsKeyDown">
-      <a-tab-pane v-for="item in TabTempItems" :ref="item.key" class="tab-pane-np"
-                  style="height:-webkit-fill-available;" forceRender
-                  :tab="item.value" :key="item.key">
+    <a-tabs :style="{backgroundColor:background,height:'100%'}" :activeKey="activeKey" @change="tabKeyChanged" :type="tabsType"
+      :tabPosition="tabPosition" @keydown="onTabsKeyDown">
+      <a-tab-pane v-for="item in TabTempItems" :ref="item.key" class="tab-pane-np" style="height:-webkit-fill-available;" forceRender
+        :tab="item.value" :key="item.key">
       </a-tab-pane>
     </a-tabs>
   </div>
 </template>
 <script lang="ts">
 import $ from 'jquery'
-import {Component, Prop, Emit, Watch} from 'vue-property-decorator'
-import {
-  Property,
-  TextList_Property,
-  Enum_Property,
-  PropertyGroupName,
-  Boolean_Property
-} from '../../02common/commonClasses/LayoutProperty'
-import {param, paramType} from '../../02common/commonClasses/layoutEvent'
-import {AllComponents, ComponentBase} from '..'
+import Vue from 'vue'
+import { Component, Prop, Emit, Watch } from 'vue-property-decorator'
+import { Property, TextList_Property, Enum_Property, PropertyGroupName, Boolean_Property } from '../../02common/commonClasses/LayoutProperty'
+import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { AllComponents, ComponentBase } from '..'
 import common from '../../02common/commonMethod'
-import {DragItemData, DragItemTypeEnum} from '../../03designerLayoutBase/BaseEvents'
-import LayoutBase, {SaveInfo, LayoutInfo, LayoutType} from '../../03designerLayoutBase/LayoutBase'
+import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
+import LayoutBase, { SaveInfo, LayoutInfo, LayoutType } from '../../03designerLayoutBase/LayoutBase'
 import componentTemplate from '../componentTemplate/componentTemplate.vue'
 
 @Component({
   name: 'npTabs',
-  components: {compTemplate: componentTemplate}
+  components: { compTemplate: componentTemplate }
 })
 export default class Tabs extends ComponentBase {
   public readonly tabTypePropName = '页签样式'
@@ -47,7 +40,7 @@ export default class Tabs extends ComponentBase {
     this.height = 600
     this.background = 'white'
     this.flagKey = common.getUuid()
-    let cellData: any[] = [{key: this.flagKey, value: 'Tab1'}]
+    let cellData: any[] = [{ key: this.flagKey, value: 'Tab1' }]
     this.RegisterProperty(this.tabLabelPropName, PropertyGroupName.special, new TextList_Property(), cellData)
     this.RegisterProperty(this.tabTypePropName, PropertyGroupName.special, new Enum_Property(true, ['线条式', '卡片式']), '线条式')
     this.RegisterProperty(this.tabPositionPropName, PropertyGroupName.special, new Enum_Property(true, ['上', '下', '右', '左']), '上')
@@ -56,13 +49,13 @@ export default class Tabs extends ComponentBase {
     // this.RegisterProperty(this.activeTabIndexPropName, PropertyGroupName.special, new Number_Property(), 0)
 
     let inparam: param[] = []
-    inparam.push({name: '标签页索引', type: paramType.number, val: null})
+    inparam.push({ name: '标签页索引', type: paramType.number, val: null })
     this.RegisterMethods('切换标签页', '切换标签页', this.changeSelectedTab, inparam, null)
     let inparam2: param[] = []
-    inparam2.push({name: '标签页索引', type: paramType.number, val: null})
+    inparam2.push({ name: '标签页索引', type: paramType.number, val: null })
     this.RegisterMethods('隐藏标签页', '隐藏标签页', this.hideTabs, inparam2, null)
     let inparam3: param[] = []
-    inparam3.push({name: '标签页索引', type: paramType.number, val: null})
+    inparam3.push({ name: '标签页索引', type: paramType.number, val: null })
     this.RegisterMethods('显示标签页', '显示标签页', this.showTabs, inparam3, null)
     this.RegisterMethods('当前标签页索引', '获取当前标签页索引', this.getSelectedTabIndex, null, null)
 
@@ -85,21 +78,21 @@ export default class Tabs extends ComponentBase {
     }
     this.$nextTick(() => {
       $(this.$el)
-          .find('.ant-tabs-content')
-          .first()
-          .css('height', 'inherit')
+        .find('.ant-tabs-content')
+        .first()
+        .css('height', 'inherit')
       $(this.$el)
-          .find('.ant-tabs-bar')
-          .first()
-          .css('margin', '0')
+        .find('.ant-tabs-bar')
+        .first()
+        .css('margin', '0')
       $(this.$el)
-          .find('.ant-tabs-right-content')
-          .first()
-          .css('padding-right', '0')
+        .find('.ant-tabs-right-content')
+        .first()
+        .css('padding-right', '0')
       $(this.$el)
-          .find('.ant-tabs-left-content')
-          .first()
-          .css('padding-left', '0')
+        .find('.ant-tabs-left-content')
+        .first()
+        .css('padding-left', '0')
     })
   }
 
@@ -148,10 +141,10 @@ export default class Tabs extends ComponentBase {
     if (tabIndexArr && tabIndexArr.length > 0) {
       let val = tabIndexArr[0] + ''
       val = val
-          .replace('，', ',')
-          .replace('【', '')
-          .replace('】', '')
-          .replace(' ', '')
+        .replace('，', ',')
+        .replace('【', '')
+        .replace('】', '')
+        .replace(' ', '')
       if (val.indexOf(',') >= 0) {
         let tabIndexs: any[] = val.split(',')
         if (tabIndexs) {
@@ -199,27 +192,29 @@ export default class Tabs extends ComponentBase {
     }
     let displayType = isShow ? '' : 'none'
     $(this.$el)
-        .find('.ant-tabs')
-        .first()
-        .find('.ant-tabs-tab')
-        .eq(tabIndex)
-        .css('display', displayType)
+      .find('.ant-tabs')
+      .first()
+      .find('.ant-tabs-tab')
+      .eq(tabIndex)
+      .css('display', displayType)
   }
 
   private onTabsPropertyChanged(propertyId: string, property: Property, layout: LayoutBase) {
     if (property.groupName == '基础设置') {
       switch (property.propertyName) {
-        case '宽度': {
-          this.children.forEach((x) => {
-            x.width = property.value
-          })
-        }
+        case '宽度':
+          {
+            this.children.forEach((x) => {
+              x.width = property.value
+            })
+          }
           break
-        case '高度': {
-          this.children.forEach((x) => {
-            x.height = property.value
-          })
-        }
+        case '高度':
+          {
+            this.children.forEach((x) => {
+              x.height = property.value
+            })
+          }
           break
         default:
           break
@@ -302,37 +297,37 @@ export default class Tabs extends ComponentBase {
     return false
   }
 
-  @Watch('showTabHeader', {deep: true, immediate: false})
+  @Watch('showTabHeader', { deep: true, immediate: false })
   private showTabHeaderChanged(newValue: boolean) {
     this.changeTabHeaderStyle(this.IsDesigning, newValue)
   }
 
-  @Watch('isSelected', {deep: true, immediate: false})
+  @Watch('isSelected', { deep: true, immediate: false })
   private isSelectedChanged(newValue: boolean) {
     if (this.IsDesigning && !this.showTabHeader) {
       if (newValue) {
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .css('display', '')
+          .find('.ant-tabs-bar')
+          .first()
+          .css('display', '')
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .addClass('tabheadfloatshow')
+          .find('.ant-tabs-bar')
+          .first()
+          .addClass('tabheadfloatshow')
       } else {
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .css('display', 'none')
+          .find('.ant-tabs-bar')
+          .first()
+          .css('display', 'none')
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .removeClass('tabheadfloatshow')
+          .find('.ant-tabs-bar')
+          .first()
+          .removeClass('tabheadfloatshow')
       }
     }
   }
 
-  @Watch('IsDesigning', {deep: true, immediate: false})
+  @Watch('IsDesigning', { deep: true, immediate: false })
   private IsDesigningChanged(newValue: boolean) {
     this.changeTabHeaderStyle(newValue, this.showTabHeader)
     if (!newValue) {
@@ -341,7 +336,7 @@ export default class Tabs extends ComponentBase {
     }
   }
 
-  @Watch('ItemDataList', {deep: true, immediate: false})
+  @Watch('ItemDataList', { deep: true, immediate: false })
   private onItemDataListChanged(nVal: any[], oVal: any[]) {
     let newValue = common.clone(nVal)
     let oldValue = common.clone(oVal)
@@ -456,13 +451,13 @@ export default class Tabs extends ComponentBase {
   protected renderComponent(dropComp: ComponentBase, layoutInfo: LayoutInfo, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
     if (this.hasLoadCompleted && data) {
       // 复制，剪切后粘贴过来的组件
-      let comp: any = this.layoutChildren.find(x => x.Id === this.activeKey)
+      let comp: any = this.layoutChildren.find((x) => x.Id === this.activeKey)
       if (comp) {
         let compClass = this.findSystemComp(layoutInfo.groupName, layoutInfo.name)
         return comp.insertComponentLayout(compClass, data.layoutInfo, null, data)
       }
     } else {
-      return this.renderTab(dropComp, layoutInfo, dragType, data);
+      return this.renderTab(dropComp, layoutInfo, dragType, data)
     }
   }
 
@@ -506,26 +501,26 @@ export default class Tabs extends ComponentBase {
     if (isDesigning) {
       if (showHeader) {
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .css('display', '')
+          .find('.ant-tabs-bar')
+          .first()
+          .css('display', '')
       } else {
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .css('display', 'none')
+          .find('.ant-tabs-bar')
+          .first()
+          .css('display', 'none')
       }
     } else {
       if (showHeader) {
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .css('display', '')
+          .find('.ant-tabs-bar')
+          .first()
+          .css('display', '')
       } else {
         $(this.$el)
-            .find('.ant-tabs-bar')
-            .first()
-            .css('display', 'none')
+          .find('.ant-tabs-bar')
+          .first()
+          .css('display', 'none')
       }
     }
   }
