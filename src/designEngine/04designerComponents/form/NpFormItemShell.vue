@@ -15,10 +15,10 @@ import {
   Text_Property,
   Behavior_Property,
   Enum_Property,
-  PropertyGroupName,
+  PropertyGroupName
 } from '../../02common/commonClasses/LayoutProperty'
 import $ from 'jquery'
-import PageBase from '../../05designerLayouts/PageBase'
+import PageBase from '../../03designerLayoutBase/PageBase'
 import modelBingding, { bindingModelVal_InProperty, modelBingValue, bindTypeEnum } from '../../02common/commonClasses/modelBingding'
 // import dragHelper, { dragulaExtand } from "../../02common/dragHelper";
 import common from '../../02common/commonMethod'
@@ -28,14 +28,14 @@ import {
   modelDetailInfo,
   ModelProperty,
   propertyValidator,
-  ModelBindingProperty,
+  ModelBindingProperty
 } from '../../02common/modelAnalysis/modelAnalysis'
 import { ComponentBase, AllComponents } from '..'
 import LayoutBase, { SaveInfo, LayoutInfo, LayoutType } from '../../03designerLayoutBase/LayoutBase'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 
 @Component({
-  components: {},
+  components: {}
 })
 export default class NpFormItemShell extends ComponentBase {
   private compName: string = null

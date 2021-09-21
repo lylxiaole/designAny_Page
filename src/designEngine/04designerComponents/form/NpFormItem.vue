@@ -16,7 +16,7 @@ import {
   PropertyGroupName
 } from '../../02common/commonClasses/LayoutProperty'
 import $ from 'jquery'
-import PageBase from '../../05designerLayouts/PageBase'
+import PageBase from '../../03designerLayoutBase/PageBase'
 import modelBingding, { bindingModelVal_InProperty, modelBingValue, bindTypeEnum } from '../../02common/commonClasses/modelBingding'
 import { FormItemData } from './commonClasses'
 import common from '../../02common/commonMethod'

@@ -20,6 +20,9 @@
           <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane> -->
         </el-tabs>
       </el-container>
+      <el-aside width="250px">
+        <propertyGrid />
+      </el-aside>
     </el-container>
   </el-container>
 </template>
@@ -29,10 +32,11 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import { DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import pagelist from './pagelist.vue'
-
+import PropertyGrid from './06propertyGrid/PropertyGrid.vue'
 @Component({
   components: {
-    pagelist: pagelist
+    pagelist: pagelist,
+    propertyGrid: PropertyGrid
   }
 })
 export default class index extends PageBase {
@@ -60,6 +64,7 @@ export default class index extends PageBase {
     window.console.log('onEditPage:', this.$refs[res.id])
   }
   private async onDeletePage(pageId: string) {}
+  // **********属性窗**********************************************************
 }
 </script>
 

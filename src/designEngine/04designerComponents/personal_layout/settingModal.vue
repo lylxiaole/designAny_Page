@@ -23,7 +23,7 @@ import $ from 'jquery'
 import common from '../../02common/commonMethod'
 import { SModal, VTable } from '@/components'
 import personalLayout from './personalLayout.vue'
-import PageBase from '../../05designerLayouts/PageBase'
+import PageBase from '../../03designerLayoutBase/PageBase'
 
 @Component({
   components: {

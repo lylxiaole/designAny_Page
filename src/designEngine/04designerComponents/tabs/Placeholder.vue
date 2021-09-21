@@ -7,7 +7,7 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 
 // import $ from 'jquery'
-// import PageBase from '../../05designerLayouts/PageBase'
+// import PageBase from '../../03designerLayoutBase/PageBase'
 // import dragHelper, { dragulaExtand } from "../../02common/dragHelper";
 // import common from '../../02common/commonMethod'
 import { ComponentBase } from '..'
@@ -15,7 +15,7 @@ import { ComponentBase } from '..'
 // import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 
 @Component({
-  components: {},
+  components: {}
 })
 export default class Placeholder extends ComponentBase {
   @Prop()

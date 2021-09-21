@@ -11,7 +11,7 @@
       :tabBarStyle="{'margin':'0px','height':'40px'}">
       <a-tab-pane style="width:100%;height:95%;overflow:auto" v-for="page in TabsPanes" :tab="page.name" :key="page.Id" :closable="true"
         :forceRender='true'>
-        <tab-content/>
+        <tab-content />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -27,7 +27,7 @@ import {
   Behavior_Property,
   Enum_Property,
   Color_Property,
-  PropertyGroupName,
+  PropertyGroupName
 } from '../../02common/commonClasses/LayoutProperty'
 import ComponentBase from '../ComponentBase'
 import common from '../../02common/commonMethod'
@@ -35,16 +35,16 @@ import LayoutBase, { SaveInfo } from '../../03designerLayoutBase/LayoutBase'
 import propertyGrid from '../../06propertyGrid/PropertyGrid.vue'
 import page_professional from '../../05designerLayouts/layout_Professional/Layout_Professional.vue'
 import layout_Grid from '../../05designerLayouts/layout_grid/Layout_Grid.vue'
-import TabContent from "../tabsComponents/TabContent.vue"
+import TabContent from '../tabsComponents/TabContent.vue'
 // import columnTemplateSetting from './columnTemplateSetting.vue'
 // import BaseEvents from '../../03designerLayoutBase/BaseEvents'
-// import PageBase from '../../05designerLayouts/PageBase'
+// import PageBase from '../../03designerLayoutBase/PageBase'
 
 class TabInfo {
   name?: string
   Id?: string
   //LayoutPage?: layout_Grid
-  get nameShow(): string {    
+  get nameShow(): string {
     // if (this.LayoutPage && this.LayoutPage.isNeedSave == true) {
     //   return this.name + '*'
     // }
@@ -103,7 +103,6 @@ export default class tabsComponents extends ComponentBase {
     // this.activeKey = TabPan.Id
     // console.log('新建页面ID：', this.activeKey)
     this.RegisterProperty('数据源', PropertyGroupName.special, null, [])
-    
   }
 
   protected async loadCompleted(childrenData: any[]) {
@@ -118,7 +117,7 @@ export default class tabsComponents extends ComponentBase {
     }
     // window.console.log('property',property.value.length)
     // window.console.log('property.value',Object.assign(property.value))
-    window.console.log('property',property)
+    window.console.log('property', property)
   }
 
   // private onPageMounted(layout: layout_Grid) {
@@ -129,7 +128,7 @@ export default class tabsComponents extends ComponentBase {
   //   this.activeKey = layout.Id
   // }
 
-  get propertyvalue():any{
+  get propertyvalue(): any {
     return ''
   }
 
@@ -168,7 +167,7 @@ export default class tabsComponents extends ComponentBase {
       }
       //window.console.log('property.value111',property.value)
       this.$nextTick(() => {
-        window.console.log('tab初始化完成',Object.assign([],this.TabsPanes))
+        window.console.log('tab初始化完成', Object.assign([], this.TabsPanes))
         this.TabsPanes.forEach((a) => {
           let cpname: string = 'tab_' + a.Id
           var vueComp = this.$refs[cpname]

@@ -51,7 +51,7 @@ import {
 import $ from 'jquery'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
 import { search, reset } from '../../02common/icons.js'
-import PageBase from '../../05designerLayouts/PageBase'
+import PageBase from '../../03designerLayoutBase/PageBase'
 import modelBingding, { bindingModelVal_InProperty, modelBingValue, bindTypeEnum } from '../../02common/commonClasses/modelBingding'
 import common from '../../02common/commonMethod'
 import {

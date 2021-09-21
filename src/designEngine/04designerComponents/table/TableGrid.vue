@@ -9,7 +9,10 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import LayoutBase, { LayoutType, LayoutInfo } from '../../03designerLayoutBase/LayoutBase'
-import PageBase from '../../05designerLayouts/PageBase'
+import PageBase from '../../03designerLayoutBase/PageBase'
+ 
+
+
 import common from '../../02common/commonMethod'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
 import { AllComponents, ComponentBase } from '../../04designerComponents'
