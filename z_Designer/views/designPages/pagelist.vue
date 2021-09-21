@@ -251,7 +251,7 @@ export default class index extends ComponentBase {
   // ***************右键弹窗**************************************
   private currentRightClickNode: any = null
   private onTreeNodeRightClick(e: any, data: any) {
-    window.console.log('右击菜单树节点', data)
+    // window.console.log('右击菜单树节点', data)
     e.stopPropagation()
     e.preventDefault()
     this.currentRightClickNode = data
@@ -314,6 +314,10 @@ export default class index extends ComponentBase {
         break
       case rightMenus.delete:
         this.deleteNode()
+        this.onDeletePage(this.currentRightClickNode.id)
+        break
+      case rightMenus.edit:
+        this.onEditPage(this.currentRightClickNode.id)
         break
       default:
         break
@@ -377,6 +381,12 @@ export default class index extends ComponentBase {
     }
     this.deleteNodeById(nodeId, this.treeData)
   }
+
+  // **************对外事件*****************************************************
+  @Emit('onEditPage')
+  private onEditPage(pageId: string) {}
+  @Emit('onDeletePage')
+  private onDeletePage(pageId: string) {}
 }
 </script>
 
