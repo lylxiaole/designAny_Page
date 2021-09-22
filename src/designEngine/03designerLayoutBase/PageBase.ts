@@ -54,12 +54,12 @@ export default class PageBase extends LayoutContainer {
   }
 
   created() {
-    this.registerProperty('拓展js', PropertyGroupName.normal, new JavaScriptCode_Property(), false, false, false)
-    this.registerProperty('页面入参', PropertyGroupName.normal, new PageInParams_Property())
-    this.registerProperty('权限设置', PropertyGroupName.normal, new Authority_Property())
-    this.registerProperty('模型实例', PropertyGroupName.normal, null, false, false)
-    this.registerProperty('行为列表', PropertyGroupName.normal, new Behavior_Property(), false, false)
-    this.registerProperty('定时器周期', PropertyGroupName.normal, new Number_Property(1, 999999999, 1), 10, true, true, '秒')
+    this.registerProperty(PropertyGroupName.normal, '拓展js', new JavaScriptCode_Property(), false, false, false)
+    this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Property())
+    this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
+    this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
+    this.registerProperty(PropertyGroupName.normal, '行为列表', new Behavior_Property(), false, false)
+    this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, true, '秒')
 
     this.registerEvents('加载完成', '页面加载完成时触发', [], null)
     this.registerMethods(
@@ -234,7 +234,7 @@ export default class PageBase extends LayoutContainer {
   }
 
   public Save(): void {
-    var saveinfo = this.GetSaveData()
+    var saveinfo = this.getSaveData()
     var saveinfoStr = this.GetPageZipStr(saveinfo)
 
     // CurrentApis.SavePageData(this.Id, saveinfoStr, null).then((res) => {
@@ -267,7 +267,7 @@ export default class PageBase extends LayoutContainer {
     try {
       //////////////////////////////////////////////
       if (pageData) {
-        this.LoadData(pageData)
+        this.loadData(pageData)
       }
       //**组织页面参数 */
       this.SetPageInParams(params)
@@ -285,7 +285,7 @@ export default class PageBase extends LayoutContainer {
   }
   public async ReLoadPageData(pageData: SaveInfo) {
     // window.console.log('reLoadPageData')
-    this.ReLoadData(pageData)
+    this.reLoadData(pageData)
     if (this.triggeEvent) {
       await this.triggeEvent('加载完成', [])
     }
@@ -308,7 +308,7 @@ export default class PageBase extends LayoutContainer {
   public getPropertyInPageById(propertyId: string): Property {
     for (let compindex = 0; compindex < this.children.length; compindex++) {
       let comp = this.children[compindex]
-      var property = comp.FindPropertyById(propertyId)
+      var property = comp.findPropertyById(propertyId)
       if (property) {
         return property
       }

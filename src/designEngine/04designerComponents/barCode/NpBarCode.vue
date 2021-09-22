@@ -20,7 +20,7 @@ export default class NpBarCode extends ComponentBase {
   private barcodeId: string = 'barcode'
 
   beforeMount() {
-    this.barcodeId = 'barcode_' + common.getUuid()
+    this.barcodeId = 'barcode_' + getUuid()
   }
 
   mounted() {
@@ -46,15 +46,15 @@ export default class NpBarCode extends ComponentBase {
       'pharmacode',
       'codabar'
     ]
-    this.registerProperty('格式', PropertyGroupName.special, new Enum_Property(true, codeFormats), 'CODE128')
-    this.registerProperty('码高', PropertyGroupName.special, new Number_Property(), 100)
-    this.registerProperty('码宽', PropertyGroupName.special, new Number_Property(), 2)
-    this.registerProperty('内容', PropertyGroupName.special, new Text_Property(), '123456789')
-    this.registerProperty('显示字', PropertyGroupName.special, new Boolean_Property(), true)
-    this.registerProperty('字对齐方式', PropertyGroupName.special, new Enum_Property(true, ['左', '中', '右']), '中')
-    this.registerProperty('字位置', PropertyGroupName.special, new Enum_Property(true, ['底部', '顶部']), '底部')
-    this.registerProperty('字边距', PropertyGroupName.special, new Number_Property(), 2)
-    this.registerProperty('字大小', PropertyGroupName.special, new Number_Property(), 20)
+    this.registerProperty(PropertyGroupName.special, '格式', new Enum_Property(true, codeFormats), 'CODE128')
+    this.registerProperty(PropertyGroupName.special, '码高', new Number_Property(), 100)
+    this.registerProperty(PropertyGroupName.special, '码宽', new Number_Property(), 2)
+    this.registerProperty(PropertyGroupName.special, '内容', new Text_Property(), '123456789')
+    this.registerProperty(PropertyGroupName.special, '显示字', new Boolean_Property(), true)
+    this.registerProperty(PropertyGroupName.special, '字对齐方式', new Enum_Property(true, ['左', '中', '右']), '中')
+    this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Property(true, ['底部', '顶部']), '底部')
+    this.registerProperty(PropertyGroupName.special, '字边距', new Number_Property(), 2)
+    this.registerProperty(PropertyGroupName.special, '字大小', new Number_Property(), 20)
   }
 
   private barCodeText: string = '123456789'

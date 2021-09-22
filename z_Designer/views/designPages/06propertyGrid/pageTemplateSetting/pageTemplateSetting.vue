@@ -70,7 +70,7 @@ export default class pageTemplateSetting extends propertyCellBase {
 
   get pageSelectedComps(): LayoutBase[] {
     if (this.currentPageSimple) {
-      let findchilds = this.currentPageSimple.FindSelectedLayoutsRecursion()
+      let findchilds = this.currentPageSimple.findSelectedLayoutsRecursion()
       if (findchilds.length > 0) {
         return findchilds
       } else {
@@ -88,7 +88,7 @@ export default class pageTemplateSetting extends propertyCellBase {
   mounted() {}
 
   private handleOk() {
-    let data = this.currentPageSimple.GetSaveData()
+    let data = this.currentPageSimple.getSaveData()
     this.currentValue = common.clone(data)
     this.columnMoudleSettingVisible = false
   }
@@ -104,14 +104,14 @@ export default class pageTemplateSetting extends propertyCellBase {
     this.currentPageSimple.parentPage = this.parentPage
 
     if (this.currentValue) {
-      this.currentPageSimple.LoadData(common.clone(this.currentValue))
+      this.currentPageSimple.loadData(common.clone(this.currentValue))
     } else {
       this.currentPageSimple.Id = common.getUuid()
     }
     if (!this.parentPage) {
       return
     }
-    let data = common.clone(this.parentPage.GetSaveData())
+    let data = common.clone(this.parentPage.getSaveData())
     let property = this.currentPageSimple.findProperties(PropertyGroupName.normal, '页面入参')[0]
     property.value = data.properties.find((item) => item.propertyName === '页面入参').value
   }

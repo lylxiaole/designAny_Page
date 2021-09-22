@@ -52,18 +52,20 @@ export class Point {
 }
 
 export default class LayoutBase extends eventBase {
-  protected properties_old: any[] = []
-  public properties: Property[] = []
+  public isSelected: boolean = false
+  /**属性 */
+  private properties_old: any[] = []
+  private properties: Property[] = []
+  /**父级布局 */
   public parentLayout: LayoutBase
   /**子级布局 */
   public children: LayoutBase[] = []
+  /**当前选中的直接子级布局 */
   public get selectedChildren(): LayoutBase[] {
     return this.children.filter((o) => o.isSelected == true)
   }
-  public isSelected: boolean = false
   /***属性的值验证 */
   public propertyValidators: propertyValidatorType[] = []
-
   /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
   private _designerEvents: layoutEvent[] = []
   public get designerEvents(): layoutEvent[] {
@@ -99,7 +101,6 @@ export default class LayoutBase extends eventBase {
     }
     property.value = newvals
   }
-
   /** 自定义方法,图形化编程会库触发这个方法*/
   private _designerMethods: layoutMethod[] = []
   public get designerMethods(): layoutMethod[] {
@@ -111,27 +112,27 @@ export default class LayoutBase extends eventBase {
 
   created() {
     if (this.IsDesigning) {
-      this.registerProperty('唯一Id', PropertyGroupName.normal, new Text_Property(), common.getUuid(), false, false)
-      this.registerProperty('名称', PropertyGroupName.normal, new Text_Property())
-      this.registerProperty('宽度', PropertyGroupName.normal, new Number_Property(), 1624, true, true, 'px')
-      this.registerProperty('高度', PropertyGroupName.normal, new Number_Property(), 786, true, true, 'px')
-      this.registerProperty('左边位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('顶部位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('外边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('外边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('外边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('外边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), common.getUuid(), false, false)
+      this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
+      this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Property(-100000), 0, true, true, 'px')
 
-      this.registerProperty('内边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('内边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('内边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('内边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty('字体', PropertyGroupName.normal, new Number_Property(), 14, true, true, 'px')
-      this.registerProperty('字体样式', PropertyGroupName.normal, new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
-      this.registerProperty('背景图片', PropertyGroupName.normal, new UploadFile_Property(1, 'image'))
-      this.registerProperty('背景色', PropertyGroupName.normal, new Color_Property(), 'white')
-      this.registerProperty('是否使用主题', PropertyGroupName.normal, new Boolean_Property(), false)
-      this.registerProperty('行为设置', PropertyGroupName.normal, new Behavior_Property())
+      this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '字体', new Number_Property(), 14, true, true, 'px')
+      this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
+      this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'))
+      this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Property(), 'white')
+      this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
+      this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())
     }
 
     this.onCreated(this)
@@ -558,7 +559,7 @@ export default class LayoutBase extends eventBase {
   }
   protected afterSetPropertyVal(propertyId: string, val: any) {}
   // *************************对外公布方法****************************************************************************
-  public GetSaveData(): SaveInfo {
+  public getSaveData(): SaveInfo {
     this.beforeGetSaveData(this)
 
     var saveinfo: SaveInfo = {
@@ -573,21 +574,21 @@ export default class LayoutBase extends eventBase {
     var res: SaveInfo[] = []
     for (let index = 0; index < this.children.length; index++) {
       const child = this.children[index]
-      var childdata = child.GetSaveData()
+      var childdata = child.getSaveData()
       res.push(childdata)
     }
     return res
   }
   protected isLoaded: boolean = false
-  public LoadData(data: SaveInfo) {
-    // window.console.log('LoadData')
+  public loadData(data: SaveInfo) {
+    // window.console.log('loadData')
     if (data) {
       if (this.isLoaded) {
         return
       }
       this.Id = data.id
       // window.console.log('************加载数据,id:', this.Id)
-      this.LoadingProperties(data.id, data.properties)
+      this.loadingProperties(data.id, data.properties)
       if (data.children) {
         this.loadChildrenData(data.children)
       }
@@ -601,14 +602,14 @@ export default class LayoutBase extends eventBase {
 
     this.isLoaded = true
   }
-  public ReLoadData(data: SaveInfo) {
+  public reLoadData(data: SaveInfo) {
     for (let index = 0; index < this.children.length; index++) {
       const element = this.children[index]
       element.destory()
     }
     this.children = []
     this.isLoaded = false
-    this.LoadData(data)
+    this.loadData(data)
   }
   private loadChildrenData(childrendatas: SaveInfo[]) {
     for (let index = 0; index < childrendatas.length; index++) {
@@ -617,11 +618,11 @@ export default class LayoutBase extends eventBase {
     }
   }
   /**递归查找子级中所有选中的布局 */
-  public FindSelectedLayoutsRecursion() {
+  public findSelectedLayoutsRecursion() {
     return this._findSelectedLayoutsRecursion(this.children)
   }
   /**递归查找子级布局 */
-  public FindLayoutRecursion(id: string) {
+  public findLayoutRecursion(id: string) {
     return this._findLayoutRecursion(id, this.children)
   }
   /**查找直接子级布局 */
@@ -644,7 +645,7 @@ export default class LayoutBase extends eventBase {
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */
-  public registerProperty(name: string, groupName: PropertyGroupName | string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
+  public registerProperty(groupName: PropertyGroupName | string, name: string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
     let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
@@ -675,12 +676,12 @@ export default class LayoutBase extends eventBase {
     this.designerEvents.push(newEvent)
   }
   /**递归删除子组件 */
-  public RemoveChildRecursion(childId: string) {
-    var find = this.FindLayoutRecursion(childId)
+  public removeChildRecursion(childId: string) {
+    var find = this.findLayoutRecursion(childId)
     var toparent = find.parentLayout.children.find((x) => x.Id === childId)
     find.parentLayout.removeChild(toparent)
   }
-  public ExcuteMethod(name: string, inparams: any[]) {
+  public excuteMethod(name: string, inparams: any[]) {
     if (name == '关闭页面') {
       //兼容性脚本
       name = '关闭页面-不触发回调'
@@ -695,7 +696,7 @@ export default class LayoutBase extends eventBase {
     //TODO 图形化编程工具会在此处调用注册的方法
   }
   /**通过已有数据加载 */
-  public LoadingProperties(layoutId: string, layout_properties: Property[]) {
+  public loadingProperties(layoutId: string, layout_properties: Property[]) {
     this.Id = layoutId
     if (layout_properties) {
       for (let index = 0; index < layout_properties.length; index++) {
@@ -746,7 +747,7 @@ export default class LayoutBase extends eventBase {
   public findPropertyByName(groupName: string, name: string): Property {
     return this.properties.find((o) => o.groupName == groupName && o.propertyName == name)
   }
-  public FindPropertyById(Id: string): Property {
+  public findPropertyById(Id: string): Property {
     return this.properties.find((o) => o.id == Id)
   }
 
@@ -821,7 +822,6 @@ export default class LayoutBase extends eventBase {
     this.SizeChange_Down(changeVal_ver)
     this.SizeChange_Right(changeVal_hor)
   }
-
   // *************************对外公布事件****************************************************************************
   protected onPropertyChanged(propertyId: string, property: Property, layout: LayoutBase): void {}
   protected onChildrenCountChange() {}
@@ -833,8 +833,8 @@ export default class LayoutBase extends eventBase {
   protected onDestroyed(layout: LayoutBase): void {}
   protected removeLayout(layout: LayoutBase): void {
     try {
-      // $(layout.$el).remove()
-      // layout.$destroy()
+      $(layout.$el).remove()
+      layout.$destroy()
     } catch (error) {
       window.console.error(error)
     }

@@ -52,13 +52,13 @@ export default class LayoutContainer extends LayoutBase {
           return
         }
         // window.console.log('onPaste_Event')
-        let compData = common.clone(LayoutContainer.copyComp.GetSaveData())
+        let compData = common.clone(LayoutContainer.copyComp.getSaveData())
 
         if (LayoutContainer.isCut) {
           //剪切--删除原有组件
           let parentLayout = LayoutContainer.copyComp.parentLayout as LayoutContainer
           if (parentLayout.deleteChildComponents(LayoutContainer.copyComp.Id) == true) {
-            parentLayout.RemoveChildRecursion(LayoutContainer.copyComp.Id)
+            parentLayout.removeChildRecursion(LayoutContainer.copyComp.Id)
           }
         } else {
           //复制操作需要给组件新Id
@@ -66,7 +66,7 @@ export default class LayoutContainer extends LayoutBase {
         }
         let compclass = findSystemComp(compData.layoutInfo.groupName, compData.layoutInfo.name)
         //为了准确性
-        let findchildren = this.FindSelectedLayoutsRecursion()
+        let findchildren = this.findSelectedLayoutsRecursion()
         let newcopyComp: LayoutBase = null
         for (let index = 0; index < findchildren.length; index++) {
           const element = findchildren[index]
@@ -79,7 +79,7 @@ export default class LayoutContainer extends LayoutBase {
         if (!newcopyComp) {
           newcopyComp = this.insertComponentLayout(compclass, compData.layoutInfo, null, compData)
         }
-        newcopyComp.LoadData(compData)
+        newcopyComp.loadData(compData)
 
         // newcopyComp.$once('onMounted', (layout: ComponentBase) => {
         //   if (LayoutContainer.isCut == false) {
@@ -128,7 +128,7 @@ export default class LayoutContainer extends LayoutBase {
           }
           dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
           if (dropcomp) {
-            dropcomp.LoadData(null)
+            dropcomp.loadData(null)
           }
         }
         break
@@ -141,7 +141,7 @@ export default class LayoutContainer extends LayoutBase {
           dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
           let compdata = this.getCompTemplateData(compInfo.sourceId)
           if (dropcomp) {
-            dropcomp.LoadData(compdata)
+            dropcomp.loadData(compdata)
             // dropcomp.$once('onMounted', (layout: LayoutBase) => {
             //   dropcomp.RefreshAllIdRecursion()
             // })
@@ -154,7 +154,7 @@ export default class LayoutContainer extends LayoutBase {
           if (!compId) {
             return true
           }
-          let oldcomp = this.FindLayoutRecursion(compId)
+          let oldcomp = this.findLayoutRecursion(compId)
 
           let compclass = findSystemComp(compInfo.groupName, compInfo.name)
           if (!compclass) {
@@ -162,8 +162,8 @@ export default class LayoutContainer extends LayoutBase {
           }
           dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
           if (dropcomp) {
-            dropcomp.LoadData(null)
-            this.RemoveChildRecursion(compId)
+            dropcomp.loadData(null)
+            this.removeChildRecursion(compId)
           }
         }
         break
@@ -177,7 +177,7 @@ export default class LayoutContainer extends LayoutBase {
           }
           dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
           if (dropcomp) {
-            dropcomp.LoadData(null)
+            dropcomp.loadData(null)
           }
           // window.console.log('模型组件', compInfo.modelDetail)
           // dropcomp = this.insertModelComponentLayout(compInfo.modelDetail)
@@ -208,7 +208,7 @@ export default class LayoutContainer extends LayoutBase {
     for (let index = 0; index < this.selectedChildren.length; index++) {
       const comp = this.selectedChildren[index]
       if (this.deleteChildComponents(comp.Id) == true) {
-        this.RemoveChildRecursion(comp.Id)
+        this.removeChildRecursion(comp.Id)
       }
     }
   }
@@ -424,7 +424,7 @@ export default class LayoutContainer extends LayoutBase {
     // }
     // let comp = this.insertComponentLayout(compclass, data.layoutInfo, null, data)
     // if (comp) {
-    //   comp.LoadData(data)
+    //   comp.loadData(data)
     // }
   }
 

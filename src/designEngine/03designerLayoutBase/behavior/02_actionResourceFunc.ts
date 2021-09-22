@@ -98,7 +98,7 @@ class propertiesInPageFunc implements actResFuncBase {
   currentBehavior: behavior
   getFunc(obj: objectBase) {
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var findproperty = containerPage.FindPropertyById(obj.resourceId)
+    var findproperty = containerPage.findPropertyById(obj.resourceId)
     if (!findproperty) {
       return null
     } else {
@@ -111,7 +111,7 @@ class propertiesInPageFunc implements actResFuncBase {
   }
   getDesc(obj: objectBase): string {
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var findproperty = containerPage.FindPropertyById(obj.resourceId)
+    var findproperty = containerPage.findPropertyById(obj.resourceId)
     if (!findproperty) {
       return ''
     }
@@ -129,7 +129,7 @@ class propertiesInPageFunc implements actResFuncBase {
   private findPropertyInPage(propertyId: string, comps: ComponentBase[]): Property {
     var result: Property = null
     comps.filter((comp) => {
-      var property = comp.FindPropertyById(propertyId)
+      var property = comp.findPropertyById(propertyId)
       if (property) {
         result = property
       } else {
@@ -145,7 +145,7 @@ class propertiesInPageFunc implements actResFuncBase {
   private findComponentInPage(propertyId: string, comps: ComponentBase[]): ComponentBase {
     var result: ComponentBase = null
     comps.filter((comp) => {
-      var property = comp.FindPropertyById(propertyId)
+      var property = comp.findPropertyById(propertyId)
       if (property) {
         result = comp
       } else {
@@ -167,7 +167,7 @@ class controlMethodsFunc implements actResFuncBase {
   getFunc(obj: object_Method) {
     var compId = obj.resourceId
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var comp = containerPage.FindLayoutRecursion(compId)
+    var comp = containerPage.findLayoutRecursion(compId)
     var params: any[] = []
     obj.inputParams.filter((o) => {
       var m_param = o.obj.ref === undefined ? (o.obj.resourceId.split('&').length > 1 ? o.obj.resourceId.split('&')[1] : o.obj.resourceId[0]) : o.obj.ref
@@ -177,7 +177,7 @@ class controlMethodsFunc implements actResFuncBase {
     if (!comp) {
       throw '组件不存在,无法调用组件方法!'
     }
-    return comp.ExcuteMethod(obj.name, params)
+    return comp.excuteMethod(obj.name, params)
   }
   setFunc(obj: objectBase, val: any) {
     throw '组件方法不能赋值'
@@ -185,7 +185,7 @@ class controlMethodsFunc implements actResFuncBase {
   getDesc(obj: objectBase): string {
     var compId = obj.resourceId
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var comp = containerPage.FindLayoutRecursion(compId)
+    var comp = containerPage.findLayoutRecursion(compId)
     if (!comp) {
       return '页面控件(已删除)'
     }

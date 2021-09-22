@@ -71,7 +71,7 @@ export default class CompIncrustationPro extends BaseEvent {
       if (this.Component.isSelected) {
         return true
       }
-      if (this.Component.FindSelectedLayoutsRecursion && this.Component.FindSelectedLayoutsRecursion().length > 0) {
+      if (this.Component.findSelectedLayoutsRecursion && this.Component.findSelectedLayoutsRecursion().length > 0) {
         return true
       }
     }

@@ -75,7 +75,7 @@ export default class columnTemplateSetting extends Vue {
   private currentPage: layout_Professional
   get pageSelectedComps(): LayoutBase[] {
     if (this.currentPageSimple) {
-      let findchilds = this.currentPageSimple.FindSelectedLayoutsRecursion()
+      let findchilds = this.currentPageSimple.findSelectedLayoutsRecursion()
       if (findchilds.length > 0) {
         return findchilds
       } else {
@@ -93,7 +93,7 @@ export default class columnTemplateSetting extends Vue {
   mounted() {}
 
   private handleOk() {
-    let data = this.currentPageSimple.GetSaveData()
+    let data = this.currentPageSimple.getSaveData()
     //window.console.log('-------------------------------加载操作列数据保存layout-data',data)
     this.UpdateLayoutData_Inner(common.clone(data))
     this.columnMoudleSettingVisible = false
@@ -111,14 +111,14 @@ export default class columnTemplateSetting extends Vue {
     //window.console.log('-------------------------------加载操作列数据layout',layout)
     //window.console.log('-------------------------------加载操作列数据this.layoutData',this.layoutData)
     if (this.layoutData) {
-      this.currentPageSimple.LoadData(common.clone(this.layoutData))
+      this.currentPageSimple.loadData(common.clone(this.layoutData))
     } else {
       this.currentPageSimple.Id = common.getUuid()
     }
     if (!this.parentPage) {
       return
     }
-    let data = common.clone(this.parentPage.GetSaveData())
+    let data = common.clone(this.parentPage.getSaveData())
     /**为了适应旧数据 */
     if (this.currentPageSimple.Id == data.id) {
       this.currentPageSimple.Id = common.getUuid()

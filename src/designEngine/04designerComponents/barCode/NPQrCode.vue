@@ -28,22 +28,22 @@ export default class NPQrCode extends ComponentBase {
   private qrCodeId: string = 'qrcode'
 
   beforeMount() {
-    this.qrCodeId = 'qrcode_' + common.getUuid()
+    this.qrCodeId = 'qrcode_' + getUuid()
   }
 
   mounted() {
     this.width = 300
     this.height = 300
 
-    this.registerProperty('内容', PropertyGroupName.special, new Text_Property(), '123456789')
-    this.registerProperty('版本', PropertyGroupName.special, new Number_Property(0, 40, 1), 0)
-    this.registerProperty('纠错等级', PropertyGroupName.special, new Enum_Property(true, ['L', 'M', 'Q', 'H']), 'M')
-    this.registerProperty('遮罩符号', PropertyGroupName.special, new Number_Property(-1, 7, 1), -1)
-    this.registerProperty('二维码外边距', PropertyGroupName.special, new Number_Property(), 4)
-    this.registerProperty('二维码宽度', PropertyGroupName.special, new Number_Property(), 0)
-    this.registerProperty('比例因子', PropertyGroupName.special, new Number_Property(), 4)
-    this.registerProperty('内容颜色', PropertyGroupName.special, new Color_Property(), '#000000')
-    this.registerProperty('留白颜色', PropertyGroupName.special, new Color_Property(), '#ffffff')
+    this.registerProperty(PropertyGroupName.special, '内容', new Text_Property(), '123456789')
+    this.registerProperty(PropertyGroupName.special, '版本', new Number_Property(0, 40, 1), 0)
+    this.registerProperty(PropertyGroupName.special, '纠错等级', new Enum_Property(true, ['L', 'M', 'Q', 'H']), 'M')
+    this.registerProperty(PropertyGroupName.special, '遮罩符号', new Number_Property(-1, 7, 1), -1)
+    this.registerProperty(PropertyGroupName.special, '二维码外边距', new Number_Property(), 4)
+    this.registerProperty(PropertyGroupName.special, '二维码宽度', new Number_Property(), 0)
+    this.registerProperty(PropertyGroupName.special, '比例因子', new Number_Property(), 4)
+    this.registerProperty(PropertyGroupName.special, '内容颜色', new Color_Property(), '#000000')
+    this.registerProperty(PropertyGroupName.special, '留白颜色', new Color_Property(), '#ffffff')
     this.initQrCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
