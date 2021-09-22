@@ -44,8 +44,6 @@ import common from '../../02common/commonMethod'
 import { param, paramType } from '../../03designerLayoutBase'
 import fileUpload from '../../02common/uploadFile/fileUpload'
 
-import { message } from 'ant-design-vue'
-
 @Component({
   components: {}
 })

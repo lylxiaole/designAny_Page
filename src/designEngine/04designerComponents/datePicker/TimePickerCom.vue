@@ -140,7 +140,7 @@ export default class DatePickerCom extends ComponentBase {
       return null
     }
     let nowvalue =
-      property != undefined && property.value != undefined && property.value != '' ? this.$moment(property.value) : property.value == '' ? null : null
+      property != undefined && property.value != undefined && property.value != '' ? moment(property.value) : property.value == '' ? null : null
     return nowvalue
   }
 
@@ -150,7 +150,7 @@ export default class DatePickerCom extends ComponentBase {
       this.setPropertyVal(property.id, null)
     } else {
       var newv = '1971-01-01 ' + val.format(this.formatter)
-      newv = this.$moment(newv).valueOf()
+      newv = moment(newv).valueOf()
       this.setPropertyVal(property.id, newv)
     }
   }
@@ -275,7 +275,7 @@ export default class DatePickerCom extends ComponentBase {
     if (date != null) {
       var now = new Date(date)
       var hms = '1971-01-01 ' + this.getHours(now) + ':' + this.getMinutes(now) + ':' + this.getSeconds(now)
-      newdate = this.$moment(hms).valueOf()
+      newdate = moment(hms).valueOf()
     } else {
       newdate = null
     }

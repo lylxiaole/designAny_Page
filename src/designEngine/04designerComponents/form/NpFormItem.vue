@@ -28,10 +28,12 @@ import {
   propertyValidator,
   ModelBindingProperty
 } from '../../02common/impResourcesCache/modelAnalysis'
-import { ComponentBase, AllComponents } from '..'
+import { AllComponents } from '..'
+import { ComponentBase } from '../../03designerLayoutBase'
+
 import LayoutBase, { SaveInfo, LayoutInfo, LayoutType } from '../../03designerLayoutBase/LayoutBase'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
-import { isNull } from 'xe-utils/methods'
+import { isNull } from 'xe-utils'
 
 @Component({
   components: {}
@@ -59,15 +61,15 @@ export default class NpFormItem extends Vue {
     // window.console.log('船舰formitem子组件')
     var drawarea = this.$refs['drawArea'] as Element
     comp.$mount(drawarea)
-    if (comp.validateProperty) {
-      // if (comp.curModelproperty.propertyType === 103){
-      //   comp.curModelproperty.defaultValue = comp.curModelproperty.defaultValue+''
-      // }
-      comp.validateProperty.value = comp.curModelproperty.defaultValue
-    }
+    // if (comp.validateProperty) {
+    //   // if (comp.curModelproperty.propertyType === 103){
+    //   //   comp.curModelproperty.defaultValue = comp.curModelproperty.defaultValue+''
+    //   // }
+    //   comp.validateProperty.value = comp.curModelproperty.defaultValue
+    // }
     //comp.validateProperty.value
     //window.console.log('---------------------------------------comp.validateProperty.value', Object.assign(comp.validateProperty))
-    this.initlizeFormVal(comp.validateProperty)
+    // this.initlizeFormVal(comp.validateProperty)
     comp.$watch('validateProperty', this.onValidatePropertyChange, { deep: true })
 
     this.innerComp = comp

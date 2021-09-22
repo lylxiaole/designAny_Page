@@ -57,13 +57,13 @@ export default class SwitchComponent extends ComponentBase {
     this.$watch('switchIcon', this.watchSwitchIconType, { deep: true })
     //属性改变触发
     this.$on('onPropertyChanged', this.onCurrentPropertyChanged)
-    if (this.curModelproperty && this.curModelproperty.defaultValue) {
-      if (parseInt(this.curModelproperty.defaultValue) == 1) {
-        this.checked = true
-      } else if (parseInt(this.curModelproperty.defaultValue) == 0) {
-        this.checked = false
-      }
-    }
+    // if (this.curModelproperty && this.curModelproperty.defaultValue) {
+    //   if (parseInt(this.curModelproperty.defaultValue) == 1) {
+    //     this.checked = true
+    //   } else if (parseInt(this.curModelproperty.defaultValue) == 0) {
+    //     this.checked = false
+    //   }
+    // }
   }
 
   get switchStyle(): any {

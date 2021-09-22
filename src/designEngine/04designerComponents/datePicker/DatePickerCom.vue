@@ -1,5 +1,5 @@
 <template>
-  <a-date-picker class="gad-calendar-picker" :locale="locale" :size="size" :format="formatter" v-bind:disabled='disabled' :showTime="IsShowTime"
+  <a-date-picker class="gad-calendar-picker" :size="size" :format="formatter" v-bind:disabled='disabled' :showTime="IsShowTime"
     :disabledDate="disabledDate" @panelChange='change' :disabledTime='disabledTime' v-model='dateValue' @change="basechange" placeholder="选择时间"
     :style="{width: '100%'}" :inputReadOnly="true">
     <div slot="suffixIcon" v-if="!disabled"></div>
@@ -20,7 +20,6 @@ import {
 import { ComponentBase } from '../../03designerLayoutBase'
 import moment from 'moment'
 import { param, paramType } from '../../03designerLayoutBase'
-import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 
 @Component
 export default class DatePickerCom extends ComponentBase {
@@ -44,7 +43,6 @@ export default class DatePickerCom extends ComponentBase {
   @Prop({ required: false })
   public disabledTime: any
 
-  public locale = locale
   public IsShowTime: boolean | any = false
 
   public created() {}
@@ -142,17 +140,8 @@ export default class DatePickerCom extends ComponentBase {
     }
     //属性改变触发
     this.$on('onPropertyChanged', this.onCurrentPropertyChanged)
-
     this.registerEvents('值改变事件', '', this.inparam, this.outparam)
-
     this.IsShowTime = this.showTime
-
-    if (this.curModelproperty && this.curModelproperty.formatter) {
-      this.formatter = this.curModelproperty.formatter
-    }
-    if (this.curModelproperty && this.curModelproperty.defaultValue) {
-      this.dateValue = moment(this.curModelproperty.defaultValue, this.formatter)
-    }
   }
 
   public get validateProperty(): Property {
@@ -182,13 +171,13 @@ export default class DatePickerCom extends ComponentBase {
       this.setPropertyVal(property.id, null)
     } else {
       //var newv = moment(val).valueOf()
-      var newv = val.format(this.formatter)
-      //console.info('时间错是的',this.$moment(newv,this.formatter));
-      newv = this.$moment(newv, this.formatter).valueOf()
-      // this.setPropertyVal(property.id, this.$moment(val))
+      var newv = val.format(this.formatter) as any
+      //console.info('时间错是的',moment(newv,this.formatter));
+      newv = moment(newv, this.formatter).valueOf()
+      // this.setPropertyVal(property.id, moment(val))
       this.setPropertyVal(property.id, newv)
     }
-    //this.setPropertyVal(property.id, this.$moment(val))
+    //this.setPropertyVal(property.id, moment(val))
   }
 
   set formatter(val: string) {
@@ -292,9 +281,7 @@ export default class DatePickerCom extends ComponentBase {
     } else newformat = this.formatter
     newmin = this.mindatevalue != null ? this.mindatevalue : '1970-01-01'
     newmax = this.maxdatevalue != null ? this.maxdatevalue : '2999-01-01'
-    return (
-      current.format(newformat) < this.$moment(newmin).format('YYYY-MM-DD') || current.format(newformat) > this.$moment(newmax).format('YYYY-MM-DD')
-    )
+    return current.format(newformat) < moment(newmin).format('YYYY-MM-DD') || current.format(newformat) > moment(newmax).format('YYYY-MM-DD')
   }
   /*
   属性变化事件
@@ -346,8 +333,8 @@ export default class DatePickerCom extends ComponentBase {
       let nowdate = value.format('YYYY-MM-DD')
       let newmin = this.mindatevalue != null ? this.mindatevalue : '1970-01-01 08:00:01'
       let newmax = this.maxdatevalue != null ? this.maxdatevalue : '2999-01-01'
-      let mindate = this.$moment(newmin).format('YYYY-MM-DD')
-      let maxdate = this.$moment(newmax).format('YYYY-MM-DD')
+      let mindate = moment(newmin as any).format('YYYY-MM-DD')
+      let maxdate = moment(newmax as any).format('YYYY-MM-DD')
       //设置禁用时分秒配置
       this.disabledTime = () => {
         return {
@@ -357,10 +344,10 @@ export default class DatePickerCom extends ComponentBase {
               return this.hours
             }
             if (mindate === nowdate) {
-              mhour = mhour.concat(this.hours.filter((c) => c < this.$moment(newmin).hours()))
+              mhour = mhour.concat(this.hours.filter((c) => c < moment(newmin as any).hours()))
             }
             if (maxdate === nowdate) {
-              mhour = mhour.concat(this.hours.filter((c) => c > this.$moment(newmax).hours()))
+              mhour = mhour.concat(this.hours.filter((c) => c > moment(newmax as any).hours()))
             }
             return mhour
           },
@@ -369,11 +356,11 @@ export default class DatePickerCom extends ComponentBase {
             if (nowdate < mindate) {
               return this.minsec
             }
-            if (mindate === nowdate && selectedHour === this.$moment(newmin).hours()) {
-              mmin = mmin.concat(this.minsec.filter((c) => c < this.$moment(newmin).minutes()))
+            if (mindate === nowdate && selectedHour === moment(newmin as any).hours()) {
+              mmin = mmin.concat(this.minsec.filter((c) => c < moment(newmin as any).minutes()))
             }
-            if (maxdate === nowdate && selectedHour === this.$moment(newmax).hours()) {
-              mmin = mmin.concat(this.minsec.filter((c) => c > this.$moment(newmax).minutes()))
+            if (maxdate === nowdate && selectedHour === moment(newmax as any).hours()) {
+              mmin = mmin.concat(this.minsec.filter((c) => c > moment(newmax as any).minutes()))
             }
             return mmin
           },
@@ -382,11 +369,11 @@ export default class DatePickerCom extends ComponentBase {
             if (nowdate < mindate) {
               return this.minsec
             }
-            if (mindate === nowdate && selectedHour === this.$moment(newmin).hours() && selectedMinute === this.$moment(newmin).minutes()) {
-              msec = msec.concat(this.minsec.filter((c) => c < this.$moment(newmin).seconds()))
+            if (mindate === nowdate && selectedHour === moment(newmin as any).hours() && selectedMinute === moment(newmin as any).minutes()) {
+              msec = msec.concat(this.minsec.filter((c) => c < moment(newmin as any).seconds()))
             }
-            if (maxdate === nowdate && selectedHour === this.$moment(newmax).hours() && selectedMinute === this.$moment(newmax).minutes()) {
-              msec = msec.concat(this.minsec.filter((c) => c > this.$moment(newmax).seconds()))
+            if (maxdate === nowdate && selectedHour === moment(newmax as any).hours() && selectedMinute === moment(newmax as any).minutes()) {
+              msec = msec.concat(this.minsec.filter((c) => c > moment(newmax as any).seconds()))
             }
             return msec
           }
@@ -415,8 +402,8 @@ export default class DatePickerCom extends ComponentBase {
         date = max
       }
       let new_value = moment(date).format(this.formatter) as string
-      // newdate =this.$moment(date,this.formatter).valueOf()
-      newdate = this.$moment(new_value).valueOf()
+      // newdate =moment(date,this.formatter).valueOf()
+      newdate = moment(new_value).valueOf()
     } else {
       newdate = null
     }

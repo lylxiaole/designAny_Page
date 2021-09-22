@@ -28,17 +28,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
-import PageBase from '../../03designerLayoutBase/PageBase'
+import { deepClone } from '@src/utils'
+import { PageBase } from '@src/designEngine/03designerLayoutBase'
 import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
-import { layoutEvent } from '../../03designerLayoutBase'
-import { layoutEventBehaviors, behavior } from '../../02common/behavior'
+import { layoutEvent } from '@src/designEngine/03designerLayoutBase'
+import { layoutEventBehaviors, behavior } from '@src/designEngine/03designerLayoutBase/behavior'
 import behaviorListInPage from './behaviorListInPage.vue'
 import behaviorDeatilSetting from './behaviorDeatilSetting.vue'
 import behaviorEventBinding from './behaviorEventBinding.vue'
 import { behaviorPageType, behaviorListData, behaviorDetailData, behaviorBindingInParam, behaviorListInParam, behaviorDetailInParam } from './model'
-import { behaviorIco } from '../../assets/icons.js'
+// import { behaviorIco } from '../../assets/icons.js'
+import { alert } from 'devextreme/ui/dialog'
 
 @propertyCellTypeAttr(PropertyTypeEnum.behavior)
 @Component({
@@ -67,7 +68,7 @@ export default class behaviorControl extends propertyCellBase {
   private listTempEventBehavior: layoutEventBehaviors = null
 
   created() {
-    this.behavioricon = behaviorIco
+    // this.behavioricon = behaviorIco
   }
 
   // 开始行为设置
@@ -76,13 +77,13 @@ export default class behaviorControl extends propertyCellBase {
       return
     }
     if (this.currentLayoutsGetter.length > 1) {
-      this.$message.warn('请不要选择多个目标！')
+      // alert('请不要选择多个目标！')
     }
 
-    this.currentPageBehaviors = common.clone(this.currentPage.behaviors)
-    this.designerLayoutEvents = common.clone(this.currentLayoutsGetter[0].DesignerEvents)
+    this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
+    this.designerLayoutEvents = deepClone(this.currentLayoutsGetter[0].designerEvents)
     if (this.currentValue) {
-      this.currentData = common.clone(this.currentValue) as layoutEventBehaviors[]
+      this.currentData = deepClone(this.currentValue) as layoutEventBehaviors[]
     } else {
       this.currentData = []
     }
@@ -144,8 +145,8 @@ export default class behaviorControl extends propertyCellBase {
         if (this.prePage === behaviorPageType.list) {
           let listInData: behaviorListInParam = new behaviorListInParam()
           listInData.selectedEventName = this.selectedEventName
-          listInData.eventBehavior = common.clone(this.listTempEventBehavior)
-          listInData.allBehaviors = common.clone(this.listTempAllBehaviors)
+          listInData.eventBehavior = deepClone(this.listTempEventBehavior)
+          listInData.allBehaviors = deepClone(this.listTempAllBehaviors)
           this.record = listInData
           this.currentComp = this.prePage
           this.prePage = behaviorPageType.binding
@@ -168,8 +169,8 @@ export default class behaviorControl extends propertyCellBase {
   private onConfirm() {
     switch (this.currentComp) {
       case behaviorPageType.binding: {
-        this.currentValue = common.clone(this.currentData)
-        this.currentPage.behaviors = common.clone(this.currentPageBehaviors)
+        this.currentValue = deepClone(this.currentData)
+        this.currentPage.behaviors = deepClone(this.currentPageBehaviors)
         this.windowVisible = false
         this.initCompData()
         break
@@ -216,8 +217,8 @@ export default class behaviorControl extends propertyCellBase {
 
           let listInData: behaviorListInParam = new behaviorListInParam()
           listInData.selectedEventName = this.selectedEventName
-          listInData.eventBehavior = common.clone(this.listTempEventBehavior)
-          listInData.allBehaviors = common.clone(this.listTempAllBehaviors)
+          listInData.eventBehavior = deepClone(this.listTempEventBehavior)
+          listInData.allBehaviors = deepClone(this.listTempAllBehaviors)
           this.record = listInData
           this.currentComp = this.prePage
           this.prePage = behaviorPageType.binding

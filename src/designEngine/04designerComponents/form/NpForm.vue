@@ -64,7 +64,10 @@ import {
   MarginRight,
   MarginBottom
 } from './commonClasses'
-import { AllComponents, ComponentBase } from '..'
+import { AllComponents } from '..'
+
+import { ComponentBase } from '../../03designerLayoutBase'
+
 import common from '../../02common/commonMethod'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 import { CurrentApis } from '../../01designerContext'
@@ -72,7 +75,7 @@ import LayoutBase, { SaveInfo, LayoutInfo } from '../../03designerLayoutBase/Lay
 import modelBingding, { bindingModelVal_InProperty } from '../../02common/commonClasses/modelBingding'
 import NpFormItem from '../form/NpFormItem.vue'
 import PageBase from '../../03designerLayoutBase/PageBase'
-import { set } from 'xe-utils/methods'
+import { set } from 'xe-utils'
 import btreeNode from '../../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
 import { param, paramType } from '../../03designerLayoutBase'
 
@@ -83,9 +86,7 @@ export default class NpForm extends ComponentBase {
   form: any
   private ItemDataList: FormItemData[] = []
 
-  beforeCreate() {
-    this.form = this.$form.createForm(this)
-  }
+  beforeCreate() {}
 
   created() {
     this.width = 400
@@ -110,9 +111,7 @@ export default class NpForm extends ComponentBase {
       this.canDrop = true
       this.canDrag = false
     }
-    if (this.layoutInfo && this.layoutInfo.modelDetail) {
-      this.makeFormByModelDetail(this.layoutInfo.modelDetail)
-    }
+
     // window.console.log('表单控件', this.layoutInfo)
   }
 
@@ -195,13 +194,13 @@ export default class NpForm extends ComponentBase {
     if (!model) {
       return
     }
-    let modelBding: modelBingding = this.parentPage.createModelBindingByModel(model)
-    if (modelBding && model && model.modelPropertyList) {
-      for (let index = 0; index < model.modelPropertyList.length; index++) {
-        const x = model.modelPropertyList[index]
-        this.prepareFormItem(x, modelBding)
-      }
-    }
+    // let modelBding: modelBingding = this.parentPage.createModelBindingByModel(model)
+    // if (modelBding && model && model.modelPropertyList) {
+    //   for (let index = 0; index < model.modelPropertyList.length; index++) {
+    //     const x = model.modelPropertyList[index]
+    //     this.prepareFormItem(x, modelBding)
+    //   }
+    // }
   }
 
   private getDecorator(itemdata: FormItemData): DecoratorOption {
@@ -341,11 +340,11 @@ export default class NpForm extends ComponentBase {
   }
   /*********************protected******************************************************/
   protected renderChildFromData(data: SaveInfo) {
-    let compclass = this.findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
-    if (!compclass) {
-      return
-    }
-    this.insertComponentLayout(compclass, data.layoutInfo, null, data)
+    // let compclass = this.findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
+    // if (!compclass) {
+    //   return
+    // }
+    // this.insertComponentLayout(compclass, data.layoutInfo, null, data)
   }
 
   protected renderComponent(dropcomp: ComponentBase, layoutInfo: LayoutInfo, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
@@ -394,16 +393,16 @@ export default class NpForm extends ComponentBase {
     item.cloneFrom(layoutInfo.data)
     item.modelProperty = this.getNewModelProperty(item.modelCode, item.propertyCode)
 
-    if (!item.modelProperty) {
-      //虚模型无法从之前的模型属性中获取到，需要使用虚模型信息
-      let modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == item.modelBindingName)
-      if (modelBind && modelBind.virtualModelPropertyList && modelBind.virtualModelPropertyList.length > 0) {
-        let property = modelBind.virtualModelPropertyList.find((single) => single.propertyCode == item.propertyCode)
-        if (property) {
-          item.modelProperty = property
-        }
-      }
-    }
+    // if (!item.modelProperty) {
+    //   //虚模型无法从之前的模型属性中获取到，需要使用虚模型信息
+    //   let modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == item.modelBindingName)
+    //   if (modelBind && modelBind.virtualModelPropertyList && modelBind.virtualModelPropertyList.length > 0) {
+    //     let property = modelBind.virtualModelPropertyList.find((single) => single.propertyCode == item.propertyCode)
+    //     if (property) {
+    //       item.modelProperty = property
+    //     }
+    //   }
+    // }
 
     if (!item.modelProperty) {
       return null
@@ -487,68 +486,64 @@ export default class NpForm extends ComponentBase {
 
   private onItemCompPropertyChanged(propertyId: string, property: Property, comp: ComponentBase) {
     if (property.propertyName == '绑定模型') {
-      this.watchOnSystemCompBind(comp, comp.bindInfos)
+      // this.watchOnSystemCompBind(comp, comp.bindInfos)
     }
   }
 
   private watchOnSystemCompBind(comp: ComponentBase, newval: bindingModelVal_InProperty[]) {
     // window.console.log('绑定信息变了')
-    if (comp.validateProperty == null) {
-      return
-    }
-    let bindinfo = newval.find((o) => o.propertyId == comp.validateProperty.id)
-    if (!bindinfo || (bindinfo && bindinfo.modelCodes.length < 1)) {
-      if (comp.layoutInfo.data) {
-        comp.layoutInfo.data = null
-      }
-      return
-    }
-    let modelBind = this.parentPage.getModelBindInfo(bindinfo)
-    if (!modelBind) {
-      return
-    }
-
-    let newformItemData: FormItemData = this.ItemDataList.find((o) => o.comp == comp)
-    newformItemData.labelName = bindinfo.modelCodes[0].codeName
-    newformItemData.modelBindingName = modelBind.modelBindingName
-    newformItemData.propertyCode = bindinfo.modelCodes[0].code
-    newformItemData.compType = comp.layoutInfo.type
-    newformItemData.modelCode = modelBind.modelBindingInfo.modelCode
-    newformItemData.modelProperty = this.getNewModelProperty(newformItemData.modelCode, newformItemData.propertyCode)
-    newformItemData.decorator = this.getDecorator(newformItemData)
-
-    if (
-      newformItemData.modelProperty.propertyType == ModelPropertyType.ENUM ||
-      newformItemData.modelProperty.propertyType == ModelPropertyType.ENUMARRAY
-    ) {
-      ;(comp as any).dictID = newformItemData.modelProperty.dictId
-    }
-
-    let fproperty = comp.findPropertyByName(PropertyGroupName.special, itemShowName)
-    comp.setPropertyVal(fproperty.id, newformItemData.labelName)
-    fproperty = comp.findPropertyByName(PropertyGroupName.special, itemValidateStr)
-    comp.setPropertyVal(fproperty.id, newformItemData.itemValidateStr)
-
-    let cloneitem = { ...newformItemData }
-    cloneitem.comp = null
-    comp.layoutInfo.data = cloneitem
+    // if (comp.validateProperty == null) {
+    //   return
+    // }
+    // let bindinfo = newval.find((o) => o.propertyId == comp.validateProperty.id)
+    // if (!bindinfo || (bindinfo && bindinfo.modelCodes.length < 1)) {
+    //   if (comp.layoutInfo.data) {
+    //     comp.layoutInfo.data = null
+    //   }
+    //   return
+    // }
+    // let modelBind = this.parentPage.getModelBindInfo(bindinfo)
+    // if (!modelBind) {
+    //   return
+    // }
+    // let newformItemData: FormItemData = this.ItemDataList.find((o) => o.comp == comp)
+    // newformItemData.labelName = bindinfo.modelCodes[0].codeName
+    // newformItemData.modelBindingName = modelBind.modelBindingName
+    // newformItemData.propertyCode = bindinfo.modelCodes[0].code
+    // newformItemData.compType = comp.layoutInfo.type
+    // newformItemData.modelCode = modelBind.modelBindingInfo.modelCode
+    // newformItemData.modelProperty = this.getNewModelProperty(newformItemData.modelCode, newformItemData.propertyCode)
+    // newformItemData.decorator = this.getDecorator(newformItemData)
+    // if (
+    //   newformItemData.modelProperty.propertyType == ModelPropertyType.ENUM ||
+    //   newformItemData.modelProperty.propertyType == ModelPropertyType.ENUMARRAY
+    // ) {
+    //   ;(comp as any).dictID = newformItemData.modelProperty.dictId
+    // }
+    // let fproperty = comp.findPropertyByName(PropertyGroupName.special, itemShowName)
+    // comp.setPropertyVal(fproperty.id, newformItemData.labelName)
+    // fproperty = comp.findPropertyByName(PropertyGroupName.special, itemValidateStr)
+    // comp.setPropertyVal(fproperty.id, newformItemData.itemValidateStr)
+    // let cloneitem = { ...newformItemData }
+    // cloneitem.comp = null
+    // comp.layoutInfo.data = cloneitem
   }
   /*********************Item组件的触发事件 *********************************************/
   private onFormItemDelete(itemdata: FormItemData) {
     let dataIndex = this.ItemDataList.indexOf(itemdata)
     this.parentPage.chooseComps([this.ItemDataList[dataIndex].comp])
 
-    this.$confirm({
-      title: '确定要删除吗?删除后不能恢复!',
-      okText: '确定',
-      okType: 'danger',
-      cancelText: '取消',
-      onOk: () => {
-        this.removeChild(this.ItemDataList[dataIndex].comp)
-        this.ItemDataList.splice(dataIndex, 1)
-      },
-      onCancel: () => {}
-    })
+    // this.$confirm({
+    //   title: '确定要删除吗?删除后不能恢复!',
+    //   okText: '确定',
+    //   okType: 'danger',
+    //   cancelText: '取消',
+    //   onOk: () => {
+    //     this.removeChild(this.ItemDataList[dataIndex].comp)
+    //     this.ItemDataList.splice(dataIndex, 1)
+    //   },
+    //   onCancel: () => {}
+    // })
   }
 
   /** 动态生成form表单的项目
@@ -562,17 +557,17 @@ export default class NpForm extends ComponentBase {
       let modelBind: any = {}
       if (this.ItemDataList && this.ItemDataList.length > 0) {
         let item = this.ItemDataList[0]
-        modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == item.modelBindingName)
-        if (modelBind.virtualModelPropertyList && modelBind.virtualModelPropertyList.length > 0) {
-          //清理下之前的虚模型数据
-          modelBind.virtualModelPropertyList.forEach((element) => {
-            let dataIndex = this.ItemDataList.findIndex((item) => item.propertyCode == element.propertyCode)
-            if (dataIndex > -1) {
-              this.removeChild(this.ItemDataList[dataIndex].comp)
-              this.ItemDataList.splice(dataIndex, 1)
-            }
-          })
-        }
+        // modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == item.modelBindingName)
+        // if (modelBind.virtualModelPropertyList && modelBind.virtualModelPropertyList.length > 0) {
+        //   //清理下之前的虚模型数据
+        //   modelBind.virtualModelPropertyList.forEach((element) => {
+        //     let dataIndex = this.ItemDataList.findIndex((item) => item.propertyCode == element.propertyCode)
+        //     if (dataIndex > -1) {
+        //       this.removeChild(this.ItemDataList[dataIndex].comp)
+        //       this.ItemDataList.splice(dataIndex, 1)
+        //     }
+        //   })
+        // }
       }
       CurrentApis.GetVirtulModelById(param[0]).then((res: any) => {
         if (res instanceof Array && res.length > 0) {
@@ -690,15 +685,15 @@ export default class NpForm extends ComponentBase {
       item.compType = compType
       var comp = this.makeInnerFormItem(item)
 
-      if (issetdefault) {
-        this.$nextTick(() => {
-          if (this.$refs[item.Id]) {
-            let formitemComp = this.$refs[item.Id][0] as NpFormItem
-            let comp = this.children.find((single) => single.name == item.labelName) as ComponentBase
-            comp.setPropertyVal(comp.validateProperty.id, modelBind.val.data[item.propertyCode])
-          }
-        })
-      }
+      // if (issetdefault) {
+      //   this.$nextTick(() => {
+      //     if (this.$refs[item.Id]) {
+      //       let formitemComp = this.$refs[item.Id][0] as NpFormItem
+      //       let comp = this.children.find((single) => single.name == item.labelName) as ComponentBase
+      //       comp.setPropertyVal(comp.validateProperty.id, modelBind.val.data[item.propertyCode])
+      //     }
+      //   })
+      // }
       return item
     }
   }

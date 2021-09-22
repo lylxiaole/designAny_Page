@@ -535,7 +535,7 @@ export default class LayoutBase extends eventBase {
     }
   }
   public destory() {}
-  protected AddProperty(proper: Property) {
+  protected addProperty(proper: Property) {
     let find = this.properties.find((o) => o.propertyName == proper.propertyName && o.groupName == proper.groupName)
     if (find) {
       window.console.warn('已经存在相同分组相同名称的属性')
@@ -716,7 +716,7 @@ export default class LayoutBase extends eventBase {
           newperperty.canSetting = item.canSetting
           newperperty.canBindModel = item.canBindModel
           newperperty.id = item.id
-          this.AddProperty(newperperty)
+          this.addProperty(newperperty)
           this.setPropertyVal(item.id, item.value, true, true)
         }
       }

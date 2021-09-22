@@ -20,7 +20,9 @@ import LayoutBase, { LayoutType, LayoutInfo } from '../../03designerLayoutBase/L
 import PageBase from '../../03designerLayoutBase/PageBase'
 import common from '../../02common/commonMethod'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
-import { AllComponents, ComponentBase } from '../../04designerComponents'
+import { AllComponents } from '../../04designerComponents'
+import { ComponentBase } from '../../03designerLayoutBase'
+
 import { CurrentApis, pagenNodeType, CurrentContext } from '../../01designerContext'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 import { Property, PropertyGroupName } from '../../03designerLayoutBase'

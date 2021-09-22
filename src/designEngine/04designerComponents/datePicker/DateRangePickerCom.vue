@@ -134,13 +134,13 @@ export default class DateRangePickerCom extends ComponentBase {
     if (val == null) {
       this.setPropertyVal(property.id, null)
     } else {
-      var newv = this.$moment(val, this.formatter).valueOf() as any
+      var newv = moment(val, this.formatter).valueOf() as any
 
       newv = Math.floor(newv / 1000) * 1000
-      // this.setPropertyVal(property.id, this.$moment(val))
+      // this.setPropertyVal(property.id, moment(val))
       this.setPropertyVal(property.id, newv)
     }
-    //this.setPropertyVal(property.id, this.$moment(val))
+    //this.setPropertyVal(property.id, moment(val))
   }
 
   get endValue(): moment.Moment {
@@ -161,13 +161,13 @@ export default class DateRangePickerCom extends ComponentBase {
       this.setPropertyVal(property.id, null)
     } else {
       //var newv = moment(val).valueOf()
-      var newv = this.$moment(val, this.formatter).valueOf() as any
+      var newv = moment(val, this.formatter).valueOf() as any
 
       newv = Math.floor(newv / 1000) * 1000 + 999
-      // this.setPropertyVal(property.id, this.$moment(val))
+      // this.setPropertyVal(property.id, moment(val))
       this.setPropertyVal(property.id, newv)
     }
-    //this.setPropertyVal(property.id, this.$moment(val))
+    //this.setPropertyVal(property.id, moment(val))
   }
 
   /*
@@ -213,7 +213,7 @@ export default class DateRangePickerCom extends ComponentBase {
       //需要根据日期值大小判定选项
       let nowdate = value.format('YYYY-MM-DD')
       let newmax = this.endValue != null ? this.endValue : '2999-01-01'
-      let maxdate = this.$moment(newmax).format('YYYY-MM-DD')
+      let maxdate = moment(newmax).format('YYYY-MM-DD')
       //设置禁用时分秒配置
       this.disabledStartTime = () => {
         return {
@@ -223,7 +223,7 @@ export default class DateRangePickerCom extends ComponentBase {
               return this.hours
             }
             if (maxdate === nowdate) {
-              mhour = mhour.concat(this.hours.filter((c) => c > this.$moment(newmax).hours()))
+              mhour = mhour.concat(this.hours.filter((c) => c > moment(newmax).hours()))
             }
             return mhour
           },
@@ -232,8 +232,8 @@ export default class DateRangePickerCom extends ComponentBase {
             if (nowdate > maxdate) {
               return this.minsec
             }
-            if (maxdate === nowdate && selectedHour === this.$moment(newmax).hours()) {
-              mmin = mmin.concat(this.minsec.filter((c) => c > this.$moment(newmax).minutes()))
+            if (maxdate === nowdate && selectedHour === moment(newmax).hours()) {
+              mmin = mmin.concat(this.minsec.filter((c) => c > moment(newmax).minutes()))
             }
             return mmin
           },
@@ -242,8 +242,8 @@ export default class DateRangePickerCom extends ComponentBase {
             if (nowdate > maxdate) {
               return this.minsec
             }
-            if (maxdate === nowdate && selectedHour === this.$moment(newmax).hours() && selectedMinute === this.$moment(newmax).minutes()) {
-              msec = msec.concat(this.minsec.filter((c) => c > this.$moment(newmax).seconds()))
+            if (maxdate === nowdate && selectedHour === moment(newmax).hours() && selectedMinute === moment(newmax).minutes()) {
+              msec = msec.concat(this.minsec.filter((c) => c > moment(newmax).seconds()))
             }
             return msec
           }
@@ -259,7 +259,7 @@ export default class DateRangePickerCom extends ComponentBase {
       //需要根据日期值大小判定选项
       let nowdate = value.format('YYYY-MM-DD')
       let newmin = this.startValue != null ? this.startValue : '1900-01-01 00:00:00'
-      let mindate = this.$moment(newmin).format('YYYY-MM-DD')
+      let mindate = moment(newmin).format('YYYY-MM-DD')
       //设置禁用时分秒配置
       this.disabledEndTime = () => {
         return {
@@ -269,7 +269,7 @@ export default class DateRangePickerCom extends ComponentBase {
               return this.hours
             }
             if (mindate === nowdate) {
-              mhour = mhour.concat(this.hours.filter((c) => c < this.$moment(newmin).hours()))
+              mhour = mhour.concat(this.hours.filter((c) => c < moment(newmin).hours()))
             }
             return mhour
           },
@@ -278,8 +278,8 @@ export default class DateRangePickerCom extends ComponentBase {
             if (nowdate < mindate) {
               return this.minsec
             }
-            if (mindate === nowdate && selectedHour === this.$moment(newmin).hours()) {
-              mmin = mmin.concat(this.minsec.filter((c) => c < this.$moment(newmin).minutes()))
+            if (mindate === nowdate && selectedHour === moment(newmin).hours()) {
+              mmin = mmin.concat(this.minsec.filter((c) => c < moment(newmin).minutes()))
             }
             return mmin
           },
@@ -288,8 +288,8 @@ export default class DateRangePickerCom extends ComponentBase {
             if (nowdate < mindate) {
               return this.minsec
             }
-            if (mindate === nowdate && selectedHour === this.$moment(newmin).hours() && selectedMinute === this.$moment(newmin).minutes()) {
-              msec = msec.concat(this.minsec.filter((c) => c < this.$moment(newmin).seconds()))
+            if (mindate === nowdate && selectedHour === moment(newmin).hours() && selectedMinute === moment(newmin).minutes()) {
+              msec = msec.concat(this.minsec.filter((c) => c < moment(newmin).seconds()))
             }
             return msec
           }

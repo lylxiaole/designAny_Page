@@ -133,7 +133,7 @@ export default class DatePickerCom extends ComponentBase {
     }
     //window.console.info('dateValuedateValuedateValuedateValue', property.value)
     let nowvalue =
-      property != undefined && property.value != undefined && property.value != '' ? this.$moment(property.value) : property.value == '' ? null : null
+      property != undefined && property.value != undefined && property.value != '' ? moment(property.value) : property.value == '' ? null : null
     //moment(new Date())
     //window.console.info('dateValuedateValuedateValuedateValue2', nowvalue)
     return nowvalue
@@ -181,7 +181,7 @@ export default class DatePickerCom extends ComponentBase {
     let newmin, newmax
     newmin = this.mindatevalue != null ? this.mindatevalue : '1900-01-01'
     newmax = this.maxdatevalue != null ? this.maxdatevalue : '2999-01-01'
-    return current.format('YYYY-wo') < this.$moment(newmin).format('YYYY-wo') || current.format('YYYY-wo') > this.$moment(newmax).format('YYYY-wo')
+    return current.format('YYYY-wo') < moment(newmin).format('YYYY-wo') || current.format('YYYY-wo') > moment(newmax).format('YYYY-wo')
   }
   /*
   属性变化事件

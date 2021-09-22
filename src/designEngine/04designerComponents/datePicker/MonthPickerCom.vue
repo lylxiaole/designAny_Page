@@ -143,12 +143,12 @@ export default class DatePickerCom extends ComponentBase {
 
   set dateValue(val: moment.Moment) {
     var property = this.findPropertyByName(PropertyGroupName.special, '值')
-    //this.setPropertyVal(property.id, this.$moment(val))
+    //this.setPropertyVal(property.id, moment(val))
     if (val == null) {
       this.setPropertyVal(property.id, null)
     } else {
       var newv = moment(val).valueOf()
-      // this.setPropertyVal(property.id, this.$moment(val))
+      // this.setPropertyVal(property.id, moment(val))
       this.setPropertyVal(property.id, newv)
     }
   }
@@ -197,7 +197,7 @@ export default class DatePickerCom extends ComponentBase {
     let newformat, newmin, newmax
     newmin = this.mindatevalue != null ? this.mindatevalue : '1900-01-01'
     newmax = this.maxdatevalue != null ? this.maxdatevalue : '2999-01-01'
-    return current.format('YYYY-MM') < this.$moment(newmin).format('YYYY-MM') || current.format('YYYY-MM') > this.$moment(newmax).format('YYYY-MM')
+    return current.format('YYYY-MM') < moment(newmin).format('YYYY-MM') || current.format('YYYY-MM') > moment(newmax).format('YYYY-MM')
   }
   /*
   属性变化事件
