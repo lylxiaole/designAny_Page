@@ -1,6 +1,3 @@
-import ComponentBase from './ComponentBase'
-import { SaveInfo } from '../03designerLayoutBase/LayoutBase'
-
 import TextComponent from './textComponents/TextComponent.vue'
 import upLoadComponent from './upLoadComponents/upLoadComponent.vue'
 
@@ -152,32 +149,14 @@ export var AllComponents: LayoutInfo[] = [
   new LayoutInfo(LayoutType.system_component, '输入框', '文本输入框', InputComponent, inputIco, null, null, 'InputComponent'),
   new LayoutInfo(LayoutType.system_component, '输入框', '多行文本框', TextAreaComponent, textArea, null, null, 'TextAreaComponent'),
   new LayoutInfo(LayoutType.system_component, '输入框', '富文本输入框', InputRichComponent, inputRichIco, null, null, 'InputRichComponent'),
-  new LayoutInfo(
-    LayoutType.system_component,
-    '输入框',
-    '复合输入框组件',
-    inputCompositeTemplate,
-    inputCompositeTemplateIco,
-    null,
-    null,
-    'inputCompositeTemplate'
-  ),
+  new LayoutInfo(LayoutType.system_component, '输入框', '复合输入框组件', inputCompositeTemplate, inputCompositeTemplateIco, null, null, 'inputCompositeTemplate'),
   //选择项
   new LayoutInfo(LayoutType.system_component, '选择项', '单选按钮', RadioComponent, radioIco, null, null, 'RadioComponent'),
   new LayoutInfo(LayoutType.system_component, '选择项', '复选框', CheckboxComponent, checkboxIco, null, null, 'CheckboxComponent'),
   new LayoutInfo(LayoutType.system_component, '选择项', '树形选择框', TreeSelectComponent, selectIco, null, null, 'TreeSelectComponent'),
   new LayoutInfo(LayoutType.system_component, '选择项', 'switch开关', SwitchComponent, switchIco, null, null, 'SwitchComponent'),
   new LayoutInfo(LayoutType.system_component, '选择项', 'select选择器', SelectSingleComponent, selectIco, null, null, 'SelectSingleComponent'),
-  new LayoutInfo(
-    LayoutType.system_component,
-    '选择项',
-    '多选下拉框',
-    SelectMultipleComponent,
-    selectMultipleIco,
-    null,
-    null,
-    'SelectMultipleComponent'
-  ),
+  new LayoutInfo(LayoutType.system_component, '选择项', '多选下拉框', SelectMultipleComponent, selectMultipleIco, null, null, 'SelectMultipleComponent'),
 
   //数据列表
   new LayoutInfo(LayoutType.system_component, '数据列表', '表格', Table, tableIco, null, null, 'Table'),
@@ -185,16 +164,7 @@ export var AllComponents: LayoutInfo[] = [
   new LayoutInfo(LayoutType.system_component, '数据列表', '穿梭框', TransferComponent, transferIco, null, null, 'TransferComponent'),
   new LayoutInfo(LayoutType.system_component, '数据列表', '穿梭表格', TransferTableComponent, transferTableIco, null, null, 'TransferTableComponent'),
   new LayoutInfo(LayoutType.system_component, '数据列表', '穿梭', TransferComponentNew, transferNewIco, null, null, 'TransferComponentNew'),
-  new LayoutInfo(
-    LayoutType.system_component,
-    '数据列表',
-    '复合组件',
-    SelectCompositeComponent,
-    selectCompositeIco,
-    null,
-    null,
-    'ButSelectCompositeComponenttonComponent'
-  ),
+  new LayoutInfo(LayoutType.system_component, '数据列表', '复合组件', SelectCompositeComponent, selectCompositeIco, null, null, 'ButSelectCompositeComponenttonComponent'),
   //内容展示
   new LayoutInfo(LayoutType.system_component, '内容展示', '栅格布局-纵向', LayoutCol, npGridIco, null, null, 'LayoutCol'),
   new LayoutInfo(LayoutType.system_component, '内容展示', '栅格布局-横向', LayoutRow, npGridIco, null, null, 'LayoutRow'),
@@ -204,16 +174,7 @@ export var AllComponents: LayoutInfo[] = [
   new LayoutInfo(LayoutType.system_component, '内容展示', '条形码', NpBarCode, npGridIco, null, null, 'NpBarCode'),
   new LayoutInfo(LayoutType.system_component, '内容展示', '二维码', NPQrCode, cardIco, null, null, 'NPQrCode'),
   new LayoutInfo(LayoutType.system_component, '内容展示', '卡片', CardComponent, cardIco, null, null, 'CardComponent'),
-  new LayoutInfo(
-    LayoutType.system_component,
-    '内容展示',
-    '可配置卡片',
-    ConfigurableCardComponent,
-    configurableCardIco,
-    null,
-    null,
-    'ConfigurableCardComponent'
-  ),
+  new LayoutInfo(LayoutType.system_component, '内容展示', '可配置卡片', ConfigurableCardComponent, configurableCardIco, null, null, 'ConfigurableCardComponent'),
   new LayoutInfo(LayoutType.system_component, '内容展示', '多媒体组件', MediaComponent, mediaIco, null, null, 'MediaComponent'),
   new LayoutInfo(LayoutType.system_component, '内容展示', '走马灯', CarouselComponent, carouselIco, null, null, 'CarouselComponent'),
   //时间组件
@@ -266,7 +227,7 @@ export function cuteCompIndex() {
 }
 cuteCompIndex()
 //////////////////////////////////////////
-export { ComponentBase, SaveInfo, NpForm }
+export { NpForm }
 
 export function findSystemComp(groupName: string, name: string, compType?: LayoutType): any {
   // window.console.log('findSystemComp', CompIndex.indexs)

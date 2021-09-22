@@ -32,8 +32,8 @@ import {
   PropertyGroupName,
   Boolean_Property,
   PageTemplateSetting_Property
-} from '../../02common/commonClasses/LayoutProperty'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+} from '../../03designerLayoutBase'
+import { param, paramType } from '../../03designerLayoutBase'
 import { AllComponents, ComponentBase } from '..'
 import common from '../../02common/commonMethod'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
@@ -74,21 +74,21 @@ export default class NpRepeatGrid extends ComponentBase {
     this.width = 400
     this.height = 400
 
-    this.RegisterProperty('数据源', PropertyGroupName.special, null, [])
-    this.RegisterProperty(
+    this.registerProperty('数据源', PropertyGroupName.special, null, [])
+    this.registerProperty(
       '展示模式',
       PropertyGroupName.special,
       new Enum_Property(true, [DisplayMode.dataFill, DisplayMode.cellClone]),
       DisplayMode.dataFill
     )
-    this.RegisterProperty('最大列数', PropertyGroupName.special, new Number_Property(1, 24, 1), 1)
-    this.RegisterProperty('最大行数', PropertyGroupName.special, new Number_Property(0, 999, 1), 0)
+    this.registerProperty('最大列数', PropertyGroupName.special, new Number_Property(1, 24, 1), 1)
+    this.registerProperty('最大行数', PropertyGroupName.special, new Number_Property(0, 999, 1), 0)
 
-    this.RegisterProperty('内容设置', this.cellSettingPropGroupName, new PageTemplateSetting_Property(), null)
-    this.RegisterProperty('上外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
-    this.RegisterProperty('下外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
-    this.RegisterProperty('左外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
-    this.RegisterProperty('右外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
+    this.registerProperty('内容设置', this.cellSettingPropGroupName, new PageTemplateSetting_Property(), null)
+    this.registerProperty('上外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
+    this.registerProperty('下外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
+    this.registerProperty('左外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
+    this.registerProperty('右外边距', this.cellSettingPropGroupName, new Number_Property(), 0, true, false, 'px')
   }
 
   mounted() {
@@ -150,7 +150,7 @@ export default class NpRepeatGrid extends ComponentBase {
   }
 
   get cellMarginLeft(): number {
-    const marginLeftProp = this.FindPropertyByName(this.cellSettingPropGroupName, '左外边距')
+    const marginLeftProp = this.findPropertyByName(this.cellSettingPropGroupName, '左外边距')
     let cellMarginLeft: number = 0
     if (marginLeftProp) {
       cellMarginLeft = marginLeftProp.value ? marginLeftProp.value : 0
@@ -159,7 +159,7 @@ export default class NpRepeatGrid extends ComponentBase {
   }
 
   get cellMarginRight(): number {
-    const marginRightProp = this.FindPropertyByName(this.cellSettingPropGroupName, '右外边距')
+    const marginRightProp = this.findPropertyByName(this.cellSettingPropGroupName, '右外边距')
     let cellMarginRight: number = 0
     if (marginRightProp) {
       cellMarginRight = marginRightProp.value ? marginRightProp.value : 0
@@ -168,7 +168,7 @@ export default class NpRepeatGrid extends ComponentBase {
   }
 
   get cellMarginTop(): number {
-    const marginTopProp = this.FindPropertyByName(this.cellSettingPropGroupName, '上外边距')
+    const marginTopProp = this.findPropertyByName(this.cellSettingPropGroupName, '上外边距')
     let cellMarginTop: number = 0
     if (marginTopProp) {
       cellMarginTop = marginTopProp.value ? marginTopProp.value : 0
@@ -177,7 +177,7 @@ export default class NpRepeatGrid extends ComponentBase {
   }
 
   get cellMarginBottom(): number {
-    const marginBottomProp = this.FindPropertyByName(this.cellSettingPropGroupName, '下外边距')
+    const marginBottomProp = this.findPropertyByName(this.cellSettingPropGroupName, '下外边距')
     let cellMarginBottom: number = 0
     if (marginBottomProp) {
       cellMarginBottom = marginBottomProp.value ? marginBottomProp.value : 0
@@ -201,21 +201,21 @@ export default class NpRepeatGrid extends ComponentBase {
   private orgHeight: number = 0
 
   protected onMounted(layout: LayoutBase) {
-    const nameProp = this.FindPropertyByName(PropertyGroupName.normal, '名称')
+    const nameProp = this.findPropertyByName(PropertyGroupName.normal, '名称')
     if (nameProp && !nameProp.value) {
       nameProp.value = '数据栅格-' + this.nprgId
     }
 
-    const ctsProp = this.FindPropertyByName(this.cellSettingPropGroupName, '内容设置')
+    const ctsProp = this.findPropertyByName(this.cellSettingPropGroupName, '内容设置')
     if (ctsProp && ctsProp.value) {
       this.templateData = ctsProp.value
     }
 
-    const widthProp = this.FindPropertyByName(PropertyGroupName.normal, '宽度')
+    const widthProp = this.findPropertyByName(PropertyGroupName.normal, '宽度')
     if (widthProp && widthProp.value) {
       this.orgWidth = widthProp.value
     }
-    const heightProp = this.FindPropertyByName(PropertyGroupName.normal, '高度')
+    const heightProp = this.findPropertyByName(PropertyGroupName.normal, '高度')
     if (heightProp && heightProp.value) {
       this.orgHeight = heightProp.value
     }
@@ -229,26 +229,26 @@ export default class NpRepeatGrid extends ComponentBase {
 
   private getRowData(): void {
     this.preloadedColComps = []
-    const dsProp = this.FindPropertyByName(PropertyGroupName.special, '数据源')
+    const dsProp = this.findPropertyByName(PropertyGroupName.special, '数据源')
     let dataSourceValue = null
     if (dsProp && dsProp.value) {
       dataSourceValue = dsProp.value
     } else {
       return
     }
-    const smProp = this.FindPropertyByName(PropertyGroupName.special, '展示模式')
+    const smProp = this.findPropertyByName(PropertyGroupName.special, '展示模式')
     let smName: string = DisplayMode.dataFill
     if (smProp && smProp.value) {
       smName = smProp.value
     }
 
-    const mlcProp = this.FindPropertyByName(PropertyGroupName.special, '最大列数')
+    const mlcProp = this.findPropertyByName(PropertyGroupName.special, '最大列数')
     let mlc: number = 0
     if (mlcProp) {
       mlc = mlcProp.value ? Math.floor(mlcProp.value) : 0
     }
 
-    const mrcProp = this.FindPropertyByName(PropertyGroupName.special, '最大行数')
+    const mrcProp = this.findPropertyByName(PropertyGroupName.special, '最大行数')
     let mrc: number = 0
     if (mrcProp) {
       mrc = mrcProp.value ? Math.floor(mrcProp.value) : 0

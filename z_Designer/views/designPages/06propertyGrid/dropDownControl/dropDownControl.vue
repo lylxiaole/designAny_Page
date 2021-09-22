@@ -53,7 +53,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import common from '../../02common/commonMethod'
 import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
-import { layoutEvent, layoutMethod, param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { layoutEvent, layoutMethod, param, paramType } from '../../03designerLayoutBase'
 import NpUploadFile from '../../07commonComponents/npUploadFile.vue'
 import dropdownAttributeInfo from '../../02common/commonClasses/dropdownAttributeInfo'
 import npColorPicker from '../../07commonComponents/npColorPicker.vue'
@@ -149,7 +149,7 @@ export default class dropDownControl extends propertyCellBase {
       newdropinfo.url = o.url
       newdropinfo.dropVisable = o.dropVisable
       newdropinfo.authCode = o.authCode
-      newdropinfo.timeout = o.timeout?o.timeout:1000
+      newdropinfo.timeout = o.timeout ? o.timeout : 1000
       this.dropData.push(newdropinfo)
     })
   }
@@ -182,7 +182,7 @@ export default class dropDownControl extends propertyCellBase {
       url: '',
       dropTextColor: '',
       dropVisable: true,
-      timeout:1000
+      timeout: 1000
     })
 
     let newCurrentLen: number = this.dropData.length

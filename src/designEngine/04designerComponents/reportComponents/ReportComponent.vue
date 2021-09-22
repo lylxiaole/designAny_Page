@@ -9,7 +9,7 @@
 </template>
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import {
   Property,
   PropertyGroupName,
@@ -17,9 +17,9 @@ import {
   Enum_Property,
   UploadFile_Property,
   Text_Property,
-  Boolean_Property,
-} from '../../02common/commonClasses/LayoutProperty'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+  Boolean_Property
+} from '../../03designerLayoutBase'
+import { param, paramType } from '../../03designerLayoutBase'
 declare var jsreports
 
 @Component({})
@@ -45,22 +45,22 @@ export default class CountDownComponent extends ComponentBase {
       {
         id: 'data_sources',
         name: 'data_sources',
-        data: [],
-      },
+        data: []
+      }
     ]
     this.width = 700
     this.height = 600
 
-    this.RegisterProperty('包含设计功能', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('弹窗设计报表', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('包含预览功能', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('包含打印功能', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('包含设计功能', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('弹窗设计报表', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('包含预览功能', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('包含打印功能', PropertyGroupName.special, new Boolean_Property(), true)
 
-    this.RegisterProperty('报表样式', PropertyGroupName.special, new Text_Property(), JSON.stringify(this.reportDefault), true)
-    this.RegisterProperty('报表数据源', PropertyGroupName.special, new Text_Property(), JSON.stringify(this.reportSource), true)
-    //this.RegisterProperty('报表图片', PropertyGroupName.special, new UploadFile_Property(10, 'image'))
+    this.registerProperty('报表样式', PropertyGroupName.special, new Text_Property(), JSON.stringify(this.reportDefault), true)
+    this.registerProperty('报表数据源', PropertyGroupName.special, new Text_Property(), JSON.stringify(this.reportSource), true)
+    //this.registerProperty('报表图片', PropertyGroupName.special, new UploadFile_Property(10, 'image'))
 
-    this.RegisterEvents('设计器保存事件', '', this.inparam, this.outparam)
+    this.registerEvents('设计器保存事件', '', this.inparam, this.outparam)
 
     this.ObserverContainer()
   }
@@ -68,7 +68,7 @@ export default class CountDownComponent extends ComponentBase {
   get containPreview(): boolean {
     var result = false
     try {
-      var val = this.FindProperties(PropertyGroupName.special, '包含预览功能')[0]
+      var val = this.findProperties(PropertyGroupName.special, '包含预览功能')[0]
       if (val && val.value) {
         result = val.value
       }
@@ -81,7 +81,7 @@ export default class CountDownComponent extends ComponentBase {
   get containPrint(): boolean {
     var result = false
     try {
-      var val = this.FindProperties(PropertyGroupName.special, '包含打印功能')[0]
+      var val = this.findProperties(PropertyGroupName.special, '包含打印功能')[0]
       if (val && val.value) {
         result = val.value
       }
@@ -95,7 +95,7 @@ export default class CountDownComponent extends ComponentBase {
     //window.console.info('get containDesign')
     var result = false
     try {
-      var val = this.FindProperties(PropertyGroupName.special, '包含设计功能')[0]
+      var val = this.findProperties(PropertyGroupName.special, '包含设计功能')[0]
       if (val && val.value) {
         result = val.value
       }
@@ -108,7 +108,7 @@ export default class CountDownComponent extends ComponentBase {
   get designerInPopup(): boolean {
     var result = false
     try {
-      var val = this.FindProperties(PropertyGroupName.special, '弹窗设计报表')[0]
+      var val = this.findProperties(PropertyGroupName.special, '弹窗设计报表')[0]
       if (val && val.value) {
         result = val.value
       }
@@ -146,12 +146,12 @@ export default class CountDownComponent extends ComponentBase {
   get dataSources(): any {
     try {
       //window.console.info('get dataSources')
-      var val = this.FindProperties(PropertyGroupName.special, '报表数据源')[0]
+      var val = this.findProperties(PropertyGroupName.special, '报表数据源')[0]
       if (val && val.value) {
-       // window.console.info('获取报表数据源:', JSON.parse(val.value))
+        // window.console.info('获取报表数据源:', JSON.parse(val.value))
         var obj = JSON.parse(val.value)
         if (typeof obj == 'object' && obj instanceof Array) {
-         // window.console.info('获取数据源：', obj)
+          // window.console.info('获取数据源：', obj)
           return obj
         }
       }
@@ -162,8 +162,8 @@ export default class CountDownComponent extends ComponentBase {
       {
         id: 'data_sources',
         name: 'data_sources',
-        data: [],
-      },
+        data: []
+      }
     ]
     //window.console.info('默认数据源：', result)
     return result
@@ -172,7 +172,7 @@ export default class CountDownComponent extends ComponentBase {
   get reportDef(): any {
     try {
       //window.console.info('get reportDef')
-      var val = this.FindProperties(PropertyGroupName.special, '报表样式')[0]
+      var val = this.findProperties(PropertyGroupName.special, '报表样式')[0]
       if (val && val.value) {
         //window.console.info('获取报表样式 :', val.value)
         var obj = JSON.parse(val.value)
@@ -193,7 +193,7 @@ export default class CountDownComponent extends ComponentBase {
     this.designer = new jsreports.Designer({
       data_sources: this.dataSources,
       report_def: this.reportDef,
-      images: [], //this.reportImages,
+      images: [] //this.reportImages,
       //showDownloadButton: true,
     })
     $('.jsr-designer-mask').css('z-index', '1000')
@@ -214,7 +214,7 @@ export default class CountDownComponent extends ComponentBase {
       embedded: false,
       report_def: this.reportDef,
       target: $('.report-preview-container'),
-      datasets: this.dataSources,
+      datasets: this.dataSources
     })
     $('.jsr-designer-mask').click((e) => {
       if ($('.jsr-designer-mask').length > 0 && e.target == $('.jsr-designer-mask')[0]) {
@@ -231,7 +231,7 @@ export default class CountDownComponent extends ComponentBase {
       jsreports.render({
         report_def: this.reportDef,
         target: $('.report-print-container'),
-        datasets: this.dataSources,
+        datasets: this.dataSources
       })
       setTimeout(() => {
         $('a.jsr-export-print')[0].click()
@@ -246,7 +246,7 @@ export default class CountDownComponent extends ComponentBase {
     var observe = new MutationObserver(this.mutationCallback)
     var container = $('.report-designer-container').last()
     let config = {
-      attributes: true, //目标节点的属性变化
+      attributes: true //目标节点的属性变化
       //childList: true, //目标节点的子节点的新增和删除
       //characterData: true, //如果目标节点为characterData节点(一种抽象接口,具体可以为文本节点,注释节点,以及处理指令节点)时,也要观察该节点的文本内容是否发生变化
       //subtree: true, //目标节点所有后代节点的attributes、childList、characterData变化
@@ -300,7 +300,7 @@ export default class CountDownComponent extends ComponentBase {
       container: container,
       data_sources: this.dataSources,
       report_def: this.reportDef,
-      images: [], //this.reportImages,
+      images: [] //this.reportImages,
     })
     this.designer.on('save', this.saveDesigner)
     //console.info($('.jsreports-designer'))
@@ -309,10 +309,10 @@ export default class CountDownComponent extends ComponentBase {
   saveDesigner(reportDef) {
     //window.console.info('保存')
     this.reportDefault = reportDef
-    var pro = this.FindPropertyByName(PropertyGroupName.special, '报表样式')
-    this.SetPropertyVal(pro.id, reportDef)
+    var pro = this.findPropertyByName(PropertyGroupName.special, '报表样式')
+    this.setPropertyVal(pro.id, reportDef)
     //window.console.info('保存样式', JSON.stringify(this.reportDefault))
-    this.TriggeEvent('设计器保存事件', [reportDef])
+    this.triggeEvent('设计器保存事件', [reportDef])
   }
 }
 </script>

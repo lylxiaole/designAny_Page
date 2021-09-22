@@ -1,6 +1,6 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 
-import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName, BindingModels_Property } from '../../02common/commonClasses/LayoutProperty'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName, BindingModels_Property } from '../../03designerLayoutBase'
 
 import { AllComponents, ComponentBase } from '../'
 import { param } from '../../03designerLayoutBase/commonClasses/layoutEvent'
@@ -69,42 +69,42 @@ export default class TransferComponent extends ComponentBase {
   }
 
   mounted() {
-    this.RegisterProperty('是否可点', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '是')
-    this.RegisterProperty('源标题', PropertyGroupName.special, new Text_Property(), '源标题')
-    this.RegisterProperty('目标标题', PropertyGroupName.special, new Text_Property(), '目标标题')
+    this.registerProperty('是否可点', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '是')
+    this.registerProperty('源标题', PropertyGroupName.special, new Text_Property(), '源标题')
+    this.registerProperty('目标标题', PropertyGroupName.special, new Text_Property(), '目标标题')
 
-    this.RegisterProperty('向右指示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('向左指示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('启用搜索', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty('向右指示文字', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('向左指示文字', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('启用搜索', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
 
-    this.RegisterProperty('懒加载', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
-    //this.RegisterProperty('穿梭框样式', PropertyGroupName.special, new Text_Property(),  '');
-    this.RegisterProperty('重新加载', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty('懒加载', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    //this.registerProperty('穿梭框样式', PropertyGroupName.special, new Text_Property(),  '');
+    this.registerProperty('重新加载', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
 
-    this.RegisterProperty('穿梭框数据源', PropertyGroupName.special, new BindingModels_Property(), [], false, true)
+    this.registerProperty('穿梭框数据源', PropertyGroupName.special, new BindingModels_Property(), [], false, true)
 
     //属性改变触发
 
-    this.RegisterMethods('加载数据方法', '', this.refreshData, this.inparam, null)
+    this.registerMethods('加载数据方法', '', this.refreshData, this.inparam, null)
   }
 
   //对外接口：获取最新数据
   refreshData(inputDatas: any[]): void {
-    this.FindProperties(PropertyGroupName.special, '数据源')[0].value = inputDatas
+    this.findProperties(PropertyGroupName.special, '数据源')[0].value = inputDatas
   }
 
   //获取数据源==============================================================
   get MockData(): any[] {
     // let datas = CurrentApis.GetTreeSelectData()
     let datas = null
-    this.FindProperties(PropertyGroupName.special, '数据源')[0].value = datas
+    this.findProperties(PropertyGroupName.special, '数据源')[0].value = datas
     return datas
   }
 
   //穿梭框可可用性============================================================
   get traDisabled(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否可点')[0]) {
-      return (this.FindProperties(PropertyGroupName.special, '是否可点')[0].value as string) == '是' ? false : true
+    if (this.findProperties(PropertyGroupName.special, '是否可点')[0]) {
+      return (this.findProperties(PropertyGroupName.special, '是否可点')[0].value as string) == '是' ? false : true
     }
     return false
   }
@@ -115,8 +115,8 @@ export default class TransferComponent extends ComponentBase {
 
   //穿梭框左边标题============================================================
   get leftTilte(): string {
-    if (this.FindPropertyByName('特有属性', '源标题')) {
-      return this.FindPropertyByName('特有属性', '源标题').value as string
+    if (this.findPropertyByName('特有属性', '源标题')) {
+      return this.findPropertyByName('特有属性', '源标题').value as string
     } else {
       return '暂无数据'
     }
@@ -138,8 +138,8 @@ export default class TransferComponent extends ComponentBase {
 
   //穿梭框右边标题============================================================
   get rightTilte(): string {
-    if (this.FindPropertyByName('特有属性', '目标标题')) {
-      return this.FindPropertyByName('特有属性', '目标标题').value as string
+    if (this.findPropertyByName('特有属性', '目标标题')) {
+      return this.findPropertyByName('特有属性', '目标标题').value as string
     } else {
       return '暂无数据'
     }
@@ -161,8 +161,8 @@ export default class TransferComponent extends ComponentBase {
 
   //向右指示文字============================================================
   get operationsRight(): string {
-    if (this.FindPropertyByName('特有属性', '向右指示文字')) {
-      return this.FindPropertyByName('特有属性', '向右指示文字').value as string
+    if (this.findPropertyByName('特有属性', '向右指示文字')) {
+      return this.findPropertyByName('特有属性', '向右指示文字').value as string
     } else {
       return '暂无数据'
     }
@@ -184,8 +184,8 @@ export default class TransferComponent extends ComponentBase {
 
   //向左指示文字============================================================
   get operationsLeft(): string {
-    if (this.FindPropertyByName('特有属性', '向左指示文字')) {
-      return this.FindPropertyByName('特有属性', '向左指示文字').value as string
+    if (this.findPropertyByName('特有属性', '向左指示文字')) {
+      return this.findPropertyByName('特有属性', '向左指示文字').value as string
     } else {
       return '暂无数据'
     }
@@ -207,8 +207,8 @@ export default class TransferComponent extends ComponentBase {
 
   //启用搜索============================================================
   get showSearch(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '启用搜索')[0]) {
-      return (this.FindProperties(PropertyGroupName.special, '启用搜索')[0].value as string) == '是' ? true : false
+    if (this.findProperties(PropertyGroupName.special, '启用搜索')[0]) {
+      return (this.findProperties(PropertyGroupName.special, '启用搜索')[0].value as string) == '是' ? true : false
     }
     return false
   }
@@ -219,8 +219,8 @@ export default class TransferComponent extends ComponentBase {
 
   //懒加载============================================================
   get lazy(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '懒加载')[0]) {
-      return (this.FindProperties(PropertyGroupName.special, '懒加载')[0].value as string) == '是' ? true : false
+    if (this.findProperties(PropertyGroupName.special, '懒加载')[0]) {
+      return (this.findProperties(PropertyGroupName.special, '懒加载')[0].value as string) == '是' ? true : false
     }
     return false
   }
@@ -231,7 +231,7 @@ export default class TransferComponent extends ComponentBase {
 
   //穿梭框样式============================================================
   // get listStyle(): any {
-  //    if (this.FindPropertyByName('特有属性', '穿梭框样式')) {
+  //    if (this.findPropertyByName('特有属性', '穿梭框样式')) {
   //     var sdg ={  width:this.width,       height:this.height    };
   //     return sdg
   // } else {
@@ -245,8 +245,8 @@ export default class TransferComponent extends ComponentBase {
 
   //重新加载============================================================
   get dispalyFooter(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '重新加载')[0]) {
-      return (this.FindProperties(PropertyGroupName.special, '重新加载')[0].value as string) == '是' ? true : false
+    if (this.findProperties(PropertyGroupName.special, '重新加载')[0]) {
+      return (this.findProperties(PropertyGroupName.special, '重新加载')[0].value as string) == '是' ? true : false
     }
     return false
   }

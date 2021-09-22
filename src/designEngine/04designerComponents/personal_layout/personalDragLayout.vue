@@ -47,7 +47,7 @@ import {
   Behavior_Property,
   Enum_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import $ from 'jquery'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
 import { search, reset } from '../../02common/icons.js'
@@ -99,7 +99,7 @@ export default class personalDragLayout extends ComponentBase {
   }
 
   private get colCount() {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '列数')
+    var property = this.findPropertyByName(PropertyGroupName.special, '列数')
     if (!property) {
       return 1
     }
@@ -107,7 +107,7 @@ export default class personalDragLayout extends ComponentBase {
   }
 
   private get personalSetting() {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '布局')
+    var property = this.findPropertyByName(PropertyGroupName.special, '布局')
     if (!property) {
       return { 0: [] }
     }
@@ -115,7 +115,7 @@ export default class personalDragLayout extends ComponentBase {
   }
 
   private set personalSetting(val: any) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '布局')
+    var property = this.findPropertyByName(PropertyGroupName.special, '布局')
     if (!property) {
       return
     }
@@ -129,9 +129,9 @@ export default class personalDragLayout extends ComponentBase {
       let numberProperty = new Number_Property()
       numberProperty.min = 1
       numberProperty.max = 9999
-      this.RegisterProperty('列数', PropertyGroupName.special, new Number_Property(), 1, true, true, '')
-      this.RegisterProperty('布局', PropertyGroupName.special, null, { 0: [] }, false, false, '')
-      this.RegisterProperty('自适应父容器', '特有布局', new Boolean_Property(), false)
+      this.registerProperty('列数', PropertyGroupName.special, new Number_Property(), 1, true, true, '')
+      this.registerProperty('布局', PropertyGroupName.special, null, { 0: [] }, false, false, '')
+      this.registerProperty('自适应父容器', '特有布局', new Boolean_Property(), false)
 
       this.$on('onPropertyChanged', this.onPropertyChangedInner)
     }
@@ -144,7 +144,7 @@ export default class personalDragLayout extends ComponentBase {
     this.fixedSelfSize()
   }
   private async fixedSelfSize() {
-    let isfixedSize = this.FindPropertyByName('特有布局', '自适应父容器').value as boolean
+    let isfixedSize = this.findPropertyByName('特有布局', '自适应父容器').value as boolean
     if (!isfixedSize) {
       return
     }

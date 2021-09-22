@@ -1,7 +1,7 @@
 import { param } from '../commonClasses/layoutEvent'
 import { deepClone } from '@src/utils'
 import PageBase from '../PageBase'
-import ComponentBase from '../../04designerComponents/ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { behavior, actionDetail, action } from './behaviorTypes'
 

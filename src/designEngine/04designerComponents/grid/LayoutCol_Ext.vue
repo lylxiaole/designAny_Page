@@ -15,7 +15,7 @@ import {
   Behavior_Property,
   Enum_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 import LayoutBase, { SaveInfo, LayoutInfo } from '../../03designerLayoutBase/LayoutBase'
 import { ComponentBase } from '../index'

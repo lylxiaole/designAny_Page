@@ -55,14 +55,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import modelBingding, {
   bindingModelVal_InProperty,
   modelBingValue,
   bindTypeEnum,
-  modelDataTypeEnum,
+  modelDataTypeEnum
 } from '../../02common/commonClasses/modelBingding'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 import moment, { Moment } from 'moment'
 import {
   Property,
@@ -71,8 +71,8 @@ import {
   Color_Property,
   calendarEvents_Property,
   PropertyType,
-  Boolean_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  Boolean_Property
+} from '../../03designerLayoutBase'
 import solarLunar from 'solarlunar'
 import CalendarEventsInfo from '../../02common/commonClasses/CalendarEventsInfo'
 import { CurrentApis } from '../../01designerContext'
@@ -98,7 +98,7 @@ export default class AntCalendar extends ComponentBase {
         isEdit: false,
         popTrigger: 'hover',
         popVisible: false,
-        status: '上班',
+        status: '上班'
       },
       {
         id: 2,
@@ -112,53 +112,53 @@ export default class AntCalendar extends ComponentBase {
         isEdit: false,
         popTrigger: 'hover',
         popVisible: false,
-        status: '休息',
-      },
+        status: '休息'
+      }
     ]
     return value
   }
 
   get eventFontColor(): String {
-    if (this.FindProperties(PropertyGroupName.special, '日程前景色')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '日程前景色')[0].value as String
+    if (this.findProperties(PropertyGroupName.special, '日程前景色')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '日程前景色')[0].value as String
       return val
     }
     return 'black'
   }
 
   get showLunar(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '显示农历')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '显示农历')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '显示农历')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '显示农历')[0].value as boolean
       return val
     }
     return true
   }
   get editable(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否显示编辑按钮')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '是否显示编辑按钮')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否显示编辑按钮')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '是否显示编辑按钮')[0].value as boolean
       return val
     }
     return true
   }
   get saveable(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否显示保存按钮')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '是否显示保存按钮')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否显示保存按钮')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '是否显示保存按钮')[0].value as boolean
       return val
     }
     return true
   }
 
   get deleteable(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否显示删除按钮')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '是否显示删除按钮')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否显示删除按钮')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '是否显示删除按钮')[0].value as boolean
       return val
     }
     return true
   }
 
   get eventTitleEditable(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '日程名称是否可编辑')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '日程名称是否可编辑')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '日程名称是否可编辑')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '日程名称是否可编辑')[0].value as boolean
 
       window.console.log('------------------------------------日程名称是否可编辑------', val)
       return val
@@ -166,30 +166,30 @@ export default class AntCalendar extends ComponentBase {
     return true
   }
   // get isModifyEventTitle(): boolean {
-  //   if (this.FindProperties(PropertyGroupName.special, '是否允许双击修改名称')[0]) {
-  //     const val = this.FindProperties(PropertyGroupName.special, '是否允许双击修改名称')[0].value as boolean
+  //   if (this.findProperties(PropertyGroupName.special, '是否允许双击修改名称')[0]) {
+  //     const val = this.findProperties(PropertyGroupName.special, '是否允许双击修改名称')[0].value as boolean
   //     return val
   //   }
   //   return true
   // }
   get workEventColor(): String {
-    if (this.FindProperties(PropertyGroupName.special, '工作日程颜色')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '工作日程颜色')[0].value as string
+    if (this.findProperties(PropertyGroupName.special, '工作日程颜色')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '工作日程颜色')[0].value as string
       return val
     }
     return '#6CC598'
   }
   get restEventColor(): String {
-    if (this.FindProperties(PropertyGroupName.special, '休息日程颜色')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '休息日程颜色')[0].value as string
+    if (this.findProperties(PropertyGroupName.special, '休息日程颜色')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '休息日程颜色')[0].value as string
       return val
     }
     return '#F7B74F'
   }
 
   get showMode(): string {
-    if (this.FindProperties(PropertyGroupName.special, '默认显示面板')[0]) {
-      const val = this.FindProperties(PropertyGroupName.special, '默认显示面板')[0].value as any
+    if (this.findProperties(PropertyGroupName.special, '默认显示面板')[0]) {
+      const val = this.findProperties(PropertyGroupName.special, '默认显示面板')[0].value as any
       return val === '月' ? 'month' : 'year'
     }
     return 'month'
@@ -203,8 +203,8 @@ export default class AntCalendar extends ComponentBase {
   isInnerChangeDataSource: boolean = false //内部改变了数据源
   // popTrigger: string = 'hover' //气泡展示方式，默认是hover，如果触发编辑就变成focus
   // get calenderEvents(): CalendarEventsInfo[] {
-  //   if (this.FindProperties(PropertyGroupName.special, '日程')[0]) {
-  //     const events = this.FindProperties(PropertyGroupName.special, '日程')[0].value as CalendarEventsInfo[]
+  //   if (this.findProperties(PropertyGroupName.special, '日程')[0]) {
+  //     const events = this.findProperties(PropertyGroupName.special, '日程')[0].value as CalendarEventsInfo[]
   //     return events
   //   }
   //   return this.eventInit
@@ -263,12 +263,12 @@ export default class AntCalendar extends ComponentBase {
       }
     })
     if (isDifferent) {
-      let property = this.FindPropertyByName(PropertyGroupName.special, '日程数据源')
-      this.SetPropertyVal(property.id, this.calenderEvents)
+      let property = this.findPropertyByName(PropertyGroupName.special, '日程数据源')
+      this.setPropertyVal(property.id, this.calenderEvents)
       this.isInnerChangeDataSource = true
 
-      let propertyEdit = this.FindPropertyByName(PropertyGroupName.special, '编辑日程数据源')
-      this.SetPropertyVal(propertyEdit.id, { modelCode: this.getModelCode(), data: this.resEditCalenderEvents })
+      let propertyEdit = this.findPropertyByName(PropertyGroupName.special, '编辑日程数据源')
+      this.setPropertyVal(propertyEdit.id, { modelCode: this.getModelCode(), data: this.resEditCalenderEvents })
     }
     return value
   }
@@ -331,10 +331,10 @@ export default class AntCalendar extends ComponentBase {
       (this.currentYearView && this.currentYearView != value.get('year'))
     ) {
       const selectYearMonth = Vue.prototype.$moment(value, 'YYYY-MM').valueOf()
-      let property = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月')
+      let property = this.findPropertyByName(PropertyGroupName.special, '当前选择年月')
 
       var val = { modelCode: this.getModelCode(), data: { start_date: selectYearMonth } }
-      this.SetPropertyVal(property.id, val)
+      this.setPropertyVal(property.id, val)
       const selectYearMonthEnd = Vue.prototype
         .$moment(value)
         .endOf('month')
@@ -343,21 +343,21 @@ export default class AntCalendar extends ComponentBase {
         .$moment(value)
         .startOf('month')
         .valueOf()
-      let propertyStart = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月开始')
-      this.SetPropertyVal(propertyStart.id, selectYearMonthStart)
-      let propertyEnd = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月结束')
-      this.SetPropertyVal(propertyEnd.id, selectYearMonthEnd)
+      let propertyStart = this.findPropertyByName(PropertyGroupName.special, '当前选择年月开始')
+      this.setPropertyVal(propertyStart.id, selectYearMonthStart)
+      let propertyEnd = this.findPropertyByName(PropertyGroupName.special, '当前选择年月结束')
+      this.setPropertyVal(propertyEnd.id, selectYearMonthEnd)
       this.currentMonthView = Vue.prototype.$moment(propertyStart.value).get('month')
       //window.console.log('---------换页-----------查询i条件', propertyStart.value, propertyEnd.value)
       this.resEditCalenderEvents = []
       this.calenderEventsDayByDay = []
-      this.TriggeEvent('换页事件', null)
+      this.triggeEvent('换页事件', null)
     }
   }
 
   getModelCode() {
     let tempModelCode = ''
-    var prop = this.FindPropertyByName(PropertyGroupName.special, '日程数据源')
+    var prop = this.findPropertyByName(PropertyGroupName.special, '日程数据源')
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
       if (propBind) {
@@ -446,7 +446,7 @@ export default class AntCalendar extends ComponentBase {
     $(this.$el)
       .find('.ant-fullcalendar-fullscreen .ant-fullcalendar-month, .ant-fullcalendar-fullscreen .ant-fullcalendar-date')
       .css('height', dateHeight + 'px')
-    // let property = this.FindPropertyByName(PropertyGroupName.special, '显示切换按钮')
+    // let property = this.findPropertyByName(PropertyGroupName.special, '显示切换按钮')
     // if (property && property.value) {
     //   $(this.$el)
     //     .find('.ant-fullcalendar-fullscreen .ant-fullcalendar-header .ant-radio-group')
@@ -497,7 +497,7 @@ export default class AntCalendar extends ComponentBase {
             tempRow.endTime = parseInt(tempRow.endTime)
           }
 
-          // const workEventColorValue = this.FindPropertyByName(PropertyGroupName.special, '工作日程颜色').value
+          // const workEventColorValue = this.findPropertyByName(PropertyGroupName.special, '工作日程颜色').value
           if (tempRow.status) {
             if (tempRow.status.constructor == Object) {
               const status = tempRow.status
@@ -536,7 +536,7 @@ export default class AntCalendar extends ComponentBase {
   }
   //外部数据源变更时触发
   private dayByDayChange(events: CalendarEventsInfo[]) {
-    let propertyStart = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月开始')
+    let propertyStart = this.findPropertyByName(PropertyGroupName.special, '当前选择年月开始')
     let currentMonthStart = propertyStart.value
     const monthDay = Vue.prototype.$moment(currentMonthStart).daysInMonth()
     this.currentMonthView = Vue.prototype.$moment(propertyStart.value).get('month')
@@ -620,37 +620,37 @@ export default class AntCalendar extends ComponentBase {
     this.$nextTick(function() {
       this.changeStyle()
     })
-    this.RegisterProperty('日程数据源', PropertyGroupName.special, null, null)
-    this.RegisterProperty('当前选择年月', PropertyGroupName.special, null, null)
-    this.RegisterProperty('当前选择年月开始', PropertyGroupName.special, null, null)
-    this.RegisterProperty('当前选择年月结束', PropertyGroupName.special, null, null)
-    this.RegisterProperty('当前选中日程', PropertyGroupName.special, null, null)
-    this.RegisterProperty('编辑日程数据源', PropertyGroupName.special, null, null, false, false)
-    this.RegisterProperty('当前选中日期', PropertyGroupName.special, null, null)
-    this.RegisterProperty('默认显示面板', PropertyGroupName.special, new Enum_Property(true, ['月', '年']), '月')
-    this.RegisterProperty('显示农历', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('日程数据源', PropertyGroupName.special, null, null)
+    this.registerProperty('当前选择年月', PropertyGroupName.special, null, null)
+    this.registerProperty('当前选择年月开始', PropertyGroupName.special, null, null)
+    this.registerProperty('当前选择年月结束', PropertyGroupName.special, null, null)
+    this.registerProperty('当前选中日程', PropertyGroupName.special, null, null)
+    this.registerProperty('编辑日程数据源', PropertyGroupName.special, null, null, false, false)
+    this.registerProperty('当前选中日期', PropertyGroupName.special, null, null)
+    this.registerProperty('默认显示面板', PropertyGroupName.special, new Enum_Property(true, ['月', '年']), '月')
+    this.registerProperty('显示农历', PropertyGroupName.special, new Boolean_Property(), true)
 
-    // this.RegisterProperty('显示切换按钮', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('工作日程颜色', PropertyGroupName.special, new Color_Property(), '#6CC598')
-    this.RegisterProperty('休息日程颜色', PropertyGroupName.special, new Color_Property(), '#F7B74F')
-    this.RegisterProperty('日程前景色', PropertyGroupName.special, new Color_Property(), true)
-    // this.RegisterProperty('是否允许双击修改名称', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('日程名称是否可编辑', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('是否显示编辑按钮', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('是否显示删除按钮', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('是否显示保存按钮', PropertyGroupName.special, new Boolean_Property(), true)
+    // this.registerProperty('显示切换按钮', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('工作日程颜色', PropertyGroupName.special, new Color_Property(), '#6CC598')
+    this.registerProperty('休息日程颜色', PropertyGroupName.special, new Color_Property(), '#F7B74F')
+    this.registerProperty('日程前景色', PropertyGroupName.special, new Color_Property(), true)
+    // this.registerProperty('是否允许双击修改名称', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('日程名称是否可编辑', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('是否显示编辑按钮', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('是否显示删除按钮', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('是否显示保存按钮', PropertyGroupName.special, new Boolean_Property(), true)
     this.$on('onPropertyChanged', this.onCurrentPropertyChanged)
 
-    this.RegisterEvents('点击日期事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('点击日程事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('保存日程事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('编辑日程事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('删除日程事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('换页事件', '', this.inparam, this.outparam)
-    this.RegisterMethods('保存当前编辑', '', this.saveCurrentEdit, [{ name: '入参', type: paramType.string, val: null }], null)
-    this.RegisterMethods('保存全部编辑', '', this.saveAllEdit, this.inparam, null)
-    this.RegisterMethods('取消全部编辑', '', this.cleanAllEdit, this.inparam, null)
-    this.RegisterMethods('获取编辑日程数据', '', this.getUpdatedDataSource, this.inparam, null)
+    this.registerEvents('点击日期事件', '', this.inparam, this.outparam)
+    this.registerEvents('点击日程事件', '', this.inparam, this.outparam)
+    this.registerEvents('保存日程事件', '', this.inparam, this.outparam)
+    this.registerEvents('编辑日程事件', '', this.inparam, this.outparam)
+    this.registerEvents('删除日程事件', '', this.inparam, this.outparam)
+    this.registerEvents('换页事件', '', this.inparam, this.outparam)
+    this.registerMethods('保存当前编辑', '', this.saveCurrentEdit, [{ name: '入参', type: paramType.string, val: null }], null)
+    this.registerMethods('保存全部编辑', '', this.saveAllEdit, this.inparam, null)
+    this.registerMethods('取消全部编辑', '', this.cleanAllEdit, this.inparam, null)
+    this.registerMethods('获取编辑日程数据', '', this.getUpdatedDataSource, this.inparam, null)
 
     //初始为当前月
     this.currentMonthView = Vue.prototype.$moment(Vue.prototype.$moment().value).get('month')
@@ -663,14 +663,14 @@ export default class AntCalendar extends ComponentBase {
       .$moment()
       .startOf('month')
       .valueOf()
-    let propertyStart = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月开始')
-    this.SetPropertyVal(propertyStart.id, selectYearMonthStart)
-    let propertyEnd = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月结束')
-    this.SetPropertyVal(propertyEnd.id, selectYearMonthEnd)
+    let propertyStart = this.findPropertyByName(PropertyGroupName.special, '当前选择年月开始')
+    this.setPropertyVal(propertyStart.id, selectYearMonthStart)
+    let propertyEnd = this.findPropertyByName(PropertyGroupName.special, '当前选择年月结束')
+    this.setPropertyVal(propertyEnd.id, selectYearMonthEnd)
     //window.console.log('--------------------当前选择年月开始111111111', propertyStart.value)
 
     //初始化绑定日程数据源模型
-    let idproperty = this.FindPropertyByName(PropertyGroupName.normal, '唯一Id')
+    let idproperty = this.findPropertyByName(PropertyGroupName.normal, '唯一Id')
     const this_ = this
     CurrentApis.GetModelInfoByCode('calendar_events').then((res: any) => {
       let modelInfo = {
@@ -678,7 +678,7 @@ export default class AntCalendar extends ComponentBase {
         modelCode: res.modelCode,
         id: res.id,
         modelDataType: res.modelType,
-        modelPropertyList: res.modelPropertyList,
+        modelPropertyList: res.modelPropertyList
       }
       let newmodelbind: modelBingding = new modelBingding()
       newmodelbind.modelDataType = modelDataTypeEnum.single
@@ -699,7 +699,7 @@ export default class AntCalendar extends ComponentBase {
         newbindInfo1.bindType = bindTypeEnum.code
         newbindInfo1.modelCodes = arr
         newbindInfo1.modelName = newmodelbind.modelBindingName
-        newbindInfo1.propertyId = this_.FindPropertyByName(PropertyGroupName.special, '日程数据源').id
+        newbindInfo1.propertyId = this_.findPropertyByName(PropertyGroupName.special, '日程数据源').id
         this_.addPropertyModelBind(newbindInfo1)
       }
     })
@@ -721,10 +721,10 @@ export default class AntCalendar extends ComponentBase {
       .$moment()
       .startOf('month')
       .valueOf()
-    let propertyStart = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月开始')
-    this.SetPropertyVal(propertyStart.id, selectYearMonthStart)
-    let propertyEnd = this.FindPropertyByName(PropertyGroupName.special, '当前选择年月结束')
-    this.SetPropertyVal(propertyEnd.id, selectYearMonthEnd)
+    let propertyStart = this.findPropertyByName(PropertyGroupName.special, '当前选择年月开始')
+    this.setPropertyVal(propertyStart.id, selectYearMonthStart)
+    let propertyEnd = this.findPropertyByName(PropertyGroupName.special, '当前选择年月结束')
+    this.setPropertyVal(propertyEnd.id, selectYearMonthEnd)
     //window.console.log('--------------------当前选择年月开始111111111', propertyStart.value)
   }
 
@@ -738,16 +738,16 @@ export default class AntCalendar extends ComponentBase {
       event.popTrigger = 'hover'
     }
 
-    let property = this.FindPropertyByName(PropertyGroupName.special, '当前选中日程')
+    let property = this.findPropertyByName(PropertyGroupName.special, '当前选中日程')
     // const selectModel = this.originalDataSource.filter((element) => element.id == event.id)
-    this.SetPropertyVal(property.id, { modelediteCode: this.getModelCode(), data: event })
+    this.setPropertyVal(property.id, { modelediteCode: this.getModelCode(), data: event })
     //window.console.log('-----------编辑日程--------', event)
-    this.TriggeEvent('编辑日程事件', null)
+    this.triggeEvent('编辑日程事件', null)
   }
 
   //外部触发的保存事件
   private saveEvents(event: CalendarEventsInfo) {
-    this.TriggeEvent('保存日程事件', event)
+    this.triggeEvent('保存日程事件', event)
   }
 
   //真正保存的方法
@@ -768,8 +768,8 @@ export default class AntCalendar extends ComponentBase {
 
     event.isEdit = false
     event.popTrigger = 'hover'
-    let property = this.FindPropertyByName(PropertyGroupName.special, '当前选中日程')
-    this.SetPropertyVal(property.id, { modelCode: this.getModelCode(), data: event })
+    let property = this.findPropertyByName(PropertyGroupName.special, '当前选中日程')
+    this.setPropertyVal(property.id, { modelCode: this.getModelCode(), data: event })
     //window.console.log('-----------保存前缓存--------', this.resEditCalenderEvents)
 
     let eventClone: CalendarEventsInfo = common.clone(event)
@@ -795,8 +795,8 @@ export default class AntCalendar extends ComponentBase {
   private cancelEvent(event: CalendarEventsInfo) {
     event.isEdit = false
     event.popTrigger = 'hover'
-    let property = this.FindPropertyByName(PropertyGroupName.special, '当前选中日程')
-    this.SetPropertyVal(property.id, { modelCode: this.getModelCode(), data: event })
+    let property = this.findPropertyByName(PropertyGroupName.special, '当前选中日程')
+    this.setPropertyVal(property.id, { modelCode: this.getModelCode(), data: event })
     //window.console.log('-----------取消前缓存--------', this.resEditCalenderEvents)
 
     let thisIsfirstEdit = true
@@ -818,39 +818,39 @@ export default class AntCalendar extends ComponentBase {
 
     //window.console.log('-----------取消后缓存--------', this.resEditCalenderEvents)
     //window.console.log('-----------取消日程--------', event)
-    //this.TriggeEvent('保存日程事件', null)
+    //this.triggeEvent('保存日程事件', null)
   }
 
   // @Emit('deleteEvents')
   private deleteEvents(event: CalendarEventsInfo) {
-    let property = this.FindPropertyByName(PropertyGroupName.special, '当前选中日程')
+    let property = this.findPropertyByName(PropertyGroupName.special, '当前选中日程')
     // const selectModel = this.originalDataSource.filter((element) => element.id == event.id)
-    this.SetPropertyVal(property.id, { modelCode: this.getModelCode(), data: event })
+    this.setPropertyVal(property.id, { modelCode: this.getModelCode(), data: event })
     //window.console.log('-----------删除日程--------', event)
-    this.TriggeEvent('删除日程事件', null)
+    this.triggeEvent('删除日程事件', null)
   }
 
   // 废弃
   private clickEvents(event: CalendarEventsInfo) {
-    let property = this.FindPropertyByName(PropertyGroupName.special, '当前选中日程')
+    let property = this.findPropertyByName(PropertyGroupName.special, '当前选中日程')
     // const selectModel = this.originalDataSource.filter((element) => element.id == event.id)
-    this.SetPropertyVal(property.id, event)
+    this.setPropertyVal(property.id, event)
     //window.console.log('-----------点击日程--------', event)
-    this.TriggeEvent('点击日程事件', null)
+    this.triggeEvent('点击日程事件', null)
   }
 
   // @Emit('handleSelect')
   private handleSelect(value: Moment) {
-    let property = this.FindPropertyByName(PropertyGroupName.special, '当前选中日期')
+    let property = this.findPropertyByName(PropertyGroupName.special, '当前选中日期')
     const selectModel = { start_date: value.valueOf(), end_date: value.valueOf() }
-    this.SetPropertyVal(property.id, selectModel)
+    this.setPropertyVal(property.id, selectModel)
     //window.console.log('-----------点击日期--------', selectModel)
-    this.TriggeEvent('点击日期事件', null)
+    this.triggeEvent('点击日期事件', null)
   }
 
   //获取编辑数据源
   getUpdatedDataSource() {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '编辑日程数据源')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '编辑日程数据源')
     if (prop.value && prop.value.data && prop.value.data instanceof Array && prop.value.data.length > 0) {
       return prop.value.data
     } else if (prop.value && prop.value instanceof Array && prop.value.length > 0) {

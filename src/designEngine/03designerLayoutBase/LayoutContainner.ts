@@ -1,8 +1,8 @@
 import LayoutBase, { LayoutInfo, SaveInfo, Point } from './LayoutBase'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import $ from 'jquery'
-import { Property } from '../02common/commonClasses/LayoutProperty'
+
+import { Property } from './commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
 import { CurrentApis } from '../01designerContext'
 import { ComponentBase } from '../04designerComponents'

@@ -18,10 +18,10 @@ import {
   Enum_Property,
   PropertyGroupName,
   TimePickerFile_Property
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+} from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import moment from 'moment'
-import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 @Component
 export default class DateRangePickerCom extends ComponentBase {
   /** 是否展示时分秒选择器  */
@@ -32,20 +32,77 @@ export default class DateRangePickerCom extends ComponentBase {
   @Prop({ required: false })
   public disabledEndTime: any
 
-  public locale = locale;
+  public locale = locale
 
   public IsShowTime: boolean | any = false
 
-  public created() { }
+  public created() {}
 
   protected items = ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH', 'YYYY-MM-DD']
   protected timeitems = ['HH:mm:ss', 'HH:mm']
   protected sizeitems = ['大', '中', '小']
   protected hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
   protected minsec = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-    40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
   ]
   mounted() {
     if (this.IsDesigning) {
@@ -53,15 +110,15 @@ export default class DateRangePickerCom extends ComponentBase {
       this.height = 32
       // this.IsShowTime = this.showTime
       //注册特有属性
-      this.RegisterProperty('开始值', PropertyGroupName.special, new TimePickerFile_Property('date'), null)
-      this.RegisterProperty('结束值', PropertyGroupName.special, new TimePickerFile_Property('date'), null)
-      this.RegisterProperty('格式化', PropertyGroupName.special, new Enum_Property(true, this.items), this.items[0])
-      this.RegisterProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, this.sizeitems), this.sizeitems[1])
+      this.registerProperty('开始值', PropertyGroupName.special, new TimePickerFile_Property('date'), null)
+      this.registerProperty('结束值', PropertyGroupName.special, new TimePickerFile_Property('date'), null)
+      this.registerProperty('格式化', PropertyGroupName.special, new Enum_Property(true, this.items), this.items[0])
+      this.registerProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, this.sizeitems), this.sizeitems[1])
     }
   }
 
   get startValue(): moment.Moment {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '开始值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '开始值')
     if (property == undefined) {
       return null
     }
@@ -73,21 +130,21 @@ export default class DateRangePickerCom extends ComponentBase {
   }
 
   set startValue(val: moment.Moment) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '开始值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '开始值')
     if (val == null) {
-      this.SetPropertyVal(property.id, null)
+      this.setPropertyVal(property.id, null)
     } else {
       var newv = this.$moment(val, this.formatter).valueOf() as any
 
-      newv = Math.floor(newv/1000)*1000
-      // this.SetPropertyVal(property.id, this.$moment(val))
-      this.SetPropertyVal(property.id, newv)
+      newv = Math.floor(newv / 1000) * 1000
+      // this.setPropertyVal(property.id, this.$moment(val))
+      this.setPropertyVal(property.id, newv)
     }
-    //this.SetPropertyVal(property.id, this.$moment(val))
+    //this.setPropertyVal(property.id, this.$moment(val))
   }
 
   get endValue(): moment.Moment {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '结束值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '结束值')
     if (property == undefined) {
       return null
     }
@@ -99,25 +156,25 @@ export default class DateRangePickerCom extends ComponentBase {
   }
 
   set endValue(val: moment.Moment) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '结束值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '结束值')
     if (val == null) {
-      this.SetPropertyVal(property.id, null)
+      this.setPropertyVal(property.id, null)
     } else {
       //var newv = moment(val).valueOf()
       var newv = this.$moment(val, this.formatter).valueOf() as any
 
-      newv = Math.floor(newv/1000) *1000+999
-      // this.SetPropertyVal(property.id, this.$moment(val))
-      this.SetPropertyVal(property.id, newv)
+      newv = Math.floor(newv / 1000) * 1000 + 999
+      // this.setPropertyVal(property.id, this.$moment(val))
+      this.setPropertyVal(property.id, newv)
     }
-    //this.SetPropertyVal(property.id, this.$moment(val))
+    //this.setPropertyVal(property.id, this.$moment(val))
   }
 
   /*
   时间格式化展示
   */
   get formatter(): string {
-    let fmt = this.FindProperties(PropertyGroupName.special, '格式化')
+    let fmt = this.findProperties(PropertyGroupName.special, '格式化')
     if (fmt.length === 0) {
       return this.items[0]
     }
@@ -242,11 +299,11 @@ export default class DateRangePickerCom extends ComponentBase {
   }
 
   get size(): string {
-    if (this.FindProperties(PropertyGroupName.special, '尺寸')[0]) {
-      let mv = this.FindProperties(PropertyGroupName.special, '尺寸')[0].value
+    if (this.findProperties(PropertyGroupName.special, '尺寸')[0]) {
+      let mv = this.findProperties(PropertyGroupName.special, '尺寸')[0].value
       return mv === '大' ? 'large' : mv === '中' ? 'default' : 'small'
     }
-    return 'default';
+    return 'default'
   }
 }
 </script>

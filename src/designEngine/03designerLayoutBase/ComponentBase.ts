@@ -1,0 +1,208 @@
+import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
+
+import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
+import { PageBase, SaveInfo, LayoutContainner, DragItemData, DragItemTypeEnum, param, factory } from '.'
+import { ModelProperty, propertyValidator, DecoratorOption, DecoratorRule, modelTypeEnum } from '../02common/impResourcesCache/modelAnalysis'
+
+@Component
+export default class ComponentBase extends LayoutContainner {
+  public wheelIndex: any = 1
+  public defaultValue: any
+  public parentPage: PageBase
+
+  public get topParentPage(): PageBase {
+    let res: PageBase = this.parentPage
+    while (res && res.parentPage) {
+      res = res.parentPage
+    }
+    return res
+  }
+
+  /**当前组件的权限码 */
+  public get authorityCode(): string {
+    return this.findPropertyByName(PropertyGroupName.normal, '权限设置').value
+  }
+  public set authorityCode(val: string) {
+    var property = this.findPropertyByName(PropertyGroupName.normal, '权限设置')
+    if (property) {
+      property.value = val
+    }
+  }
+
+  get foreground(): string {
+    var property = this.findPropertyByName(PropertyGroupName.normal, '前景色')
+    if (property) {
+      return property.value
+    } else {
+      return '#000000'
+    }
+  }
+
+  get display(): boolean {
+    // window.console.log('是否显示')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '是否显示')
+    if (property) {
+      return property.value as boolean
+    }
+    return false
+  }
+
+  set display(val: boolean) {
+    var property = this.findPropertyByName(PropertyGroupName.normal, '是否显示')
+    if (property) {
+      property.value = val
+    }
+  }
+
+  get disabled(): boolean {
+    var property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
+    if (property) {
+      return property.value as boolean
+    }
+    return false
+  }
+
+  set disabled(val: boolean) {
+    var property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
+    if (property) {
+      property.value = val
+    }
+  }
+
+  get zIndex(): number {
+    var property = this.findPropertyByName(PropertyGroupName.normal, '层级设置')
+    if (property) {
+      return property.value
+    } else {
+      return null
+    }
+  }
+
+  set zIndex(val: number) {
+    var property = this.findPropertyByName(PropertyGroupName.normal, '层级设置')
+    if (property) {
+      property.value = val
+    }
+  }
+  get tooltipText(): string {
+    return null
+  }
+
+  created() {
+    if (this.IsDesigning == true) {
+      this.registerProperty('前景色', PropertyGroupName.normal, new Color_Property(), '#000000')
+      this.registerProperty('权限设置', PropertyGroupName.normal, new Authority_Property())
+      this.registerProperty('绑定模型', PropertyGroupName.normal, new BindingModels_Property(), [], true, false)
+      this.registerProperty('是否禁用', PropertyGroupName.normal, new Boolean_Property(), false)
+      this.registerProperty('是否显示', PropertyGroupName.normal, new Boolean_Property(), true, true)
+      this.registerProperty('层级设置', PropertyGroupName.normal, new Number_Property(), 1)
+
+      var numberproperty = new Number_Property()
+      numberproperty.min = -99999
+      this.registerProperty('外边距-左', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+      this.registerProperty('外边距-右', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+      this.registerProperty('外边距-上', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+      this.registerProperty('外边距-下', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+      this.registerProperty('内边距-左', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+      this.registerProperty('内边距-右', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+      this.registerProperty('内边距-上', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+      this.registerProperty('内边距-下', PropertyGroupName.normal, numberproperty, 0, false, false, 'px')
+    }
+
+    /**注册事件 */
+    var inparams: param[] = []
+    this.registerEvents('控件加载完成事件', '', inparams, null)
+    this.$nextTick(() => {
+      if (this.triggeEvent) {
+        // this.triggeEvent('控件初始化完成事件', null)
+      }
+    })
+  }
+
+  mounted() {
+    if (this.IsDesigning == true) {
+      this.canDrop = false
+      this.canDrag = true
+      this.width = 200
+      this.height = 200
+      this.onDrag_Event = this.listenOnDrag
+    }
+    // this.onDragMove_Event = this.onDragMove
+    this.$nextTick(() => {
+      if (!this.triggeEvent) {
+        return
+      }
+      this.triggeEvent('控件加载完成事件', null)
+    })
+  }
+
+  rendered(dom: Element) {}
+  // *******************************privates**************************************************************************************
+  protected listenOnDrag(el: Element, dragdata: DragItemData<any>) {
+    dragdata.type = DragItemTypeEnum.dragmove_component_inpage
+    //window.console.log('comp listenOnDrag')
+    dragdata.dragData = { compId: this.Id }
+  }
+  // *******************************protecteds**************************************************************************************
+  protected async triggeEvent(name: string, inparam: any) {
+    if (!this.parentPage || this.parentPage.IsDesigning == true) {
+      return
+    }
+    // window.console.log('触发事件:', name, this.$el)
+    var event = this.designerEvents.find((o) => o.eventName == name)
+    if (!event) {
+      window.console.error('事件调用失败,该事件不存在')
+      return
+    }
+
+    for (let index = 0; index < event.behaviorIds.length; index++) {
+      const bid = event.behaviorIds[index]
+      let behavior = this.parentPage.behaviors.find((o) => o.id == bid)
+      if (!behavior) {
+        continue
+      }
+      behavior.inparam = null
+      if (inparam) {
+        behavior.inparam = inparam
+      }
+      let actfac = new factory(this, this.parentPage, behavior)
+      // console.info('behavior.inparam', behavior.inparam)
+      try {
+        actfac.exacteAction()
+      } catch (error) {
+        break
+      } finally {
+        behavior = null
+        actfac = null
+      }
+    }
+    //TODO 在事件设计的数据中找到事件,并调用事件
+    return
+  }
+  // *******************************publics**************************************************************************************
+  protected loadCompleted(childrenData: SaveInfo[]): void {}
+  /**通用的验证方法，根据编码获取 */
+  public CommonValid(validatorArr: propertyValidator[], value: any, callback: any, message: any) {
+    if (value === 0) {
+      value = '0'
+    }
+    //根据模型编码获取验证库的验证方法
+    if (value == Number.NaN || value == undefined || value == null || value == '') {
+      callback()
+      return
+    }
+    //解析方法，然后返回错误信息，funcCode就是方法名，入参固定传value，出参传boolean，根据出参判断是否提示
+    for (let index = 0; index < validatorArr.length; index++) {
+      const element = validatorArr[index]
+      if (element.customFunction && element.customFunction.funcContent) {
+        let func = element.customFunction.funcContent
+        let validateRes = eval(func + ' ' + element.customFunction.funcCode + '(' + value + ')')
+        if (!validateRes) {
+          callback(element.errorMsg)
+          return
+        }
+      }
+    }
+  }
+  public getModelValidate(propCode: string) {}
+}

@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '../../02common/commonClasses/LayoutProperty'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '../../03designerLayoutBase'
 import componentTemplate from './componentTemplate.vue'
 import { SaveInfo, LayoutType, LayoutInfo, DragItemTypeEnum, DragItemData, LayoutBase } from '../../03designerLayoutBase'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'

@@ -1,6 +1,6 @@
 import PageBase from '../PageBase'
 import { getUuid } from '@src/utils'
-import ComponentBase from '../../04designerComponents/ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { behavior, variable, action, actionDetail } from './behaviorTypes'
 import { objectBase, objectType, resourceType, resourceSearchType, object_Method, object_Variable, allCuteSigns, allFilterSigns, resourceSearchAttr } from './01_actionCommon'

@@ -28,8 +28,8 @@ import {
   Enum_Property,
   Color_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+} from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 import LayoutBase, { SaveInfo } from '../../03designerLayoutBase/LayoutBase'
 import propertyGrid from '../../06propertyGrid/PropertyGrid.vue'
@@ -61,7 +61,7 @@ export default class tabsComponents extends ComponentBase {
   private TabsPanes: TabInfo[] = []
 
   // get TabsPanes():TabInfo[]{
-  //   var property = this.FindPropertyByName(PropertyGroupName.special, '数据源')
+  //   var property = this.findPropertyByName(PropertyGroupName.special, '数据源')
   //   if (property) {
   //     window.console.log('property',property)
   //     return property.value
@@ -73,7 +73,7 @@ export default class tabsComponents extends ComponentBase {
 
   // set TabsPanes(val:TabInfo[]){
   //   window.console.log('tabs赋值',val)
-  //   var property = this.FindPropertyByName(PropertyGroupName.special, '数据源')
+  //   var property = this.findPropertyByName(PropertyGroupName.special, '数据源')
   //   if (property) {
   //     property.value = val
   //   }
@@ -88,10 +88,10 @@ export default class tabsComponents extends ComponentBase {
     this.height = 300
     //注册基本属性
     //页签的基本属性
-    this.RegisterProperty('页签位置', PropertyGroupName.special, new Enum_Property(true, ['上边', '右边', '下边', '左边']), '上边')
-    this.RegisterProperty('页签样式', PropertyGroupName.special, new Enum_Property(true, ['线条', '卡片', '可编辑']), '可编辑')
+    this.registerProperty('页签位置', PropertyGroupName.special, new Enum_Property(true, ['上边', '右边', '下边', '左边']), '上边')
+    this.registerProperty('页签样式', PropertyGroupName.special, new Enum_Property(true, ['线条', '卡片', '可编辑']), '可编辑')
     //注册特有属性
-    this.RegisterProperty('页签间距', PropertyGroupName.special, new Number_Property(), 5)
+    this.registerProperty('页签间距', PropertyGroupName.special, new Number_Property(), 5)
 
     //添加基本页面
     // var TabPan = new TabsInfo()
@@ -102,13 +102,13 @@ export default class tabsComponents extends ComponentBase {
     // this.TabsPanes.push(TabPan)
     // this.activeKey = TabPan.Id
     // console.log('新建页面ID：', this.activeKey)
-    this.RegisterProperty('数据源', PropertyGroupName.special, null, [])
+    this.registerProperty('数据源', PropertyGroupName.special, null, [])
   }
 
   protected async loadCompleted(childrenData: any[]) {
-    //var id = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource).id
+    //var id = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource).id
     //const aaa = this.getPropertyBindInfo(id).modelCodes
-    var property = this.FindPropertyByName(PropertyGroupName.special, '数据源')
+    var property = this.findPropertyByName(PropertyGroupName.special, '数据源')
     if (property && property.value) {
       //common.serialize(val)
       //common.deserialize(property.value) as FormItemData[]
@@ -159,7 +159,7 @@ export default class tabsComponents extends ComponentBase {
       //let tempArr = this.TabsPanes
       //tempArr.push(TabPan)
       this.TabsPanes.push(TabPan)
-      var property = this.FindPropertyByName(PropertyGroupName.special, '数据源')
+      var property = this.findPropertyByName(PropertyGroupName.special, '数据源')
       if (property) {
         //window.console.log('property.value111',property.value)
         //window.console.log('this.TabsPanes',Object.assign([],this.TabsPanes))
@@ -207,45 +207,45 @@ export default class tabsComponents extends ComponentBase {
   }
 
   get tabStyle(): string {
-    if (this.FindProperties(PropertyGroupName.special, '页签样式')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '页签样式')[0].value === '线条') return 'line'
-      else if (this.FindProperties(PropertyGroupName.special, '页签样式')[0].value === '卡片') return 'card'
-      else if (this.FindProperties(PropertyGroupName.special, '页签样式')[0].value === '可编辑') return 'editable-card'
+    if (this.findProperties(PropertyGroupName.special, '页签样式')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '页签样式')[0].value === '线条') return 'line'
+      else if (this.findProperties(PropertyGroupName.special, '页签样式')[0].value === '卡片') return 'card'
+      else if (this.findProperties(PropertyGroupName.special, '页签样式')[0].value === '可编辑') return 'editable-card'
       else return 'editable-card'
     }
     return 'editable-card'
   }
 
   get tabPosition(): string {
-    if (this.FindProperties(PropertyGroupName.special, '页签位置')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '页签位置')[0].value === '上边') return 'top'
-      else if (this.FindProperties(PropertyGroupName.special, '页签位置')[0].value === '下边') return 'bottom'
-      else if (this.FindProperties(PropertyGroupName.special, '页签位置')[0].value === '左边') return 'left'
-      else if (this.FindProperties(PropertyGroupName.special, '页签位置')[0].value === '右边') return 'right'
+    if (this.findProperties(PropertyGroupName.special, '页签位置')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '页签位置')[0].value === '上边') return 'top'
+      else if (this.findProperties(PropertyGroupName.special, '页签位置')[0].value === '下边') return 'bottom'
+      else if (this.findProperties(PropertyGroupName.special, '页签位置')[0].value === '左边') return 'left'
+      else if (this.findProperties(PropertyGroupName.special, '页签位置')[0].value === '右边') return 'right'
       else return 'top'
     }
     return 'top'
   }
   get tabBarGutter(): number {
-    if (this.FindProperties(PropertyGroupName.special, '页签间距')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '页签间距')[0].value)
-        return this.FindProperties(PropertyGroupName.special, '页签间距')[0].value
+    if (this.findProperties(PropertyGroupName.special, '页签间距')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '页签间距')[0].value)
+        return this.findProperties(PropertyGroupName.special, '页签间距')[0].value
     }
     return 5
   }
 
   //公有属性
   get fontColor(): String {
-    if (this.FindProperties(PropertyGroupName.normal, '前景色')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '前景色')[0].value)
-        return this.FindProperties(PropertyGroupName.normal, '前景色')[0].value as string
+    if (this.findProperties(PropertyGroupName.normal, '前景色')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '前景色')[0].value)
+        return this.findProperties(PropertyGroupName.normal, '前景色')[0].value as string
     }
     return ''
   }
   get backgroundColor(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '背景色')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '背景色')[0].value)
-        return this.FindProperties(PropertyGroupName.normal, '背景色')[0].value as string
+    if (this.findProperties(PropertyGroupName.normal, '背景色')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '背景色')[0].value)
+        return this.findProperties(PropertyGroupName.normal, '背景色')[0].value as string
     }
     return ''
   }

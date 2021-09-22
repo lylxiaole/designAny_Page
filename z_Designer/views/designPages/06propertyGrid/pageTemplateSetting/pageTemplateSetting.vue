@@ -34,7 +34,7 @@ import {
   PropertyGroupName,
   Boolean_Property,
   Number_Property
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import PageBase from '../../03designerLayoutBase/PageBase'
 import NpGridCell from '../../04designerComponents/grid/NpGridCell.vue'
 import common from '../../02common/commonMethod'
@@ -112,7 +112,7 @@ export default class pageTemplateSetting extends propertyCellBase {
       return
     }
     let data = common.clone(this.parentPage.GetSaveData())
-    let property = this.currentPageSimple.FindProperties(PropertyGroupName.normal, '页面入参')[0]
+    let property = this.currentPageSimple.findProperties(PropertyGroupName.normal, '页面入参')[0]
     property.value = data.properties.find((item) => item.propertyName === '页面入参').value
   }
 }

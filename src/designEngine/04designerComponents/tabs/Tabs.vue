@@ -12,8 +12,8 @@
 import $ from 'jquery'
 import Vue from 'vue'
 import { Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import { Property, TextList_Property, Enum_Property, PropertyGroupName, Boolean_Property } from '../../02common/commonClasses/LayoutProperty'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { Property, TextList_Property, Enum_Property, PropertyGroupName, Boolean_Property } from '../../03designerLayoutBase'
+import { param, paramType } from '../../03designerLayoutBase'
 import { AllComponents, ComponentBase } from '..'
 import common from '../../02common/commonMethod'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
@@ -41,27 +41,27 @@ export default class Tabs extends ComponentBase {
     this.background = 'white'
     this.flagKey = common.getUuid()
     let cellData: any[] = [{ key: this.flagKey, value: 'Tab1' }]
-    this.RegisterProperty(this.tabLabelPropName, PropertyGroupName.special, new TextList_Property(), cellData)
-    this.RegisterProperty(this.tabTypePropName, PropertyGroupName.special, new Enum_Property(true, ['线条式', '卡片式']), '线条式')
-    this.RegisterProperty(this.tabPositionPropName, PropertyGroupName.special, new Enum_Property(true, ['上', '下', '右', '左']), '上')
-    this.RegisterProperty(this.showTabHeaderPropName, PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty(this.tabLabelPropName, PropertyGroupName.special, new TextList_Property(), cellData)
+    this.registerProperty(this.tabTypePropName, PropertyGroupName.special, new Enum_Property(true, ['线条式', '卡片式']), '线条式')
+    this.registerProperty(this.tabPositionPropName, PropertyGroupName.special, new Enum_Property(true, ['上', '下', '右', '左']), '上')
+    this.registerProperty(this.showTabHeaderPropName, PropertyGroupName.special, new Boolean_Property(), true)
 
-    // this.RegisterProperty(this.activeTabIndexPropName, PropertyGroupName.special, new Number_Property(), 0)
+    // this.registerProperty(this.activeTabIndexPropName, PropertyGroupName.special, new Number_Property(), 0)
 
     let inparam: param[] = []
     inparam.push({ name: '标签页索引', type: paramType.number, val: null })
-    this.RegisterMethods('切换标签页', '切换标签页', this.changeSelectedTab, inparam, null)
+    this.registerMethods('切换标签页', '切换标签页', this.changeSelectedTab, inparam, null)
     let inparam2: param[] = []
     inparam2.push({ name: '标签页索引', type: paramType.number, val: null })
-    this.RegisterMethods('隐藏标签页', '隐藏标签页', this.hideTabs, inparam2, null)
+    this.registerMethods('隐藏标签页', '隐藏标签页', this.hideTabs, inparam2, null)
     let inparam3: param[] = []
     inparam3.push({ name: '标签页索引', type: paramType.number, val: null })
-    this.RegisterMethods('显示标签页', '显示标签页', this.showTabs, inparam3, null)
-    this.RegisterMethods('当前标签页索引', '获取当前标签页索引', this.getSelectedTabIndex, null, null)
+    this.registerMethods('显示标签页', '显示标签页', this.showTabs, inparam3, null)
+    this.registerMethods('当前标签页索引', '获取当前标签页索引', this.getSelectedTabIndex, null, null)
 
     let inparam4: param[] = []
     let outparam4: param = null
-    this.RegisterEvents('标签页切换事件', '', inparam4, outparam4)
+    this.registerEvents('标签页切换事件', '', inparam4, outparam4)
     this.$on('onPropertyChanged', this.onTabsPropertyChanged)
   }
 
@@ -227,7 +227,7 @@ export default class Tabs extends ComponentBase {
   }
 
   get tabsType(): string {
-    let property = this.FindPropertyByName(PropertyGroupName.special, this.tabTypePropName)
+    let property = this.findPropertyByName(PropertyGroupName.special, this.tabTypePropName)
     if (property && property.value) {
       let propertyValue: string
       let selectedValue = property.value as string
@@ -248,14 +248,14 @@ export default class Tabs extends ComponentBase {
   }
 
   // set activeTabIndex(index: Number) {
-  //   let property = this.FindPropertyByName(PropertyGroupName.special, this.activeTabIndexPropName)
+  //   let property = this.findPropertyByName(PropertyGroupName.special, this.activeTabIndexPropName)
   //   if (property) {
   //     property.value = index
   //   }
   // }
 
   // get activeTabIndex(): Number {
-  //   let property = this.FindPropertyByName(PropertyGroupName.special, this.activeTabIndexPropName)
+  //   let property = this.findPropertyByName(PropertyGroupName.special, this.activeTabIndexPropName)
   //   if (property && property.value) {
   //     return property.value as Number
   //   }
@@ -263,7 +263,7 @@ export default class Tabs extends ComponentBase {
   // }
 
   get tabPosition(): string {
-    let property = this.FindPropertyByName(PropertyGroupName.special, this.tabPositionPropName)
+    let property = this.findPropertyByName(PropertyGroupName.special, this.tabPositionPropName)
     if (property && property.value) {
       let propertyValue: string
       let selectedValue = property.value as string
@@ -290,7 +290,7 @@ export default class Tabs extends ComponentBase {
   }
 
   get showTabHeader(): boolean {
-    let property = this.FindPropertyByName(PropertyGroupName.special, this.showTabHeaderPropName)
+    let property = this.findPropertyByName(PropertyGroupName.special, this.showTabHeaderPropName)
     if (property && property.value !== undefined && property.value !== null) {
       return property.value as boolean
     }
@@ -413,13 +413,13 @@ export default class Tabs extends ComponentBase {
       let activeIndex: number = this.ItemDataList.findIndex((x) => x.key == newValue)
       if (activeIndex != undefined && activeIndex != null) {
         // this.activeTabIndex = activeIndex
-        this.TriggeEvent('标签页切换事件', [activeIndex])
+        this.triggeEvent('标签页切换事件', [activeIndex])
       }
     }
   }
 
   get ItemDataList(): any[] {
-    let property = this.FindPropertyByName(PropertyGroupName.special, this.tabLabelPropName)
+    let property = this.findPropertyByName(PropertyGroupName.special, this.tabLabelPropName)
     if (property && property.value) {
       let selectedValue = property.value as any[]
       return selectedValue

@@ -224,7 +224,7 @@ export default class PropertyGrid extends Vue {
 
     for (var i = 0; i < newlayouts_extra.length; i++) {
       let layout = newlayouts_extra[0]
-      var findproperty = layout.FindProperties(propertyGroupName, propertyName)[0]
+      var findproperty = layout.findProperties(propertyGroupName, propertyName)[0]
       var isok = layout.validatorPropertyValue(findproperty.id, newval)
       if (isok == false) {
         return false
@@ -232,8 +232,8 @@ export default class PropertyGrid extends Vue {
     }
 
     newlayouts_extra.filter((layout) => {
-      var findproperty = layout.FindProperties(propertyGroupName, propertyName)[0]
-      layout.SetPropertyVal(findproperty.id, newval)
+      var findproperty = layout.findProperties(propertyGroupName, propertyName)[0]
+      layout.setPropertyVal(findproperty.id, newval)
     })
     return true
   }

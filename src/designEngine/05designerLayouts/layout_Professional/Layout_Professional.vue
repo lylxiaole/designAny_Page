@@ -17,7 +17,7 @@ import { DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 
 export default class Layout_Professional extends PageBase {
   get backgroundCute(): string {
-    // let property = this.FindPropertyByName('基础设置', '背景图片')
+    // let property = this.findPropertyByName('基础设置', '背景图片')
     if (!this.background_img || !this.background_img.url) {
       return this.background
     }
@@ -46,7 +46,7 @@ export default class Layout_Professional extends PageBase {
     if (event && !this.tickTimerObj) {
       // window.console.log('创建定时器')
       this.tickTimerObj = window.setInterval(() => {
-        this.TriggeEvent('定时器触发事件', null)
+        this.triggeEvent('定时器触发事件', null)
       }, this.tickTime * 1000)
     }
   }
@@ -60,8 +60,8 @@ export default class Layout_Professional extends PageBase {
   }
 
   created() {
-    this.RegisterEvents('页面激活', '页面激活时触发', [], null)
-    this.RegisterEvents('页面消息传递', '由部分应用触发', [], null)
+    this.registerEvents('页面激活', '页面激活时触发', [], null)
+    this.registerEvents('页面消息传递', '由部分应用触发', [], null)
     // this.$bus.$on('on_wsmsg', this.onWSmessage)
   }
 
@@ -92,7 +92,7 @@ export default class Layout_Professional extends PageBase {
 
   private onWSmessage(data: any) {
     //window.console.log('**********页面来消息啦', data)
-    this.TriggeEvent('页面消息传递', data)
+    this.triggeEvent('页面消息传递', data)
   }
 
   // *******************************public**************************************************************************************

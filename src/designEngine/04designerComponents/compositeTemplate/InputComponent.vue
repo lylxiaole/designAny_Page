@@ -16,7 +16,7 @@ Add By Gyl
 <!--Script-->
 <script lang="ts">
 import Vue from 'vue'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import {
   Property,
@@ -26,8 +26,8 @@ import {
   PropertyGroupName,
   Color_Property,
   Boolean_Property
-} from '../../02common/commonClasses/LayoutProperty'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+} from '../../03designerLayoutBase'
+import { param, paramType } from '../../03designerLayoutBase'
 
 @Component
 export default class InputComponent extends ComponentBase {
@@ -46,18 +46,18 @@ export default class InputComponent extends ComponentBase {
     this.width = 200
     this.height = 40
     /*空值属性：文本为空时，显示的提示内容 */
-    this.RegisterProperty('空值文本', PropertyGroupName.special, new Text_Property(), '请输入')
-    this.RegisterProperty('左内边距', PropertyGroupName.special, new Text_Property(), '0')
-    this.RegisterProperty('上内边距', PropertyGroupName.special, new Text_Property(), '6')
-    this.RegisterProperty('右内边距', PropertyGroupName.special, new Text_Property(), '0')
-    this.RegisterProperty('下内边距', PropertyGroupName.special, new Text_Property(), '6')
-    //this.RegisterProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
-    //this.RegisterProperty('密码模式', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('文本', PropertyGroupName.special, new Text_Property(), '')
-    // this.RegisterProperty('是否显示前缀图标', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('空值文本', PropertyGroupName.special, new Text_Property(), '请输入')
+    this.registerProperty('左内边距', PropertyGroupName.special, new Text_Property(), '0')
+    this.registerProperty('上内边距', PropertyGroupName.special, new Text_Property(), '6')
+    this.registerProperty('右内边距', PropertyGroupName.special, new Text_Property(), '0')
+    this.registerProperty('下内边距', PropertyGroupName.special, new Text_Property(), '6')
+    //this.registerProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
+    //this.registerProperty('密码模式', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('文本', PropertyGroupName.special, new Text_Property(), '')
+    // this.registerProperty('是否显示前缀图标', PropertyGroupName.special, new Boolean_Property(), false)
 
-    // this.RegisterEvents('内容变化时的事件', '', this.inparam, this.outparam)
-    // this.RegisterEvents('按下回车的事件', '', this.inparam, this.outparam)
+    // this.registerEvents('内容变化时的事件', '', this.inparam, this.outparam)
+    // this.registerEvents('按下回车的事件', '', this.inparam, this.outparam)
 
     if (this.curModelproperty && this.curModelproperty.defaultValue) {
       this.Text = this.curModelproperty.defaultValue
@@ -79,13 +79,13 @@ export default class InputComponent extends ComponentBase {
   }
 
   public get validateProperty(): Property {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
     return property
   }
 
   handleNumberChange(e) {
     this.triggerChange(e)
-    this.TriggeEvent('内容变化时的事件', e)
+    this.triggeEvent('内容变化时的事件', e)
   }
 
   triggerChange(changedValue) {
@@ -93,84 +93,84 @@ export default class InputComponent extends ComponentBase {
   }
 
   handlePressEnter(e) {
-    this.TriggeEvent('按下回车的事件', null)
+    this.triggeEvent('按下回车的事件', null)
   }
 
   get PlaceHolder(): string {
-    if (this.FindProperties(PropertyGroupName.special, '空值文本')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '空值文本')[0]) {
       // console.log('文本输入框组件空值变了')
-      return this.FindProperties(PropertyGroupName.special, '空值文本')[0].value as string
+      return this.findProperties(PropertyGroupName.special, '空值文本')[0].value as string
     } else {
       return ''
     }
   }
 
   get Color(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '前景色')[0]) {
+    if (this.findProperties(PropertyGroupName.normal, '前景色')[0]) {
       // console.log('文本输入框前景色变了')
-      return this.FindProperties(PropertyGroupName.normal, '前景色')[0].value as string
+      return this.findProperties(PropertyGroupName.normal, '前景色')[0].value as string
     } else {
       return ''
     }
   }
   get FontSize(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '字体')[0]) {
+    if (this.findProperties(PropertyGroupName.normal, '字体')[0]) {
       // console.log('文本输入框组件字体变了')
-      return this.FindProperties(PropertyGroupName.normal, '字体')[0].value as string
+      return this.findProperties(PropertyGroupName.normal, '字体')[0].value as string
     } else {
       return ''
     }
   }
 
   get PaddingLeft(): string {
-    if (this.FindProperties(PropertyGroupName.special, '左内边距')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '左内边距')[0]) {
       //window.console.log('文本输入框组件左边距变了')
-      return this.FindProperties(PropertyGroupName.special, '左内边距')[0].value as string
+      return this.findProperties(PropertyGroupName.special, '左内边距')[0].value as string
     } else {
       return ''
     }
   }
 
   get PaddingTop(): string {
-    if (this.FindProperties(PropertyGroupName.special, '上内边距')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '上内边距')[0]) {
       //window.console.log('文本输入框组件上边距位置变了')
-      return this.FindProperties(PropertyGroupName.special, '上内边距')[0].value as string
+      return this.findProperties(PropertyGroupName.special, '上内边距')[0].value as string
     } else {
       return ''
     }
   }
 
   get PaddingRight(): string {
-    if (this.FindProperties(PropertyGroupName.special, '右内边距')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '右内边距')[0]) {
       //window.console.log('文本输入框组件右边距位置变了')
-      return this.FindProperties(PropertyGroupName.special, '右内边距')[0].value as string
+      return this.findProperties(PropertyGroupName.special, '右内边距')[0].value as string
     } else {
       return ''
     }
   }
 
   get PaddingBottom(): string {
-    if (this.FindProperties(PropertyGroupName.special, '下内边距')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '下内边距')[0]) {
       //window.console.log('文本输入框下内边距变了')
-      let data = this.FindProperties(PropertyGroupName.special, '下内边距')[0].value as string
+      let data = this.findProperties(PropertyGroupName.special, '下内边距')[0].value as string
       return data
     }
     return ''
   }
 
   // get Disabled(): boolean {
-  //   if (this.FindProperties(PropertyGroupName.special, '是否可用')[0]) {
+  //   if (this.findProperties(PropertyGroupName.special, '是否可用')[0]) {
   //     // console.log('文本输入框是否可用变了')
-  //     let data = this.FindProperties(PropertyGroupName.special, '是否可用')[0].value as boolean
+  //     let data = this.findProperties(PropertyGroupName.special, '是否可用')[0].value as boolean
   //     if (data) return false
   //     if (!data) return true
   //   }
   // }
 
   get Type(): string {
-    if (this.FindProperties(PropertyGroupName.special, '密码模式')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '密码模式')[0]) {
       // console.log('文本输入框是否密码模式变了')
-      let data = this.FindProperties(PropertyGroupName.special, '密码模式')[0].value as boolean
+      let data = this.findProperties(PropertyGroupName.special, '密码模式')[0].value as boolean
       if (data == true) return 'password'
       if (data == false) return 'text'
     }
@@ -178,13 +178,13 @@ export default class InputComponent extends ComponentBase {
   }
 
   get Text(): string {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
     return property ? property.value : ''
   }
 
   set Text(val) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
-    this.SetPropertyVal(property.id, val)
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
+    this.setPropertyVal(property.id, val)
     // let r = new RegExp(s)
 
     // let m = r.exec(val)

@@ -6,18 +6,19 @@ table组件
   <!-- <tablemix name="firstDemo" :dataSource="dataSource" :currentStyle="tablestyle" :style="{background:background,width:width,height:height}"
     @select="select" :showPagination="false"></tablemix> -->
   <div>
-    <v-table ref="table" name="demo" :parentPage="parentPage" :data="dataSource" :childdata="childdataSource" :columns="column" :tableStyle="tableStyle"
-      :showPagination="showPagination" :showSetColumnButton="isDesign" :tablePageConfig="{currentPage:currentPage,pageSize:pageSize,total:total}"
-      :height="height+'px'" @select="manualSelect" @changePage="changePage" @refresh="refreshData" @sort="sort" @expand="expand"
-      @treeExpand="treeExpand" :showSelection="showSelection" :showRadioColumn="showRadioColumn" :showColumnIndex="showColumnIndex" @rowClick="rowClick"
-      :showHeader="showHeader" :rowId="rowIdName" @selectchild="childItemSelect" :showRefreshButton="showRefreshButton" :selectOptionArr="dictItemArr"
-      @rowEditEnd="rowEditEnd" @dataChange="dataChange" :emptyTip="emptyTip" @childrowEditEnd="childrowEditEnd" :childrowId="childRowIdName"
-      @celldbclick="celldbclick" @childcelldbclick="childcelldbclick" @childrowClick="childrowClick" @rowEditBegin="rowEditBeginTriggerEvent"
-      @tableAdvanceSetting="tableAdvanceSetting" @saveTableSetting="saveTableSetting" :isDesign="IsDesigning" :personConfig="personConfig"
-      :isUseParentLayout="isUseParentLayout" :dynamicheight="dynamicheight">
+    <v-table ref="table" name="demo" :parentPage="parentPage" :data="dataSource" :childdata="childdataSource" :columns="column"
+      :tableStyle="tableStyle" :showPagination="showPagination" :showSetColumnButton="isDesign"
+      :tablePageConfig="{currentPage:currentPage,pageSize:pageSize,total:total}" :height="height+'px'" @select="manualSelect" @changePage="changePage"
+      @refresh="refreshData" @sort="sort" @expand="expand" @treeExpand="treeExpand" :showSelection="showSelection" :showRadioColumn="showRadioColumn"
+      :showColumnIndex="showColumnIndex" @rowClick="rowClick" :showHeader="showHeader" :rowId="rowIdName" @selectchild="childItemSelect"
+      :showRefreshButton="showRefreshButton" :selectOptionArr="dictItemArr" @rowEditEnd="rowEditEnd" @dataChange="dataChange" :emptyTip="emptyTip"
+      @childrowEditEnd="childrowEditEnd" :childrowId="childRowIdName" @celldbclick="celldbclick" @childcelldbclick="childcelldbclick"
+      @childrowClick="childrowClick" @rowEditBegin="rowEditBeginTriggerEvent" @tableAdvanceSetting="tableAdvanceSetting"
+      @saveTableSetting="saveTableSetting" :isDesign="IsDesigning" :personConfig="personConfig" :isUseParentLayout="isUseParentLayout"
+      :dynamicheight="dynamicheight">
     </v-table>
     <advance-setting ref="setting" @ok="saveTableSetting"></advance-setting>
-  </div>  
+  </div>
 </template>
 
 <script lang="ts">
@@ -33,9 +34,9 @@ import {
   TableStyleSetting_Property,
   Number_Property,
   TableExportSetting_Property
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import APIS_Test from '../../01designerContext/APIs_Test'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { columnInfo, tableStyle } from './tableCommonTypes'
 import common from '../../02common/commonMethod'
 import VTable from './VxeTable'
@@ -54,13 +55,13 @@ import modelBingding, {
   bindTypeEnum,
   modelDataTypeEnum
 } from '../../02common/commonClasses/modelBingding'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 import moment from 'moment'
 import { timeStamp2time } from '../../02common/utils/util'
 /**引入xlsx来实现excel导出 */
 import XLSX from 'xlsx'
 import TableGrid from '../../04designerComponents/table/TableGrid.vue'
-import AdvanceSetting from "../../04designerComponents/table/advanceSetting.vue";
+import AdvanceSetting from '../../04designerComponents/table/advanceSetting.vue'
 
 enum propertyNameEnum {
   datasource = '表格数据源',
@@ -85,7 +86,7 @@ enum operationTypeEnum {
 @Component({
   components: {
     VTable: VTable,
-    AdvanceSetting:AdvanceSetting
+    AdvanceSetting: AdvanceSetting
   }
 })
 export default class TableComponent extends ComponentBase {
@@ -128,7 +129,7 @@ export default class TableComponent extends ComponentBase {
     isCanCheck: true,
     editMode: 'dblclick',
     hasChildTag: null,
-    isTabInner:false
+    isTabInner: false
   }
 
   /**导出配置 */
@@ -158,32 +159,32 @@ export default class TableComponent extends ComponentBase {
    * readonly data
    */
   get currentPage(): any {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码').value
     } else {
       return 1
     }
   }
 
   get pageSize(): any {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数').value
     } else {
       return 20
     }
   }
 
   get total(): any {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '总条数')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '总条数').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '总条数')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '总条数').value
     } else {
       return 0
     }
   }
 
   get showHeader(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头').value
+    if (this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头')) {
+      return this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头').value
     } else {
       return true
     }
@@ -194,39 +195,39 @@ export default class TableComponent extends ComponentBase {
   }
 
   get isCanEdit(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑').value
     } else {
       return false
     }
   }
 
   get showPagination(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页').value
     }
     return true
   }
 
   //是否显示刷新
   get showRefreshButton(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新').value
     } else {
       return true
     }
   }
 
   get emptyTip(): string {
-    if (this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本').value
+    if (this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本')) {
+      return this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本').value
     } else {
       return '暂无数据'
     }
   }
 
-  get isUseParentLayout():boolean{
-    let prop = this.FindPropertyByName('特有布局', '高度自适应')
+  get isUseParentLayout(): boolean {
+    let prop = this.findPropertyByName('特有布局', '高度自适应')
     //window.console.log('--------------------------propproppropprop',prop)
     if (prop) {
       return prop.value
@@ -235,242 +236,241 @@ export default class TableComponent extends ComponentBase {
     }
   }
 
-  get dynamicheight():string{
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, '高度')
+  get dynamicheight(): string {
+    let prop = this.findPropertyByName(PropertyGroupName.normal, '高度')
     if (prop) {
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         ;(this.$refs['table'] as any).setInitMax(prop.value)
       })
-      return prop.value+'px'
+      return prop.value + 'px'
     } else {
       return '100%'
     }
   }
 
-  personConfig:any
+  personConfig: any
   /** 页面初始化方法 */
-  mounted() {    
+  mounted() {
     if (this.IsDesigning) {
       // window.console.log('表格组件加载了')
       this.width = 400
       this.height = 300
-      this.RegisterProperty('表格数据源', PropertyGroupName.normal, null, [])
-      this.RegisterProperty('子表格数据源', PropertyGroupName.normal, null, [])
+      this.registerProperty('表格数据源', PropertyGroupName.normal, null, [])
+      this.registerProperty('子表格数据源', PropertyGroupName.normal, null, [])
       /**列*/
-      // this.RegisterProperty('字体大小', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
-      // this.RegisterProperty('字体颜色', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
-      this.RegisterProperty('列样式', propertyGroupEnum.columnSetting, new TableStyleSetting_Property(), null)
+      // this.registerProperty('字体大小', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
+      // this.registerProperty('字体颜色', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
+      this.registerProperty('列样式', propertyGroupEnum.columnSetting, new TableStyleSetting_Property(), null)
 
-      this.RegisterProperty('当前页码', propertyGroupEnum.tableSetting, new Number_Property(), 1, false)
-      this.RegisterProperty('每页显示项数', propertyGroupEnum.tableSetting, new Number_Property(), 20, false)
-      this.RegisterProperty('总条数', propertyGroupEnum.tableSetting, new Number_Property(), 0, false)
-      this.RegisterProperty('是否显示分页', propertyGroupEnum.tableSetting, new Boolean_Property(), true, true)
-      this.RegisterProperty('当前选中行', propertyGroupEnum.tableSetting, null, [])
-      this.RegisterProperty('是否有选中行', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
-      this.RegisterProperty('是否有子表格', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
-      this.RegisterProperty('展开行', propertyGroupEnum.tableSetting, null, '')
-      this.RegisterProperty('当前选中模型', propertyGroupEnum.tableSetting, null, [], false, false)
-      this.RegisterProperty('当前点击行', propertyGroupEnum.tableSetting, null, {})
-      this.RegisterProperty('是否树表格', propertyGroupEnum.tableSetting, new Boolean_Property(), false, true)
-      this.RegisterProperty('是否可选', propertyGroupEnum.tableSetting, new Enum_Property(true, ['否', '多选', '单选']), '多选')
-      this.RegisterProperty('新增数据源', propertyGroupEnum.tableSetting, null, [], false, false)
-      this.RegisterProperty('编辑数据源', propertyGroupEnum.tableSetting, null, [], false, false)
-      this.RegisterProperty('删除数据源', propertyGroupEnum.tableSetting, null, [], false, false)
-      this.RegisterProperty('是否显示刷新', propertyGroupEnum.tableSetting, new Boolean_Property(), true)
-      // this.RegisterProperty(
+      this.registerProperty('当前页码', propertyGroupEnum.tableSetting, new Number_Property(), 1, false)
+      this.registerProperty('每页显示项数', propertyGroupEnum.tableSetting, new Number_Property(), 20, false)
+      this.registerProperty('总条数', propertyGroupEnum.tableSetting, new Number_Property(), 0, false)
+      this.registerProperty('是否显示分页', propertyGroupEnum.tableSetting, new Boolean_Property(), true, true)
+      this.registerProperty('当前选中行', propertyGroupEnum.tableSetting, null, [])
+      this.registerProperty('是否有选中行', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
+      this.registerProperty('是否有子表格', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
+      this.registerProperty('展开行', propertyGroupEnum.tableSetting, null, '')
+      this.registerProperty('当前选中模型', propertyGroupEnum.tableSetting, null, [], false, false)
+      this.registerProperty('当前点击行', propertyGroupEnum.tableSetting, null, {})
+      this.registerProperty('是否树表格', propertyGroupEnum.tableSetting, new Boolean_Property(), false, true)
+      this.registerProperty('是否可选', propertyGroupEnum.tableSetting, new Enum_Property(true, ['否', '多选', '单选']), '多选')
+      this.registerProperty('新增数据源', propertyGroupEnum.tableSetting, null, [], false, false)
+      this.registerProperty('编辑数据源', propertyGroupEnum.tableSetting, null, [], false, false)
+      this.registerProperty('删除数据源', propertyGroupEnum.tableSetting, null, [], false, false)
+      this.registerProperty('是否显示刷新', propertyGroupEnum.tableSetting, new Boolean_Property(), true)
+      // this.registerProperty(
       //   '是否可编辑',
       //   propertyGroupEnum.tableSetting,
       //   new Enum_Property(true, ['否', '单击编辑', '双击编辑', '手动编辑']),
       //   '否',
       //   false,false
       // )
-      this.RegisterProperty('子表格是否缓存数据', propertyGroupEnum.tableSetting, new Boolean_Property(), false)
-      this.RegisterProperty('导出设置', propertyGroupEnum.tableSetting, new TableExportSetting_Property(), null)
+      this.registerProperty('子表格是否缓存数据', propertyGroupEnum.tableSetting, new Boolean_Property(), false)
+      this.registerProperty('导出设置', propertyGroupEnum.tableSetting, new TableExportSetting_Property(), null)
 
-      this.RegisterProperty('是否显示表头', propertyGroupEnum.tableDisplaySetting, new Boolean_Property(), true)
-      this.RegisterProperty('表格为空时显示文本', propertyGroupEnum.tableDisplaySetting, new Text_Property(), '暂无数据')      
+      this.registerProperty('是否显示表头', propertyGroupEnum.tableDisplaySetting, new Boolean_Property(), true)
+      this.registerProperty('表格为空时显示文本', propertyGroupEnum.tableDisplaySetting, new Text_Property(), '暂无数据')
     }
-    this.RegisterEvents('列表刷新', '', this.inparam, this.outparam)
-    this.RegisterEvents('表格展开', '', this.inparam, this.outparam)
-    this.RegisterEvents('点击行', '', this.inparam, this.outparam)
+    this.registerEvents('列表刷新', '', this.inparam, this.outparam)
+    this.registerEvents('表格展开', '', this.inparam, this.outparam)
+    this.registerEvents('点击行', '', this.inparam, this.outparam)
 
     let currentCheckinparam: param[] = []
     currentCheckinparam.push({ name: '当前勾选', type: paramType.complexType, val: null })
-    this.RegisterEvents('勾选行', '', currentCheckinparam, this.outparam)
-    this.RegisterEvents('取消勾选行', '', this.inparam, this.outparam)
+    this.registerEvents('勾选行', '', currentCheckinparam, this.outparam)
+    this.registerEvents('取消勾选行', '', this.inparam, this.outparam)
     let datasourceinparam: param[] = []
     datasourceinparam.push({ name: '当前数据', type: paramType.complexType, val: null })
-    this.RegisterEvents('表格数据变更', '', datasourceinparam, this.outparam)
+    this.registerEvents('表格数据变更', '', datasourceinparam, this.outparam)
     let editRowinparam: param[] = []
     editRowinparam.push({ name: '编辑行数据', type: paramType.complexType, val: null })
 
-    this.RegisterEvents('行编辑开始', '', editRowinparam, this.outparam)
-    this.RegisterEvents('行编辑结束', '', editRowinparam, this.outparam)
-        
+    this.registerEvents('行编辑开始', '', editRowinparam, this.outparam)
+    this.registerEvents('行编辑结束', '', editRowinparam, this.outparam)
 
-    this.RegisterEvents('树表格展开行', '', this.inparam, this.outparam)
+    this.registerEvents('树表格展开行', '', this.inparam, this.outparam)
 
-    this.RegisterMethods('删除选中数据', '', this.deleteRows, null, null)
+    this.registerMethods('删除选中数据', '', this.deleteRows, null, null)
     let rowinparam: param[] = []
     rowinparam.push({ name: '行数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('删除行', '', this.deleteRow, rowinparam, null)
+    this.registerMethods('删除行', '', this.deleteRow, rowinparam, null)
 
     let deletechildparam: param[] = []
     deletechildparam.push({ name: '主表关联id', type: paramType.string, val: null })
     deletechildparam.push({ name: '子表id', type: paramType.complexType, val: null })
-    this.RegisterMethods('删除子表数据', '', this.deleteChildRow, deletechildparam, null)
+    this.registerMethods('删除子表数据', '', this.deleteChildRow, deletechildparam, null)
     let updateparam: param[] = []
     updateparam.push({ name: '行数据', type: paramType.complexType, val: null })
     updateparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    this.RegisterMethods('更新行', '', this.updateRow, updateparam, null)
+    this.registerMethods('更新行', '', this.updateRow, updateparam, null)
     let updatechildparam: param[] = []
     updatechildparam.push({ name: '主表关联id', type: paramType.string, val: null })
     updatechildparam.push({ name: '子表数据', type: paramType.complexType, val: null })
     updatechildparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    this.RegisterMethods('更新子表数据', '', this.updateChildRow, updatechildparam, null)
+    this.registerMethods('更新子表数据', '', this.updateChildRow, updatechildparam, null)
     let addrowinparam: param[] = []
     addrowinparam.push({ name: '行数据', type: paramType.complexType, val: null })
     addrowinparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    this.RegisterMethods('添加行', '', this.addRows, addrowinparam, null)
+    this.registerMethods('添加行', '', this.addRows, addrowinparam, null)
     let addchildrowinparam: param[] = []
     addchildrowinparam.push({ name: '主表关联id', type: paramType.string, val: null })
     addchildrowinparam.push({ name: '子表数据', type: paramType.complexType, val: null })
     addchildrowinparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    this.RegisterMethods('添加子表数据', '', this.addChildRow, addchildrowinparam, null)
-    this.RegisterMethods('清除临时数据', '', this.dataClear, this.inparam, null)
-    //this.RegisterEvents('列表排序', '', this.inparam, this.outparam)
+    this.registerMethods('添加子表数据', '', this.addChildRow, addchildrowinparam, null)
+    this.registerMethods('清除临时数据', '', this.dataClear, this.inparam, null)
+    //this.registerEvents('列表排序', '', this.inparam, this.outparam)
     let editinparam: param[] = []
     editinparam.push({ name: '行数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('开始行内编辑', '', this.rowEditBegin, editinparam, null)
-    this.RegisterMethods('取消行内编辑', '', this.rowEditCancel, editinparam, null)
-    this.RegisterMethods('保存行内编辑', '', this.rowEditSave, editinparam, null)
+    this.registerMethods('开始行内编辑', '', this.rowEditBegin, editinparam, null)
+    this.registerMethods('取消行内编辑', '', this.rowEditCancel, editinparam, null)
+    this.registerMethods('保存行内编辑', '', this.rowEditSave, editinparam, null)
     let selectallinparam: param[] = []
     selectallinparam.push({ name: '全选/反选', type: paramType.boolean, val: true })
     selectallinparam.push({ name: '是否触发勾选事件', type: paramType.boolean, val: true })
-    this.RegisterMethods('勾选全部数据', '', this.selectAllData, selectallinparam, null)
+    this.registerMethods('勾选全部数据', '', this.selectAllData, selectallinparam, null)
     let selectinparam: param[] = []
     selectinparam.push({ name: '匹配数据源', type: paramType.complexType, val: null })
     selectinparam.push({ name: '匹配字段', type: paramType.string, val: null })
     selectinparam.push({ name: '勾选/反选', type: paramType.boolean, val: true })
     selectinparam.push({ name: '是否触发勾选事件', type: paramType.boolean, val: true })
     selectinparam.push({ name: '匹配表格字段', type: paramType.string, val: null })
-    this.RegisterMethods('勾选指定行', '', this.selectDataArr, selectinparam, null)
-    this.RegisterMethods('获取表格当前数据', '', this.getCurrentDataSource, this.inparam, null)
-    this.RegisterMethods('获取最近一次编辑的数据', '', this.getPreviousEditInfo, this.inparam, null)
+    this.registerMethods('勾选指定行', '', this.selectDataArr, selectinparam, null)
+    this.registerMethods('获取表格当前数据', '', this.getCurrentDataSource, this.inparam, null)
+    this.registerMethods('获取最近一次编辑的数据', '', this.getPreviousEditInfo, this.inparam, null)
     /**表格临时数据源相关方法 */
     let getadddataparam: param[] = []
     getadddataparam.push({ name: '是否包含模型编码', type: paramType.boolean, val: false })
-    this.RegisterMethods('获取表格新增数据', '', this.getAddedDataSource, getadddataparam, null)
-    this.RegisterMethods('获取子表格新增数据', '', this.getAddedChildDataSource, this.inparam, null)
+    this.registerMethods('获取表格新增数据', '', this.getAddedDataSource, getadddataparam, null)
+    this.registerMethods('获取子表格新增数据', '', this.getAddedChildDataSource, this.inparam, null)
     //getadddataparam.push({ name: '是否包含模型编码', type: paramType.boolean, val: false })
-    this.RegisterMethods('获取表格更新数据', '', this.getUpdatedDataSource, getadddataparam, null)
-    this.RegisterMethods('获取子表格更新数据', '', this.getUpdatedChildDataSource, this.inparam, null)
+    this.registerMethods('获取表格更新数据', '', this.getUpdatedDataSource, getadddataparam, null)
+    this.registerMethods('获取子表格更新数据', '', this.getUpdatedChildDataSource, this.inparam, null)
     //getadddataparam.push({ name: '是否包含模型编码', type: paramType.boolean, val: false })
-    this.RegisterMethods('获取表格删除数据', '', this.getDeletedDataSource, getadddataparam, null)
-    this.RegisterMethods('获取子表格删除数据', '', this.getDeletedChildDataSource, this.inparam, null)
+    this.registerMethods('获取表格删除数据', '', this.getDeletedDataSource, getadddataparam, null)
+    this.registerMethods('获取子表格删除数据', '', this.getDeletedChildDataSource, this.inparam, null)
 
     let expandinparam: param[] = []
     expandinparam.push({ name: '行数据', type: paramType.string, val: null })
-    this.RegisterMethods('展开指定行', '', this.setExpandRow, expandinparam, null)
+    this.registerMethods('展开指定行', '', this.setExpandRow, expandinparam, null)
 
     let tempinparam: param[] = []
     tempinparam.push({ name: '新增数据', type: paramType.complexType, val: null })
     tempinparam.push({ name: '编辑数据', type: paramType.complexType, val: null })
     tempinparam.push({ name: '删除数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('指定临时数据源', '', this.setTempDataSource, tempinparam, null)
+    this.registerMethods('指定临时数据源', '', this.setTempDataSource, tempinparam, null)
 
     /** 列设置根据列编码来匹配 */
     let columninparam: param[] = []
     columninparam.push({ name: '指定列', type: paramType.string, val: null })
     columninparam.push({ name: '下拉数据源', type: paramType.complexType, val: null })
-    this.RegisterMethods('设置列数据源', '用于行编辑中的下拉框的数据源赋值', this.setSelectDataSourceByColumnCode, columninparam, null)
+    this.registerMethods('设置列数据源', '用于行编辑中的下拉框的数据源赋值', this.setSelectDataSourceByColumnCode, columninparam, null)
 
     let rowselectinparam: param[] = []
     rowselectinparam.push({ name: '主键id', type: paramType.string, val: null })
-    this.RegisterMethods('设置点击行', '', this.setClickRow, rowselectinparam, null)
+    this.registerMethods('设置点击行', '', this.setClickRow, rowselectinparam, null)
 
     //let childCheckinparam: param[] = []
-    this.RegisterMethods('获取子表格选中数据', '', this.getChildCheckRows, this.inparam, null)
-    this.RegisterMethods('重置表格数据', '', this.resetDataSource, this.inparam, null)
+    this.registerMethods('获取子表格选中数据', '', this.getChildCheckRows, this.inparam, null)
+    this.registerMethods('重置表格数据', '', this.resetDataSource, this.inparam, null)
 
     let batchDeleteChildinparam: param[] = []
     batchDeleteChildinparam.push({ name: '待删除数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('批量删除子表格数据', '', this.batchDeleteChild, batchDeleteChildinparam, null)
+    this.registerMethods('批量删除子表格数据', '', this.batchDeleteChild, batchDeleteChildinparam, null)
 
     let batchUpdateChildinparam: param[] = []
     batchUpdateChildinparam.push({ name: '待更新数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('批量更新子表格数据', '', this.batchUpdateChild, batchUpdateChildinparam, null)
+    this.registerMethods('批量更新子表格数据', '', this.batchUpdateChild, batchUpdateChildinparam, null)
 
     let setActionCoulumninparam: param[] = []
     setActionCoulumninparam.push({ name: '显示/隐藏', type: paramType.boolean, val: true })
-    this.RegisterMethods('设置操作列状态', '', this.setActionCoulumn, setActionCoulumninparam, null)
+    this.registerMethods('设置操作列状态', '', this.setActionCoulumn, setActionCoulumninparam, null)
 
     let setCoulumninparam: param[] = []
     setCoulumninparam.push({ name: '指定列', type: paramType.string, val: null })
     setCoulumninparam.push({ name: '显示/隐藏', type: paramType.boolean, val: true })
-    this.RegisterMethods('设置列状态', '', this.setCoulumnStatus, setCoulumninparam, null)
+    this.registerMethods('设置列状态', '', this.setCoulumnStatus, setCoulumninparam, null)
 
-    this.RegisterMethods('检测是否存在临时数据', '', this.checkIsExistTempData, this.inparam, null)
-    this.RegisterMethods('获取子表格当前数据', '', this.getChildCurrentDataSource, this.inparam, null)
+    this.registerMethods('检测是否存在临时数据', '', this.checkIsExistTempData, this.inparam, null)
+    this.registerMethods('获取子表格当前数据', '', this.getChildCurrentDataSource, this.inparam, null)
     let exportinparam: param[] = []
     exportinparam.push({ name: '文件名称', type: paramType.string, val: null })
-    this.RegisterMethods('导出表格当前数据', '', this.exportTableToCsv, exportinparam, null)
+    this.registerMethods('导出表格当前数据', '', this.exportTableToCsv, exportinparam, null)
 
     let customExportinparam: param[] = []
     customExportinparam.push({ name: '文件名称', type: paramType.string, val: null })
-    this.RegisterMethods('导出表格数据', '根据导出配置来导出', this.customExportData, customExportinparam, null)
+    this.registerMethods('导出表格数据', '根据导出配置来导出', this.customExportData, customExportinparam, null)
 
-    this.RegisterMethods('表格禁用', '', this.setTableDisabled, this.inparam, null)
-    this.RegisterMethods('表格启用', '', this.setTableEnabled, this.inparam, null)
+    this.registerMethods('表格禁用', '', this.setTableDisabled, this.inparam, null)
+    this.registerMethods('表格启用', '', this.setTableEnabled, this.inparam, null)
 
     let setChildDatainparam: param[] = []
     setChildDatainparam.push({ name: '子表关联主表属性编码', type: paramType.string, val: null })
     setChildDatainparam.push({ name: '子表格全部数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('设置子表格全部数据', '', this.setAllChildDataSource, setChildDatainparam, null)
+    this.registerMethods('设置子表格全部数据', '', this.setAllChildDataSource, setChildDatainparam, null)
 
     let treeExpandinparam: param[] = []
     treeExpandinparam.push({ name: '子数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('设置树表格当前行子数据', '', this.setTreeExpandRowChildren, treeExpandinparam, null)
+    this.registerMethods('设置树表格当前行子数据', '', this.setTreeExpandRowChildren, treeExpandinparam, null)
 
     let refreshTableinparam: param[] = []
     refreshTableinparam.push({ name: '表格数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('强制刷新表格数据', '树表格懒加载使用', this.forceRefreshDataSource, refreshTableinparam, null)
+    this.registerMethods('强制刷新表格数据', '树表格懒加载使用', this.forceRefreshDataSource, refreshTableinparam, null)
 
     let masterRowinparam: param[] = []
     masterRowinparam.push({ name: '行数据', type: paramType.complexType, val: null })
     masterRowinparam.push({ name: '子表关联字段名', type: paramType.string, val: null })
-    this.RegisterMethods('删除主表数据', '联动删除子表数据', this.deleteRowContainsChild, masterRowinparam, null)
+    this.registerMethods('删除主表数据', '联动删除子表数据', this.deleteRowContainsChild, masterRowinparam, null)
 
-    this.RegisterMethods('表格折叠全部', '', this.folderingAllRows, this.inparam, null)
-    //this.RegisterMethods('表格展开全部', '', this.expandAllRows, this.inparam, null)
+    this.registerMethods('表格折叠全部', '', this.folderingAllRows, this.inparam, null)
+    //this.registerMethods('表格展开全部', '', this.expandAllRows, this.inparam, null)
 
     let columnIdxinparam: param[] = []
     columnIdxinparam.push({ name: '列序号', type: paramType.number, val: null })
-    this.RegisterMethods('根据序号显示列', '', this.setColumnVisibleByIdx, columnIdxinparam, null)
-    this.RegisterMethods('根据数据显示列', '', this.setColumnVisibleByData, this.inparam, null)
+    this.registerMethods('根据序号显示列', '', this.setColumnVisibleByIdx, columnIdxinparam, null)
+    this.registerMethods('根据数据显示列', '', this.setColumnVisibleByData, this.inparam, null)
 
     let rowIdinparam: param[] = []
     rowIdinparam.push({ name: '主键', type: paramType.string, val: null })
-    this.RegisterMethods('根据主键获取表格行数据', '', this.getRowById, rowIdinparam, null)
+    this.registerMethods('根据主键获取表格行数据', '', this.getRowById, rowIdinparam, null)
 
     let childrowselectinparam: param[] = []
     childrowselectinparam.push({ name: '主表主键id', type: paramType.string, val: null })
     childrowselectinparam.push({ name: '子表主键id', type: paramType.string, val: null })
-    this.RegisterMethods('设置子表点击行', '', this.setChildClickRow, childrowselectinparam, null)
+    this.registerMethods('设置子表点击行', '', this.setChildClickRow, childrowselectinparam, null)
 
     //this.$on('onPropertyChanged', this.onPropertyChangedInner)
 
     //表格初始化完成之后绑定分页模型实例，查询一下分页模型信息，然后初始化
     let pagenumber = 1
     let pageSize = 20
-    let nameproperty = this.FindPropertyByName(PropertyGroupName.normal, '名称')
+    let nameproperty = this.findPropertyByName(PropertyGroupName.normal, '名称')
     let name = ''
     if (nameproperty && nameproperty.value) {
       name = '-' + nameproperty.value
     }
 
     if (this.IsDesigning) {
-      let idproperty = this.FindPropertyByName(PropertyGroupName.normal, '唯一Id')
+      let idproperty = this.findPropertyByName(PropertyGroupName.normal, '唯一Id')
 
       let modelInfo = modelAnalysis.getModelInfoByCode('pageModel').modelIndo
       this.$nextTick(() => {
@@ -489,8 +489,8 @@ export default class TableComponent extends ComponentBase {
           this.parentPage.addModelBinding(newmodelbind)
           let tempData = {
             id: 1,
-            pageSize: this.FindPropertyByName('表格设置', '每页显示项数').value,
-            pageNumber: this.FindPropertyByName('表格设置', '当前页码').value
+            pageSize: this.findPropertyByName('表格设置', '每页显示项数').value,
+            pageNumber: this.findPropertyByName('表格设置', '当前页码').value
           }
           this.parentPage.setModelBindVal(newmodelbind.modelBindingName, tempData)
           //把分页属性绑定到模型实例上面
@@ -498,7 +498,7 @@ export default class TableComponent extends ComponentBase {
           newbindInfo.bindType = bindTypeEnum.code
           newbindInfo.modelCodes = [{ code: 'pageSize', codeName: '页大小', modelId: null }]
           newbindInfo.modelName = newmodelbind.modelBindingName
-          newbindInfo.propertyId = this.FindPropertyByName('表格设置', '每页显示项数').id
+          newbindInfo.propertyId = this.findPropertyByName('表格设置', '每页显示项数').id
           this.addPropertyModelBind(newbindInfo)
           //this.setModelBindInfo(newbindInfo.modelName,newmodelbind,newbindInfo.propertyId)
 
@@ -506,7 +506,7 @@ export default class TableComponent extends ComponentBase {
           newbindInfo1.bindType = bindTypeEnum.code
           newbindInfo1.modelCodes = [{ code: 'pageNumber', codeName: '页索引', modelId: null }]
           newbindInfo1.modelName = newmodelbind.modelBindingName
-          newbindInfo1.propertyId = this.FindPropertyByName('表格设置', '当前页码').id
+          newbindInfo1.propertyId = this.findPropertyByName('表格设置', '当前页码').id
           this.addPropertyModelBind(newbindInfo1)
         }
       })
@@ -530,14 +530,14 @@ export default class TableComponent extends ComponentBase {
     })
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
 
-    this.isNeedRecalculate = true    
+    this.isNeedRecalculate = true
   }
 
   /** 页面加载完成之后执行 */
   protected loadCompleted(childrenData: any[]) {
-    //var id = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource).id
+    //var id = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource).id
     //const aaa = this.getPropertyBindInfo(id).modelCodes
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     var modelInfo = null
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
@@ -545,7 +545,7 @@ export default class TableComponent extends ComponentBase {
         modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
       }
     }
-    var childprop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+    var childprop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     var childmodelInfo = null
     if (childprop) {
       let propBind = this.getPropertyBindInfo(childprop.id)
@@ -555,7 +555,7 @@ export default class TableComponent extends ComponentBase {
     }
 
     //window.console.log('------------------------------打印出来当前表格modelInfo', modelInfo)
-    let property = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+    let property = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
     if (property && property.value && property.value.columnInfos.length > 0) {
       let tempStyle = property.value as tableStyle
       let hasData = modelInfo && modelInfo.modelDetailInfo && modelInfo.modelDetailInfo.modelPropertyList
@@ -597,14 +597,14 @@ export default class TableComponent extends ComponentBase {
     }
     //window.console.log('------------------------------打印出来当前表格样式this.tableStyle', this.tableStyle)
 
-    let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     if (chooseType) {
       chooseType.value = this.tableStyle.canChoose === 0 ? '否' : this.tableStyle.canChoose === 1 ? '多选' : '单选'
     }
     //window.console.log('--------------初始化是否可选属性',chooseType)
 
     //this.rowIdName = detailInfo.modelRelationList[0].modelAlias+'__id'
-    //var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    //var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       this.initDefaultData(prop, false)
     }
@@ -630,34 +630,33 @@ export default class TableComponent extends ComponentBase {
     this.$off('onPropertyChanged')
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
     //兼容之前的数据
-    let propDataSource = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let propDataSource = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     if (propDataSource && propDataSource.value === true) {
       propDataSource.value = []
     }
-    // this.SetPropertyVal(propDataSource.id,[])
+    // this.setPropertyVal(propDataSource.id,[])
 
     // this.initDataSource(cloneValue)
     // this.$once('onAfterResize', () => {
 
     // })
     //加载完成之后把给导出设置一个默认值
-    let exportProperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
+    let exportProperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
     if (exportProperty) {
       if (!exportProperty.value || !exportProperty.value.columnInfos || exportProperty.value.columnInfos.length == 0) {
         exportProperty.value = this.getExportSetting()
-        //this.SetPropertyVal(exportProperty.id, this.getExportSetting())
+        //this.setPropertyVal(exportProperty.id, this.getExportSetting())
       }
     }
     if (this.IsDesigning == true) {
       this.updateComponentsChildren()
-    }
-    else{
-      //let heightProperty = this.FindPropertyByName(PropertyGroupName.normal, '高度')
+    } else {
+      //let heightProperty = this.findPropertyByName(PropertyGroupName.normal, '高度')
       //;(this.$refs['table'] as any).setDynamicheight(heightProperty.value)
     }
 
     //不在设计期的情况下，获取用户配置的表格列数据
-    if (!this.IsDesigning){
+    if (!this.IsDesigning) {
       let personalSetting = this.topParentPage.getCompPersonalSetting(this.Id)
       //window.console.error('-------------------获取表格id',this.Id)
       //window.console.error('-----------------获取表格个性化配置',personalSetting)
@@ -763,16 +762,16 @@ export default class TableComponent extends ComponentBase {
 
   private initDataSource(cloneValue: any) {
     //window.console.error('------------表格初始化数据')
-    let totalSize = this.FindPropertyByName(propertyGroupEnum.tableSetting, '总条数')
+    let totalSize = this.findPropertyByName(propertyGroupEnum.tableSetting, '总条数')
     if (Object.keys(cloneValue).length == 0 || (cloneValue.content && cloneValue.content instanceof Array && cloneValue.content.length == 0)) {
       this.dataSource = []
       totalSize.value = 0
-      let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+      let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
       var val = { modelCode: this.getModelCode(), data: {} }
-      this.SetPropertyVal(property.id, val)
+      this.setPropertyVal(property.id, val)
       //window.console.log('------------属性变更-当前点击行',common.clone(property))
       //如果没查询到数据，页码重置会第一页，执行刷新方法
-      // let currentPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+      // let currentPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
       // currentPage.value = 1
       // this.changePage(1, this.pageSize, false)
       return
@@ -793,13 +792,13 @@ export default class TableComponent extends ComponentBase {
       this.dataSource = common.clone(tempValue)
     } else {
       this.dataSource = []
-      let propertyclick = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+      let propertyclick = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
       var val = { modelCode: this.getModelCode(), data: {} }
-      this.SetPropertyVal(propertyclick.id, val)
+      this.setPropertyVal(propertyclick.id, val)
       //如果没查询到数据，页码重置会第一页，执行刷新方法，只有查询的结构才会重置，不分页的不需要查询
-      let isshowPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
+      let isshowPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
       if (cloneValue.content && isshowPage && isshowPage.value == true) {
-        let currentPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+        let currentPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
         currentPage.value = 1
         this.changePage(1, this.pageSize)
       }
@@ -821,34 +820,34 @@ export default class TableComponent extends ComponentBase {
       }
     }
     if (isRefresh) {
-      let dataproperty = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+      let dataproperty = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
       dataproperty.value.content = common.clone(this.dataSource)
-      this.SetPropertyVal(dataproperty.id, dataproperty.value)
+      this.setPropertyVal(dataproperty.id, dataproperty.value)
     }
-    let isSelectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
-    this.SetPropertyVal(isSelectproperty.id, true)
+    let isSelectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
+    this.setPropertyVal(isSelectproperty.id, true)
   }
 
   /** 属性表更方法 */
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: ComponentBase): void {
-    var page = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
-    var pageSize = this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
+    var page = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+    var pageSize = this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
     //window.console.log('------------属性变更',property)
     switch (property.propertyName) {
       case '绑定模型':
         if (this.IsDesigning == true) {
-          var property11 = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+          var property11 = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
           property11.value = this.getTableStyle()
-          var exportPro = this.FindPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
+          var exportPro = this.findPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
           var exportSetting = this.getExportSetting()
           //exportSetting.columnInfos = exportSetting.columnInfos.filter(item=>item.field != 'action')
           exportPro.value = exportSetting
-          //this.SetPropertyVal(exportPro.id,exportSetting)
+          //this.setPropertyVal(exportPro.id,exportSetting)
           //this.tableStyle = property11.value
           //window.console.log('----------------------------------列样式赋值', property11)
           //window.console.log('--------------this.bindInfos', this.bindInfos)
           //window.console.log('--------------绑定模型变更', property)
-          //var aaa = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+          //var aaa = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
           //window.console.log('--------------展开行属性', aaa)
         }
         //this.tableStyle = this.getTableStyle()
@@ -857,9 +856,9 @@ export default class TableComponent extends ComponentBase {
         //数据源变更之后，新增编辑删除的数据源要清空
         this.tempDataClear()
         //点击行属性清空
-        // let propertyClick = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+        // let propertyClick = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
         // var propertyClickVal = { modelCode: this.getModelCode(), data: {} }
-        // this.SetPropertyVal(propertyClick.id, propertyClickVal)
+        // this.setPropertyVal(propertyClick.id, propertyClickVal)
         if (property.value) {
           let cloneValue = common.clone(property.value)
           this.initDataSource(cloneValue)
@@ -880,16 +879,16 @@ export default class TableComponent extends ComponentBase {
         this.oldAllChildDataSourceNoGroup = []
         this.allChildDataSource = []
         this.allChildDataSourceNoGroup = []
-        var childprop = this.FindPropertyByName(PropertyGroupName.normal, '子表格数据源')
-        this.SetPropertyVal(childprop.id, [])
+        var childprop = this.findPropertyByName(PropertyGroupName.normal, '子表格数据源')
+        this.setPropertyVal(childprop.id, [])
         break
       case '子表格数据源':
         //window.console.log('--------------子表格数据源变更', property.value)
         if (property.value) {
-          var prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+          var prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
           if (prop) {
             let temp = this.oldAllChildDataSource.find((item) => item.key == prop.value)
-            var tempprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
+            var tempprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
             if (tempprop.value == false) {
               let tempValue = property.value.content ? property.value.content : property.value
               if (tempValue && tempValue.length > 0) {
@@ -932,13 +931,13 @@ export default class TableComponent extends ComponentBase {
       case '当前页码':
       case '每页显示项数':
       case '总条数':
-        // this.TriggeEvent('列表刷新', [
+        // this.triggeEvent('列表刷新', [
         //   { name: 'pageNumber', type: 'Number', val: page.value },
         //   { name: 'pageSize', type: 'Number', val: pageSize.value },
         // ])
         break
       case '是否显示分页':
-        // var isshowPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
+        // var isshowPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
         // this.showPagination = isshowPage.value
         break
       case '列样式':
@@ -957,17 +956,17 @@ export default class TableComponent extends ComponentBase {
         }
         break
       case '是否可选':
-        var property111 = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+        var property111 = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
         if (property111) {
           var temp = common.clone(property111.value)
           temp.canChoose = property.value === '否' ? 0 : property.value === '多选' ? 1 : 2
           this.tableStyle = temp
           property111.value = temp
-          //this.SetPropertyVal(property111.id,temp)
+          //this.setPropertyVal(property111.id,temp)
         }
         break
       case '是否树表格':
-        var property111 = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+        var property111 = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
         if (property111) {
           var temp = common.clone(property111.value)
           //temp.canChoose = property.value === '否' ? 0 : property.value === '多选' ? 1 : 2
@@ -977,11 +976,11 @@ export default class TableComponent extends ComponentBase {
             ;(temp as tableStyle).hasChildData = false
           }
           //this.tableStyle = temp
-          this.SetPropertyVal(property111.id, temp)
+          this.setPropertyVal(property111.id, temp)
         }
         break
       case '高度':
-        window.console.log('------------------------表格高度变更property',property)
+        window.console.log('------------------------表格高度变更property', property)
         ;(this.$refs['table'] as any).setDynamicheight(property.value)
         break
       default:
@@ -996,7 +995,7 @@ export default class TableComponent extends ComponentBase {
 
   private getcolumn(): any[] {
     var columnInfos = []
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       if (this.getPropertyBindInfo(prop.id)) {
         var codeList = this.getPropertyBindInfo(prop.id).modelCodes
@@ -1031,7 +1030,7 @@ export default class TableComponent extends ComponentBase {
     etableStyle.orderCode = this.tableStyle ? this.tableStyle.orderCode : null
     etableStyle.isCanCheck = this.tableStyle ? this.tableStyle.isCanCheck : true
     etableStyle.columnInfos = []
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
       //window.console.log('----------------------------------------aaaaaaaaaaa', propBind)
@@ -1063,7 +1062,7 @@ export default class TableComponent extends ComponentBase {
       }
     }
     //添加子表格数据源模型实例
-    prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+    prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
       if (propBind) {
@@ -1093,13 +1092,13 @@ export default class TableComponent extends ComponentBase {
   /**获取导出配置 */
   private getExportSetting(): tableStyle {
     let oldSetting = new tableStyle()
-    let exportProperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
+    let exportProperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
     if (exportProperty && exportProperty.value) {
       oldSetting = exportProperty.value
     }
     var etableStyle = new tableStyle()
     etableStyle.columnInfos = []
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
       if (propBind) {
@@ -1170,7 +1169,7 @@ export default class TableComponent extends ComponentBase {
   }
 
   private refreshCoulumnByStyle(): tableStyle {
-    var proper = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+    var proper = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
     if (proper) {
       if (proper.value) {
         return proper.value
@@ -1184,33 +1183,33 @@ export default class TableComponent extends ComponentBase {
     this.itemSelect(value)
     //window.console.log('------------------------------------勾选参数', currentRow)
     if (ischecked) {
-      this.TriggeEvent('勾选行', currentRow)
+      this.triggeEvent('勾选行', currentRow)
     } else {
-      this.TriggeEvent('取消勾选行', currentRow)
+      this.triggeEvent('取消勾选行', currentRow)
     }
   }
 
   /** 自动触发选择，不触发勾选事件 */
   itemSelect(value: any[]) {
     //window.console.log('------------------------------------当前选中行121212', value)
-    let isSelectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
+    let isSelectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
     if (value.length === 0) {
-      this.SetPropertyVal(isSelectproperty.id, true)
+      this.setPropertyVal(isSelectproperty.id, true)
       //return
     }
-    let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     if (!chooseType) {
       return
     }
-    let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
+    let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
     if (chooseType.value === '单选' || chooseType.value === '否') {
       // if (value.length > 0) {
 
       // }
       let val = { modelCode: this.getModelCode(), data: common.clone(value.length > 0 ? value[0] : {}) }
-      this.SetPropertyVal(property.id, val)
-      this.SetPropertyVal(prop.id, common.clone(value.length > 0 ? value[0] : {}))
+      this.setPropertyVal(property.id, val)
+      this.setPropertyVal(prop.id, common.clone(value.length > 0 ? value[0] : {}))
       //关联的模型实例的值也要改掉，根据属性关联更新模型实例有点问题，暂时先这么处理
       let propBind = this.getPropertyBindInfo(property.id)
       if (propBind) {
@@ -1219,8 +1218,8 @@ export default class TableComponent extends ComponentBase {
       }
     } else {
       let val = { modelCode: this.getModelCode(), data: common.clone(value) }
-      this.SetPropertyVal(property.id, val)
-      this.SetPropertyVal(prop.id, common.clone(value))
+      this.setPropertyVal(property.id, val)
+      this.setPropertyVal(prop.id, common.clone(value))
       let propBind = this.getPropertyBindInfo(property.id)
       if (propBind) {
         let modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
@@ -1228,7 +1227,7 @@ export default class TableComponent extends ComponentBase {
       }
     }
     //window.console.log('当前选中行', property.value)
-    this.SetPropertyVal(isSelectproperty.id, value.length <= 0)
+    this.setPropertyVal(isSelectproperty.id, value.length <= 0)
     //window.console.log('--------------------当前是否有选中行', property.value)
     //window.console.log('--------this.parentPage.modelBindingsmodelBindings', common.clone(this.parentPage.modelBindings))
   }
@@ -1239,15 +1238,15 @@ export default class TableComponent extends ComponentBase {
   }
 
   tempDataClear() {
-    let addeddata = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let addeddata = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     if (addeddata) {
       addeddata.value = []
     }
-    let updateddate = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let updateddate = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     if (updateddate) {
       updateddate.value = []
     }
-    let deleteddate = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let deleteddate = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     if (deleteddate) {
       deleteddate.value = []
     }
@@ -1255,22 +1254,22 @@ export default class TableComponent extends ComponentBase {
   }
 
   rowClick(row: any) {
-    let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+    let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
     var val = { modelCode: this.getModelCode(), data: common.clone(row) }
-    this.SetPropertyVal(property.id, val)
+    this.setPropertyVal(property.id, val)
     let propBind = this.getPropertyBindInfo(property.id)
     if (propBind) {
       let modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
       modelInfo.val = common.clone(val)
     }
     //window.console.log('-----------------------触发点击行事件', row)
-    this.TriggeEvent('点击行', row)
+    this.triggeEvent('点击行', row)
   }
 
   //分页信息改变通知属性
   changePage(pageNumber: any, pageSize: any, istriggerEvent: boolean = true) {
-    var page = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
-    var size = this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
+    var page = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+    var size = this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
     let propBind = this.getPropertyBindInfo(page.id)
     if (propBind) {
       var modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == propBind.modelName)
@@ -1284,19 +1283,19 @@ export default class TableComponent extends ComponentBase {
     }
     page.value = pageNumber
     size.value = pageSize
-    //this.SetPropertyVal(page.id,pageNumber)
+    //this.setPropertyVal(page.id,pageNumber)
     //window.console.log('propBind',propBind)
     //window.console.log('----------------------------------------------进入刷新方法')
     if (istriggerEvent) {
-      this.TriggeEvent('列表刷新', null)
+      this.triggeEvent('列表刷新', null)
     }
   }
 
   getModelCode(ischild: boolean = false) {
     let tempModelCode = ''
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (ischild) {
-      prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+      prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     }
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
@@ -1313,9 +1312,9 @@ export default class TableComponent extends ComponentBase {
 
   getModel(ischild: boolean = false): modelBingding {
     let tempModel = new modelBingding()
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (ischild) {
-      prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+      prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     }
     if (prop) {
       //window.console.log('prop-xxx',prop)
@@ -1334,10 +1333,10 @@ export default class TableComponent extends ComponentBase {
 
   refreshData(pagenumber: number) {
     //window.console.log('---------------------------------刷新当前页行为执行完成之后pagenumber111', pagenumber)
-    var page = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
-    var size = this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
+    var page = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+    var size = this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
     page.value = pagenumber
-    //this.TriggeEvent('列表刷新', null)
+    //this.triggeEvent('列表刷新', null)
     //如果pagenumber大于1，就是要刷新当前页，如果等于1就是要刷新到首页
     this.changePage(page.value, size.value)
     //window.console.log('---------------------------------刷新当前页行为执行完成之后pagenumber', pagenumber)
@@ -1360,8 +1359,8 @@ export default class TableComponent extends ComponentBase {
     //排序赋值
     this.getModel().modelOrders = []
     var tmodel = this.getModel().modelOrders
-    let index = tmodel.findIndex((item) => item.code == this.rowIdName) 
-    if (index >= 0){
+    let index = tmodel.findIndex((item) => item.code == this.rowIdName)
+    if (index >= 0) {
       tmodel.splice(index, 1)
     }
     if (orderInfo.length > 0) {
@@ -1372,26 +1371,26 @@ export default class TableComponent extends ComponentBase {
       } else {
         tmodel[idx].val = orderInfo[0].type === 'DESC' ? true : false
       }
-    }    
+    }
     tmodel.push({ code: this.rowIdName, val: true })
-    //this.TriggeEvent('列表排序', inparam)
-    this.TriggeEvent('列表刷新', null)
+    //this.triggeEvent('列表排序', inparam)
+    this.triggeEvent('列表刷新', null)
   }
 
   //isExpand:boolean=false
   //表格展开事件
   expand(row: any) {
     //window.console.log('--------------------------------展开行属性xxxxxxxxx-----------------', row)
-    var prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+    var prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
     if (prop) {
       //window.console.log('--------------------------------展开的行赋值-----------------', row)
-      this.SetPropertyVal(prop.id, row[this.rowIdName])
+      this.setPropertyVal(prop.id, row[this.rowIdName])
     }
     //window.console.log('--------------------------------展开行属性-----------------', prop)
     let _this = this
     this.$nextTick(() => {
       let temp = _this.oldAllChildDataSource.find((item) => item.key == row[_this.rowIdName])
-      let tempprop = _this.FindPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
+      let tempprop = _this.findPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
       let tempnew = _this.allChildDataSource.find((item) => item.key == row[_this.rowIdName])
       if (tempnew && tempnew.value && tempnew.value.length > 0 && tempprop.value == true) {
         _this.childdataSource = []
@@ -1413,11 +1412,11 @@ export default class TableComponent extends ComponentBase {
           })
         }
       } else {
-        let childdataProp = _this.FindPropertyByName(PropertyGroupName.normal, '子表格数据源')
-        _this.SetPropertyVal(childdataProp.id, null)
+        let childdataProp = _this.findPropertyByName(PropertyGroupName.normal, '子表格数据源')
+        _this.setPropertyVal(childdataProp.id, null)
 
         _this.$nextTick(() => {
-          _this.TriggeEvent('表格展开', row)
+          _this.triggeEvent('表格展开', row)
         })
       }
     })
@@ -1426,10 +1425,10 @@ export default class TableComponent extends ComponentBase {
   /** 变更子表格数据源 */
   changeChildData(property: any) {
     if (property.value) {
-      var prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+      var prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
       if (prop) {
         let temp = this.oldAllChildDataSource.find((item) => item.key == prop.value)
-        var tempprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
+        var tempprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
         if (tempprop.value == false) {
           let tempValue = property.value.content
           if (tempValue && tempValue.length > 0) {
@@ -1490,7 +1489,7 @@ export default class TableComponent extends ComponentBase {
       })
       this.dataSource = newData
       this.prepareData('删除')
-      let propertyClick = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+      let propertyClick = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
       if (propertyClick && propertyClick.value) {
         //如果点击行被删除，需要更新一下属性
         let row = selectRows.find((s) =>
@@ -1498,7 +1497,7 @@ export default class TableComponent extends ComponentBase {
         )
         if (row) {
           var val = { modelCode: this.getModelCode(), data: {} }
-          this.SetPropertyVal(propertyClick.id, val)
+          this.setPropertyVal(propertyClick.id, val)
         }
       }
     }
@@ -1557,7 +1556,7 @@ export default class TableComponent extends ComponentBase {
 
   //临时数据的批量删除，根据当前选中行来处理
   deleteRows() {
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
     window.console.log('--------------------------------进入删除行-----------------', prop)
     if (prop.value) {
       let selectRows = []
@@ -1576,7 +1575,7 @@ export default class TableComponent extends ComponentBase {
       this.dataSource = newData
       this.prepareData('删除')
       this.itemSelect([])
-      let propertyClick = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+      let propertyClick = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
       if (propertyClick && propertyClick.value) {
         //如果点击行被删除，需要更新一下属性
         let row = selectRows.find((s) =>
@@ -1584,7 +1583,7 @@ export default class TableComponent extends ComponentBase {
         )
         if (row) {
           var val = { modelCode: this.getModelCode(), data: {} }
-          this.SetPropertyVal(propertyClick.id, val)
+          this.setPropertyVal(propertyClick.id, val)
         }
       }
     }
@@ -1609,7 +1608,7 @@ export default class TableComponent extends ComponentBase {
     //主键的验证不区分情况
     validateParam.push(this.rowIdName)
 
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    let prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     let propBind = this.getPropertyBindInfo(prop.id)
     let modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
     let detailInfo = modelInfo.modelDetailInfo
@@ -1817,14 +1816,14 @@ export default class TableComponent extends ComponentBase {
 
   //准备数据，根据类型来更新对应属性
   prepareData(operateType: string) {
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let prop = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     let olddata = prop.value ? prop.value.content : []
     if (!olddata) {
       olddata = prop.value
     }
     if (!olddata || !(olddata instanceof Array)) {
       olddata = []
-      //this.SetPropertyVal(prop.id,[])
+      //this.setPropertyVal(prop.id,[])
     }
     let resadddata = []
     let resupdatedata = []
@@ -1865,11 +1864,11 @@ export default class TableComponent extends ComponentBase {
       }
     }
     //联动的操作需要把之前的临时数据同步处理
-    let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     addprop.value = resadddata
-    let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     updateprop.value = resupdatedata
-    let deleteprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let deleteprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     deleteprop.value = resdeletedata
     //记录变更
     //window.console.log('-------------------------------------------------------临时数据变更新增', addprop)
@@ -1877,7 +1876,7 @@ export default class TableComponent extends ComponentBase {
     //window.console.log('-------------------------------------------------------临时数据变更删除', deleteprop)
     //删除之后，检查选中行的数据
     if (operateType === '删除') {
-      let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+      let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
       if (!chooseType) {
         return
       }
@@ -1885,7 +1884,7 @@ export default class TableComponent extends ComponentBase {
         this.itemSelect([])
         return
       }
-      let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+      let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
       if (chooseType.value === '单选' || chooseType.value === '否') {
         let ttt = (property.value as any).data
         if (ttt && !this.dataSource.find((item) => item[this.rowIdName] == ttt[this.rowIdName])) {
@@ -1909,9 +1908,9 @@ export default class TableComponent extends ComponentBase {
 
   /** 行编辑结束，更新编辑数据源 */
   rowEditEnd(row: any) {
-    let olddata = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源').value.content
+    let olddata = this.findPropertyByName(PropertyGroupName.normal, '表格数据源').value.content
     if (!olddata) {
-      olddata = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源').value
+      olddata = this.findPropertyByName(PropertyGroupName.normal, '表格数据源').value
     }
     let resadddata = []
     let resupdatedata = []
@@ -1951,12 +1950,12 @@ export default class TableComponent extends ComponentBase {
       })
     }
 
-    let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     addprop.value = resadddata
-    let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     updateprop.value = resupdatedata
     //联动更新选中行和点击行 20200828
-    let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+    let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
     if (property && property.value && property.value.data) {
       if (property.value.data instanceof Array) {
         let index = property.value.data.findIndex((element) => element[this.rowIdName] == currentRow[this.rowIdName])
@@ -1969,13 +1968,13 @@ export default class TableComponent extends ComponentBase {
         }
       }
     }
-    let propertyClick = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+    let propertyClick = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
     if (propertyClick && propertyClick.value) {
       //propertyClick.value.data == currentRow
       var val = { modelCode: this.getModelCode(), data: currentRow }
-      this.SetPropertyVal(propertyClick.id, val)
+      this.setPropertyVal(propertyClick.id, val)
     }
-    //this.SetPropertyVal(property.id, property.value)
+    //this.setPropertyVal(property.id, property.value)
     //window.console.log('-------------------------------------------------------当前选中行', property.value)
     if (!property.value.data || property.value.data.length == 0) {
       this.itemSelect([])
@@ -1983,7 +1982,7 @@ export default class TableComponent extends ComponentBase {
       this.itemSelect(property.value.data)
     }
     //触发行编辑结束
-    this.TriggeEvent('行编辑结束', common.clone(currentRow))
+    this.triggeEvent('行编辑结束', common.clone(currentRow))
     //window.console.log('-------------------------------------------------------行编辑结束记录', updateprop)
   }
 
@@ -2054,7 +2053,7 @@ export default class TableComponent extends ComponentBase {
   /** 全部勾选*/
   selectAllData(param: any) {
     //window.console.log('----------------------勾选全部param', param)
-    //let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    //let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     // if (!chooseType || chooseType.value === '否' || chooseType.value === '单选') {
     //   return
     // }
@@ -2067,17 +2066,17 @@ export default class TableComponent extends ComponentBase {
           this.itemSelect(this.dataSource)
           if (param.length > 1) {
             if (param[1]) {
-              this.TriggeEvent('勾选行', null)
+              this.triggeEvent('勾选行', null)
             }
           }
         } else {
           this.itemSelect([])
           if (param[0] === false) {
-            this.TriggeEvent('取消勾选行', null)
+            this.triggeEvent('取消勾选行', null)
           }
         }
       })
-      // let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+      // let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
       // window.console.log('当前选中行', property.value)
     }
   }
@@ -2097,7 +2096,7 @@ export default class TableComponent extends ComponentBase {
       }
       //this.dataSource
 
-      //let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+      //let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
       // if (!chooseType || chooseType.value === '否' || chooseType.value === '单选') {
       //   return
       // }
@@ -2134,7 +2133,7 @@ export default class TableComponent extends ComponentBase {
           }
         })
 
-        let selectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+        let selectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
         if (param.length > 2 && param[2] === false) {
           ;(this.$refs.table as any).setRowsSelected(tempArr, false)
         } else {
@@ -2162,9 +2161,9 @@ export default class TableComponent extends ComponentBase {
         if (param.length > 3) {
           if (param[3]) {
             if (param[2] !== false) {
-              this.TriggeEvent('勾选行', null)
+              this.triggeEvent('勾选行', null)
             } else {
-              this.TriggeEvent('取消勾选行', null)
+              this.triggeEvent('取消勾选行', null)
             }
           }
         }
@@ -2174,18 +2173,18 @@ export default class TableComponent extends ComponentBase {
 
   childItemSelect(value: any, isChecked: boolean) {
     //window.console.log('------------------------------------当前选中行121212', value)
-    let isSelectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
-    // let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    let isSelectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
+    // let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     // if (!chooseType) {
     //   return
     // }
     let isCanCheck = this.tableStyle.child.isCanCheck
-    // let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
-    // let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
+    // let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+    // let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
     // if (!isCanCheck) {
     //   let val = { modelCode: this.getModelCode(true), data: common.clone(value) }
-    //   this.SetPropertyVal(property.id, val)
-    //   this.SetPropertyVal(prop.id, common.clone(value))
+    //   this.setPropertyVal(property.id, val)
+    //   this.setPropertyVal(prop.id, common.clone(value))
     // } else {
     //   let tempValue = common.clone(property.value.data)
     //   if (isChecked) {
@@ -2200,10 +2199,10 @@ export default class TableComponent extends ComponentBase {
     //     }
     //   }
     //   let val = { modelCode: this.getModelCode(true), data: tempValue }
-    //   this.SetPropertyVal(property.id, val)
+    //   this.setPropertyVal(property.id, val)
     // }
     // window.console.log('当前子表格选中行', property.value.data)
-    // this.SetPropertyVal(isSelectproperty.id, value.length <= 0)
+    // this.setPropertyVal(isSelectproperty.id, value.length <= 0)
 
     //更新子表格选中变量
     if (isChecked) {
@@ -2212,11 +2211,11 @@ export default class TableComponent extends ComponentBase {
         if (!temp) {
           this.childCheckRows.push(value)
         }
-        this.TriggeEvent('勾选行', common.clone(value))
+        this.triggeEvent('勾选行', common.clone(value))
       } else {
         this.childCheckRows = []
         this.childCheckRows.push(value)
-        this.TriggeEvent('勾选行', common.clone(value))
+        this.triggeEvent('勾选行', common.clone(value))
       }
     } else {
       if (isCanCheck) {
@@ -2224,7 +2223,7 @@ export default class TableComponent extends ComponentBase {
         if (tempIndex > -1) {
           this.childCheckRows.splice(tempIndex, 1)
         }
-        this.TriggeEvent('取消勾选行', common.clone(value))
+        this.triggeEvent('取消勾选行', common.clone(value))
       }
     }
   }
@@ -2247,7 +2246,7 @@ export default class TableComponent extends ComponentBase {
 
   /** 表格数据变化触发变更事件 */
   dataChange() {
-    this.TriggeEvent('表格数据变更', common.clone(this.dataSource))
+    this.triggeEvent('表格数据变更', common.clone(this.dataSource))
   }
 
   /** 公开六个方法 */
@@ -2258,7 +2257,7 @@ export default class TableComponent extends ComponentBase {
       //window.console.log('------------------获取添加数据源参数', param)
       isaddModelCode = param[0]
     }
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     if (prop.value && prop.value instanceof Array && prop.value.length > 0) {
       return isaddModelCode == true ? { modelCode: this.getModelCode(), data: common.clone(prop.value) } : common.clone(prop.value)
     } else {
@@ -2280,7 +2279,7 @@ export default class TableComponent extends ComponentBase {
       //window.console.log('------------------获取更新数据源参数', param)
       isaddModelCode = param[0]
     }
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     if (prop.value && prop.value instanceof Array && prop.value.length > 0) {
       return isaddModelCode == true ? { modelCode: this.getModelCode(), data: common.clone(prop.value) } : common.clone(prop.value)
     } else {
@@ -2301,7 +2300,7 @@ export default class TableComponent extends ComponentBase {
       //window.console.log('------------------获取删除数据源参数', param)
       isaddModelCode = param[0]
     }
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     if (prop.value && prop.value instanceof Array && prop.value.length > 0) {
       return isaddModelCode == true ? { modelCode: this.getModelCode(), data: common.clone(prop.value) } : common.clone(prop.value)
     } else {
@@ -2321,7 +2320,7 @@ export default class TableComponent extends ComponentBase {
    * 数据源不注册属性了，定义成变量内部使用
    */
   getDataSourceByType(param: operationTypeEnum) {
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let prop = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     let olddata = prop.value.content
     if (!olddata) {
       olddata = prop.value
@@ -2726,7 +2725,7 @@ export default class TableComponent extends ComponentBase {
       this.allChildDataSourceNoGroup[idx] = common.clone(row)
     }
     //行编辑结束
-    //this.TriggeEvent('行编辑结束', common.clone(currentRow))
+    //this.triggeEvent('行编辑结束', common.clone(currentRow))
     //window.console.log('-------------------------------------------------------子表格行编辑结束记录allChildDataSource', this.allChildDataSource)
     //window.console.log('-------------------------------------------------------子表格行编辑结束记录', this.allChildDataSourceNoGroup)
   }
@@ -2749,7 +2748,7 @@ export default class TableComponent extends ComponentBase {
           ? param[2].data.content
           : param[2].data
         : param[2]
-      let prop = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+      let prop = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
       if (prop) {
         prop.value = { content: common.clone(tempUpdate) }
       }
@@ -2758,13 +2757,13 @@ export default class TableComponent extends ComponentBase {
         _this.dataSource = []
         _this.dataSource = _this.dataSource.concat(tempAdd)
         _this.dataSource = _this.dataSource.concat(tempUpdate)
-        let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+        let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
         addprop.value = tempAdd
-        let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+        let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
         updateprop.value = tempUpdate
       })
       //let olddata = prop.value? prop.value.content:[]
-      let deleteprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+      let deleteprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
       deleteprop.value = tempDelete
     }
   }
@@ -2796,7 +2795,7 @@ export default class TableComponent extends ComponentBase {
   /** 重置数据，还原到上次查询到的数据 */
   resetDataSource() {
     //window.console.log('----------------进入表格重置方法')
-    let property = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let property = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     if (property.value) {
       let cloneValue = common.clone(property.value)
       this.initDataSource(cloneValue)
@@ -2809,8 +2808,8 @@ export default class TableComponent extends ComponentBase {
     this.allChildDataSource = []
     this.allChildDataSourceNoGroup = []
     ;(this.$refs['table'] as any).clearRowExpand()
-    let childprop = this.FindPropertyByName(PropertyGroupName.normal, '子表格数据源')
-    this.SetPropertyVal(childprop.id, [])
+    let childprop = this.findPropertyByName(PropertyGroupName.normal, '子表格数据源')
+    this.setPropertyVal(childprop.id, [])
   }
 
   /**
@@ -2906,9 +2905,9 @@ export default class TableComponent extends ComponentBase {
    * 存在的话返回true，不存在返回false
    */
   checkIsExistTempData(param: any) {
-    let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
-    let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
-    let deleteprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let deleteprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     if (
       (!addprop.value || addprop.value.length == 0) &&
       (!updateprop.value || updateprop.value.length == 0) &&
@@ -2921,9 +2920,9 @@ export default class TableComponent extends ComponentBase {
   }
   celldbclick(value: any[], currentRow: any, ischecked: boolean = true) {
     this.manualSelect(value, currentRow, ischecked)
-    let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+    let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
     var val = { modelCode: this.getModelCode(), data: common.clone(currentRow) }
-    this.SetPropertyVal(property.id, val)
+    this.setPropertyVal(property.id, val)
   }
   private currentClickRow: any
   childcelldbclick(value: any, isChecked: boolean) {
@@ -2933,7 +2932,7 @@ export default class TableComponent extends ComponentBase {
   childrowClick(row: any) {
     this.currentClickRow = common.clone(row)
     //window.console.log('-----------------------触发子表格点击行事件', row)
-    this.TriggeEvent('点击行', row)
+    this.triggeEvent('点击行', row)
   }
   getChildCurrentDataSource(param: any) {
     return common.clone(this.allChildDataSourceNoGroup)
@@ -2974,15 +2973,14 @@ export default class TableComponent extends ComponentBase {
       if (columnCodeStr) {
         validateParam = columnCodeStr.split('@')
       }
-      if (validateParam.length == 0){
+      if (validateParam.length == 0) {
         return
       }
-      if (validateParam.length == 1){
+      if (validateParam.length == 1) {
         let columnCode = validateParam[0]
         let isshow = param.length == 1 ? false : param[1]
         ;(this.$refs.table as any).switchColumnStatus(columnCode, isshow)
-      }
-      else{
+      } else {
         let isshow = param.length == 1 ? false : param[1]
         ;(this.$refs.table as any).switchColumnStatusByCodeArr(validateParam, isshow)
       }
@@ -3028,7 +3026,7 @@ export default class TableComponent extends ComponentBase {
    * 树表格展开行
    */
   treeExpand(row: any) {
-    this.TriggeEvent('树表格展开行', row)
+    this.triggeEvent('树表格展开行', row)
   }
 
   setTreeExpandRowChildren(param: any) {
@@ -3082,7 +3080,7 @@ export default class TableComponent extends ComponentBase {
       filename = param[0]
     }
     let columns = []
-    let exportPro = this.FindPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
+    let exportPro = this.findPropertyByName(propertyGroupEnum.tableSetting, '导出设置')
     if (exportPro && exportPro.value) {
       columns = exportPro.value.columnInfos
     }
@@ -3203,56 +3201,56 @@ export default class TableComponent extends ComponentBase {
   }
 
   /** 行编辑开始事件 */
-  rowEditBeginTriggerEvent(currentRow){
+  rowEditBeginTriggerEvent(currentRow) {
     //window.console.log('-----行编辑开始')
-    this.TriggeEvent('行编辑开始', common.clone(currentRow))
-  }  
+    this.triggeEvent('行编辑开始', common.clone(currentRow))
+  }
 
   /**更新table组件的子项，用于外部获取操作列中的组件 */
-  updateComponentsChildren(){
+  updateComponentsChildren() {
     let tableg = new TableGrid()
     let action = this.tableStyle.columnInfos.find((item) => item.field === 'action')
-    if (action && action.colTemplateData){
-      if (this.tableStyle.child){
+    if (action && action.colTemplateData) {
+      if (this.tableStyle.child) {
         let childAction = this.tableStyle.child.columnInfos.find((item) => item.field === 'action')
-        if (childAction && childAction.colTemplateData){
+        if (childAction && childAction.colTemplateData) {
           let childtable = new TableGrid()
           childtable.LoadPageByData(childAction.colTemplateData.id, childAction.colTemplateData)
           ;(tableg as any).children = [childtable]
         }
       }
       tableg.LoadPageByData(action.colTemplateData.id, action.colTemplateData)
-      this.children=[tableg]
-      window.console.log('---------------------表格子数据',this.children)
+      this.children = [tableg]
+      window.console.log('---------------------表格子数据', this.children)
     }
   }
 
-  getRowById(param:any){
+  getRowById(param: any) {
     if (param instanceof Array && param.length > 0) {
       let id = param[0]
-      let row = this.dataSource.find(item=>item[this.rowIdName] == id)
+      let row = this.dataSource.find((item) => item[this.rowIdName] == id)
       return common.clone(row)
     }
   }
 
-  /** 
+  /**
    * 高级设置
    * 弹出一个表格列的编辑窗口，需要支持多行编辑
    * 类似于表格列设置
    */
-  tableAdvanceSetting(param){
+  tableAdvanceSetting(param) {
     //window.console.error('------------高级设置',param)
     //let setting = new AdvanceSetting()
     //setting.view(this.tableStyle)
     ;(this.$refs.setting as any).view(param)
   }
 
-  personalConfigId:any=''
+  personalConfigId: any = ''
   /**
    * 保存设置的信息
    * 调用接口
    */
-  async saveTableSetting(param){
+  async saveTableSetting(param) {
     //定义保存的数据结构
     //window.console.error('-----------保存表格设置',param)
     //return
@@ -3263,25 +3261,20 @@ export default class TableComponent extends ComponentBase {
     if (!this.personalConfigId) {
       this.personalConfigId = await CurrentApis.GetUniqueIds(1)[0]
     }
-    await CurrentApis.SaveComponentConfig(
-      this.Id,
-      this.topParentPage.Id,
-      { config: personalConfig },
-      this.personalConfigId
-    )
+    await CurrentApis.SaveComponentConfig(this.Id, this.topParentPage.Id, { config: personalConfig }, this.personalConfigId)
     //this.personConfig = personalConfig
-    ;(this.$refs.table as any).initStyle(this.tableStyle,personalConfig)
+    ;(this.$refs.table as any).initStyle(this.tableStyle, personalConfig)
     // this.$nextTick(()=>{
     //   ;(this.$refs.table as any).resetDataSource(this.dataSource)
     // })
   }
 
   /**设置子表的点击 */
-  setChildClickRow(param){
+  setChildClickRow(param) {
     if (param instanceof Array && param.length > 1) {
       let id = param[0]
       let childId = param[1]
-      ;(this.$refs.table as any).setChildrenClickRow(id,childId)
+      ;(this.$refs.table as any).setChildrenClickRow(id, childId)
     }
   }
 }
@@ -3343,7 +3336,7 @@ export default class TableComponent extends ComponentBase {
   height: 30px !important;
 }
 
-.vxe-table .vxe-header--column.col--ellipsis{
+.vxe-table .vxe-header--column.col--ellipsis {
   height: 40px !important;
 }
 

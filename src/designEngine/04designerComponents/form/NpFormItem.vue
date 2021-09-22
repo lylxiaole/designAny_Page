@@ -14,7 +14,7 @@ import {
   Behavior_Property,
   Enum_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import $ from 'jquery'
 import PageBase from '../../03designerLayoutBase/PageBase'
 import modelBingding, { bindingModelVal_InProperty, modelBingValue, bindTypeEnum } from '../../02common/commonClasses/modelBingding'

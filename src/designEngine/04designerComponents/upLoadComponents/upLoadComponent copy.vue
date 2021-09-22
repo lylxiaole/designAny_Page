@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { CurrentApis, fileInfo, CurrentContext } from '../../01designerContext'
 import {
   Property,
@@ -23,22 +23,22 @@ import {
   Number_Property,
   UploadFile_Property,
   Color_Property,
-  BindingModels_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  BindingModels_Property
+} from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 import npUploadFile from '../../07commonComponents/npUploadFile.vue'
 import fileUpload from '../../02common/uploadFile/fileUpload'
 
 import { message } from 'ant-design-vue'
 
 @Component({
-  components: { npUploadFile },
+  components: { npUploadFile }
 })
 export default class upLoadComponent extends ComponentBase {
   private get fileList(): fileInfo[] {
     window.console.log('上传文件完成了get')
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文件列表')
+    var property = this.findPropertyByName(PropertyGroupName.special, '文件列表')
     if (property) {
       return property.value as fileInfo[]
     } else {
@@ -47,8 +47,8 @@ export default class upLoadComponent extends ComponentBase {
   }
   private set fileList(filelist: fileInfo[]) {
     window.console.log('上传文件完成了set')
-    var propertyId = this.FindPropertyByName(PropertyGroupName.special, '文件列表').id
-    this.SetPropertyVal(propertyId, filelist)
+    var propertyId = this.findPropertyByName(PropertyGroupName.special, '文件列表').id
+    this.setPropertyVal(propertyId, filelist)
   }
   upLoadCallBack(relativePath: String) {
     var inParams: param[] = []
@@ -58,7 +58,7 @@ export default class upLoadComponent extends ComponentBase {
     para.val = relativePath
 
     inParams.push(para)
-    this.TriggeEvent('文件上传成功', inParams)
+    this.triggeEvent('文件上传成功', inParams)
   }
 
   uploadError(error: any) {
@@ -66,24 +66,24 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get fileType(): string {
-    if (this.FindProperties(PropertyGroupName.special, '文件格式')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '文件格式')[0].value as any
+    if (this.findProperties(PropertyGroupName.special, '文件格式')[0]) {
+      return this.findProperties(PropertyGroupName.special, '文件格式')[0].value as any
     } else {
       return 'image'
     }
   }
 
   get fontColor(): String {
-    if (this.FindPropertyByName(PropertyGroupName.special, '前景色')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '前景色').value as String
+    if (this.findPropertyByName(PropertyGroupName.special, '前景色')) {
+      return this.findPropertyByName(PropertyGroupName.special, '前景色').value as String
     } else {
       return ''
     }
   }
 
   get backgroundColor(): String {
-    if (this.FindPropertyByName(PropertyGroupName.special, '背景色')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '背景色').value as String
+    if (this.findPropertyByName(PropertyGroupName.special, '背景色')) {
+      return this.findPropertyByName(PropertyGroupName.special, '背景色').value as String
     } else {
       return ''
     }
@@ -91,12 +91,12 @@ export default class upLoadComponent extends ComponentBase {
 
   get imageUrl(): String {
     if (
-      this.FindPropertyByName(PropertyGroupName.special, '背景图片') &&
-      this.FindPropertyByName(PropertyGroupName.special, '背景图片').value &&
-      this.FindPropertyByName(PropertyGroupName.special, '背景图片').value[0]
+      this.findPropertyByName(PropertyGroupName.special, '背景图片') &&
+      this.findPropertyByName(PropertyGroupName.special, '背景图片').value &&
+      this.findPropertyByName(PropertyGroupName.special, '背景图片').value[0]
     ) {
       var address = (CurrentContext.FileServerAddress +
-        this.FindPropertyByName(PropertyGroupName.special, '背景图片').value[0].url.split('?')[0]) as String
+        this.findPropertyByName(PropertyGroupName.special, '背景图片').value[0].url.split('?')[0]) as String
       window.console.log(address)
       return address
     } else {
@@ -105,24 +105,24 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get upLoadSize(): number {
-    if (this.FindProperties(PropertyGroupName.special, '文件大小不超过')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '文件大小不超过')[0].value as any
+    if (this.findProperties(PropertyGroupName.special, '文件大小不超过')[0]) {
+      return this.findProperties(PropertyGroupName.special, '文件大小不超过')[0].value as any
     } else {
       return 2
     }
   }
 
   get maxFileLengthParent(): number {
-    if (this.FindProperties(PropertyGroupName.special, '文件最大数量')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '文件最大数量')[0].value as any
+    if (this.findProperties(PropertyGroupName.special, '文件最大数量')[0]) {
+      return this.findProperties(PropertyGroupName.special, '文件最大数量')[0].value as any
     } else {
       return 10
     }
   }
 
   get uploadDisable(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否禁用')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '是否禁用')[0].value) {
+    if (this.findProperties(PropertyGroupName.special, '是否禁用')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '是否禁用')[0].value) {
         return true
       } else {
         if (this.fileList.length < this.maxFileLengthParent) {
@@ -137,16 +137,16 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get listType(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '列表样式')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '列表样式').value
+    if (this.findPropertyByName(PropertyGroupName.special, '列表样式')) {
+      return this.findPropertyByName(PropertyGroupName.special, '列表样式').value
     } else {
       return 'picture-card'
     }
   }
 
   get showUploadList(): boolean {
-    if (this.FindPropertyByName(PropertyGroupName.special, '是否显示已上传文件列表')[0]) {
-      return this.FindPropertyByName(PropertyGroupName.special, '是否显示已上传文件列表')[0].value as boolean
+    if (this.findPropertyByName(PropertyGroupName.special, '是否显示已上传文件列表')[0]) {
+      return this.findPropertyByName(PropertyGroupName.special, '是否显示已上传文件列表')[0].value as boolean
     }
     return true
   }
@@ -157,25 +157,25 @@ export default class upLoadComponent extends ComponentBase {
     para.name = '文件相对路径'
     para.type = paramType.string
     inParams.push(para)
-    this.RegisterEvents('文件上传成功', null, inParams, null)
+    this.registerEvents('文件上传成功', null, inParams, null)
 
-    this.RegisterProperty('文件格式', PropertyGroupName.special, new Enum_Property(true, ['image', 'file', 'vedio', 'vectorgraph']), 'image')
-    this.RegisterProperty('文件列表', PropertyGroupName.special, null, [])
-    this.RegisterProperty('文件大小不超过', PropertyGroupName.special, new Number_Property(), 2)
+    this.registerProperty('文件格式', PropertyGroupName.special, new Enum_Property(true, ['image', 'file', 'vedio', 'vectorgraph']), 'image')
+    this.registerProperty('文件列表', PropertyGroupName.special, null, [])
+    this.registerProperty('文件大小不超过', PropertyGroupName.special, new Number_Property(), 2)
 
-    this.RegisterProperty('文件最大数量', PropertyGroupName.special, new Number_Property(), 10)
+    this.registerProperty('文件最大数量', PropertyGroupName.special, new Number_Property(), 10)
 
-    //this.RegisterProperty('是否禁用', PropertyGroupName.special, new Boolean_Property(), false)
+    //this.registerProperty('是否禁用', PropertyGroupName.special, new Boolean_Property(), false)
 
-    this.RegisterProperty('前景色', PropertyGroupName.special, new Color_Property(), '')
+    this.registerProperty('前景色', PropertyGroupName.special, new Color_Property(), '')
 
-    this.RegisterProperty('背景色', PropertyGroupName.special, new Color_Property(), '')
+    this.registerProperty('背景色', PropertyGroupName.special, new Color_Property(), '')
 
-    this.RegisterProperty('背景图片', PropertyGroupName.special, new UploadFile_Property(1, 'image'))
+    this.registerProperty('背景图片', PropertyGroupName.special, new UploadFile_Property(1, 'image'))
 
-    this.RegisterProperty('列表样式', PropertyGroupName.special, new Enum_Property(true, ['text', 'picture', 'picture-card']), 'picture-card')
+    this.registerProperty('列表样式', PropertyGroupName.special, new Enum_Property(true, ['text', 'picture', 'picture-card']), 'picture-card')
 
-    this.RegisterProperty('是否显示已上传文件列表', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('是否显示已上传文件列表', PropertyGroupName.special, new Boolean_Property(), true)
   }
 }
 </script>

@@ -13,7 +13,7 @@ import {
   Behavior_Property,
   Enum_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import { AllComponents, ComponentBase } from '..'
 import { DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 import common from '../../02common/commonMethod'

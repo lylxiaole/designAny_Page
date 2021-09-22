@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component } from 'vue-property-decorator'
 import {
   Property,
@@ -15,8 +15,8 @@ import {
   Enum_Property,
   PropertyGroupName,
   Color_Property,
-  Boolean_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  Boolean_Property
+} from '../../03designerLayoutBase'
 import E from 'wangeditor'
 import { EditSession } from 'ace-builds'
 
@@ -26,8 +26,8 @@ export default class InputRichComponent extends ComponentBase {
   mounted() {
     this.width = 800
     this.height = 400
-    this.RegisterProperty('富文本内容', PropertyGroupName.special, new Text_Property(), '', false)
-    this.RegisterProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('富文本内容', PropertyGroupName.special, new Text_Property(), '', false)
+    this.registerProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
 
     //初始化
     this.editor = new E(this.$refs.editor)
@@ -50,7 +50,7 @@ export default class InputRichComponent extends ComponentBase {
       'emoticon', // 表情
       'image', // 插入图片
       'table', // 表格
-      'code', // 插入代码
+      'code' // 插入代码
     ]
 
     //粘贴文本过滤
@@ -65,16 +65,15 @@ export default class InputRichComponent extends ComponentBase {
     }
 
     //插入图片回调
-    this.editor.customConfig.linkImgCallback = function(url: any) {
-    }
+    this.editor.customConfig.linkImgCallback = function(url: any) {}
 
     //url文本校验
     this.editor.customConfig.linkCheck = function(text: any, link: any) {
-      return true 
+      return true
     }
     //url图片校验
     this.editor.customConfig.linkImgCheck = function(src: any) {
-      return true 
+      return true
     }
 
     //上传本地图片
@@ -82,12 +81,12 @@ export default class InputRichComponent extends ComponentBase {
 
     //输入内容变化时
     this.editor.customConfig.onchange = (html: any) => {
-      this.FindProperties(PropertyGroupName.special, '富文本内容')[0].value = html
+      this.findProperties(PropertyGroupName.special, '富文本内容')[0].value = html
     }
     this.editor.create()
 
     setTimeout(() => {
-      this.editor.txt.html(this.FindProperties(PropertyGroupName.special, '富文本内容')[0].value)
+      this.editor.txt.html(this.findProperties(PropertyGroupName.special, '富文本内容')[0].value)
     })
   }
 
@@ -97,8 +96,8 @@ export default class InputRichComponent extends ComponentBase {
 
   //是否可用
   get Enabled(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否可用')[0]) {
-      let data = this.FindProperties(PropertyGroupName.special, '是否可用')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否可用')[0]) {
+      let data = this.findProperties(PropertyGroupName.special, '是否可用')[0].value as boolean
       this.editor.$textElem.attr('contenteditable', data)
       return data
     }

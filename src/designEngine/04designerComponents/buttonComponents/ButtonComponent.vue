@@ -1,69 +1,59 @@
 <template>
   <a-tooltip v-if="TooltipTitle.length>0" placement="top" :title="TooltipTitle" style="position:relative">
     <div class="gad-btn-div">
-      <a-popconfirm v-if="isSo===true" :title="confirmTitle" okText="确认" style="width:100%;height:100%" cancelText="取消"
-                    :visible="btnOptions.visible" @confirm="confirm" @visibleChange="handleVisibleChange">
-        <a-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle"
-                  @mouseover="onMouseOver"
-                  @mouseout="onMouseOut" @click="onClick" @mousedown="onmousedown" @mouseup="onmouseup">
+      <a-popconfirm v-if="isSo===true" :title="confirmTitle" okText="确认" style="width:100%;height:100%" cancelText="取消" :visible="btnOptions.visible"
+        @confirm="confirm" @visibleChange="handleVisibleChange">
+        <a-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle" @mouseover="onMouseOver" @mouseout="onMouseOut" @click="onClick"
+          @mousedown="onmousedown" @mouseup="onmouseup">
           <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
-          <v-icon  :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''" v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon"/>
-          <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image"
-               :width="svgSize+'px'" :height="svgSize+'px'" style="margin-right:8px;margin-top:-3px;"/>
+          <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
+            v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon" />
+          <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
+            style="margin-right:8px;margin-top:-3px;" />
           {{  }}
         </a-button>
       </a-popconfirm>
-      <a-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled"
-                @click="onClick"
-                @mouseover="onMouseOver" @mouseout="onMouseOut" @mousedown="onmousedown" @mouseup="onmouseup">
+      <a-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled" @click="onClick" @mouseover="onMouseOver"
+        @mouseout="onMouseOut" @mousedown="onmousedown" @mouseup="onmouseup">
         <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
-        <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''" v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon"/>
-        <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image"
-             :width="svgSize+'px'" :height="svgSize+'px'"
-             style="margin-right:8px;margin-top:-3px;"/>{{ buttonText }}
+        <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
+          v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon" />
+        <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
+          style="margin-right:8px;margin-top:-3px;" />{{ buttonText }}
       </a-button>
     </div>
   </a-tooltip>
   <div class="gad-btn-div" v-else>
-    <a-popconfirm v-if="isSo===true" :title="confirmTitle" okText="确认" style="width:100%;height:100%" cancelText="取消"
-                  :visible="btnOptions.visible" @confirm="confirm" @visibleChange="handleVisibleChange">
-      <a-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle" @click="onClick"
-                @mouseover="onMouseOver" @mouseout="onMouseOut" @mousedown="onmousedown"
-                @mouseup="onmouseup">
+    <a-popconfirm v-if="isSo===true" :title="confirmTitle" okText="确认" style="width:100%;height:100%" cancelText="取消" :visible="btnOptions.visible"
+      @confirm="confirm" @visibleChange="handleVisibleChange">
+      <a-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle" @click="onClick" @mouseover="onMouseOver" @mouseout="onMouseOut"
+        @mousedown="onmousedown" @mouseup="onmouseup">
         <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
-        <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''" v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon"/>
-        <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image"
-             :width="svgSize+'px'" :height="svgSize+'px'"
-             style="margin-right:8px;margin-top:-3px;"/>{{ buttonText }}
+        <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
+          v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon" />
+        <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
+          style="margin-right:8px;margin-top:-3px;" />{{ buttonText }}
       </a-button>
     </a-popconfirm>
-    <a-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled"
-              @click="onClick" @mouseover="onMouseOver" @mouseout="onMouseOut" @mousedown="onmousedown"
-              @mouseup="onmouseup">
+    <a-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled" @click="onClick" @mouseover="onMouseOver"
+      @mouseout="onMouseOut" @mousedown="onmousedown" @mouseup="onmouseup">
       <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
-      <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''" v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon"/>
-      <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image"
-           :width="svgSize+'px'" :height="svgSize+'px'"
-           style="margin-right:8px;margin-top:-3px;"/>{{ buttonText }}
+      <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
+        v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon" />
+      <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
+        style="margin-right:8px;margin-top:-3px;" />{{ buttonText }}
     </a-button>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Watch} from 'vue-property-decorator'
-import {
-  Number_Property,
-  Text_Property,
-  Boolean_Property,
-  Enum_Property,
-  PropertyGroupName,
-  Button_Property,
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+import { Component, Watch } from 'vue-property-decorator'
+import { Number_Property, Text_Property, Boolean_Property, Enum_Property, PropertyGroupName, Button_Property } from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 import buttonAttributeInfos from '../../02common/commonClasses/buttonAttributeInfo'
-import {CurrentContext} from '../../01designerContext'
-import {param, paramType} from '../../02common/commonClasses/layoutEvent'
+import { CurrentContext } from '../../01designerContext'
+import { param, paramType } from '../../03designerLayoutBase'
 import $ from 'jquery'
 
 class btnOptionsClass {
@@ -103,8 +93,8 @@ export default class ButtonComponent extends ComponentBase {
         this.btnOptions.varIcon = ''
         if (buttonAttributeInfo.buttonIconImages && buttonAttributeInfo.buttonIconImages.length > 0) {
           this.btnOptions.imageUrl = common.BuildingFileUrlForShow(
-              CurrentContext.FileServerAddress,
-              buttonAttributeInfo.buttonIconImages[0].url.split('?')[0]
+            CurrentContext.FileServerAddress,
+            buttonAttributeInfo.buttonIconImages[0].url.split('?')[0]
           )
         }
       }
@@ -127,8 +117,7 @@ export default class ButtonComponent extends ComponentBase {
     }
   }
 
-  rendered(dom: Element) {
-  }
+  rendered(dom: Element) {}
 
   @Watch('infoNormal')
   watchInfoNormal() {
@@ -181,7 +170,7 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   private onClick() {
-    let timeoutProperty = this.FindPropertyByName(PropertyGroupName.special, '点击时间间隔')
+    let timeoutProperty = this.findPropertyByName(PropertyGroupName.special, '点击时间间隔')
     if (this.btnOptions && this.btnOptions.buttonTimeOut) {
       this.btnOptions.buttonTimeOut = false
       let timeout = timeoutProperty && timeoutProperty.value ? (timeoutProperty.value as number) : 1000
@@ -193,7 +182,7 @@ export default class ButtonComponent extends ComponentBase {
           this.btnOptions.buttonTimeOut = true
         }
       }, timeout)
-      this.TriggeEvent('按钮点击事件', null)
+      this.triggeEvent('按钮点击事件', null)
     }
     //触发事件
   }
@@ -212,39 +201,38 @@ export default class ButtonComponent extends ComponentBase {
       setTimeout(() => {
         this.btnOptions.confirmClick = true
       }, 1000)
-      this.TriggeEvent('确认按钮回调事件', null)
+      this.triggeEvent('确认按钮回调事件', null)
     }
   }
 
-  created() {
-  }
+  created() {}
 
   mounted() {
     if (this.IsDesigning) {
       this.width = 80
       this.height = 34
       //注册特有属性
-      this.RegisterProperty('提示文字', PropertyGroupName.special, new Text_Property(), '')
-      this.RegisterProperty('气泡提示信息', PropertyGroupName.special, new Text_Property(), '确认要删除吗？')
-      this.RegisterProperty('是否展示气泡', PropertyGroupName.special, new Boolean_Property(), false)
-      this.RegisterProperty('按钮文本', PropertyGroupName.special, new Text_Property(), '新增')
-      this.RegisterProperty('图标大小', PropertyGroupName.special, new Number_Property(), 20)
-      this.RegisterProperty(
-          '按钮类型',
-          PropertyGroupName.special,
-          new Enum_Property(true, ['主按钮', '次按钮', '虚线按钮', '危险按钮', '链接按钮']),
-          '主按钮'
+      this.registerProperty('提示文字', PropertyGroupName.special, new Text_Property(), '')
+      this.registerProperty('气泡提示信息', PropertyGroupName.special, new Text_Property(), '确认要删除吗？')
+      this.registerProperty('是否展示气泡', PropertyGroupName.special, new Boolean_Property(), false)
+      this.registerProperty('按钮文本', PropertyGroupName.special, new Text_Property(), '新增')
+      this.registerProperty('图标大小', PropertyGroupName.special, new Number_Property(), 20)
+      this.registerProperty(
+        '按钮类型',
+        PropertyGroupName.special,
+        new Enum_Property(true, ['主按钮', '次按钮', '虚线按钮', '危险按钮', '链接按钮']),
+        '主按钮'
       )
-      this.RegisterProperty('按钮设置', PropertyGroupName.special, new Button_Property())
+      this.registerProperty('按钮设置', PropertyGroupName.special, new Button_Property())
       //新增点击时间间隔属性
-      this.RegisterProperty('点击时间间隔', PropertyGroupName.special, new Number_Property(), 1000)
-      this.FindPropertyByName(PropertyGroupName.normal, '前景色').canSetting = false
-      this.FindPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
-      this.FindPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
+      this.registerProperty('点击时间间隔', PropertyGroupName.special, new Number_Property(), 1000)
+      this.findPropertyByName(PropertyGroupName.normal, '前景色').canSetting = false
+      this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+      this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
     }
-    this.RegisterEvents('按钮点击事件', '', this.btnOptions.inparam, this.btnOptions.outparam)
-    this.RegisterEvents('确认按钮回调事件', '', this.btnOptions.inparam, this.btnOptions.outparam)
-    this.$watch('buttonInfo', this.watchButtonAttributeInfo, {deep: true})
+    this.registerEvents('按钮点击事件', '', this.btnOptions.inparam, this.btnOptions.outparam)
+    this.registerEvents('确认按钮回调事件', '', this.btnOptions.inparam, this.btnOptions.outparam)
+    this.$watch('buttonInfo', this.watchButtonAttributeInfo, { deep: true })
   }
 
   get npBtnStyle() {
@@ -257,12 +245,12 @@ export default class ButtonComponent extends ComponentBase {
       height: '100%',
       'box-shadow': 'none',
       'text-shadow': '0px',
-      padding:this.buttonText.length==0?0:'0 15px'
+      padding: this.buttonText.length == 0 ? 0 : '0 15px'
     }
   }
 
   get buttonDisabled(): Boolean {
-    let property = this.FindPropertyByName(PropertyGroupName.normal, '是否禁用')
+    let property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
     let result: boolean = false
     if (property && property.value) {
       if (property.value == false) {
@@ -279,8 +267,8 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   set buttonDisabled(val: Boolean) {
-    let property = this.FindPropertyByName(PropertyGroupName.normal, '是否禁用')
-    this.SetPropertyVal(property.id, val)
+    let property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
+    this.setPropertyVal(property.id, val)
     if (val) {
       this.setButtonAttribute(this.btnOptions.infoDisable)
       this.removeSpanClass()
@@ -296,7 +284,7 @@ export default class ButtonComponent extends ComponentBase {
   // }
 
   watchButtonAttributeInfo() {
-    let findProp = this.FindPropertyByName(PropertyGroupName.special, '按钮设置')
+    let findProp = this.findPropertyByName(PropertyGroupName.special, '按钮设置')
 
     if (findProp && typeof findProp.value != 'undefined') {
       this.btnOptions.infoNormal = findProp.value[0]
@@ -307,7 +295,7 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   protected get buttonInfo(): buttonAttributeInfos[] {
-    let property = this.FindPropertyByName(PropertyGroupName.special, '按钮设置')
+    let property = this.findPropertyByName(PropertyGroupName.special, '按钮设置')
     if (!property) {
       return []
     }
@@ -320,7 +308,7 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   get confirmTitle(): string {
-    let findProp = this.FindPropertyByName('特有属性', '气泡提示信息')
+    let findProp = this.findPropertyByName('特有属性', '气泡提示信息')
     if (findProp) {
       return findProp.value as string
     } else {
@@ -329,7 +317,7 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   get isSo(): boolean {
-    let findProp = this.FindPropertyByName(PropertyGroupName.special, '是否展示气泡')
+    let findProp = this.findPropertyByName(PropertyGroupName.special, '是否展示气泡')
     if (findProp) {
       return findProp.value as boolean
     }
@@ -338,7 +326,7 @@ export default class ButtonComponent extends ComponentBase {
 
   //按钮文本
   get buttonText(): string {
-    let findProp = this.FindPropertyByName('特有属性', '按钮文本')
+    let findProp = this.findPropertyByName('特有属性', '按钮文本')
     if (findProp) {
       return findProp.value as string
     } else {
@@ -347,7 +335,7 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   get svgSize(): number {
-    let findProp = this.FindPropertyByName('特有属性', '图标大小')
+    let findProp = this.findPropertyByName('特有属性', '图标大小')
     if (findProp) {
       return findProp.value as number
     }
@@ -356,7 +344,7 @@ export default class ButtonComponent extends ComponentBase {
 
   //公有属性
   get fontSize(): string {
-    let findProp = this.FindPropertyByName(PropertyGroupName.normal, '字体')
+    let findProp = this.findPropertyByName(PropertyGroupName.normal, '字体')
     if (findProp) {
       let size = findProp.value
       if (size == 0) {
@@ -369,7 +357,7 @@ export default class ButtonComponent extends ComponentBase {
 
   //按钮类型
   get buttonType(): string {
-    let findProp = this.FindPropertyByName(PropertyGroupName.special, '按钮类型')
+    let findProp = this.findPropertyByName(PropertyGroupName.special, '按钮类型')
     let typeName = 'default'
     if (findProp) {
       switch (findProp.value) {
@@ -407,7 +395,7 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   get TooltipTitle(): string {
-    let tmp = this.FindPropertyByName(PropertyGroupName.special, '提示文字')
+    let tmp = this.findPropertyByName(PropertyGroupName.special, '提示文字')
     if (tmp && (tmp.value as string) != '') {
       return tmp.value as string
     } else {
@@ -422,7 +410,7 @@ export default class ButtonComponent extends ComponentBase {
   width: 2em;
   height: 2em;
 }
-.iconCss{
+.iconCss {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -39,14 +39,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import {
-  Property,
-  Number_Property,
-  NumberList_Property,
-  Text_Property,
-  Enum_Property,
-  PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+import { Property, Number_Property, NumberList_Property, Text_Property, Enum_Property, PropertyGroupName } from '../../03designerLayoutBase'
 import modelAnalysis, {
   ModelInfo,
   ModelPropertyType,
@@ -81,7 +74,7 @@ import NpFormItem from '../form/NpFormItem.vue'
 import PageBase from '../../03designerLayoutBase/PageBase'
 import { set } from 'xe-utils/methods'
 import btreeNode from '../../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 
 @Component({
   components: { NpFormItem: NpFormItem, btreeNode: btreeNode }
@@ -98,18 +91,18 @@ export default class NpForm extends ComponentBase {
     this.width = 400
     this.height = 600
     this.background = 'white'
-    this.RegisterProperty(layoutPropName, PropertyGroupName.special, new Enum_Property(true, ['水平', '垂直', '单行']), '水平')
-    this.RegisterProperty(FormItemDataName, PropertyGroupName.special, new Text_Property(), null, false)
-    this.RegisterProperty(LabelColSpanName, PropertyGroupName.special, new Number_Property(0, 24), 4, false, false) //span
-    this.RegisterProperty(LabelColOffsetName, PropertyGroupName.special, new Number_Property(0, 24), 0, false, false) //偏移位
-    this.RegisterProperty(WrapperColSpanName, PropertyGroupName.special, new Number_Property(0, 24), 14, false, false) //span
-    this.RegisterProperty(WrapperColOffsetName, PropertyGroupName.special, new Number_Property(0, 24), 0, false, false) //偏移位
-    this.RegisterMethods('提交表单', '', this.submit, [], null)
-    this.RegisterMethods('重置表单验证', '', this.resetForm, [], null)
+    this.registerProperty(layoutPropName, PropertyGroupName.special, new Enum_Property(true, ['水平', '垂直', '单行']), '水平')
+    this.registerProperty(FormItemDataName, PropertyGroupName.special, new Text_Property(), null, false)
+    this.registerProperty(LabelColSpanName, PropertyGroupName.special, new Number_Property(0, 24), 4, false, false) //span
+    this.registerProperty(LabelColOffsetName, PropertyGroupName.special, new Number_Property(0, 24), 0, false, false) //偏移位
+    this.registerProperty(WrapperColSpanName, PropertyGroupName.special, new Number_Property(0, 24), 14, false, false) //span
+    this.registerProperty(WrapperColOffsetName, PropertyGroupName.special, new Number_Property(0, 24), 0, false, false) //偏移位
+    this.registerMethods('提交表单', '', this.submit, [], null)
+    this.registerMethods('重置表单验证', '', this.resetForm, [], null)
 
     let keyparam: param[] = []
     keyparam.push({ name: '模型id', type: paramType.string, val: null })
-    this.RegisterMethods('动态生成项目', '', this.createFormItems, keyparam, null)
+    this.registerMethods('动态生成项目', '', this.createFormItems, keyparam, null)
   }
 
   mounted() {
@@ -125,7 +118,7 @@ export default class NpForm extends ComponentBase {
 
   /*********************for binding******************************************************/
   get formLayout(): string {
-    let property = this.FindPropertyByName(PropertyGroupName.special, layoutPropName)
+    let property = this.findPropertyByName(PropertyGroupName.special, layoutPropName)
     if (property && property.value) {
       let propertyValue: string
       let selectedValue = property.value as string
@@ -334,9 +327,9 @@ export default class NpForm extends ComponentBase {
     let item = this.ItemDataList.find((o) => o.Id == itemId)
     item.labelName = newtitle
 
-    let propertyFind = item.comp.FindPropertyByName(PropertyGroupName.special, itemShowName)
+    let propertyFind = item.comp.findPropertyByName(PropertyGroupName.special, itemShowName)
     if (propertyFind) {
-      item.comp.SetPropertyVal(propertyFind.id, newtitle)
+      item.comp.setPropertyVal(propertyFind.id, newtitle)
     }
 
     this.onChildrenCountChange()
@@ -364,17 +357,17 @@ export default class NpForm extends ComponentBase {
     numberProperty.min = -9999
     numberProperty.max = 9999
     /**表单项显示名称 */
-    dropcomp.RegisterProperty(itemShowName, PropertyGroupName.special, new Text_Property(), null)
-    dropcomp.RegisterProperty(itemValidateStr, PropertyGroupName.special, new Text_Property(), null)
+    dropcomp.registerProperty(itemShowName, PropertyGroupName.special, new Text_Property(), null)
+    dropcomp.registerProperty(itemValidateStr, PropertyGroupName.special, new Text_Property(), null)
     /***************************** */
-    dropcomp.RegisterProperty(LabelColSpanName, formItemGroupName, { ...numberProperty }, 10, true, true)
-    dropcomp.RegisterProperty(LabelColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
-    dropcomp.RegisterProperty(WrapperColSpanName, formItemGroupName, { ...numberProperty }, 14, true, true)
-    dropcomp.RegisterProperty(WrapperColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
-    dropcomp.RegisterProperty(MarginTop, formItemGroupName, { ...numberProperty }, 3, true, true, 'px')
-    dropcomp.RegisterProperty(MarginBottom, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
-    dropcomp.RegisterProperty(MarginLeft, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
-    dropcomp.RegisterProperty(MarginRight, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
+    dropcomp.registerProperty(LabelColSpanName, formItemGroupName, { ...numberProperty }, 10, true, true)
+    dropcomp.registerProperty(LabelColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
+    dropcomp.registerProperty(WrapperColSpanName, formItemGroupName, { ...numberProperty }, 14, true, true)
+    dropcomp.registerProperty(WrapperColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
+    dropcomp.registerProperty(MarginTop, formItemGroupName, { ...numberProperty }, 3, true, true, 'px')
+    dropcomp.registerProperty(MarginBottom, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
+    dropcomp.registerProperty(MarginLeft, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
+    dropcomp.registerProperty(MarginRight, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
     /***************************** */
     if (layoutInfo.data) {
       this.renderFormComp(dropcomp, layoutInfo, dragType, data)
@@ -423,8 +416,8 @@ export default class NpForm extends ComponentBase {
       item.itemValidateStr = finddata ? finddata.value : ''
     } else {
       item.labelName = item.modelProperty.propertyName
-      let fproperty = dropcomp.FindPropertyByName(PropertyGroupName.special, itemShowName)
-      dropcomp.SetPropertyVal(fproperty.id, item.labelName)
+      let fproperty = dropcomp.findPropertyByName(PropertyGroupName.special, itemShowName)
+      dropcomp.setPropertyVal(fproperty.id, item.labelName)
     }
 
     item.decorator = this.getDecorator(item)
@@ -531,10 +524,10 @@ export default class NpForm extends ComponentBase {
       ;(comp as any).dictID = newformItemData.modelProperty.dictId
     }
 
-    let fproperty = comp.FindPropertyByName(PropertyGroupName.special, itemShowName)
-    comp.SetPropertyVal(fproperty.id, newformItemData.labelName)
-    fproperty = comp.FindPropertyByName(PropertyGroupName.special, itemValidateStr)
-    comp.SetPropertyVal(fproperty.id, newformItemData.itemValidateStr)
+    let fproperty = comp.findPropertyByName(PropertyGroupName.special, itemShowName)
+    comp.setPropertyVal(fproperty.id, newformItemData.labelName)
+    fproperty = comp.findPropertyByName(PropertyGroupName.special, itemValidateStr)
+    comp.setPropertyVal(fproperty.id, newformItemData.itemValidateStr)
 
     let cloneitem = { ...newformItemData }
     cloneitem.comp = null
@@ -598,35 +591,35 @@ export default class NpForm extends ComponentBase {
               this.$nextTick(() => {
                 let comp = this.children.find((single) => single.name == fromitemdata.labelName) as ComponentBase
                 comp.width = this.ItemDataList[0].comp.width
-                comp.FindPropertyByName(formItemGroupName, LabelColSpanName).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, LabelColSpanName).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   LabelColSpanName
                 ).value
-                comp.FindPropertyByName(formItemGroupName, LabelColOffsetName).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, LabelColOffsetName).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   LabelColOffsetName
                 ).value
-                comp.FindPropertyByName(formItemGroupName, WrapperColSpanName).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, WrapperColSpanName).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   WrapperColSpanName
                 ).value
-                comp.FindPropertyByName(formItemGroupName, WrapperColOffsetName).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, WrapperColOffsetName).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   WrapperColOffsetName
                 ).value
-                comp.FindPropertyByName(formItemGroupName, MarginTop).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, MarginTop).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   MarginTop
                 ).value
-                comp.FindPropertyByName(formItemGroupName, MarginBottom).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, MarginBottom).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   MarginBottom
                 ).value
-                comp.FindPropertyByName(formItemGroupName, MarginLeft).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, MarginLeft).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   MarginLeft
                 ).value
-                comp.FindPropertyByName(formItemGroupName, MarginRight).value = this.ItemDataList[0].comp.FindPropertyByName(
+                comp.findPropertyByName(formItemGroupName, MarginRight).value = this.ItemDataList[0].comp.findPropertyByName(
                   formItemGroupName,
                   MarginRight
                 ).value
@@ -702,7 +695,7 @@ export default class NpForm extends ComponentBase {
           if (this.$refs[item.Id]) {
             let formitemComp = this.$refs[item.Id][0] as NpFormItem
             let comp = this.children.find((single) => single.name == item.labelName) as ComponentBase
-            comp.SetPropertyVal(comp.validateProperty.id, modelBind.val.data[item.propertyCode])
+            comp.setPropertyVal(comp.validateProperty.id, modelBind.val.data[item.propertyCode])
           }
         })
       }

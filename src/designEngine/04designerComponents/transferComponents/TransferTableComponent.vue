@@ -36,7 +36,7 @@
 </template>
 <script lang="ts">
 import table from './table_mix'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import {
   Property,
@@ -46,18 +46,18 @@ import {
   BindingModels_Property,
   PropertyGroupName,
   Boolean_Property,
-  TableStyleSetting_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  TableStyleSetting_Property
+} from '../../03designerLayoutBase'
 import tablemix from './table_mix'
 import { columnInfo, tableStyle } from '../table/tableCommonTypes'
 import common from '../../02common/commonMethod'
 
 enum propertyNameEnum {
-  datasource = '表格数据源',
+  datasource = '表格数据源'
 }
 enum propertyGroupEnum {
   columnSetting = '列设置',
-  bodySetting = '表身设置',
+  bodySetting = '表身设置'
 }
 
 var defaultTableStyle = function() {
@@ -89,8 +89,8 @@ var defaultTableStyle = function() {
 
 @Component({
   components: {
-    tablemix: tablemix,
-  },
+    tablemix: tablemix
+  }
 })
 export default class TransferTableComponent extends ComponentBase {
   leftDataSource: any[] = []
@@ -102,20 +102,20 @@ export default class TransferTableComponent extends ComponentBase {
     let _dataSource = [
       {
         accountNo: 1,
-        name: '麻子',
+        name: '麻子'
       },
       {
         accountNo: 2,
-        name: '张三',
+        name: '张三'
       },
       {
         accountNo: 3,
-        name: '李四',
+        name: '李四'
       },
       {
         accountNo: 4,
-        name: '王二',
-      },
+        name: '王二'
+      }
     ]
     window.console.log(_dataSource)
 
@@ -133,30 +133,30 @@ export default class TransferTableComponent extends ComponentBase {
     // window.console.log('表格组件加载了')
     this.width = 400
     this.height = 300
-    this.RegisterProperty(propertyNameEnum.datasource, PropertyGroupName.normal, null, {}, false, true)
+    this.registerProperty(propertyNameEnum.datasource, PropertyGroupName.normal, null, {}, false, true)
 
     /**特有属性 */
-    this.RegisterProperty('是否可点', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '是')
+    this.registerProperty('是否可点', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '是')
 
-    this.RegisterProperty('源标题', PropertyGroupName.special, new Text_Property(), '源标题')
+    this.registerProperty('源标题', PropertyGroupName.special, new Text_Property(), '源标题')
 
-    this.RegisterProperty('目标标题', PropertyGroupName.special, new Text_Property(), '目标标题')
-    this.RegisterProperty('向右指示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('向左指示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('启用搜索', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty('目标标题', PropertyGroupName.special, new Text_Property(), '目标标题')
+    this.registerProperty('向右指示文字', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('向左指示文字', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('启用搜索', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
 
     /**列*/
-    this.RegisterProperty('字体大小', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
-    this.RegisterProperty('字体颜色', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
-    this.RegisterProperty('列样式', propertyGroupEnum.columnSetting, new TableStyleSetting_Property(), null)
+    this.registerProperty('字体大小', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
+    this.registerProperty('字体颜色', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
+    this.registerProperty('列样式', propertyGroupEnum.columnSetting, new TableStyleSetting_Property(), null)
     /** 表身*/
   }
 
   /**特有属性实现 */
   get traDisabled(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否可点')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '是否可点')[0]) {
       window.console.log(1234567890)
-      var disabled = (this.FindProperties(PropertyGroupName.special, '是否可点')[0].value as string) == '是' ? true : false
+      var disabled = (this.findProperties(PropertyGroupName.special, '是否可点')[0].value as string) == '是' ? true : false
       window.console.log(disabled)
       return disabled
     }
@@ -164,7 +164,7 @@ export default class TransferTableComponent extends ComponentBase {
   }
 
   get leftTitle(): string {
-    var findValue = this.FindProperties(PropertyGroupName.special, '源标题')[0]
+    var findValue = this.findProperties(PropertyGroupName.special, '源标题')[0]
     if (findValue) {
       return findValue.value as string
     } else {
@@ -173,7 +173,7 @@ export default class TransferTableComponent extends ComponentBase {
   }
 
   get rightTitle(): string {
-    var findValue = this.FindProperties(PropertyGroupName.special, '目标标题')[0]
+    var findValue = this.findProperties(PropertyGroupName.special, '目标标题')[0]
     if (findValue) {
       return findValue.value as string
     }
@@ -181,7 +181,7 @@ export default class TransferTableComponent extends ComponentBase {
   }
 
   get leftOperatorTitle(): string {
-    var findValue = this.FindProperties(PropertyGroupName.special, '向左指示文字')[0]
+    var findValue = this.findProperties(PropertyGroupName.special, '向左指示文字')[0]
     if (findValue) {
       return findValue.value as string
     } else {
@@ -190,7 +190,7 @@ export default class TransferTableComponent extends ComponentBase {
   }
 
   get rightOperatorTitle(): string {
-    var findValue = this.FindProperties(PropertyGroupName.special, '向右指示文字')[0]
+    var findValue = this.findProperties(PropertyGroupName.special, '向右指示文字')[0]
     if (findValue) {
       return findValue.value as string
     } else {
@@ -203,18 +203,18 @@ export default class TransferTableComponent extends ComponentBase {
       {
         title: '姓名',
         width: '80px',
-        field: 'name',
+        field: 'name'
       },
       {
         title: '姓名',
         width: '80px',
-        field: 'name',
+        field: 'name'
       },
       {
         title: '账号',
         width: '80px',
-        field: 'accountNo',
-      },
+        field: 'accountNo'
+      }
     ]
     return leftColumnsaaa
   }
@@ -224,13 +224,13 @@ export default class TransferTableComponent extends ComponentBase {
       {
         title: '姓名',
         width: '80px',
-        field: 'name',
+        field: 'name'
       },
       {
         title: '账号',
         width: '80px',
-        field: 'accountNo',
-      },
+        field: 'accountNo'
+      }
     ]
     window.console.log(rightColumns)
     return rightColumns

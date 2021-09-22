@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import {
   Property,
@@ -20,8 +20,8 @@ import {
   Boolean_Property,
   UploadFile_Property,
   Number_Property
-} from '../../02common/commonClasses/LayoutProperty'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+} from '../../03designerLayoutBase'
+import { param, paramType } from '../../03designerLayoutBase'
 import { CurrentContext } from '../../01designerContext'
 import common from '../../02common/commonMethod'
 
@@ -50,7 +50,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get maxlength(): number {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '最大长度')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '最大长度')
     if (prop) {
       if (prop.value == 0) {
         return null
@@ -62,7 +62,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get isShowPrefix(): boolean {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '是否显示前缀图标')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '是否显示前缀图标')
     if (prop) {
       return prop.value as boolean
     } else {
@@ -70,7 +70,7 @@ export default class InputComponent extends ComponentBase {
     }
   }
   get imageUrl(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '上传图标')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '上传图标')
     if (prop) {
       let selectValues = prop.value
       if (selectValues && selectValues.length > 0) {
@@ -84,35 +84,35 @@ export default class InputComponent extends ComponentBase {
   }
   created() {
     /*空值属性：文本为空时，显示的提示内容 */
-    this.RegisterProperty('空值文本', PropertyGroupName.special, new Text_Property(), '请输入')
-    this.RegisterProperty('左内边距', PropertyGroupName.special, new Text_Property(), '0')
-    this.RegisterProperty('上内边距', PropertyGroupName.special, new Text_Property(), '0')
-    this.RegisterProperty('右内边距', PropertyGroupName.special, new Text_Property(), '0')
-    this.RegisterProperty('下内边距', PropertyGroupName.special, new Text_Property(), '0')
-    //this.RegisterProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('密码模式', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('文本', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty(
+    this.registerProperty('空值文本', PropertyGroupName.special, new Text_Property(), '请输入')
+    this.registerProperty('左内边距', PropertyGroupName.special, new Text_Property(), '0')
+    this.registerProperty('上内边距', PropertyGroupName.special, new Text_Property(), '0')
+    this.registerProperty('右内边距', PropertyGroupName.special, new Text_Property(), '0')
+    this.registerProperty('下内边距', PropertyGroupName.special, new Text_Property(), '0')
+    //this.registerProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('密码模式', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('文本', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty(
       '最大长度',
       PropertyGroupName.special,
       new Number_Property(),
       this.curModelproperty.maxLength == 0 ? '' : this.curModelproperty.maxLength
     )
-    this.RegisterProperty('是否显示前缀图标', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('上传图标', PropertyGroupName.special, new UploadFile_Property(10, ''))
-    this.RegisterProperty('支持打印设置', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('圆角设置', PropertyGroupName.special, new Number_Property(), 0)
-    this.RegisterProperty('边框颜色', PropertyGroupName.special, new Color_Property(), '#000000')
-    this.RegisterProperty('水平对齐', PropertyGroupName.special, new Enum_Property(true, ['居左', '居中', '居右']), '居左')
+    this.registerProperty('是否显示前缀图标', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('上传图标', PropertyGroupName.special, new UploadFile_Property(10, ''))
+    this.registerProperty('支持打印设置', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('圆角设置', PropertyGroupName.special, new Number_Property(), 0)
+    this.registerProperty('边框颜色', PropertyGroupName.special, new Color_Property(), '#000000')
+    this.registerProperty('水平对齐', PropertyGroupName.special, new Enum_Property(true, ['居左', '居中', '居右']), '居左')
     // }
 
-    this.RegisterEvents('内容变化时的事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('按下回车的事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('失去焦点事件', '', this.inparam, this.outparam)
+    this.registerEvents('内容变化时的事件', '', this.inparam, this.outparam)
+    this.registerEvents('按下回车的事件', '', this.inparam, this.outparam)
+    this.registerEvents('失去焦点事件', '', this.inparam, this.outparam)
 
-    this.RegisterMethods('移除焦点', '', this.blur, null, null)
-    this.RegisterMethods('获取焦点', '', this.focus, null, null)
-    this.RegisterMethods('输入框全选', '', this.selectInput, null, null)
+    this.registerMethods('移除焦点', '', this.blur, null, null)
+    this.registerMethods('获取焦点', '', this.focus, null, null)
+    this.registerMethods('输入框全选', '', this.selectInput, null, null)
   }
   mounted() {
     this.width = 220
@@ -159,17 +159,17 @@ export default class InputComponent extends ComponentBase {
   }
 
   public get validateProperty(): Property {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
     return property
   }
 
   handleInputBlur(e) {
-    this.TriggeEvent('失去焦点事件', null)
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
+    this.triggeEvent('失去焦点事件', null)
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
     var template = property.value
     if (property && property.value) {
       let newval = property ? property.value.trim() : ''
-      this.SetPropertyVal(property.id, newval)
+      this.setPropertyVal(property.id, newval)
       if (newval.length !== template.length) {
         this.handleNumberChange(newval)
       }
@@ -185,7 +185,7 @@ export default class InputComponent extends ComponentBase {
   handleNumberChange(e) {
     this.triggerChange(e)
 
-    this.TriggeEvent('内容变化时的事件', e)
+    this.triggeEvent('内容变化时的事件', e)
   }
 
   triggerChange(changedValue) {
@@ -193,16 +193,16 @@ export default class InputComponent extends ComponentBase {
   }
 
   handlePressEnter(e) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
     if (property && property.value) {
       let newval = property ? property.value.trim() : ''
-      this.SetPropertyVal(property.id, newval)
+      this.setPropertyVal(property.id, newval)
     }
-    this.TriggeEvent('按下回车的事件', null)
+    this.triggeEvent('按下回车的事件', null)
   }
 
   get PlaceHolder(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '空值文本')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '空值文本')
     if (prop) {
       return prop.value as string
     } else {
@@ -211,7 +211,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get Color(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, '前景色')
+    let prop = this.findPropertyByName(PropertyGroupName.normal, '前景色')
     if (prop) {
       return prop.value as string
     } else {
@@ -219,7 +219,7 @@ export default class InputComponent extends ComponentBase {
     }
   }
   get FontSize(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, '字体')
+    let prop = this.findPropertyByName(PropertyGroupName.normal, '字体')
     if (prop) {
       return prop.value as string
     } else {
@@ -228,7 +228,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get PaddingLeft(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '左内边距')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '左内边距')
     if (prop) {
       return prop.value as string
     } else {
@@ -237,7 +237,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get PaddingTop(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '上内边距')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '上内边距')
     if (prop) {
       return prop.value as string
     } else {
@@ -246,7 +246,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get PaddingRight(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '右内边距')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '右内边距')
     if (prop) {
       return prop.value as string
     } else {
@@ -255,7 +255,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get PaddingBottom(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '下内边距')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '下内边距')
     if (prop) {
       let data = prop.value as string
       return data
@@ -264,7 +264,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get Type(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '密码模式')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '密码模式')
     if (prop) {
       let data = prop.value as boolean
       if (data == true) return 'password'
@@ -273,7 +273,7 @@ export default class InputComponent extends ComponentBase {
     return ''
   }
   get allowClear(): boolean {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '支持打印设置')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '支持打印设置')
     if (prop) {
       let property = prop.value as boolean
       return !property
@@ -286,7 +286,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get Text(): string {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
     if (property && property.value) {
       return property ? property.value : ''
     }
@@ -294,7 +294,7 @@ export default class InputComponent extends ComponentBase {
   }
 
   get borderRadius(): number {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '圆角设置')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '圆角设置')
     if (prop) {
       let property = prop.value
       return property
@@ -302,14 +302,14 @@ export default class InputComponent extends ComponentBase {
     return 5
   }
   get bordercolor(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '边框颜色')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '边框颜色')
     if (prop) {
       return prop.value as string
     }
     return ''
   }
   get Horienten(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '水平对齐')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '水平对齐')
     if (prop) {
       if (prop.value === '居左') {
         return 'left'
@@ -323,9 +323,9 @@ export default class InputComponent extends ComponentBase {
   }
 
   set Text(val) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '文本')
+    var property = this.findPropertyByName(PropertyGroupName.special, '文本')
     if (property) {
-      this.SetPropertyVal(property.id, val)
+      this.setPropertyVal(property.id, val)
     }
   }
 

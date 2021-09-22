@@ -1,15 +1,6 @@
-import {
-  ModelInfo,
-  ModelBindingProperty,
-  ModelPropertyType,
-  modelSimpleInfo,
-  modelDetailInfo,
-  ModelProperty,
-  DecoratorOption,
-  DecoratorRule
-} from '../../02common/impResourcesCache/modelAnalysis'
+import { ModelInfo, ModelBindingProperty, ModelPropertyType, modelSimpleInfo, modelDetailInfo, ModelProperty, DecoratorOption, DecoratorRule } from '../../02common/impResourcesCache/modelAnalysis'
 
-import { PropertyGroupName } from '../../02common/commonClasses/LayoutProperty'
+import { PropertyGroupName } from '../../03designerLayoutBase'
 
 import { ComponentBase } from '../index'
 
@@ -63,15 +54,15 @@ export class FormItemData {
       return { labelCol: { span: 10 }, wrapperCol: { span: 14 }, margin: [13, 0, 0, 0] }
     }
 
-    var property1 = this.comp.FindPropertyByName(formItemGroupName, LabelColSpanName)
-    var property2 = this.comp.FindPropertyByName(formItemGroupName, LabelColOffsetName)
-    var property3 = this.comp.FindPropertyByName(formItemGroupName, WrapperColSpanName)
-    var property4 = this.comp.FindPropertyByName(formItemGroupName, WrapperColOffsetName)
+    var property1 = this.comp.findPropertyByName(formItemGroupName, LabelColSpanName)
+    var property2 = this.comp.findPropertyByName(formItemGroupName, LabelColOffsetName)
+    var property3 = this.comp.findPropertyByName(formItemGroupName, WrapperColSpanName)
+    var property4 = this.comp.findPropertyByName(formItemGroupName, WrapperColOffsetName)
     //
-    var property5 = this.comp.FindPropertyByName(formItemGroupName, MarginTop)
-    var property6 = this.comp.FindPropertyByName(formItemGroupName, MarginBottom)
-    var property7 = this.comp.FindPropertyByName(formItemGroupName, MarginLeft)
-    var property8 = this.comp.FindPropertyByName(formItemGroupName, MarginRight)
+    var property5 = this.comp.findPropertyByName(formItemGroupName, MarginTop)
+    var property6 = this.comp.findPropertyByName(formItemGroupName, MarginBottom)
+    var property7 = this.comp.findPropertyByName(formItemGroupName, MarginLeft)
+    var property8 = this.comp.findPropertyByName(formItemGroupName, MarginRight)
     //*********为了适应mes3.1的ui规范做的脚本， */
     if (property5 && property5.value == 13) {
       property5.value = 3

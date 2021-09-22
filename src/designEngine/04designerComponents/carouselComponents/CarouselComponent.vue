@@ -24,17 +24,17 @@ import {
   Boolean_Property,
   PropertyGroupName,
   Number_Property,
-  UploadFile_Property,
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+  UploadFile_Property
+} from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { CurrentContext } from '../../01designerContext'
 
 @Component
 export default class CarouselComponent extends ComponentBase {
   get imgSrcList() {
-    if (this.FindProperties(PropertyGroupName.special, '选择文件')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '选择文件')[0]) {
       let imgSrcArr: string[] = []
-      let selectValues = this.FindProperties(PropertyGroupName.special, '选择文件')[0].value
+      let selectValues = this.findProperties(PropertyGroupName.special, '选择文件')[0].value
       if (selectValues && selectValues.length > 0) {
         for (let index = 0; index < selectValues.length; index++) {
           let element = selectValues[index]
@@ -56,34 +56,34 @@ export default class CarouselComponent extends ComponentBase {
   }
 
   get autoplay(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否轮播')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '是否轮播')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否轮播')[0]) {
+      return this.findProperties(PropertyGroupName.special, '是否轮播')[0].value as boolean
     }
     return false
   }
 
   get autoplaySpeed(): number {
-    if (this.FindPropertyByName(PropertyGroupName.special, '轮播速度')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '轮播速度').value as number
+    if (this.findPropertyByName(PropertyGroupName.special, '轮播速度')) {
+      return this.findPropertyByName(PropertyGroupName.special, '轮播速度').value as number
     } else {
       return 0
     }
   }
 
   get vertical(): boolean {
-    if (this.FindPropertyByName(PropertyGroupName.special, '垂直显示')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '垂直显示').value as boolean
+    if (this.findPropertyByName(PropertyGroupName.special, '垂直显示')) {
+      return this.findPropertyByName(PropertyGroupName.special, '垂直显示').value as boolean
     }
     return false
   }
 
   get backImagesize(): string {
-    if (this.FindProperties(PropertyGroupName.special, '图片填充方式')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '图片填充方式')[0].value === '无缩放') {
+    if (this.findProperties(PropertyGroupName.special, '图片填充方式')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '图片填充方式')[0].value === '无缩放') {
         return 'auto'
-      } else if (this.FindProperties(PropertyGroupName.special, '图片填充方式')[0].value === '自适应') {
+      } else if (this.findProperties(PropertyGroupName.special, '图片填充方式')[0].value === '自适应') {
         return 'cover'
-      } else if (this.FindProperties(PropertyGroupName.special, '图片填充方式')[0].value === '填充') {
+      } else if (this.findProperties(PropertyGroupName.special, '图片填充方式')[0].value === '填充') {
         return 'contain'
       }
       return 'auto'
@@ -98,16 +98,16 @@ export default class CarouselComponent extends ComponentBase {
 
   //动画效果函数，可取 scrollx, fade
   get effect(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '动画效果')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '动画效果').value === '滚动' ? 'scrollx' : 'fade'
+    if (this.findPropertyByName(PropertyGroupName.special, '动画效果')) {
+      return this.findPropertyByName(PropertyGroupName.special, '动画效果').value === '滚动' ? 'scrollx' : 'fade'
     } else {
       return 'scrollx'
     }
   }
 
   get dots(): boolean {
-    if (this.FindPropertyByName(PropertyGroupName.special, '是否显示面板指示点')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '是否显示面板指示点').value as boolean
+    if (this.findPropertyByName(PropertyGroupName.special, '是否显示面板指示点')) {
+      return this.findPropertyByName(PropertyGroupName.special, '是否显示面板指示点').value as boolean
     }
     return false
   }
@@ -120,15 +120,15 @@ export default class CarouselComponent extends ComponentBase {
   mounted() {
     this.width = 200
     this.height = 200
-    this.RegisterProperty('选择文件', PropertyGroupName.special, new UploadFile_Property(10, 'image'))
-    this.RegisterProperty('是否轮播', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('轮播速度(毫秒)', PropertyGroupName.special, new Number_Property(), 500)
-    this.RegisterProperty('图片填充方式', PropertyGroupName.special, new Enum_Property(true, ['自适应', '填充', '无缩放']), '无缩放')
-    this.RegisterProperty('垂直显示', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('动画效果', PropertyGroupName.special, new Enum_Property(true, ['滚动', '渐变']), '滚动')
-    this.RegisterProperty('是否显示面板指示点', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('选择文件', PropertyGroupName.special, new UploadFile_Property(10, 'image'))
+    this.registerProperty('是否轮播', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('轮播速度(毫秒)', PropertyGroupName.special, new Number_Property(), 500)
+    this.registerProperty('图片填充方式', PropertyGroupName.special, new Enum_Property(true, ['自适应', '填充', '无缩放']), '无缩放')
+    this.registerProperty('垂直显示', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('动画效果', PropertyGroupName.special, new Enum_Property(true, ['滚动', '渐变']), '滚动')
+    this.registerProperty('是否显示面板指示点', PropertyGroupName.special, new Boolean_Property(), true)
 
-    this.RegisterMethods('切换到下一张', '', this.next, null, null)
+    this.registerMethods('切换到下一张', '', this.next, null, null)
   }
 }
 </script>

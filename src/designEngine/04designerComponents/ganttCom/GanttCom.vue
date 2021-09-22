@@ -48,7 +48,7 @@
       </GanttComponent>
       <div :style="{left:chartDateWidth+10+'px',width:'10px',top:'0px',position:'absolute',background:'#fff',height:height+'px'}"></div>
     </div>
-    <exportModal ref="export"  @printData="print" :svgSize="svgSize" :fontSize="exportFontSize" :cancelSettingInfo="cancelSettingInfo"
+    <exportModal ref="export" @printData="print" :svgSize="svgSize" :fontSize="exportFontSize" :cancelSettingInfo="cancelSettingInfo"
       :okSettingInfo="okSettingInfo"></exportModal>
 
   </div>
@@ -69,11 +69,11 @@ import {
   Number_Property,
   Color_Property,
   TimePickerFile_Property,
-  UploadFile_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  UploadFile_Property
+} from '../../03designerLayoutBase'
 import APIS_Test from '../../01designerContext/APIs_Test'
 import { CurrentContext } from '../../01designerContext'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 // import tablemix from './table_mix'
 import { columnInfo, tableStyle } from './tableCommonTypes'
 import common from '../../02common/commonMethod'
@@ -83,17 +83,17 @@ import modelAnalysis, {
   PageBaseModel,
   ModelBindingProperty,
   ModelPropertyType,
-  modelTypeEnum,
+  modelTypeEnum
 } from '../../02common/impResourcesCache/modelAnalysis'
 import { CurrentApis } from '../../01designerContext'
 import modelBingding, {
   bindingModelVal_InProperty,
   modelBingValue,
   bindTypeEnum,
-  modelDataTypeEnum,
+  modelDataTypeEnum
 } from '../../02common/commonClasses/modelBingding'
 
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 import Sortable from 'sortablejs'
 import XEUtils from 'xe-utils'
 import moment from 'moment'
@@ -104,7 +104,7 @@ import $ from 'jquery'
 
 enum propertyNameEnum {
   datasource = '表格数据源',
-  childdatasource = '子表格数据源',
+  childdatasource = '子表格数据源'
 }
 enum propertyGroupEnum {
   columnSetting = '列设置',
@@ -116,7 +116,7 @@ enum propertyGroupEnum {
   taskHeightSetting = '任务相关高度设置',
   imageSetting = '图片设置',
   exportButtonSetting = '导出弹窗设置',
-  tableDisplaySetting = '表格样式设置',
+  tableDisplaySetting = '表格样式设置'
 }
 
 enum operationTypeEnum {
@@ -125,7 +125,7 @@ enum operationTypeEnum {
   update = '编辑',
   updateChild = '编辑子表',
   delete = '删除',
-  deleteChild = '删除子表',
+  deleteChild = '删除子表'
 }
 
 @Component({
@@ -134,8 +134,8 @@ enum operationTypeEnum {
     // tablemix: tablemix,
     VTable: VTable,
     Sortable: Sortable,
-    exportModal: exportModal,
-  },
+    exportModal: exportModal
+  }
 })
 export default class GanttCom extends ComponentBase {
   /**
@@ -151,7 +151,7 @@ export default class GanttCom extends ComponentBase {
   tablePageConfig: any = {
     currentPage: 1,
     pageSize: 10,
-    total: 0,
+    total: 0
   }
 
   rowIdName: string = 'id'
@@ -163,8 +163,8 @@ export default class GanttCom extends ComponentBase {
     {
       title: '操作',
       field: 'action',
-      dataIndex: 'action',
-    },
+      dataIndex: 'action'
+    }
   ]
 
   tableStyle: tableStyle = {
@@ -180,7 +180,7 @@ export default class GanttCom extends ComponentBase {
     orderCode: null,
     orderType: false,
     isCanCheck: true,
-    editMode: 'dblclick',
+    editMode: 'dblclick'
   }
 
   tableScrollFlag: boolean = true
@@ -222,11 +222,11 @@ export default class GanttCom extends ComponentBase {
               actualBeginTime: 1567958400000,
               actualEndTime: 1568217600000,
               id: 1568028403474,
-              parentId: 1568028467666,
-            },
-          ],
-        },
-      ],
+              parentId: 1568028467666
+            }
+          ]
+        }
+      ]
     },
     {
       taskName: '5',
@@ -247,10 +247,10 @@ export default class GanttCom extends ComponentBase {
           planEndTime: '',
           isShow: true,
           id: 1568544467666,
-          parentId: 1568133397666,
-        },
-      ],
-    },
+          parentId: 1568133397666
+        }
+      ]
+    }
   ]
   isReload: boolean = true
 
@@ -297,329 +297,329 @@ export default class GanttCom extends ComponentBase {
     this.height = 500
     this.width = 1002
 
-  /*******************************************************************************************/
-    this.RegisterProperty('日期头高度', propertyGroupEnum.dateSetting, new Number_Property(), 32)
-    this.RegisterProperty('日期头字体大小', propertyGroupEnum.dateSetting, new Number_Property(), 17)
-    this.RegisterProperty('日期头字体粗细值', propertyGroupEnum.dateSetting, new Number_Property(), 600)
-    this.RegisterProperty('日期头部字体颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#404040')
-    this.RegisterProperty('日期边框颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#d7d7d7')
-    this.RegisterProperty('日期头背景颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#ffffff')
+    /*******************************************************************************************/
+    this.registerProperty('日期头高度', propertyGroupEnum.dateSetting, new Number_Property(), 32)
+    this.registerProperty('日期头字体大小', propertyGroupEnum.dateSetting, new Number_Property(), 17)
+    this.registerProperty('日期头字体粗细值', propertyGroupEnum.dateSetting, new Number_Property(), 600)
+    this.registerProperty('日期头部字体颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#404040')
+    this.registerProperty('日期边框颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#d7d7d7')
+    this.registerProperty('日期头背景颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#ffffff')
 
-    this.RegisterProperty('快速定位的字体大小', propertyGroupEnum.dateSetting, new Number_Property(), 17)
-    this.RegisterProperty('快速定位的字体粗细值', propertyGroupEnum.dateSetting, new Number_Property(), 600)
-    this.RegisterProperty('快速定位的宽度', propertyGroupEnum.dateSetting, new Number_Property(), 40)
-    this.RegisterProperty('快速定位的边框颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#d7d7d7')
-    this.RegisterProperty('快速定位的选中颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#ffffff')
-    this.RegisterProperty('是否快速定位', propertyGroupEnum.dateSetting, new Boolean_Property(), false)
+    this.registerProperty('快速定位的字体大小', propertyGroupEnum.dateSetting, new Number_Property(), 17)
+    this.registerProperty('快速定位的字体粗细值', propertyGroupEnum.dateSetting, new Number_Property(), 600)
+    this.registerProperty('快速定位的宽度', propertyGroupEnum.dateSetting, new Number_Property(), 40)
+    this.registerProperty('快速定位的边框颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#d7d7d7')
+    this.registerProperty('快速定位的选中颜色', propertyGroupEnum.dateSetting, new Color_Property(), '#ffffff')
+    this.registerProperty('是否快速定位', propertyGroupEnum.dateSetting, new Boolean_Property(), false)
 
-    this.RegisterProperty('周末高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
-    this.RegisterProperty('周末颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#82828233')
-    this.RegisterProperty('节假日高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
-    this.RegisterProperty('节假日高亮颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#82828233')
-    this.RegisterProperty('设置特殊日历高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
-    this.RegisterProperty('特殊日历-加班时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#EDAC1D33')
-    this.RegisterProperty('特殊日历-休息时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#DB4D3E33')
-    this.RegisterProperty('上班时间高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
-    this.RegisterProperty('上班时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#4BBA8133')
-    this.RegisterProperty('休息时间高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
-    this.RegisterProperty('休息时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#4BBA8133')
-    // this.RegisterProperty('上班开始时间', propertyGroupEnum.specialTimeSetting, new TimePickerFile_Property('time'), null)
-    // this.RegisterProperty('上班结束时间', propertyGroupEnum.specialTimeSetting, new TimePickerFile_Property('time'), null)
-    this.RegisterProperty('工厂日历级别', propertyGroupEnum.specialTimeSetting, new Enum_Property(true, ['project', 'middle']), 'project')
+    this.registerProperty('周末高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
+    this.registerProperty('周末颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#82828233')
+    this.registerProperty('节假日高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
+    this.registerProperty('节假日高亮颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#82828233')
+    this.registerProperty('设置特殊日历高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
+    this.registerProperty('特殊日历-加班时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#EDAC1D33')
+    this.registerProperty('特殊日历-休息时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#DB4D3E33')
+    this.registerProperty('上班时间高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
+    this.registerProperty('上班时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#4BBA8133')
+    this.registerProperty('休息时间高亮', propertyGroupEnum.specialTimeSetting, new Boolean_Property(), true)
+    this.registerProperty('休息时间颜色', propertyGroupEnum.specialTimeSetting, new Color_Property(), '#4BBA8133')
+    // this.registerProperty('上班开始时间', propertyGroupEnum.specialTimeSetting, new TimePickerFile_Property('time'), null)
+    // this.registerProperty('上班结束时间', propertyGroupEnum.specialTimeSetting, new TimePickerFile_Property('time'), null)
+    this.registerProperty('工厂日历级别', propertyGroupEnum.specialTimeSetting, new Enum_Property(true, ['project', 'middle']), 'project')
 
-    this.RegisterProperty('工厂日历', PropertyGroupName.normal, null, [])
-    // this.RegisterProperty('休息时间', PropertyGroupName.normal, null, [])
-    this.RegisterProperty('筛选条件', PropertyGroupName.normal, null, [])
-    this.RegisterProperty('节假日', PropertyGroupName.normal, null, []) //暂无法获取数据，所以未写默认值,格式为yyyy-mm-dd
-    this.RegisterProperty('特殊时间', PropertyGroupName.normal, null, []) //暂无法获取数据，所以未写默认值,格式为yyyy-mm-dd hh:mm
-    this.RegisterProperty('气泡卡片内容', PropertyGroupName.normal, null, [])
+    this.registerProperty('工厂日历', PropertyGroupName.normal, null, [])
+    // this.registerProperty('休息时间', PropertyGroupName.normal, null, [])
+    this.registerProperty('筛选条件', PropertyGroupName.normal, null, [])
+    this.registerProperty('节假日', PropertyGroupName.normal, null, []) //暂无法获取数据，所以未写默认值,格式为yyyy-mm-dd
+    this.registerProperty('特殊时间', PropertyGroupName.normal, null, []) //暂无法获取数据，所以未写默认值,格式为yyyy-mm-dd hh:mm
+    this.registerProperty('气泡卡片内容', PropertyGroupName.normal, null, [])
 
-    this.RegisterProperty('展示实际任务条', propertyGroupEnum.taskColorSetting, new Boolean_Property(), true) //应该作为方法抛出，待修改
-    this.RegisterProperty('实际任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#133E28')
-    this.RegisterProperty('project层任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#CBEADA')
-    this.RegisterProperty('project层任务条完成颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#4BBA81')
-    this.RegisterProperty('middle层任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#CBEADA')
-    this.RegisterProperty('middle层任务条完成颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#4BBA81')
-    this.RegisterProperty('task层任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#CBEADA')
-    this.RegisterProperty('task层任务条完成颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#4BBA81')
-    this.RegisterProperty('奇数任务行颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ffffff')
-    this.RegisterProperty('偶数任务行颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ffffff')
-    this.RegisterProperty('project任务行背景颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ffffff')
-    this.RegisterProperty('middle任务行背景颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#F6F5F7')
-    this.RegisterProperty('任务依赖线颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#FE0000')
-    this.RegisterProperty('任务行分割线颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#E3E3E3')
-    this.RegisterProperty('任务行纵向分割线颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#E3E3E3')
-    this.RegisterProperty('任务行鼠标选中颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#f2f2f2')
-    this.RegisterProperty('任务行鼠标悬停颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#f2f2f2')
-    this.RegisterProperty('可移动至资源颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ff0000')
+    this.registerProperty('展示实际任务条', propertyGroupEnum.taskColorSetting, new Boolean_Property(), true) //应该作为方法抛出，待修改
+    this.registerProperty('实际任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#133E28')
+    this.registerProperty('project层任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#CBEADA')
+    this.registerProperty('project层任务条完成颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#4BBA81')
+    this.registerProperty('middle层任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#CBEADA')
+    this.registerProperty('middle层任务条完成颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#4BBA81')
+    this.registerProperty('task层任务条颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#CBEADA')
+    this.registerProperty('task层任务条完成颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#4BBA81')
+    this.registerProperty('奇数任务行颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ffffff')
+    this.registerProperty('偶数任务行颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ffffff')
+    this.registerProperty('project任务行背景颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ffffff')
+    this.registerProperty('middle任务行背景颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#F6F5F7')
+    this.registerProperty('任务依赖线颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#FE0000')
+    this.registerProperty('任务行分割线颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#E3E3E3')
+    this.registerProperty('任务行纵向分割线颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#E3E3E3')
+    this.registerProperty('任务行鼠标选中颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#f2f2f2')
+    this.registerProperty('任务行鼠标悬停颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#f2f2f2')
+    this.registerProperty('可移动至资源颜色', propertyGroupEnum.taskColorSetting, new Color_Property(), '#ff0000')
 
-    this.RegisterProperty('每行高度', propertyGroupEnum.taskHeightSetting, new Number_Property(23), 29)
-    this.RegisterProperty('自动设置任务条高度', propertyGroupEnum.taskHeightSetting, new Boolean_Property(), false)
-    this.RegisterProperty('预计任务条和顶部的高度', propertyGroupEnum.taskHeightSetting, new Number_Property(), 5)
-    this.RegisterProperty('展示实际任务条时预计任务条的高度', propertyGroupEnum.taskHeightSetting, new Number_Property(), 9)
-    this.RegisterProperty('不展示实际任务条时预计任务条的高度', propertyGroupEnum.taskHeightSetting, new Number_Property(), 24)
-    this.RegisterProperty('实际任务条和顶部的距离', propertyGroupEnum.taskHeightSetting, new Number_Property(), 16)
+    this.registerProperty('每行高度', propertyGroupEnum.taskHeightSetting, new Number_Property(23), 29)
+    this.registerProperty('自动设置任务条高度', propertyGroupEnum.taskHeightSetting, new Boolean_Property(), false)
+    this.registerProperty('预计任务条和顶部的高度', propertyGroupEnum.taskHeightSetting, new Number_Property(), 5)
+    this.registerProperty('展示实际任务条时预计任务条的高度', propertyGroupEnum.taskHeightSetting, new Number_Property(), 9)
+    this.registerProperty('不展示实际任务条时预计任务条的高度', propertyGroupEnum.taskHeightSetting, new Number_Property(), 24)
+    this.registerProperty('实际任务条和顶部的距离', propertyGroupEnum.taskHeightSetting, new Number_Property(), 16)
 
-    // this.RegisterProperty('气泡卡片内容', PropertyGroupName.special, null, null, false, true) //暂无法获取数据，所以未写默认值
-    this.RegisterProperty('表格与甘特图是否有间隔', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('表格与甘特图间隔宽度', PropertyGroupName.special, new Number_Property(), 10)
-    this.RegisterProperty('表格与甘特图间隔背景色', PropertyGroupName.special, new Color_Property(), '#E9ECF0')
-    this.RegisterProperty('表格与甘特图间隙边框颜色', PropertyGroupName.special, new Color_Property(), '#E9ECF0')
+    // this.registerProperty('气泡卡片内容', PropertyGroupName.special, null, null, false, true) //暂无法获取数据，所以未写默认值
+    this.registerProperty('表格与甘特图是否有间隔', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('表格与甘特图间隔宽度', PropertyGroupName.special, new Number_Property(), 10)
+    this.registerProperty('表格与甘特图间隔背景色', PropertyGroupName.special, new Color_Property(), '#E9ECF0')
+    this.registerProperty('表格与甘特图间隙边框颜色', PropertyGroupName.special, new Color_Property(), '#E9ECF0')
 
-    this.RegisterProperty('是否使用默认弹窗（鼠标悬停任务条时）', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('甘特图可编辑', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('是否展示汇总', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('拖拽联动', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('生产日历数据格式', PropertyGroupName.special, new Enum_Property(true, ['周循环', '详细时间']), '周循环')
-    this.RegisterProperty('移动条件属性', PropertyGroupName.special, new Text_Property(), null)
-    this.RegisterProperty('表格宽度', PropertyGroupName.special, new Number_Property(), 300)
-    // this.RegisterProperty('甘特图宽度', PropertyGroupName.special, new Number_Property(), 700)
-    this.RegisterProperty('是否展示依赖线', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('依赖线宽度', PropertyGroupName.special, new Number_Property(1, 20), 2)
+    this.registerProperty('是否使用默认弹窗（鼠标悬停任务条时）', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('甘特图可编辑', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('是否展示汇总', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('拖拽联动', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('生产日历数据格式', PropertyGroupName.special, new Enum_Property(true, ['周循环', '详细时间']), '周循环')
+    this.registerProperty('移动条件属性', PropertyGroupName.special, new Text_Property(), null)
+    this.registerProperty('表格宽度', PropertyGroupName.special, new Number_Property(), 300)
+    // this.registerProperty('甘特图宽度', PropertyGroupName.special, new Number_Property(), 700)
+    this.registerProperty('是否展示依赖线', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('依赖线宽度', PropertyGroupName.special, new Number_Property(1, 20), 2)
 
-    this.RegisterProperty('project图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
-    this.RegisterProperty('middle图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
-    this.RegisterProperty('task图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
-    // this.RegisterProperty('锁定产线图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
-    this.RegisterProperty('任务图标大小', propertyGroupEnum.imageSetting, new Number_Property(1), 14)
+    this.registerProperty('project图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
+    this.registerProperty('middle图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
+    this.registerProperty('task图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
+    // this.registerProperty('锁定产线图标', propertyGroupEnum.imageSetting, new UploadFile_Property(1, 'image'))
+    this.registerProperty('任务图标大小', propertyGroupEnum.imageSetting, new Number_Property(1), 14)
 
-    this.RegisterProperty('图标大小', propertyGroupEnum.exportButtonSetting, new Number_Property(), 16)
-    this.RegisterProperty('字体大小', propertyGroupEnum.exportButtonSetting, new Number_Property(), 14)
-    this.RegisterProperty('取消按钮图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
-    this.RegisterProperty('取消按钮选中图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
-    this.RegisterProperty('导出按钮图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
-    this.RegisterProperty('导出按钮选中图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
-    this.RegisterProperty('取消按钮正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC8626')
-    this.RegisterProperty('取消按钮悬浮颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#6CC5980D')
-    this.RegisterProperty('取消按钮点击颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
-    this.RegisterProperty('取消按钮边框颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
-    this.RegisterProperty('取消字体正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC86FF')
-    this.RegisterProperty('取消字体选中颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#ffffff')
-    this.RegisterProperty('导出按钮正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC86')
-    this.RegisterProperty('导出按钮悬浮颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#6CC598')
-    this.RegisterProperty('导出按钮点击颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
-    this.RegisterProperty('导出按钮边框颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
-    this.RegisterProperty('导出字体正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#ffffff')
-    this.RegisterProperty('导出字体选中颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC86FF')
+    this.registerProperty('图标大小', propertyGroupEnum.exportButtonSetting, new Number_Property(), 16)
+    this.registerProperty('字体大小', propertyGroupEnum.exportButtonSetting, new Number_Property(), 14)
+    this.registerProperty('取消按钮图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
+    this.registerProperty('取消按钮选中图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
+    this.registerProperty('导出按钮图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
+    this.registerProperty('导出按钮选中图标', propertyGroupEnum.exportButtonSetting, new UploadFile_Property(1, 'image'))
+    this.registerProperty('取消按钮正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC8626')
+    this.registerProperty('取消按钮悬浮颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#6CC5980D')
+    this.registerProperty('取消按钮点击颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
+    this.registerProperty('取消按钮边框颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
+    this.registerProperty('取消字体正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC86FF')
+    this.registerProperty('取消字体选中颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#ffffff')
+    this.registerProperty('导出按钮正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC86')
+    this.registerProperty('导出按钮悬浮颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#6CC598')
+    this.registerProperty('导出按钮点击颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
+    this.registerProperty('导出按钮边框颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#469F72')
+    this.registerProperty('导出字体正常颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#ffffff')
+    this.registerProperty('导出字体选中颜色', propertyGroupEnum.exportButtonSetting, new Color_Property(), '#53BC86FF')
 
-    this.RegisterEvents('任务条双击事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('任务条选中事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('任务条右击事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('任务条悬浮事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('树节点展开收起', '', this.inparam, this.outparam)
-    this.RegisterEvents('拖动校验事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('选中拖拽行事件', '', this.inparam, this.outparam)
+    this.registerEvents('任务条双击事件', '', this.inparam, this.outparam)
+    this.registerEvents('任务条选中事件', '', this.inparam, this.outparam)
+    this.registerEvents('任务条右击事件', '', this.inparam, this.outparam)
+    this.registerEvents('任务条悬浮事件', '', this.inparam, this.outparam)
+    this.registerEvents('树节点展开收起', '', this.inparam, this.outparam)
+    this.registerEvents('拖动校验事件', '', this.inparam, this.outparam)
+    this.registerEvents('选中拖拽行事件', '', this.inparam, this.outparam)
 
     let addparam: param[] = []
     addparam.push({ name: '新增数据', type: paramType.complexType, val: null })
     addparam.push({ name: '依赖关系', type: paramType.complexType, val: null })
-    this.RegisterMethods('新增任务', '', this.addNewTask, addparam, null)
+    this.registerMethods('新增任务', '', this.addNewTask, addparam, null)
     let deleteparam: param[] = []
     deleteparam.push({ name: '删除数据id', type: paramType.number, val: null })
-    this.RegisterMethods('删除任务', '', this.deleteTask, deleteparam, null)
+    this.registerMethods('删除任务', '', this.deleteTask, deleteparam, null)
     let changeparam: param[] = []
     changeparam.push({ name: '修改任务数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('修改任务', '', this.changeTask, changeparam, null)
-    // this.RegisterMethods('任务位置互换', '', this.exchangeTask, this.inparam, null)
-    // this.RegisterMethods('任务条移动', '', this.moveToTask, this.inparam, null)
-    // this.RegisterMethods('撤销', '', this.undo, null, null)
-    // this.RegisterMethods('重做', '', this.redo, null, null)
-    // this.RegisterMethods('获取撤销列表', '', this.getUndoList, null, this.outparam)
-    // this.RegisterMethods('获取重做列表', '', this.getRedoList, null, this.outparam)
-    // this.RegisterMethods('加载数据方法', '', this.refreshganttData, this.inparam, null)
+    this.registerMethods('修改任务', '', this.changeTask, changeparam, null)
+    // this.registerMethods('任务位置互换', '', this.exchangeTask, this.inparam, null)
+    // this.registerMethods('任务条移动', '', this.moveToTask, this.inparam, null)
+    // this.registerMethods('撤销', '', this.undo, null, null)
+    // this.registerMethods('重做', '', this.redo, null, null)
+    // this.registerMethods('获取撤销列表', '', this.getUndoList, null, this.outparam)
+    // this.registerMethods('获取重做列表', '', this.getRedoList, null, this.outparam)
+    // this.registerMethods('加载数据方法', '', this.refreshganttData, this.inparam, null)
     let lockinparam: param[] = []
     lockinparam.push({ name: '行数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('锁定产线', '', this.lockNode, lockinparam, null)
+    this.registerMethods('锁定产线', '', this.lockNode, lockinparam, null)
     let checkinparam: param[] = []
     checkinparam.push({ name: '数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('检查时间是否合法', '', this.checkTask, checkinparam, this.outparam)
+    this.registerMethods('检查时间是否合法', '', this.checkTask, checkinparam, this.outparam)
     let depenparam: param[] = []
     depenparam.push({ name: '行数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('获取所有依赖和时间', '', this.getDepen, depenparam, null)
+    this.registerMethods('获取所有依赖和时间', '', this.getDepen, depenparam, null)
     let getparam: param[] = []
     getparam.push({ name: '行数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('获取当前行数据', '', this.getTask, getparam, null)
+    this.registerMethods('获取当前行数据', '', this.getTask, getparam, null)
 
-    this.RegisterMethods('获取是否有选中行', '', this.isHasClickedRow, null, null)
+    this.registerMethods('获取是否有选中行', '', this.isHasClickedRow, null, null)
 
-    this.RegisterMethods('获取数据源', '', this.getSaveTask, null, null)
+    this.registerMethods('获取数据源', '', this.getSaveTask, null, null)
     let levelLabel: param[] = []
     levelLabel.push({ name: '日期显示级别（hour/day/week/month/year）', type: paramType.string, val: null })
-    this.RegisterMethods('快速定位日期等级方法', '', this.changeLevel, levelLabel, this.outparam)
+    this.registerMethods('快速定位日期等级方法', '', this.changeLevel, levelLabel, this.outparam)
     // let levelNumber: param[] = []
     // levelNumber.push({ name: '日期显示级别1-13（hour1-3/day4-8/week9/month10-11/year12-13）', type: paramType.number, val: null })
-    // this.RegisterMethods('滑块快速缩放日期', '', this.zoomDate, levelNumber, this.outparam)
+    // this.registerMethods('滑块快速缩放日期', '', this.zoomDate, levelNumber, this.outparam)
     let dateString: param[] = []
     dateString.push({ name: '日期范围("2019-09-15","2019-09-16")', type: paramType.complexType, val: null })
-    this.RegisterMethods('日期快速定位', '', this.locateDate, dateString, this.outparam)
-    this.RegisterMethods('缩放至合适', '', this.zoomToFit, this.inparam, this.outparam)
-    // this.RegisterMethods('折叠展开', '', this.handlerExpand, this.inparam, null)
-    this.RegisterMethods('导出Excel', '', this.exportExcel, null, null)
-    this.RegisterMethods('打印数据', '', this.printData, null, null)
-    this.RegisterMethods('筛选', '', this.filters, null, null)
+    this.registerMethods('日期快速定位', '', this.locateDate, dateString, this.outparam)
+    this.registerMethods('缩放至合适', '', this.zoomToFit, this.inparam, this.outparam)
+    // this.registerMethods('折叠展开', '', this.handlerExpand, this.inparam, null)
+    this.registerMethods('导出Excel', '', this.exportExcel, null, null)
+    this.registerMethods('打印数据', '', this.printData, null, null)
+    this.registerMethods('筛选', '', this.filters, null, null)
 
     let dropCheckResult: param[] = []
     dropCheckResult.push({ name: '拖动校验结果', type: paramType.boolean, val: null })
-    this.RegisterMethods('获取拖动校验结果', '', this.getCheckDropResult, dropCheckResult, this.outparam)
+    this.registerMethods('获取拖动校验结果', '', this.getCheckDropResult, dropCheckResult, this.outparam)
 
-  /*******************************************************************************************/
-    this.RegisterProperty('表格数据源', PropertyGroupName.normal, null, [])
-    this.RegisterProperty('列样式', propertyGroupEnum.columnSetting, new TableStyleSetting_Property(), null)
+    /*******************************************************************************************/
+    this.registerProperty('表格数据源', PropertyGroupName.normal, null, [])
+    this.registerProperty('列样式', propertyGroupEnum.columnSetting, new TableStyleSetting_Property(), null)
 
-    this.RegisterProperty('当前页码', propertyGroupEnum.tableSetting, new Number_Property(), 1, false)
-    this.RegisterProperty('每页显示项数', propertyGroupEnum.tableSetting, new Number_Property(), 10, false)
-    this.RegisterProperty('总条数', propertyGroupEnum.tableSetting, new Number_Property(), 0, false)
-    this.RegisterProperty('当前选中行', propertyGroupEnum.tableSetting, null, [])
-    this.RegisterProperty('是否有选中行', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
-    this.RegisterProperty('是否有子表格', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
-    this.RegisterProperty('展开行', propertyGroupEnum.tableSetting, null, '')
-    this.RegisterProperty('当前选中模型', propertyGroupEnum.tableSetting, null, [], false)
-    this.RegisterProperty('当前点击行', propertyGroupEnum.tableSetting, null, {})
-    this.RegisterProperty('表格行字体颜色', propertyGroupEnum.tableSetting, new Color_Property(), '#000000')
-    this.RegisterProperty('表格行字体大小', propertyGroupEnum.tableSetting, new Number_Property(), 14)
-    this.RegisterProperty('表格标题字体大小', propertyGroupEnum.tableSetting, new Number_Property(), 17)
+    this.registerProperty('当前页码', propertyGroupEnum.tableSetting, new Number_Property(), 1, false)
+    this.registerProperty('每页显示项数', propertyGroupEnum.tableSetting, new Number_Property(), 10, false)
+    this.registerProperty('总条数', propertyGroupEnum.tableSetting, new Number_Property(), 0, false)
+    this.registerProperty('当前选中行', propertyGroupEnum.tableSetting, null, [])
+    this.registerProperty('是否有选中行', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
+    this.registerProperty('是否有子表格', propertyGroupEnum.tableSetting, new Boolean_Property(), false, false)
+    this.registerProperty('展开行', propertyGroupEnum.tableSetting, null, '')
+    this.registerProperty('当前选中模型', propertyGroupEnum.tableSetting, null, [], false)
+    this.registerProperty('当前点击行', propertyGroupEnum.tableSetting, null, {})
+    this.registerProperty('表格行字体颜色', propertyGroupEnum.tableSetting, new Color_Property(), '#000000')
+    this.registerProperty('表格行字体大小', propertyGroupEnum.tableSetting, new Number_Property(), 14)
+    this.registerProperty('表格标题字体大小', propertyGroupEnum.tableSetting, new Number_Property(), 17)
 
-    this.RegisterProperty('表格为空时显示文本', propertyGroupEnum.tableDisplaySetting, new Text_Property(), '暂无数据')
+    this.registerProperty('表格为空时显示文本', propertyGroupEnum.tableDisplaySetting, new Text_Property(), '暂无数据')
 
-    // this.RegisterProperty('子表格数据源', PropertyGroupName.normal, null, [])
+    // this.registerProperty('子表格数据源', PropertyGroupName.normal, null, [])
     /**列*/
-    // this.RegisterProperty('字体大小', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
-    // this.RegisterProperty('字体颜色', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
+    // this.registerProperty('字体大小', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
+    // this.registerProperty('字体颜色', propertyGroupEnum.columnSetting, new Boolean_Property(), true)
 
-    // this.RegisterProperty('是否显示分页', propertyGroupEnum.tableSetting, new Boolean_Property(), false, true)
-    // this.RegisterProperty('是否显示表头', propertyGroupEnum.tableSetting, new Boolean_Property(), true, true)
-    // this.RegisterProperty('是否树表格', propertyGroupEnum.tableSetting, new Boolean_Property(), true, true)
-    // this.RegisterProperty('是否可选', propertyGroupEnum.tableSetting, new Enum_Property(true, ['否', '多选', '单选']), '否')
-    // this.RegisterProperty('新增数据源', propertyGroupEnum.tableSetting, null, [], false, false)
-    // this.RegisterProperty('编辑数据源', propertyGroupEnum.tableSetting, null, [], false, false)
-    // this.RegisterProperty('删除数据源', propertyGroupEnum.tableSetting, null, [], false, false)
-    // this.RegisterProperty('是否显示刷新', propertyGroupEnum.tableSetting, new Boolean_Property(), true)
-    // this.RegisterProperty('是否可编辑', propertyGroupEnum.tableSetting, new Enum_Property(true, ['否', '单击编辑', '双击编辑','手动编辑']), '否',false,false)
+    // this.registerProperty('是否显示分页', propertyGroupEnum.tableSetting, new Boolean_Property(), false, true)
+    // this.registerProperty('是否显示表头', propertyGroupEnum.tableSetting, new Boolean_Property(), true, true)
+    // this.registerProperty('是否树表格', propertyGroupEnum.tableSetting, new Boolean_Property(), true, true)
+    // this.registerProperty('是否可选', propertyGroupEnum.tableSetting, new Enum_Property(true, ['否', '多选', '单选']), '否')
+    // this.registerProperty('新增数据源', propertyGroupEnum.tableSetting, null, [], false, false)
+    // this.registerProperty('编辑数据源', propertyGroupEnum.tableSetting, null, [], false, false)
+    // this.registerProperty('删除数据源', propertyGroupEnum.tableSetting, null, [], false, false)
+    // this.registerProperty('是否显示刷新', propertyGroupEnum.tableSetting, new Boolean_Property(), true)
+    // this.registerProperty('是否可编辑', propertyGroupEnum.tableSetting, new Enum_Property(true, ['否', '单击编辑', '双击编辑','手动编辑']), '否',false,false)
 
-    this.RegisterEvents('列表刷新', '', this.inparam, this.outparam)
-    this.RegisterEvents('表格展开', '', this.inparam, this.outparam)
-    this.RegisterEvents('点击行', '', this.inparam, this.outparam)
+    this.registerEvents('列表刷新', '', this.inparam, this.outparam)
+    this.registerEvents('表格展开', '', this.inparam, this.outparam)
+    this.registerEvents('点击行', '', this.inparam, this.outparam)
     let currentCheckinparam: param[] = []
     currentCheckinparam.push({ name: '当前勾选', type: paramType.complexType, val: null })
-    this.RegisterEvents('勾选行', '', currentCheckinparam, this.outparam)
-    this.RegisterEvents('取消勾选行', '', this.inparam, this.outparam)
+    this.registerEvents('勾选行', '', currentCheckinparam, this.outparam)
+    this.registerEvents('取消勾选行', '', this.inparam, this.outparam)
     let datasourceinparam: param[] = []
     datasourceinparam.push({ name: '当前数据', type: paramType.complexType, val: null })
-    this.RegisterEvents('表格数据变更', '', datasourceinparam, this.outparam)
+    this.registerEvents('表格数据变更', '', datasourceinparam, this.outparam)
     let editRowinparam: param[] = []
     editRowinparam.push({ name: '编辑行数据', type: paramType.complexType, val: null })
-    this.RegisterEvents('行编辑结束', '', editRowinparam, this.outparam)
-    this.RegisterEvents('表格行悬浮', '', this.inparam, this.outparam)
-    this.RegisterEvents('表格行双击', '', this.inparam, this.outparam)
+    this.registerEvents('行编辑结束', '', editRowinparam, this.outparam)
+    this.registerEvents('表格行悬浮', '', this.inparam, this.outparam)
+    this.registerEvents('表格行双击', '', this.inparam, this.outparam)
 
     let selectallinparam: param[] = []
     selectallinparam.push({ name: '全选/反选', type: paramType.boolean, val: true })
     selectallinparam.push({ name: '是否触发勾选事件', type: paramType.boolean, val: true })
-    this.RegisterMethods('勾选全部数据', '', this.selectAllData, selectallinparam, null)
+    this.registerMethods('勾选全部数据', '', this.selectAllData, selectallinparam, null)
     let selectinparam: param[] = []
     selectinparam.push({ name: '匹配数据源', type: paramType.complexType, val: null })
     selectinparam.push({ name: '匹配字段', type: paramType.string, val: null })
     selectinparam.push({ name: '勾选/反选', type: paramType.boolean, val: true })
     selectinparam.push({ name: '是否触发勾选事件', type: paramType.boolean, val: true })
     selectinparam.push({ name: '匹配表格字段', type: paramType.string, val: null })
-    this.RegisterMethods('勾选指定行', '', this.selectDataArr, selectinparam, null)
-    this.RegisterMethods('获取最近一次编辑的数据', '', this.getPreviousEditInfo, this.inparam, null)
+    this.registerMethods('勾选指定行', '', this.selectDataArr, selectinparam, null)
+    this.registerMethods('获取最近一次编辑的数据', '', this.getPreviousEditInfo, this.inparam, null)
     /**表格临时数据源相关方法 */
-    this.RegisterMethods('获取表格新增数据', '', this.getAddedDataSource, this.inparam, null)
-    this.RegisterMethods('获取表格更新数据', '', this.getUpdatedDataSource, this.inparam, null)
-    this.RegisterMethods('获取表格删除数据', '', this.getDeletedDataSource, this.inparam, null)
+    this.registerMethods('获取表格新增数据', '', this.getAddedDataSource, this.inparam, null)
+    this.registerMethods('获取表格更新数据', '', this.getUpdatedDataSource, this.inparam, null)
+    this.registerMethods('获取表格删除数据', '', this.getDeletedDataSource, this.inparam, null)
     let expandinparam: param[] = []
     expandinparam.push({ name: '行数据', type: paramType.string, val: null })
-    this.RegisterMethods('展开指定行', '', this.setExpandRow, expandinparam, null)
+    this.registerMethods('展开指定行', '', this.setExpandRow, expandinparam, null)
 
     let tempinparam: param[] = []
     tempinparam.push({ name: '新增数据', type: paramType.complexType, val: null })
     tempinparam.push({ name: '编辑数据', type: paramType.complexType, val: null })
     tempinparam.push({ name: '删除数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('指定临时数据源', '', this.setTempDataSource, tempinparam, null)
+    this.registerMethods('指定临时数据源', '', this.setTempDataSource, tempinparam, null)
 
     /** 列设置根据列编码来匹配 */
     let columninparam: param[] = []
     columninparam.push({ name: '指定列', type: paramType.string, val: null })
     columninparam.push({ name: '下拉数据源', type: paramType.complexType, val: null })
-    this.RegisterMethods('设置列数据源', '用于行编辑中的下拉框的数据源赋值', this.setSelectDataSourceByColumnCode, columninparam, null)
+    this.registerMethods('设置列数据源', '用于行编辑中的下拉框的数据源赋值', this.setSelectDataSourceByColumnCode, columninparam, null)
 
     let rowselectinparam: param[] = []
     rowselectinparam.push({ name: '主键id', type: paramType.string, val: null })
-    this.RegisterMethods('设置点击行', '', this.setClickRow, rowselectinparam, null)
+    this.registerMethods('设置点击行', '', this.setClickRow, rowselectinparam, null)
 
     //let childCheckinparam: param[] = []
-    this.RegisterMethods('获取子表格选中数据', '', this.getChildCheckRows, this.inparam, null)
-    this.RegisterMethods('重置表格数据', '', this.resetDataSource, this.inparam, null)
+    this.registerMethods('获取子表格选中数据', '', this.getChildCheckRows, this.inparam, null)
+    this.registerMethods('重置表格数据', '', this.resetDataSource, this.inparam, null)
 
     let batchDeleteChildinparam: param[] = []
     batchDeleteChildinparam.push({ name: '待删除数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('批量删除子表格数据', '', this.batchDeleteChild, batchDeleteChildinparam, null)
+    this.registerMethods('批量删除子表格数据', '', this.batchDeleteChild, batchDeleteChildinparam, null)
 
     let batchUpdateChildinparam: param[] = []
     batchUpdateChildinparam.push({ name: '待更新数据', type: paramType.complexType, val: null })
-    this.RegisterMethods('批量更新子表格数据', '', this.batchUpdateChild, batchUpdateChildinparam, null)
+    this.registerMethods('批量更新子表格数据', '', this.batchUpdateChild, batchUpdateChildinparam, null)
 
     let setActionCoulumninparam: param[] = []
     setActionCoulumninparam.push({ name: '显示/隐藏', type: paramType.boolean, val: true })
-    this.RegisterMethods('设置操作列状态', '', this.setActionCoulumn, setActionCoulumninparam, null)
-    this.RegisterMethods('检测是否存在临时数据', '', this.checkIsExistTempData, this.inparam, null)
-    this.RegisterMethods('获取子表格当前数据', '', this.getChildCurrentDataSource, this.inparam, null)
-    this.RegisterMethods('导出表格当前数据', '', this.exportTableToCsv, this.inparam, null)
-    //this.RegisterEvents('列表排序', '', this.inparam, this.outparam)
+    this.registerMethods('设置操作列状态', '', this.setActionCoulumn, setActionCoulumninparam, null)
+    this.registerMethods('检测是否存在临时数据', '', this.checkIsExistTempData, this.inparam, null)
+    this.registerMethods('获取子表格当前数据', '', this.getChildCurrentDataSource, this.inparam, null)
+    this.registerMethods('导出表格当前数据', '', this.exportTableToCsv, this.inparam, null)
+    //this.registerEvents('列表排序', '', this.inparam, this.outparam)
 
-    // this.RegisterMethods('删除选中数据', '', this.deleteRows, null, null)
+    // this.registerMethods('删除选中数据', '', this.deleteRows, null, null)
     // let rowinparam: param[] = []
     // rowinparam.push({ name: '行数据', type: paramType.complexType, val: null })
-    // this.RegisterMethods('删除行', '', this.deleteRow, rowinparam, null)
+    // this.registerMethods('删除行', '', this.deleteRow, rowinparam, null)
     // let deletechildparam: param[] = []
     // deletechildparam.push({ name: '主表关联id', type: paramType.string, val: null })
     // deletechildparam.push({ name: '子表id', type: paramType.complexType, val: null })
-    // this.RegisterMethods('删除子表数据', '', this.deleteChildRow, deletechildparam, null)
+    // this.registerMethods('删除子表数据', '', this.deleteChildRow, deletechildparam, null)
     // let updateparam: param[] = []
     // updateparam.push({ name: '行数据', type: paramType.complexType, val: null })
     // updateparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    // this.RegisterMethods('更新行', '', this.updateRow, updateparam, null)
+    // this.registerMethods('更新行', '', this.updateRow, updateparam, null)
     // let updatechildparam: param[] = []
     // updatechildparam.push({ name: '主表关联id', type: paramType.string, val: null })
     // updatechildparam.push({ name: '子表数据', type: paramType.complexType, val: null })
     // updatechildparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    // this.RegisterMethods('更新子表数据', '', this.updateChildRow, updatechildparam, null)
+    // this.registerMethods('更新子表数据', '', this.updateChildRow, updatechildparam, null)
     // let addrowinparam: param[] = []
     // addrowinparam.push({ name: '行数据', type: paramType.complexType, val: null })
     // addrowinparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    // this.RegisterMethods('添加行', '', this.addRows, addrowinparam, null)
+    // this.registerMethods('添加行', '', this.addRows, addrowinparam, null)
 
     // let addchildrowinparam: param[] = []
     // addchildrowinparam.push({ name: '主表关联id', type: paramType.string, val: null })
     // addchildrowinparam.push({ name: '子表行数据', type: paramType.complexType, val: null })
     // addchildrowinparam.push({ name: '验证重复字段', type: paramType.string, val: null })
-    // this.RegisterMethods('添加子表数据', '', this.addChildRow, addchildrowinparam, null)
+    // this.registerMethods('添加子表数据', '', this.addChildRow, addchildrowinparam, null)
 
-    // this.RegisterMethods('清除临时数据', '', this.dataClear, this.inparam, null)
+    // this.registerMethods('清除临时数据', '', this.dataClear, this.inparam, null)
 
     // let editinparam: param[] = []
     // editinparam.push({ name: '行数据', type: paramType.complexType, val: null })
-    // this.RegisterMethods('开始行内编辑', '', this.rowEditBegin, editinparam, null)
-    // this.RegisterMethods('取消行内编辑', '', this.rowEditCancel, editinparam, null)
-    // this.RegisterMethods('保存行内编辑', '', this.rowEditSave, editinparam, null)
+    // this.registerMethods('开始行内编辑', '', this.rowEditBegin, editinparam, null)
+    // this.registerMethods('取消行内编辑', '', this.rowEditCancel, editinparam, null)
+    // this.registerMethods('保存行内编辑', '', this.rowEditSave, editinparam, null)
 
-    // this.RegisterMethods('获取表格当前数据', '', this.getCurrentDataSource, this.inparam, null)
-    // this.RegisterMethods('获取子表格新增数据', '', this.getAddedChildDataSource, this.inparam, null)
-    // this.RegisterMethods('获取子表格更新数据', '', this.getUpdatedChildDataSource, this.inparam, null)
-    // this.RegisterMethods('获取子表格删除数据', '', this.getDeletedChildDataSource, this.inparam, null)
+    // this.registerMethods('获取表格当前数据', '', this.getCurrentDataSource, this.inparam, null)
+    // this.registerMethods('获取子表格新增数据', '', this.getAddedChildDataSource, this.inparam, null)
+    // this.registerMethods('获取子表格更新数据', '', this.getUpdatedChildDataSource, this.inparam, null)
+    // this.registerMethods('获取子表格删除数据', '', this.getDeletedChildDataSource, this.inparam, null)
 
     // this.$on('onPropertyChanged', this.onPropertyChangedInner)
 
     //表格初始化完成之后绑定分页模型实例，查询一下分页模型信息，然后初始化
     let pagenumber = 1
     let pageSize = 10
-    let nameproperty = this.FindPropertyByName(PropertyGroupName.normal, '名称')
+    let nameproperty = this.findPropertyByName(PropertyGroupName.normal, '名称')
     let name = ''
     if (nameproperty && nameproperty.value) {
       name = '-' + nameproperty.value
     }
-    let idproperty = this.FindPropertyByName(PropertyGroupName.normal, '唯一Id')
+    let idproperty = this.findPropertyByName(PropertyGroupName.normal, '唯一Id')
     CurrentApis.GetModelInfoByCode('pageModel').then((res: any) => {
       let modelInfo = res
       //window.console.log('element', modelInfo)
@@ -637,13 +637,13 @@ export default class GanttCom extends ComponentBase {
         return
       }
       var modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == newmodelbind.modelBindingName)
-      //this.FindPropertyByName('表格设置', '当前页码')
+      //this.findPropertyByName('表格设置', '当前页码')
       if (!modelBind) {
         this.parentPage.addModelBinding(newmodelbind)
         let tempData = {
           id: 1,
-          pageSize: this.FindPropertyByName('表格设置', '每页显示项数').value,
-          pageNumber: this.FindPropertyByName('表格设置', '当前页码').value,
+          pageSize: this.findPropertyByName('表格设置', '每页显示项数').value,
+          pageNumber: this.findPropertyByName('表格设置', '当前页码').value
         }
         this.parentPage.setModelBindVal(newmodelbind.modelBindingName, tempData)
         //把分页属性绑定到模型实例上面
@@ -651,7 +651,7 @@ export default class GanttCom extends ComponentBase {
         newbindInfo.bindType = bindTypeEnum.code
         newbindInfo.modelCodes = [{ code: 'pageSize', codeName: '页大小', modelId: null }]
         newbindInfo.modelName = newmodelbind.modelBindingName
-        newbindInfo.propertyId = this.FindPropertyByName('表格设置', '每页显示项数').id
+        newbindInfo.propertyId = this.findPropertyByName('表格设置', '每页显示项数').id
         this.addPropertyModelBind(newbindInfo)
         //this.setModelBindInfo(newbindInfo.modelName,newmodelbind,newbindInfo.propertyId)
 
@@ -659,7 +659,7 @@ export default class GanttCom extends ComponentBase {
         newbindInfo1.bindType = bindTypeEnum.code
         newbindInfo1.modelCodes = [{ code: 'pageNumber', codeName: '页索引', modelId: null }]
         newbindInfo1.modelName = newmodelbind.modelBindingName
-        newbindInfo1.propertyId = this.FindPropertyByName('表格设置', '当前页码').id
+        newbindInfo1.propertyId = this.findPropertyByName('表格设置', '当前页码').id
         this.addPropertyModelBind(newbindInfo1)
       }
 
@@ -676,7 +676,7 @@ export default class GanttCom extends ComponentBase {
         let tempData = {
           id: 1,
           pageSize: 10,
-          pageNumber: this.FindPropertyByName('表格设置', '当前页码').value,
+          pageNumber: this.findPropertyByName('表格设置', '当前页码').value
         }
         this.$on('onPropertyChanged', this.onPropertyChangedInner)
         this.parentPage.setModelBindVal(element.modelBindingName, tempData)
@@ -718,7 +718,7 @@ export default class GanttCom extends ComponentBase {
     })
   }
 
-/*******************表格相关数据与方法***************************/
+  /*******************表格相关数据与方法***************************/
   get showSelection(): boolean {
     return false
   }
@@ -747,7 +747,7 @@ export default class GanttCom extends ComponentBase {
       'border-top': '1px solid ' + this.dateBorderColor,
       'border-bottom': '2px solid ' + this.dateBorderColor,
       'border-left': '0px solid #0000',
-      'border-right': '0px solid #0000',
+      'border-right': '0px solid #0000'
     }
   }
   handleScroll({ scrollTop }) {
@@ -781,41 +781,40 @@ export default class GanttCom extends ComponentBase {
   }
   //分页信息改变通知属性
   changePage(pageNumber: any, pageSize: any, istriggerEvent: boolean = true) {
-    var page = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
-    var size = this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
+    var page = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+    var size = this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
     let propBind = this.getPropertyBindInfo(page.id)
     if (propBind) {
       var modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == propBind.modelName)
       if (modelBind) {
         var tempData = {
           pageSize: pageSize,
-          pageNumber: pageNumber,
+          pageNumber: pageNumber
         }
         this.parentPage.setModelBindVal(propBind.modelName, tempData)
       }
     }
     page.value = pageNumber
     size.value = pageSize
-    //this.SetPropertyVal(page.id,pageNumber)
+    //this.setPropertyVal(page.id,pageNumber)
     //window.console.log('propBind',propBind)
     //window.console.log('----------------------------------------------进入刷新方法')
     if (istriggerEvent) {
-      this.TriggeEvent('列表刷新', null)
+      this.triggeEvent('列表刷新', null)
     }
   }
   refreshData(pagenumber: number) {
     //window.console.log('---------------------------------刷新当前页行为执行完成之后pagenumber111', pagenumber)
-    var page = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
-    var size = this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
+    var page = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+    var size = this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
     page.value = pagenumber
-    //this.TriggeEvent('列表刷新', null)
+    //this.triggeEvent('列表刷新', null)
     //如果pagenumber大于1，就是要刷新当前页，如果等于1就是要刷新到首页
     this.changePage(page.value, size.value)
     //window.console.log('---------------------------------刷新当前页行为执行完成之后pagenumber', pagenumber)
     if (pagenumber > 1) {
       //刷新当前页的时候需要一个判断,当前页没数据的情况，往前再翻一页
       this.$nextTick(() => {
-
         if (!this.dataSource || this.dataSource.length === 0) {
           this.changePage(pagenumber - 1, size.value)
         }
@@ -839,20 +838,20 @@ export default class GanttCom extends ComponentBase {
       //window.console.log('orderInfo[0].val',orderInfo[0])
       tmodel.push(orderInfo[0])
     }
-    //this.TriggeEvent('列表排序', inparam)
-    this.TriggeEvent('列表刷新', null)
+    //this.triggeEvent('列表排序', inparam)
+    this.triggeEvent('列表刷新', null)
   }
   //表格展开事件
   expand(row: any) {
     //window.console.log('--------------------------------展开行属性xxxxxxxxx-----------------', row)
-    var prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+    var prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
     if (prop) {
       //window.console.log('--------------------------------展开的行赋值-----------------', row)
-      this.SetPropertyVal(prop.id, row[this.rowIdName])
+      this.setPropertyVal(prop.id, row[this.rowIdName])
     }
     //window.console.log('--------------------------------展开行属性-----------------', prop)
     let temp = this.oldAllChildDataSource.find((item) => item.key == row[this.rowIdName])
-    let tempprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
+    let tempprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
     let tempnew = this.allChildDataSource.find((item) => item.key == row[this.rowIdName])
     if (temp && temp.value && temp.value.length > 0 && tempprop.value == true) {
       //window.console.log('--------------------------------展开的行信息temp-----------------', temp)
@@ -872,8 +871,8 @@ export default class GanttCom extends ComponentBase {
       })
     } else {
       this.$nextTick(() => {
-        let childdataProp = this.FindPropertyByName(PropertyGroupName.normal, '子表格数据源')
-        this.SetPropertyVal(childdataProp.id, [])
+        let childdataProp = this.findPropertyByName(PropertyGroupName.normal, '子表格数据源')
+        this.setPropertyVal(childdataProp.id, [])
         //this.childdataSource = []
         // if (childdataProp.value && childdataProp.value.content && childdataProp.value.content.length > 0) {
         //   //暂时先注释掉
@@ -882,25 +881,25 @@ export default class GanttCom extends ComponentBase {
         //this.isExpand = true
 
         this.$nextTick(() => {
-          this.TriggeEvent('表格展开', row)
+          this.triggeEvent('表格展开', row)
         })
       })
     }
   }
   childItemSelect(value: any, isChecked: boolean) {
     //window.console.log('------------------------------------当前选中行121212', value)
-    let isSelectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
-    // let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    let isSelectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
+    // let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     // if (!chooseType || chooseType.value === '否') {
     //   return
     // }
     let isCanCheck = this.tableStyle.child.isCanCheck
-    // let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
-    // let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
+    // let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+    // let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
     // if (!isCanCheck) {
     //   let val = { modelCode: this.getModelCode(true), data: common.clone(value) }
-    //   this.SetPropertyVal(property.id, val)
-    //   this.SetPropertyVal(prop.id, common.clone(value))
+    //   this.setPropertyVal(property.id, val)
+    //   this.setPropertyVal(prop.id, common.clone(value))
     // } else {
     //   let tempValue = common.clone(property.value.data)
     //   if (isChecked) {
@@ -915,10 +914,10 @@ export default class GanttCom extends ComponentBase {
     //     }
     //   }
     //   let val = { modelCode: this.getModelCode(true), data: tempValue }
-    //   this.SetPropertyVal(property.id, val)
+    //   this.setPropertyVal(property.id, val)
     // }
     // window.console.log('当前子表格选中行', property.value.data)
-    // this.SetPropertyVal(isSelectproperty.id, value.length <= 0)
+    // this.setPropertyVal(isSelectproperty.id, value.length <= 0)
 
     //更新子表格选中变量
     if (isChecked) {
@@ -927,11 +926,11 @@ export default class GanttCom extends ComponentBase {
         if (!temp) {
           this.childCheckRows.push(value)
         }
-        this.TriggeEvent('勾选行', common.clone(value))
+        this.triggeEvent('勾选行', common.clone(value))
       } else {
         this.childCheckRows = []
         this.childCheckRows.push(value)
-        this.TriggeEvent('勾选行', common.clone(value))
+        this.triggeEvent('勾选行', common.clone(value))
       }
     } else {
       if (isCanCheck) {
@@ -939,7 +938,7 @@ export default class GanttCom extends ComponentBase {
         if (tempIndex > -1) {
           this.childCheckRows.splice(tempIndex, 1)
         }
-        this.TriggeEvent('取消勾选行', common.clone(value))
+        this.triggeEvent('取消勾选行', common.clone(value))
       }
     }
   }
@@ -961,12 +960,12 @@ export default class GanttCom extends ComponentBase {
       this.allChildDataSourceNoGroup[idx] = common.clone(row)
     }
     //行编辑结束
-    //this.TriggeEvent('行编辑结束', common.clone(currentRow))
+    //this.triggeEvent('行编辑结束', common.clone(currentRow))
     //window.console.log('-------------------------------------------------------子表格行编辑结束记录allChildDataSource', this.allChildDataSource)
     //window.console.log('-------------------------------------------------------子表格行编辑结束记录', this.allChildDataSourceNoGroup)
   }
 
-/*******************表格与甘特图之前的间隔的相关数据与方法***************************/
+  /*******************表格与甘特图之前的间隔的相关数据与方法***************************/
   handleMousedown(event) {
     document.body.style.cursor = 'move'
     event.stopPropagation()
@@ -997,20 +996,20 @@ export default class GanttCom extends ComponentBase {
     this.canMove = false
     document.body.style.cursor = ''
   }
-/*******************甘特图相关数据与方法***************************/
+  /*******************甘特图相关数据与方法***************************/
   get chartDateWidth(): number {
     let width = this.isShowSpace ? this.width - this.tableWidth - this.spaceWidth - 20 : this.width - this.tableWidth - 20
     return width >= 0 ? width : 0
   }
   set chartDateWidth(val) {
-    // var property = this.FindPropertyByName(PropertyGroupName.special, '甘特图宽度')
-    // this.SetPropertyVal(property.id, val)
+    // var property = this.findPropertyByName(PropertyGroupName.special, '甘特图宽度')
+    // this.setPropertyVal(property.id, val)
   }
   get ganttMove(): boolean {
     return false
   }
 
-/*******************导出弹窗相关数据与方法***************************/
+  /*******************导出弹窗相关数据与方法***************************/
   clearClickRow() {
     let gantt = this.$refs.gantt as any
     let gridLine = gantt.$refs.gridLine as any
@@ -1132,7 +1131,7 @@ export default class GanttCom extends ComponentBase {
     var gantt = this.$refs.ganttAll as any
     html2Canvas(gantt, {
       // allowTaint: true
-      useCORS: true, //看情况选用上面还是下面的，
+      useCORS: true //看情况选用上面还是下面的，
     }).then(function(canvas) {
       var compress = document.createElement('canvas')
       compress.width = canvas.width
@@ -1173,7 +1172,7 @@ export default class GanttCom extends ComponentBase {
     etableStyle.orderCode = this.tableStyle ? this.tableStyle.orderCode : null
     etableStyle.isCanCheck = this.tableStyle ? this.tableStyle.isCanCheck : true
     etableStyle.columnInfos = []
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
       //window.console.log('----------------------------------------aaaaaaaaaaa', propBind)
@@ -1205,7 +1204,7 @@ export default class GanttCom extends ComponentBase {
     }
 
     //添加子表格数据源模型实例
-    prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+    prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
       if (propBind) {
@@ -1266,7 +1265,7 @@ export default class GanttCom extends ComponentBase {
   }
 
   private refreshCoulumnByStyle(): tableStyle {
-    var proper = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+    var proper = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
     if (proper) {
       if (proper.value) {
         return proper.value
@@ -1275,12 +1274,12 @@ export default class GanttCom extends ComponentBase {
     }
   }
 
-/*************************************内部调用的方法***************************************************/
+  /*************************************内部调用的方法***************************************************/
   /** 页面加载完成之后执行 */
-  protected   loadCompleted(childrenData: any[]) {
-    //var id = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource).id
+  protected loadCompleted(childrenData: any[]) {
+    //var id = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource).id
     //const aaa = this.getPropertyBindInfo(id).modelCodes
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     var modelInfo = null
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
@@ -1288,7 +1287,7 @@ export default class GanttCom extends ComponentBase {
         modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
       }
     }
-    var childprop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+    var childprop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     var childmodelInfo = null
     if (childprop) {
       let propBind = this.getPropertyBindInfo(childprop.id)
@@ -1298,7 +1297,7 @@ export default class GanttCom extends ComponentBase {
     }
 
     //window.console.log('------------------------------打印出来当前表格modelInfo', modelInfo)
-    let property = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+    let property = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
     if (property.value && property.value.columnInfos.length > 0) {
       let tempStyle = property.value as tableStyle
       tempStyle.columnInfos.forEach((element) => {
@@ -1335,7 +1334,7 @@ export default class GanttCom extends ComponentBase {
       this.tableStyle = this.getTableStyle()
     }
     //window.console.log('------------------------------打印出来当前表格样式this.tableStyle', this.tableStyle)
-    let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     // if (!chooseType || chooseType.value === '多选') {
     // if (chooseType || chooseType.value === '多选') {
     //   chooseType.value = this.tableStyle.canChoose === 0 ? '否' : this.tableStyle.canChoose === 1 ? '多选' : '单选'
@@ -1353,7 +1352,7 @@ export default class GanttCom extends ComponentBase {
     //window.console.log('------------------------------model', model)
 
     //this.rowIdName = detailInfo.modelRelationList[0].modelAlias+'__id'
-    // var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    // var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       this.initDefaultData(prop, false)
     }
@@ -1371,14 +1370,13 @@ export default class GanttCom extends ComponentBase {
     this.$off('onPropertyChanged')
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
     //兼容之前的数据
-    let propDataSource = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let propDataSource = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     if (propDataSource.value === true) {
       propDataSource.value = []
     }
-    // this.SetPropertyVal(propDataSource.id,[])
+    // this.setPropertyVal(propDataSource.id,[])
     // let cloneValue = common.clone(propDataSource.value)
     // this.initDataSource(cloneValue)
-
   }
   private initDefaultData(prop: any, ischild: boolean) {
     let bindings = this.parentPage.modelBindings
@@ -1427,10 +1425,10 @@ export default class GanttCom extends ComponentBase {
                 {
                   code: 'sys_dict_view__id',
                   value: dictId,
-                  type: 'EQ',
-                },
+                  type: 'EQ'
+                }
               ],
-              modelCode: 'DictView',
+              modelCode: 'DictView'
             }
             let tempItem = []
             if (dictId) {
@@ -1441,7 +1439,7 @@ export default class GanttCom extends ComponentBase {
                 tempItem.push({
                   itemName: single.sys_dict_view_item__item_name,
                   itemValue: single.sys_dict_view_item__item_value + '',
-                  itemCode: single.sys_dict_view_item__item_code,
+                  itemCode: single.sys_dict_view_item__item_code
                 })
               })
             }
@@ -1450,7 +1448,7 @@ export default class GanttCom extends ComponentBase {
                 dictId: modelPropertyDetail.dictId,
                 propertyCode: modelPropertyDetail.propertyCode,
                 columnType: modelPropertyDetail.propertyType,
-                item: tempItem,
+                item: tempItem
               })
             }
           }
@@ -1459,15 +1457,15 @@ export default class GanttCom extends ComponentBase {
     }
   }
   private initDataSource(cloneValue: any) {
-    let totalSize = this.FindPropertyByName(propertyGroupEnum.tableSetting, '总条数')
+    let totalSize = this.findPropertyByName(propertyGroupEnum.tableSetting, '总条数')
     if (Object.keys(cloneValue).length == 0) {
       this.dataSource = []
       totalSize.value = 0
-      let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+      let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
       var val = { modelCode: this.getModelCode(), data: {} }
-      this.SetPropertyVal(property.id, val)
+      this.setPropertyVal(property.id, val)
       //如果没查询到数据，页码重置会第一页，执行刷新方法
-      // let currentPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+      // let currentPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
       // currentPage.value = 1
       // this.changePage(1, this.pageSize, false)
       return
@@ -1486,9 +1484,9 @@ export default class GanttCom extends ComponentBase {
     } else {
       this.dataSource = []
       //如果没查询到数据，页码重置会第一页，执行刷新方法，只有查询的结构才会重置，不分页的不需要查询
-      let isshowPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
+      let isshowPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
       if (cloneValue.content && isshowPage && isshowPage.value == true) {
-        let currentPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+        let currentPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
         currentPage.value = 1
         this.changePage(1, this.pageSize)
       }
@@ -1507,36 +1505,35 @@ export default class GanttCom extends ComponentBase {
       })
     }
     if (isRefresh) {
-      let dataproperty = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+      let dataproperty = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
       dataproperty.value.content = common.clone(this.dataSource)
-      this.SetPropertyVal(dataproperty.id, dataproperty.value)
+      this.setPropertyVal(dataproperty.id, dataproperty.value)
     }
-    let isSelectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
-    this.SetPropertyVal(isSelectproperty.id, true)
+    let isSelectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
+    this.setPropertyVal(isSelectproperty.id, true)
   }
   /** 属性表更方法 */
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: ComponentBase): void {
     //window.console.log('onPropertyChangedInner')
     //window.console.log(property)
-    var page = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
-    var pageSize = this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
+    var page = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')
+    var pageSize = this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')
 
     switch (property.propertyName) {
       case '绑定模型':
         if (this.IsDesigning == true) {
-          var property11 = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+          var property11 = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
           property11.value = this.getTableStyle()
           //this.tableStyle = property11.value
           //window.console.log('----------------------------------列样式赋值', property11)
           //window.console.log('--------------this.bindInfos', this.bindInfos)
           //window.console.log('--------------绑定模型变更', property)
-          var aaa = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+          var aaa = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
           //window.console.log('--------------展开行属性', aaa)
         }
         //this.tableStyle = this.getTableStyle()
         break
       case '表格数据源':
-
         //数据源变更之后，新增编辑删除的数据源要清空
         this.tempDataClear()
         if (property.value) {
@@ -1570,16 +1567,16 @@ export default class GanttCom extends ComponentBase {
         this.allChildDataSource = []
         this.allChildDataSourceNoGroup = []
         // ;(this.$refs['table'] as any).clearRowExpand()
-        // var childprop = this.FindPropertyByName(PropertyGroupName.normal, '子表格数据源')
-        // this.SetPropertyVal(childprop.id, [])
+        // var childprop = this.findPropertyByName(PropertyGroupName.normal, '子表格数据源')
+        // this.setPropertyVal(childprop.id, [])
         break
       case '子表格数据源':
         //window.console.log('--------------子表格数据源变更', property.value)
         if (property.value) {
-          var prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+          var prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
           if (prop) {
             let temp = this.oldAllChildDataSource.find((item) => item.key == prop.value)
-            var tempprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
+            var tempprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
             if (tempprop && tempprop.value == false) {
               let tempValue = property.value.content
               if (tempValue && tempValue.length > 0) {
@@ -1624,13 +1621,13 @@ export default class GanttCom extends ComponentBase {
       case '当前页码':
       case '每页显示项数':
       case '总条数':
-        // this.TriggeEvent('列表刷新', [
+        // this.triggeEvent('列表刷新', [
         //   { name: 'pageNumber', type: 'Number', val: page.value },
         //   { name: 'pageSize', type: 'Number', val: pageSize.value },
         // ])
         break
       case '是否显示分页':
-        // var isshowPage = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
+        // var isshowPage = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')
         // this.showPagination = isshowPage.value
         break
       case '列样式':
@@ -1645,17 +1642,17 @@ export default class GanttCom extends ComponentBase {
         }
         break
       case '是否可选':
-        var property111 = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+        var property111 = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
         if (property111) {
           var temp = common.clone(property111.value)
           temp.canChoose = property.value === '否' ? 0 : property.value === '多选' ? 1 : 2
           this.tableStyle = temp
           property111.value = temp
-          //this.SetPropertyVal(property111.id,temp)
+          //this.setPropertyVal(property111.id,temp)
         }
         break
       case '是否树表格':
-        var property1111 = this.FindPropertyByName(propertyGroupEnum.columnSetting, '列样式')
+        var property1111 = this.findPropertyByName(propertyGroupEnum.columnSetting, '列样式')
         if (property1111) {
           var temp1 = common.clone(property1111.value)
           //temp1.canChoose = property.value === '否' ? 0 : property.value === '多选' ? 1 : 2
@@ -1665,7 +1662,7 @@ export default class GanttCom extends ComponentBase {
             ;(temp1 as tableStyle).hasChildData = false
           }
           //this.tableStyle = temp1
-          this.SetPropertyVal(property1111.id, temp1)
+          this.setPropertyVal(property1111.id, temp1)
         }
         break
       default:
@@ -1682,24 +1679,24 @@ export default class GanttCom extends ComponentBase {
   /** 自动触发选择，不触发勾选事件 */
   itemSelect(value: any[]) {
     //window.console.log('------------------------------------当前选中行121212', value)
-    let isSelectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
+    let isSelectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否有选中行')
     if (value.length === 0) {
-      this.SetPropertyVal(isSelectproperty.id, true)
+      this.setPropertyVal(isSelectproperty.id, true)
       // return
     }
-    let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     if (!chooseType) {
       return
     }
-    let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
+    let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
     if (chooseType.value === '单选' || chooseType.value === '否') {
       // if (value.length > 0) {
 
       // }
       let val = { modelCode: this.getModelCode(), data: common.clone(value.length > 0 ? value[0] : {}) }
-      this.SetPropertyVal(property.id, val)
-      this.SetPropertyVal(prop.id, common.clone(value.length > 0 ? value[0] : {}))
+      this.setPropertyVal(property.id, val)
+      this.setPropertyVal(prop.id, common.clone(value.length > 0 ? value[0] : {}))
       //关联的模型实例的值也要改掉，根据属性关联更新模型实例有点问题，暂时先这么处理
       let propBind = this.getPropertyBindInfo(property.id)
       if (propBind) {
@@ -1708,8 +1705,8 @@ export default class GanttCom extends ComponentBase {
       }
     } else {
       let val = { modelCode: this.getModelCode(), data: common.clone(value) }
-      this.SetPropertyVal(property.id, val)
-      this.SetPropertyVal(prop.id, common.clone(value))
+      this.setPropertyVal(property.id, val)
+      this.setPropertyVal(prop.id, common.clone(value))
       let propBind = this.getPropertyBindInfo(property.id)
       if (propBind) {
         let modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
@@ -1717,20 +1714,20 @@ export default class GanttCom extends ComponentBase {
       }
     }
     //window.console.log('当前选中行', property.value)
-    this.SetPropertyVal(isSelectproperty.id, value.length <= 0)
+    this.setPropertyVal(isSelectproperty.id, value.length <= 0)
     //window.console.log('--------------------当前是否有选中行', property.value)
     //window.console.log('--------this.parentPage.modelBindingsmodelBindings', common.clone(this.parentPage.modelBindings))
   }
   tempDataClear() {
-    let addeddata = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let addeddata = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     if (addeddata) {
       addeddata.value = []
     }
-    let updateddate = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let updateddate = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     if (updateddate) {
       updateddate.value = []
     }
-    let deleteddate = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let deleteddate = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     if (deleteddate) {
       deleteddate.value = []
     }
@@ -1739,9 +1736,9 @@ export default class GanttCom extends ComponentBase {
 
   getModelCode(ischild: boolean = false) {
     let tempModelCode = ''
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (ischild) {
-      prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+      prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     }
     if (prop) {
       let propBind = this.getPropertyBindInfo(prop.id)
@@ -1757,9 +1754,9 @@ export default class GanttCom extends ComponentBase {
   }
   getModel(ischild: boolean = false): modelBingding {
     let tempModel = new modelBingding()
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (ischild) {
-      prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
+      prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.childdatasource)
     }
     if (prop) {
       //window.console.log('prop-xxx',prop)
@@ -1779,10 +1776,10 @@ export default class GanttCom extends ComponentBase {
   /** 变更子表格数据源 */
   changeChildData(property: any) {
     if (property.value) {
-      var prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '展开行')
+      var prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '展开行')
       if (prop) {
         let temp = this.oldAllChildDataSource.find((item) => item.key == prop.value)
-        var tempprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
+        var tempprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '子表格是否缓存数据')
         if (tempprop.value == false) {
           let tempValue = property.value.content
           if (tempValue && tempValue.length > 0) {
@@ -1880,7 +1877,7 @@ export default class GanttCom extends ComponentBase {
         onChoose: ({ item }) => {
           // evt.oldIndex;  // element index within parent
           let chooseRow = xTable.getRowNode(item).item
-          this.TriggeEvent('选中拖拽行事件', common.clone(chooseRow))
+          this.triggeEvent('选中拖拽行事件', common.clone(chooseRow))
           this.showAble = true
         },
         onUnchoose: ({ item }) => {
@@ -1948,7 +1945,7 @@ export default class GanttCom extends ComponentBase {
               // let result = gantt.checkDrop(selfRow, prevRow, currRow, 'in', this.dropProperty)
               let moveRow = this.getMoveTaskPre(selfRow, prevRow, 'in', wrapper)
               //window.console.log('移动前this.checkDropResult:', this.checkDropResult)
-              this.TriggeEvent('拖动校验事件', moveRow)
+              this.triggeEvent('拖动校验事件', moveRow)
               //window.console.log('移动后this.checkDropResult:', this.checkDropResult)
               if (this.checkDropResult) {
                 prevRow[options.children].splice(0, 0, currRow)
@@ -1976,7 +1973,7 @@ export default class GanttCom extends ComponentBase {
               // let result = gantt.checkDrop(selfRow, prevRow, currRow, 'side', this.dropProperty)
               let moveRow = this.getMoveTaskPre(selfRow, prevRow, 'side', wrapper)
               //window.console.log('移动前this.checkDropResult:', this.checkDropResult)
-              this.TriggeEvent('拖动校验事件', moveRow)
+              this.triggeEvent('拖动校验事件', moveRow)
               //window.console.log('移动后this.checkDropResult:', this.checkDropResult)
               if (this.checkDropResult) {
                 let index = prevNode.index + (selfNode.index < prevNode.index ? 0 : 1)
@@ -2008,7 +2005,7 @@ export default class GanttCom extends ComponentBase {
           // 如果变动了树层级，需要刷新数据
           //window.console.log('变动了树层级')
           // xTable.refreshData()
-        },
+        }
       })
     })
   }
@@ -2038,14 +2035,14 @@ export default class GanttCom extends ComponentBase {
   }
   //准备数据，根据类型来更新对应属性
   prepareData(operateType: string) {
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let prop = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     let olddata = prop.value.content
     if (!olddata) {
       olddata = prop.value
     }
     if (!olddata || !(olddata instanceof Array)) {
       olddata = []
-      //this.SetPropertyVal(prop.id,[])
+      //this.setPropertyVal(prop.id,[])
     }
     let resadddata = []
     let resupdatedata = []
@@ -2086,11 +2083,11 @@ export default class GanttCom extends ComponentBase {
       }
     }
     //联动的操作需要把之前的临时数据同步处理
-    let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     addprop.value = resadddata
-    let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     updateprop.value = resupdatedata
-    let deleteprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let deleteprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     deleteprop.value = resdeletedata
 
     //记录变更
@@ -2099,7 +2096,7 @@ export default class GanttCom extends ComponentBase {
     //window.console.log('-------------------------------------------------------临时数据变更删除', deleteprop)
     //删除之后，检查选中行的数据
     if (operateType === '删除') {
-      let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+      let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
       if (!chooseType) {
         return
       }
@@ -2107,7 +2104,7 @@ export default class GanttCom extends ComponentBase {
         this.itemSelect([])
         return
       }
-      let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+      let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
       if (chooseType.value === '单选' || chooseType.value === '否') {
         let ttt = (property.value as any).data
         if (ttt && !this.dataSource.find((item) => item[this.rowIdName] == ttt[this.rowIdName])) {
@@ -2129,321 +2126,321 @@ export default class GanttCom extends ComponentBase {
     }
   }
   //定位任务条
-  localTask(item: any){
+  localTask(item: any) {
     let gantt = this.$refs.gantt as any
-    if(item.type === 'task'){
+    if (item.type === 'task') {
       gantt.localTask(item.id)
     }
   }
 
-/**************************左侧表格相关公开的参数 */
+  /**************************左侧表格相关公开的参数 */
   get currentPage(): any {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前页码').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '当前页码').value
     } else {
       return 1
     }
   }
   get pageSize(): any {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '每页显示项数').value
     } else {
       return 10
     }
   }
   get total(): any {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '总条数')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '总条数').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '总条数')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '总条数').value
     } else {
       return 0
     }
   }
   get tableRowFontColor(): string {
-    if (this.FindProperties(propertyGroupEnum.tableSetting, '表格行字体颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.tableSetting, '表格行字体颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.tableSetting, '表格行字体颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.tableSetting, '表格行字体颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.tableSetting, '表格行字体颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.tableSetting, '表格行字体颜色')[0].value as string
       }
     }
     return '#000000'
   }
   get tableCellFontSize(): string {
-    if (this.FindProperties(propertyGroupEnum.tableSetting, '表格行字体大小')[0]) {
-      if (this.FindProperties(propertyGroupEnum.tableSetting, '表格行字体大小')[0].value) {
-        return this.FindProperties(propertyGroupEnum.tableSetting, '表格行字体大小')[0].value + 'px'
+    if (this.findProperties(propertyGroupEnum.tableSetting, '表格行字体大小')[0]) {
+      if (this.findProperties(propertyGroupEnum.tableSetting, '表格行字体大小')[0].value) {
+        return this.findProperties(propertyGroupEnum.tableSetting, '表格行字体大小')[0].value + 'px'
       }
     }
     return '14px'
   }
   get tableHeaderFontSize(): number {
-    if (this.FindProperties(propertyGroupEnum.tableSetting, '表格标题字体大小')[0]) {
-      if (this.FindProperties(propertyGroupEnum.tableSetting, '表格标题字体大小')[0].value) {
-        return this.FindProperties(propertyGroupEnum.tableSetting, '表格标题字体大小')[0].value
+    if (this.findProperties(propertyGroupEnum.tableSetting, '表格标题字体大小')[0]) {
+      if (this.findProperties(propertyGroupEnum.tableSetting, '表格标题字体大小')[0].value) {
+        return this.findProperties(propertyGroupEnum.tableSetting, '表格标题字体大小')[0].value
       }
     }
     return 17
   }
   get emptyTip(): string {
-    if (this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本').value
+    if (this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本')) {
+      return this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '表格为空时显示文本').value
     } else {
       return '暂无数据'
     }
   }
   get showPagination(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示分页').value
     }
     return false
   }
   get showHeader(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头').value
+    if (this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头')) {
+      return this.findPropertyByName(propertyGroupEnum.tableDisplaySetting, '是否显示表头').value
     } else {
       return true
     }
   }
   //是否显示刷新
   get showRefreshButton(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '是否显示刷新').value
     } else {
       return false
     }
   }
   get isCanEdit(): boolean {
-    if (this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑')) {
-      return this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑').value
+    if (this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑')) {
+      return this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可编辑').value
     } else {
       return false
     }
   }
 
-/**************************右侧甘特图相关公开的参数 */
+  /**************************右侧甘特图相关公开的参数 */
   //dateSetting----日期头设置
   get dateHeaderHeight(): number {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头高度')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头高度')[0].value)
-        return this.FindProperties(propertyGroupEnum.dateSetting, '日期头高度')[0].value
+    if (this.findProperties(propertyGroupEnum.dateSetting, '日期头高度')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '日期头高度')[0].value)
+        return this.findProperties(propertyGroupEnum.dateSetting, '日期头高度')[0].value
     }
     return 32
   }
   get dateHeaderFontSize(): number {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头字体大小')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头字体大小')[0].value)
-        return this.FindProperties(propertyGroupEnum.dateSetting, '日期头字体大小')[0].value
+    if (this.findProperties(propertyGroupEnum.dateSetting, '日期头字体大小')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '日期头字体大小')[0].value)
+        return this.findProperties(propertyGroupEnum.dateSetting, '日期头字体大小')[0].value
     }
     return 17
   }
   get dateHeaderFontWeight(): number {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头字体粗细值')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头字体粗细值')[0].value)
-        return this.FindProperties(propertyGroupEnum.dateSetting, '日期头字体粗细值')[0].value
+    if (this.findProperties(propertyGroupEnum.dateSetting, '日期头字体粗细值')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '日期头字体粗细值')[0].value)
+        return this.findProperties(propertyGroupEnum.dateSetting, '日期头字体粗细值')[0].value
     }
     return 600
   }
   get dateHeaderColor(): string {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头部字体颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头部字体颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.dateSetting, '日期头部字体颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.dateSetting, '日期头部字体颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '日期头部字体颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.dateSetting, '日期头部字体颜色')[0].value as string
       }
     }
     return '#404040'
   }
   get dateBorderColor(): string {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '日期边框颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '日期边框颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.dateSetting, '日期边框颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.dateSetting, '日期边框颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '日期边框颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.dateSetting, '日期边框颜色')[0].value as string
       }
     }
     return '#d7d7d7'
   }
   get dateBackgroundColor(): string {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头背景颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '日期头背景颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.dateSetting, '日期头背景颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.dateSetting, '日期头背景颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '日期头背景颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.dateSetting, '日期头背景颜色')[0].value as string
       }
     }
     return '#ffffff'
   }
   get loactionFontSize(): number {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的字体大小')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的字体大小')[0].value)
-        return this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的字体大小')[0].value
+    if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的字体大小')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的字体大小')[0].value)
+        return this.findProperties(propertyGroupEnum.dateSetting, '快速定位的字体大小')[0].value
     }
     return 14
   }
   get locationWidth(): number {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的宽度')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的宽度')[0].value)
-        return this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的宽度')[0].value
+    if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的宽度')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的宽度')[0].value)
+        return this.findProperties(propertyGroupEnum.dateSetting, '快速定位的宽度')[0].value
     }
     return 40
   }
   get locationFontWeight(): number {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的字体粗细值')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的字体粗细值')[0].value)
-        return this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的字体粗细值')[0].value
+    if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的字体粗细值')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的字体粗细值')[0].value)
+        return this.findProperties(propertyGroupEnum.dateSetting, '快速定位的字体粗细值')[0].value
     }
     return 550
   }
   get locationBorderColor(): string {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的边框颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的边框颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的边框颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的边框颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的边框颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.dateSetting, '快速定位的边框颜色')[0].value as string
       }
     }
     return '#D7D7D7'
   }
   get locationBGColor(): string {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的选中颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的选中颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.dateSetting, '快速定位的选中颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的选中颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '快速定位的选中颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.dateSetting, '快速定位的选中颜色')[0].value as string
       }
     }
     return '#53BC86'
   }
   get isZoomInOrOut(): boolean {
-    if (this.FindProperties(propertyGroupEnum.dateSetting, '是否快速定位')[0]) {
-      if (this.FindProperties(propertyGroupEnum.dateSetting, '是否快速定位')[0].value) {
-        return this.FindProperties(propertyGroupEnum.dateSetting, '是否快速定位')[0].value
+    if (this.findProperties(propertyGroupEnum.dateSetting, '是否快速定位')[0]) {
+      if (this.findProperties(propertyGroupEnum.dateSetting, '是否快速定位')[0].value) {
+        return this.findProperties(propertyGroupEnum.dateSetting, '是否快速定位')[0].value
       }
     }
     return false
   }
   //specialTimeSetting----特殊时间显示设置
   get showNonWeekday(): boolean {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '周末高亮')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '周末高亮')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '周末高亮')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '周末高亮')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '周末高亮')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '周末高亮')[0].value
       }
     }
     return false
   }
   get weekdayBGColor(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '周末颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '周末颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '周末颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '周末颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '周末颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '周末颜色')[0].value as string
       }
     }
     return '#82828233'
   }
   get holidayShow(): boolean {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮')[0].value
       }
     }
     return false
   }
   get holidayColor(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '节假日高亮颜色')[0].value as string
       }
     }
     return '#82828233'
   }
   get userSetShow(): boolean {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '设置特殊日历高亮')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '设置特殊日历高亮')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '设置特殊日历高亮')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '设置特殊日历高亮')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '设置特殊日历高亮')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '设置特殊日历高亮')[0].value
       }
     }
     return false
   }
   get speWorkColor(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-加班时间颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-加班时间颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-加班时间颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-加班时间颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-加班时间颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-加班时间颜色')[0].value as string
       }
     }
     return '#EDAC1D33'
   }
   get speRestColor(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-休息时间颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-休息时间颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-休息时间颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-休息时间颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-休息时间颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '特殊日历-休息时间颜色')[0].value as string
       }
     }
     return '#DB4D3E33'
   }
   get dayShow(): boolean {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班时间高亮')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班时间高亮')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班时间高亮')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班时间高亮')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班时间高亮')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '上班时间高亮')[0].value
       }
     }
     return false
   }
   get workBGColor(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班时间颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班时间颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班时间颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班时间颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班时间颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '上班时间颜色')[0].value as string
       }
     }
     return '#4BBA8133'
   }
   get restShow(): boolean {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '休息时间高亮')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '休息时间高亮')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '休息时间高亮')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '休息时间高亮')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '休息时间高亮')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '休息时间高亮')[0].value
       }
     }
     return false
   }
   get restBGColor(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '休息时间颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '休息时间颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '休息时间颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '休息时间颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '休息时间颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '休息时间颜色')[0].value as string
       }
     }
     return '#4BBA8133'
   }
   get calendarLevel(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '工厂日历级别')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '工厂日历级别')[0].value)
-        return this.FindProperties(propertyGroupEnum.specialTimeSetting, '工厂日历级别')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '工厂日历级别')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '工厂日历级别')[0].value)
+        return this.findProperties(propertyGroupEnum.specialTimeSetting, '工厂日历级别')[0].value
     }
     return 'project'
   }
   get ganttCalendar(): any {
-    if (this.FindProperties(PropertyGroupName.normal, '工厂日历')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '工厂日历')[0].value)
-        return this.FindProperties(PropertyGroupName.normal, '工厂日历')[0].value
+    if (this.findProperties(PropertyGroupName.normal, '工厂日历')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '工厂日历')[0].value)
+        return this.findProperties(PropertyGroupName.normal, '工厂日历')[0].value
     }
     return []
   }
   // get ganttRest(): any {
-  //   if (this.FindProperties(PropertyGroupName.normal, '休息时间')[0]) {
-  //     if (this.FindProperties(PropertyGroupName.normal, '休息时间')[0].value)
-  //       return this.FindProperties(PropertyGroupName.normal, '休息时间')[0].value
+  //   if (this.findProperties(PropertyGroupName.normal, '休息时间')[0]) {
+  //     if (this.findProperties(PropertyGroupName.normal, '休息时间')[0].value)
+  //       return this.findProperties(PropertyGroupName.normal, '休息时间')[0].value
   //   }
   //   return []
   // }
   get filter(): any {
-    if (this.FindProperties(PropertyGroupName.normal, '筛选条件')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '筛选条件')[0].value)
-        return this.FindProperties(PropertyGroupName.normal, '筛选条件')[0].value
+    if (this.findProperties(PropertyGroupName.normal, '筛选条件')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '筛选条件')[0].value)
+        return this.findProperties(PropertyGroupName.normal, '筛选条件')[0].value
     }
     return []
   }
   set filter(val) {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '筛选条件')
-    this.SetPropertyVal(property.id, val)
+    var property = this.findPropertyByName(PropertyGroupName.normal, '筛选条件')
+    this.setPropertyVal(property.id, val)
   }
   get holidayList(): string[] {
-    if (this.FindProperties(PropertyGroupName.normal, '节假日')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '节假日')[0].value) {
-        return this.FindProperties(PropertyGroupName.normal, '节假日')[0].value
+    if (this.findProperties(PropertyGroupName.normal, '节假日')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '节假日')[0].value) {
+        return this.findProperties(PropertyGroupName.normal, '节假日')[0].value
       }
     }
     // let item = ['2019-9-23', '2019-9-30', '2020-5-1']
     return []
   }
   get userSetList(): any[] {
-    if (this.FindProperties(PropertyGroupName.normal, '特殊时间')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '特殊时间')[0].value) {
-        return this.FindProperties(PropertyGroupName.normal, '特殊时间')[0].value
+    if (this.findProperties(PropertyGroupName.normal, '特殊时间')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '特殊时间')[0].value) {
+        return this.findProperties(PropertyGroupName.normal, '特殊时间')[0].value
       }
     }
     return []
@@ -2453,17 +2450,17 @@ export default class GanttCom extends ComponentBase {
     // ]
   }
   get popForm(): any {
-    if (this.FindProperties(PropertyGroupName.normal, '气泡卡片内容')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '气泡卡片内容')[0].value) {
-        return this.FindProperties(PropertyGroupName.normal, '气泡卡片内容')[0].value
+    if (this.findProperties(PropertyGroupName.normal, '气泡卡片内容')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '气泡卡片内容')[0].value) {
+        return this.findProperties(PropertyGroupName.normal, '气泡卡片内容')[0].value
       }
     }
     return []
   }
   get dayStartTime(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班开始时间')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班开始时间')[0].value) {
-        let time = this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班开始时间')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班开始时间')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班开始时间')[0].value) {
+        let time = this.findProperties(propertyGroupEnum.specialTimeSetting, '上班开始时间')[0].value
         let timeString = '6:00'
         try {
           timeString = time.getHours() + ':' + time.getMinutes()
@@ -2483,9 +2480,9 @@ export default class GanttCom extends ComponentBase {
     }
   }
   get dayEndTime(): string {
-    if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班结束时间')[0]) {
-      if (this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班结束时间')[0].value) {
-        let time = this.FindProperties(propertyGroupEnum.specialTimeSetting, '上班结束时间')[0].value
+    if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班结束时间')[0]) {
+      if (this.findProperties(propertyGroupEnum.specialTimeSetting, '上班结束时间')[0].value) {
+        let time = this.findProperties(propertyGroupEnum.specialTimeSetting, '上班结束时间')[0].value
         let timeString = '20:00'
         try {
           timeString = time.getHours() + ':' + time.getMinutes()
@@ -2510,150 +2507,150 @@ export default class GanttCom extends ComponentBase {
     return {
       day: { isShow: this.dayShow, restShow: this.restShow, startTime: this.dayStartTime, endTime: this.dayEndTime },
       holiday: { isShow: this.holidayShow, color: this.holidayColor, list: this.holidayList },
-      userSet: { isShow: this.userSetShow, list: this.userSetList },
+      userSet: { isShow: this.userSetShow, list: this.userSetList }
     }
   }
   //taskColorSetting----任务相关颜色设置
   get activeShowValue(): boolean {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '展示实际任务条')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '展示实际任务条')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '展示实际任务条')[0].value
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '展示实际任务条')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '展示实际任务条')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '展示实际任务条')[0].value
       }
     }
     return false
   }
   get taskActuelTimeColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '实际任务条颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '实际任务条颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '实际任务条颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '实际任务条颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '实际任务条颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '实际任务条颜色')[0].value as string
       }
     }
     return '#133E28'
   }
   get projectTypeColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'project层任务条颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'project层任务条颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'project层任务条颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'project层任务条颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'project层任务条颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'project层任务条颜色')[0].value as string
       }
     }
     return '#CBEADA'
   }
   get projectTypePerColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'project层任务条完成颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'project层任务条完成颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'project层任务条完成颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'project层任务条完成颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'project层任务条完成颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'project层任务条完成颜色')[0].value as string
       }
     }
     return '#4BBA81'
   }
   get middleTypeColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条颜色')[0].value as string
       }
     }
     return '#CBEADA'
   }
   get middleTypePerColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条完成颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条完成颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条完成颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条完成颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条完成颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'middle层任务条完成颜色')[0].value as string
       }
     }
     return '#4BBA81'
   }
   get taskTypeColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'task层任务条颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'task层任务条颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'task层任务条颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'task层任务条颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'task层任务条颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'task层任务条颜色')[0].value as string
       }
     }
     return '#CBEADA'
   }
   get taskTypePerColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'task层任务条完成颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'task层任务条完成颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'task层任务条完成颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'task层任务条完成颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'task层任务条完成颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'task层任务条完成颜色')[0].value as string
       }
     }
     return '#4BBA81'
   }
   get oddTaskBackgroundColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '奇数任务行颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '奇数任务行颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '奇数任务行颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '奇数任务行颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '奇数任务行颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '奇数任务行颜色')[0].value as string
       }
     }
     return '#ffffff'
   }
   get evenTaskBackgroundColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '偶数任务行颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '偶数任务行颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '偶数任务行颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '偶数任务行颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '偶数任务行颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '偶数任务行颜色')[0].value as string
       }
     }
     return '#ffffff'
   }
   get projectBackgroundColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'project任务行背景颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'project任务行背景颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'project任务行背景颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'project任务行背景颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'project任务行背景颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'project任务行背景颜色')[0].value as string
       }
     }
     return '#ffffff'
   }
   get middleBackgroundColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle任务行背景颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle任务行背景颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, 'middle任务行背景颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, 'middle任务行背景颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, 'middle任务行背景颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, 'middle任务行背景颜色')[0].value as string
       }
     }
     return '#F6F5F7'
   }
   get taskDependencyColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务依赖线颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务依赖线颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '任务依赖线颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务依赖线颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务依赖线颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '任务依赖线颜色')[0].value as string
       }
     }
     return '#FE0000'
   }
   get splitLineColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行分割线颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行分割线颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行分割线颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行分割线颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行分割线颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '任务行分割线颜色')[0].value as string
       }
     }
     return '#E3E3E3'
   }
   get verticalSplitLineColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行纵向分割线颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行纵向分割线颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行纵向分割线颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行纵向分割线颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行纵向分割线颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '任务行纵向分割线颜色')[0].value as string
       }
     }
     return '#E3E3E3'
   }
   get taskClickColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标选中颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标选中颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标选中颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标选中颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标选中颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标选中颜色')[0].value as string
       }
     }
     return '#f2f2f2'
   }
   get taskHoverColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标悬停颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标悬停颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标悬停颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标悬停颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标悬停颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '任务行鼠标悬停颜色')[0].value as string
       }
     }
     return '#f2f2f2'
   }
   get showResourceColor(): string {
-    if (this.FindProperties(propertyGroupEnum.taskColorSetting, '可移动至资源颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskColorSetting, '可移动至资源颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskColorSetting, '可移动至资源颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.taskColorSetting, '可移动至资源颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskColorSetting, '可移动至资源颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskColorSetting, '可移动至资源颜色')[0].value as string
       }
     }
     return '#ff0000'
@@ -2666,66 +2663,66 @@ export default class GanttCom extends ComponentBase {
       middleColor: this.middleTypeColor, //middle类型的任务条颜色
       middlePerColor: this.middleTypePerColor, //middle类型的任务条完成百分比颜色
       taskColor: this.taskTypeColor, //task类型的任务条颜色
-      taskPerColor: this.taskTypePerColor, //task类型的任务条完成百分比颜色
+      taskPerColor: this.taskTypePerColor //task类型的任务条完成百分比颜色
     }
   }
   //taskHeightSetting----任务相关高度设置
   get rowHeight(): number {
-    if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '每行高度')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '每行高度')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskHeightSetting, '每行高度')[0].value
+    if (this.findProperties(propertyGroupEnum.taskHeightSetting, '每行高度')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskHeightSetting, '每行高度')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskHeightSetting, '每行高度')[0].value
       }
     }
     return 29
   }
   get rowHeightModel(): boolean {
     // window.console.log('rowHeightModel')
-    if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0]) {
+    if (this.findProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0]) {
       if (
-        this.FindProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value == true ||
-        this.FindProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value == false
+        this.findProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value == true ||
+        this.findProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value == false
       ) {
-        // window.console.log(this.FindProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value)
-        return this.FindProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value
+        // window.console.log(this.findProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value)
+        return this.findProperties(propertyGroupEnum.taskHeightSetting, '自动设置任务条高度')[0].value
       }
     }
     return true
   }
   get setFirstTop(): number {
-    if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0].value
-      } else if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0].value == 0) {
+    if (this.findProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0].value
+      } else if (this.findProperties(propertyGroupEnum.taskHeightSetting, '预计任务条和顶部的高度')[0].value == 0) {
         return 0
       }
     }
     return 5
   }
   get setRowInHeightT(): number {
-    if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0].value
-      } else if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0].value == 0) {
+    if (this.findProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0].value
+      } else if (this.findProperties(propertyGroupEnum.taskHeightSetting, '展示实际任务条时预计任务条的高度')[0].value == 0) {
         return 0
       }
     }
     return 9
   }
   get setRowInHeightS(): number {
-    if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0].value
-      } else if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0].value) {
+    if (this.findProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0].value
+      } else if (this.findProperties(propertyGroupEnum.taskHeightSetting, '不展示实际任务条时预计任务条的高度')[0].value) {
         return 0
       }
     }
     return 24
   }
   get setLineTwoTop(): number {
-    if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0]) {
-      if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0].value) {
-        return this.FindProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0].value
-      } else if (this.FindProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0].value == 0) {
+    if (this.findProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0]) {
+      if (this.findProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0].value) {
+        return this.findProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0].value
+      } else if (this.findProperties(propertyGroupEnum.taskHeightSetting, '实际任务条和顶部的距离')[0].value == 0) {
         return 0
       }
     }
@@ -2733,9 +2730,9 @@ export default class GanttCom extends ComponentBase {
   }
   //special----特有属性
   get isShowSpace(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '表格与甘特图是否有间隔')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '表格与甘特图是否有间隔')[0].value) {
-        if (this.FindProperties(PropertyGroupName.special, '表格与甘特图是否有间隔')[0].value == true) {
+    if (this.findProperties(PropertyGroupName.special, '表格与甘特图是否有间隔')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '表格与甘特图是否有间隔')[0].value) {
+        if (this.findProperties(PropertyGroupName.special, '表格与甘特图是否有间隔')[0].value == true) {
           return true
         }
       } else {
@@ -2745,33 +2742,33 @@ export default class GanttCom extends ComponentBase {
     return false
   }
   get spaceWidth(): number {
-    if (this.FindProperties(PropertyGroupName.special, '表格与甘特图间隔宽度')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '表格与甘特图间隔宽度')[0].value) {
-        return this.FindProperties(PropertyGroupName.special, '表格与甘特图间隔宽度')[0].value
+    if (this.findProperties(PropertyGroupName.special, '表格与甘特图间隔宽度')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '表格与甘特图间隔宽度')[0].value) {
+        return this.findProperties(PropertyGroupName.special, '表格与甘特图间隔宽度')[0].value
       }
     }
     return 10
   }
   get spaceBackgroundColor(): string {
-    if (this.FindProperties(PropertyGroupName.special, '表格与甘特图间隔背景色')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '表格与甘特图间隔背景色')[0].value) {
-        return this.FindProperties(PropertyGroupName.special, '表格与甘特图间隔背景色')[0].value as string
+    if (this.findProperties(PropertyGroupName.special, '表格与甘特图间隔背景色')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '表格与甘特图间隔背景色')[0].value) {
+        return this.findProperties(PropertyGroupName.special, '表格与甘特图间隔背景色')[0].value as string
       }
     }
     return '#E9ECF0'
   }
   get spaceBorderColor(): string {
-    if (this.FindProperties(PropertyGroupName.special, '表格与甘特图间隙边框颜色')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '表格与甘特图间隙边框颜色')[0].value) {
-        return this.FindProperties(PropertyGroupName.special, '表格与甘特图间隙边框颜色')[0].value as string
+    if (this.findProperties(PropertyGroupName.special, '表格与甘特图间隙边框颜色')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '表格与甘特图间隙边框颜色')[0].value) {
+        return this.findProperties(PropertyGroupName.special, '表格与甘特图间隙边框颜色')[0].value as string
       }
     }
     return '#E9ECF0'
   }
   get isUseDefaultPopup(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否使用默认弹窗（鼠标悬停任务条时）')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '是否使用默认弹窗（鼠标悬停任务条时）')[0].value) {
-        if (this.FindProperties(PropertyGroupName.special, '是否使用默认弹窗（鼠标悬停任务条时）')[0].value == true) {
+    if (this.findProperties(PropertyGroupName.special, '是否使用默认弹窗（鼠标悬停任务条时）')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '是否使用默认弹窗（鼠标悬停任务条时）')[0].value) {
+        if (this.findProperties(PropertyGroupName.special, '是否使用默认弹窗（鼠标悬停任务条时）')[0].value == true) {
           return true
         }
       } else {
@@ -2781,10 +2778,10 @@ export default class GanttCom extends ComponentBase {
     return false
   }
   get disable(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '甘特图可编辑')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '甘特图可编辑')[0].value) {
-        if (this.FindProperties(PropertyGroupName.special, '甘特图可编辑')[0].value == true) {
-          return this.FindProperties(PropertyGroupName.special, '甘特图可编辑')[0].value
+    if (this.findProperties(PropertyGroupName.special, '甘特图可编辑')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '甘特图可编辑')[0].value) {
+        if (this.findProperties(PropertyGroupName.special, '甘特图可编辑')[0].value == true) {
+          return this.findProperties(PropertyGroupName.special, '甘特图可编辑')[0].value
         }
       } else {
         return false
@@ -2793,10 +2790,10 @@ export default class GanttCom extends ComponentBase {
     return false
   }
   get summaryAble(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否展示汇总')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '是否展示汇总')[0].value) {
-        if (this.FindProperties(PropertyGroupName.special, '是否展示汇总')[0].value == true) {
-          return this.FindProperties(PropertyGroupName.special, '是否展示汇总')[0].value
+    if (this.findProperties(PropertyGroupName.special, '是否展示汇总')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '是否展示汇总')[0].value) {
+        if (this.findProperties(PropertyGroupName.special, '是否展示汇总')[0].value == true) {
+          return this.findProperties(PropertyGroupName.special, '是否展示汇总')[0].value
         }
       } else {
         return false
@@ -2805,94 +2802,94 @@ export default class GanttCom extends ComponentBase {
     return false
   }
   get drapDepen(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '拖拽联动')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '拖拽联动')[0].value) {
-        return this.FindProperties(PropertyGroupName.special, '拖拽联动')[0].value
+    if (this.findProperties(PropertyGroupName.special, '拖拽联动')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '拖拽联动')[0].value) {
+        return this.findProperties(PropertyGroupName.special, '拖拽联动')[0].value
       }
     }
     return false
   }
   get workTimeType(): string {
     //window.console.log('workTimeType')
-    if (this.FindProperties(PropertyGroupName.special, '生产日历数据格式')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '生产日历数据格式')[0]) {
       //window.console.log('1')
-      if (this.FindProperties(PropertyGroupName.special, '生产日历数据格式')[0].value)
-        //window.console.log(this.FindProperties(PropertyGroupName.special, '生产日历数据格式')[0].value)
-      return this.FindProperties(PropertyGroupName.special, '生产日历数据格式')[0].value
+      if (this.findProperties(PropertyGroupName.special, '生产日历数据格式')[0].value)
+        //window.console.log(this.findProperties(PropertyGroupName.special, '生产日历数据格式')[0].value)
+        return this.findProperties(PropertyGroupName.special, '生产日历数据格式')[0].value
     }
     return '周循环'
   }
   get dropProperty(): string {
-    if (this.FindProperties(PropertyGroupName.special, '移动条件属性')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '移动条件属性')[0].value) {
-        return this.FindProperties(PropertyGroupName.special, '移动条件属性')[0].value
+    if (this.findProperties(PropertyGroupName.special, '移动条件属性')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '移动条件属性')[0].value) {
+        return this.findProperties(PropertyGroupName.special, '移动条件属性')[0].value
       }
     }
     return '[]'
     // return '["section"]'
   }
   get tableWidth(): number {
-    if (this.FindProperties(PropertyGroupName.special, '表格宽度')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '表格宽度')[0].value)
-        return this.FindProperties(PropertyGroupName.special, '表格宽度')[0].value
+    if (this.findProperties(PropertyGroupName.special, '表格宽度')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '表格宽度')[0].value)
+        return this.findProperties(PropertyGroupName.special, '表格宽度')[0].value
     }
     return 300
   }
   set tableWidth(val) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '表格宽度')
-    this.SetPropertyVal(property.id, val)
+    var property = this.findPropertyByName(PropertyGroupName.special, '表格宽度')
+    this.setPropertyVal(property.id, val)
   }
   get isDepend(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否展示依赖线')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '是否展示依赖线')[0].value == false)
-        return this.FindProperties(PropertyGroupName.special, '是否展示依赖线')[0].value
+    if (this.findProperties(PropertyGroupName.special, '是否展示依赖线')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '是否展示依赖线')[0].value == false)
+        return this.findProperties(PropertyGroupName.special, '是否展示依赖线')[0].value
     }
     return true
   }
   set isDepend(val) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '是否展示依赖线')
-    this.SetPropertyVal(property.id, val)
+    var property = this.findPropertyByName(PropertyGroupName.special, '是否展示依赖线')
+    this.setPropertyVal(property.id, val)
   }
   get dependencyWidth(): number {
-    if (this.FindProperties(PropertyGroupName.special, '依赖线宽度')[0]) {
-      if (this.FindProperties(PropertyGroupName.special, '依赖线宽度')[0].value)
-        return this.FindProperties(PropertyGroupName.special, '依赖线宽度')[0].value
+    if (this.findProperties(PropertyGroupName.special, '依赖线宽度')[0]) {
+      if (this.findProperties(PropertyGroupName.special, '依赖线宽度')[0].value)
+        return this.findProperties(PropertyGroupName.special, '依赖线宽度')[0].value
     }
     return 2
   }
   //imageSrtting----图片设置
   get projectIcon(): any {
-    if (this.FindProperties(propertyGroupEnum.imageSetting, 'project图标')[0]) {
-      if (this.FindProperties(propertyGroupEnum.imageSetting, 'project图标')[0].value)
-        return this.FindProperties(propertyGroupEnum.imageSetting, 'project图标')[0].value
+    if (this.findProperties(propertyGroupEnum.imageSetting, 'project图标')[0]) {
+      if (this.findProperties(propertyGroupEnum.imageSetting, 'project图标')[0].value)
+        return this.findProperties(propertyGroupEnum.imageSetting, 'project图标')[0].value
     }
     return null
   }
   get middleIcon(): any {
-    if (this.FindProperties(propertyGroupEnum.imageSetting, 'middle图标')[0]) {
-      if (this.FindProperties(propertyGroupEnum.imageSetting, 'middle图标')[0].value)
-        return this.FindProperties(propertyGroupEnum.imageSetting, 'middle图标')[0].value
+    if (this.findProperties(propertyGroupEnum.imageSetting, 'middle图标')[0]) {
+      if (this.findProperties(propertyGroupEnum.imageSetting, 'middle图标')[0].value)
+        return this.findProperties(propertyGroupEnum.imageSetting, 'middle图标')[0].value
     }
     return null
   }
   get taskIcon(): any {
-    if (this.FindProperties(propertyGroupEnum.imageSetting, 'task图标')[0]) {
-      if (this.FindProperties(propertyGroupEnum.imageSetting, 'task图标')[0].value)
-        return this.FindProperties(propertyGroupEnum.imageSetting, 'task图标')[0].value
+    if (this.findProperties(propertyGroupEnum.imageSetting, 'task图标')[0]) {
+      if (this.findProperties(propertyGroupEnum.imageSetting, 'task图标')[0].value)
+        return this.findProperties(propertyGroupEnum.imageSetting, 'task图标')[0].value
     }
     return null
   }
   // get lockIcon(): any {
-  //   if (this.FindProperties(propertyGroupEnum.imageSetting, '锁定产线图标')[0]) {
-  //     if (this.FindProperties(propertyGroupEnum.imageSetting, '锁定产线图标')[0].value)
-  //       return this.FindProperties(propertyGroupEnum.imageSetting, '锁定产线图标')[0].value
+  //   if (this.findProperties(propertyGroupEnum.imageSetting, '锁定产线图标')[0]) {
+  //     if (this.findProperties(propertyGroupEnum.imageSetting, '锁定产线图标')[0].value)
+  //       return this.findProperties(propertyGroupEnum.imageSetting, '锁定产线图标')[0].value
   //   }
   //   return null
   // }
   get iconWandH(): number {
-    if (this.FindProperties(propertyGroupEnum.imageSetting, '任务图标大小')[0]) {
-      if (this.FindProperties(propertyGroupEnum.imageSetting, '任务图标大小')[0].value)
-        return this.FindProperties(propertyGroupEnum.imageSetting, '任务图标大小')[0].value
+    if (this.findProperties(propertyGroupEnum.imageSetting, '任务图标大小')[0]) {
+      if (this.findProperties(propertyGroupEnum.imageSetting, '任务图标大小')[0].value)
+        return this.findProperties(propertyGroupEnum.imageSetting, '任务图标大小')[0].value
     }
     return 14
   }
@@ -2903,23 +2900,23 @@ export default class GanttCom extends ComponentBase {
   }
   //导出弹窗设置
   get svgSize(): number {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '图标大小')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '图标大小')[0].value)
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '图标大小')[0].value
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '图标大小')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '图标大小')[0].value)
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '图标大小')[0].value
     }
     return 16
   }
   get exportFontSize(): number {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '字体大小')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '字体大小')[0].value)
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '字体大小')[0].value
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '字体大小')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '字体大小')[0].value)
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '字体大小')[0].value
     }
     return 14
   }
   get cancelIcon(): any {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮图标')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮图标')[0].value)
-        var val = this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮图标')[0].value
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮图标')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮图标')[0].value)
+        var val = this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮图标')[0].value
       if (val) {
         let icon = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, val[0].url.split('?')[0])
         return icon
@@ -2929,9 +2926,9 @@ export default class GanttCom extends ComponentBase {
     return ''
   }
   get cancelClickIcon(): any {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮选中图标')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮选中图标')[0].value)
-        var val = this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮选中图标')[0].value
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮选中图标')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮选中图标')[0].value)
+        var val = this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮选中图标')[0].value
       if (val) {
         let icon = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, val[0].url.split('?')[0])
         return icon
@@ -2941,9 +2938,9 @@ export default class GanttCom extends ComponentBase {
     return ''
   }
   get okIcon(): any {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮图标')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮图标')[0].value)
-        var val = this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮图标')[0].value
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮图标')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮图标')[0].value)
+        var val = this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮图标')[0].value
       if (val) {
         let icon = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, val[0].url.split('?')[0])
         return icon
@@ -2953,9 +2950,9 @@ export default class GanttCom extends ComponentBase {
     return ''
   }
   get okClickIcon(): any {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮选中图标')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮选中图标')[0].value)
-        var val = this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮选中图标')[0].value
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮选中图标')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮选中图标')[0].value)
+        var val = this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮选中图标')[0].value
       if (val) {
         let icon = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, val[0].url.split('?')[0])
         return icon
@@ -2965,97 +2962,97 @@ export default class GanttCom extends ComponentBase {
     return ''
   }
   get cancelBGNormal(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮正常颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮正常颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮正常颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮正常颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮正常颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮正常颜色')[0].value as string
       }
     }
     return '#53BC8626'
   }
   get cancelBGOver(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮悬浮颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮悬浮颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮悬浮颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮悬浮颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮悬浮颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮悬浮颜色')[0].value as string
       }
     }
     return '#6CC5980D'
   }
   get cancelBGClick(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮点击颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮点击颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮点击颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮点击颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮点击颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮点击颜色')[0].value as string
       }
     }
     return '#469F72'
   }
   get cancelBorderColor(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮边框颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮边框颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消按钮边框颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮边框颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮边框颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '取消按钮边框颜色')[0].value as string
       }
     }
     return '#469F72'
   }
   get cancelFontColor(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消字体正常颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消字体正常颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消字体正常颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消字体正常颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消字体正常颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '取消字体正常颜色')[0].value as string
       }
     }
     return '#53BC86FF'
   }
   get cancelFontClickColor(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消字体选中颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消字体选中颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '取消字体选中颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消字体选中颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '取消字体选中颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '取消字体选中颜色')[0].value as string
       }
     }
     return '#ffffff'
   }
   get okBGNormal(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮正常颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮正常颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮正常颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮正常颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮正常颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮正常颜色')[0].value as string
       }
     }
     return '#53BC86'
   }
   get okBGOver(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮悬浮颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮悬浮颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮悬浮颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮悬浮颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮悬浮颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮悬浮颜色')[0].value as string
       }
     }
     return '#6CC598'
   }
   get okBGClick(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮点击颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮点击颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮点击颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮点击颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮点击颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮点击颜色')[0].value as string
       }
     }
     return '#469F72'
   }
   get okBorderColor(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮边框颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮边框颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出按钮边框颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮边框颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮边框颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '导出按钮边框颜色')[0].value as string
       }
     }
     return '#469F72'
   }
   get okFontColor(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出字体正常颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出字体正常颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出字体正常颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出字体正常颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出字体正常颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '导出字体正常颜色')[0].value as string
       }
     }
     return '#ffffff'
   }
   get okFontClickColor(): string {
-    if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出字体选中颜色')[0]) {
-      if (this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出字体选中颜色')[0].value) {
-        return this.FindProperties(propertyGroupEnum.exportButtonSetting, '导出字体选中颜色')[0].value as string
+    if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出字体选中颜色')[0]) {
+      if (this.findProperties(propertyGroupEnum.exportButtonSetting, '导出字体选中颜色')[0].value) {
+        return this.findProperties(propertyGroupEnum.exportButtonSetting, '导出字体选中颜色')[0].value as string
       }
     }
     return '#53BC86FF'
@@ -3069,7 +3066,7 @@ export default class GanttCom extends ComponentBase {
       okBGClick: this.okBGClick,
       okBorderColor: this.okBorderColor,
       okFontColor: this.okFontColor,
-      okFontClickColor: this.okFontClickColor,
+      okFontClickColor: this.okFontClickColor
     }
   }
   get cancelSettingInfo(): any {
@@ -3081,43 +3078,43 @@ export default class GanttCom extends ComponentBase {
       cancelBGClick: this.cancelBGClick,
       cancelBorderColor: this.cancelBorderColor,
       cancelFontColor: this.cancelFontColor,
-      cancelFontClickColor: this.cancelFontClickColor,
+      cancelFontClickColor: this.cancelFontClickColor
     }
   }
   //基本设置
   get backgroundColor(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '背景色')[0]) {
-      if (this.FindProperties(PropertyGroupName.normal, '背景色')[0].value) {
-        return this.FindProperties(PropertyGroupName.normal, '背景色')[0].value as string
+    if (this.findProperties(PropertyGroupName.normal, '背景色')[0]) {
+      if (this.findProperties(PropertyGroupName.normal, '背景色')[0].value) {
+        return this.findProperties(PropertyGroupName.normal, '背景色')[0].value as string
       }
     }
     return '#808080'
   }
 
-/**************右侧甘特图公开的事件 ****************************/
+  /**************右侧甘特图公开的事件 ****************************/
   //事件
   dblclickRowWrapper(item: any) {
-    this.TriggeEvent('任务条双击事件', item)
+    this.triggeEvent('任务条双击事件', item)
   }
   clickRowWrapper(item: any) {
-    this.TriggeEvent('任务条选中事件', item)
+    this.triggeEvent('任务条选中事件', item)
   }
   rightClickRowWrapper(item: any) {
-    this.TriggeEvent('任务条右击事件', item)
+    this.triggeEvent('任务条右击事件', item)
   }
   mouseover(item: any) {
-    this.TriggeEvent('任务条悬浮事件', item)
+    this.triggeEvent('任务条悬浮事件', item)
   }
   toggleTreeExpand(item: any) {
     // window.console.log('_______&&&&&&&&&&&&&树节点展开收起')
     this.handlerExpand(item, item.expanded)
-    this.TriggeEvent('树节点展开收起', item)
+    this.triggeEvent('树节点展开收起', item)
   }
   leftTableClickRow(task: any) {
     //左侧表格同步选中---
     let table = this.$refs.table as any
     table.changeStyle(task, task.id, true, false)
-    this.TriggeEvent('点击行', task)
+    this.triggeEvent('点击行', task)
   }
   leftTableHoverRow(task: any) {
     //左侧表格同步悬停---
@@ -3129,11 +3126,11 @@ export default class GanttCom extends ComponentBase {
     let table = this.$refs.table as any
     table.changeStyle(task, task.id, false, true)
   }
-/**************左侧表格公开的事件 **************************/
+  /**************左侧表格公开的事件 **************************/
   rowClick(row: any) {
-    // let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+    // let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
     // var val = { modelCode: this.getModelCode(), data: common.clone(row) }
-    // this.SetPropertyVal(property.id, val)
+    // this.setPropertyVal(property.id, val)
     // let propBind = this.getPropertyBindInfo(property.id)
     // if (propBind) {
     //   let modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
@@ -3145,27 +3142,27 @@ export default class GanttCom extends ComponentBase {
     let gridLine = gantt.$refs.gridLine as any
     gridLine.handleClick(row)
 
-    this.TriggeEvent('点击行', row)
+    this.triggeEvent('点击行', row)
   }
   //手动触发，会执行勾选事件
   manualSelect(value: any[], currentRow: any, ischecked: boolean = true) {
     this.itemSelect(value)
     //window.console.log('------------------------------------勾选参数', currentRow)
     if (ischecked) {
-      this.TriggeEvent('勾选行', currentRow)
+      this.triggeEvent('勾选行', currentRow)
     } else {
-      this.TriggeEvent('取消勾选行', currentRow)
+      this.triggeEvent('取消勾选行', currentRow)
     }
   }
   /** 表格数据变化触发变更事件 */
   dataChange() {
-    this.TriggeEvent('表格数据变更', common.clone(this.dataSource))
+    this.triggeEvent('表格数据变更', common.clone(this.dataSource))
   }
   /** 行编辑结束，更新编辑数据源 */
   rowEditEnd(row: any) {
-    let olddata = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源').value.content
+    let olddata = this.findPropertyByName(PropertyGroupName.normal, '表格数据源').value.content
     if (!olddata) {
-      olddata = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源').value
+      olddata = this.findPropertyByName(PropertyGroupName.normal, '表格数据源').value
     }
     let resadddata = []
     let resupdatedata = []
@@ -3204,12 +3201,12 @@ export default class GanttCom extends ComponentBase {
       })
     }
 
-    let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     addprop.value = resadddata
-    let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     updateprop.value = resupdatedata
     //行编辑结束
-    this.TriggeEvent('行编辑结束', common.clone(currentRow))
+    this.triggeEvent('行编辑结束', common.clone(currentRow))
     //window.console.log('-------------------------------------------------------行编辑结束记录', updateprop)
   }
   rowHover(row: any) {
@@ -3218,7 +3215,7 @@ export default class GanttCom extends ComponentBase {
     let gridLine = gantt.$refs.gridLine as any
     this.rowHoverId = row.id
     gridLine.handleMouseover(row)
-    this.TriggeEvent('表格行悬浮', row)
+    this.triggeEvent('表格行悬浮', row)
   }
   rowLeave(row: any) {
     /**悬浮左侧行同时改变右侧对应行的颜色*/
@@ -3232,14 +3229,14 @@ export default class GanttCom extends ComponentBase {
     this.localTask(row)
     // dbModel.viedoublew(row)
 
-    this.TriggeEvent('表格行双击', row)
+    this.triggeEvent('表格行双击', row)
   }
 
-/*******************左侧表格公开的方法******************************/
+  /*******************左侧表格公开的方法******************************/
   /** 全部勾选*/
   selectAllData(param: any) {
     //window.console.log('----------------------勾选全部param', param)
-    // let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+    // let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
     // if (!chooseType || chooseType.value === '否' || chooseType.value === '单选') {
     //   return
     // }
@@ -3252,17 +3249,17 @@ export default class GanttCom extends ComponentBase {
           this.itemSelect(this.dataSource)
           if (param.length > 1) {
             if (param[1]) {
-              this.TriggeEvent('勾选行', null)
+              this.triggeEvent('勾选行', null)
             }
           }
         } else {
           this.itemSelect([])
           if (param[0] === false) {
-            this.TriggeEvent('取消勾选行', null)
+            this.triggeEvent('取消勾选行', null)
           }
         }
       })
-      // let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+      // let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
       // window.console.log('当前选中行', property.value)
     }
   }
@@ -3281,7 +3278,7 @@ export default class GanttCom extends ComponentBase {
       }
       //this.dataSource
 
-      // let chooseType = this.FindPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
+      // let chooseType = this.findPropertyByName(propertyGroupEnum.tableSetting, '是否可选')
       // if (!chooseType || chooseType.value === '否' || chooseType.value === '单选') {
       //   return
       // }
@@ -3314,7 +3311,7 @@ export default class GanttCom extends ComponentBase {
           }
         })
 
-        let selectproperty = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
+        let selectproperty = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中行')
         if (param.length > 2 && param[2] === false) {
           ;(this.$refs.table as any).setRowsSelected(tempArr, false)
         } else {
@@ -3342,9 +3339,9 @@ export default class GanttCom extends ComponentBase {
         if (param.length > 3) {
           if (param[3]) {
             if (param[2] !== false) {
-              this.TriggeEvent('勾选行', null)
+              this.triggeEvent('勾选行', null)
             } else {
-              this.TriggeEvent('取消勾选行', null)
+              this.triggeEvent('取消勾选行', null)
             }
           }
         }
@@ -3371,7 +3368,6 @@ export default class GanttCom extends ComponentBase {
   }
   /** 获取当前数据 */
   getCurrentDataSource() {
-
     if (!this.dataSource || this.dataSource.length === 0) {
       return []
     }
@@ -3379,7 +3375,7 @@ export default class GanttCom extends ComponentBase {
   }
   //获取添加数据源
   getAddedDataSource() {
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
     if (prop.value && prop.value instanceof Array && prop.value.length > 0) {
       return prop.value
     } else {
@@ -3407,7 +3403,7 @@ export default class GanttCom extends ComponentBase {
   }
   //获取编辑数据源
   getUpdatedDataSource() {
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
     if (prop.value && prop.value instanceof Array && prop.value.length > 0) {
       return prop.value
     } else {
@@ -3420,7 +3416,7 @@ export default class GanttCom extends ComponentBase {
   }
   //获取删除数据源
   getDeletedDataSource() {
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     if (prop.value && prop.value instanceof Array && prop.value.length > 0) {
       return prop.value
     } else {
@@ -3437,7 +3433,7 @@ export default class GanttCom extends ComponentBase {
    * 数据源不注册属性了，定义成变量内部使用
    */
   getDataSourceByType(param: operationTypeEnum) {
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let prop = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     let olddata = prop.value.content
     if (!olddata) {
       olddata = prop.value
@@ -3581,11 +3577,11 @@ export default class GanttCom extends ComponentBase {
         : param[2]
       this.dataSource = this.dataSource.concat(tempAdd)
       this.dataSource = this.dataSource.concat(tempUpdate)
-      let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+      let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
       addprop.value = tempAdd
-      let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+      let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
       updateprop.value = tempUpdate
-      let deleteprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+      let deleteprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
       deleteprop.value = tempDelete
     }
   }
@@ -3604,7 +3600,7 @@ export default class GanttCom extends ComponentBase {
           //dictId: modelPropertyDetail.dictId,
           propertyCode: columnCode,
           columnType: ModelPropertyType.ENUM,
-          item: selectDataSource,
+          item: selectDataSource
         })
       } else {
         this.dictItemArr[idx].item = selectDataSource
@@ -3620,7 +3616,7 @@ export default class GanttCom extends ComponentBase {
   /** 重置数据，还原到上次查询到的数据 */
   resetDataSource() {
     //window.console.log('----------------进入表格重置方法')
-    let property = this.FindPropertyByName(PropertyGroupName.normal, '表格数据源')
+    let property = this.findPropertyByName(PropertyGroupName.normal, '表格数据源')
     if (property.value) {
       let cloneValue = common.clone(property.value)
       this.initDataSource(cloneValue)
@@ -3636,8 +3632,8 @@ export default class GanttCom extends ComponentBase {
     let table = this.$refs.table as any
     let xTable = table.$refs.xTable3 as any
     xTable.refreshData()
-    // let childprop = this.FindPropertyByName(PropertyGroupName.normal, '子表格数据源')
-    // this.SetPropertyVal(childprop.id, [])
+    // let childprop = this.findPropertyByName(PropertyGroupName.normal, '子表格数据源')
+    // this.setPropertyVal(childprop.id, [])
   }
   /**
    * 批量删除子表数据
@@ -3718,9 +3714,9 @@ export default class GanttCom extends ComponentBase {
    * 存在的话返回true，不存在返回false
    */
   checkIsExistTempData(param: any) {
-    let addprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
-    let updateprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
-    let deleteprop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
+    let addprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '新增数据源')
+    let updateprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '编辑数据源')
+    let deleteprop = this.findPropertyByName(propertyGroupEnum.tableSetting, '删除数据源')
     if (
       (!addprop.value || addprop.value.length == 0) &&
       (!updateprop.value || updateprop.value.length == 0) &&
@@ -3734,9 +3730,9 @@ export default class GanttCom extends ComponentBase {
 
   celldbclick(value: any[], currentRow: any, ischecked: boolean = true) {
     this.manualSelect(value, currentRow, ischecked)
-    let property = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
+    let property = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前点击行')
     var val = { modelCode: this.getModelCode(), data: common.clone(currentRow) }
-    this.SetPropertyVal(property.id, val)
+    this.setPropertyVal(property.id, val)
   }
   private currentClickRow: any
   childcelldbclick(value: any, isChecked: boolean) {
@@ -3746,7 +3742,7 @@ export default class GanttCom extends ComponentBase {
   childrowClick(row: any) {
     this.currentClickRow = common.clone(row)
     //window.console.log('-----------------------触发子表格点击行事件', row)
-    this.TriggeEvent('点击行', row)
+    this.triggeEvent('点击行', row)
   }
   getChildCurrentDataSource(param: any) {
     return common.clone(this.allChildDataSourceNoGroup)
@@ -3757,7 +3753,7 @@ export default class GanttCom extends ComponentBase {
 
   //临时数据的批量删除，根据当前选中行来处理
   deleteRows() {
-    let prop = this.FindPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
+    let prop = this.findPropertyByName(propertyGroupEnum.tableSetting, '当前选中模型')
     if (prop.value) {
       let selectRows = []
       if (!(prop.value instanceof Array)) {
@@ -3952,7 +3948,7 @@ export default class GanttCom extends ComponentBase {
     //主键的验证不区分情况
     validateParam.push(this.rowIdName)
 
-    let prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    let prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     let propBind = this.getPropertyBindInfo(prop.id)
     let modelInfo = this.parentPage.modelBindings.find((item) => item.modelBindingName === propBind.modelName)
     let detailInfo = modelInfo.modelDetailInfo
@@ -4192,7 +4188,7 @@ export default class GanttCom extends ComponentBase {
     ;(this.$refs.table as any).editRowSave(param[0].data)
   }
 
-/*******************右侧甘特图公开的方法******************************/
+  /*******************右侧甘特图公开的方法******************************/
   isHasClickedRow(): boolean {
     let gantt = this.$refs.gantt as any
     let gridLine = gantt.$refs.gridLine as any
@@ -4438,9 +4434,9 @@ export default class GanttCom extends ComponentBase {
     }
   }
   refreshganttData(date: any[]) {
-    // if (this.FindProperties(PropertyGroupName.special, '数据源')) {
-    //   if (this.FindProperties(PropertyGroupName.special, '数据源')[0]) {
-    //     this.FindProperties(PropertyGroupName.special, '数据源')[0].value = date
+    // if (this.findProperties(PropertyGroupName.special, '数据源')) {
+    //   if (this.findProperties(PropertyGroupName.special, '数据源')[0]) {
+    //     this.findProperties(PropertyGroupName.special, '数据源')[0].value = date
     //   }
     // }
     // return date
@@ -4449,7 +4445,7 @@ export default class GanttCom extends ComponentBase {
   /**************************其他************************************************************/
   private getcolumn(): any[] {
     var columnInfos = []
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       if (this.getPropertyBindInfo(prop.id)) {
         var codeList = this.getPropertyBindInfo(prop.id).modelCodes
@@ -4473,7 +4469,6 @@ export default class GanttCom extends ComponentBase {
 
   /**判断数据源是否为空 */
   datasourceIsNull() {
-
     if (this.dataSource && this.dataSource.length > 0) {
       return false
     }
@@ -4528,35 +4523,33 @@ export default class GanttCom extends ComponentBase {
   .drag-btn :hover {
     cursor: move;
   }
-  .vxe-table .vxe-tree-wrapper.is--active .vxe-tree--node-btn{
-    border:0px;
+  .vxe-table .vxe-tree-wrapper.is--active .vxe-tree--node-btn {
+    border: 0px;
   }
-  .vxe-table .vxe-tree-wrapper .vxe-tree--node-btn{
-    border:0px;
+  .vxe-table .vxe-tree-wrapper .vxe-tree--node-btn {
+    border: 0px;
   }
 
-  .vxe-tree-wrapper{
+  .vxe-tree-wrapper {
     .vxe-tree--node-btn .vxe-icon--caret-bottom:before,
     .vxe-icon--caret-left:before,
     .vxe-icon--caret-right:before,
-    .vxe-icon--caret-top:before{
+    .vxe-icon--caret-top:before {
       // background:#6c6a6b;
-      border-width:0.4em;
-      border-style:solid;
+      border-width: 0.4em;
+      border-style: solid;
       // border-color:#fff0;
-      content:"" !important;
-      position:absolute;
-      transform:rotate(225deg);
+      content: '' !important;
+      position: absolute;
+      transform: rotate(225deg);
     }
 
-    .vxe-icon--caret-right:before{
-      left:0.2em !important;
-      bottom:0.1em !important;
-      border-left-color:inherit !important;
+    .vxe-icon--caret-right:before {
+      left: 0.2em !important;
+      bottom: 0.1em !important;
+      border-left-color: inherit !important;
     }
   }
-
-
 }
 .tableBlank {
   position: absolute;

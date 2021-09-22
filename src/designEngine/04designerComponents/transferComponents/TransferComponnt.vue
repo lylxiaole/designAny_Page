@@ -21,8 +21,8 @@ import {
   Boolean_Property,
   Number_Property,
   Color_Property,
-  BindingModels_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  BindingModels_Property
+} from '../../03designerLayoutBase'
 
 import { AllComponents, ComponentBase } from '../'
 import BaseEvents from '../../03designerLayoutBase/BaseEvents'
@@ -30,7 +30,7 @@ import common from '../../02common/commonMethod'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { CurrentApis, CurrentContext } from '../../01designerContext'
 import { Layout } from 'ant-design-vue'
-import { param } from '../../02common/commonClasses/layoutEvent'
+import { param } from '../../03designerLayoutBase'
 
 @Component
 export default class TransferComponent extends ComponentBase {
@@ -51,7 +51,7 @@ export default class TransferComponent extends ComponentBase {
         key: i.toString(),
         title: `content${i + 1}`,
         description: `description of content${i + 1}`,
-        disabled: i % 3 < 1,
+        disabled: i % 3 < 1
       })
     }
 
@@ -69,40 +69,40 @@ export default class TransferComponent extends ComponentBase {
   }
 
   mounted() {
-   // this.RegisterProperty('是否可点', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('源标题', PropertyGroupName.special, new Text_Property(), '源标题')
-    this.RegisterProperty('目标标题', PropertyGroupName.special, new Text_Property(), '目标标题')
+    // this.registerProperty('是否可点', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('源标题', PropertyGroupName.special, new Text_Property(), '源标题')
+    this.registerProperty('目标标题', PropertyGroupName.special, new Text_Property(), '目标标题')
 
-    this.RegisterProperty('向右指示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('向左指示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('启用搜索', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('向右指示文字', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('向左指示文字', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('启用搜索', PropertyGroupName.special, new Boolean_Property(), false)
 
-    this.RegisterProperty('懒加载', PropertyGroupName.special, new Boolean_Property(), false)
-    //this.RegisterProperty('穿梭框样式', PropertyGroupName.special, new Text_Property(),  '');
-    this.RegisterProperty('重新加载', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('懒加载', PropertyGroupName.special, new Boolean_Property(), false)
+    //this.registerProperty('穿梭框样式', PropertyGroupName.special, new Text_Property(),  '');
+    this.registerProperty('重新加载', PropertyGroupName.special, new Boolean_Property(), false)
 
-    this.RegisterProperty('穿梭框数据源', PropertyGroupName.special, new BindingModels_Property(), [], false, true)
+    this.registerProperty('穿梭框数据源', PropertyGroupName.special, new BindingModels_Property(), [], false, true)
 
-    this.RegisterMethods('加载数据方法', '', this.refreshData, this.inparam, null)
+    this.registerMethods('加载数据方法', '', this.refreshData, this.inparam, null)
   }
 
   //对外接口：获取最新数据
   refreshData(inputDatas: any[]): void {
-    this.FindProperties(PropertyGroupName.special, '数据源')[0].value = inputDatas
+    this.findProperties(PropertyGroupName.special, '数据源')[0].value = inputDatas
   }
 
   //获取数据源==============================================================
   get MockData(): any[] {
     // let datas = CurrentApis.GetTreeSelectData()
     let datas = null
-    this.FindProperties(PropertyGroupName.special, '数据源')[0].value = datas
+    this.findProperties(PropertyGroupName.special, '数据源')[0].value = datas
     return datas
   }
 
   //穿梭框可可用性============================================================
   // get traDisabled(): boolean {
-  //   if (this.FindProperties(PropertyGroupName.special, '是否可点')[0]) {
-  //     return !(this.FindProperties(PropertyGroupName.special, '是否可点')[0].value as boolean)
+  //   if (this.findProperties(PropertyGroupName.special, '是否可点')[0]) {
+  //     return !(this.findProperties(PropertyGroupName.special, '是否可点')[0].value as boolean)
   //   }
   //   return false
   // }
@@ -113,8 +113,8 @@ export default class TransferComponent extends ComponentBase {
 
   //穿梭框左边标题============================================================
   get leftTilte(): string {
-    if (this.FindPropertyByName('特有属性', '源标题')) {
-      return this.FindPropertyByName('特有属性', '源标题').value as string
+    if (this.findPropertyByName('特有属性', '源标题')) {
+      return this.findPropertyByName('特有属性', '源标题').value as string
     } else {
       return '暂无数据'
     }
@@ -136,8 +136,8 @@ export default class TransferComponent extends ComponentBase {
 
   //穿梭框右边标题============================================================
   get rightTilte(): string {
-    if (this.FindPropertyByName('特有属性', '目标标题')) {
-      return this.FindPropertyByName('特有属性', '目标标题').value as string
+    if (this.findPropertyByName('特有属性', '目标标题')) {
+      return this.findPropertyByName('特有属性', '目标标题').value as string
     } else {
       return '暂无数据'
     }
@@ -159,8 +159,8 @@ export default class TransferComponent extends ComponentBase {
 
   //向右指示文字============================================================
   get operationsRight(): string {
-    if (this.FindPropertyByName('特有属性', '向右指示文字')) {
-      return this.FindPropertyByName('特有属性', '向右指示文字').value as string
+    if (this.findPropertyByName('特有属性', '向右指示文字')) {
+      return this.findPropertyByName('特有属性', '向右指示文字').value as string
     } else {
       return '暂无数据'
     }
@@ -182,8 +182,8 @@ export default class TransferComponent extends ComponentBase {
 
   //向左指示文字============================================================
   get operationsLeft(): string {
-    if (this.FindPropertyByName('特有属性', '向左指示文字')) {
-      return this.FindPropertyByName('特有属性', '向左指示文字').value as string
+    if (this.findPropertyByName('特有属性', '向左指示文字')) {
+      return this.findPropertyByName('特有属性', '向左指示文字').value as string
     } else {
       return '暂无数据'
     }
@@ -205,8 +205,8 @@ export default class TransferComponent extends ComponentBase {
 
   //启用搜索============================================================
   get showSearch(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '启用搜索')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '启用搜索')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '启用搜索')[0]) {
+      return this.findProperties(PropertyGroupName.special, '启用搜索')[0].value as boolean
     }
     return false
   }
@@ -217,8 +217,8 @@ export default class TransferComponent extends ComponentBase {
 
   //懒加载============================================================
   get lazy(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '懒加载')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '懒加载')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '懒加载')[0]) {
+      return this.findProperties(PropertyGroupName.special, '懒加载')[0].value as boolean
     }
     return false
   }
@@ -229,7 +229,7 @@ export default class TransferComponent extends ComponentBase {
 
   //穿梭框样式============================================================
   // get listStyle(): any {
-  //    if (this.FindPropertyByName('特有属性', '穿梭框样式')) {
+  //    if (this.findPropertyByName('特有属性', '穿梭框样式')) {
   //     var sdg ={  width:this.width,       height:this.height    };
   //     return sdg
   // } else {
@@ -243,8 +243,8 @@ export default class TransferComponent extends ComponentBase {
 
   //重新加载============================================================
   get dispalyFooter(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '重新加载')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '重新加载')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '重新加载')[0]) {
+      return this.findProperties(PropertyGroupName.special, '重新加载')[0].value as boolean
     }
     return false
   }
@@ -300,7 +300,7 @@ export default class TransferComponent extends ComponentBase {
         key: i.toString(),
         title: `拉取的数据${i + 1}`,
         description: `description of content${i + 1}`,
-        chosen: false,
+        chosen: false
       }
       if (data.chosen) {
         targetKeys.push(data.key)

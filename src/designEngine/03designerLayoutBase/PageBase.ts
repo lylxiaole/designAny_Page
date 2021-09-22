@@ -18,14 +18,14 @@ export default class PageBase extends LayoutContainer {
   /***************************** */
   /**行为列表*/
   public get behaviors(): behavior[] {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '行为列表')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
     if (!property.value) {
       property.value = []
     }
     return property.value as behavior[]
   }
   public set behaviors(val: behavior[]) {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '行为列表')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
     if (!property.value) {
       property.value = []
       return
@@ -34,22 +34,22 @@ export default class PageBase extends LayoutContainer {
   }
   /**页面定时器 */
   public get tickTime(): number {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '定时器周期')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '定时器周期')
     if (!property || !property.value) {
       return 0
     }
     return property.value
   }
   public set tickTime(val: number) {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '定时器周期')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '定时器周期')
     if (!property) {
       return
     }
-    this.SetPropertyVal(property.id, val)
+    this.setPropertyVal(property.id, val)
   }
   /**页面入参 */
   public get inParams(): paramInfo[] {
-    var property = this.FindProperties(PropertyGroupName.normal, '页面入参')[0]
+    var property = this.findProperties(PropertyGroupName.normal, '页面入参')[0]
     if (!property.value) {
       property.value = []
     }
@@ -57,15 +57,15 @@ export default class PageBase extends LayoutContainer {
   }
 
   created() {
-    this.RegisterProperty('拓展js', PropertyGroupName.normal, new JavaScriptCode_Property(), false, false, false)
-    this.RegisterProperty('页面入参', PropertyGroupName.normal, new PageInParams_Property())
-    this.RegisterProperty('权限设置', PropertyGroupName.normal, new Authority_Property())
-    this.RegisterProperty('模型实例', PropertyGroupName.normal, null, false, false)
-    this.RegisterProperty('行为列表', PropertyGroupName.normal, new Behavior_Property(), false, false)
-    this.RegisterProperty('定时器周期', PropertyGroupName.normal, new Number_Property(1, 999999999, 1), 10, true, true, '秒')
+    this.registerProperty('拓展js', PropertyGroupName.normal, new JavaScriptCode_Property(), false, false, false)
+    this.registerProperty('页面入参', PropertyGroupName.normal, new PageInParams_Property())
+    this.registerProperty('权限设置', PropertyGroupName.normal, new Authority_Property())
+    this.registerProperty('模型实例', PropertyGroupName.normal, null, false, false)
+    this.registerProperty('行为列表', PropertyGroupName.normal, new Behavior_Property(), false, false)
+    this.registerProperty('定时器周期', PropertyGroupName.normal, new Number_Property(1, 999999999, 1), 10, true, true, '秒')
 
-    this.RegisterEvents('加载完成', '页面加载完成时触发', [], null)
-    this.RegisterMethods(
+    this.registerEvents('加载完成', '页面加载完成时触发', [], null)
+    this.registerMethods(
       '关闭页面-触发回调',
       '',
       () => {
@@ -74,7 +74,7 @@ export default class PageBase extends LayoutContainer {
       [],
       null
     )
-    this.RegisterMethods(
+    this.registerMethods(
       '关闭页面-不触发回调',
       '',
       () => {
@@ -83,7 +83,7 @@ export default class PageBase extends LayoutContainer {
       [],
       null
     )
-    this.RegisterEvents('定时器触发事件', '定时器触发', [], null)
+    this.registerEvents('定时器触发事件', '定时器触发', [], null)
   }
   mounted() {
     if (this.IsDesigning) {
@@ -106,7 +106,7 @@ export default class PageBase extends LayoutContainer {
     $(window).unbind('resize', this.onWindowResize as any)
   }
   // *******************************overrides **************************************************************************************
-  protected async TriggeEvent(name: string, inparam: any) {
+  protected async triggeEvent(name: string, inparam: any) {
     if (this.IsDesigning == true) {
       return
     }
@@ -276,8 +276,8 @@ export default class PageBase extends LayoutContainer {
       this.SetPageInParams(params)
       this.scaleSize(1 - this.currentScaleSize)
 
-      if (this.TriggeEvent) {
-        await this.TriggeEvent('加载完成', [])
+      if (this.triggeEvent) {
+        await this.triggeEvent('加载完成', [])
       }
       this.Id = pageId
     } catch (error) {
@@ -289,8 +289,8 @@ export default class PageBase extends LayoutContainer {
   public async ReLoadPageData(pageData: SaveInfo) {
     // window.console.log('reLoadPageData')
     this.ReLoadData(pageData)
-    if (this.TriggeEvent) {
-      await this.TriggeEvent('加载完成', [])
+    if (this.triggeEvent) {
+      await this.triggeEvent('加载完成', [])
     }
   }
 

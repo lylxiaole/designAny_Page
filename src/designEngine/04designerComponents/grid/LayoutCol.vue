@@ -32,7 +32,7 @@ import {
   Enum_Property,
   Boolean_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import { AllComponents, ComponentBase } from '..'
 import { DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 import common from '../../02common/commonMethod'
@@ -54,7 +54,7 @@ export default class LayoutCol extends ComponentBase {
     if (this.IsDesigning) {
       this.canDrag = true
       this.canDrop = true
-      this.RegisterProperty('自适应父容器', '特有布局', new Boolean_Property(), false)
+      this.registerProperty('自适应父容器', '特有布局', new Boolean_Property(), false)
     }
   }
 
@@ -65,7 +65,7 @@ export default class LayoutCol extends ComponentBase {
     // ****************************************
     dropcomp.parentPage = this.parentPage
     dropcomp.parentLayout = this
-    dropcomp.RegisterProperty('列占比', '特有布局', new Number_Property(1, 24, 1), 8)
+    dropcomp.registerProperty('列占比', '特有布局', new Number_Property(1, 24, 1), 8)
     dropcomp.$on('onPropertyChanged', this.onCompPropertyChanged)
     let compIn = new CompIncrustationPro()
     compIn.positionval = 'static'
@@ -147,7 +147,7 @@ export default class LayoutCol extends ComponentBase {
     }
   }
   private async fixedSelfSize() {
-    let isfixedSize = this.FindPropertyByName('特有布局', '自适应父容器').value as boolean
+    let isfixedSize = this.findPropertyByName('特有布局', '自适应父容器').value as boolean
     if (!isfixedSize) {
       return
     }
@@ -192,13 +192,13 @@ export default class LayoutCol extends ComponentBase {
     if (!comp) {
       return 8
     }
-    let fproperty = comp.FindPropertyByName('特有布局', '列占比')
+    let fproperty = comp.findPropertyByName('特有布局', '列占比')
     // window.console.log('getItemSpan:', fproperty)
     if (fproperty) {
       return fproperty.value
     }
     return 8
-    // RegisterProperty('列占比', '特有布局', new Number_Property(1, 24, 1), 8)
+    // registerProperty('列占比', '特有布局', new Number_Property(1, 24, 1), 8)
   }
   /**upOrDown：true向上，false向下 */
   private async onChangeItemIndex(data: fragmentRecord, upOrDown: boolean) {

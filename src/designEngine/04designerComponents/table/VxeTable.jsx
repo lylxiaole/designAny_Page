@@ -114,13 +114,13 @@ export default {
       disabled: false,
       hasChild: null,
       actionRowIndex: 0,
-      max:9,
-      lastScrollTop:0,
-      selectSort:{},
+      max: 9,
+      lastScrollTop: 0,
+      selectSort: {},
       //isInnerTab:false,
       //用于设置的popover显示隐藏控制
-      hovered:false,
-      initMax:9
+      hovered: false,
+      initMax: 9
     }
   },
   props: {
@@ -264,24 +264,24 @@ export default {
       type: String,
       default: '暂无数据'
     },
-    isDesign:{
+    isDesign: {
       type: Boolean,
       default: false
     },
-    personConfig:{
+    personConfig: {
       type: Array,
       required: false,
       default: function() {
         return []
       }
     },
-    isUseParentLayout:{
+    isUseParentLayout: {
       type: Boolean,
       default: false
     },
-    dynamicheight:{
-      type:String,
-      default:'100%'
+    dynamicheight: {
+      type: String,
+      default: '100%'
     }
   },
   watch: {
@@ -289,7 +289,7 @@ export default {
       if (!newval) {
         return
       }
-      this.initStyle(newval,null)
+      this.initStyle(newval, null)
     },
     showColumnIndex(newval) {
       this.showIndex = newval
@@ -374,9 +374,9 @@ export default {
       //window.console.log('------------------------------------表格空值设置', newval)
       this.$refs.xTable3.$slots.empty = newval
     },
-    personConfig(newval){
+    personConfig(newval) {
       //window.console.error('-------------------初始化personConfig',newval)
-      this.initStyle(this.tableStyle,newval)
+      this.initStyle(this.tableStyle, newval)
     }
   },
   mounted() {
@@ -388,11 +388,11 @@ export default {
     //window.console.log('-----------dynamicheight',this.dynamicheight)
   },
   created() {},
-  beforeDestroy(){
+  beforeDestroy() {
     this.hovered = false
   },
   methods: {
-    initStyle(newval,personConfig) {
+    initStyle(newval, personConfig) {
       this.tableColumns = []
       switch (newval.canChoose) {
         case 0:
@@ -408,44 +408,42 @@ export default {
           this.showRadio = false
           break
       }
-      if (!this.isDesign && !personConfig){
+      if (!this.isDesign && !personConfig) {
         //return
-      }
-      else{
-        if (!this.isDesign){
+      } else {
+        if (!this.isDesign) {
           this.settingVisibleColumns = []
           this.settingColumns = []
           //重新组织一下数据
-          if (personConfig && personConfig instanceof Array && personConfig.length > 0){
+          if (personConfig && personConfig instanceof Array && personConfig.length > 0) {
             let tempColumns = []
-            this.preparePersonColumn(newval.columnInfos,personConfig)
-            personConfig.forEach(item => {
-              let element = newval.columnInfos.find(single=>single.field == item.field)
-              if (element){
+            this.preparePersonColumn(newval.columnInfos, personConfig)
+            personConfig.forEach((item) => {
+              let element = newval.columnInfos.find((single) => single.field == item.field)
+              if (element) {
                 element.isShow = item.isShow
-                if (item.width){
+                if (item.width) {
                   element.width = item.width
                 }
-                element.sortable = item.orderType == 1 || item.orderType == 2?true:false
+                element.sortable = item.orderType == 1 || item.orderType == 2 ? true : false
                 //element.title = item.title
               }
               tempColumns.push(element)
               item.title = element.title
               this.settingColumns.push(item)
-              if (item.isShow){
+              if (item.isShow) {
                 this.settingVisibleColumns.push(item.field)
               }
             })
-            let actionColumn = newval.columnInfos.find(single=>single.field == 'action')
+            let actionColumn = newval.columnInfos.find((single) => single.field == 'action')
             newval.columnInfos = tempColumns
             newval.columnInfos.push(actionColumn)
-          }
-          else{
-            newval.columnInfos.forEach(element=>{
-              if (element.field != 'action'){
-                let item = {field:element.field,title:element.title,isShow:element.isShow,index:element.index}
+          } else {
+            newval.columnInfos.forEach((element) => {
+              if (element.field != 'action') {
+                let item = { field: element.field, title: element.title, isShow: element.isShow, index: element.index }
                 this.settingColumns.push(item)
-                if (element.isShow){
+                if (element.isShow) {
                   this.settingVisibleColumns.push(element.field)
                 }
               }
@@ -453,9 +451,9 @@ export default {
           }
         }
       }
-      window.console.error('-------------------初始化列配置',newval.columnInfos)
-      this.showIndex = newval.showIndex      
-      this.initColumns(newval.columnInfos)      
+      window.console.error('-------------------初始化列配置', newval.columnInfos)
+      this.showIndex = newval.showIndex
+      this.initColumns(newval.columnInfos)
 
       newval.columnInfos.forEach((item) => {
         item.treeNode = undefined
@@ -471,7 +469,7 @@ export default {
         this.treeConfig = {
           lazy: true,
           children: 'children',
-          hasChild: this.tableStyle.hasChildTag?this.tableStyle.hasChildTag:'hasChild',
+          hasChild: this.tableStyle.hasChildTag ? this.tableStyle.hasChildTag : 'hasChild',
           loadMethod: this.loadChildrenMethod
         }
         // if (this.tableStyle.hasChildTag) {
@@ -497,7 +495,7 @@ export default {
       this.refreshActionColumn()
     },
     //准备展示列和配置列
-    preparePersonColumn(designColumns,personColumns){
+    preparePersonColumn(designColumns, personColumns) {
       //需要区分一下几种情况
       //1.设计器选择的列和个性化配置的列可以一一对应，无需更新，按照个性化配置的数据来准备
       //2.设计器选择的列和个性化配置的列不可以一一对应
@@ -505,33 +503,33 @@ export default {
       //2.2 设计器选择的列多于个性化配置的列
       //2.3 设计器选择的列和个性化配置的列不匹配，有多有少
       let oldAddColumns = []
-      designColumns.forEach(element => {
-        if (element.field != 'action'){
-          let idx = personColumns.findIndex(item=>item.field == element.field)
-          if (idx < 0){
+      designColumns.forEach((element) => {
+        if (element.field != 'action') {
+          let idx = personColumns.findIndex((item) => item.field == element.field)
+          if (idx < 0) {
             oldAddColumns.push(element)
           }
-        }        
+        }
       })
       let newAddColumns = []
-      personColumns.forEach(element => {
-        let idx = designColumns.findIndex(item=>item.field == element.field)
-        if (idx < 0){
+      personColumns.forEach((element) => {
+        let idx = designColumns.findIndex((item) => item.field == element.field)
+        if (idx < 0) {
           newAddColumns.push(element)
         }
       })
       //oldAddColumns有值的情况
-      oldAddColumns.forEach(element => {
-        let item = {field:element.field,title:element.title,isShow:element.isShow,index:element.index}
+      oldAddColumns.forEach((element) => {
+        let item = { field: element.field, title: element.title, isShow: element.isShow, index: element.index }
         personColumns.push(item)
       })
 
       //newAddColumns有值的情况
-      newAddColumns.forEach(element => {
-        let idx = personColumns.findIndex(item=>item.field == element.field)
-        if (idx > -1){
-          personColumns.splice(idx,1)
-        }        
+      newAddColumns.forEach((element) => {
+        let idx = personColumns.findIndex((item) => item.field == element.field)
+        if (idx > -1) {
+          personColumns.splice(idx, 1)
+        }
       })
     },
     /**目前只适用于操作列，暂时废弃 */
@@ -543,19 +541,12 @@ export default {
       //window.console.log('*********************加载列模板开始')
       //要处理下行为
       return {
-        default: ({ row, rowIndex, column }) => {          
-          return [
-                <table-grid
-                  style={{ width: '100%', height: '35px' }}
-                  currentRowData={row}
-                  modelCode={colTemplateData.modelCode}
-                  onOnMounted={(layout) => this.onPageMounted(layout, colTemplateData, row)}
-                />
-          ]       
+        default: ({ row, rowIndex, column }) => {
+          return [<table-grid style={{ width: '100%', height: '35px' }} currentRowData={row} modelCode={colTemplateData.modelCode} onOnMounted={(layout) => this.onPageMounted(layout, colTemplateData, row)} />]
         }
       }
     },
-    onPageMounted(layout, columnTempData, row) {      
+    onPageMounted(layout, columnTempData, row) {
       // window.console.log('*********************加载列模板', layout)
       if (columnTempData) {
         //let prop = this.parentPage.properties.find((item) => item.propertyName === '表格行')
@@ -585,17 +576,14 @@ export default {
         //LoadData(common.clone(this.layoutData))
         //var tableGrid = layout
         //layout.currentRow = property.value
-        //layout.RegisterMethods('表格行数据', PropertyGroupName.normal, null, this.currentRow)
+        //layout.registerMethods('表格行数据', PropertyGroupName.normal, null, this.currentRow)
         //** */
         //**layout是一个页面，把当前组件的父页面作为layout的父级布局 */
-
-
-
 
         layout.parentPage = this.parentPage
         layout.LoadPageByData(columnTempData.id, columnTempData)
         layout.ppap = common.getUuid()
-        // layout.RegisterMethods('表格刷新', '', this.refresh, null, null)
+        // layout.registerMethods('表格刷新', '', this.refresh, null, null)
         layout.$on('onCellLayoutRefreshCurrentPage', () => {
           this.refresh(false)
         })
@@ -607,7 +595,7 @@ export default {
         //   window.console.log('组件外壳收到点击', row)
         // }
         layout.StartShow(true)
-        window.console.log('+++++++++++++++列模板加载完成+++++++++++++++',Date.now())
+        window.console.log('+++++++++++++++列模板加载完成+++++++++++++++', Date.now())
       }
     },
     selectChange(row) {
@@ -616,16 +604,16 @@ export default {
     /**
      * 初始化显示列
      */
-    initColumns(tempColumn) {      
+    initColumns(tempColumn) {
       this.showColumns = []
-      this.tableOrders = []      
-      tempColumn.forEach((element) => {        
+      this.tableOrders = []
+      tempColumn.forEach((element) => {
         if (element.defaultOrder != undefined) {
           this.tableOrders.push({ code: element.field, type: element.defaultOrder.toUpperCase() })
         }
         if (element.isShow !== false) {
           this.showColumns.push(element)
-        }        
+        }
       })
       //console.log('----------------this.settingColumns', this.settingColumns)
     },
@@ -669,7 +657,7 @@ export default {
     handleSortChange({ column, property, order }) {
       //window.console.log('--------排序字段名',property)
       //window.console.log('--------排序规则',order)
-      this.selectSort = {property:property,order:order}
+      this.selectSort = { property: property, order: order }
       if (!order) {
         this.$emit('sort', [])
         return
@@ -694,7 +682,7 @@ export default {
         this.tablePage.currentPage = 1
       }
       //this.loadData()
-      this.$emit('refresh', this.tablePage?this.tablePage.currentPage:1)
+      this.$emit('refresh', this.tablePage ? this.tablePage.currentPage : 1)
     },
     /**
      * 加载数据
@@ -808,9 +796,9 @@ export default {
         //newcol['sort-method'] = currentCol.sortMethod
         //给最后一列的列头追加一个自定义列的插槽
         if (currentCol.field === 'action') {
-          if (this.tableStyle.isTabInner){
+          if (this.tableStyle.isTabInner) {
             newcol.slots = this.cuteColumnSolts(currentCol.colTemplateData, false)
-          }           
+          }
           newcol = this.makeActionColumn(newcol)
           newcol.visible = currentCol.isShow
         } else {
@@ -948,8 +936,7 @@ export default {
         newcol.slots = {}
       }
       if (newcol.isCanEdit) {
-        let maxLength =
-          newcol.propertyDetail && newcol.propertyDetail.maxLength && newcol.propertyDetail.maxLength > 0 ? newcol.propertyDetail.maxLength : null
+        let maxLength = newcol.propertyDetail && newcol.propertyDetail.maxLength && newcol.propertyDetail.maxLength > 0 ? newcol.propertyDetail.maxLength : null
         if (maxLength && maxLength > 0) {
           //newcol.editRender = { name: 'AInput', attrs: { maxlength: maxLength } }
           newcol.editRender = { name: 'input', attrs: { maxlength: maxLength } }
@@ -976,15 +963,8 @@ export default {
       if (newcol.isCanEdit) {
         //如果有最大长度就按最大长度来判断
         let props = {}
-        let min =
-          newcol.propertyDetail && newcol.propertyDetail.minValue == 0
-            ? 0
-            : newcol.propertyDetail && (newcol.propertyDetail.minValue != undefined && newcol.propertyDetail.minValue != null && newcol.propertyDetail.minValue != '')
-            ? newcol.propertyDetail.minValue
-            : null
-        let max =
-          newcol.propertyDetail && (newcol.propertyDetail.maxValue != undefined && newcol.propertyDetail.maxValue != null && newcol.propertyDetail.maxValue != '')  
-          ? newcol.propertyDetail.maxValue : null
+        let min = newcol.propertyDetail && newcol.propertyDetail.minValue == 0 ? 0 : newcol.propertyDetail && (newcol.propertyDetail.minValue != undefined && newcol.propertyDetail.minValue != null && newcol.propertyDetail.minValue != '') ? newcol.propertyDetail.minValue : null
+        let max = newcol.propertyDetail && (newcol.propertyDetail.maxValue != undefined && newcol.propertyDetail.maxValue != null && newcol.propertyDetail.maxValue != '') ? newcol.propertyDetail.maxValue : null
         // if (newcol.propertyDetail.maxLength && newcol.propertyDetail.maxLength > 0) {
         //   newcol.editRender = { name: 'input', attrs: { maxlength: newcol.propertyDetail.maxLength } }
         // }
@@ -1000,25 +980,19 @@ export default {
         // } else {
         //   props.precision = 0
         // }
-        if (isInt){
+        if (isInt) {
           props.precision = 0
         }
         window.console.log('-----------------------------------设置编辑列数值', props)
         newcol.editRender = { name: 'AInputNumber', props: props }
-        //newcol.editRender = { name: 'AInputNumber', props: { max: max, min: min } }        
+        //newcol.editRender = { name: 'AInputNumber', props: { max: max, min: min } }
       }
       if (isInt) {
         newcol.slots = {
           default: ({ row, column }) => {
             //window.console.log('---------------整数row', newcol.field)
             //window.console.log('---------------整数row111', row)
-            return [
-              <span>
-                {row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field])
-                  ? ''
-                  : parseInt(row[newcol.field])}
-              </span>
-            ]
+            return [<span>{row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field]) ? '' : parseInt(row[newcol.field])}</span>]
           }
         }
       } else {
@@ -1027,13 +1001,7 @@ export default {
             //window.console.log('---------------浮点数row', newcol.field)
             //window.console.log('---------------浮点数row1111', row)
             let precision = newcol.propertyDetail && newcol.propertyDetail.per && newcol.propertyDetail.per > 0 ? newcol.propertyDetail.per : 0
-            return [
-              <span>
-                {row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field])
-                  ? ''
-                  : parseFloat(parseFloat(row[newcol.field]).toFixed(precision))}
-              </span>
-            ]
+            return [<span>{row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field]) ? '' : parseFloat(parseFloat(row[newcol.field]).toFixed(precision))}</span>]
           }
         }
       }
@@ -1057,12 +1025,7 @@ export default {
           }
           let allowClear = true
           const select = (
-            <a-select
-              allowClear={allowClear}
-              style="width:90%"
-              defaultValue={scope.row[col.field] ? scope.row[col.field].itemValue + '' : ''}
-              onchange={(e, option) => this.handleChange(e, option, scope, col.field)}
-            >
+            <a-select allowClear={allowClear} style="width:90%" defaultValue={scope.row[col.field] ? scope.row[col.field].itemValue + '' : ''} onchange={(e, option) => this.handleChange(e, option, scope, col.field)}>
               {options.item.map((item) => {
                 return (
                   <a-select-option value={item.itemValue + ''} fieldName={col.field} item={scope.row[col.field]}>
@@ -1104,12 +1067,7 @@ export default {
           //window.console.log('-------------------------表格下拉框this.selectOptionArr[0].options', common.clone(this.selectOptionArr[0].item))
           let allowClear = true
           const select = (
-            <a-select
-              allowClear={allowClear}
-              defaultValue={scope.row[col.field] ? scope.row[col.field].itemValue + '' : ''}
-              style="width:90%"
-              onchange={(e, option) => this.handleChange(e, option, scope, col.field)}
-            >
+            <a-select allowClear={allowClear} defaultValue={scope.row[col.field] ? scope.row[col.field].itemValue + '' : ''} style="width:90%" onchange={(e, option) => this.handleChange(e, option, scope, col.field)}>
               {options.item.map((item) => {
                 return (
                   <a-select-option value={item.itemValue} fieldName={col.field} item={scope.row[col.field]}>
@@ -1168,13 +1126,7 @@ export default {
           }
           let allowClear = true
           const select = (
-            <a-select
-              allowClear={allowClear}
-              mode="multiple"
-              defaultValue={defaultValue}
-              style="width:90%"
-              onchange={(e, option) => this.arrayHandleChange(e, option, scope, col.field)}
-            >
+            <a-select allowClear={allowClear} mode="multiple" defaultValue={defaultValue} style="width:90%" onchange={(e, option) => this.arrayHandleChange(e, option, scope, col.field)}>
               {options.item.map((item) => {
                 return (
                   <a-select-option value={item.itemValue} fieldName={col.field} item={scope.row[col.field]}>
@@ -1291,11 +1243,10 @@ export default {
     makeActionColumn(column) {
       var newcol = Object.assign({}, column)
       newcol.showOverflow = false
-      if (this.isDesign){
-        newcol.minWidth = '80px'      
-      }      
-      else{
-        newcol.minWidth = '130px'      
+      if (this.isDesign) {
+        newcol.minWidth = '80px'
+      } else {
+        newcol.minWidth = '130px'
       }
       newcol.fixed = 'right'
       //console.error('---------------操作列', newcol)
@@ -1316,32 +1267,56 @@ export default {
                 <a-icon type="sync" /> 刷新
               </a>
             </span>
-            <span style={{display:this.isDesign?'none':''}}>
+            <span style={{ display: this.isDesign ? 'none' : '' }}>
               <a-popover title="显示隐藏列" trigger="click" placement="topRight" visible={this.hovered} onVisibleChange={this.handleClickChange}>
                 <template slot="content">
                   <a-checkbox-group style="overflow-y:scroll;max-height:200px" value={this.settingVisibleColumns} onChange={this.changeSelectColumn}>
                     {this.settingColumns.map((item, index) => (
                       <a-row span="18" style="margin-bottom:5px">
                         <a-col span="11">
-                          <a-checkbox value={item.field} onChange={this.changeCurrentColumnVisible}>{item.title}</a-checkbox>
+                          <a-checkbox value={item.field} onChange={this.changeCurrentColumnVisible}>
+                            {item.title}
+                          </a-checkbox>
                         </a-col>
                         <a-col span="6">
-                          <input size="small" style="width:100px;height:25px" v-model={item.width} onChange={(value)=>{this.changeCloumnWidth(item.field,value)}}></input>
-                        </a-col>                                                
+                          <input
+                            size="small"
+                            style="width:100px;height:25px"
+                            v-model={item.width}
+                            onChange={(value) => {
+                              this.changeCloumnWidth(item.field, value)
+                            }}
+                          />
+                        </a-col>
                       </a-row>
-                    ))}                    
+                    ))}
                   </a-checkbox-group>
                   <a-row style="margin-top: 10px;">
-                    <a-button style="width:60px;height:25px;margin-right:10px" onClick={() => {
-                      this.cancelSetting()
-                    }}>取消</a-button>
-                    <a-button style="width:60px;height:25px;margin-right:10px" onClick={() => {
-                      this.useSetting()
-                    }}>应用</a-button>
-                    <a-button style="width:60px;height:25px" onClick={() => {
-                      this.advanceSetting()
-                    }}>高级</a-button>
-                  </a-row>                  
+                    <a-button
+                      style="width:60px;height:25px;margin-right:10px"
+                      onClick={() => {
+                        this.cancelSetting()
+                      }}
+                    >
+                      取消
+                    </a-button>
+                    <a-button
+                      style="width:60px;height:25px;margin-right:10px"
+                      onClick={() => {
+                        this.useSetting()
+                      }}
+                    >
+                      应用
+                    </a-button>
+                    <a-button
+                      style="width:60px;height:25px"
+                      onClick={() => {
+                        this.advanceSetting()
+                      }}
+                    >
+                      高级
+                    </a-button>
+                  </a-row>
                 </template>
                 <a style="margin-left: 10px">
                   <a-icon type="setting" />
@@ -1528,10 +1503,9 @@ export default {
       //rowEditEnd
       this.tableColumns.forEach((item) => {
         if (item.isCanEdit && item.columnType === ModelPropertyType.DATE) {
-          if (row[item.field] < 0){
+          if (row[item.field] < 0) {
             row[item.field] = null
-          }
-          else{
+          } else {
             row[item.field] = moment(row[item.field]).valueOf()
           }
         }
@@ -1893,11 +1867,11 @@ export default {
      * 行为里面调用表格显示隐藏方法也可以通过刷新来实现，不使用变更检测的方式来渲染
      * 还是先判断渲染次数再重新渲染一轮吧
      */
-    refreshActionColumn(scrollTop=0) {      
-      if (this.tableStyle.isTabInner){
+    refreshActionColumn(scrollTop = 0) {
+      if (this.tableStyle.isTabInner) {
         return
       }
-      window.console.log('*********************gundong渲染操作列xxxxxxxx',scrollTop)
+      window.console.log('*********************gundong渲染操作列xxxxxxxx', scrollTop)
       let action = this.tableColumns.find((item) => item.field == 'action')
       if (!action || !action.slots) {
         return
@@ -1922,46 +1896,25 @@ export default {
             tempIdx++
             if (tempIdx > dataLength * 2) {
               //window.console.log('*********************渲染操作列max',this.max)
-              if (rowIndex > max){
+              if (rowIndex > max) {
                 return []
               }
               //window.console.log('*********************渲染操作列',rowIndex)
-              return [
-                <table-grid
-                  style={{ width: '100%', height: '35px' }}
-                  currentRowData={row}
-                  modelCode={currentCol.colTemplateData.modelCode}
-                  onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)}
-                />
-              ]                                  
+              return [<table-grid style={{ width: '100%', height: '35px' }} currentRowData={row} modelCode={currentCol.colTemplateData.modelCode} onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)} />]
             } else {
               return []
             }
           } else {
-            if (rowIndex > max){
+            if (rowIndex > max) {
               return []
             }
-            return [
-              <table-grid
-                style={{ width: '100%', height: '35px' }}
-                currentRowData={row}
-                modelCode={currentCol.colTemplateData.modelCode}
-                onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)}
-              />
-            ]                                    
+            return [<table-grid style={{ width: '100%', height: '35px' }} currentRowData={row} modelCode={currentCol.colTemplateData.modelCode} onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)} />]
           }
         }
       } else {
         //数据为空的时候无需添加渲染逻辑，直接指定默认插槽
         action.slots.default = ({ row, rowIndex, column }) => {
-          return [
-            <table-grid
-              style={{ width: '100%', height: '35px' }}
-              currentRowData={row}
-              modelCode={currentCol.colTemplateData.modelCode}
-              onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)}
-            />
-          ]                             
+          return [<table-grid style={{ width: '100%', height: '35px' }} currentRowData={row} modelCode={currentCol.colTemplateData.modelCode} onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)} />]
         }
       }
       this.$refs.xTable3.refreshColumn()
@@ -1991,26 +1944,12 @@ export default {
             tempIdx++
             if (tempIdx > dataLength * 2) {
               //window.console.log('*********************渲染操作列',rowIndex)
-              return [
-                <table-grid
-                  style={{ width: '100%', height: '35px' }}
-                  currentRowData={row}
-                  modelCode={currentCol.colTemplateData.modelCode}
-                  onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)}
-                />
-              ]
+              return [<table-grid style={{ width: '100%', height: '35px' }} currentRowData={row} modelCode={currentCol.colTemplateData.modelCode} onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)} />]
             } else {
               return []
             }
           } else {
-            return [
-              <table-grid
-                style={{ width: '100%', height: '35px' }}
-                currentRowData={row}
-                modelCode={currentCol.colTemplateData.modelCode}
-                onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)}
-              />
-            ]
+            return [<table-grid style={{ width: '100%', height: '35px' }} currentRowData={row} modelCode={currentCol.colTemplateData.modelCode} onOnMounted={(layout) => this.onPageMounted(layout, currentCol.colTemplateData, row)} />]
           }
         }
       }
@@ -2053,102 +1992,93 @@ export default {
       this.$nextTick(() => {
         this.$refs.xTable3.setAllRowExpansion(true)
       })
-    },      
+    },
     /**根据顺序号来显示列 */
-    switchColumnStatusByIdx(columnIdx) {      
+    switchColumnStatusByIdx(columnIdx) {
       this.$nextTick(() => {
         for (let index = 0; index < this.tableStyle.columnInfos.length; index++) {
-          let element = this.tableStyle.columnInfos[index];
-          if (element.field == 'action'){
+          let element = this.tableStyle.columnInfos[index]
+          if (element.field == 'action') {
             continue
           }
-          if (index < columnIdx){            
+          if (index < columnIdx) {
             element.isShow = true
-          }          
-          else{
+          } else {
             element.isShow = false
           }
         }
         this.tableColumns = this.cuteTableColumns(this.tableStyle.columnInfos)
-        this.$nextTick(()=>{          
+        this.$nextTick(() => {
           this.refreshActionColumn()
           this.resetScroll()
-        })  
+        })
       })
-    },  
+    },
     /**根据单元格数据来判断表格列是否显示 */
-    switchColumnStatusByData() {            
+    switchColumnStatusByData() {
       this.$nextTick(() => {
-        if (!this.dataSource || this.dataSource.length === 0){
+        if (!this.dataSource || this.dataSource.length === 0) {
           return
         }
         let firstRow = this.dataSource[0]
         for (let index = 0; index < this.tableStyle.columnInfos.length; index++) {
-          let element = this.tableStyle.columnInfos[index];
-          if (element.field == 'action'){
+          let element = this.tableStyle.columnInfos[index]
+          if (element.field == 'action') {
             continue
           }
-          //单元格数据为空，就不显示对应的列（暂时直接判断第一行数据）                              
-          if (firstRow[element.field]){
+          //单元格数据为空，就不显示对应的列（暂时直接判断第一行数据）
+          if (firstRow[element.field]) {
             element.isShow = true
-          }         
-          else{
+          } else {
             element.isShow = false
           }
         }
         this.tableColumns = this.cuteTableColumns(this.tableStyle.columnInfos)
-        this.$nextTick(()=>{          
+        this.$nextTick(() => {
           this.refreshActionColumn()
           this.resetScroll()
-        })  
+        })
       })
-    },  
-    editActived({row}){
+    },
+    editActived({ row }) {
       this.$emit('rowEditBegin', row)
     },
-      
+
     /**获取列模板 */
     getColumnTemp(row, modelCode, colTemplateData) {
       if (!this.currentColumnTemp) {
-        this.currentColumnTemp = (
-          <table-grid
-            style={{ width: '100%', height: '35px' }}
-            currentRowData={row}
-            modelCode={modelCode}
-            onOnMounted={(layout) => this.onPageMounted(layout, colTemplateData, row)}
-          />
-        )
+        this.currentColumnTemp = <table-grid style={{ width: '100%', height: '35px' }} currentRowData={row} modelCode={modelCode} onOnMounted={(layout) => this.onPageMounted(layout, colTemplateData, row)} />
       }
       return [this.currentColumnTemp]
     },
-    tableScroll({ type, scrollTop, scrollLeft, isX, isY, $table }){
+    tableScroll({ type, scrollTop, scrollLeft, isX, isY, $table }) {
       //window.console.log('---------滚动开始')
-      if (!isX){
+      if (!isX) {
         //window.console.log('-------------向下滚-高度',scrollTop)
-        //计算显示的最大数量，还要判断是否是向下滚，向上滚的情况可以直接忽略掉        
-        if (scrollTop < 30 || scrollTop < this.lastScrollTop || this.lastScrollTop > scrollTop-30){
+        //计算显示的最大数量，还要判断是否是向下滚，向上滚的情况可以直接忽略掉
+        if (scrollTop < 30 || scrollTop < this.lastScrollTop || this.lastScrollTop > scrollTop - 30) {
           return
-        }        
-        let num = parseInt(scrollTop/30)
+        }
+        let num = parseInt(scrollTop / 30)
         // for (let index = 0; index < num; index++) {
-        //   this.max++          
+        //   this.max++
         // }
         //window.console.log('-------------向下滚',num)
-        this.max = this.initMax +num
-        this.lastScrollTop = scrollTop        
+        this.max = this.initMax + num
+        this.lastScrollTop = scrollTop
         //return
-        this.refreshActionColumn(scrollTop)       
+        this.refreshActionColumn(scrollTop)
       }
     },
-    resetScroll(){
+    resetScroll() {
       this.max = this.initMax
-      this.lastScrollTop = 0   
-      //使用nextTick重置滚动不生效，暂时使用延时操作来处理      
+      this.lastScrollTop = 0
+      //使用nextTick重置滚动不生效，暂时使用延时操作来处理
       setTimeout(() => {
-        this.$refs.xTable3.scrollTo(0,0)
-      }, 100)       
+        this.$refs.xTable3.scrollTo(0, 0)
+      }, 100)
     },
-    resetDataSource(newval){
+    resetDataSource(newval) {
       this.actionRowIndex = 0
       let tempArr = newval
       //重新渲染操作列
@@ -2172,8 +2102,7 @@ export default {
             this.treeConfig.lazy = false
           }
         }
-      }
-      else{
+      } else {
         this.treeConfig = null
       }
       this.loading = false
@@ -2183,9 +2112,9 @@ export default {
       // if (tempArr.length > 10){
       //   this.treeConfig = null
       // }
-      this.dataSource = tempArr      
-      //加载完成之后再刷新操作列      
-      this.$nextTick(() => {        
+      this.dataSource = tempArr
+      //加载完成之后再刷新操作列
+      this.$nextTick(() => {
         this.refreshActionColumn()
         if (this.dataSource && this.dataSource.length > 0) {
           this.$refs.xTable3.setCurrentRow(this.dataSource[0])
@@ -2194,25 +2123,24 @@ export default {
           //没数据的时候清空一下tooltip
           this.$refs.xTable3.clostTooltip()
         }
-        if (!this.selectSort.property){
+        if (!this.selectSort.property) {
           this.$refs.xTable3.sort(this.tableStyle.orderCode, this.tableStyle.orderType ? 'asc' : 'desc')
-        }        
-        else{
-          if (this.selectSort.order){
+        } else {
+          if (this.selectSort.order) {
             this.$refs.xTable3.sort(this.selectSort.property, this.selectSort.order)
-          }          
+          }
         }
         this.$emit('dataChange', this.dataSource)
         //重新计算表格，用于高度的重置，暂时注释
         //this.$refs.xTable3.recalculate(true)
-        this.resetScroll()        
+        this.resetScroll()
       })
     },
     /**操作列配置相关方法*/
     /**取消设置
      * 将数据还原到上次打开时的状态，关闭popover
      */
-    cancelSetting(){
+    cancelSetting() {
       this.settingVisibleColumns = []
       this.columns.forEach((element) => {
         if (element.field != 'action' && element.field != 'expand' && element.isShow) {
@@ -2224,14 +2152,14 @@ export default {
     /** 应用设置
      * 保存当前设置信息，无需重置，完成之后关闭popover
      */
-    useSetting(){
+    useSetting() {
       this.hovered = false
       //this.settingColumns
       //组织一下保存的信息，需要把完整数据和目前勾选的数据对应一下，来存储是否显示和宽度，还需要记录顺序
       // let outparamArr = []
       // this.settingColumns.forEach((item)=>{
       //   let idx = this.settingVisibleColumns.findIndex(element=>element == item.field)
-      //   let outparam = {field:item.field,title:item.title,index:item.index,width:item.width?item.width:'',isShow:idx > -1?true:false}        
+      //   let outparam = {field:item.field,title:item.title,index:item.index,width:item.width?item.width:'',isShow:idx > -1?true:false}
       //   outparamArr.push(outparam)
       // })
       //window.console.error('----------------表格应用设置',this.settingColumns)
@@ -2241,38 +2169,38 @@ export default {
     /** 高级设置
      * 弹出新的配置页面
      */
-    advanceSetting(){
+    advanceSetting() {
       this.hovered = false
       this.$emit('tableAdvanceSetting', this.settingColumns)
     },
-    handleClickChange(visible){
+    handleClickChange(visible) {
       //点击改变
       //window.console.log('-----------------点击表格设置visible',visible)
-      if (visible){
+      if (visible) {
         this.hovered = visible
-      }      
+      }
     },
-    changeSelectColumn(selectValue){
+    changeSelectColumn(selectValue) {
       //window.console.log('-----------------选中值改变selectValue',selectValue)
-      this.settingVisibleColumns = selectValue       
+      this.settingVisibleColumns = selectValue
     },
-    changeCurrentColumnVisible(e){
+    changeCurrentColumnVisible(e) {
       //window.console.error('-----------------选中值改变eeeeeeeeeee',e)
-      //this.settingVisibleColumns = selectValue       
-      this.settingColumns.find(element=>element.field == e.target.value).isShow = e.target.checked
+      //this.settingVisibleColumns = selectValue
+      this.settingColumns.find((element) => element.field == e.target.value).isShow = e.target.checked
     },
-    changeCloumnWidth(field,value){
+    changeCloumnWidth(field, value) {
       //window.console.log('-----------------修改列编码',field)
-      //window.console.error('-----------------修改列宽度',value.target.value)     
-      this.settingColumns.find(element=>element.field == field).width = value.target.value
+      //window.console.error('-----------------修改列宽度',value.target.value)
+      this.settingColumns.find((element) => element.field == field).width = value.target.value
       // this.settingColumns.forEach(element => {
       //   if (element.field == field){
       //     element.width = value
       //   }
-      // }); 
+      // });
     },
     /**指定子表格点击行 */
-    setChildrenClickRow(id,childId){
+    setChildrenClickRow(id, childId) {
       //首先判断下子表格是否存在
       setTimeout(() => {
         let ref = this.$refs['ref' + id]
@@ -2283,26 +2211,26 @@ export default {
         }
       }, 100)
     },
-    setDynamicheight(newHeight){
+    setDynamicheight(newHeight) {
       // this.$nextTick(()=>{
       //   let tableHeight = this.showPagination?(newHeight-70)+'px':(newHeight-40)+'px'
       //   this.$el.getElementsByClassName('vxe-table--body-wrapper body--wrapper')[0].style.height = tableHeight
       // })
     },
-    setInitMax(newHeight){
-      this.initMax = newHeight/36
+    setInitMax(newHeight) {
+      this.initMax = newHeight / 36
       this.max = this.initMax
     },
     //切换多个自定义列的显示隐藏
     switchColumnStatusByCodeArr(columnCodeArr, isshow) {
-      window.console.log('-----------开始切换',isshow)
+      window.console.log('-----------开始切换', isshow)
       let tempShowColumns = common.clone(this.tableColumns)
       let prepareColums = common.clone(this.tableStyle.columnInfos)
       //需要结合着原始数据和目前的展示数据来处理
       //如果目前的数据里面没有，然后传递的参数要显示，就需要追加进来
-      prepareColums.forEach(item=>{
-        let idx = tempShowColumns.findIndex(element=>element.field == item.field)
-        item.isShow = idx < 0?false:true
+      prepareColums.forEach((item) => {
+        let idx = tempShowColumns.findIndex((element) => element.field == item.field)
+        item.isShow = idx < 0 ? false : true
       })
       for (const columnCode of columnCodeArr) {
         let columnIndex = prepareColums.findIndex((item) => item.field == columnCode)
@@ -2318,8 +2246,8 @@ export default {
       })
     },
     //滚动到指定位置
-    scrollToRow(id){
-      window.console.log('---------------滚动指定位置',id)
+    scrollToRow(id) {
+      window.console.log('---------------滚动指定位置', id)
       let masterRow = this.$refs.xTable3.getRowById(id)
       this.$refs.xTable3.scrollToRow(masterRow)
     }
@@ -2335,7 +2263,7 @@ export default {
         show-header-overflow
         row-id={this.rowIdName}
         data={this.dataSource}
-        height={this.isUseParentLayout?this.dynamicheight:this.height}
+        height={this.isUseParentLayout ? this.dynamicheight : this.height}
         //height={'100%'}
         //max-height={this.isUseParentLayout?this.dynamicheight:this.height}
         highlight-current-row

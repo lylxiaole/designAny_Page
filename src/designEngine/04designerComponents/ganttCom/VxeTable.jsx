@@ -565,14 +565,7 @@ export default {
       return {
         default: ({ row, rowIndex, column }) => {
           // window.console.log('*********************渲染操作列')
-          return [
-            <table-grid
-              style={{ width: '100%', height: '100%', marginTop: '-15px' }}
-              currentRowData={row}
-              modelCode={colTemplateData.modelCode}
-              onOnMounted={(layout) => this.onPageMounted(layout, colTemplateData, row)}
-            />
-          ]
+          return [<table-grid style={{ width: '100%', height: '100%', marginTop: '-15px' }} currentRowData={row} modelCode={colTemplateData.modelCode} onOnMounted={(layout) => this.onPageMounted(layout, colTemplateData, row)} />]
         }
       }
     },
@@ -603,13 +596,13 @@ export default {
         //LoadData(common.clone(this.layoutData))
         //var tableGrid = layout
         //layout.currentRow = property.value
-        //layout.RegisterMethods('表格行数据', PropertyGroupName.normal, null, this.currentRow)
+        //layout.registerMethods('表格行数据', PropertyGroupName.normal, null, this.currentRow)
         //** */
         //**layout是一个页面，把当前组件的父页面作为layout的父级布局 */
         layout.parentPage = this.parentPage
-        layout.LoadPageByData(columnTempData.id,columnTempData)
+        layout.LoadPageByData(columnTempData.id, columnTempData)
         layout.ppap = common.getUuid()
-        // layout.RegisterMethods('表格刷新', '', this.refresh, null, null)
+        // layout.registerMethods('表格刷新', '', this.refresh, null, null)
         layout.$on('onCellLayoutRefreshCurrentPage', () => {
           this.refresh(false)
         })
@@ -1051,8 +1044,7 @@ export default {
         newcol.slots = {}
       }
       if (newcol.isCanEdit) {
-        let maxLength =
-          newcol.propertyDetail && newcol.propertyDetail.maxLength && newcol.propertyDetail.maxLength > 0 ? newcol.propertyDetail.maxLength : null
+        let maxLength = newcol.propertyDetail && newcol.propertyDetail.maxLength && newcol.propertyDetail.maxLength > 0 ? newcol.propertyDetail.maxLength : null
         if (maxLength && maxLength > 0) {
           // newcol.editRender = { name: 'AInput', attrs: { maxlength: maxLength } }
           newcol.editRender = { name: 'input', attrs: { maxlength: maxLength } }
@@ -1079,14 +1071,8 @@ export default {
       if (newcol.isCanEdit) {
         //如果有最大长度就按最大长度来判断
         let props = {}
-        let min =
-          newcol.propertyDetail && newcol.propertyDetail.minValue !== '' && newcol.propertyDetail.minValue == 0
-            ? 0
-            : newcol.propertyDetail && newcol.propertyDetail.minValue && newcol.propertyDetail.minValue > 0
-            ? newcol.propertyDetail.minValue
-            : null
-        let max =
-          newcol.propertyDetail && newcol.propertyDetail.maxValue && newcol.propertyDetail.maxValue > 0 ? newcol.propertyDetail.maxValue : null
+        let min = newcol.propertyDetail && newcol.propertyDetail.minValue !== '' && newcol.propertyDetail.minValue == 0 ? 0 : newcol.propertyDetail && newcol.propertyDetail.minValue && newcol.propertyDetail.minValue > 0 ? newcol.propertyDetail.minValue : null
+        let max = newcol.propertyDetail && newcol.propertyDetail.maxValue && newcol.propertyDetail.maxValue > 0 ? newcol.propertyDetail.maxValue : null
         // if (newcol.propertyDetail.maxLength && newcol.propertyDetail.maxLength > 0) {
         //   newcol.editRender = { name: 'input', attrs: { maxlength: newcol.propertyDetail.maxLength } }
         // }
@@ -1109,13 +1095,7 @@ export default {
           default: ({ row, column }) => {
             // window.console.log('---------------整数row', newcol.field)
             //window.console.log('---------------整数row111', row)
-            return [
-              <span>
-                {row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field])
-                  ? ''
-                  : parseInt(row[newcol.field])}
-              </span>
-            ]
+            return [<span>{row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field]) ? '' : parseInt(row[newcol.field])}</span>]
           }
         }
       } else {
@@ -1123,13 +1103,7 @@ export default {
           default: ({ row, column }) => {
             // window.console.log('---------------浮点数row', newcol.field)
             //window.console.log('---------------浮点数row1111', row)
-            return [
-              <span>
-                {row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field])
-                  ? ''
-                  : parseFloat(row[newcol.field])}
-              </span>
-            ]
+            return [<span>{row[newcol.field] === undefined || row[newcol.field] === null || row[newcol.field] === '' || isNaN(row[newcol.field]) ? '' : parseFloat(row[newcol.field])}</span>]
           }
         }
       }
@@ -1156,12 +1130,7 @@ export default {
           //window.console.log('-------------------------表格下拉框this.selectOptionArr[0].options', common.clone(this.selectOptionArr[0].item))
           let allowClear = true
           const select = (
-            <a-select
-              allowClear={allowClear}
-              defaultValue={scope.row[col.field] ? scope.row[col.field].itemValue + '' : ''}
-              style="width:90%"
-              onchange={(e, option) => this.handleChange(e, option, scope, col.field)}
-            >
+            <a-select allowClear={allowClear} defaultValue={scope.row[col.field] ? scope.row[col.field].itemValue + '' : ''} style="width:90%" onchange={(e, option) => this.handleChange(e, option, scope, col.field)}>
               {options.item.map((item) => {
                 return (
                   <a-select-option value={item.itemValue} fieldName={col.field} item={scope.row[col.field]}>
@@ -1241,11 +1210,7 @@ export default {
                 <img referrer="no-referrer|origin|unsafe-url" v-lazy={taskIcon} width={this.iconWandH + 'px'} height={this.iconWandH + 'px'} />
               )}
             </span>
-            {row.type === 'task' ? (
-              <span style="white-space:noworp">{name}</span>
-            ) : (
-              <span style="white-space:noworp;font-weight:600;color:#2E2424">{name}</span>
-            )}
+            {row.type === 'task' ? <span style="white-space:noworp">{name}</span> : <span style="white-space:noworp;font-weight:600;color:#2E2424">{name}</span>}
           </span>
         ]
       }
@@ -1280,13 +1245,7 @@ export default {
           }
           let allowClear = true
           const select = (
-            <a-select
-              allowClear={allowClear}
-              mode="multiple"
-              defaultValue={defaultValue}
-              style="width:90%"
-              onchange={(e, option) => this.arrayHandleChange(e, option, scope, col.field)}
-            >
+            <a-select allowClear={allowClear} mode="multiple" defaultValue={defaultValue} style="width:90%" onchange={(e, option) => this.arrayHandleChange(e, option, scope, col.field)}>
               {options.item.map((item) => {
                 return (
                   <a-select-option value={item.itemValue} fieldName={col.field} item={scope.row[col.field]}>

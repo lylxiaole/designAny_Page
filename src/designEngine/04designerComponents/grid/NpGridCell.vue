@@ -14,8 +14,8 @@ import CompIncrustationPro from '../../05designerLayouts/layout_Professional/Com
 import { AllComponents, ComponentBase } from '../../04designerComponents'
 import { CurrentApis, pagenNodeType, CurrentContext } from '../../01designerContext'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
-import { Property, PropertyGroupName } from '../../02common/commonClasses/LayoutProperty'
-import { param } from '../../02common/commonClasses/layoutEvent'
+import { Property, PropertyGroupName } from '../../03designerLayoutBase'
+import { param } from '../../03designerLayoutBase'
 
 @Component
 export default class NpGridCell extends PageBase {
@@ -23,7 +23,7 @@ export default class NpGridCell extends PageBase {
   public currentRow: any
 
   get backgroundCute(): string {
-    let property = this.FindPropertyByName('基础设置', '背景图片')
+    let property = this.findPropertyByName('基础设置', '背景图片')
     if (!this.background_img || !this.background_img.url) {
       return this.background
     }
@@ -47,7 +47,7 @@ export default class NpGridCell extends PageBase {
   /** 行数据属性变更 */
   @Watch('currentRowData')
   currentRowDataChange(newval) {
-    let property = this.FindPropertyByName(PropertyGroupName.normal, '单元格数据')
+    let property = this.findPropertyByName(PropertyGroupName.normal, '单元格数据')
     if (property) {
       property.value = { modelCode: this.modelCode, data: common.clone(newval) }
     }
@@ -58,8 +58,8 @@ export default class NpGridCell extends PageBase {
   created() {
     this.width = 200
     this.height = 200
-    this.RegisterProperty('单元格数据', PropertyGroupName.normal, null)
-    this.RegisterEvents('单元格加载完成', '', this.inparam, this.outparam)
+    this.registerProperty('单元格数据', PropertyGroupName.normal, null)
+    this.registerEvents('单元格加载完成', '', this.inparam, this.outparam)
   }
 
   mounted() {
@@ -67,7 +67,7 @@ export default class NpGridCell extends PageBase {
   }
   protected async loadCompleted(childrenData: any[]) {
     this.$nextTick(() => {
-      this.TriggeEvent('单元格加载完成', null)
+      this.triggeEvent('单元格加载完成', null)
     })
   }
 
@@ -108,7 +108,7 @@ export default class NpGridCell extends PageBase {
     switch (property.propertyName) {
       case '单元格数据':
         this.$nextTick(() => {
-          this.TriggeEvent('单元格加载完成', null)
+          this.triggeEvent('单元格加载完成', null)
         })
         break
     }

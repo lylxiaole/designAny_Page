@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { SaveInfo, LayoutType, LayoutInfo, DragItemTypeEnum, LayoutBase } from '../../03designerLayoutBase'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
 import { CurrentApis, pagenNodeType, CurrentContext } from '../../01designerContext'
@@ -24,7 +24,7 @@ import common from '../../02common/commonMethod'
 @Component
 export default class componentTemplate extends ComponentBase {
   get backgroundCute(): string {
-    var property = this.FindPropertyByName('基础设置', '背景图片')
+    var property = this.findPropertyByName('基础设置', '背景图片')
     // window.console.log('获取计算图片', property)
     if (!this.background_img || !this.background_img.url) {
       return this.background
@@ -33,7 +33,7 @@ export default class componentTemplate extends ComponentBase {
   }
 
   get backgroundColor(): string {
-    var property = this.FindPropertyByName('基础设置', '背景图片')
+    var property = this.findPropertyByName('基础设置', '背景图片')
     // window.console.log('获取计算图片', property)
     if (!this.background_img || !this.background_img.url) {
       return this.background
@@ -43,7 +43,7 @@ export default class componentTemplate extends ComponentBase {
 
   get backgroundImage(): string {
     //console.info('backgroundImagebackgroundImagebackgroundImagebackgroundImage',this.background_img)
-    var property = this.FindPropertyByName('基础设置', '背景图片')
+    var property = this.findPropertyByName('基础设置', '背景图片')
     // window.console.log('获取计算图片', property)
     if (!this.background_img || !this.background_img.url) {
       return 'unset'
@@ -60,19 +60,19 @@ export default class componentTemplate extends ComponentBase {
       this.canDrag = true
       this.canDrop = true
       /**解决旧数据的问题 */
-      this.RegisterProperty('页面入参', PropertyGroupName.normal, null, null, false, false)
-      this.RegisterProperty('排布方式', PropertyGroupName.special, new Enum_Property(true, ['无', '靠左排布', '靠右排布']), '无')
+      this.registerProperty('页面入参', PropertyGroupName.normal, null, null, false, false)
+      this.registerProperty('排布方式', PropertyGroupName.special, new Enum_Property(true, ['无', '靠左排布', '靠右排布']), '无')
     }
   }
 
   private get layoutType() {
-    let findprop = this.FindPropertyByName(PropertyGroupName.special, '排布方式')
+    let findprop = this.findPropertyByName(PropertyGroupName.special, '排布方式')
 
     if (findprop) {
       if (findprop.value === '无') {
         return ''
       } else {
-        return this.FindPropertyByName(PropertyGroupName.special, '排布方式').value
+        return this.findPropertyByName(PropertyGroupName.special, '排布方式').value
       }
     } else {
       return ''

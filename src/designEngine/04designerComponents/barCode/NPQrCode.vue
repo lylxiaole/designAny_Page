@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import QRCode from 'qrcode'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
@@ -20,7 +20,7 @@ import {
   Text_Property,
   Boolean_Property,
   Enum_Property
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 
 @Component
@@ -35,15 +35,15 @@ export default class NPQrCode extends ComponentBase {
     this.width = 300
     this.height = 300
 
-    this.RegisterProperty('内容', PropertyGroupName.special, new Text_Property(), '123456789')
-    this.RegisterProperty('版本', PropertyGroupName.special, new Number_Property(0, 40, 1), 0)
-    this.RegisterProperty('纠错等级', PropertyGroupName.special, new Enum_Property(true, ['L', 'M', 'Q', 'H']), 'M')
-    this.RegisterProperty('遮罩符号', PropertyGroupName.special, new Number_Property(-1, 7, 1), -1)
-    this.RegisterProperty('二维码外边距', PropertyGroupName.special, new Number_Property(), 4)
-    this.RegisterProperty('二维码宽度', PropertyGroupName.special, new Number_Property(), 0)
-    this.RegisterProperty('比例因子', PropertyGroupName.special, new Number_Property(), 4)
-    this.RegisterProperty('内容颜色', PropertyGroupName.special, new Color_Property(), '#000000')
-    this.RegisterProperty('留白颜色', PropertyGroupName.special, new Color_Property(), '#ffffff')
+    this.registerProperty('内容', PropertyGroupName.special, new Text_Property(), '123456789')
+    this.registerProperty('版本', PropertyGroupName.special, new Number_Property(0, 40, 1), 0)
+    this.registerProperty('纠错等级', PropertyGroupName.special, new Enum_Property(true, ['L', 'M', 'Q', 'H']), 'M')
+    this.registerProperty('遮罩符号', PropertyGroupName.special, new Number_Property(-1, 7, 1), -1)
+    this.registerProperty('二维码外边距', PropertyGroupName.special, new Number_Property(), 4)
+    this.registerProperty('二维码宽度', PropertyGroupName.special, new Number_Property(), 0)
+    this.registerProperty('比例因子', PropertyGroupName.special, new Number_Property(), 4)
+    this.registerProperty('内容颜色', PropertyGroupName.special, new Color_Property(), '#000000')
+    this.registerProperty('留白颜色', PropertyGroupName.special, new Color_Property(), '#ffffff')
     this.initQrCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
@@ -57,7 +57,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeValue: string = '123456789'
   get codeValue(): string {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '内容')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '内容')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value.toString()
       this.qrCodeValue = data
@@ -70,7 +70,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeVersion: number = 0
   get codeVersion(): number {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '版本')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '版本')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
       this.qrCodeVersion = data
@@ -83,7 +83,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeErrorCorrectionLevel: string = 'M'
   get codeErrorCorrectionLevel(): string {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '纠错等级')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '纠错等级')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value.toString()
       this.qrCodeErrorCorrectionLevel = data
@@ -96,7 +96,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeMaskPattern: number = -1
   get codeMaskPattern(): number {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '遮罩符号')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '遮罩符号')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
       this.qrCodeMaskPattern = data
@@ -109,7 +109,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeMargin: number = 4
   get codeMargin(): number {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '二维码外边距')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '二维码外边距')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
       this.qrCodeMargin = data
@@ -122,7 +122,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeWidth: number = 0
   get codeWidth(): number {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '二维码宽度')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '二维码宽度')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
       this.qrCodeWidth = data
@@ -135,7 +135,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeScale: number = 0
   get codeScale(): number {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '比例因子')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '比例因子')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
       this.qrCodeScale = data
@@ -148,7 +148,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeDarkColor: string = '#000000'
   get codeDarkColor(): string {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '内容颜色')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '内容颜色')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value.toString()
       this.qrCodeDarkColor = data
@@ -161,7 +161,7 @@ export default class NPQrCode extends ComponentBase {
 
   private qrCodeLightColor: string = '#ffffff'
   get codeLightColor(): string {
-    const prop = this.FindPropertyByName(PropertyGroupName.special, '留白颜色')
+    const prop = this.findPropertyByName(PropertyGroupName.special, '留白颜色')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value as string
       this.qrCodeLightColor = data

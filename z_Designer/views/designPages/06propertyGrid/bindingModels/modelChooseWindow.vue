@@ -62,7 +62,7 @@ import {
   Color_Property,
   UploadFile_Property,
   Boolean_Property
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 import npTable from '../../07commonComponents/table/npTable.vue'
 

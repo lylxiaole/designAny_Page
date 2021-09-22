@@ -16,11 +16,11 @@ import {
   Enum_Property,
   PropertyGroupName,
   TimePickerFile_Property
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+} from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import moment from 'moment'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
-import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+import { param, paramType } from '../../03designerLayoutBase'
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
 
 @Component
 export default class DatePickerCom extends ComponentBase {
@@ -47,16 +47,73 @@ export default class DatePickerCom extends ComponentBase {
   public locale = locale
   public IsShowTime: boolean | any = false
 
-  public created() { }
+  public created() {}
 
   protected items = ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH', 'YYYY-MM-DD']
   protected timeitems = ['HH:mm:ss', 'HH:mm']
   protected sizeitems = ['大', '中', '小']
   protected hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
   protected minsec = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-    40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
   ]
 
   @Prop() private dateType: string
@@ -69,25 +126,24 @@ export default class DatePickerCom extends ComponentBase {
       this.width = 195
       this.height = 32
       //注册特有属性
-      this.RegisterProperty('值', PropertyGroupName.special, new TimePickerFile_Property('date'), null)
-      this.RegisterProperty('格式化', PropertyGroupName.special, new Enum_Property(true, this.items), this.items[0])
-      this.RegisterProperty('最小值', PropertyGroupName.special, new TimePickerFile_Property('date'))
-      this.RegisterProperty('最大值', PropertyGroupName.special, new TimePickerFile_Property('date'))
-      this.RegisterProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, this.sizeitems), this.sizeitems[1])
+      this.registerProperty('值', PropertyGroupName.special, new TimePickerFile_Property('date'), null)
+      this.registerProperty('格式化', PropertyGroupName.special, new Enum_Property(true, this.items), this.items[0])
+      this.registerProperty('最小值', PropertyGroupName.special, new TimePickerFile_Property('date'))
+      this.registerProperty('最大值', PropertyGroupName.special, new TimePickerFile_Property('date'))
+      this.registerProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, this.sizeitems), this.sizeitems[1])
 
       //添加最大值、最小值之间的检验规则
-      this.AddPropertyValidator(this.FindProperties(PropertyGroupName.special, '最小值')[0].id, (newval: any) => {
+      this.AddPropertyValidator(this.findProperties(PropertyGroupName.special, '最小值')[0].id, (newval: any) => {
         return this.maxdatevalue === undefined || newval === null ? true : newval <= this.maxdatevalue
       })
-      this.AddPropertyValidator(this.FindProperties(PropertyGroupName.special, '最大值')[0].id, (newval: any) => {
+      this.AddPropertyValidator(this.findProperties(PropertyGroupName.special, '最大值')[0].id, (newval: any) => {
         return this.mindatevalue === undefined || newval === null ? true : newval >= this.mindatevalue
       })
-
     }
     //属性改变触发
     this.$on('onPropertyChanged', this.onCurrentPropertyChanged)
 
-    this.RegisterEvents('值改变事件', '', this.inparam, this.outparam)
+    this.registerEvents('值改变事件', '', this.inparam, this.outparam)
 
     this.IsShowTime = this.showTime
 
@@ -97,43 +153,46 @@ export default class DatePickerCom extends ComponentBase {
     if (this.curModelproperty && this.curModelproperty.defaultValue) {
       this.dateValue = moment(this.curModelproperty.defaultValue, this.formatter)
     }
-
   }
 
   public get validateProperty(): Property {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '值')
     return property
   }
 
   get dateValue(): moment.Moment {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '值')
     if (property == undefined) {
       return null
     }
     let nowvalue =
-      property != undefined && property.value != undefined && property.value != '' ? moment(parseInt(property.value)) : property.value == '' ? null : null
+      property != undefined && property.value != undefined && property.value != ''
+        ? moment(parseInt(property.value))
+        : property.value == ''
+        ? null
+        : null
     //moment(new Date())
 
     return nowvalue
   }
 
   set dateValue(val: moment.Moment) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '值')
     if (val == null) {
-      this.SetPropertyVal(property.id, null)
+      this.setPropertyVal(property.id, null)
     } else {
       //var newv = moment(val).valueOf()
       var newv = val.format(this.formatter)
       //console.info('时间错是的',this.$moment(newv,this.formatter));
       newv = this.$moment(newv, this.formatter).valueOf()
-      // this.SetPropertyVal(property.id, this.$moment(val))
-      this.SetPropertyVal(property.id, newv)
+      // this.setPropertyVal(property.id, this.$moment(val))
+      this.setPropertyVal(property.id, newv)
     }
-    //this.SetPropertyVal(property.id, this.$moment(val))
+    //this.setPropertyVal(property.id, this.$moment(val))
   }
 
   set formatter(val: string) {
-    let fmt = this.FindPropertyByName(PropertyGroupName.special, '格式化')
+    let fmt = this.findPropertyByName(PropertyGroupName.special, '格式化')
     if (fmt) {
       fmt.value = val
     }
@@ -143,7 +202,7 @@ export default class DatePickerCom extends ComponentBase {
   时间格式化展示
   */
   get formatter(): string {
-    let fmt = this.FindProperties(PropertyGroupName.special, '格式化')
+    let fmt = this.findProperties(PropertyGroupName.special, '格式化')
     if (fmt.length === 0) {
       //window.console.log('时间格式化初值', fmt)
       // if (this.curModelproperty && this.curModelproperty.formatter) {
@@ -168,14 +227,14 @@ export default class DatePickerCom extends ComponentBase {
     } else {
       this.IsShowTime = false
     }
-    var propertyType_max = this.FindProperties(PropertyGroupName.special, '最大值')[0].propertyType as TimePickerFile_Property
+    var propertyType_max = this.findProperties(PropertyGroupName.special, '最大值')[0].propertyType as TimePickerFile_Property
     propertyType_max.showTime = this.IsShowTime
 
     // propertyType_max.format = fmvalue
-    var propertyType_min = this.FindProperties(PropertyGroupName.special, '最小值')[0].propertyType as TimePickerFile_Property
+    var propertyType_min = this.findProperties(PropertyGroupName.special, '最小值')[0].propertyType as TimePickerFile_Property
     propertyType_min.showTime = this.IsShowTime
 
-    var propertyType_val = this.FindProperties(PropertyGroupName.special, '值')[0].propertyType as TimePickerFile_Property
+    var propertyType_val = this.findProperties(PropertyGroupName.special, '值')[0].propertyType as TimePickerFile_Property
     propertyType_val.showTime = this.IsShowTime
 
     return fmvalue
@@ -186,7 +245,7 @@ export default class DatePickerCom extends ComponentBase {
   */
   get mindatevalue(): String {
     //console.info('最小值');
-    let fmt = this.FindProperties(PropertyGroupName.special, '最小值')
+    let fmt = this.findProperties(PropertyGroupName.special, '最小值')
     // if (moment.isMoment(fmt[0].value)) {
     //   return fmt[0].value.format(this.formatter)
     // }
@@ -208,7 +267,7 @@ export default class DatePickerCom extends ComponentBase {
   最大值
   */
   get maxdatevalue(): String {
-    let fmt = this.FindProperties(PropertyGroupName.special, '最大值')
+    let fmt = this.findProperties(PropertyGroupName.special, '最大值')
     // if (moment.isMoment(fmt[0].value)) {
     //   return fmt[0].value.format(this.formatter)
     // }
@@ -254,29 +313,27 @@ export default class DatePickerCom extends ComponentBase {
       $(this.$el)
         .find('.ant-calendar-picker-input')
         .css('fontSize', property.value + 'px')
-    }
-    else if (property.propertyName == '最小值') {
+    } else if (property.propertyName == '最小值') {
       if (property.value == 0 || property.value == '') {
-        this.SetPropertyVal(property.id, null)
+        this.setPropertyVal(property.id, null)
       }
-    }
-    else if (property.propertyName == '最大值') {
+    } else if (property.propertyName == '最大值') {
       if (property.value == 0 || property.value == '') {
-        this.SetPropertyVal(property.id, null)
+        this.setPropertyVal(property.id, null)
       }
     }
   }
 
   get backgroundColor(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '背景色')[0]) {
-      return this.FindProperties(PropertyGroupName.normal, '背景色')[0].value as string
+    if (this.findProperties(PropertyGroupName.normal, '背景色')[0]) {
+      return this.findProperties(PropertyGroupName.normal, '背景色')[0].value as string
     }
     return ''
   }
 
   get size(): string {
-    if (this.FindProperties(PropertyGroupName.special, '尺寸')[0]) {
-      let mv = this.FindProperties(PropertyGroupName.special, '尺寸')[0].value
+    if (this.findProperties(PropertyGroupName.special, '尺寸')[0]) {
+      let mv = this.findProperties(PropertyGroupName.special, '尺寸')[0].value
       return mv === '大' ? 'large' : mv === '中' ? 'default' : 'small'
     }
     return '大'
@@ -342,32 +399,30 @@ export default class DatePickerCom extends ComponentBase {
 
   private basechange(date: any, dateString: string) {
     //console.log('datastring',dateString)
-    var property = this.FindPropertyByName(PropertyGroupName.special, '值')
-    // this.SetPropertyVal(property.id, dateString)
+    var property = this.findPropertyByName(PropertyGroupName.special, '值')
+    // this.setPropertyVal(property.id, dateString)
     // this.$emit('change', dateString)
     var newdate
     if (date != null) {
       var min_date = (this.mindatevalue != null ? this.mindatevalue : '1970-01-01 08:00:01') as string
       var max_date = (this.maxdatevalue != null ? this.maxdatevalue : '2999-01-01') as string
-      var min = new Date(min_date).getTime();
-      var max = new Date(max_date).getTime();
-      var now = new Date(date).getTime();
+      var min = new Date(min_date).getTime()
+      var max = new Date(max_date).getTime()
+      var now = new Date(date).getTime()
       if (now < min) {
         date = min
-      }
-      else if (now > max) {
+      } else if (now > max) {
         date = max
       }
-      let new_value = moment(date).format(this.formatter) as string;
+      let new_value = moment(date).format(this.formatter) as string
       // newdate =this.$moment(date,this.formatter).valueOf()
       newdate = this.$moment(new_value).valueOf()
-
     } else {
       newdate = null
     }
-    this.SetPropertyVal(property.id, newdate)
+    this.setPropertyVal(property.id, newdate)
     this.$emit('change', newdate)
-    this.TriggeEvent('值改变事件', newdate)
+    this.triggeEvent('值改变事件', newdate)
   }
 
   getTruthTime(time) {

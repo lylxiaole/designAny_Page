@@ -4,7 +4,7 @@
  */
 <template>
   <a-card hoverable style="width: 300px">
-    <img referrer="no-referrer|origin|unsafe-url" :alt="coverAlt" v-lazy="coverPath"  slot="cover" />
+    <img referrer="no-referrer|origin|unsafe-url" :alt="coverAlt" v-lazy="coverPath" slot="cover" />
     <template class="ant-card-actions" slot="actions">
       <a-icon v-for="item in types" :type="item" :key="item" />
       <!-- <a-button v-for="item in types" :icon="item" :key="item" style="border:none" @click='handelClick(item)'></a-button> -->
@@ -23,20 +23,20 @@ import {
   Behavior_Property,
   Enum_Property,
   PropertyGroupName,
-  UploadFile_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  UploadFile_Property
+} from '../../03designerLayoutBase'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 import fileUpload from '../../02common/uploadFile/fileUpload'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import BaseEvents from '../../03designerLayoutBase/BaseEvents'
 import common from '../../02common/commonMethod'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import TextComponent from '../textComponents/TextComponent.vue'
 import { CurrentContext } from '../../01designerContext'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 
 @Component({
-  components: {},
+  components: {}
 })
 export default class ConfigurableCardComponent extends ComponentBase {
   fileUploadClass: fileUpload = null
@@ -56,18 +56,18 @@ export default class ConfigurableCardComponent extends ComponentBase {
     this.canDrag = true
     this.onDrag_Event = this.ListenDrag_Event
     //注册特有属性
-    this.RegisterProperty('卡片标题', PropertyGroupName.special, new Text_Property(), '请设置')
-    this.RegisterProperty('描述', PropertyGroupName.special, new Text_Property(), '描述')
-    this.RegisterProperty('封面', PropertyGroupName.special, new UploadFile_Property(1, ''))
-    this.RegisterProperty('头像', PropertyGroupName.special, new UploadFile_Property(1, ''))
+    this.registerProperty('卡片标题', PropertyGroupName.special, new Text_Property(), '请设置')
+    this.registerProperty('描述', PropertyGroupName.special, new Text_Property(), '描述')
+    this.registerProperty('封面', PropertyGroupName.special, new UploadFile_Property(1, ''))
+    this.registerProperty('头像', PropertyGroupName.special, new UploadFile_Property(1, ''))
     this.fileUploadClass = new fileUpload(CurrentContext.FileServerAddress)
     this.types.forEach((element) => {
-      this.RegisterEvents(element + '事件', '', this.inparam, null)
+      this.registerEvents(element + '事件', '', this.inparam, null)
     })
   }
   private image(propertyName: string): string {
-    if (this.FindProperties(PropertyGroupName.special, propertyName)[0]) {
-      let selectValues = this.FindProperties(PropertyGroupName.special, propertyName)[0].value
+    if (this.findProperties(PropertyGroupName.special, propertyName)[0]) {
+      let selectValues = this.findProperties(PropertyGroupName.special, propertyName)[0].value
       if (selectValues && selectValues.length > 0) {
         let fullpath = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, selectValues[0].url)
         if (propertyName === '封面') {
@@ -84,15 +84,15 @@ export default class ConfigurableCardComponent extends ComponentBase {
     }
   }
   get title(): string {
-    if (this.FindProperties(PropertyGroupName.special, '卡片标题')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '卡片标题')[0].value
+    if (this.findProperties(PropertyGroupName.special, '卡片标题')[0]) {
+      return this.findProperties(PropertyGroupName.special, '卡片标题')[0].value
     } else {
       return ''
     }
   }
   get desc(): string {
-    if (this.FindProperties(PropertyGroupName.special, '描述')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '描述')[0].value
+    if (this.findProperties(PropertyGroupName.special, '描述')[0]) {
+      return this.findProperties(PropertyGroupName.special, '描述')[0].value
     } else {
       return ''
     }

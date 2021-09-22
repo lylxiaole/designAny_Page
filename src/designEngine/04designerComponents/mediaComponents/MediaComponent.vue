@@ -38,7 +38,7 @@ xuww add 2019-09-18
       </a-tabs> -->
       <div style="margin:0 auto;text-align: center;">
         <img id="image" v-show="fileType==='image'" class="imageDemo" />
-      </div>      
+      </div>
     </a-row>
   </div>
 </template>
@@ -46,16 +46,9 @@ xuww add 2019-09-18
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 
-import {
-  Property,
-  Text_Property,
-  Behavior_Property,
-  Enum_Property,
-  PropertyGroupName,
-  UploadFile_Property
-} from '../../02common/commonClasses/LayoutProperty'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName, UploadFile_Property } from '../../03designerLayoutBase'
 
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import fileUpload from '../../02common/uploadFile/fileUpload'
 import { CurrentContext } from '../../01designerContext'
 import pdfjsLib from 'pdfjs-dist/build/pdf'
@@ -63,7 +56,7 @@ import mammoth from 'mammoth'
 import XLSX from 'xlsx'
 import common from '../../02common/commonMethod'
 
-import MediaModal from "../../04designerComponents/mediaComponents/MediaModal.vue";
+import MediaModal from '../../04designerComponents/mediaComponents/MediaModal.vue'
 
 //var url = 'http://172.16.50.87:30040/fileservice/bucket-default/2019-09-20/SOP-TY-008三防（A1）.pdf?versionId=2y-tBAB4VIlHhmIE1zfQmyZhRlvnkzp'
 
@@ -72,12 +65,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs-dist/build/pdf.worker.js'
 @Component
 export default class MediaComponent extends ComponentBase {
   get backgroundColor(): string {
-    if (this.FindPropertyByName(PropertyGroupName.normal, '背景色')) {
-      return this.FindPropertyByName(PropertyGroupName.normal, '背景色').value as string
+    if (this.findPropertyByName(PropertyGroupName.normal, '背景色')) {
+      return this.findPropertyByName(PropertyGroupName.normal, '背景色').value as string
     } else {
       return null
     }
-  }  
+  }
 
   fileType: string = 'image'
   // get fileType(): string {
@@ -107,9 +100,9 @@ export default class MediaComponent extends ComponentBase {
 
   get FilePath(): string {
     //window.console.log('CurrentContext111', CurrentContext)
-    let property = this.FindPropertyByName(PropertyGroupName.special, '文件路径')
-    if (this.FindProperties(PropertyGroupName.special, '选择文件')[0]) {
-      let selectValues = this.FindProperties(PropertyGroupName.special, '选择文件')[0].value
+    let property = this.findPropertyByName(PropertyGroupName.special, '文件路径')
+    if (this.findProperties(PropertyGroupName.special, '选择文件')[0]) {
+      let selectValues = this.findProperties(PropertyGroupName.special, '选择文件')[0].value
       if (selectValues instanceof Array) {
         return ''
       }
@@ -122,7 +115,7 @@ export default class MediaComponent extends ComponentBase {
         let fullpath = selectValues
         if (selectValues.indexOf(CurrentContext.BusinessFileServerAddress) < 0) {
           fullpath = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, selectValues)
-        }        
+        }
         //window.console.log('fullpath', fullpath)
         //this._filePath = fullpath
         this.refresh(fullpath, typeName)
@@ -465,18 +458,18 @@ export default class MediaComponent extends ComponentBase {
     this.height = 400
     //注册属性
     //文件选择框
-    //this.RegisterProperty('选择文件', PropertyGroupName.special, new UploadFile_Property(1, ''))
-    this.RegisterProperty('文件路径', PropertyGroupName.special, new Text_Property(), null)
+    //this.registerProperty('选择文件', PropertyGroupName.special, new UploadFile_Property(1, ''))
+    this.registerProperty('文件路径', PropertyGroupName.special, new Text_Property(), null)
     //this.fileUploadClass = new fileUpload(CurrentContext.FileServerAddress)
     //是否需要根据文件类型来判断显示属性
 
     //视频是否支持循环播放
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
     //window.console.log('------------------------多媒体组件id', document.getElementById(this.Id))
-    this.bodyContent = $(this.$el)[0]    
+    this.bodyContent = $(this.$el)[0]
   }
 
-  onclick(){
+  onclick() {
     //console.log("this is dblclick event");
     if (this.IsDesigning) {
       return
@@ -487,7 +480,7 @@ export default class MediaComponent extends ComponentBase {
     var div = $(this.$el)[0].innerHTML
     let tmpNode = ' <div id="' + domid + '"> </div> '
     //window.console.log('----------div',div)
-    window.console.log('----------tmpNode',tmpNode)
+    window.console.log('----------tmpNode', tmpNode)
     var layerpopupIndex = (window as any).layer.open({
       type: 1,
       title: '查看',
@@ -499,7 +492,7 @@ export default class MediaComponent extends ComponentBase {
       shade: 0.6,
       shadeClose: false, //开启遮罩关闭
       zIndex: 100, //表格的tips是101，弹窗的zindex不能大于100 xuww 2020-04-02 add
-      content: (this.fileType == 'pdf' || this.fileType == 'xlsx')?tmpNode:div,
+      content: this.fileType == 'pdf' || this.fileType == 'xlsx' ? tmpNode : div,
       end: async () => {
         //this.IsDesigning = oldIsDesigning
       },
@@ -507,26 +500,26 @@ export default class MediaComponent extends ComponentBase {
       success: function(layero, index) {}
     })
     //excel文件有点击操作，也需要单独加载
-    if (this.fileType == 'pdf' || this.fileType == 'xlsx'){
+    if (this.fileType == 'pdf' || this.fileType == 'xlsx') {
       //不能直接把网页传递进去了，canvas加载不出来
       let modal = new MediaModal()
-      let property = this.FindPropertyByName(PropertyGroupName.special, '文件路径')
+      let property = this.findPropertyByName(PropertyGroupName.special, '文件路径')
       let fullpath = property.value
       if (fullpath.indexOf(CurrentContext.BusinessFileServerAddress) < 0) {
         fullpath = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, fullpath)
       }
       //fullpath += '?Company-Id=999'
-      //let fullpath = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, property.value)      
+      //let fullpath = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, property.value)
       modal.fileType = this.fileType
       modal.filePathTemp = fullpath
       //window.console.log('-------------modal',modal)
       modal.$mount('#' + domid)
-    }    
+    }
   }
 
   protected loadCompleted(childrenData: any[]) {
-    if (this.FindPropertyByName(PropertyGroupName.special, '文件路径')) {
-      let property = this.FindPropertyByName(PropertyGroupName.special, '文件路径')
+    if (this.findPropertyByName(PropertyGroupName.special, '文件路径')) {
+      let property = this.findPropertyByName(PropertyGroupName.special, '文件路径')
       //window.console.log('--------------------------文件路径-----------------------------------', property)
       if (property.value) {
         this.resetComp()

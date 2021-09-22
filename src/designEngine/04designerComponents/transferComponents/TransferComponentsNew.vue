@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import VTable from '../table/VxeTable'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import {
   Property,
@@ -28,18 +28,18 @@ import {
   BindingModels_Property,
   Boolean_Property,
   TableStyleSetting_Property,
-  Number_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  Number_Property
+} from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 import { columnInfo, tableStyle } from '../table/tableCommonTypes'
 
 enum propertyNameEnum {
-  datasource = '表格数据源',
+  datasource = '表格数据源'
 }
 enum propertyGroupName {
   transferSetting = '穿梭框设置',
   tableLeftSetting = '左表格设置',
-  tableRightSetting = '右表格设置',
+  tableRightSetting = '右表格设置'
 }
 
 var defaultTableStyle = function() {
@@ -68,8 +68,8 @@ var defaultTableStyle = function() {
 
 @Component({
   components: {
-    VTable: VTable,
-  },
+    VTable: VTable
+  }
 })
 export default class TransferComponentNew extends ComponentBase {
   dataSource: any[] = []
@@ -97,28 +97,28 @@ export default class TransferComponentNew extends ComponentBase {
     var _dataSource = [
       {
         accountNo: 1,
-        name: 'xuhh',
+        name: 'xuhh'
       },
       {
         accountNo: 2,
-        name: '张三',
+        name: '张三'
       },
       {
         accountNo: 3,
-        name: 'xuhh222',
+        name: 'xuhh222'
       },
       {
         accountNo: 4,
-        name: '张三',
+        name: '张三'
       },
       {
         accountNo: 5,
-        name: 'wang',
+        name: 'wang'
       },
       {
         accountNo: 6,
-        name: 'wang',
-      },
+        name: 'wang'
+      }
     ]
     //window.console.log('---------------------------------：', this.rowKey)
     let rowKey = this.rowKey
@@ -154,40 +154,40 @@ export default class TransferComponentNew extends ComponentBase {
     this.leftColumns
     //window.console.log('-------------------created leftColumns', this.leftColumns)
     //获取唯一键
-    this.RegisterProperty(propertyNameEnum.datasource, PropertyGroupName.normal, null, {}, false, true)
+    this.registerProperty(propertyNameEnum.datasource, PropertyGroupName.normal, null, {}, false, true)
     //属性改变触发
     this.$on('onPropertyChanged', this.onCurrentPropertyChanged)
 
     /**属性注册 */
-    this.RegisterProperty("唯一键", propertyGroupName.transferSetting, new Enum_Property(true, this.columnField), 'id');
-    //this.RegisterProperty("是否可点", propertyGroupName.transferSetting, new Boolean_Property(), false);
-    this.RegisterProperty("启用搜索", propertyGroupName.transferSetting, new Boolean_Property(), true);
-    this.RegisterProperty("源标题", propertyGroupName.transferSetting, new Text_Property(), "源标题");
-    this.RegisterProperty("目标标题", propertyGroupName.transferSetting, new Text_Property(), "目标标题");
-    this.RegisterProperty("向左指示文字", propertyGroupName.transferSetting, new Text_Property(), "");
-    this.RegisterProperty("向右指示文字", propertyGroupName.transferSetting, new Text_Property(), "");
-    this.RegisterProperty("中间宽度", propertyGroupName.transferSetting, new Number_Property(), 48);
+    this.registerProperty('唯一键', propertyGroupName.transferSetting, new Enum_Property(true, this.columnField), 'id')
+    //this.registerProperty("是否可点", propertyGroupName.transferSetting, new Boolean_Property(), false);
+    this.registerProperty('启用搜索', propertyGroupName.transferSetting, new Boolean_Property(), true)
+    this.registerProperty('源标题', propertyGroupName.transferSetting, new Text_Property(), '源标题')
+    this.registerProperty('目标标题', propertyGroupName.transferSetting, new Text_Property(), '目标标题')
+    this.registerProperty('向左指示文字', propertyGroupName.transferSetting, new Text_Property(), '')
+    this.registerProperty('向右指示文字', propertyGroupName.transferSetting, new Text_Property(), '')
+    this.registerProperty('中间宽度', propertyGroupName.transferSetting, new Number_Property(), 48)
 
     /*左表格属性注册*/
-    this.RegisterProperty('字体大小', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
-    this.RegisterProperty('字体颜色', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
-    this.RegisterProperty('列样式', propertyGroupName.tableLeftSetting, new TableStyleSetting_Property(), null)
-    this.RegisterProperty('是否可选中', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
-    this.RegisterProperty('是否显示序号', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
-    this.RegisterProperty('是否显示边框', propertyGroupName.tableLeftSetting, new Boolean_Property(), false)
-    this.RegisterProperty('是否显示线', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
-    this.RegisterProperty('是否可以改变大小', propertyGroupName.tableLeftSetting, new Boolean_Property(), false)
+    this.registerProperty('字体大小', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
+    this.registerProperty('字体颜色', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
+    this.registerProperty('列样式', propertyGroupName.tableLeftSetting, new TableStyleSetting_Property(), null)
+    this.registerProperty('是否可选中', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
+    this.registerProperty('是否显示序号', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
+    this.registerProperty('是否显示边框', propertyGroupName.tableLeftSetting, new Boolean_Property(), false)
+    this.registerProperty('是否显示线', propertyGroupName.tableLeftSetting, new Boolean_Property(), true)
+    this.registerProperty('是否可以改变大小', propertyGroupName.tableLeftSetting, new Boolean_Property(), false)
 
     /*右表格属性注册*/
-    // this.RegisterProperty("唯一键", propertyGroupName.tableRightSetting, new Enum_Property(true, this.columnField), true);
-    this.RegisterProperty('字体大小', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
-    this.RegisterProperty('字体颜色', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
-    this.RegisterProperty('列样式', propertyGroupName.tableRightSetting, new TableStyleSetting_Property(), null)
-    this.RegisterProperty('是否可选中', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
-    this.RegisterProperty('是否显示序号', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
-    this.RegisterProperty('是否显示边框', propertyGroupName.tableRightSetting, new Boolean_Property(), false)
-    this.RegisterProperty('是否显示线', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
-    this.RegisterProperty('是否可以改变大小', propertyGroupName.tableRightSetting, new Boolean_Property(), false)
+    // this.registerProperty("唯一键", propertyGroupName.tableRightSetting, new Enum_Property(true, this.columnField), true);
+    this.registerProperty('字体大小', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
+    this.registerProperty('字体颜色', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
+    this.registerProperty('列样式', propertyGroupName.tableRightSetting, new TableStyleSetting_Property(), null)
+    this.registerProperty('是否可选中', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
+    this.registerProperty('是否显示序号', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
+    this.registerProperty('是否显示边框', propertyGroupName.tableRightSetting, new Boolean_Property(), false)
+    this.registerProperty('是否显示线', propertyGroupName.tableRightSetting, new Boolean_Property(), true)
+    this.registerProperty('是否可以改变大小', propertyGroupName.tableRightSetting, new Boolean_Property(), false)
   }
 
   mounted() {
@@ -218,7 +218,7 @@ export default class TransferComponentNew extends ComponentBase {
 
   /**穿梭框属性 */
   getRowKey(): void {
-    var findValue = this.FindProperties(propertyGroupName.transferSetting, '唯一键')[0]
+    var findValue = this.findProperties(propertyGroupName.transferSetting, '唯一键')[0]
     let key = 'Id'
     if (findValue) {
       var data = 'rowKey-----------------------------:' + findValue + '###:' + findValue.propertyName + '%%%%:' + (findValue.value as string)
@@ -231,15 +231,15 @@ export default class TransferComponentNew extends ComponentBase {
   }
 
   // get traDisabled(): boolean {
-  //   if (this.FindProperties(propertyGroupName.transferSetting, "是否可点")[0]) {
-  //     return !(this.FindProperties(propertyGroupName.transferSetting, "是否可点")[0].value as boolean)
-  //   } 
+  //   if (this.findProperties(propertyGroupName.transferSetting, "是否可点")[0]) {
+  //     return !(this.findProperties(propertyGroupName.transferSetting, "是否可点")[0].value as boolean)
+  //   }
   //     return false
   // }
 
   get leftTitle(): string {
     window.console.log('源标题')
-    var findValue = this.FindProperties(propertyGroupName.transferSetting, '源标题')[0]
+    var findValue = this.findProperties(propertyGroupName.transferSetting, '源标题')[0]
     if (findValue) {
       return findValue.value as string
     } else {
@@ -248,7 +248,7 @@ export default class TransferComponentNew extends ComponentBase {
   }
 
   get rightTitle(): string {
-    var findValue = this.FindProperties(propertyGroupName.transferSetting, '目标标题')[0]
+    var findValue = this.findProperties(propertyGroupName.transferSetting, '目标标题')[0]
     if (findValue) {
       return findValue.value as string
     }
@@ -262,7 +262,7 @@ export default class TransferComponentNew extends ComponentBase {
 
   get leftOperatorTitle(): string {
     window.console.log('leftOperatorTitle')
-    var findValue = this.FindProperties(propertyGroupName.transferSetting, '向左指示文字')[0]
+    var findValue = this.findProperties(propertyGroupName.transferSetting, '向左指示文字')[0]
     if (findValue) {
       return findValue.value as string
     } else {
@@ -272,7 +272,7 @@ export default class TransferComponentNew extends ComponentBase {
 
   get rightOperatorTitle(): string {
     window.console.log('rightOperatorTitle')
-    var findValue = this.FindProperties(propertyGroupName.transferSetting, '向右指示文字')[0]
+    var findValue = this.findProperties(propertyGroupName.transferSetting, '向右指示文字')[0]
     if (findValue) {
       return findValue.value as string
     } else {
@@ -286,7 +286,7 @@ export default class TransferComponentNew extends ComponentBase {
 
   showTableSearch(): boolean {
     window.console.log('启用搜索')
-    var findValue = this.FindProperties(propertyGroupName.transferSetting, '启用搜索')[0]
+    var findValue = this.findProperties(propertyGroupName.transferSetting, '启用搜索')[0]
     window.console.log('showTableSearch:', findValue.value as string)
     let showFlag = false
     if (findValue) {
@@ -307,7 +307,7 @@ export default class TransferComponentNew extends ComponentBase {
   }
 
   get midWidth(): number {
-    var findValue = this.FindProperties(propertyGroupName.transferSetting, '中间宽度')[0]
+    var findValue = this.findProperties(propertyGroupName.transferSetting, '中间宽度')[0]
     if (findValue) {
       window.console.log('midWidthGet:', findValue.value as number)
       return findValue.value as number
@@ -317,12 +317,12 @@ export default class TransferComponentNew extends ComponentBase {
   }
 
   set midWidth(val: number) {
-    var pro = this.FindPropertyByName(propertyGroupName.transferSetting, '中间宽度')
+    var pro = this.findPropertyByName(propertyGroupName.transferSetting, '中间宽度')
     window.console.log('wwwwwwwwwwwwwwwwwww', pro)
     if (pro) {
       window.console.log('wwwwwwwwwwwwwwwwwww', pro, pro.id)
 
-      this.SetPropertyVal(pro.id, val)
+      this.setPropertyVal(pro.id, val)
     }
     //
   }
@@ -352,7 +352,7 @@ export default class TransferComponentNew extends ComponentBase {
     etableStyle.showheader = true
 
     etableStyle.columnInfos = []
-    var prop = this.FindPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
+    var prop = this.findPropertyByName(PropertyGroupName.normal, propertyNameEnum.datasource)
     if (prop) {
       if (this.getPropertyBindInfo(prop.id)) {
         var codeList = this.getPropertyBindInfo(prop.id).modelCodes
@@ -371,7 +371,7 @@ export default class TransferComponentNew extends ComponentBase {
     actionColumn.field = 'action'
     etableStyle.columnInfos.push(actionColumn)
 
-    var proper = this.FindPropertyByName(propertyGroupName.tableLeftSetting, '列样式')
+    var proper = this.findPropertyByName(propertyGroupName.tableLeftSetting, '列样式')
     if (proper) {
       if (proper.value) {
         return proper.value
@@ -388,13 +388,13 @@ export default class TransferComponentNew extends ComponentBase {
         title: '姓名',
         width: '80px',
         field: 'name',
-        dataIndex: 'name',
+        dataIndex: 'name'
       },
       {
         title: '账号',
         width: '80px',
-        field: 'accountNo',
-      },
+        field: 'accountNo'
+      }
     ]
     this.columnField = ['name', 'accountNo']
     return leftColumnsaaa
@@ -405,13 +405,13 @@ export default class TransferComponentNew extends ComponentBase {
       {
         title: '姓名',
         width: '80px',
-        field: 'name',
+        field: 'name'
       },
       {
         title: '账号',
         width: '80px',
-        field: 'accountNo',
-      },
+        field: 'accountNo'
+      }
     ]
     window.console.log(rightColumns)
     return rightColumns

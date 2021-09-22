@@ -18,7 +18,7 @@ import {
   Behavior_Property,
   Enum_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import $ from 'jquery'
 import common from '../../02common/commonMethod'
 import { SModal, VTable } from '@/components'

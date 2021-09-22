@@ -48,8 +48,8 @@ export default class CompIncrustationPro extends BaseEvent {
     if (!this.Component) {
       return '#FFF'
     }
-    if (this.Component.FindPropertyByName('基础设置', '背景色')) {
-      return this.Component.FindPropertyByName('基础设置', '背景色').value as string
+    if (this.Component.findPropertyByName('基础设置', '背景色')) {
+      return this.Component.findPropertyByName('基础设置', '背景色').value as string
     } else {
       return '#FFF'
     }

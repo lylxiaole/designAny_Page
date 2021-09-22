@@ -23,7 +23,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import common from '../../02common/commonMethod'
 import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
-import { layoutEvent, layoutMethod, param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { layoutEvent, layoutMethod, param, paramType } from '../../03designerLayoutBase'
 import { layoutEventBehaviors, behavior, action, actionDetail } from '../../02common/behavior/behaviorTypes'
 
 import PageBase from '../../03designerLayoutBase/PageBase'

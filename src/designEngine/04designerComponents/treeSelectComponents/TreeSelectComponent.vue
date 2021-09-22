@@ -1,7 +1,7 @@
 <template>
-  <a-tree-select :style="{width: '100%'}" :treeData="treeData" :disabled="disabled" :showSearch="showSearch" :treeCheckable="treeCheckable" :dropdownMatchSelectWidth="true"
-    :size="size" treeNodeFilterProp="title" @change="selectchange" @search="searchData" @treeExpand="expandTree" v-model="vmodel" placeholder="请选择"
-    :allowClear="allowClear">
+  <a-tree-select :style="{width: '100%'}" :treeData="treeData" :disabled="disabled" :showSearch="showSearch" :treeCheckable="treeCheckable"
+    :dropdownMatchSelectWidth="true" :size="size" treeNodeFilterProp="title" @change="selectchange" @search="searchData" @treeExpand="expandTree"
+    v-model="vmodel" placeholder="请选择" :allowClear="allowClear">
   </a-tree-select>
 </template>
 
@@ -17,13 +17,13 @@ import {
   Boolean_Property,
   Number_Property,
   Color_Property,
-  BindingModels_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  BindingModels_Property
+} from '../../03designerLayoutBase'
 
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 
 import { CurrentApis, CurrentContext } from '../../01designerContext'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 
 export interface TreeNodeInfo {
@@ -42,8 +42,8 @@ export default class TreeSelectComponent extends ComponentBase {
   //selectvalue: string
 
   get selectvalues(): string[] {
-    if (this.FindPropertyByName(PropertyGroupName.special, '选中值列表')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '选中值列表').value
+    if (this.findPropertyByName(PropertyGroupName.special, '选中值列表')) {
+      return this.findPropertyByName(PropertyGroupName.special, '选中值列表').value
     } else {
       return []
     }
@@ -59,9 +59,9 @@ export default class TreeSelectComponent extends ComponentBase {
   }
 
   get vmodel(): any {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '选中值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '选中值')
     // if (property && property.value != undefined && property.value.itemValue !== undefined) {
-    //   this.SetPropertyVal(property.id, property.value.itemValue)
+    //   this.setPropertyVal(property.id, property.value.itemValue)
     // }
     //window.console.log('------------------------------获取当前选项值property', property)
     let aaa = property ? (property.value != undefined && property.value != null && property.value != '' ? property.value + '' : undefined) : undefined
@@ -70,8 +70,8 @@ export default class TreeSelectComponent extends ComponentBase {
   }
   set vmodel(val: any) {
     //window.console.log('------------------------------设置选中', val)
-    var property = this.FindPropertyByName(PropertyGroupName.special, '选中值')
-    this.SetPropertyVal(property.id, val)
+    var property = this.findPropertyByName(PropertyGroupName.special, '选中值')
+    this.setPropertyVal(property.id, val)
   }
 
   inparam: param[]
@@ -80,32 +80,32 @@ export default class TreeSelectComponent extends ComponentBase {
   selectNode: TreeNodeInfo
 
   // get disabled(): boolean {
-  //   if (this.FindPropertyByName(PropertyGroupName.special, '是否可用')) {
-  //     return this.FindPropertyByName(PropertyGroupName.special, '是否可用').value as boolean
+  //   if (this.findPropertyByName(PropertyGroupName.special, '是否可用')) {
+  //     return this.findPropertyByName(PropertyGroupName.special, '是否可用').value as boolean
   //   } else {
   //     return false
   //   }
   // }
 
   get showSearch(): boolean {
-    if (this.FindPropertyByName(PropertyGroupName.special, '是否显示搜索框')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '是否显示搜索框').value as boolean
+    if (this.findPropertyByName(PropertyGroupName.special, '是否显示搜索框')) {
+      return this.findPropertyByName(PropertyGroupName.special, '是否显示搜索框').value as boolean
     } else {
       return false
     }
   }
 
   get treeCheckable(): boolean {
-    if (this.FindPropertyByName(PropertyGroupName.special, '是否允许多选')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '是否允许多选').value as boolean
+    if (this.findPropertyByName(PropertyGroupName.special, '是否允许多选')) {
+      return this.findPropertyByName(PropertyGroupName.special, '是否允许多选').value as boolean
     } else {
       return false
     }
   }
 
   get size(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '尺寸')) {
-      let newval = this.FindPropertyByName(PropertyGroupName.special, '尺寸').value
+    if (this.findPropertyByName(PropertyGroupName.special, '尺寸')) {
+      let newval = this.findPropertyByName(PropertyGroupName.special, '尺寸').value
       return newval === '大' ? 'large' : newval === '小' ? 'small' : 'default'
     } else {
       return 'default'
@@ -113,38 +113,38 @@ export default class TreeSelectComponent extends ComponentBase {
   }
 
   get allowClear(): boolean {
-    if (this.FindPropertyByName(PropertyGroupName.special, '是否允许清空选择框')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '是否允许清空选择框').value as boolean
+    if (this.findPropertyByName(PropertyGroupName.special, '是否允许清空选择框')) {
+      return this.findPropertyByName(PropertyGroupName.special, '是否允许清空选择框').value as boolean
     }
     return false
   }
 
   //选中顶层节点触发，更改选中值和选中的列表值
   selectchange(value: any, node: any, extra: any) {
-    //this.FindPropertyByName(PropertyGroupName.special, '选中值列表').value = value
+    //this.findPropertyByName(PropertyGroupName.special, '选中值列表').value = value
     //window.console.log('选中树---------------', value)
     //window.console.log('选中树---------------', node)
     //window.console.log('选中树---------------', extra.triggerNode.dataRef.tag)
     //window.console.log('---------------选中树的值', value)
-    var prop = this.FindPropertyByName(PropertyGroupName.special, '选中值')
+    var prop = this.findPropertyByName(PropertyGroupName.special, '选中值')
     if (prop && extra.triggerNode.dataRef.tag) {
-      this.SetPropertyVal(prop.id, value)
+      this.setPropertyVal(prop.id, value)
     }
     this.selectNode = common.clone(extra.triggerNode.dataRef)
     //window.console.log('-------------xxxxyyyyyy获取选中节点全部信息', this.selectNode)
-    this.TriggeEvent('值改变事件', null)
+    this.triggeEvent('值改变事件', null)
   }
 
   //树节点展开事件
   expandTree(expandedKeys: any) {
     //window.console.log('展开', expandedKeys)
-    this.TriggeEvent('节点展开事件', expandedKeys)
+    this.triggeEvent('节点展开事件', expandedKeys)
   }
 
   //模糊查询数据
   searchData(value: any) {
     let param = []
-    this.TriggeEvent('模糊查询事件', value)
+    this.triggeEvent('模糊查询事件', value)
   }
 
   pm: paramType
@@ -154,29 +154,29 @@ export default class TreeSelectComponent extends ComponentBase {
     //this.height = 30
     //this.disabled = false
     //是否可用
-    //this.RegisterProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('选中值', PropertyGroupName.special, new BindingModels_Property(), null, true, true)
-    this.RegisterProperty('数据源', PropertyGroupName.special, new BindingModels_Property(), [], true, true)
+    //this.registerProperty('是否可用', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('选中值', PropertyGroupName.special, new BindingModels_Property(), null, true, true)
+    this.registerProperty('数据源', PropertyGroupName.special, new BindingModels_Property(), [], true, true)
     //是否允许多选
-    this.RegisterProperty('是否允许多选', PropertyGroupName.special, new Boolean_Property(), false, false)
+    this.registerProperty('是否允许多选', PropertyGroupName.special, new Boolean_Property(), false, false)
     //是否显示搜索框
-    this.RegisterProperty('是否显示搜索框', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('是否显示搜索框', PropertyGroupName.special, new Boolean_Property(), false)
     //尺寸
-    this.RegisterProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, ['大', '中', '小']), '中')
-    //this.RegisterEvents('节点展开事件', '', this.inparam, this.outparam)
-    //this.RegisterEvents('节点展开事件', '', this.inparam, this.outparam)
-    //this.RegisterEvents('模糊查询事件', '', this.inparam, this.outparam)
+    this.registerProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, ['大', '中', '小']), '中')
+    //this.registerEvents('节点展开事件', '', this.inparam, this.outparam)
+    //this.registerEvents('节点展开事件', '', this.inparam, this.outparam)
+    //this.registerEvents('模糊查询事件', '', this.inparam, this.outparam)
 
-    this.RegisterEvents('值改变事件', '', this.inparam, this.outparam)
-    this.RegisterMethods('获取选中项关联id', '', this.getSelectKeys, this.inparam, null)
+    this.registerEvents('值改变事件', '', this.inparam, this.outparam)
+    this.registerMethods('获取选中项关联id', '', this.getSelectKeys, this.inparam, null)
 
-    this.RegisterProperty('是否允许清空选择框', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('是否允许清空选择框', PropertyGroupName.special, new Boolean_Property(), true)
     /**注册组件事件 */
     this.$on('onPropertyChanged', this.onComponentPropertyChanged)
   }
 
   public get validateProperty(): Property {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '选中值')
+    var property = this.findPropertyByName(PropertyGroupName.special, '选中值')
     return property
   }
 
@@ -190,20 +190,19 @@ export default class TreeSelectComponent extends ComponentBase {
         element.disabled = true
       }
     })
-    this.FindPropertyByName(PropertyGroupName.special, '数据源').value = datas
+    this.findPropertyByName(PropertyGroupName.special, '数据源').value = datas
     return datas
   }
 
   refreshData(nodeList: TreeNodeInfo[]): TreeNodeInfo[] {
-    this.FindPropertyByName(PropertyGroupName.special, '数据源').value = nodeList
+    this.findPropertyByName(PropertyGroupName.special, '数据源').value = nodeList
     return nodeList
   }
 
   //获取树形的数据源
   get treeData(): TreeNodeInfo[] {
-    let temp = this.FindPropertyByName(PropertyGroupName.special, '数据源')
+    let temp = this.findPropertyByName(PropertyGroupName.special, '数据源')
     if (temp && temp.value instanceof Array) {
-
       temp.value.forEach((item) => {
         //item.value = item.key
         this.recursion(item)

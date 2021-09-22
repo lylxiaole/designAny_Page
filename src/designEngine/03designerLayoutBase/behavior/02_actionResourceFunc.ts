@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { CurrentContext, CurrentApis, fileInfo } from '../../01designerContext'
 import { getUuid } from '@src/utils'
 import PageBase from '../PageBase'
-import ComponentBase from '../../04designerComponents/ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import factory from './03_actionFactory'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { Property } from '../commonClasses/LayoutProperty'
@@ -108,7 +108,7 @@ class propertiesInPageFunc implements actResFuncBase {
   }
   setFunc(obj: objectBase, val: any) {
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    containerPage.SetPropertyVal(obj.resourceId, val, true)
+    containerPage.setPropertyVal(obj.resourceId, val, true)
   }
   getDesc(obj: objectBase): string {
     var containerPage = findContainerPage(this.currentPage, obj.pageId)

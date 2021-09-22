@@ -83,7 +83,7 @@ export default class LayoutBase extends eventBase {
     if (!this._designerEvents) {
       this._designerEvents = []
     }
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '行为设置')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '行为设置')
 
     if (property && !property.value) {
       property.value = []
@@ -101,7 +101,7 @@ export default class LayoutBase extends eventBase {
     return this._designerEvents
   }
   public set designerEvents(val: layoutEvent[]) {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '行为设置')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '行为设置')
     var newvals: layoutEventBehaviors[] = []
     for (let index = 0; index < val.length; index++) {
       const element = val[index]
@@ -124,27 +124,27 @@ export default class LayoutBase extends eventBase {
 
   created() {
     if (this.IsDesigning) {
-      this.RegisterProperty('唯一Id', PropertyGroupName.normal, new Text_Property(), common.getUuid(), false, false)
-      this.RegisterProperty('名称', PropertyGroupName.normal, new Text_Property())
-      this.RegisterProperty('宽度', PropertyGroupName.normal, new Number_Property(), 1624, true, true, 'px')
-      this.RegisterProperty('高度', PropertyGroupName.normal, new Number_Property(), 786, true, true, 'px')
-      this.RegisterProperty('左边位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('顶部位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('外边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('外边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('外边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('外边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('唯一Id', PropertyGroupName.normal, new Text_Property(), common.getUuid(), false, false)
+      this.registerProperty('名称', PropertyGroupName.normal, new Text_Property())
+      this.registerProperty('宽度', PropertyGroupName.normal, new Number_Property(), 1624, true, true, 'px')
+      this.registerProperty('高度', PropertyGroupName.normal, new Number_Property(), 786, true, true, 'px')
+      this.registerProperty('左边位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('顶部位置', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('外边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('外边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('外边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('外边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
 
-      this.RegisterProperty('内边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('内边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('内边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('内边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
-      this.RegisterProperty('字体', PropertyGroupName.normal, new Number_Property(), 14, true, true, 'px')
-      this.RegisterProperty('字体样式', PropertyGroupName.normal, new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
-      this.RegisterProperty('背景图片', PropertyGroupName.normal, new UploadFile_Property(1, 'image'))
-      this.RegisterProperty('背景色', PropertyGroupName.normal, new Color_Property(), 'white')
-      this.RegisterProperty('是否使用主题', PropertyGroupName.normal, new Boolean_Property(), false)
-      this.RegisterProperty('行为设置', PropertyGroupName.normal, new Behavior_Property())
+      this.registerProperty('内边距-左', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('内边距-右', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('内边距-上', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('内边距-下', PropertyGroupName.normal, new Number_Property(-100000), 0, true, true, 'px')
+      this.registerProperty('字体', PropertyGroupName.normal, new Number_Property(), 14, true, true, 'px')
+      this.registerProperty('字体样式', PropertyGroupName.normal, new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
+      this.registerProperty('背景图片', PropertyGroupName.normal, new UploadFile_Property(1, 'image'))
+      this.registerProperty('背景色', PropertyGroupName.normal, new Color_Property(), 'white')
+      this.registerProperty('是否使用主题', PropertyGroupName.normal, new Boolean_Property(), false)
+      this.registerProperty('行为设置', PropertyGroupName.normal, new Behavior_Property())
     }
 
     this.onCreated(this)
@@ -184,212 +184,212 @@ export default class LayoutBase extends eventBase {
   }
   // *************************基础属性****************************************************************************
   get Id(): string {
-    if (!this.FindPropertyByName) {
+    if (!this.findPropertyByName) {
       return ''
     }
-    var pro = this.FindPropertyByName('基础设置', '唯一Id')
+    var pro = this.findPropertyByName('基础设置', '唯一Id')
     if (!pro) {
       return ''
     }
     return pro.value
   }
   set Id(val: string) {
-    if (!this.FindPropertyByName) {
+    if (!this.findPropertyByName) {
       return
     }
-    var pro = this.FindPropertyByName('基础设置', '唯一Id')
+    var pro = this.findPropertyByName('基础设置', '唯一Id')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, val)
+    this.setPropertyVal(pro.id, val)
   }
 
   get name(): string {
-    var pro = this.FindPropertyByName('基础设置', '名称')
+    var pro = this.findPropertyByName('基础设置', '名称')
     if (!pro) {
       return ''
     }
     return pro.value
   }
   set name(val: string) {
-    var pro = this.FindPropertyByName('基础设置', '名称')
+    var pro = this.findPropertyByName('基础设置', '名称')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, val)
+    this.setPropertyVal(pro.id, val)
   }
   get width(): any {
-    var pro = this.FindPropertyByName('基础设置', '宽度')
+    var pro = this.findPropertyByName('基础设置', '宽度')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as any
   }
   set width(val: any) {
-    var pro = this.FindPropertyByName('基础设置', '宽度')
+    var pro = this.findPropertyByName('基础设置', '宽度')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get height(): any {
-    var pro = this.FindPropertyByName('基础设置', '高度')
+    var pro = this.findPropertyByName('基础设置', '高度')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as any
   }
   set height(val: any) {
-    var pro = this.FindPropertyByName('基础设置', '高度')
+    var pro = this.findPropertyByName('基础设置', '高度')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get left(): number {
-    var pro = this.FindPropertyByName('基础设置', '左边位置')
+    var pro = this.findPropertyByName('基础设置', '左边位置')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set left(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '左边位置')
+    var pro = this.findPropertyByName('基础设置', '左边位置')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get top(): number {
-    var pro = this.FindPropertyByName('基础设置', '顶部位置')
+    var pro = this.findPropertyByName('基础设置', '顶部位置')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set top(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '顶部位置')
+    var pro = this.findPropertyByName('基础设置', '顶部位置')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
 
   get margin_left(): number {
-    var pro = this.FindPropertyByName('基础设置', '外边距-左')
+    var pro = this.findPropertyByName('基础设置', '外边距-左')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set margin_left(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '外边距-左')
+    var pro = this.findPropertyByName('基础设置', '外边距-左')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get margin_right(): number {
-    var pro = this.FindPropertyByName('基础设置', '外边距-右')
+    var pro = this.findPropertyByName('基础设置', '外边距-右')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set margin_right(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '外边距-右')
+    var pro = this.findPropertyByName('基础设置', '外边距-右')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get margin_top(): number {
-    var pro = this.FindPropertyByName('基础设置', '外边距-上')
+    var pro = this.findPropertyByName('基础设置', '外边距-上')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set margin_top(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '外边距-上')
+    var pro = this.findPropertyByName('基础设置', '外边距-上')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get margin_bottom(): number {
-    var pro = this.FindPropertyByName('基础设置', '外边距-下')
+    var pro = this.findPropertyByName('基础设置', '外边距-下')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set margin_bottom(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '外边距-下')
+    var pro = this.findPropertyByName('基础设置', '外边距-下')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get padding_left(): number {
-    var pro = this.FindPropertyByName('基础设置', '内边距-左')
+    var pro = this.findPropertyByName('基础设置', '内边距-左')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set padding_left(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '内边距-左')
+    var pro = this.findPropertyByName('基础设置', '内边距-左')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get padding_right(): number {
-    var pro = this.FindPropertyByName('基础设置', '内边距-右')
+    var pro = this.findPropertyByName('基础设置', '内边距-右')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set padding_right(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '内边距-右')
+    var pro = this.findPropertyByName('基础设置', '内边距-右')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get padding_top(): number {
-    var pro = this.FindPropertyByName('基础设置', '内边距-上')
+    var pro = this.findPropertyByName('基础设置', '内边距-上')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set padding_top(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '内边距-上')
+    var pro = this.findPropertyByName('基础设置', '内边距-上')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get padding_bottom(): number {
-    var pro = this.FindPropertyByName('基础设置', '内边距-下')
+    var pro = this.findPropertyByName('基础设置', '内边距-下')
     if (!pro) {
       return 0
     }
     return parseInt(pro.value) as number
   }
   set padding_bottom(val: number) {
-    var pro = this.FindPropertyByName('基础设置', '内边距-下')
+    var pro = this.findPropertyByName('基础设置', '内边距-下')
     if (!pro) {
       return
     }
-    this.SetPropertyVal(pro.id, parseInt(val.toString()))
+    this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
   get fontFamily(): string {
     // '宋体', '楷体', '黑体', '隶书'
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '字体样式')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '字体样式')
     if (!property) {
       return ''
     }
@@ -418,7 +418,7 @@ export default class LayoutBase extends eventBase {
     return ''
   }
   get background(): string {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景色')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '背景色')
     if (property) {
       return property.value
     } else {
@@ -426,15 +426,15 @@ export default class LayoutBase extends eventBase {
     }
   }
   set background(val: string) {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景色')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '背景色')
     if (!property) {
       return
     }
-    this.SetPropertyVal(property.id, val)
+    this.setPropertyVal(property.id, val)
   }
   get background_img(): fileInfo {
     // window.console.log('获取背景图片')
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景图片')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '背景图片')
     if (property && property.value && property.value.length > 0) {
       return property.value[0]
     } else {
@@ -442,18 +442,18 @@ export default class LayoutBase extends eventBase {
     }
   }
   set background_img(val: fileInfo) {
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '背景图片')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '背景图片')
     if (!property) {
       return
     }
     if (val) {
-      this.SetPropertyVal(property.id, [val])
+      this.setPropertyVal(property.id, [val])
     } else {
-      this.SetPropertyVal(property.id, [])
+      this.setPropertyVal(property.id, [])
     }
   }
   get isUseTheme(): boolean {
-    var pro = this.FindPropertyByName(PropertyGroupName.normal, '是否使用主题')
+    var pro = this.findPropertyByName(PropertyGroupName.normal, '是否使用主题')
     if (!pro) {
       return false
     }
@@ -559,7 +559,7 @@ export default class LayoutBase extends eventBase {
     this.propertyValidators.push(newvaildate)
   }
   /**触发事件 */
-  protected async TriggeEvent(name: string, inparams: any[]) {
+  protected async triggeEvent(name: string, inparams: any[]) {
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件调用失败,该事件不存在')
@@ -660,7 +660,7 @@ export default class LayoutBase extends eventBase {
     return this.layoutChildren.find((o) => o.Id == id)
   }
   /**注册方法 */
-  public RegisterMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
+  public registerMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
     var event = this.designerMethods.find((o) => o.eventName == name)
     if (event) {
       window.console.error('注册失败,已经有相同名称的事件存在')
@@ -675,7 +675,7 @@ export default class LayoutBase extends eventBase {
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */
-  public RegisterProperty(name: string, groupName: PropertyGroupName | string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
+  public registerProperty(name: string, groupName: PropertyGroupName | string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
     let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
@@ -692,7 +692,7 @@ export default class LayoutBase extends eventBase {
     this.properties.push(newperperty)
   }
   /**注册事件 */
-  public RegisterEvents(name: string, description: string, inParams: param[], outParam: param) {
+  public registerEvents(name: string, description: string, inParams: param[], outParam: param) {
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (event) {
       window.console.error('注册失败,已经有相同名称的事件存在')
@@ -734,14 +734,14 @@ export default class LayoutBase extends eventBase {
         let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
         if (find) {
           find.id = item.id
-          this.SetPropertyVal(item.id, item.value, true, true)
+          this.setPropertyVal(item.id, item.value, true, true)
         } else {
           var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
           newperperty.canSetting = item.canSetting
           newperperty.canBindModel = item.canBindModel
           newperperty.id = item.id
           this.AddProperty(newperperty)
-          this.SetPropertyVal(item.id, item.value, true, true)
+          this.setPropertyVal(item.id, item.value, true, true)
         }
       }
     }
@@ -771,10 +771,10 @@ export default class LayoutBase extends eventBase {
     }
   }
 
-  public FindProperties(groupName: string, name: string): Property[] {
+  public findProperties(groupName: string, name: string): Property[] {
     return this.properties.filter((o) => o.groupName == groupName && o.propertyName == name)
   }
-  public FindPropertyByName(groupName: string, name: string): Property {
+  public findPropertyByName(groupName: string, name: string): Property {
     return this.properties.find((o) => o.groupName == groupName && o.propertyName == name)
   }
   public FindPropertyById(Id: string): Property {
@@ -792,7 +792,7 @@ export default class LayoutBase extends eventBase {
     }
     return true
   }
-  public SetPropertyVal(propertyId: string, val: any, idNeedTriggerPropertyChange: boolean = true, isForce: boolean = false): boolean {
+  public setPropertyVal(propertyId: string, val: any, idNeedTriggerPropertyChange: boolean = true, isForce: boolean = false): boolean {
     var findproperty = this.properties.find((p) => p.id == propertyId)
     if (!findproperty) {
       // window.console.error('设置属性值失败，没有找到对应的属性')

@@ -84,7 +84,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import common from '../../02common/commonMethod'
 import { layoutEventBehaviors, behavior } from '../../02common/behavior'
 import PageBase from '../../03designerLayoutBase/PageBase'
-import { layoutEvent, layoutMethod, param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { layoutEvent, layoutMethod, param, paramType } from '../../03designerLayoutBase'
 import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
 import { moveUpIco, moveDownIco, buttonEditIco, buttonDeleteIco, buttonAddIco } from '../../assets/icons.js'
 

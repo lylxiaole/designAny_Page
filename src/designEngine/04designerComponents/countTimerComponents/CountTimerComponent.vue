@@ -4,16 +4,9 @@
   </h1>
 </template>
 <script lang="ts">
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Watch } from 'vue-property-decorator'
-import {
-  Property,
-  PropertyGroupName,
-  Number_Property,
-  Button_Property,
-  Enum_Property,
-  Text_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+import { Property, PropertyGroupName, Number_Property, Button_Property, Enum_Property, Text_Property } from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 import { property } from 'xe-utils/methods'
 
@@ -32,12 +25,12 @@ export default class CountTimerComponent extends ComponentBase {
     this.width = 200
     this.height = 200
     //this.status = '停止'
-    //this.RegisterProperty('状态', PropertyGroupName.special, new Enum_Property(true, ['开始', '停止', '重置']), '停止')
-    this.RegisterProperty('计时器', PropertyGroupName.special, new Text_Property(), 915120000000)
+    //this.registerProperty('状态', PropertyGroupName.special, new Enum_Property(true, ['开始', '停止', '重置']), '停止')
+    this.registerProperty('计时器', PropertyGroupName.special, new Text_Property(), 915120000000)
 
-    this.RegisterMethods('开始', '', this.countStart, null, null)
-    this.RegisterMethods('停止', '', this.countSuspend, null, null)
-    this.RegisterMethods('重置', '', this.countReset, null, null)
+    this.registerMethods('开始', '', this.countStart, null, null)
+    this.registerMethods('停止', '', this.countSuspend, null, null)
+    this.registerMethods('重置', '', this.countReset, null, null)
   }
 
   Destory() {
@@ -73,13 +66,13 @@ export default class CountTimerComponent extends ComponentBase {
     let template =
       this.y + '-' + this.add(this.m) + '-' + this.add(this.d) + ' ' + this.add(this.h) + ':' + this.add(this.mm) + ':' + this.add(this.s)
     //window.console.info('template-------------', template)
-    let property = this.FindPropertyByName(PropertyGroupName.special, '计时器')
+    let property = this.findPropertyByName(PropertyGroupName.special, '计时器')
     property.value = Date.parse(template)
   }
   get countTime(): string {
     var hh = 0
-    if (this.FindPropertyByName(PropertyGroupName.special, '计时器')) {
-      let property = parseInt(this.FindPropertyByName(PropertyGroupName.special, '计时器').value)
+    if (this.findPropertyByName(PropertyGroupName.special, '计时器')) {
+      let property = parseInt(this.findPropertyByName(PropertyGroupName.special, '计时器').value)
       //window.console.info('property-----------------', property)
       var time = new Date(property)
       //window.console.info('time-----------------', time)
@@ -104,18 +97,18 @@ export default class CountTimerComponent extends ComponentBase {
     }
   }
   set countTime(val: string) {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '计时器')
-    this.SetPropertyVal(property.id, val)
+    var property = this.findPropertyByName(PropertyGroupName.special, '计时器')
+    this.setPropertyVal(property.id, val)
   }
   get fontColor(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '前景色')[0]) {
-      return this.FindProperties(PropertyGroupName.normal, '前景色')[0].value as string
+    if (this.findProperties(PropertyGroupName.normal, '前景色')[0]) {
+      return this.findProperties(PropertyGroupName.normal, '前景色')[0].value as string
     }
     return ''
   }
   get fontSize(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '字体')[0]) {
-      return this.FindProperties(PropertyGroupName.normal, '字体')[0].value as string
+    if (this.findProperties(PropertyGroupName.normal, '字体')[0]) {
+      return this.findProperties(PropertyGroupName.normal, '字体')[0].value as string
     }
     return ''
   }
@@ -139,7 +132,7 @@ export default class CountTimerComponent extends ComponentBase {
     let template =
       this.y + '-' + this.add(this.m) + '-' + this.add(this.d) + ' ' + this.add(this.h) + ':' + this.add(this.mm) + ':' + this.add(this.s)
     //window.console.info('template-------------', template)
-    let property = this.FindPropertyByName(PropertyGroupName.special, '计时器')
+    let property = this.findPropertyByName(PropertyGroupName.special, '计时器')
     property.value = Date.parse(template)
   }
 

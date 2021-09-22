@@ -43,17 +43,17 @@ import {
   UploadFile_Property,
   Color_Property,
   Button_Property,
-  PageInParams_Property,
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+  PageInParams_Property
+} from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import BaseEvents from '../../03designerLayoutBase/BaseEvents'
 import common from '../../02common/commonMethod'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { InputSearch } from 'ant-design-vue/types/input/input-search'
-import { layoutEvent } from '../../02common/commonClasses/layoutEvent'
+import { layoutEvent } from '../../03designerLayoutBase'
 import buttonAttributeInfos from '../../02common/commonClasses/buttonAttributeInfo'
 import { CurrentContext } from '../../01designerContext'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 
 @Component
 export default class ButtonComponent extends ComponentBase {
@@ -153,33 +153,33 @@ export default class ButtonComponent extends ComponentBase {
   private onClick() {
     //触发事件
     window.console.log('触发点击事件1212121212')
-    this.TriggeEvent('按钮点击事件', null)
+    this.triggeEvent('按钮点击事件', null)
   }
   private confirm() {
-    this.TriggeEvent('确认按钮回调事件', null)
+    this.triggeEvent('确认按钮回调事件', null)
   }
   mounted() {
     this.width = 80
     this.height = 34
     //注册特有属性
-    this.RegisterProperty('气泡提示信息', PropertyGroupName.special, new Text_Property(), '确认要删除吗？')
-    this.RegisterProperty('是否展示气泡', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('按钮文本', PropertyGroupName.special, new Text_Property(), '新增')
-    this.RegisterProperty('图标大小', PropertyGroupName.special, new Number_Property(), 16)
-    //this.RegisterProperty('是否禁用', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty(
+    this.registerProperty('气泡提示信息', PropertyGroupName.special, new Text_Property(), '确认要删除吗？')
+    this.registerProperty('是否展示气泡', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('按钮文本', PropertyGroupName.special, new Text_Property(), '新增')
+    this.registerProperty('图标大小', PropertyGroupName.special, new Number_Property(), 16)
+    //this.registerProperty('是否禁用', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty(
       '按钮类型',
       PropertyGroupName.special,
       new Enum_Property(true, ['主按钮', '次按钮', '虚线按钮', '危险按钮', '链接按钮']),
       '主按钮'
     )
-    this.RegisterProperty('按钮设置', PropertyGroupName.special, new Button_Property())
-    this.FindPropertyByName(PropertyGroupName.normal, '前景色').canSetting = false
-    this.FindPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
-    this.FindPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
+    this.registerProperty('按钮设置', PropertyGroupName.special, new Button_Property())
+    this.findPropertyByName(PropertyGroupName.normal, '前景色').canSetting = false
+    this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
 
-    this.RegisterEvents('按钮点击事件', '', this.inparam, this.outparam)
-    this.RegisterEvents('确认按钮回调事件', '', this.inparam, this.outparam)
+    this.registerEvents('按钮点击事件', '', this.inparam, this.outparam)
+    this.registerEvents('确认按钮回调事件', '', this.inparam, this.outparam)
 
     //属性改变
     this.$on('onPropertyChanged', this.onCurrentPropertyChanged)
@@ -196,16 +196,16 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   watchButtonAttributeInfo() {
-    if (typeof this.FindPropertyByName(PropertyGroupName.special, '按钮设置').value != 'undefined') {
-      this.infoNormal = this.FindPropertyByName(PropertyGroupName.special, '按钮设置').value[0]
-      this.infoHover = this.FindPropertyByName(PropertyGroupName.special, '按钮设置').value[1]
-      this.infoSelected = this.FindPropertyByName(PropertyGroupName.special, '按钮设置').value[2]
-      this.infoDisable = this.FindPropertyByName(PropertyGroupName.special, '按钮设置').value[3]
+    if (typeof this.findPropertyByName(PropertyGroupName.special, '按钮设置').value != 'undefined') {
+      this.infoNormal = this.findPropertyByName(PropertyGroupName.special, '按钮设置').value[0]
+      this.infoHover = this.findPropertyByName(PropertyGroupName.special, '按钮设置').value[1]
+      this.infoSelected = this.findPropertyByName(PropertyGroupName.special, '按钮设置').value[2]
+      this.infoDisable = this.findPropertyByName(PropertyGroupName.special, '按钮设置').value[3]
     }
   }
 
   protected get buttonInfo(): buttonAttributeInfos[] {
-    var val = this.FindPropertyByName(PropertyGroupName.special, '按钮设置').value
+    var val = this.findPropertyByName(PropertyGroupName.special, '按钮设置').value
     if (!val) {
       return []
     }
@@ -213,58 +213,57 @@ export default class ButtonComponent extends ComponentBase {
   }
 
   get confirmTitle(): string {
-    if (this.FindPropertyByName('特有属性', '气泡提示信息')) {
-      return this.FindPropertyByName('特有属性', '气泡提示信息').value as string
+    if (this.findPropertyByName('特有属性', '气泡提示信息')) {
+      return this.findPropertyByName('特有属性', '气泡提示信息').value as string
     } else {
       return ''
     }
   }
   get isSo(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否展示气泡')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '是否展示气泡')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否展示气泡')[0]) {
+      return this.findProperties(PropertyGroupName.special, '是否展示气泡')[0].value as boolean
     }
     return false
   }
- 
 
   //按钮文本
   get buttonText(): string {
-    if (this.FindPropertyByName('特有属性', '按钮文本')) {
-      return this.FindPropertyByName('特有属性', '按钮文本').value as string
+    if (this.findPropertyByName('特有属性', '按钮文本')) {
+      return this.findPropertyByName('特有属性', '按钮文本').value as string
     } else {
       return ''
     }
   }
   get svgSize(): number {
-    if (this.FindPropertyByName('特有属性', '图标大小')) {
-      return this.FindPropertyByName('特有属性', '图标大小').value as number
+    if (this.findPropertyByName('特有属性', '图标大小')) {
+      return this.findPropertyByName('特有属性', '图标大小').value as number
     }
     return
   }
   // get buttonDisabled(): boolean {
-  //   if (this.FindProperties(PropertyGroupName.special, '是否禁用')[0]) {
-  //     return this.FindProperties(PropertyGroupName.special, '是否禁用')[0].value as boolean
+  //   if (this.findProperties(PropertyGroupName.special, '是否禁用')[0]) {
+  //     return this.findProperties(PropertyGroupName.special, '是否禁用')[0].value as boolean
   //   }
   //   return false
   // }
   //公有属性
   get fontSize(): string {
-    if (this.FindPropertyByName(PropertyGroupName.normal, '字体')) {
-      return this.FindPropertyByName(PropertyGroupName.normal, '字体').value as string
+    if (this.findPropertyByName(PropertyGroupName.normal, '字体')) {
+      return this.findPropertyByName(PropertyGroupName.normal, '字体').value as string
     }
     return ''
   }
 
   //按钮类型
   get buttonType(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '按钮类型')) {
-      if (this.FindPropertyByName(PropertyGroupName.special, '按钮类型').value === '主按钮') {
+    if (this.findPropertyByName(PropertyGroupName.special, '按钮类型')) {
+      if (this.findPropertyByName(PropertyGroupName.special, '按钮类型').value === '主按钮') {
         return 'primary'
-      } else if (this.FindPropertyByName(PropertyGroupName.special, '按钮类型').value === '次按钮') {
+      } else if (this.findPropertyByName(PropertyGroupName.special, '按钮类型').value === '次按钮') {
         return 'default'
-      } else if (this.FindPropertyByName(PropertyGroupName.special, '按钮类型').value === '虚线按钮') {
+      } else if (this.findPropertyByName(PropertyGroupName.special, '按钮类型').value === '虚线按钮') {
         return 'dashed'
-      } else if (this.FindPropertyByName(PropertyGroupName.special, '按钮类型').value === '危险按钮') {
+      } else if (this.findPropertyByName(PropertyGroupName.special, '按钮类型').value === '危险按钮') {
         return 'danger'
       } else {
         return 'link'

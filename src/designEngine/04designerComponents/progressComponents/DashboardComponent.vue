@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import {
   Property,
@@ -15,47 +15,47 @@ import {
   Boolean_Property,
   PropertyGroupName,
   Number_Property,
-  BindingModels_Property,
-} from '../../02common/commonClasses/LayoutProperty'
+  BindingModels_Property
+} from '../../03designerLayoutBase'
 
 @Component
 export default class ProgressComponent extends ComponentBase {
   mounted() {
     this.width = 300
     this.height = 300
-    this.RegisterProperty('输入值', PropertyGroupName.special, new Number_Property(), 75)
-    //this.RegisterProperty("已完成",PropertyGroupName.special,new Number_Property(),0)
-    this.RegisterProperty('是否显示进度数值', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('样式', PropertyGroupName.special, new Enum_Property(true, ['square', 'round']), 'round')
-    //this.RegisterProperty('颜色', PropertyGroupName.special, new Enum_Property(true, ['红色', '蓝色', '绿色']), '蓝色')
-    this.RegisterProperty('状态', PropertyGroupName.special, new Enum_Property(true, ['正常', '成功', '异常', '活动']), '正常')
+    this.registerProperty('输入值', PropertyGroupName.special, new Number_Property(), 75)
+    //this.registerProperty("已完成",PropertyGroupName.special,new Number_Property(),0)
+    this.registerProperty('是否显示进度数值', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('样式', PropertyGroupName.special, new Enum_Property(true, ['square', 'round']), 'round')
+    //this.registerProperty('颜色', PropertyGroupName.special, new Enum_Property(true, ['红色', '蓝色', '绿色']), '蓝色')
+    this.registerProperty('状态', PropertyGroupName.special, new Enum_Property(true, ['正常', '成功', '异常', '活动']), '正常')
   }
 
   get strokeLinecap(): string {
-    if (this.FindProperties(PropertyGroupName.special, '样式')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '样式')[0].value === 'round' ? 'round' : 'square'
+    if (this.findProperties(PropertyGroupName.special, '样式')[0]) {
+      return this.findProperties(PropertyGroupName.special, '样式')[0].value === 'round' ? 'round' : 'square'
     } else {
       return 'round'
     }
   }
   get progrestatus(): string {
-    if (this.FindProperties(PropertyGroupName.special, '状态')[0]) {
-      let newval2 = this.FindProperties(PropertyGroupName.special, '状态')[0].value
+    if (this.findProperties(PropertyGroupName.special, '状态')[0]) {
+      let newval2 = this.findProperties(PropertyGroupName.special, '状态')[0].value
       return newval2 === '正常' ? 'normal' : newval2 === '成功' ? 'success' : newval2 === '异常' ? 'exception' : 'active'
     } else {
       return 'normal'
     }
   }
   get showInfo(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否显示进度数值')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '是否显示进度数值')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否显示进度数值')[0]) {
+      return this.findProperties(PropertyGroupName.special, '是否显示进度数值')[0].value as boolean
     } else {
       return false
     }
   }
   get percent(): number {
-    if (this.FindPropertyByName(PropertyGroupName.special, '输入值')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '输入值').value as number
+    if (this.findPropertyByName(PropertyGroupName.special, '输入值')) {
+      return this.findPropertyByName(PropertyGroupName.special, '输入值').value as number
     } else {
       return 0
     }

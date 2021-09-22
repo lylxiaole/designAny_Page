@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import {
   Property,
   PropertyGroupName,
@@ -15,11 +15,11 @@ import {
   Text_Property,
   Boolean_Property,
   PropertyTypeEnum
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
 import modelAnalysis from '../../02common/impResourcesCache/modelAnalysis'
 import { CurrentApis, CurrentContext, pagenNodeType, APIRequestClass, PageOrderClass } from '../../01designerContext'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 import { message } from 'ant-design-vue'
 //import sleep from '../reportComponents/sleep'
 declare var jsreports
@@ -45,7 +45,7 @@ export default class ReportComponent extends ComponentBase {
     var p = new param()
     p.name = '模板样式内容'
     p.type = paramType.string
-    this.RegisterEvents('设计器保存事件', '设计器保存事件', [p], this.outparam)
+    this.registerEvents('设计器保存事件', '设计器保存事件', [p], this.outparam)
 
     //name: string  type: paramType  val: any
     var dataParam = new param()
@@ -60,11 +60,11 @@ export default class ReportComponent extends ComponentBase {
     var tempAllParam = new param()
     tempAllParam.name = '报表模板'
     tempAllParam.type = paramType.complexType
-    this.RegisterMethods('根据数据源结构设计', '根据数据源结构设计', this.designReportByDataSchema, [tempParam, schemaParam], null)
-    this.RegisterMethods('根据数据源设计', '根据数据源设计', this.designReportByDataSource, [tempParam, dataParam], null)
-    this.RegisterMethods('设计模板', '(根据数据或结构)设计模板', this.startPrintPopup, [tempAllParam, dataParam, schemaParam], null)
-    this.RegisterMethods('打印预览', '打印预览', this.printPage, [tempParam, dataParam], null)
-    this.RegisterMethods('打印报表', '打印报表', this.printPage, [tempParam, dataParam], null)
+    this.registerMethods('根据数据源结构设计', '根据数据源结构设计', this.designReportByDataSchema, [tempParam, schemaParam], null)
+    this.registerMethods('根据数据源设计', '根据数据源设计', this.designReportByDataSource, [tempParam, dataParam], null)
+    this.registerMethods('设计模板', '(根据数据或结构)设计模板', this.startPrintPopup, [tempAllParam, dataParam, schemaParam], null)
+    this.registerMethods('打印预览', '打印预览', this.printPage, [tempParam, dataParam], null)
+    this.registerMethods('打印报表', '打印报表', this.printPage, [tempParam, dataParam], null)
   }
 
   /**
@@ -324,7 +324,7 @@ export default class ReportComponent extends ComponentBase {
   /**其他函数************************************************************* */
 
   get modelCode(): string {
-    var val = this.FindPropertyByName(PropertyGroupName.special, '模型编码')
+    var val = this.findPropertyByName(PropertyGroupName.special, '模型编码')
     return val.value //uid_part_project
   }
 
@@ -342,7 +342,7 @@ export default class ReportComponent extends ComponentBase {
     p.name = '模板样式内容'
     p.type = paramType.string
     p.val = reportDef
-    this.TriggeEvent('设计器保存事件', [p])
+    this.triggeEvent('设计器保存事件', [p])
   }
 
   /**其他函数************************************************************* */
@@ -353,7 +353,7 @@ export default class ReportComponent extends ComponentBase {
     let data = inparam[1]
     let schema = inparam[2]
     //window.console.log('**********弹出打印控件了,传入参数是:', inparam)
-     var tmpNode = window.document.createElement('div')
+    var tmpNode = window.document.createElement('div')
     var designer: genoPrintDesigner = new genoPrintDesigner()
     this.currentDesigner = designer
     var oldIsDesigning = this.IsDesigning
@@ -467,7 +467,7 @@ export default class ReportComponent extends ComponentBase {
     let pageId = inparam[0]
     let data = inparam[1]
     //window.console.log('**********弹出打印控件了,传入参数是:', data)
-   var tmpNode = window.document.createElement('div')
+    var tmpNode = window.document.createElement('div')
     var designer: genoPrintDesigner = new genoPrintDesigner()
     this.currentDesigner = designer
     var oldIsDesigning = this.IsDesigning

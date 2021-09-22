@@ -35,7 +35,7 @@ import {
   Boolean_Property,
   TableStyleSetting_Property,
   Number_Property
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import { tableStyle } from '../../04designerComponents/table/tableCommonTypes'
 import layout_Professional from '../../05designerLayouts/layout_Professional/Layout_Professional.vue'
 import PageBase from '../../03designerLayoutBase/PageBase'
@@ -123,7 +123,7 @@ export default class columnTemplateSetting extends Vue {
     if (this.currentPageSimple.Id == data.id) {
       this.currentPageSimple.Id = common.getUuid()
     }
-    let property = this.currentPageSimple.FindProperties(PropertyGroupName.normal, '页面入参')[0]
+    let property = this.currentPageSimple.findProperties(PropertyGroupName.normal, '页面入参')[0]
     property.value = data.properties.find((item) => item.propertyName === '页面入参').value
   }
 }

@@ -74,17 +74,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import ComponentBase from '../ComponentBase'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { ComponentBase } from '../../03designerLayoutBase'
+import { param, paramType } from '../../03designerLayoutBase'
 
-import {
-  Property,
-  Number_Property,
-  NumberList_Property,
-  Text_Property,
-  Enum_Property,
-  PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+import { Property, Number_Property, NumberList_Property, Text_Property, Enum_Property, PropertyGroupName } from '../../03designerLayoutBase'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
 import { SaveInfo, LayoutType, LayoutInfo, DragItemTypeEnum, LayoutBase } from '../../03designerLayoutBase'
 import searchItem from './searchItem.vue'
@@ -135,7 +128,7 @@ export default class personal_SearchControl extends ComponentBase {
 
   private get fontSize(): number {
     // '宋体', '楷体', '黑体', '隶书'
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '字体')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '字体')
     if (!property) {
       return 12
     }
@@ -148,7 +141,7 @@ export default class personal_SearchControl extends ComponentBase {
     let inparam = new param()
     inparam.name = '组件名称'
     inparam.type = paramType.complexType
-    this.RegisterMethods(
+    this.registerMethods(
       '隐藏查询项',
       '手动调用',
       (inpd) => {
@@ -167,9 +160,9 @@ export default class personal_SearchControl extends ComponentBase {
       this.canDrag = true
       this.canDrop = true
     }
-    // this.RegisterProperty('控件占位', PropertyGroupName.special, new Number_Property(1, 24), 4, true, true) //span
-    this.RegisterEvents('查询按钮点击事件', '', [], null)
-    this.RegisterEvents('重置按钮点击事件', '', [], null)
+    // this.registerProperty('控件占位', PropertyGroupName.special, new Number_Property(1, 24), 4, true, true) //span
+    this.registerEvents('查询按钮点击事件', '', [], null)
+    this.registerEvents('重置按钮点击事件', '', [], null)
   }
 
   private onCurrentPropertyChanged(propertyId: string, property: Property, layout: LayoutBase): void {}
@@ -281,17 +274,17 @@ export default class personal_SearchControl extends ComponentBase {
     let numberProperty = new Number_Property()
     numberProperty.min = -9999
     numberProperty.max = 9999
-    dropcomp.RegisterProperty(itemShowName, formItemGroupName, new Text_Property(), null)
+    dropcomp.registerProperty(itemShowName, formItemGroupName, new Text_Property(), null)
     /***************************** */
-    dropcomp.RegisterProperty(itemFloat, formItemGroupName, new Enum_Property(true, ['左对齐', '右对齐']), '右对齐', true, true)
-    dropcomp.RegisterProperty(LabelColSpanName, formItemGroupName, { ...numberProperty }, 10, true, true)
-    dropcomp.RegisterProperty(LabelColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
-    dropcomp.RegisterProperty(WrapperColSpanName, formItemGroupName, { ...numberProperty }, 14, true, true)
-    dropcomp.RegisterProperty(WrapperColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
-    dropcomp.RegisterProperty(MarginTop, formItemGroupName, { ...numberProperty }, 13, true, true, 'px')
-    dropcomp.RegisterProperty(MarginBottom, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
-    dropcomp.RegisterProperty(MarginLeft, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
-    dropcomp.RegisterProperty(MarginRight, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
+    dropcomp.registerProperty(itemFloat, formItemGroupName, new Enum_Property(true, ['左对齐', '右对齐']), '右对齐', true, true)
+    dropcomp.registerProperty(LabelColSpanName, formItemGroupName, { ...numberProperty }, 10, true, true)
+    dropcomp.registerProperty(LabelColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
+    dropcomp.registerProperty(WrapperColSpanName, formItemGroupName, { ...numberProperty }, 14, true, true)
+    dropcomp.registerProperty(WrapperColOffsetName, formItemGroupName, { ...numberProperty }, 0, true, true)
+    dropcomp.registerProperty(MarginTop, formItemGroupName, { ...numberProperty }, 13, true, true, 'px')
+    dropcomp.registerProperty(MarginBottom, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
+    dropcomp.registerProperty(MarginLeft, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
+    dropcomp.registerProperty(MarginRight, formItemGroupName, { ...numberProperty }, 0, true, true, 'px')
   }
   // *********formItem的事件******************************************************************************
   get formOverflow(): string {
@@ -388,7 +381,7 @@ export default class personal_SearchControl extends ComponentBase {
     }
 
     let textalign = ''
-    let fproperty = comp.FindPropertyByName(formItemGroupName, itemFloat)
+    let fproperty = comp.findPropertyByName(formItemGroupName, itemFloat)
     if (!fproperty) {
       textalign = ''
     } else if (fproperty.value === '左对齐') {
@@ -431,7 +424,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return '待定'
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, itemShowName)
+    let fproperty = comp.findPropertyByName(formItemGroupName, itemShowName)
     if (!fproperty) {
       return '待定'
     }
@@ -443,7 +436,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return '待定'
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, itemFloat)
+    let fproperty = comp.findPropertyByName(formItemGroupName, itemFloat)
     if (!fproperty) {
       return ''
     }
@@ -458,7 +451,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 1
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, LabelColSpanName)
+    let fproperty = comp.findPropertyByName(formItemGroupName, LabelColSpanName)
     if (!fproperty) {
       return 1
     }
@@ -469,7 +462,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 1
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, LabelColOffsetName)
+    let fproperty = comp.findPropertyByName(formItemGroupName, LabelColOffsetName)
     if (!fproperty) {
       return 1
     }
@@ -480,7 +473,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 1
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, WrapperColSpanName)
+    let fproperty = comp.findPropertyByName(formItemGroupName, WrapperColSpanName)
     if (!fproperty) {
       return 1
     }
@@ -491,7 +484,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 1
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, WrapperColOffsetName)
+    let fproperty = comp.findPropertyByName(formItemGroupName, WrapperColOffsetName)
     if (!fproperty) {
       return 1
     }
@@ -502,7 +495,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 0
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, MarginTop)
+    let fproperty = comp.findPropertyByName(formItemGroupName, MarginTop)
     if (!fproperty) {
       return 0
     }
@@ -513,7 +506,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 0
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, MarginLeft)
+    let fproperty = comp.findPropertyByName(formItemGroupName, MarginLeft)
     if (!fproperty) {
       return 0
     }
@@ -524,7 +517,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 0
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, MarginRight)
+    let fproperty = comp.findPropertyByName(formItemGroupName, MarginRight)
     if (!fproperty) {
       return 0
     }
@@ -535,7 +528,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (!comp) {
       return 0
     }
-    let fproperty = comp.FindPropertyByName(formItemGroupName, MarginBottom)
+    let fproperty = comp.findPropertyByName(formItemGroupName, MarginBottom)
     if (!fproperty) {
       return 0
     }
@@ -676,22 +669,22 @@ export default class personal_SearchControl extends ComponentBase {
   private onCancelSetting() {}
   // ***************************************************************************************
   private onSearchBtnClick() {
-    this.TriggeEvent('查询按钮点击事件', null)
+    this.triggeEvent('查询按钮点击事件', null)
   }
   private onResetBtnClick() {
-    this.TriggeEvent('重置按钮点击事件', null)
+    this.triggeEvent('重置按钮点击事件', null)
   }
   // ***************************************************************************************
   private loadModelComponents(components: ComponentBase[]) {
     for (let index = 0; index < components.length; index++) {
       let comp = components[index]
-      let showname = comp.FindPropertyByName(PropertyGroupName.special, '表单项显示').value
+      let showname = comp.findPropertyByName(PropertyGroupName.special, '表单项显示').value
       let compClass = this.findSystemCompByCode(comp.layoutInfo.compCode)
       var compVue = this.insertComponentLayout(compClass, comp.layoutInfo, null, null)
       if (compVue) {
         compVue.LoadData(null)
       }
-      compVue.FindPropertyByName(formItemGroupName, itemShowName).value = showname
+      compVue.findPropertyByName(formItemGroupName, itemShowName).value = showname
     }
   }
 }

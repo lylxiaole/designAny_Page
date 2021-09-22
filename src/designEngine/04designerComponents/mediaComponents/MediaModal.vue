@@ -23,8 +23,8 @@ import CompIncrustationPro from '../../05designerLayouts/layout_Professional/Com
 import { AllComponents, ComponentBase } from '../../04designerComponents'
 import { CurrentApis, pagenNodeType, CurrentContext } from '../../01designerContext'
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
-import { Property, PropertyGroupName } from '../../02common/commonClasses/LayoutProperty'
-import { param } from '../../02common/commonClasses/layoutEvent'
+import { Property, PropertyGroupName } from '../../03designerLayoutBase'
+import { param } from '../../03designerLayoutBase'
 import pdfjsLib from 'pdfjs-dist/build/pdf'
 import XLSX from 'xlsx'
 

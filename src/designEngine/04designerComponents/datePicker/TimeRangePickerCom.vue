@@ -16,9 +16,9 @@ import {
   Behavior_Property,
   Enum_Property,
   PropertyGroupName,
-  TimePickerFile_Property,
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+  TimePickerFile_Property
+} from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 
 @Component
 export default class DateRangePickerCom extends ComponentBase {
@@ -27,31 +27,88 @@ export default class DateRangePickerCom extends ComponentBase {
   @Prop({ required: false })
   public endValue: any
 
-  public created() { }
+  public created() {}
 
   protected items = ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH', 'YYYY-MM-DD']
   protected timeitems = ['HH:mm:ss', 'HH:mm']
   protected sizeitems = ['大', '中', '小']
   protected hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
   protected minsec = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-    40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
   ]
   mounted() {
     if (this.IsDesigning) {
       this.width = 195 * 2 + 8
       this.height = 32
       //注册特有属性
-      this.RegisterProperty('格式化', PropertyGroupName.special, new Enum_Property(true, this.timeitems), this.timeitems[0])
-      this.RegisterProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, this.sizeitems), this.sizeitems[1])
+      this.registerProperty('格式化', PropertyGroupName.special, new Enum_Property(true, this.timeitems), this.timeitems[0])
+      this.registerProperty('尺寸', PropertyGroupName.special, new Enum_Property(true, this.sizeitems), this.sizeitems[1])
     }
   }
   /*
   时间格式化展示
   */
   get formatter(): string {
-    let fmt = this.FindProperties(PropertyGroupName.special, '格式化')
+    let fmt = this.findProperties(PropertyGroupName.special, '格式化')
     if (fmt.length === 0) {
       return this.items[0]
     }
@@ -60,8 +117,8 @@ export default class DateRangePickerCom extends ComponentBase {
   }
 
   get size(): string {
-    if (this.FindProperties(PropertyGroupName.special, '尺寸')[0]) {
-      let mv = this.FindProperties(PropertyGroupName.special, '尺寸')[0].value
+    if (this.findProperties(PropertyGroupName.special, '尺寸')[0]) {
+      let mv = this.findProperties(PropertyGroupName.special, '尺寸')[0].value
       return mv === '大' ? 'large' : mv === '中' ? 'default' : 'small'
     }
     return 'default'

@@ -8,17 +8,10 @@
 </template>
 
 <script lang="ts">
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
-import {
-  Property,
-  PropertyGroupName,
-  Number_Property,
-  Text_Property,
-  Boolean_Property,
-  Enum_Property
-} from '../../02common/commonClasses/LayoutProperty'
+import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '../../03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
 import common from '../../02common/commonMethod'
 
@@ -53,20 +46,20 @@ export default class NpBarCode extends ComponentBase {
       'pharmacode',
       'codabar'
     ]
-    this.RegisterProperty('格式', PropertyGroupName.special, new Enum_Property(true, codeFormats), 'CODE128')
-    this.RegisterProperty('码高', PropertyGroupName.special, new Number_Property(), 100)
-    this.RegisterProperty('码宽', PropertyGroupName.special, new Number_Property(), 2)
-    this.RegisterProperty('内容', PropertyGroupName.special, new Text_Property(), '123456789')
-    this.RegisterProperty('显示字', PropertyGroupName.special, new Boolean_Property(), true)
-    this.RegisterProperty('字对齐方式', PropertyGroupName.special, new Enum_Property(true, ['左', '中', '右']), '中')
-    this.RegisterProperty('字位置', PropertyGroupName.special, new Enum_Property(true, ['底部', '顶部']), '底部')
-    this.RegisterProperty('字边距', PropertyGroupName.special, new Number_Property(), 2)
-    this.RegisterProperty('字大小', PropertyGroupName.special, new Number_Property(), 20)
+    this.registerProperty('格式', PropertyGroupName.special, new Enum_Property(true, codeFormats), 'CODE128')
+    this.registerProperty('码高', PropertyGroupName.special, new Number_Property(), 100)
+    this.registerProperty('码宽', PropertyGroupName.special, new Number_Property(), 2)
+    this.registerProperty('内容', PropertyGroupName.special, new Text_Property(), '123456789')
+    this.registerProperty('显示字', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('字对齐方式', PropertyGroupName.special, new Enum_Property(true, ['左', '中', '右']), '中')
+    this.registerProperty('字位置', PropertyGroupName.special, new Enum_Property(true, ['底部', '顶部']), '底部')
+    this.registerProperty('字边距', PropertyGroupName.special, new Number_Property(), 2)
+    this.registerProperty('字大小', PropertyGroupName.special, new Number_Property(), 20)
   }
 
   private barCodeText: string = '123456789'
   get vlaue(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '内容')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '内容')
     if (prop && prop.value != undefined && prop.value != null) {
       let data = prop.value.toString()
       this.barCodeText = data
@@ -79,7 +72,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeFormat: string = 'CODE128'
   get codeFormat(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '格式')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '格式')
     let data = null
     if (prop && prop.value) {
       data = prop.value.toString()
@@ -94,7 +87,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeWidth: number = 2
   get codeWidth(): number {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '码宽')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '码宽')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
@@ -109,7 +102,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeHeight: number = 100
   get codeHeight(): number {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '码高')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '码高')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
@@ -124,7 +117,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeDisplayValue: boolean = true
   get codeDisplayValue(): boolean {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '显示字')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '显示字')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Boolean(prop.value)
@@ -138,7 +131,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeTextAlign: string = 'center'
   get codeTextAlign(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '字对齐方式')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '字对齐方式')
     let data = null
     if (prop && prop.value) {
       let pval = prop.value.toString()
@@ -166,7 +159,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeTextPosition: string = 'bottom'
   get codeTextPosition(): string {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '字位置')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '字位置')
     let data = null
     if (prop && prop.value) {
       let pval = prop.value.toString()
@@ -191,7 +184,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeTextMargin: number = 2
   get codeTextMargin(): number {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '字边距')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '字边距')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
@@ -206,7 +199,7 @@ export default class NpBarCode extends ComponentBase {
 
   private barCodeFontSize: number = 20
   get codeFontSize(): number {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '字大小')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '字大小')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)

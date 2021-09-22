@@ -19,15 +19,15 @@ import {
   Boolean_Property,
   PropertyGroupName,
   Number_Property,
-  UploadFile_Property,
-} from '../../02common/commonClasses/LayoutProperty'
-import ComponentBase from '../ComponentBase'
+  UploadFile_Property
+} from '../../03designerLayoutBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import TableComponent from '../table/Table.vue'
 
 @Component({
   components: {
-    TableComponent: TableComponent,
-  },
+    TableComponent: TableComponent
+  }
 })
 export default class SelectCompositeComponent extends ComponentBase {
   private uiValue: string = 'aaa'
@@ -36,31 +36,31 @@ export default class SelectCompositeComponent extends ComponentBase {
       label: '北京',
       value: 'beijing',
       title: '北京 010',
-      key: '010',
+      key: '010'
     },
     {
       label: '上海',
       value: 'shanghai',
-      key: '021',
+      key: '021'
     },
     {
       label: '南京',
       value: 'nanjing',
-      key: '025',
+      key: '025'
     },
     {
       label: '杭州',
       value: 'hangzhou',
       key: '0571',
-      disabled: true,
-    },
+      disabled: true
+    }
   ]
 
   mounted() {
-    this.RegisterProperty('是否允许清空选择框', PropertyGroupName.special, new Boolean_Property(), false)
-    this.RegisterProperty('显示值', PropertyGroupName.special, new Text_Property())
-    this.RegisterProperty('实际值', PropertyGroupName.special, new Text_Property())
-    this.RegisterProperty('数据源', PropertyGroupName.special, new Text_Property())
+    this.registerProperty('是否允许清空选择框', PropertyGroupName.special, new Boolean_Property(), false)
+    this.registerProperty('显示值', PropertyGroupName.special, new Text_Property())
+    this.registerProperty('实际值', PropertyGroupName.special, new Text_Property())
+    this.registerProperty('数据源', PropertyGroupName.special, new Text_Property())
   }
 
   handleChange(value: any, option: any) {
@@ -80,20 +80,20 @@ export default class SelectCompositeComponent extends ComponentBase {
 
   //清空选择框属性
   get allowClear(): boolean {
-    if (this.FindPropertyByName(PropertyGroupName.special, '是否允许清空选择框')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '是否允许清空选择框').value as boolean
+    if (this.findPropertyByName(PropertyGroupName.special, '是否允许清空选择框')) {
+      return this.findPropertyByName(PropertyGroupName.special, '是否允许清空选择框').value as boolean
     }
   }
 
   get displayMember(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '显示值')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '显示值').value
+    if (this.findPropertyByName(PropertyGroupName.special, '显示值')) {
+      return this.findPropertyByName(PropertyGroupName.special, '显示值').value
     }
   }
 
   get valueMember(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '实际值')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '实际值').value
+    if (this.findPropertyByName(PropertyGroupName.special, '实际值')) {
+      return this.findPropertyByName(PropertyGroupName.special, '实际值').value
     }
   }
 }

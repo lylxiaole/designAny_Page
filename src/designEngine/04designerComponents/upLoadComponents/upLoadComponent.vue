@@ -26,7 +26,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 import { CurrentApis, fileInfo, CurrentContext } from '../../01designerContext'
 import {
   Property,
@@ -39,9 +39,9 @@ import {
   UploadFile_Property,
   Color_Property,
   BindingModels_Property
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
-import { param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { param, paramType } from '../../03designerLayoutBase'
 import fileUpload from '../../02common/uploadFile/fileUpload'
 
 import { message } from 'ant-design-vue'
@@ -55,11 +55,11 @@ export default class upLoadComponent extends ComponentBase {
   private fileList: fileInfo[] = []
 
   get currentFileList(): fileInfo[] {
-    var fileArr = this.FindPropertyByName(PropertyGroupName.special, '文件列表')
-    var maxProp = this.FindPropertyByName(PropertyGroupName.special, '文件最大数量')
+    var fileArr = this.findPropertyByName(PropertyGroupName.special, '文件列表')
+    var maxProp = this.findPropertyByName(PropertyGroupName.special, '文件最大数量')
     if (fileArr == undefined) return []
     if (!this.fileList || !this.fileUploadClass) {
-      this.SetPropertyVal(fileArr.id, null)
+      this.setPropertyVal(fileArr.id, null)
       return []
     }
     var maxLenth = maxProp.value
@@ -78,14 +78,14 @@ export default class upLoadComponent extends ComponentBase {
 
     if (maxLenth == 1) {
       if (absolutefiles.length > 0) {
-        this.SetPropertyVal(fileArr.id, absolutefiles[0])
+        this.setPropertyVal(fileArr.id, absolutefiles[0])
       } else {
-        this.SetPropertyVal(fileArr.id, new fileInfo())
+        this.setPropertyVal(fileArr.id, new fileInfo())
       }
-      // var fileName = this.FindPropertyByName(PropertyGroupName.special, '文件名')
-      // this.SetPropertyVal(fileName.id, files[0].name)
+      // var fileName = this.findPropertyByName(PropertyGroupName.special, '文件名')
+      // this.setPropertyVal(fileName.id, files[0].name)
     } else {
-      this.SetPropertyVal(fileArr.id, absolutefiles)
+      this.setPropertyVal(fileArr.id, absolutefiles)
     }
 
     return files
@@ -96,7 +96,7 @@ export default class upLoadComponent extends ComponentBase {
   //--------------------------------------------------------------------------
   // private get fileLists(): fileInfo[] {
   //   window.console.log('上传文件完成了get')
-  //   var property = this.FindPropertyByName(PropertyGroupName.special, '文件列表')
+  //   var property = this.findPropertyByName(PropertyGroupName.special, '文件列表')
   //   if (property) {
   //     return property.value as fileInfo[]
   //   } else {
@@ -105,8 +105,8 @@ export default class upLoadComponent extends ComponentBase {
   // }
   // private set fileLists(filelist: fileInfo[]) {
   //   window.console.log('上传文件完成了set')
-  //   var propertyId = this.FindPropertyByName(PropertyGroupName.special, '文件列表').id
-  //   this.SetPropertyVal(propertyId, filelist)
+  //   var propertyId = this.findPropertyByName(PropertyGroupName.special, '文件列表').id
+  //   this.setPropertyVal(propertyId, filelist)
   // }
   upLoadCallBack(relativePath: String) {
     var inParams: param[] = []
@@ -117,7 +117,7 @@ export default class upLoadComponent extends ComponentBase {
 
     inParams.push(para)
 
-    this.TriggeEvent('文件上传成功', inParams)
+    this.triggeEvent('文件上传成功', inParams)
   }
 
   onUploadError(error: any) {
@@ -142,10 +142,10 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get fileType(): string {
-    let fileType = this.FindPropertyByName(PropertyGroupName.special, '文件格式筛选')
+    let fileType = this.findPropertyByName(PropertyGroupName.special, '文件格式筛选')
     if (fileType == undefined || fileType.value == '') {
-      if (this.FindProperties(PropertyGroupName.special, '文件格式')[0]) {
-        return this.fileTypes(this.FindProperties(PropertyGroupName.special, '文件格式')[0].value as any)
+      if (this.findProperties(PropertyGroupName.special, '文件格式')[0]) {
+        return this.fileTypes(this.findProperties(PropertyGroupName.special, '文件格式')[0].value as any)
       } else {
         return this.fileTypes('不限')
       }
@@ -155,16 +155,16 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get fontColor(): String {
-    if (this.FindPropertyByName(PropertyGroupName.normal, '前景色')) {
-      return this.FindPropertyByName(PropertyGroupName.normal, '前景色').value as String
+    if (this.findPropertyByName(PropertyGroupName.normal, '前景色')) {
+      return this.findPropertyByName(PropertyGroupName.normal, '前景色').value as String
     } else {
       return ''
     }
   }
 
   get backgroundColor(): String {
-    if (this.FindPropertyByName(PropertyGroupName.normal, '背景色')) {
-      return this.FindPropertyByName(PropertyGroupName.normal, '背景色').value as String
+    if (this.findPropertyByName(PropertyGroupName.normal, '背景色')) {
+      return this.findPropertyByName(PropertyGroupName.normal, '背景色').value as String
     } else {
       return ''
     }
@@ -172,12 +172,12 @@ export default class upLoadComponent extends ComponentBase {
 
   get imageUrl(): String {
     if (
-      this.FindPropertyByName(PropertyGroupName.normal, '背景图片') &&
-      this.FindPropertyByName(PropertyGroupName.normal, '背景图片').value &&
-      this.FindPropertyByName(PropertyGroupName.normal, '背景图片').value[0]
+      this.findPropertyByName(PropertyGroupName.normal, '背景图片') &&
+      this.findPropertyByName(PropertyGroupName.normal, '背景图片').value &&
+      this.findPropertyByName(PropertyGroupName.normal, '背景图片').value[0]
     ) {
       var address = (CurrentContext.FileServerAddress +
-        this.FindPropertyByName(PropertyGroupName.normal, '背景图片').value[0].url.split('?')[0]) as String
+        this.findPropertyByName(PropertyGroupName.normal, '背景图片').value[0].url.split('?')[0]) as String
       //window.console.log(address)
       return address
     } else {
@@ -186,24 +186,24 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get upLoadSize(): number {
-    if (this.FindProperties(PropertyGroupName.special, '文件大小不超过')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '文件大小不超过')[0].value as any
+    if (this.findProperties(PropertyGroupName.special, '文件大小不超过')[0]) {
+      return this.findProperties(PropertyGroupName.special, '文件大小不超过')[0].value as any
     } else {
       return 2
     }
   }
 
   get maxFileLengthParent(): number {
-    if (this.FindProperties(PropertyGroupName.special, '文件最大数量')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '文件最大数量')[0].value as any
+    if (this.findProperties(PropertyGroupName.special, '文件最大数量')[0]) {
+      return this.findProperties(PropertyGroupName.special, '文件最大数量')[0].value as any
     } else {
       return 10
     }
   }
 
   get disabled(): boolean {
-    // if (this.FindProperties(PropertyGroupName.normal, '是否禁用')[0]) {
-    //   if (this.FindProperties(PropertyGroupName.normal, '是否禁用')[0].value) {
+    // if (this.findProperties(PropertyGroupName.normal, '是否禁用')[0]) {
+    //   if (this.findProperties(PropertyGroupName.normal, '是否禁用')[0].value) {
     //     return true
     //   } else {
     //     if (typeof this.fileList == 'undefined' || this.fileList.length < this.maxFileLengthParent) {
@@ -215,7 +215,7 @@ export default class upLoadComponent extends ComponentBase {
     // } else {
     //   return false
     // }
-    var property = this.FindPropertyByName(PropertyGroupName.normal, '是否禁用')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
     this.$nextTick(() => {
       $(this.$el)
         .find('.ant-upload-list-item-actions')
@@ -229,22 +229,22 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get listType(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '列表样式')) {
-      return this.FindPropertyByName(PropertyGroupName.special, '列表样式').value
+    if (this.findPropertyByName(PropertyGroupName.special, '列表样式')) {
+      return this.findPropertyByName(PropertyGroupName.special, '列表样式').value
     } else {
       return 'picture-card'
     }
   }
 
   get showUploadList(): boolean {
-    if (this.FindProperties(PropertyGroupName.special, '是否显示已上传文件列表')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '是否显示已上传文件列表')[0].value as boolean
+    if (this.findProperties(PropertyGroupName.special, '是否显示已上传文件列表')[0]) {
+      return this.findProperties(PropertyGroupName.special, '是否显示已上传文件列表')[0].value as boolean
     }
     return true
   }
 
   get btnText(): string {
-    var txt = this.FindPropertyByName(PropertyGroupName.special, '按钮文本')
+    var txt = this.findPropertyByName(PropertyGroupName.special, '按钮文本')
     if (txt) {
       return txt.value as string
     }
@@ -252,12 +252,12 @@ export default class upLoadComponent extends ComponentBase {
   }
 
   get todoFileList(): fileInfo[] {
-    var fileArr = this.FindPropertyByName(PropertyGroupName.special, '待显示文件列表')
+    var fileArr = this.findPropertyByName(PropertyGroupName.special, '待显示文件列表')
     return fileArr.value as fileInfo[]
   }
 
   get multiple(): boolean {
-    let isMultiple = this.FindPropertyByName(PropertyGroupName.special, '是否多选文件')
+    let isMultiple = this.findPropertyByName(PropertyGroupName.special, '是否多选文件')
     if (isMultiple) {
       return isMultiple.value as boolean
     } else {
@@ -282,46 +282,46 @@ export default class upLoadComponent extends ComponentBase {
     para.name = '文件相对路径'
     para.type = paramType.string
     inParams.push(para)
-    this.RegisterEvents('文件上传成功', null, inParams, null)
+    this.registerEvents('文件上传成功', null, inParams, null)
 
-    this.RegisterProperty(
+    this.registerProperty(
       '文件格式',
       PropertyGroupName.special,
       new Enum_Property(true, ['不限', '图像文件', '音频文件', '视频文件', 'Word', 'Excel']),
       '不限'
     )
-    this.RegisterProperty('文件格式筛选', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('文件列表', PropertyGroupName.special, null, [])
-    this.RegisterProperty('待显示文件列表', PropertyGroupName.special, null, [])
-    this.RegisterProperty('文件', PropertyGroupName.special, null, null)
-    this.RegisterProperty('文件大小不超过', PropertyGroupName.special, new Number_Property(), 2)
+    this.registerProperty('文件格式筛选', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('文件列表', PropertyGroupName.special, null, [])
+    this.registerProperty('待显示文件列表', PropertyGroupName.special, null, [])
+    this.registerProperty('文件', PropertyGroupName.special, null, null)
+    this.registerProperty('文件大小不超过', PropertyGroupName.special, new Number_Property(), 2)
 
-    this.RegisterProperty('文件最大数量', PropertyGroupName.special, new Number_Property(), 10)
-    this.RegisterProperty('按钮文本', PropertyGroupName.special, new Text_Property(), '上传文件')
-    this.RegisterProperty('是否多选文件', PropertyGroupName.special, new Boolean_Property(), false)
-    //this.RegisterProperty('文件名', PropertyGroupName.special, new Text_Property(), '文件名', false)
+    this.registerProperty('文件最大数量', PropertyGroupName.special, new Number_Property(), 10)
+    this.registerProperty('按钮文本', PropertyGroupName.special, new Text_Property(), '上传文件')
+    this.registerProperty('是否多选文件', PropertyGroupName.special, new Boolean_Property(), false)
+    //this.registerProperty('文件名', PropertyGroupName.special, new Text_Property(), '文件名', false)
 
-    //this.RegisterProperty('是否禁用', PropertyGroupName.special, new Boolean_Property(), false)
+    //this.registerProperty('是否禁用', PropertyGroupName.special, new Boolean_Property(), false)
 
-    //this.RegisterProperty('前景色', PropertyGroupName.special, new Color_Property(), '')
+    //this.registerProperty('前景色', PropertyGroupName.special, new Color_Property(), '')
 
-    //this.RegisterProperty('背景色', PropertyGroupName.special, new Color_Property(), '')
+    //this.registerProperty('背景色', PropertyGroupName.special, new Color_Property(), '')
 
-    // this.RegisterProperty('背景图片', PropertyGroupName.special, new UploadFile_Property(1, 'image'))
+    // this.registerProperty('背景图片', PropertyGroupName.special, new UploadFile_Property(1, 'image'))
 
-    this.RegisterProperty('列表样式', PropertyGroupName.special, new Enum_Property(true, ['text', 'picture', 'picture-card']), 'picture-card')
+    this.registerProperty('列表样式', PropertyGroupName.special, new Enum_Property(true, ['text', 'picture', 'picture-card']), 'picture-card')
 
-    this.RegisterProperty('是否显示已上传文件列表', PropertyGroupName.special, new Boolean_Property(), true)
+    this.registerProperty('是否显示已上传文件列表', PropertyGroupName.special, new Boolean_Property(), true)
 
-    this.RegisterEvents('上传文件改变时的状态事件', '', this.inparam, this.outparam)
-    //this.RegisterEvents('点击文件链接或预览图标时的事件', '', this.inparam, this.outparam)
+    this.registerEvents('上传文件改变时的状态事件', '', this.inparam, this.outparam)
+    //this.registerEvents('点击文件链接或预览图标时的事件', '', this.inparam, this.outparam)
 
     this.$on('onPropertyChanged', (propertyId: string, property: Property, layout: any) => {
       if (property.propertyName != '待显示文件列表') {
         return
       }
-      var fileArr = this.FindPropertyByName(PropertyGroupName.special, '待显示文件列表')
-      var maxprop = this.FindPropertyByName(PropertyGroupName.special, '文件最大数量')
+      var fileArr = this.findPropertyByName(PropertyGroupName.special, '待显示文件列表')
+      var maxprop = this.findPropertyByName(PropertyGroupName.special, '文件最大数量')
       if (fileArr.value) {
         this.fileList = []
         this.currentFileList = []
@@ -350,7 +350,7 @@ export default class upLoadComponent extends ComponentBase {
       }
     })
 
-    this.RegisterMethods('清除数据', '', this.clearData, null, null)
+    this.registerMethods('清除数据', '', this.clearData, null, null)
   }
 
   handleCancel() {
@@ -361,12 +361,12 @@ export default class upLoadComponent extends ComponentBase {
   //   this.previewImage = file.url || file.thumbUrl
 
   //   this.previewVisible = true
-  //   this.TriggeEvent('点击文件链接或预览图标时的事件', file)
+  //   this.triggeEvent('点击文件链接或预览图标时的事件', file)
   // }
 
   handleChange(file: any) {
     //window.console.log(file)
-    this.TriggeEvent('上传文件改变时的状态事件', file)
+    this.triggeEvent('上传文件改变时的状态事件', file)
   }
 
   handleRemove(file: fileInfo) {
@@ -412,11 +412,11 @@ export default class upLoadComponent extends ComponentBase {
     this.fileList.push(fileinfo)
 
     //添加操作赋值文件列表
-    var fileArr = this.FindPropertyByName(PropertyGroupName.special, '文件列表')
-    var maxprop = this.FindPropertyByName(PropertyGroupName.special, '文件最大数量')
+    var fileArr = this.findPropertyByName(PropertyGroupName.special, '文件列表')
+    var maxprop = this.findPropertyByName(PropertyGroupName.special, '文件最大数量')
     if (fileArr == undefined) return []
     if (!this.fileList || !this.fileUploadClass) {
-      this.SetPropertyVal(fileArr.id, null)
+      this.setPropertyVal(fileArr.id, null)
       return []
     }
     var maxLenth = maxprop.value
@@ -434,9 +434,9 @@ export default class upLoadComponent extends ComponentBase {
     })
 
     if (maxLenth == 1) {
-      this.SetPropertyVal(fileArr.id, absolutefiles[0])
+      this.setPropertyVal(fileArr.id, absolutefiles[0])
     } else {
-      this.SetPropertyVal(fileArr.id, absolutefiles)
+      this.setPropertyVal(fileArr.id, absolutefiles)
     }
 
     //this.UpdateFileList_Inner(res)

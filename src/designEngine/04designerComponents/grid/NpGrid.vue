@@ -15,12 +15,11 @@ import {
   Text_Property,
   Behavior_Property,
   Enum_Property,
-  PropertyGroupName,
-} from '../../02common/commonClasses/LayoutProperty'
+  PropertyGroupName
+} from '../../03designerLayoutBase'
 // import dragHelper, { dragulaExtand } from '../../02common/dragHelper'
- 
-import ComponentBase from '../ComponentBase'
 
+import { ComponentBase } from '../../03designerLayoutBase'
 
 import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 
@@ -31,7 +30,7 @@ import NpGridCol from './NpGridCol.vue'
 
 @Component({
   name: 'gridEx',
-  components: {},
+  components: {}
 })
 export default class NpGrid extends ComponentBase {
   // private cacheChildData: SaveInfo[] = []
@@ -40,11 +39,11 @@ export default class NpGrid extends ComponentBase {
     this.width = 200
     this.height = 200
 
-    this.RegisterProperty('栅格间隔', PropertyGroupName.special, new Number_Property(), 0)
+    this.registerProperty('栅格间隔', PropertyGroupName.special, new Number_Property(), 0)
     let cellData: any[] = [{ key: common.getUuid(), value: 12 }, { key: common.getUuid(), value: 12 }]
-    this.RegisterProperty('列设置', PropertyGroupName.special, new NumberList_Property(0, 24), cellData)
-    this.RegisterProperty('垂直对齐方式', PropertyGroupName.special, new Enum_Property(true, ['顶部对齐', '居中', '底部对齐']), '顶部对齐')
-    this.RegisterProperty(
+    this.registerProperty('列设置', PropertyGroupName.special, new NumberList_Property(0, 24), cellData)
+    this.registerProperty('垂直对齐方式', PropertyGroupName.special, new Enum_Property(true, ['顶部对齐', '居中', '底部对齐']), '顶部对齐')
+    this.registerProperty(
       '水平排列方式',
       PropertyGroupName.special,
       new Enum_Property(true, ['左对齐', '右对齐', '居中', '两侧间隔相等', '两端对齐']),
@@ -71,7 +70,7 @@ export default class NpGrid extends ComponentBase {
         'background-color': 'rgba(236, 245, 255, 0.3)',
         margin: '2px',
         height: 'inherit',
-        overflow: 'hidden',
+        overflow: 'hidden'
       }
     } else {
       return {
@@ -81,13 +80,13 @@ export default class NpGrid extends ComponentBase {
         position: 'relative',
         margin: '2px',
         height: 'inherit',
-        overflow: 'hidden',
+        overflow: 'hidden'
       }
     }
   }
 
   get rowGutter(): number {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '栅格间隔')
+    var property = this.findPropertyByName(PropertyGroupName.special, '栅格间隔')
     let val: number = 0
     if (property) {
       val = property.value ? property.value : 0
@@ -100,7 +99,7 @@ export default class NpGrid extends ComponentBase {
   }
 
   get rowColumns(): any[] {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '列设置')
+    var property = this.findPropertyByName(PropertyGroupName.special, '列设置')
     if (property) {
       return property.value
     }
@@ -128,7 +127,7 @@ export default class NpGrid extends ComponentBase {
   }
 
   get rowAlign(): string {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '垂直对齐方式')
+    var property = this.findPropertyByName(PropertyGroupName.special, '垂直对齐方式')
     if (property && property.value) {
       let propertyValue: string
       let selectedValue = property.value as string
@@ -152,7 +151,7 @@ export default class NpGrid extends ComponentBase {
   }
 
   get rowJustify(): string {
-    var property = this.FindPropertyByName(PropertyGroupName.special, '水平排列方式')
+    var property = this.findPropertyByName(PropertyGroupName.special, '水平排列方式')
     if (property && property.value) {
       let propertyValue: string
       let selectedValue = property.value as string

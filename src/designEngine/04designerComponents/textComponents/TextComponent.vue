@@ -27,9 +27,9 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 
-import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '../../02common/commonClasses/LayoutProperty'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '../../03designerLayoutBase'
 
-import ComponentBase from '../ComponentBase'
+import { ComponentBase } from '../../03designerLayoutBase'
 
 @Component
 export default class TextComponent extends ComponentBase {
@@ -40,18 +40,18 @@ export default class TextComponent extends ComponentBase {
     this.width = 150
     this.height = 40
     this.background = 'white'
-    this.RegisterProperty('文本', PropertyGroupName.special, new Text_Property(), '文本组件')
-    //var textPropertyId = this.FindPropertyByName(PropertyGroupName.special, '文本').id
+    this.registerProperty('文本', PropertyGroupName.special, new Text_Property(), '文本组件')
+    //var textPropertyId = this.findPropertyByName(PropertyGroupName.special, '文本').id
 
-    this.RegisterProperty('水平对齐', PropertyGroupName.special, new Enum_Property(true, ['居左', '居中', '居右']), '居中')
-    this.RegisterProperty('垂直对齐', PropertyGroupName.special, new Enum_Property(true, ['居上', '居中', '居下']), '居中')
-    // this.RegisterProperty('垂直对齐', PropertyGroupName.special, new Enum_Property(true, ['上', '中', '下']), '上')
-    this.RegisterProperty('提示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.RegisterProperty('是否换行', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '是')
-    this.RegisterProperty('粗细', PropertyGroupName.special, new Enum_Property(true, ['normal', 'bold', 'bolder', 'lighter']), 'normal')
-    this.RegisterProperty('是否倾斜', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
-    this.RegisterProperty('是否可点击开启编辑', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
-    this.RegisterProperty('是否显示边框', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty('水平对齐', PropertyGroupName.special, new Enum_Property(true, ['居左', '居中', '居右']), '居中')
+    this.registerProperty('垂直对齐', PropertyGroupName.special, new Enum_Property(true, ['居上', '居中', '居下']), '居中')
+    // this.registerProperty('垂直对齐', PropertyGroupName.special, new Enum_Property(true, ['上', '中', '下']), '上')
+    this.registerProperty('提示文字', PropertyGroupName.special, new Text_Property(), '')
+    this.registerProperty('是否换行', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '是')
+    this.registerProperty('粗细', PropertyGroupName.special, new Enum_Property(true, ['normal', 'bold', 'bolder', 'lighter']), 'normal')
+    this.registerProperty('是否倾斜', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty('是否可点击开启编辑', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty('是否显示边框', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
     // this.CaptureEvent()
     // this.canDrag = true
     // this.canDrop = true
@@ -62,7 +62,7 @@ export default class TextComponent extends ComponentBase {
   }
 
   get contentEditable(): boolean {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '是否可点击开启编辑')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '是否可点击开启编辑')
     if (prop && prop.value == '是') {
       return true
     } else {
@@ -71,51 +71,51 @@ export default class TextComponent extends ComponentBase {
   }
 
   get fontSize(): string {
-    if (this.FindProperties(PropertyGroupName.normal, '字体')[0]) {
-      return this.FindProperties(PropertyGroupName.normal, '字体')[0].value as string
+    if (this.findProperties(PropertyGroupName.normal, '字体')[0]) {
+      return this.findProperties(PropertyGroupName.normal, '字体')[0].value as string
     }
     return '14'
   }
   get fontWeight(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '粗细')) {
-      return this.FindProperties(PropertyGroupName.special, '粗细')[0].value as string
+    if (this.findPropertyByName(PropertyGroupName.special, '粗细')) {
+      return this.findProperties(PropertyGroupName.special, '粗细')[0].value as string
     } else {
       return 'normal'
     }
   }
   get fontStyle(): string {
-    if (this.FindProperties(PropertyGroupName.special, '是否倾斜')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '是否倾斜')[0].value === '是' ? 'oblique' : 'normal'
+    if (this.findProperties(PropertyGroupName.special, '是否倾斜')[0]) {
+      return this.findProperties(PropertyGroupName.special, '是否倾斜')[0].value === '是' ? 'oblique' : 'normal'
     } else {
       return 'normal'
     }
   }
 
   get verticalAlign(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '垂直对齐')) {
-      if (this.FindPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居上') {
+    if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐')) {
+      if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居上') {
         return 'top'
-      } else if (this.FindPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居中') {
+      } else if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居中') {
         return 'middle'
-      } else if (this.FindPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居下') {
+      } else if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居下') {
         return 'bottom'
       }
     }
     return 'top'
   }
   get CurrentText(): string {
-    if (this.FindProperties(PropertyGroupName.special, '文本')[0]) {
+    if (this.findProperties(PropertyGroupName.special, '文本')[0]) {
       if (this.contentEditable) {
-        //window.console.log('-----------文本输入框文字', this.FindProperties(PropertyGroupName.special, '文本')[0].value as string)
+        //window.console.log('-----------文本输入框文字', this.findProperties(PropertyGroupName.special, '文本')[0].value as string)
       }
-      return this.FindProperties(PropertyGroupName.special, '文本')[0].value as string
+      return this.findProperties(PropertyGroupName.special, '文本')[0].value as string
     } else {
       return '暂无数据'
     }
   }
   get space(): string {
-    if (this.FindProperties(PropertyGroupName.special, '是否换行')[0]) {
-      return this.FindProperties(PropertyGroupName.special, '是否换行')[0].value === '否' ? 'nowrap' : null
+    if (this.findProperties(PropertyGroupName.special, '是否换行')[0]) {
+      return this.findProperties(PropertyGroupName.special, '是否换行')[0].value === '否' ? 'nowrap' : null
     } else {
       return null
     }
@@ -123,12 +123,12 @@ export default class TextComponent extends ComponentBase {
 
   /**获取属性值 */
   get Horienten(): string {
-    if (this.FindPropertyByName(PropertyGroupName.special, '水平对齐')) {
-      if (this.FindPropertyByName(PropertyGroupName.special, '水平对齐').value === '居左') {
+    if (this.findPropertyByName(PropertyGroupName.special, '水平对齐')) {
+      if (this.findPropertyByName(PropertyGroupName.special, '水平对齐').value === '居左') {
         return 'left'
-      } else if (this.FindPropertyByName(PropertyGroupName.special, '水平对齐').value === '居右') {
+      } else if (this.findPropertyByName(PropertyGroupName.special, '水平对齐').value === '居右') {
         return 'right'
-      } else if (this.FindPropertyByName(PropertyGroupName.special, '水平对齐').value === '居中') {
+      } else if (this.findPropertyByName(PropertyGroupName.special, '水平对齐').value === '居中') {
         return 'center'
       }
     }
@@ -136,12 +136,12 @@ export default class TextComponent extends ComponentBase {
   }
 
   get TooltipTitle(): string {
-    var tmp = this.FindPropertyByName(PropertyGroupName.special, '提示文字')
+    var tmp = this.findPropertyByName(PropertyGroupName.special, '提示文字')
     if (tmp && (tmp.value as string) != '') {
       return tmp.value as string
     } else {
-      // if (this.FindPropertyByName(PropertyGroupName.special, '文本')) {
-      //   return this.FindPropertyByName(PropertyGroupName.special, '文本').value as string
+      // if (this.findPropertyByName(PropertyGroupName.special, '文本')) {
+      //   return this.findPropertyByName(PropertyGroupName.special, '文本').value as string
       // } else {
       //   return ''
       // }
@@ -150,7 +150,7 @@ export default class TextComponent extends ComponentBase {
   }
 
   get isShowBorder(): boolean {
-    let prop = this.FindPropertyByName(PropertyGroupName.special, '是否显示边框')
+    let prop = this.findPropertyByName(PropertyGroupName.special, '是否显示边框')
     if (prop && prop.value == '是') {
       return true
     } else {

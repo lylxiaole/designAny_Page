@@ -93,7 +93,7 @@ import {
   Color_Property,
   UploadFile_Property,
   Boolean_Property
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import { buttonAddIco } from '../../assets/icons.js'
 
 @Component

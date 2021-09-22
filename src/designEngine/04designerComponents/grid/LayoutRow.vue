@@ -33,7 +33,7 @@ import {
   Enum_Property,
   Boolean_Property,
   PropertyGroupName
-} from '../../02common/commonClasses/LayoutProperty'
+} from '../../03designerLayoutBase'
 import { AllComponents, ComponentBase } from '..'
 import { DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 import common from '../../02common/commonMethod'
@@ -55,7 +55,7 @@ export default class LayoutRow extends ComponentBase {
     if (this.IsDesigning) {
       this.canDrag = true
       this.canDrop = true
-      this.RegisterProperty('自适应父容器', '特有布局', new Boolean_Property(), false)
+      this.registerProperty('自适应父容器', '特有布局', new Boolean_Property(), false)
     }
   }
 
@@ -66,8 +66,8 @@ export default class LayoutRow extends ComponentBase {
     // ****************************************
     dropcomp.parentPage = this.parentPage
     dropcomp.parentLayout = this
-    dropcomp.RegisterProperty('高度自适应', '特有布局', new Boolean_Property(), false)
-    dropcomp.RegisterProperty('宽度自适应', '特有布局', new Boolean_Property(), false)
+    dropcomp.registerProperty('高度自适应', '特有布局', new Boolean_Property(), false)
+    dropcomp.registerProperty('宽度自适应', '特有布局', new Boolean_Property(), false)
     dropcomp.$on('onPropertyChanged', this.onCompPropertyChanged)
     let compIn = new CompIncrustationPro()
     compIn.positionval = 'static'
@@ -150,8 +150,8 @@ export default class LayoutRow extends ComponentBase {
     let fixedHeight = this.height
     for (let index = 0; index < this.compIns.length; index++) {
       const element = this.compIns[index]
-      let isfixedWidth = element.InnerComponent.FindPropertyByName('特有布局', '宽度自适应').value as boolean
-      let isfixedHeight = element.InnerComponent.FindPropertyByName('特有布局', '高度自适应').value as boolean
+      let isfixedWidth = element.InnerComponent.findPropertyByName('特有布局', '宽度自适应').value as boolean
+      let isfixedHeight = element.InnerComponent.findPropertyByName('特有布局', '高度自适应').value as boolean
       if (isfixedWidth) {
         $(element.$el).css('width', '100%')
       } else {
@@ -172,7 +172,7 @@ export default class LayoutRow extends ComponentBase {
 
     for (let index = 0; index < this.compIns.length; index++) {
       const element = this.compIns[index]
-      let isfixedHeight = element.InnerComponent.FindPropertyByName('特有布局', '高度自适应').value as boolean
+      let isfixedHeight = element.InnerComponent.findPropertyByName('特有布局', '高度自适应').value as boolean
       if (isfixedHeight) {
         element.InnerComponent.height = fixedHeight + 'px'
       }
@@ -180,7 +180,7 @@ export default class LayoutRow extends ComponentBase {
   }
 
   private async fixedSelfSize() {
-    let isfixedSize = this.FindPropertyByName('特有布局', '自适应父容器').value as boolean
+    let isfixedSize = this.findPropertyByName('特有布局', '自适应父容器').value as boolean
     if (!isfixedSize) {
       return
     }
