@@ -16,7 +16,7 @@ import componentTemplate from './componentTemplate.vue'
 import { SaveInfo, LayoutType, LayoutInfo, DragItemTypeEnum, DragItemData, LayoutBase } from '../../03designerLayoutBase'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
 import { CurrentApis, pagenNodeType, CurrentContext } from '../../01designerContext'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import { printSelectedInnerHtml, previewSelectedInnerHtml } from '@/utils/printBase'
 import genoPrintDesigner from '../../genoPrintDesigner.vue'
 

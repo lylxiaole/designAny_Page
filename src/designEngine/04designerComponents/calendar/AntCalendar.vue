@@ -76,7 +76,7 @@ import {
 import solarLunar from 'solarlunar'
 import CalendarEventsInfo from '../../02common/commonClasses/CalendarEventsInfo'
 import { CurrentApis } from '../../01designerContext'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 @Component
 export default class AntCalendar extends ComponentBase {

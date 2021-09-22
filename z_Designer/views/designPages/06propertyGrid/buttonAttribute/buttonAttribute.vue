@@ -62,13 +62,59 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
-import buttonAttributeInfo from '../../02common/commonClasses/buttonAttributeInfo'
+import { getUuid, deepClone } from '@src/utils'
 import npColorPicker from '../../07commonComponents/npColorPicker.vue'
 import npUploadFile from '../../07commonComponents/npUploadFile.vue'
 import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 import npIcon from '../../../../views/npicon/npIcon.vue'
+
+class buttonIcons {
+  name: string
+  value: string
+}
+
+export class fileInfo {
+  uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+  status: string = 'done' // 状态有：uploading done error removed
+  response: string = '{status: success}' // 服务端响应内容
+  name: string
+  get thumbUrl(): string {
+    //应对IE的兼容性
+    return this.url
+  }
+  url: string
+}
+class buttonAttributeInfo {
+  key: string
+
+  /**按钮状态 */
+  buttonStatus: string
+
+  /**设置按钮图标方式 1：直接设置 2：上传图片 */
+  buttonIconType: number
+
+  buttonIcons: buttonIcons
+
+  buttonIconImages: fileInfo[]
+
+  /**按钮文字颜色 */
+  buttonTextColor: string = ''
+
+  /**按钮背景色 */
+  buttonBGColor: string = ''
+
+  /**按钮边框颜色 */
+  buttonFrameColor: string = ''
+
+  get allButtonIcons(): any[] {
+    if (this.buttonIconType == 1) {
+      return [{ name: '新增', value: 'plus' }, { name: '查询', value: 'search' }, { name: '删除', value: 'delete' }, { name: '编辑', value: 'edit' }]
+    } else {
+      return this.buttonIconImages
+    }
+  }
+}
 
 @propertyCellTypeAttr(PropertyTypeEnum.buttonAttribute)
 @Component({ components: { NpColorPicker: npColorPicker, NpUploadFile: npUploadFile, npIcon } })
@@ -80,38 +126,38 @@ export default class buttonAttribute extends propertyCellBase {
       title: '按钮状态',
       dataIndex: 'buttonStatus',
       key: 'buttonStatus',
-      width: '20%',
+      width: '20%'
     },
     {
       title: '按钮图标',
       dataIndex: 'buttonIconType',
       scopedSlots: { customRender: 'buttonIconType' },
-      width: '40%',
+      width: '40%'
     },
     {
       title: '前景色',
       dataIndex: 'buttonTextColor',
       scopedSlots: { customRender: 'buttonTextColor' },
-      width: '15%',
+      width: '15%'
     },
     {
       title: '背景色',
       dataIndex: 'buttonBGColor',
       scopedSlots: { customRender: 'buttonBGColor' },
-      width: '15%',
+      width: '15%'
     },
     {
       title: '边框颜色',
       dataIndex: 'buttonFrameColor',
       scopedSlots: { customRender: 'buttonFrameColor' },
-      width: '10%',
-    },
+      width: '10%'
+    }
   ]
 
   private data: buttonAttributeInfo[] = []
   private newbutton(val: string): buttonAttributeInfo {
     var newRow1 = new buttonAttributeInfo()
-    newRow1.key = common.getUuid()
+    newRow1.key = getUuid()
     newRow1.buttonStatus = val
     newRow1.buttonIconType = 1
     newRow1.buttonIcons = undefined
@@ -156,7 +202,7 @@ export default class buttonAttribute extends propertyCellBase {
   }
 
   private modalSure() {
-    this.currentValue = common.clone(this.data)
+    this.currentValue = deepClone(this.data)
     console.log('this.currentValue: ', this.currentValue)
     this.windowVisible = false
   }
@@ -182,7 +228,7 @@ export default class buttonAttribute extends propertyCellBase {
     const newData = [...this.data]
     //找到目标行
     let target = newData.filter((item) => record.key === item.key)[0]
-    console.log('target: ', target);
+    console.log('target: ', target)
     if (target) {
       target = record
       //更新data

@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 import { columnInfo, tableStyle } from '../../04designerComponents/table/tableCommonTypes'
@@ -27,14 +27,14 @@ import PageBase from '../../03designerLayoutBase/PageBase'
 @propertyCellTypeAttr(PropertyTypeEnum.tableExportSetting)
 @Component({
   components: {
-    styleSetting: styleSetting,
-  },
+    styleSetting: styleSetting
+  }
 })
 export default class tableExportSetting extends propertyCellBase {
   private currentTableStyle: tableStyle = new tableStyle()
   private tableStyleSettingVisible: boolean = false
 
-  mounted() {        
+  mounted() {
     this.currentTableStyle = common.clone(this.currentValue)
   }
 
@@ -44,7 +44,7 @@ export default class tableExportSetting extends propertyCellBase {
     this.tableStyleSettingVisible = true
   }
   private handleOk() {
-    this.currentValue = common.clone(this.currentTableStyle)        
+    this.currentValue = common.clone(this.currentTableStyle)
     //this.currentValue.columnInfos = []
     this.tableStyleSettingVisible = false
   }

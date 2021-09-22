@@ -33,7 +33,7 @@ import {
 } from '../../03designerLayoutBase'
 import { ComponentBase } from '../../03designerLayoutBase'
 import BaseEvents from '../../03designerLayoutBase/BaseEvents'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { InputSearch } from 'ant-design-vue/types/input/input-search'
 import { layoutEvent, param } from '../../03designerLayoutBase'

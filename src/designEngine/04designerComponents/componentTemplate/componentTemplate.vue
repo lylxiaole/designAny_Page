@@ -19,7 +19,7 @@ import { ComponentBase } from '../../03designerLayoutBase'
 import { SaveInfo, LayoutType, LayoutInfo, DragItemTypeEnum, LayoutBase } from '../../03designerLayoutBase'
 import CompIncrustationPro from '../../05designerLayouts/layout_Professional/CompIncrustationPro.vue'
 import { CurrentApis, pagenNodeType, CurrentContext } from '../../01designerContext'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 @Component
 export default class componentTemplate extends ComponentBase {
@@ -29,7 +29,7 @@ export default class componentTemplate extends ComponentBase {
     if (!this.background_img || !this.background_img.url) {
       return this.background
     }
-    return 'url("' + common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, this.background_img.url) + '")'
+    return 'url("' + BuildingFileUrlForShow(CurrentContext.FileServerAddress, this.background_img.url) + '")'
   }
 
   get backgroundColor(): string {
@@ -48,7 +48,7 @@ export default class componentTemplate extends ComponentBase {
     if (!this.background_img || !this.background_img.url) {
       return 'unset'
     }
-    return common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, this.background_img.url)
+    return BuildingFileUrlForShow(CurrentContext.FileServerAddress, this.background_img.url)
   }
 
   public PageComponentIncrustations: CompIncrustationPro[] = []

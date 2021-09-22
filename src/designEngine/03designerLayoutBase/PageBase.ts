@@ -2,7 +2,7 @@ import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Pr
 import { ModelInfo, modelSimpleInfo, modelDetailInfo, ModelProperty, propertyValidator, ModelBindingProperty, DecoratorOption, DecoratorRule, modelTypeEnum } from '../02common/impResourcesCache/modelAnalysis'
 import { modelAnalysis, functionCache, dictCache, modelMapperCache, pageCache, pageContentTable, pageStatus } from '../02common/impResourcesCache'
 
-import { ComponentBase } from '../04designerComponents'
+import ComponentBase from './ComponentBase'
 import common from '../02common/commonMethod'
 import LayoutBase, { SaveInfo } from '../03designerLayoutBase/LayoutBase'
 import LayoutContainer from '../03designerLayoutBase/LayoutContainner'
@@ -309,8 +309,8 @@ export default class PageBase extends LayoutContainer {
   }
   // ***************************************************************
   public getPropertyInPageById(propertyId: string): Property {
-    for (let compindex = 0; compindex < this.layoutChildren.length; compindex++) {
-      let comp = this.layoutChildren[compindex]
+    for (let compindex = 0; compindex < this.children.length; compindex++) {
+      let comp = this.children[compindex]
       var property = comp.FindPropertyById(propertyId)
       if (property) {
         return property
@@ -320,15 +320,15 @@ export default class PageBase extends LayoutContainer {
   }
   public getCompMethodById(compId: string, methodName: string, comps?: ComponentBase[]): layoutMethod {
     if (!comps) {
-      comps = this.layoutChildren as ComponentBase[]
+      comps = this.children as ComponentBase[]
     }
     for (let index = 0; index < comps.length; index++) {
       const comp = comps[index]
       if (comp.Id == compId) {
         return comp.designerMethods.find((o) => o.eventName == methodName)
       }
-      if (comp.layoutChildren) {
-        var findMethod = this.getCompMethodById(compId, methodName, comp.layoutChildren as ComponentBase[])
+      if (comp.children) {
+        var findMethod = this.getCompMethodById(compId, methodName, comp.children as ComponentBase[])
         if (findMethod) {
           return findMethod
         }

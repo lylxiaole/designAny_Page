@@ -40,7 +40,7 @@ import {
   Color_Property,
   BindingModels_Property
 } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import { param, paramType } from '../../03designerLayoutBase'
 import fileUpload from '../../02common/uploadFile/fileUpload'
 
@@ -68,7 +68,7 @@ export default class upLoadComponent extends ComponentBase {
       info.uid = o.uid
       info.name = o.name
       info.url = this.fileUploadClass.getFilePath(o.url)
-      var ab_info = common.clone(info)
+      var ab_info = deepClone(info)
       ab_info.url = o.url
       files.push(info)
       absolutefiles.push(ab_info)
@@ -398,7 +398,7 @@ export default class upLoadComponent extends ComponentBase {
 
   onUploadSuccess(relativePath: string, fileName: string) {
     var fileinfo = new fileInfo()
-    fileinfo.uid = common.getUuid()
+    fileinfo.uid = getUuid()
     fileinfo.name = fileName
     fileinfo.url = relativePath
     //window.console.log('上传文件大小子')
@@ -425,7 +425,7 @@ export default class upLoadComponent extends ComponentBase {
       info.uid = o.uid
       info.name = o.name
       info.url = this.fileUploadClass.getFilePath(o.url)
-      var ab_info = common.clone(info)
+      var ab_info = deepClone(info)
       ab_info.url = o.url
       files.push(info)
       absolutefiles.push(ab_info)

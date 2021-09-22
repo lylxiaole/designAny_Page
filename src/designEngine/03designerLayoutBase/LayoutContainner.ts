@@ -5,7 +5,7 @@ import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorat
 import { Property } from './commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
 import { CurrentApis } from '../01designerContext'
-import { ComponentBase } from '../04designerComponents'
+import { ComponentBase } from '../03designerLayoutBase'
 import { findSystemComp, findSystemCompByCode } from '../04designerComponents'
 
 export default class LayoutContainer extends LayoutBase {
@@ -156,8 +156,7 @@ export default class LayoutContainer extends LayoutBase {
             return true
           }
           let oldcomp = this.FindLayoutRecursion(compId)
-          compInfo.groupName = oldcomp.layoutInfo.groupName
-          compInfo.name = oldcomp.layoutInfo.name
+
           let compclass = findSystemComp(compInfo.groupName, compInfo.name)
           if (!compclass) {
             break
@@ -273,7 +272,7 @@ export default class LayoutContainer extends LayoutBase {
   }
 
   private changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
-    let comps = this.layoutChildren.filter((o) => o.Id == compId)
+    let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
       case 'you_xia':
         comps.filter((comp) => {
@@ -322,8 +321,8 @@ export default class LayoutContainer extends LayoutBase {
 
   private cuteNearbyPointInPage(x: number, y: number, target: LayoutBase): Point {
     let respoint: Point = { X: x, Y: y }
-    for (let index = 0; index < this.layoutChildren.length; index++) {
-      const layout = this.layoutChildren[index]
+    for (let index = 0; index < this.children.length; index++) {
+      const layout = this.children[index]
       if (layout.Id == target.Id) {
         continue
       }
@@ -401,7 +400,7 @@ export default class LayoutContainer extends LayoutBase {
 
   /************************************publics***********************/
   public chooseComps(comps: LayoutBase[]) {
-    this.cancelCompSelected(this.layoutChildren)
+    this.cancelCompSelected(this.children)
 
     comps.filter((o) => {
       o.isSelected = true
@@ -413,7 +412,7 @@ export default class LayoutContainer extends LayoutBase {
       if (o.isSelected == true) {
         o.isSelected = false
       }
-      this.cancelCompSelected(o.layoutChildren)
+      this.cancelCompSelected(o.children)
     })
     this.isSelected = false
   }

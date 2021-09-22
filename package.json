@@ -82,6 +82,7 @@
     "@babel/plugin-syntax-top-level-await": "^7.14.5",
     "@types/file-saver": "^2.0.3",
     "@types/uuid": "^8.3.1",
+    "ant-design-vue": "^1.7.8",
     "autoprefixer": "^10.3.1",
     "axios": "^0.21.1",
     "browserify-zlib": "^0.2.0",
@@ -133,6 +134,7 @@
     "vue-schart": "^2.0.0",
     "vue-template-compiler": "2.6.10",
     "vuex": "^3.1.0",
+    "vxe-table": "^3.3.12",
     "wangeditor": "^4.7.4",
     "xe-utils": "^3.3.2",
     "xlsx": "^0.17.2"

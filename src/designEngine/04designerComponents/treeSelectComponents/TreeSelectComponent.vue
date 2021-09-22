@@ -24,7 +24,7 @@ import { ComponentBase } from '../../03designerLayoutBase'
 
 import { CurrentApis, CurrentContext } from '../../01designerContext'
 import { param, paramType } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 export interface TreeNodeInfo {
   label?: string
@@ -130,7 +130,7 @@ export default class TreeSelectComponent extends ComponentBase {
     if (prop && extra.triggerNode.dataRef.tag) {
       this.setPropertyVal(prop.id, value)
     }
-    this.selectNode = common.clone(extra.triggerNode.dataRef)
+    this.selectNode = deepClone(extra.triggerNode.dataRef)
     //window.console.log('-------------xxxxyyyyyy获取选中节点全部信息', this.selectNode)
     this.triggeEvent('值改变事件', null)
   }

@@ -54,7 +54,7 @@ import { CurrentContext } from '../../01designerContext'
 import pdfjsLib from 'pdfjs-dist/build/pdf'
 import mammoth from 'mammoth'
 import XLSX from 'xlsx'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone, BuildingFileUrlForShow } from '@src/utils'
 
 import MediaModal from '../../04designerComponents/mediaComponents/MediaModal.vue'
 
@@ -114,7 +114,7 @@ export default class MediaComponent extends ComponentBase {
         //window.console.log('typeName', typeName)
         let fullpath = selectValues
         if (selectValues.indexOf(CurrentContext.BusinessFileServerAddress) < 0) {
-          fullpath = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, selectValues)
+          fullpath = BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, selectValues)
         }
         //window.console.log('fullpath', fullpath)
         //this._filePath = fullpath
@@ -136,7 +136,7 @@ export default class MediaComponent extends ComponentBase {
     let start = shortPath.lastIndexOf('.')
     let typeName = shortPath.substring(start, end).replace('.', '')
     if (value.indexOf(CurrentContext.BusinessFileServerAddress) < 0) {
-      value = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, value)
+      value = BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, value)
     }
     this.refresh(value, typeName)
   }
@@ -156,7 +156,7 @@ export default class MediaComponent extends ComponentBase {
         this.videoSource = [
           {
             type: 'video/mp4',
-            src: common.clone(fullpath)
+            src: deepClone(fullpath)
           }
         ]
         var ddd = this.bodyContent.getElementsByClassName('videoDemo')
@@ -476,7 +476,7 @@ export default class MediaComponent extends ComponentBase {
     }
     //弹窗
     //MediaComponent
-    let domid = common.getUuid()
+    let domid = getUuid()
     var div = $(this.$el)[0].innerHTML
     let tmpNode = ' <div id="' + domid + '"> </div> '
     //window.console.log('----------div',div)
@@ -506,10 +506,10 @@ export default class MediaComponent extends ComponentBase {
       let property = this.findPropertyByName(PropertyGroupName.special, '文件路径')
       let fullpath = property.value
       if (fullpath.indexOf(CurrentContext.BusinessFileServerAddress) < 0) {
-        fullpath = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, fullpath)
+        fullpath = BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, fullpath)
       }
       //fullpath += '?Company-Id=999'
-      //let fullpath = common.BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, property.value)
+      //let fullpath = BuildingFileUrlForShow(CurrentContext.BusinessFileServerAddress, property.value)
       modal.fileType = this.fileType
       modal.filePathTemp = fullpath
       //window.console.log('-------------modal',modal)
@@ -528,7 +528,7 @@ export default class MediaComponent extends ComponentBase {
         this.videoSource = [
           {
             type: 'video/mp4',
-            src: common.clone(property.value)
+            src: deepClone(property.value)
           }
         ]
       }

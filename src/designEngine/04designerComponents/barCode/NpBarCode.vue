@@ -13,7 +13,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '../../03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 @Component
 export default class NpBarCode extends ComponentBase {

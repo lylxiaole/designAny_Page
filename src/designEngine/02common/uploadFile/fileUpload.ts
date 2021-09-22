@@ -11,7 +11,7 @@ export default class fileUpload {
     this.urlfileserviceAddress = new URL(serverAddr)
     this.serverAddr = serverAddr
     AWS.config.update({
-      endpoint: this.urlfileserviceAddress.host,
+      endpoint: this.urlfileserviceAddress.host
     })
   }
 
@@ -28,7 +28,7 @@ export default class fileUpload {
     let params = {
       Bucket: this.urlfileserviceAddress.pathname.substring(1),
       Key: file.name,
-      Body: file,
+      Body: file
     }
 
     var s3 = new AWS.S3({
@@ -38,7 +38,7 @@ export default class fileUpload {
       s3ForcePathStyle: true,
       sslEnabled: false,
       clientSideMonitoring: false,
-      sessionToken: token,
+      sessionToken: token
     })
 
     let upload = s3
@@ -46,8 +46,8 @@ export default class fileUpload {
         queueSize: 3,
         connectTimeout: 60 * 1008 * 10,
         httpoptions: {
-          timeout: 60 * 100 * 10,
-        },
+          timeout: 60 * 100 * 10
+        }
       })
       .on('httpUploadProgress', (e: any) => {
         var precent = parseInt(e.loaded, 10) / parseInt(e.total, 10)
@@ -102,7 +102,7 @@ export default class fileUpload {
   /**拼接文件路径 */
   public getFilePath(relativePath: string) {
     //window.console.log(this.serverAddr + relativePath + '&access_token=' + token)
-    return common.BuildingFileUrlForShow(this.serverAddr, relativePath)
+    return BuildingFileUrlForShow(this.serverAddr, relativePath)
   }
 
   /**********可注册时间************************************************************* */

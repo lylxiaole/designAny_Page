@@ -50,7 +50,7 @@
 import { Component, Watch } from 'vue-property-decorator'
 import { Number_Property, Text_Property, Boolean_Property, Enum_Property, PropertyGroupName, Button_Property } from '../../03designerLayoutBase'
 import { ComponentBase } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import buttonAttributeInfos from '../../02common/commonClasses/buttonAttributeInfo'
 import { CurrentContext } from '../../01designerContext'
 import { param, paramType } from '../../03designerLayoutBase'
@@ -92,7 +92,7 @@ export default class ButtonComponent extends ComponentBase {
         this.btnOptions.iconFlag = false
         this.btnOptions.varIcon = ''
         if (buttonAttributeInfo.buttonIconImages && buttonAttributeInfo.buttonIconImages.length > 0) {
-          this.btnOptions.imageUrl = common.BuildingFileUrlForShow(
+          this.btnOptions.imageUrl = BuildingFileUrlForShow(
             CurrentContext.FileServerAddress,
             buttonAttributeInfo.buttonIconImages[0].url.split('?')[0]
           )

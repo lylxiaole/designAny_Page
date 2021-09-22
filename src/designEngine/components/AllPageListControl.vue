@@ -896,7 +896,7 @@ export default class PageListControl extends Vue {
         workflowIds: pageb.resourceObj.workFlowIds
       }
       let res = (await CurrentApis.LeadOutPage(reqdata)) as any
-      let fileurl = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, res.relativePath)
+      let fileurl = BuildingFileUrlForShow(CurrentContext.FileServerAddress, res.relativePath)
       window.open(fileurl)
       window.console.log('leadoutPage:', pageb.resourceObj)
     } finally {

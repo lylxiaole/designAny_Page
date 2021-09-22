@@ -43,7 +43,7 @@ import breadcrumAttributeInfos from '../../02common/commonClasses/breadcrumAttri
 import breadcrumIcons from '../../02common/commonClasses/breadcrumAttributeInfo'
 import { CurrentContext } from '../../01designerContext'
 import { param, paramType } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 @Component
 export default class BreadcrumComponent extends ComponentBase {

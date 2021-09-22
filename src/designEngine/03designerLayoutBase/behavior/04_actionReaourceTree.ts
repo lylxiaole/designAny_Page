@@ -1,13 +1,9 @@
 import PageBase from '../PageBase'
 import { getUuid } from '@src/utils'
-import { ComponentBase } from '../../03designerLayoutBase'
-import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { behavior, variable, action, actionDetail } from './behaviorTypes'
 import { objectBase, objectType, resourceType, resourceSearchType, object_Method, object_Variable, allCuteSigns, allFilterSigns, resourceSearchAttr } from './01_actionCommon'
 import factory from './03_actionFactory'
 import { CurrentContext, CurrentApis, pagenNodeType } from '../../01designerContext'
-import { Property } from '../commonClasses/LayoutProperty'
-import { layoutMethod, param, paramType } from '../commonClasses/layoutEvent'
 import { object_callback, object_FixedVal } from '.'
 
 export class groupNode {

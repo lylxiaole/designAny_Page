@@ -29,7 +29,7 @@ import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseE
 import fileUpload from '../../02common/uploadFile/fileUpload'
 import { ComponentBase } from '../../03designerLayoutBase'
 import BaseEvents from '../../03designerLayoutBase/BaseEvents'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import TextComponent from '../textComponents/TextComponent.vue'
 import { CurrentContext } from '../../01designerContext'
@@ -69,7 +69,7 @@ export default class ConfigurableCardComponent extends ComponentBase {
     if (this.findProperties(PropertyGroupName.special, propertyName)[0]) {
       let selectValues = this.findProperties(PropertyGroupName.special, propertyName)[0].value
       if (selectValues && selectValues.length > 0) {
-        let fullpath = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, selectValues[0].url)
+        let fullpath = BuildingFileUrlForShow(CurrentContext.FileServerAddress, selectValues[0].url)
         if (propertyName === '封面') {
           const names = selectValues[0].name.split('/')
           if (names && names.length > 0) {

@@ -27,11 +27,11 @@
       <a-layout-content style="" :style="{'overflow': 'hidden','width':'100%','height':'100%'}">
         <div class="ant-pro-multi-tab" style="height:100%;width: 100%;z-index: 0;">
           <div class="ant-pro-multi-tab-wrapper">
-             <!-- style="height: calc(100% - 100px) !important;" -->
-            <a-tabs
-              :tabBarStyle="{'background': '#FFF','margin': 0,'paddingLeft': '16px','paddingTop': '0px','border-bottom': '1px solid #18aeb7'}" hideAdd
-              :activeKey="activeTabKey" @change="changeActiveTab" @edit="onTabsEdit" type="editable-card">
-              <a-tab-pane style="width:100%;height:100%;overflow:auto;background: #E0E3E9;" v-for="pane in panes" :key="pane.key" :closable="pane.closable">
+            <!-- style="height: calc(100% - 100px) !important;" -->
+            <a-tabs :tabBarStyle="{'background': '#FFF','margin': 0,'paddingLeft': '16px','paddingTop': '0px','border-bottom': '1px solid #18aeb7'}"
+              hideAdd :activeKey="activeTabKey" @change="changeActiveTab" @edit="onTabsEdit" type="editable-card">
+              <a-tab-pane style="width:100%;height:100%;overflow:auto;background: #E0E3E9;" v-for="pane in panes" :key="pane.key"
+                :closable="pane.closable">
                 <!-- :tab="pane.title" -->
                 <span class="np-tab-span" :title="pane.title" slot="tab">
                   {{pane.title}}
@@ -48,17 +48,19 @@
             </a-tabs>
           </div>
         </div>
-         <div style="top: 0;position: fixed;right: 0;"> <a-icon class="trigger preview-export" type="export" @click="closePreview" />
-        <a-icon v-if="activeTabKey" class="trigger historyicon" style="position:absolute;right:56px" @click="()=>{ this.showPageHistory()}"
-          :component="historyIcon" />
-        <PageHistory @onSelectHistory="viewHistroy" ref="historyPopup"></PageHistory></div>
+        <div style="top: 0;position: fixed;right: 0;">
+          <a-icon class="trigger preview-export" type="export" @click="closePreview" />
+          <a-icon v-if="activeTabKey" class="trigger historyicon" style="position:absolute;right:56px" @click="()=>{ this.showPageHistory()}"
+            :component="historyIcon" />
+          <PageHistory @onSelectHistory="viewHistroy" ref="historyPopup"></PageHistory>
+        </div>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
 import SubMenu from './tool/SuMenu'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import Logo from '../../../tools/Logo'
 import position from '../../assets/imges/position.svg?inline'
 import Icon from 'ant-design-vue/es/icon'
@@ -113,7 +115,7 @@ export default {
   },
   created() {
     CurrentContext.RoutePage = (pageId, param) => {
-      console.info('menuPageData',this.menuPageData)
+      console.info('menuPageData', this.menuPageData)
       if (pageId == this.activeTabKey) {
         return
       }
@@ -545,20 +547,20 @@ export default {
   display: inline-block;
   width: 100px;
 }
-/deep/ .ant-tabs-bar{
+/deep/ .ant-tabs-bar {
   height: 50px;
 }
 
-/deep/ .ant-tabs-tab div{
+/deep/ .ant-tabs-tab div {
   height: 32px;
 }
-/deep/ .ant-pro-multi-tab-wrapper{
+/deep/ .ant-pro-multi-tab-wrapper {
   height: 100%;
 }
-/deep/ .ant-tabs{
+/deep/ .ant-tabs {
   height: 100%;
 }
-/deep/ .ant-tabs-top-content{
-  height:calc(100% - 50px) !important;
+/deep/ .ant-tabs-top-content {
+  height: calc(100% - 50px) !important;
 }
 </style>

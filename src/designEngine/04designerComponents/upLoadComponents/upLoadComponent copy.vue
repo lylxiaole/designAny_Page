@@ -25,7 +25,7 @@ import {
   Color_Property,
   BindingModels_Property
 } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import { param, paramType } from '../../03designerLayoutBase'
 import npUploadFile from '../../07commonComponents/npUploadFile.vue'
 import fileUpload from '../../02common/uploadFile/fileUpload'

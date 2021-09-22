@@ -37,7 +37,7 @@ import {
 } from '../../03designerLayoutBase'
 import PageBase from '../../03designerLayoutBase/PageBase'
 import NpGridCell from '../../04designerComponents/grid/NpGridCell.vue'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { startEditIco } from '../../assets/icons.js'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'

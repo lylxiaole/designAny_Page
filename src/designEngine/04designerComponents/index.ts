@@ -60,11 +60,7 @@ import InputNumberComponent from './InputComponents/InputNumberComponent.vue'
 import InputComponent from './InputComponents/InputComponent.vue'
 import TextAreaComponent from './InputComponents/TextAreaComponent.vue'
 import InputRichComponent from './InputComponents/InputRichComponent.vue'
-import GanttCom from './ganttCom/GanttCom.vue'
 import componentTemplate from './componentTemplate/componentTemplate.vue'
-import printAreaComponent from './componentTemplate/printAreaComponent.vue'
-// import tabContent from './tabsComponents/TabContent.vue'
-//import flowCompomemt from './flowComponents/flow.vue'
 import flowCompomemt from './flowComponents/flowX6.vue'
 import mindCompomemt from './mindComponents/mind.vue'
 import inputCompositeTemplate from './compositeTemplate/InputCompositeTemplate.vue'
@@ -193,7 +189,6 @@ export var AllComponents: LayoutInfo[] = [
   //图形组件
   new LayoutInfo(LayoutType.system_component, '图形组件', '圆形进度条', CircleComponent, circleIco, null, null, 'CircleComponent'),
   new LayoutInfo(LayoutType.system_component, '图形组件', '仪表进度条', DashboardComponent, dashboardIco, null, null, 'DashboardComponent'),
-  new LayoutInfo(LayoutType.system_component, '图形组件', '甘特图', GanttCom, ganttIco, null, null, 'GanttCom'),
   //流程图组件
   new LayoutInfo(LayoutType.system_component, '流程组件', '流程图', flowCompomemt, circleIco, null, null, 'flowCompomemt'),
   //脑图

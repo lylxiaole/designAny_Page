@@ -7,7 +7,7 @@
 import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Watch } from 'vue-property-decorator'
 import { Property, PropertyGroupName, Number_Property, Button_Property, Enum_Property, Text_Property } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import { property } from 'xe-utils'
 
 @Component

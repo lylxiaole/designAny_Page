@@ -17,7 +17,7 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { Property, Text_Property, Enum_Property, Boolean_Property, PropertyGroupName, EnumModal_Property } from '../../03designerLayoutBase'
 import { ComponentBase } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone,BuildingFileUrlForShow } from '@src/utils'
 import fileUpload from '../../02common/uploadFile/fileUpload'
 import { CurrentContext } from '../../01designerContext'
 import { bindTypeEnum } from '../../02common/commonClasses/modelBingding'
@@ -354,7 +354,7 @@ export default class CheckboxComponent extends ComponentBase {
     if (this.findProperties(PropertyGroupName.special, '背景图片')[0]) {
       let selectValues = this.findProperties(PropertyGroupName.special, '背景图片')[0].value
       if (selectValues && selectValues.length > 0) {
-        let fullPath = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, selectValues[0].url)
+        let fullPath = BuildingFileUrlForShow(CurrentContext.FileServerAddress, selectValues[0].url)
         return fullPath
       }
       return ''

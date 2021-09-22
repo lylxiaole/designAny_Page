@@ -1,16 +1,21 @@
 <template>
-  <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgba(9, 87, 106, 1)" :style="{ height: height + 'px', width: '100%' }">
+  <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgba(9, 87, 106, 1)"
+    :style="{ height: height + 'px', width: '100%' }">
     <div :style="{ height: height + 'px', width: '200px' }" style="display: flex; min-width: 200px">
       <div style="padding: 9px; line-height: 0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }">
         <img style="height: 100%; width: 100%" src="../../assets/imges/designerMainLogo.png" />
       </div>
-      <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">
+      <div class="verticalAlignCenter"
+        style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">
         {{ title }}
       </div>
     </div>
     <!-- *************************************************************************** -->
-    <div :style="{ height: height + 'px' }" style="left: 20%; border-right: 1px solid rgba(233, 236, 240, 0.5); padding-right: 20px" class="verticalAlignCenter">
-      <a-tooltip v-if="pageResourcesVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip" style="background: transparent" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+    <div :style="{ height: height + 'px' }" style="left: 20%; border-right: 1px solid rgba(233, 236, 240, 0.5); padding-right: 20px"
+      class="verticalAlignCenter">
+      <a-tooltip v-if="pageResourcesVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip"
+        style="background: transparent"
+        :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
         <div slot="title" style="width: 467px; height: 457px; background-color: #ffffff; background: #ffffff">
           <geno-allPageListControl style="width: 100%; height: 100%" @onOpenCommonPage="onOpenCommonPageNew" />
         </div>
@@ -19,9 +24,12 @@
           <div class="verticalAlignCenter">页面资源</div>
         </div>
       </a-tooltip>
-      <a-tooltip v-if="systemControlsVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip" style="background: transparent" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+      <a-tooltip v-if="systemControlsVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip"
+        style="background: transparent"
+        :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
         <div slot="title" style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
-          <geno-componentListControl :sys_limitGroupNames="sys_limitGroupNames" :sys_limitCompCodes="sys_limitCompCodes" ref="systemComps" style="width: 100%; height: 100%" />
+          <geno-componentListControl :sys_limitGroupNames="sys_limitGroupNames" :sys_limitCompCodes="sys_limitCompCodes" ref="systemComps"
+            style="width: 100%; height: 100%" />
         </div>
         <div :style="{ width: height + 'px' }" class="flexItem themeHover">
           <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="systemCompIcon" />
@@ -29,7 +37,9 @@
         </div>
       </a-tooltip>
       <!-- *************************************************************************** -->
-      <a-tooltip v-if="compComponentsVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip" style="background: transparent" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+      <a-tooltip v-if="compComponentsVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip"
+        style="background: transparent"
+        :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
         <div slot="title" style="width: 467px; height: 357px; background-color: rgba(255, 255, 255, 1); background: rgba(255, 255, 255, 1)">
           <geno-componentTemplateControl style="width: 100%; height: 100%" @onOpenPage="onOpenComppnentPage" />
         </div>
@@ -39,7 +49,9 @@
         </div>
       </a-tooltip>
       <!-- *************************************************************************** -->
-      <a-tooltip v-if="modelComponentsVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip" style="background: transparent" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+      <a-tooltip v-if="modelComponentsVisible" ref="compref1" placement="bottom" :getPopupContainer="getPopupContainer" overlayClassName="nptooltip"
+        style="background: transparent"
+        :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
         <div slot="title" style="width: 467px; height: 357px; background-color: rgba(255, 255, 255, 1); background: rgba(255, 255, 255, 1)">
           <geno-modelcontrol style="width: 100%; height: 100%" @onAddModel="addModel" @onDblClick="onDblClick" />
         </div>
@@ -61,7 +73,8 @@
         <div class="verticalAlignCenter">前进</div>
       </div> -->
       <!-- *************************************************************************** -->
-      <div :style="{ width: height + 'px' }" @click="savePage" class="flexItem themeHover" v-if="saveBtnVisible && ((CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2) || (CurrentPage && CurrentPage.IsComponentTemplate == true))">
+      <div :style="{ width: height + 'px' }" @click="savePage" class="flexItem themeHover"
+        v-if="saveBtnVisible && ((CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2) || (CurrentPage && CurrentPage.IsComponentTemplate == true))">
         <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="saveIcon" />
         <div class="verticalAlignCenter">保存</div>
       </div>
@@ -84,70 +97,45 @@
         <div class="iconitem flexHorilanLayout"><span class="icon iconfont">&#xe618;</span></div>
         <div class="verticalAlignCenter">导出文件</div>
       </div> -->
-      <div
-        :style="{ width: height + 'px' }"
-        class="flexItem themeHover"
-        @click="
+      <div :style="{ width: height + 'px' }" class="flexItem themeHover" @click="
           () => {
             this.onCheckOut();
           }
-        "
-        v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 0"
-      >
+        " v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 0">
         <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="checkoutIcon" />
         <div class="verticalAlignCenter">签出</div>
       </div>
-      <div
-        :style="{ width: height + 'px' }"
-        class="flexItem themeHover"
-        @click="
+      <div :style="{ width: height + 'px' }" class="flexItem themeHover" @click="
           () => {
             this.preCheckIn();
           }
-        "
-        v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2"
-      >
+        " v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2">
         <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="checkinIcon" />
         <div class="verticalAlignCenter">签入</div>
         <InputDescModal ref="InputDescPopup" @onSuccess="onGetDescStr"></InputDescModal>
       </div>
-      <div
-        :style="{ width: height + 'px' }"
-        class="flexItem themeHover"
-        @click="
+      <div :style="{ width: height + 'px' }" class="flexItem themeHover" @click="
           () => {
             this.onCancelCheckOut();
           }
-        "
-        v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2"
-      >
+        " v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2">
         <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="revertIcon" />
         <div class="verticalAlignCenter">撤销</div>
       </div>
-      <div
-        :style="{ width: height + 'px' }"
-        class="flexItem themeHover"
-        @click="
+      <div :style="{ width: height + 'px' }" class="flexItem themeHover" @click="
           () => {
             this.showPageHistory();
           }
-        "
-        v-if="CurrentPage"
-      >
+        " v-if="CurrentPage">
         <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="historyIcon" />
         <div class="verticalAlignCenter">历史</div>
         <PageHistory @onSelectHistory="viewHistroy" ref="historyPopup"></PageHistory>
       </div>
-      <div
-        :style="{ width: height + 'px' }"
-        class="flexItem themeHover"
-        @click="
+      <div :style="{ width: height + 'px' }" class="flexItem themeHover" @click="
           () => {
             this.showPageHistory_Restore();
           }
-        "
-        v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2"
-      >
+        " v-if="CurrentPage && CurrentPage.checkoutInfo.checkoutStatus == 2">
         <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="restoreIcon" />
         <div class="verticalAlignCenter">回滚</div>
         <PageHistory @onSelectHistory="restoreHistroy" ref="historyRestorePopup"></PageHistory>
@@ -169,20 +157,18 @@
         <div class="verticalAlignCenter">打印</div>
       </div>
       <!-- *************************************************************************** -->
-      <div
-        v-if="previewBtnVisible"
-        :style="{ width: height + 'px' }"
-        class="flexItem themeHover"
-        @click="
+      <div v-if="previewBtnVisible" :style="{ width: height + 'px' }" class="flexItem themeHover" @click="
           () => {
             this.onPreView();
           }
-        "
-      >
+        ">
         <a-icon style="margin-top: 4px; margin-bottom: 2px; font-size: 23px; height: 57%; width: 100%" :component="previewIcon" />
         <div class="verticalAlignCenter">预览</div>
-        <a-modal ref="previewPopup" :title="null" width="100%" style="top: 0; bottom: 0; height: 100%; overflow-y: hidden" :bodyStyle="modalBodyStyle" wrapClassName="ant-modal-cust-warp" class="preview-modal" :visible="previewWindowVisible" :closable="false" :footer="null" destroyOnClose :zIndex="100">
-          <PagePreview :v-if="previewWindowVisible" :pageId="CurrentPage ? CurrentPage.Id : null" style="height: 100%; width: 100%" @close="handleCancel"> </PagePreview>
+        <a-modal ref="previewPopup" :title="null" width="100%" style="top: 0; bottom: 0; height: 100%; overflow-y: hidden" :bodyStyle="modalBodyStyle"
+          wrapClassName="ant-modal-cust-warp" class="preview-modal" :visible="previewWindowVisible" :closable="false" :footer="null" destroyOnClose
+          :zIndex="100">
+          <PagePreview :v-if="previewWindowVisible" :pageId="CurrentPage ? CurrentPage.Id : null" style="height: 100%; width: 100%"
+            @close="handleCancel"> </PagePreview>
         </a-modal>
       </div>
       <!-- *************************************************************************** -->
@@ -195,14 +181,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from "vue-property-decorator";
-import PageBase from "../PageBase";
-import PagePreview from "../page_Preview/PagePreview.vue";
-import { pagenNodeType } from "../../01designerContext";
-import ComponentListControl from "../../components/ComponentListControl.vue";
-import Icon from "ant-design-vue/es/icon";
-import PageHistory from "../../components/PageHistory.vue";
-import InputDescModal from "../../components/InputDescModal.vue";
+import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { PageBase, ComponentBase, LayoutBase, LayoutInfo } from '../../03designerLayoutBase'
+
+import PagePreview from '../page_Preview/PagePreview.vue'
+import { pagenNodeType } from '../../01designerContext'
+import ComponentListControl from '../../components/ComponentListControl.vue'
+import Icon from 'ant-design-vue/es/icon'
+import PageHistory from '../../components/PageHistory.vue'
+import InputDescModal from '../../components/InputDescModal.vue'
 
 import {
   save,
@@ -236,216 +223,217 @@ import {
   preview,
   redo,
   componentTemp,
-  history,
-} from "../../02common/icons.js";
+  history
+} from '../../02common/icons.js'
 
 @Component({
   components: {
     PagePreview,
     Icon,
     PageHistory,
-    InputDescModal,
-  },
+    InputDescModal
+  }
 })
 export default class quickActionBar extends Vue {
-  private systemCompIcon: any;
-  private componentTempIcon: any;
-  private componentModelIcon: any;
-  private saveIcon: any;
-  private saveAsIcon: any;
+  private systemCompIcon: any
+  private componentTempIcon: any
+  private componentModelIcon: any
+  private saveIcon: any
+  private saveAsIcon: any
 
-  private pageResource: any;
-  private checkoutIcon: any;
-  private checkinIcon: any;
-  private revertIcon: any;
-  private historyIcon: any;
-  private restoreIcon: any;
+  private pageResource: any
+  private checkoutIcon: any
+  private checkinIcon: any
+  private revertIcon: any
+  private historyIcon: any
+  private restoreIcon: any
 
-  private previewIcon: any;
-  private quitIcon: any;
+  private previewIcon: any
+  private quitIcon: any
 
-  @Prop() private height: number;
+  @Prop() private height: number
   /**当前的布局页面属性，外部通过绑定传递进来 */
-  @Prop() public CurrentPage: PageBase;
+  @Prop() public CurrentPage: PageBase
 
   private get pageScale(): number {
     if (!this.CurrentPage) {
-      return 0;
+      return 0
     }
-    return this.CurrentPage.currentScaleSize;
+    return this.CurrentPage.currentScaleSize
   }
   private set pageScale(val: number) {
     // window.console.log('aaaaaa')
     if (!this.CurrentPage) {
-      return;
+      return
     }
-    var valchange = val - this.CurrentPage.currentScaleSize;
-    this.CurrentPage.scaleSize(valchange);
+    var valchange = val - this.CurrentPage.currentScaleSize
+    this.CurrentPage.scaleSize(valchange)
   }
 
   private get modalBodyStyle(): any {
     return {
-      padding: "0",
-      height: "100% !important",
-    };
+      padding: '0',
+      height: '100% !important'
+    }
   }
 
   created() {
-    this.systemCompIcon = systemComponent;
-    this.componentTempIcon = componentTemp;
-    this.componentModelIcon = componengModel;
-    this.saveIcon = save;
-    this.saveAsIcon = save_as;
-    this.pageResource = pageResources;
-    this.checkoutIcon = checkout;
-    this.checkinIcon = checkin;
-    this.revertIcon = revert;
-    this.historyIcon = history;
-    this.previewIcon = preview;
-    this.quitIcon = quitLogin;
-    this.restoreIcon = restore;
+    this.systemCompIcon = systemComponent
+    this.componentTempIcon = componentTemp
+    this.componentModelIcon = componengModel
+    this.saveIcon = save
+    this.saveAsIcon = save_as
+    this.pageResource = pageResources
+    this.checkoutIcon = checkout
+    this.checkinIcon = checkin
+    this.revertIcon = revert
+    this.historyIcon = history
+    this.previewIcon = preview
+    this.quitIcon = quitLogin
+    this.restoreIcon = restore
   }
 
   public savePage() {
     if (!this.CurrentPage) {
-      return;
+      return
     }
-    this.CurrentPage.Save();
+    this.CurrentPage.Save()
   }
 
   public savePageAndClose() {}
 
   private getPopupContainer() {
     this.$nextTick(() => {
-      $(this.$el).find(".ant-tooltip-inner").css("padding", "0px");
-    });
-    return this.$refs.miandiv;
+      $(this.$el)
+        .find('.ant-tooltip-inner')
+        .css('padding', '0px')
+    })
+    return this.$refs.miandiv
   }
   private showPageHistory() {
     // window.console.log('showPageHistory')
-    (this.$refs.historyPopup as any).show(this.CurrentPage.Id);
-    (this.$refs.historyPopup as any).startViewHistory();
+    ;(this.$refs.historyPopup as any).show(this.CurrentPage.Id)
+    ;(this.$refs.historyPopup as any).startViewHistory()
   }
   private showPageHistory_Restore() {
-    (this.$refs.historyRestorePopup as any).show(this.CurrentPage.Id);
-    (this.$refs.historyRestorePopup as any).startRostore();
+    ;(this.$refs.historyRestorePopup as any).show(this.CurrentPage.Id)
+    ;(this.$refs.historyRestorePopup as any).startRostore()
   }
 
   private viewHistroy(histroyId: number) {
-    this.onViewHistroy(histroyId);
+    this.onViewHistroy(histroyId)
   }
   private restoreHistroy(histroyId: number) {
-    this.onRestoreHistroy(histroyId);
+    this.onRestoreHistroy(histroyId)
   }
 
   private preCheckIn() {
-    (this.$refs.InputDescPopup as any).show();
+    ;(this.$refs.InputDescPopup as any).show()
   }
 
   private onGetDescStr(val: string) {
-    this.onCheckIn(val);
+    this.onCheckIn(val)
   }
   /****************预览功能************************************************************* */
-  private previewWindowVisible: boolean = false;
+  private previewWindowVisible: boolean = false
   private onPreviewOk() {
-    this.previewWindowVisible = false;
+    this.previewWindowVisible = false
   }
   private handleCancel() {
-    this.previewWindowVisible = false;
+    this.previewWindowVisible = false
   }
   private onPreView() {
-    this.previewWindowVisible = true;
+    this.previewWindowVisible = true
   }
   /**新增一个打开页面的方法 */
   onOpenComppnentPage(pageId: string, pageName: string, pageType: pagenNodeType) {
-    this.onOpenComponentTemplate(pageId, pageName, pageType);
+    this.onOpenComponentTemplate(pageId, pageName, pageType)
   }
   onOpenCommonPageNew(pageId: string, pageName: string, pageType: pagenNodeType) {
-    this.onOpenCommonPage(pageId, pageName, pageType);
+    this.onOpenCommonPage(pageId, pageName, pageType)
   }
   /*************定制化控制项************************************************************************ */
-  public title: string = "二次开发平台";
-  public pageResourcesVisible: boolean = true;
-  public systemControlsVisible: boolean = true;
-  public compComponentsVisible: boolean = true;
-  public modelComponentsVisible: boolean = true;
-  public saveBtnVisible: boolean = true;
-  public saveAndCloseBtnVisible: boolean = false;
-  public saveAsBtnVisible: boolean = true;
-  public leadInBtnVisible: boolean = true;
-  public leadOutBtnVisible: boolean = true;
-  public printBtnVisible: boolean = false;
-  public previewBtnVisible: boolean = true;
-  public quitBtnVisible: boolean = true;
+  public title: string = '二次开发平台'
+  public pageResourcesVisible: boolean = true
+  public systemControlsVisible: boolean = true
+  public compComponentsVisible: boolean = true
+  public modelComponentsVisible: boolean = true
+  public saveBtnVisible: boolean = true
+  public saveAndCloseBtnVisible: boolean = false
+  public saveAsBtnVisible: boolean = true
+  public leadInBtnVisible: boolean = true
+  public leadOutBtnVisible: boolean = true
+  public printBtnVisible: boolean = false
+  public previewBtnVisible: boolean = true
+  public quitBtnVisible: boolean = true
   ///////////////////////////////////////////
-  private sys_limitGroupNames: string[] = [];
-  private sys_limitCompCodes: string[] = [];
+  private sys_limitGroupNames: string[] = []
+  private sys_limitCompCodes: string[] = []
   public limitSysCompGroup(names: string[]) {
     if (!names) {
-      this.sys_limitGroupNames = [];
+      this.sys_limitGroupNames = []
     } else {
-      this.sys_limitGroupNames = names;
+      this.sys_limitGroupNames = names
     }
   }
   public limitSysComps(codes: string[]) {
     if (!codes) {
-      this.sys_limitCompCodes = [];
+      this.sys_limitCompCodes = []
     } else {
-      this.sys_limitCompCodes = codes;
+      this.sys_limitCompCodes = codes
     }
   }
   /*************对外公布事件************************************************************************ */
-  @Emit("onSaveAs")
+  @Emit('onSaveAs')
   private onSaveAs() {}
 
-  @Emit("onLeadIn")
+  @Emit('onLeadIn')
   private onLeadIn() {}
 
-  @Emit("onLeadOut")
+  @Emit('onLeadOut')
   private onLeadOut() {}
 
-  @Emit("onRevert")
+  @Emit('onRevert')
   private onRevert() {}
 
-  @Emit("onGo")
+  @Emit('onGo')
   private onGo() {}
 
-  @Emit("onQuit")
+  @Emit('onQuit')
   private onQuit() {}
 
-  @Emit("onOpenComponentTemplate")
+  @Emit('onOpenComponentTemplate')
   public onOpenComponentTemplate(pageId: string, pageName: string, pageType: pagenNodeType) {}
 
-  @Emit("onAddModel")
+  @Emit('onAddModel')
   private addModel() {
     //window.console.info('进入模型新增')
   }
-  @Emit("onDblClick")
+  @Emit('onDblClick')
   private onDblClick(record) {
     //window.console.info('编辑模型', record)
   }
-  @Emit("onOpenCommonPage")
+  @Emit('onOpenCommonPage')
   public onOpenCommonPage(pageId: string, pageName: string, pageType: pagenNodeType) {}
 
-  @Emit("onPrint")
+  @Emit('onPrint')
   public onPrint() {}
 
-  @Emit("onCheckOut")
+  @Emit('onCheckOut')
   public onCheckOut() {}
-  @Emit("onCancelCheckOut")
+  @Emit('onCancelCheckOut')
   public onCancelCheckOut() {}
-  @Emit("onCheckIn")
+  @Emit('onCheckIn')
   public onCheckIn(desc: string) {}
 
-  @Emit("onViewHistroy")
+  @Emit('onViewHistroy')
   public onViewHistroy(histroyId: number) {}
-  @Emit("onRestoreHistroy")
+  @Emit('onRestoreHistroy')
   public onRestoreHistroy(histroyId: number) {}
 }
 </script>
 
 <style lang="less" scoped>
- 
 .verticalAlignCenter {
   display: flex;
   position: relative;

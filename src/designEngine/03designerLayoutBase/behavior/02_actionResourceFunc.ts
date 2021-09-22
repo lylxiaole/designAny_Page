@@ -134,7 +134,7 @@ class propertiesInPageFunc implements actResFuncBase {
       if (property) {
         result = property
       } else {
-        let findinChildren = this.findPropertyInPage(propertyId, comp.layoutChildren as ComponentBase[])
+        let findinChildren = this.findPropertyInPage(propertyId, comp.children as ComponentBase[])
         if (findinChildren) {
           result = findinChildren
         }
@@ -150,7 +150,7 @@ class propertiesInPageFunc implements actResFuncBase {
       if (property) {
         result = comp
       } else {
-        let findinChildren = this.findComponentInPage(propertyId, comp.layoutChildren as ComponentBase[])
+        let findinChildren = this.findComponentInPage(propertyId, comp.children as ComponentBase[])
         if (findinChildren) {
           result = findinChildren
         }

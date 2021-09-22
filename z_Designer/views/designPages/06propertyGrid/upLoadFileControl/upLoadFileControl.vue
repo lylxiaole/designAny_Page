@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import npUploadFile from '../../07commonComponents/npUploadFile.vue'
 
 import propertyCellBase from '../propertyCellBase'
@@ -22,8 +22,8 @@ import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 @propertyCellTypeAttr(PropertyTypeEnum.uploadFile)
 @Component({
   components: {
-    UploadFile: npUploadFile,
-  },
+    UploadFile: npUploadFile
+  }
 })
 export default class upLoadFileControl extends propertyCellBase {
   mounted() {}

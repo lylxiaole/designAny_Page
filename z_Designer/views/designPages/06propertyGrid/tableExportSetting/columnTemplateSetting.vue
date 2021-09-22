@@ -40,7 +40,7 @@ import { tableStyle } from '../../04designerComponents/table/tableCommonTypes'
 import layout_Professional from '../../05designerLayouts/layout_Professional/Layout_Professional.vue'
 import PageBase from '../../03designerLayoutBase/PageBase'
 import TableGrid from '../../04designerComponents/table/TableGrid.vue'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import LayoutBase from '../../03designerLayoutBase/LayoutBase'
 import { startEditIco } from '../../assets/icons.js'
 

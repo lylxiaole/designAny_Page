@@ -69,16 +69,40 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import npColorPicker from '../../07commonComponents/npColorPicker.vue'
-import CalendarEventsInfo from '../../02common/commonClasses/CalendarEventsInfo'
-import common from '../../02common/commonMethod'
 import propertyCellBase from '../propertyCellBase'
+import { getUuid, deepClone } from '@src/utils'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
+class CalendarEventsInfo {
+  id: number
+
+  key: string
+
+  eventTitle: string
+
+  startDate: Number
+
+  startTime: Number
+
+  endDate: Number
+
+  endTime: Number
+
+  color: String
+
+  isEdit: boolean
+
+  popTrigger: String
+
+  popVisible: boolean
+
+  status: String //工作状态
+}
 
 @propertyCellTypeAttr(PropertyTypeEnum.calendarEvents)
 @Component({
   components: {
-    npColorPicker: npColorPicker,
-  },
+    npColorPicker: npColorPicker
+  }
 })
 export default class calendarEvents extends propertyCellBase {
   public windowVisible: boolean = false
@@ -89,50 +113,50 @@ export default class calendarEvents extends propertyCellBase {
       dataIndex: 'eventTitle',
       scopedSlots: { customRender: 'eventTitle' },
       width: '20%',
-      fixed: 'center',
+      fixed: 'center'
     },
     {
       title: '开始日期',
       dataIndex: 'startDate',
       scopedSlots: { customRender: 'startDate' },
       width: '15%',
-      fixed: 'center',
+      fixed: 'center'
     },
     {
       title: '开始时间',
       dataIndex: 'startTime',
       scopedSlots: { customRender: 'startTime' },
       width: '10%',
-      fixed: 'center',
+      fixed: 'center'
     },
     {
       title: '结束日期',
       dataIndex: 'endDate',
       scopedSlots: { customRender: 'endDate' },
       width: '15%',
-      fixed: 'center',
+      fixed: 'center'
     },
     {
       title: '结束时间',
       dataIndex: 'endTime',
       scopedSlots: { customRender: 'endTime' },
       width: '10%',
-      fixed: 'center',
+      fixed: 'center'
     },
     {
       title: '颜色',
       dataIndex: 'color',
       scopedSlots: { customRender: 'color' },
       width: '10%',
-      fixed: 'center',
+      fixed: 'center'
     },
     {
       title: '操作',
       dataIndex: 'operation',
       scopedSlots: { customRender: 'operation' },
       width: '10%',
-      fixed: 'center',
-    },
+      fixed: 'center'
+    }
   ]
 
   private data: CalendarEventsInfo[] = []
@@ -150,7 +174,7 @@ export default class calendarEvents extends propertyCellBase {
   private newParam() {
     var newRow = new CalendarEventsInfo()
     newRow.id = 1
-    newRow.key = common.getUuid()
+    newRow.key = getUuid()
     newRow.eventTitle = 'dsfg'
     newRow.startDate = Vue.prototype.$moment('2019-09-06', 'YYYY-MM-DD')
     newRow.startTime = Vue.prototype.$moment('00:00', 'HH:mm')
@@ -173,7 +197,7 @@ export default class calendarEvents extends propertyCellBase {
           startTime: Vue.prototype.$moment(element.startTime, 'HH:mm'),
           endDate: Vue.prototype.$moment(element.endDate),
           endTime: Vue.prototype.$moment(element.endTime, 'HH:mm'),
-          color: element.color,
+          color: element.color
         }
         this.data.push(obj)
       })
@@ -193,12 +217,12 @@ export default class calendarEvents extends propertyCellBase {
         startTime: element.startTime,
         endDate: element.endDate,
         endTime: element.endTime,
-        color: element.color,
+        color: element.color
       }
       changeData.push(obj)
     })
     this.data = []
-    this.currentValue = common.clone(changeData)
+    this.currentValue = deepClone(changeData)
     this.windowVisible = false
   }
 

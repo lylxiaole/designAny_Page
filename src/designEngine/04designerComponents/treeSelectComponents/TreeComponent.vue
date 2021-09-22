@@ -32,7 +32,7 @@ import { ComponentBase } from '../../03designerLayoutBase'
 
 import { CurrentApis, CurrentContext } from '../../01designerContext'
 import { param, paramType } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 export class TreeNodeInfo {
   label?: string
@@ -162,14 +162,14 @@ export default class TreeComponent extends ComponentBase {
     }
     let prop = this.findPropertyByName(PropertyGroupName.special, '勾选项')
     if (prop) {
-      this.setPropertyVal(prop.id, common.clone(tempArr))
+      this.setPropertyVal(prop.id, deepClone(tempArr))
     }
     //this.findPropertyByName(PropertyGroupName.special, '勾选项').value = tempArr
     //window.console.log('点击复选框', e)
     //window.console.log('value', checkedKeys)
 
     if (e.checked) {
-      this.triggeEvent('复选框选中事件', common.clone(e.node.dataRef.tag))
+      this.triggeEvent('复选框选中事件', deepClone(e.node.dataRef.tag))
     } else {
       //入参不能使用null，使用null的话无法清除之前的入参 xuww 2020-03-16 add
       this.triggeEvent('复选框选中事件', {} as any)
@@ -222,7 +222,7 @@ export default class TreeComponent extends ComponentBase {
     let arr = []
     let prop = this.findPropertyByName(PropertyGroupName.special, '数据源')
     if (prop) {
-      arr = common.clone(prop)
+      arr = deepClone(prop)
       //this.tempNodeList = Object.assign(arr)
     }
     //let propValue = this.findPropertyByName(PropertyGroupName.special, '选中值')
@@ -253,7 +253,7 @@ export default class TreeComponent extends ComponentBase {
       case '根节点名称':
       case '数据源':
         //window.console.log('--------------------------------树组件数据源变更', property)
-        this.treeData = this.addRootNode(common.clone(this.findPropertyByName(PropertyGroupName.special, '数据源').value))
+        this.treeData = this.addRootNode(deepClone(this.findPropertyByName(PropertyGroupName.special, '数据源').value))
         //window.console.log('--------------------------------树组件数据源变更-this.inputValue', this.inputValue)
         if (this.inputValue) {
           this.search(this.inputValue)
@@ -282,7 +282,7 @@ export default class TreeComponent extends ComponentBase {
   }
 
   search(paramSearch: any) {
-    let tree = common.clone(this.findPropertyByName(PropertyGroupName.special, '数据源').value)
+    let tree = deepClone(this.findPropertyByName(PropertyGroupName.special, '数据源').value)
     //window.console.info('paramSearch', paramSearch)
 
     if (paramSearch !== '') {
@@ -451,7 +451,7 @@ export default class TreeComponent extends ComponentBase {
   commonSelect(selectValue: any, childValue: any) {
     var prop = this.findPropertyByName(PropertyGroupName.special, '选中值')
     if (prop && selectValue) {
-      this.setPropertyVal(prop.id, common.clone(selectValue))
+      this.setPropertyVal(prop.id, deepClone(selectValue))
     }
     if (prop && !selectValue) {
       prop.value = ''
@@ -461,7 +461,7 @@ export default class TreeComponent extends ComponentBase {
     let prop11 = this.findPropertyByName(PropertyGroupName.special, '选中值子节点')
     if (prop11) {
       if (childValue) {
-        this.setPropertyVal(prop11.id, common.clone(childValue))
+        this.setPropertyVal(prop11.id, deepClone(childValue))
       } else {
         this.setPropertyVal(prop11.id, [])
       }

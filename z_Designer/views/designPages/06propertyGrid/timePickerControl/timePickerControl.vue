@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import npDatePicker from '../../07commonComponents/npDatePicker.vue'
 
 import propertyCellBase from '../propertyCellBase'
@@ -21,8 +21,8 @@ import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 @propertyCellTypeAttr(PropertyTypeEnum.timePicker)
 @Component({
   components: {
-    DatePicker: npDatePicker,
-  },
+    DatePicker: npDatePicker
+  }
 })
 export default class timePickerControl extends propertyCellBase {
   mounted() {}

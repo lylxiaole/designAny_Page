@@ -42,7 +42,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 import propertyCellBase from '../propertyCellBase'
 import selectElementInfo from '../../02common/commonClasses/selectElementInfo'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 @propertyCellTypeAttr(PropertyTypeEnum.selectGroupElement)
 @Component
@@ -54,26 +54,26 @@ export default class selectGroupElement extends propertyCellBase {
       title: '选择框组别名称',
       dataIndex: 'selectGroupName',
       scopedSlots: { customRender: 'selectGroupName' },
-      width: '35%',
+      width: '35%'
     },
     {
       title: '选择项名称',
       dataIndex: 'selectEleName',
       scopedSlots: { customRender: 'selectEleName' },
-      width: '35%',
+      width: '35%'
     },
     {
       title: '选择项是否可选',
       dataIndex: 'selectEleDisabled',
       scopedSlots: { customRender: 'selectEleDisabled' },
-      width: '20%',
+      width: '20%'
     },
     {
       title: '操作',
       dataIndex: 'operation',
       scopedSlots: { customRender: 'operation' },
-      width: '10%',
-    },
+      width: '10%'
+    }
   ]
 
   private data: selectElementInfo[] = []

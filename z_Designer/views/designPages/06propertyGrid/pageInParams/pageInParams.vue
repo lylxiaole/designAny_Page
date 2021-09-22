@@ -73,7 +73,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 import paramInfo from '../../02common/commonClasses/pageInParamInfo'
 
 import propertyCellBase from '../propertyCellBase'
@@ -92,26 +92,26 @@ export default class pageInParams extends propertyCellBase {
       title: '入参名称',
       dataIndex: 'paramName',
       scopedSlots: { customRender: 'paramName' },
-      width: '30%',
+      width: '30%'
     },
     {
       title: '入参类型',
       dataIndex: 'paramType',
       scopedSlots: { customRender: 'paramType' },
-      width: '40%',
+      width: '40%'
     },
     {
       title: '集合/单模',
       dataIndex: 'paramIsList',
       scopedSlots: { customRender: 'paramIsList' },
-      width: '20%',
+      width: '20%'
     },
     {
       title: '操作',
       dataIndex: 'operation',
       scopedSlots: { customRender: 'operation' },
-      width: '10%',
-    },
+      width: '10%'
+    }
   ]
 
   private data: paramInfo[] = []

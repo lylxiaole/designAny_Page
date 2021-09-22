@@ -25,7 +25,7 @@ import {
   Color_Property,
   PropertyGroupName
 } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone, BuildingFileUrlForShow } from '@src/utils'
 
 import { ComponentBase } from '../../03designerLayoutBase'
 import { CurrentContext } from '../../01designerContext'
@@ -96,7 +96,7 @@ export default class QuadrangleComponent extends ComponentBase {
       var imagUrl = findprop.value
       if (imagUrl && imagUrl[0]) {
         // console.log('相对路径背景图片URl：', this.findProperties(PropertyGroupName.normal, '背景图片')[0].value[0].url)
-        let fullpath = common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, imagUrl[0].url)
+        let fullpath = BuildingFileUrlForShow(CurrentContext.FileServerAddress, imagUrl[0].url)
 
         // console.log('绝对路径背景图片URl：', fullpath)
         return fullpath

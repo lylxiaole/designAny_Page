@@ -21,7 +21,7 @@ import {
   Boolean_Property,
   Enum_Property
 } from '../../03designerLayoutBase'
-import common from '../../02common/commonMethod'
+import { getUuid, deepClone } from '@src/utils'
 
 @Component
 export default class NPQrCode extends ComponentBase {

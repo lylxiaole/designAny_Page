@@ -7,11 +7,9 @@
 
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator'
-import LayoutBase, { LayoutInfo } from '../../03designerLayoutBase/LayoutBase'
-import PageBase from '../PageBase'
-import common from '../../02common/commonMethod'
+import { PageBase, ComponentBase, LayoutBase, LayoutInfo } from '../../03designerLayoutBase'
+import { getUuid, deepClone } from '@src/utils'
 import CompIncrustationPro from './CompIncrustationPro.vue'
-import { ComponentBase } from '../../04designerComponents'
 import { CurrentContext } from '../../01designerContext'
 import { DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
 
@@ -21,7 +19,7 @@ export default class Layout_Professional extends PageBase {
     if (!this.background_img || !this.background_img.url) {
       return this.background
     }
-    return 'url("' + common.BuildingFileUrlForShow(CurrentContext.FileServerAddress, this.background_img.url) + '")'
+    return 'url("' + BuildingFileUrlForShow(CurrentContext.FileServerAddress, this.background_img.url) + '")'
   }
 
   // ***********文件上传相关*******************
