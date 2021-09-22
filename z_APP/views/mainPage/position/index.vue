@@ -40,8 +40,8 @@ export default class Index extends PageBase {
   }
   // ************************************************************************
   private onItemClick(item: any) {
-    window.console.log('onItemClick:', item)
-    this.$router.push({ name: 'flowmeter', params: { area: item.QYMC } })
+    // window.console.log('onItemClick:', item)
+    this.$router.push({ path: '/index/flowmeter', query: { area: item.QYMC } })
   }
 }
 </script>

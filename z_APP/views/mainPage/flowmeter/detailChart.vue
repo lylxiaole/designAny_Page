@@ -38,7 +38,14 @@ export default class detailChart extends PageBase {
   activated() {
     if (this.currentChooseDate !== (this.$route.query as any).time) {
       let time = (this.$route.query as any).time
-      this.currentChooseDate = moment(time).format('YYYY-MM-DD')
+
+      if (this.currentChooseDate === moment(time).format('YYYY-MM-DD')) {
+        this.getDataList().then(() => {
+          this.drawCharts()
+        })
+      } else {
+        this.currentChooseDate = moment(time).format('YYYY-MM-DD')
+      }
     }
   }
 

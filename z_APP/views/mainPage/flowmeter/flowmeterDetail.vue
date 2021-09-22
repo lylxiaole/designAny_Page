@@ -47,6 +47,13 @@ export default class Index extends PageBase {
   }
   activated() {
     this.currentjlbid = this.$route.query.jlbid as any
+    this.startGetData()
+  }
+
+  private async startGetData() {
+    this.getDataList().then(async () => {
+      await this.tabrendered('', this.getTitleByActivedTab(this.tabsActived))
+    })
     this.intervalTimer = window.setInterval(() => {
       this.getDataList().then(async () => {
         await this.tabrendered('', this.getTitleByActivedTab(this.tabsActived))
@@ -100,7 +107,7 @@ export default class Index extends PageBase {
 
   @Watch('tabsActived')
   ontabsActivedChanged(newval) {
-    window.console.log('tabsActived:', this.getTitleByActivedTab(this.tabsActived))
+    // window.console.log('tabsActived:', this.getTitleByActivedTab(this.tabsActived))
     this.tabrendered('', this.getTitleByActivedTab(this.tabsActived))
   }
 

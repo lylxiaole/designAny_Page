@@ -40,6 +40,9 @@ import { wbjh, xjjh } from '../../../serviceAPIs/service'
 
 @Component({ components: { maintenanceCard: maintenanceCard } })
 export default class Index extends PageBase {
+  mounted() {
+    this.getDataList()
+  }
   // *******************时间选择****************************************************
   private showChooseDate: boolean = false
   private currentChooseDate: string = moment(new Date()).format('YYYY-MM-DD')
@@ -62,7 +65,7 @@ export default class Index extends PageBase {
   private viewType: number = 0
   private viewTypes: any[] = [{ text: '维保信息', value: 0 }, { text: '巡检信息', value: 1 }]
   private chooseViewType(e: any) {
-    window.console.log('chooseViewType:', e)
+    // window.console.log('chooseViewType:', e)
     this.viewType = e
     if (this.viewType === 0) {
       this.statusList = [{ text: '未开始', value: 0 }, { text: '维保中', value: 1 }, { text: '维保完成', value: 2 }]

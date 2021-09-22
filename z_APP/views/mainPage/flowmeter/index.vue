@@ -34,19 +34,21 @@ export default class Index extends PageBase {
 
   activated() {
     // **************************************************************************
-    let chooseArea = this.$router.currentRoute.params.area
+    let chooseArea = this.$router.currentRoute.query.area
+    // window.console.log('chooseArea:', chooseArea)
     if (chooseArea) {
       let find = this.areaList.find((o) => o.text === chooseArea)
       if (find) {
         this.currentArea = find.value
       }
     }
+    this.getJlbTagInfo()
     // **************************************************************************
   }
 
   // **********模糊搜索条件*****************************************
   private searchStr: string = ''
-  private currentArea: string = '0'
+  private currentArea: string = '1'
   private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
   private async getAllArea() {
     this.areaList = []
