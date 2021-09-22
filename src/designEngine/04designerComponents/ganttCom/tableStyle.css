@@ -1,8 +1,0 @@
-.mytable-style .vxe-table{
-  background-color: var(--background-color);
-}
-.mytable-style .vxe-table--body-wrapper{
-  overflow-x: scroll;
-  top: -1px;
-}
- 

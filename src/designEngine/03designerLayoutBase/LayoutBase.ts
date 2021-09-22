@@ -109,7 +109,7 @@ export default class LayoutBase extends eventBase {
     }
     return this._designerMethods
   }
-
+  /**生命周期 */
   created() {
     if (this.IsDesigning) {
       this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), common.getUuid(), false, false)
@@ -134,41 +134,24 @@ export default class LayoutBase extends eventBase {
       this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
       this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())
     }
-
     this.onCreated(this)
   }
+  /**生命周期 */
   mounted() {
     //开始捕捉鼠标键盘事件
     if (this.IsDesigning == true) {
       this.CaptureEvent()
     }
   }
+  /**生命周期 */
   updated() {
     this.onUpdated(this)
   }
+  /**生命周期 */
   destroyed() {
     // window.console.log('销毁了页面组件:', this.Id)
     this.onDestroyed(this)
     this.destorymethod()
-  }
-
-  private async destorymethod() {
-    for (let index = 0; index < this.properties.length; index++) {
-      const element = this.properties[index]
-      element.destory()
-    }
-    for (let index = 0; index < this.children.length; index++) {
-      const o = this.children[index]
-      o.destory()
-    }
-
-    // $(this.$el).remove()
-    for (const key in (this as any).prototype) {
-      delete (this as any).prototype[key]
-    }
-    for (const key in this) {
-      delete this[key]
-    }
   }
   // *************************基础属性****************************************************************************
   get Id(): string {
@@ -191,7 +174,6 @@ export default class LayoutBase extends eventBase {
     }
     this.setPropertyVal(pro.id, val)
   }
-
   get name(): string {
     var pro = this.findPropertyByName('基础设置', '名称')
     if (!pro) {
@@ -479,10 +461,26 @@ export default class LayoutBase extends eventBase {
     }
     return null
   }
-  // *************************overrides****************************************************************************
+  private isLoaded: boolean = false
+
+  private getChildrenData(): SaveInfo[] {
+    var res: SaveInfo[] = []
+    for (let index = 0; index < this.children.length; index++) {
+      const child = this.children[index]
+      var childdata = child.getSaveData()
+      res.push(childdata)
+    }
+    return res
+  }
+  private loadChildrenData(childrendatas: SaveInfo[]) {
+    for (let index = 0; index < childrendatas.length; index++) {
+      const o = childrendatas[index]
+      this.renderChildFromData(o)
+    }
+  }
+  // *************************protect方法****************************************************************************
   protected renderChildFromData(data: SaveInfo) {}
   protected loadCompleted(childrenData: SaveInfo[]) {}
-  // *************************protect方法****************************************************************************
   /**添加子级 */
   protected addChild(child: LayoutBase) {
     if (!this.children) {
@@ -530,7 +528,6 @@ export default class LayoutBase extends eventBase {
       return
     }
   }
-  public destory() {}
   protected addProperty(proper: Property) {
     let find = this.properties.find((o) => o.propertyName == proper.propertyName && o.groupName == proper.groupName)
     if (find) {
@@ -557,8 +554,25 @@ export default class LayoutBase extends eventBase {
     //TODO 在事件设计的数据中找到事件,并调用事件
     return
   }
-  protected afterSetPropertyVal(propertyId: string, val: any) {}
   // *************************对外公布方法****************************************************************************
+  private async destorymethod() {
+    for (let index = 0; index < this.properties.length; index++) {
+      const element = this.properties[index]
+      element.destory()
+    }
+    for (let index = 0; index < this.children.length; index++) {
+      const o = this.children[index]
+      o.destorymethod()
+    }
+
+    $(this.$el).remove()
+    for (const key in (this as any).prototype) {
+      delete (this as any).prototype[key]
+    }
+    for (const key in this) {
+      delete this[key]
+    }
+  }
   public getSaveData(): SaveInfo {
     this.beforeGetSaveData(this)
 
@@ -570,16 +584,7 @@ export default class LayoutBase extends eventBase {
     saveinfo.children = this.getChildrenData()
     return saveinfo
   }
-  private getChildrenData(): SaveInfo[] {
-    var res: SaveInfo[] = []
-    for (let index = 0; index < this.children.length; index++) {
-      const child = this.children[index]
-      var childdata = child.getSaveData()
-      res.push(childdata)
-    }
-    return res
-  }
-  protected isLoaded: boolean = false
+
   public loadData(data: SaveInfo) {
     // window.console.log('loadData')
     if (data) {
@@ -605,18 +610,13 @@ export default class LayoutBase extends eventBase {
   public reLoadData(data: SaveInfo) {
     for (let index = 0; index < this.children.length; index++) {
       const element = this.children[index]
-      element.destory()
+      element.destorymethod()
     }
     this.children = []
     this.isLoaded = false
     this.loadData(data)
   }
-  private loadChildrenData(childrendatas: SaveInfo[]) {
-    for (let index = 0; index < childrendatas.length; index++) {
-      const o = childrendatas[index]
-      this.renderChildFromData(o)
-    }
-  }
+
   /**递归查找子级中所有选中的布局 */
   public findSelectedLayoutsRecursion() {
     return this._findSelectedLayoutsRecursion(this.children)
@@ -704,14 +704,14 @@ export default class LayoutBase extends eventBase {
         let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
         if (find) {
           find.id = item.id
-          this.setPropertyVal(item.id, item.value, true, true)
+          this.setPropertyVal(item.id, item.value, true)
         } else {
           var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
           newperperty.canSetting = item.canSetting
           newperperty.canBindModel = item.canBindModel
           newperperty.id = item.id
           this.addProperty(newperperty)
-          this.setPropertyVal(item.id, item.value, true, true)
+          this.setPropertyVal(item.id, item.value, true)
         }
       }
     }
@@ -723,13 +723,10 @@ export default class LayoutBase extends eventBase {
       var filter_oldproperty = this.properties_old.find((o) => o.id == newproperty.id)
       if (!filter_oldproperty) {
         //..新增了一个属性
-        //Update By LH 2020/07/30
         this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
-        // this.properties_old.push(common.clone(newproperty))
         this.onPropertyChanged(newproperty.id, newproperty, this)
       } else if (common.serialize(filter_oldproperty) != common.serialize(newproperty)) {
         //..修改了一个属性的内容
-        //Update By LH 2020/07/30
         var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
         //var newpropertyClone = common.clone(newproperty) as Property
         // window.console.log('检测到数据变化:', newproperty)
@@ -762,7 +759,7 @@ export default class LayoutBase extends eventBase {
     }
     return true
   }
-  public setPropertyVal(propertyId: string, val: any, idNeedTriggerPropertyChange: boolean = true, isForce: boolean = false): boolean {
+  public setPropertyVal(propertyId: string, val: any, isForce: boolean = false): boolean {
     var findproperty = this.properties.find((p) => p.id == propertyId)
     if (!findproperty) {
       // window.console.error('设置属性值失败，没有找到对应的属性')
@@ -775,13 +772,6 @@ export default class LayoutBase extends eventBase {
     }
 
     findproperty.value = convert_value
-    if (idNeedTriggerPropertyChange == false) {
-      this.properties_old.find((p) => p.id == propertyId).value = val
-    }
-    if (idNeedTriggerPropertyChange == true) {
-      this.afterSetPropertyVal(propertyId, findproperty.value)
-    }
-
     return true
   }
   public SizeChange_Up(changeVal: number) {
