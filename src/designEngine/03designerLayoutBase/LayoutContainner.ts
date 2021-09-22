@@ -66,7 +66,7 @@ export default class LayoutContainer extends LayoutBase {
         }
         let compclass = findSystemComp(compData.layoutInfo.groupName, compData.layoutInfo.name)
         //为了准确性
-        let findchildren = this.findSelectedLayoutsRecursion()
+        let findchildren = this.findSelectedLayoutsRecursion(this.children)
         let newcopyComp: LayoutBase = null
         for (let index = 0; index < findchildren.length; index++) {
           const element = findchildren[index]
@@ -80,19 +80,6 @@ export default class LayoutContainer extends LayoutBase {
           newcopyComp = this.insertComponentLayout(compclass, compData.layoutInfo, null, compData)
         }
         newcopyComp.loadData(compData)
-
-        // newcopyComp.$once('onMounted', (layout: ComponentBase) => {
-        //   if (LayoutContainer.isCut == false) {
-        //     /**粘贴操作需要重新刷新所有Id,并让组件的Id跟渲染钱一致 */
-        //     newcopyComp.RefreshAllIdRecursion()
-        //     newcopyComp.Id = compData.id
-        //   }
-
-        //   newcopyComp.top = this.mouseY
-        //   newcopyComp.left = this.mouseX
-        //   // this.$message.success('组件已粘贴', 2)
-        //   LayoutContainer.copyComp = null
-        // })
         e.stopPropagation()
       }
       this.onMouseMove_Event = this.onMouseMoveE
@@ -154,7 +141,6 @@ export default class LayoutContainer extends LayoutBase {
           if (!compId) {
             return true
           }
-          let oldcomp = this.findLayoutRecursion(compId)
 
           let compclass = findSystemComp(compInfo.groupName, compInfo.name)
           if (!compclass) {
@@ -223,7 +209,7 @@ export default class LayoutContainer extends LayoutBase {
       return true
     }
     /** */
-    let dragComp = this.FindLayout(compInfo.compId) as ComponentBase
+    let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as ComponentBase
     // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
     if (!dragComp) {
       return false
@@ -275,42 +261,42 @@ export default class LayoutContainer extends LayoutBase {
     switch (position) {
       case 'you_xia':
         comps.filter((comp) => {
-          comp.SizeChange_Down_Right(verchanged, horchanged)
+          comp.sizeChange_Down_Right(verchanged, horchanged)
         })
         break
       case 'zuo_xia':
         comps.filter((comp) => {
-          comp.SizeChange_Down_Left(verchanged, horchanged)
+          comp.sizeChange_Down_Left(verchanged, horchanged)
         })
         break
       case 'you_shang':
         comps.filter((comp) => {
-          comp.SizeChange_Up_Right(verchanged, horchanged)
+          comp.sizeChange_Up_Right(verchanged, horchanged)
         })
         break
       case 'zuo_shang':
         comps.filter((comp) => {
-          comp.SizeChange_Up_Left(verchanged, horchanged)
+          comp.sizeChange_Up_Left(verchanged, horchanged)
         })
         break
       case 'shang':
         comps.filter((comp) => {
-          comp.SizeChange_Up(verchanged)
+          comp.sizeChange_Up(verchanged)
         })
         break
       case 'xia':
         comps.filter((comp) => {
-          comp.SizeChange_Down(verchanged)
+          comp.sizeChange_Down(verchanged)
         })
         break
       case 'zuo':
         comps.filter((comp) => {
-          comp.SizeChange_Left(horchanged)
+          comp.sizeChange_Left(horchanged)
         })
         break
       case 'you':
         comps.filter((comp) => {
-          comp.SizeChange_Right(horchanged)
+          comp.sizeChange_Right(horchanged)
         })
         break
       default:

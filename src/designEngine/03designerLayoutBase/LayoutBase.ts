@@ -244,7 +244,6 @@ export default class LayoutBase extends eventBase {
     }
     this.setPropertyVal(pro.id, parseInt(val.toString()))
   }
-
   get margin_left(): number {
     var pro = this.findPropertyByName('基础设置', '外边距-左')
     if (!pro) {
@@ -430,44 +429,31 @@ export default class LayoutBase extends eventBase {
     return pro.value as boolean
   }
   // *************************privates****************************************************************************
-  private _findSelectedLayoutsRecursion(comps: LayoutBase[]): LayoutBase[] {
-    var res: LayoutBase[] = []
-    for (let index = 0; index < comps.length; index++) {
-      const comp = comps[index]
-      if (comp.isSelected == true) {
-        res.push(comp)
-      }
-      if (comp.children) {
-        var finds = this._findSelectedLayoutsRecursion(comp.children)
-        res = res.concat(finds)
-      }
-    }
-    return res
-  }
-  private _findLayoutRecursion(id: string, lays: LayoutBase[]): LayoutBase {
-    //添加空值判断
-    if (!lays) {
-      return null
-    }
-    for (let index = 0; index < lays.length; index++) {
-      const layout = lays[index]
-      if (layout.Id == id) {
-        return layout
-      }
-      var findc = this._findLayoutRecursion(id, layout.children)
-      if (findc) {
-        return findc
-      }
-    }
-    return null
-  }
   private isLoaded: boolean = false
+  private async destorymethod() {
+    for (let index = 0; index < this.properties.length; index++) {
+      const element = this.properties[index]
+      element.destory()
+    }
+    for (let index = 0; index < this.children.length; index++) {
+      const o = this.children[index]
+      o.destorymethod()
+    }
 
-  private getChildrenData(): SaveInfo[] {
+    $(this.$el).remove()
+    for (const key in (this as any).prototype) {
+      delete (this as any).prototype[key]
+    }
+    for (const key in this) {
+      delete this[key]
+    }
+  }
+
+  private async getChildrenData(): Promise<SaveInfo[]> {
     var res: SaveInfo[] = []
     for (let index = 0; index < this.children.length; index++) {
       const child = this.children[index]
-      var childdata = child.getSaveData()
+      var childdata = await child.getSaveData()
       res.push(childdata)
     }
     return res
@@ -476,6 +462,27 @@ export default class LayoutBase extends eventBase {
     for (let index = 0; index < childrendatas.length; index++) {
       const o = childrendatas[index]
       this.renderChildFromData(o)
+    }
+  }
+  private watch_properties(newval: Property[]) {
+    // window.console.log('布局属性变化了')
+    for (var j = 0; j < newval.length; j++) {
+      var newproperty = newval[j]
+      var filter_oldproperty = this.properties_old.find((o) => o.id == newproperty.id)
+      if (!filter_oldproperty) {
+        //..新增了一个属性
+        this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
+        this.onPropertyChanged(newproperty.id, newproperty, this)
+      } else if (common.serialize(filter_oldproperty) != common.serialize(newproperty)) {
+        //..修改了一个属性的内容
+        var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
+        //var newpropertyClone = common.clone(newproperty) as Property
+        // window.console.log('检测到数据变化:', newproperty)
+        /**替换旧的属性 */
+        var index = this.properties_old.indexOf(filter_oldproperty)
+        this.properties_old.splice(index, 1, newpropertyClone)
+        this.onPropertyChanged(newproperty.id, newpropertyClone, this)
+      }
     }
   }
   // *************************protect方法****************************************************************************
@@ -555,59 +562,19 @@ export default class LayoutBase extends eventBase {
     return
   }
   // *************************对外公布方法****************************************************************************
-  private async destorymethod() {
-    for (let index = 0; index < this.properties.length; index++) {
-      const element = this.properties[index]
-      element.destory()
+  public async loadData(data: SaveInfo) {
+    this.children = []
+    if (this.isLoaded) {
+      return
     }
-    for (let index = 0; index < this.children.length; index++) {
-      const o = this.children[index]
-      o.destorymethod()
-    }
-
-    $(this.$el).remove()
-    for (const key in (this as any).prototype) {
-      delete (this as any).prototype[key]
-    }
-    for (const key in this) {
-      delete this[key]
-    }
-  }
-  public getSaveData(): SaveInfo {
-    this.beforeGetSaveData(this)
-
-    var saveinfo: SaveInfo = {
-      id: this.Id,
-      properties: this.properties,
-      children: []
-    }
-    saveinfo.children = this.getChildrenData()
-    return saveinfo
-  }
-
-  public loadData(data: SaveInfo) {
-    // window.console.log('loadData')
-    if (data) {
-      if (this.isLoaded) {
-        return
-      }
-      this.Id = data.id
-      // window.console.log('************加载数据,id:', this.Id)
-      this.loadingProperties(data.id, data.properties)
-      if (data.children) {
-        this.loadChildrenData(data.children)
-      }
-    }
-
-    if (data) {
-      this.loadCompleted(data.children)
-    } else {
-      this.loadCompleted([])
-    }
-
+    this.Id = data.id
+    this.loadingProperties(data.id, data.properties)
     this.isLoaded = true
+    if (data.children) {
+      this.loadChildrenData(data.children)
+    }
   }
-  public reLoadData(data: SaveInfo) {
+  public async reLoadData(data: SaveInfo) {
     for (let index = 0; index < this.children.length; index++) {
       const element = this.children[index]
       element.destorymethod()
@@ -616,21 +583,56 @@ export default class LayoutBase extends eventBase {
     this.isLoaded = false
     this.loadData(data)
   }
-
-  /**递归查找子级中所有选中的布局 */
-  public findSelectedLayoutsRecursion() {
-    return this._findSelectedLayoutsRecursion(this.children)
+  public async getSaveData(): Promise<SaveInfo> {
+    var saveinfo: SaveInfo = {
+      id: this.Id,
+      properties: this.properties,
+      children: []
+    }
+    saveinfo.children = await this.getChildrenData()
+    return saveinfo
   }
-  /**递归查找子级布局 */
-  public findLayoutRecursion(id: string) {
-    return this._findLayoutRecursion(id, this.children)
+  public async removeLayout(layout: LayoutBase) {
+    try {
+      $(layout.$el).remove()
+      layout.$destroy()
+    } catch (error) {
+      window.console.error(error)
+    }
   }
-  /**查找直接子级布局 */
-  public FindLayout(id: string) {
-    return this.children.find((o) => o.Id == id)
+  public findSelectedLayoutsRecursion(comps: LayoutBase[]): LayoutBase[] {
+    var res: LayoutBase[] = []
+    for (let index = 0; index < comps.length; index++) {
+      const comp = comps[index]
+      if (comp.isSelected == true) {
+        res.push(comp)
+      }
+      if (comp.children) {
+        var finds = this.findSelectedLayoutsRecursion(comp.children)
+        res = res.concat(finds)
+      }
+    }
+    return res
+  }
+  public findLayoutRecursion(id: string, lays: LayoutBase[]): LayoutBase {
+    //添加空值判断
+    if (!lays) {
+      return null
+    }
+    for (let index = 0; index < lays.length; index++) {
+      const layout = lays[index]
+      if (layout.Id == id) {
+        return layout
+      }
+      var findc = this.findLayoutRecursion(id, layout.children)
+      if (findc) {
+        return findc
+      }
+    }
+    return null
   }
   /**注册方法 */
-  public registerMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
+  public async registerMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
     var event = this.designerMethods.find((o) => o.eventName == name)
     if (event) {
       window.console.error('注册失败,已经有相同名称的事件存在')
@@ -645,7 +647,7 @@ export default class LayoutBase extends eventBase {
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */
-  public registerProperty(groupName: PropertyGroupName | string, name: string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
+  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
     let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
@@ -662,7 +664,7 @@ export default class LayoutBase extends eventBase {
     this.properties.push(newperperty)
   }
   /**注册事件 */
-  public registerEvents(name: string, description: string, inParams: param[], outParam: param) {
+  public async registerEvents(name: string, description: string, inParams: param[], outParam: param) {
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (event) {
       window.console.error('注册失败,已经有相同名称的事件存在')
@@ -675,19 +677,9 @@ export default class LayoutBase extends eventBase {
     newEvent.outParam = outParam
     this.designerEvents.push(newEvent)
   }
-  /**递归删除子组件 */
-  public removeChildRecursion(childId: string) {
-    var find = this.findLayoutRecursion(childId)
-    var toparent = find.parentLayout.children.find((x) => x.Id === childId)
-    find.parentLayout.removeChild(toparent)
-  }
-  public excuteMethod(name: string, inparams: any[]) {
-    if (name == '关闭页面') {
-      //兼容性脚本
-      name = '关闭页面-不触发回调'
-    }
+  /**执行组件自定义方法 */
+  public async excuteMethod(name: string, inparams: any[]) {
     var method = this.designerMethods.find((o) => o.eventName == name)
-
     if (!method) {
       window.console.error('方法调用失败,该方法不存在')
       return
@@ -695,6 +687,13 @@ export default class LayoutBase extends eventBase {
     return method.callback(inparams)
     //TODO 图形化编程工具会在此处调用注册的方法
   }
+  /**递归删除子组件 */
+  public async removeChildRecursion(childId: string) {
+    var find = this.findLayoutRecursion(childId, this.children)
+    var toparent = find.parentLayout.children.find((x) => x.Id === childId)
+    find.parentLayout.removeChild(toparent)
+  }
+
   /**通过已有数据加载 */
   public loadingProperties(layoutId: string, layout_properties: Property[]) {
     this.Id = layoutId
@@ -716,28 +715,6 @@ export default class LayoutBase extends eventBase {
       }
     }
   }
-  private watch_properties(newval: Property[]) {
-    // window.console.log('布局属性变化了')
-    for (var j = 0; j < newval.length; j++) {
-      var newproperty = newval[j]
-      var filter_oldproperty = this.properties_old.find((o) => o.id == newproperty.id)
-      if (!filter_oldproperty) {
-        //..新增了一个属性
-        this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
-        this.onPropertyChanged(newproperty.id, newproperty, this)
-      } else if (common.serialize(filter_oldproperty) != common.serialize(newproperty)) {
-        //..修改了一个属性的内容
-        var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
-        //var newpropertyClone = common.clone(newproperty) as Property
-        // window.console.log('检测到数据变化:', newproperty)
-        /**替换旧的属性 */
-        var index = this.properties_old.indexOf(filter_oldproperty)
-        this.properties_old.splice(index, 1, newpropertyClone)
-        this.onPropertyChanged(newproperty.id, newpropertyClone, this)
-      }
-    }
-  }
-
   public findProperties(groupName: string, name: string): Property[] {
     return this.properties.filter((o) => o.groupName == groupName && o.propertyName == name)
   }
@@ -774,59 +751,58 @@ export default class LayoutBase extends eventBase {
     findproperty.value = convert_value
     return true
   }
-  public SizeChange_Up(changeVal: number) {
+  /**对外公布方法 尺寸向上变化*/
+  public sizeChange_Up(changeVal: number) {
     if (this.height - changeVal >= 20) {
       this.top += changeVal
       this.height -= changeVal
     }
   }
-  public SizeChange_Down(changeVal: number) {
+  /**对外公布方法 尺寸向下变化*/
+  public sizeChange_Down(changeVal: number) {
     if (this.height + changeVal >= 20) {
       this.height += changeVal
     }
   }
-  public SizeChange_Left(changeVal: number) {
+  /**对外公布方法 尺寸向左变化*/
+  public sizeChange_Left(changeVal: number) {
     if (this.width - changeVal >= 20) {
       this.left += changeVal
       this.width -= changeVal
     }
   }
-  public SizeChange_Right(changeVal: number) {
+  /**对外公布方法 尺寸向右变化*/
+  public sizeChange_Right(changeVal: number) {
     if (this.width + changeVal >= 20) {
       this.width += changeVal
     }
   }
-  public SizeChange_Up_Left(changeVal_ver: number, changeVal_hor: number) {
-    this.SizeChange_Up(changeVal_ver)
-    this.SizeChange_Left(changeVal_hor)
+  /**对外公布方法 尺寸左上变化*/
+  public sizeChange_Up_Left(changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Up(changeVal_ver)
+    this.sizeChange_Left(changeVal_hor)
   }
-  public SizeChange_Up_Right(changeVal_ver: number, changeVal_hor: number) {
-    this.SizeChange_Up(changeVal_ver)
-    this.SizeChange_Right(changeVal_hor)
+  /**对外公布方法 尺寸右上变化*/
+  public sizeChange_Up_Right(changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Up(changeVal_ver)
+    this.sizeChange_Right(changeVal_hor)
   }
-  public SizeChange_Down_Left(changeVal_ver: number, changeVal_hor: number) {
-    this.SizeChange_Down(changeVal_ver)
-    this.SizeChange_Left(changeVal_hor)
+  /**对外公布方法 尺寸左下变化*/
+  public sizeChange_Down_Left(changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Down(changeVal_ver)
+    this.sizeChange_Left(changeVal_hor)
   }
-  public SizeChange_Down_Right(changeVal_ver: number, changeVal_hor: number) {
-    this.SizeChange_Down(changeVal_ver)
-    this.SizeChange_Right(changeVal_hor)
+  /**对外公布方法 尺寸右下变化*/
+  public sizeChange_Down_Right(changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Down(changeVal_ver)
+    this.sizeChange_Right(changeVal_hor)
   }
   // *************************对外公布事件****************************************************************************
   protected onPropertyChanged(propertyId: string, property: Property, layout: LayoutBase): void {}
   protected onChildrenCountChange() {}
   protected onCreated(layout: LayoutBase) {}
-  protected beforeGetSaveData(layout: LayoutBase) {}
   protected onMounted(layout: LayoutBase) {}
   protected onUpdated(layout: LayoutBase) {}
   protected onSizeChanged(e: any) {}
   protected onDestroyed(layout: LayoutBase): void {}
-  protected removeLayout(layout: LayoutBase): void {
-    try {
-      $(layout.$el).remove()
-      layout.$destroy()
-    } catch (error) {
-      window.console.error(error)
-    }
-  }
 }

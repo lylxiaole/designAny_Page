@@ -62,24 +62,8 @@ export default class PageBase extends LayoutContainer {
     this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, true, '秒')
 
     this.registerEvents('加载完成', '页面加载完成时触发', [], null)
-    this.registerMethods(
-      '关闭页面-触发回调',
-      '',
-      () => {
-        // this.ClosePage(true)
-      },
-      [],
-      null
-    )
-    this.registerMethods(
-      '关闭页面-不触发回调',
-      '',
-      () => {
-        // this.ClosePage(false)
-      },
-      [],
-      null
-    )
+    this.registerMethods('关闭页面-触发回调', '', () => {}, [], null)
+    this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
     this.registerEvents('定时器触发事件', '定时器触发', [], null)
   }
   mounted() {
