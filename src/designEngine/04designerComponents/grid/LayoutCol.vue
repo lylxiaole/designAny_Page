@@ -223,7 +223,7 @@ export default class LayoutCol extends ComponentBase {
   private onFormItemDelete(data: fragmentRecord) {
     this.deleteChildComponents(data.id)
     let comp = this.getItemComponent(data.id)
-    this.RemoveChild(comp)
+    this.removeChild(comp)
   }
 }
 </script>

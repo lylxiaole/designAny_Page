@@ -177,7 +177,7 @@ export default class personal_SearchControl extends ComponentBase {
     if (layoutInfo.compCode === 'NpForm') {
       // window.console.log('renderComponent:', compCon.layoutChildren)
       this.loadModelComponents(compCon.layoutChildren as any[])
-      this.RemoveChild(compCon)
+      this.removeChild(compCon)
       return compCon
     }
 
@@ -305,7 +305,7 @@ export default class personal_SearchControl extends ComponentBase {
   }
   private onFormItemDelete(itemdata: personal_config) {
     let comp = this.getItemComponent(itemdata.compId)
-    this.RemoveChild(comp)
+    this.removeChild(comp)
     let index = this.personalConfig.findIndex((o) => o.compId == itemdata.compId)
     this.personalConfig.splice(index, 1)
   }

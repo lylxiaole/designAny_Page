@@ -544,7 +544,7 @@ export default class NpForm extends ComponentBase {
       okType: 'danger',
       cancelText: '取消',
       onOk: () => {
-        this.RemoveChild(this.ItemDataList[dataIndex].comp)
+        this.removeChild(this.ItemDataList[dataIndex].comp)
         this.ItemDataList.splice(dataIndex, 1)
       },
       onCancel: () => {}
@@ -568,7 +568,7 @@ export default class NpForm extends ComponentBase {
           modelBind.virtualModelPropertyList.forEach((element) => {
             let dataIndex = this.ItemDataList.findIndex((item) => item.propertyCode == element.propertyCode)
             if (dataIndex > -1) {
-              this.RemoveChild(this.ItemDataList[dataIndex].comp)
+              this.removeChild(this.ItemDataList[dataIndex].comp)
               this.ItemDataList.splice(dataIndex, 1)
             }
           })

@@ -8,7 +8,7 @@ import { ComponentBase } from '../../03designerLayoutBase'
 import { Component, Watch } from 'vue-property-decorator'
 import { Property, PropertyGroupName, Number_Property, Button_Property, Enum_Property, Text_Property } from '../../03designerLayoutBase'
 import common from '../../02common/commonMethod'
-import { property } from 'xe-utils/methods'
+import { property } from 'xe-utils'
 
 @Component
 export default class CountTimerComponent extends ComponentBase {
@@ -33,18 +33,18 @@ export default class CountTimerComponent extends ComponentBase {
     this.registerMethods('重置', '', this.countReset, null, null)
   }
 
-  Destory() {
+  destory() {
     if (this.time) {
       clearInterval(this.time)
     }
-    // super.Destory()
+    // super.destory()
   }
 
   beforeDestroy() {}
   private countStart() {
     //window.console.info('执行了开始*------------------------')
     //this.status = '开始'
-    this.time = setInterval(() => {
+    this.time = window.setInterval(() => {
       this.timer()
     }, 1000)
   }

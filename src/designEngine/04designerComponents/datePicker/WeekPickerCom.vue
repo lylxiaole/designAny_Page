@@ -114,10 +114,10 @@ export default class DatePickerCom extends ComponentBase {
     //属性改变触发
     this.$on('onPropertyChanged', this.onCurrentPropertyChanged)
     //添加最大值、最小值之间的检验规则
-    this.AddPropertyValidator(this.findProperties(PropertyGroupName.special, '最小值')[0].id, (newval: any) => {
+    this.addPropertyValidator(this.findProperties(PropertyGroupName.special, '最小值')[0].id, (newval: any) => {
       return this.maxdatevalue === undefined || newval === null ? true : newval <= this.maxdatevalue
     })
-    this.AddPropertyValidator(this.findProperties(PropertyGroupName.special, '最大值')[0].id, (newval: any) => {
+    this.addPropertyValidator(this.findProperties(PropertyGroupName.special, '最大值')[0].id, (newval: any) => {
       return this.mindatevalue === undefined || newval === null ? true : newval >= this.mindatevalue
     })
   }

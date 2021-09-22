@@ -177,7 +177,7 @@ export default class tabsComponents extends ComponentBase {
             if (theCell) {
               theCell.Id = a.Id
               theCell.parentPage = this.parentPage
-              this.AddChild(theCell)
+              this.addChild(theCell)
             }
           }
         })

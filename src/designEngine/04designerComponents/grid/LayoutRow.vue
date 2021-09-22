@@ -245,7 +245,7 @@ export default class LayoutRow extends ComponentBase {
   private onFormItemDelete(data: fragmentRecord) {
     this.deleteChildComponents(data.id)
     let comp = this.getItemComponent(data.id)
-    this.RemoveChild(comp)
+    this.removeChild(comp)
   }
 }
 </script>

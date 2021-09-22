@@ -390,7 +390,7 @@ export default class Tabs extends ComponentBase {
       if (deleteKey) {
         let deletedChild = this.children.find((x) => x.Id === deleteKey)
         if (deletedChild) {
-          this.RemoveChild(deletedChild)
+          this.removeChild(deletedChild)
           this.TabTempItems = newValue
         }
         let deletedChildDataIndex = this.childrenData.findIndex((x) => x.id === deleteKey)

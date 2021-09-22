@@ -256,64 +256,6 @@ export default class CheckboxComponent extends ComponentBase {
 
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: ComponentBase): void {
     switch (property.propertyName) {
-      case '绑定模型':
-        {
-          if (!this.bindInfos || this.bindInfos.length <= 0) {
-            return
-          }
-          let modelBind = this.parentPage.modelBindings.find((o) => o.modelBindingName == this.bindInfos[0].modelName)
-          let bindType = []
-          for (let index = 0; index < property.value.length; index++) {
-            const element = property.value[index]
-            if (element.bindType === bindTypeEnum.filter) {
-              bindType.push(element)
-            }
-          }
-          let bindCode = []
-          for (let index = 0; index < property.value.length; index++) {
-            const element = property.value[index]
-            if (element.bindType === bindTypeEnum.code) {
-              bindCode.push(element)
-            }
-          }
-          if (modelBind) {
-            if (property.value.length > 0 && bindType.length > 0) {
-              if (modelBind.modelFilters && modelBind.modelFilters.length > 0) {
-                let filter = modelBind.modelFilters.find((item) => item.id === property.value[0].modelFilterId)
-                if (!filter) {
-                  return
-                }
-                let enumProp = modelBind.modelDetailInfo.modelPropertyList.find((item) => item.propertyCode === filter.code)
-                if (!enumProp) {
-                  return
-                }
-                if (enumProp && enumProp.propertyType === ModelPropertyType.ENUM && enumProp.dictId) {
-                  this.dictID = enumProp.dictId
-                }
-              }
-            }
-          }
-
-          //也可以绑定数据源，非表单操作
-          if (property.value.length > 0 && bindCode.length > 0) {
-            if (property.value[0].modelCodes && property.value[0].modelCodes.length > 0) {
-              let enumProp = modelBind.modelDetailInfo.modelPropertyList.find((item) => item.propertyCode === property.value[0].modelCodes[0].code)
-              if (!enumProp) {
-                return
-              }
-              if (
-                enumProp &&
-                (enumProp.propertyType === ModelPropertyType.ENUM || enumProp.propertyType === ModelPropertyType.ENUMARRAY) &&
-                enumProp.dictId
-              ) {
-                this.dictID = enumProp.dictId
-              }
-            }
-          }
-          this.findPropertyByName(PropertyGroupName.special, '选择枚举').value = undefined
-          this.findPropertyByName(PropertyGroupName.special, '是否支持布尔').value = false
-        }
-        break
       case '选择枚举':
         {
           this.dictOptions = []

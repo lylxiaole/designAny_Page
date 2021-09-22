@@ -71,7 +71,7 @@ export default class TabContent extends ComponentBase {
     dropcomp.parentLayout = this
     dropcomp.layoutInfo = compInfo
     dropcomp = this.renderComponent(dropcomp, compInfo, dragType)
-    this.AddChild(dropcomp)
+    this.addChild(dropcomp)
 
     dropcomp.$on('onChildrenCountChange', this.onComponentChildrenCountChange)
     dropcomp.$on('onComponentChildrenCountChange', this.onComponentChildrenCountChange)
@@ -113,7 +113,7 @@ export default class TabContent extends ComponentBase {
     if (!compCon) {
       return null
     }
-    this.AddChild(compCon)
+    this.addChild(compCon)
     /**注册组件事件 */
     compCon.$on('onChildrenCountChange', this.onComponentChildrenCountChange)
     compCon.$on('onPropertyChanged', this.onComponentPropertyChanged)

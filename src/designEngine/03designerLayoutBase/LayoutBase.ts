@@ -58,27 +58,19 @@ export class Point {
 
 export default class LayoutBase extends eventBase {
   protected properties_old: any[] = []
-  private properties: Property[] = []
-
-  public layoutInfo: LayoutInfo
+  public properties: Property[] = []
   public parentLayout: LayoutBase
   /**子级布局 */
-  protected children: LayoutBase[] = []
-  public isSelected: boolean = false
-  /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
-  private _designerEvents: layoutEvent[] = []
-
-  /***属性的值验证 */
-  public propertyValidators: propertyValidatorType[] = []
+  public children: LayoutBase[] = []
   public get selectedChildren(): LayoutBase[] {
     return this.children.filter((o) => o.isSelected == true)
   }
-  public get layoutChildren(): LayoutBase[] {
-    return this.children
-  }
-  public get layoutProperties(): Property[] {
-    return this.properties
-  }
+  public isSelected: boolean = false
+  /***属性的值验证 */
+  public propertyValidators: propertyValidatorType[] = []
+
+  /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
+  private _designerEvents: layoutEvent[] = []
   public get designerEvents(): layoutEvent[] {
     if (!this._designerEvents) {
       this._designerEvents = []
@@ -165,13 +157,13 @@ export default class LayoutBase extends eventBase {
   }
 
   private async destorymethod() {
-    for (let index = 0; index < this.layoutProperties.length; index++) {
-      const element = this.layoutProperties[index]
+    for (let index = 0; index < this.properties.length; index++) {
+      const element = this.properties[index]
       element.destory()
     }
-    for (let index = 0; index < this.layoutChildren.length; index++) {
-      const o = this.layoutChildren[index]
-      o.Destory()
+    for (let index = 0; index < this.children.length; index++) {
+      const o = this.children[index]
+      o.destory()
     }
 
     // $(this.$el).remove()
@@ -467,8 +459,8 @@ export default class LayoutBase extends eventBase {
       if (comp.isSelected == true) {
         res.push(comp)
       }
-      if (comp.layoutChildren) {
-        var finds = this._findSelectedLayoutsRecursion(comp.layoutChildren)
+      if (comp.children) {
+        var finds = this._findSelectedLayoutsRecursion(comp.children)
         res = res.concat(finds)
       }
     }
@@ -484,7 +476,7 @@ export default class LayoutBase extends eventBase {
       if (layout.Id == id) {
         return layout
       }
-      var findc = this._findLayoutRecursion(id, layout.layoutChildren)
+      var findc = this._findLayoutRecursion(id, layout.children)
       if (findc) {
         return findc
       }
@@ -496,7 +488,7 @@ export default class LayoutBase extends eventBase {
   protected loadCompleted(childrenData: SaveInfo[]) {}
   // *************************protect方法****************************************************************************
   /**添加子级 */
-  protected AddChild(child: LayoutBase) {
+  protected addChild(child: LayoutBase) {
     if (!this.children) {
       this.children = []
     }
@@ -505,18 +497,18 @@ export default class LayoutBase extends eventBase {
       this.onChildrenCountChange()
     }
   }
-  protected AddChilds(childs: LayoutBase[]) {
+  protected addChilds(childs: LayoutBase[]) {
     if (!this.children) {
       this.children = []
     }
     if (childs && childs.length > 0) {
       for (let index = 0; index < childs.length; index++) {
         const child = childs[index]
-        this.AddChild(child)
+        this.addChild(child)
       }
     }
   }
-  protected RemoveChild(child: LayoutBase) {
+  protected removeChild(child: LayoutBase) {
     let index = this.children.indexOf(child)
     if (index < 0) {
       return
@@ -525,24 +517,24 @@ export default class LayoutBase extends eventBase {
     this.children.splice(index, 1)
     this.onChildrenCountChange()
   }
-  protected RemoveChilds(childs: LayoutBase[]) {
+  protected removeChilds(childs: LayoutBase[]) {
     if (childs && childs.length > 0) {
       for (let index = 0; index < childs.length; index++) {
         const child = childs[index]
-        this.RemoveChild(child)
+        this.removeChild(child)
       }
     } else {
       return
     }
   }
-  protected RemoveAllChilds() {
+  protected removeAllChilds() {
     if (this.children && this.children.length > 0) {
-      this.RemoveChilds(this.children)
+      this.removeChilds(this.children)
     } else {
       return
     }
   }
-  public Destory() {}
+  public destory() {}
   protected AddProperty(proper: Property) {
     let find = this.properties.find((o) => o.propertyName == proper.propertyName && o.groupName == proper.groupName)
     if (find) {
@@ -552,7 +544,7 @@ export default class LayoutBase extends eventBase {
     this.properties.push(proper)
   }
   /**添加属性值验证，当属性值变化前进行验证，如果验证不通过则不设置值 */
-  protected AddPropertyValidator(propertyId: string, validatorHandle: propertyValidatorHandle) {
+  protected addPropertyValidator(propertyId: string, validatorHandle: propertyValidatorHandle) {
     var newvaildate = new propertyValidatorType()
     newvaildate.propertyId = propertyId
     newvaildate.handle = validatorHandle
@@ -574,23 +566,10 @@ export default class LayoutBase extends eventBase {
   public GetSaveData(): SaveInfo {
     this.beforeGetSaveData(this)
     let layoutcloneData: LayoutInfo = null
-    if (this.layoutInfo) {
-      layoutcloneData = common.clone(this.layoutInfo)
-      if (layoutcloneData) {
-        if (layoutcloneData.modelDetail) {
-          layoutcloneData.modelDetail = null
-        }
-        if (layoutcloneData.bindingProperty && layoutcloneData.bindingProperty.modelProperty) {
-          layoutcloneData.bindingProperty.modelProperty = null
-        }
-        if (layoutcloneData.isNew) {
-          layoutcloneData.isNew = false
-        }
-      }
-    }
+
     var saveinfo: SaveInfo = {
       id: this.Id,
-      properties: this.layoutProperties,
+      properties: this.properties,
       children: [],
       layoutInfo: layoutcloneData
     }
@@ -599,8 +578,8 @@ export default class LayoutBase extends eventBase {
   }
   private getChildrenData(): SaveInfo[] {
     var res: SaveInfo[] = []
-    for (let index = 0; index < this.layoutChildren.length; index++) {
-      const child = this.layoutChildren[index]
+    for (let index = 0; index < this.children.length; index++) {
+      const child = this.children[index]
       var childdata = child.GetSaveData()
       res.push(childdata)
     }
@@ -616,9 +595,6 @@ export default class LayoutBase extends eventBase {
       this.Id = data.id
       // window.console.log('************加载数据,id:', this.Id)
       this.LoadingProperties(data.id, data.properties)
-      if (data.layoutInfo) {
-        this.layoutInfo = data.layoutInfo
-      }
       if (data.children) {
         this.loadChildrenData(data.children)
       }
@@ -635,7 +611,7 @@ export default class LayoutBase extends eventBase {
   public ReLoadData(data: SaveInfo) {
     for (let index = 0; index < this.children.length; index++) {
       const element = this.children[index]
-      element.Destory()
+      element.destory()
     }
     this.children = []
     this.isLoaded = false
@@ -649,15 +625,15 @@ export default class LayoutBase extends eventBase {
   }
   /**递归查找子级中所有选中的布局 */
   public FindSelectedLayoutsRecursion() {
-    return this._findSelectedLayoutsRecursion(this.layoutChildren)
+    return this._findSelectedLayoutsRecursion(this.children)
   }
   /**递归查找子级布局 */
   public FindLayoutRecursion(id: string) {
-    return this._findLayoutRecursion(id, this.layoutChildren)
+    return this._findLayoutRecursion(id, this.children)
   }
   /**查找直接子级布局 */
   public FindLayout(id: string) {
-    return this.layoutChildren.find((o) => o.Id == id)
+    return this.children.find((o) => o.Id == id)
   }
   /**注册方法 */
   public registerMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
@@ -708,8 +684,8 @@ export default class LayoutBase extends eventBase {
   /**递归删除子组件 */
   public RemoveChildRecursion(childId: string) {
     var find = this.FindLayoutRecursion(childId)
-    var toparent = find.parentLayout.layoutChildren.find((x) => x.Id === childId)
-    find.parentLayout.RemoveChild(toparent)
+    var toparent = find.parentLayout.children.find((x) => x.Id === childId)
+    find.parentLayout.removeChild(toparent)
   }
   public ExcuteMethod(name: string, inparams: any[]) {
     if (name == '关闭页面') {

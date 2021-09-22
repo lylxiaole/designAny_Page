@@ -474,7 +474,7 @@ export default class LayoutContainer extends LayoutBase {
     }
     // window.console.error('绘制子组件失败,请不要保存!!!')
     // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
-    this.AddChild(dropcomp)
+    this.addChild(dropcomp)
     if (dropcomp) {
       dropcomp.$on('onChildrenCountChange', this.onComponentChildrenCountChange)
       dropcomp.$on('onComponentChildrenCountChange', this.onComponentChildrenCountChange)

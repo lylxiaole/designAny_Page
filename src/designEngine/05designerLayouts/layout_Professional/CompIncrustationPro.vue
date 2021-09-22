@@ -141,7 +141,7 @@ export default class CompIncrustationPro extends BaseEvent {
 
   public AddComponent(comp: ComponentBase) {
     if (this.Component != null) {
-      this.Component.Destory()
+      this.Component.destory()
     }
     this.Component = comp
     // this.Component.$mount(this.$refs.compContent as Element)
