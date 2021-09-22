@@ -92,7 +92,6 @@ export default class BaseEvents extends Vue {
       this._dragHelper.makeDomContainer()
     }
   }
-
   beforeDestroy() {
     this.RealseEvent()
   }
@@ -104,7 +103,6 @@ export default class BaseEvents extends Vue {
   deactivated(): void {}
   destroyed(): void {}
   errorCaptured(): void {}
-
   /**开始捕捉鼠标键盘 */
   protected CaptureEvent() {
     if (this.isCaptureEvent == true) {
@@ -153,9 +151,7 @@ export default class BaseEvents extends Vue {
       this._dragHelper.RemoveContainer()
     }
   }
-
   /********************Drag事件****************************************************** */
-
   private _onDrag(el: Element, sourceContainer: Element) {
     // window.console.log('从本布局中开始拖拽一个东西出去了')
     if (this.IsDesigning == false) {
@@ -208,7 +204,6 @@ export default class BaseEvents extends Vue {
       return
     }
   }
-
   private _onDragMove(el: Element, targetContainer: Element): boolean {
     if (this.IsDesigning == false || this.canDrop == false || !this.onDragMove_Event) {
       return true
@@ -244,7 +239,6 @@ export default class BaseEvents extends Vue {
     this.startDragMovePoint_top = currentDragTop
     return iscontinue
   }
-
   private _onDragEnd(el: Element) {
     if (this.IsDesigning == false || !this.onDragEnd_Event) {
       return
@@ -254,7 +248,6 @@ export default class BaseEvents extends Vue {
     // window.console.log('dragend')
     this.onDragEnd_Event()
   }
-
   private _onDragOut(el: Element, targetContainer: Element): boolean {
     if (this.IsDesigning == false || !this.onDragOut_Event) {
       return true
@@ -269,7 +262,6 @@ export default class BaseEvents extends Vue {
     //   this._dragHelper.dragEnd()
     // }
   }
-
   private _onDragClone(clone: Element) {
     if (this.IsDesigning == false || !this.onDragClone_Event) {
       return true
@@ -277,7 +269,6 @@ export default class BaseEvents extends Vue {
     this.onDragClone_Event(clone)
   }
   /************************************************************************** */
-
   private _onClick(e: Event) {
     //window.console.log('最底层,_onClick')
     if (this.IsDesigning == false || !this.onClick_Event) {
@@ -292,7 +283,6 @@ export default class BaseEvents extends Vue {
     //window.console.log('最底层,_onClick')
     this.onClick_Event(e, this)
   }
-
   private _onDoubleClick(e: Event) {
     if (this.IsDesigning == false || !this.onDoubleClick_Event) {
       return
@@ -301,7 +291,6 @@ export default class BaseEvents extends Vue {
     // window.console.log('点击')
     this.onDoubleClick_Event(e, this)
   }
-
   private _onKeyUp(e: any) {
     // window.console.log('按了键盘')
     if (this.IsDesigning == false) {
@@ -315,7 +304,6 @@ export default class BaseEvents extends Vue {
       this.onDelete_Event(e)
     }
   }
-
   private _onKeyDown(e: any) {
     if (this.IsDesigning == false) {
       return true
@@ -381,7 +369,6 @@ export default class BaseEvents extends Vue {
       this.onPaste_Event(e)
     }
   }
-
   private _onMouseWheel(e: any) {
     if (this.IsDesigning == false) {
       return true
@@ -399,7 +386,6 @@ export default class BaseEvents extends Vue {
       this.onMouseWheelInLayout_Event(e)
     }
   }
-
   private _mouseMove(e: any) {
     if (this.IsDesigning == false || !this.onMouseMove_Event) {
       return true
@@ -435,7 +421,6 @@ export default class BaseEvents extends Vue {
       // this.startMouseDragPoint_top = currentDragTop
     }
   }
-
   private _mouseUp(e: any) {
     if (this.IsDesigning == false || !this.onMoudeUp_Event) {
       return true
@@ -448,7 +433,6 @@ export default class BaseEvents extends Vue {
     this.clearCachePoint()
     this.onMoudeUp_Event(e)
   }
-
   private clearBoxSelectInfo(e: any) {
     $('.boxSelectBorder').unbind('mousemove', this._mouseMove)
     $('.boxSelectBorder').unbind('mouseup', this._mouseUp)
@@ -460,7 +444,6 @@ export default class BaseEvents extends Vue {
       e.stopPropagation()
     }
   }
-
   private _mouseDown(e: any) {
     if (this.IsDesigning == false) {
       return true
@@ -479,13 +462,11 @@ export default class BaseEvents extends Vue {
     this.isMouseDown = true
     this.onMoudeDown_Event(e)
   }
-
   private _onWindowUnload(e: any) {
     if (this.onWindowUnload_Event) {
       this.onWindowUnload_Event(e)
     }
   }
-
   private _onWindowResize(e: any) {
     if (!this.onWindowResize_Event) {
       return
@@ -494,14 +475,12 @@ export default class BaseEvents extends Vue {
       this.onWindowResize_Event(e)
     }, 500)
   }
-
   private clearCachePoint() {
     this.startDragMovePoint_left = NaN
     this.startDragMovePoint_top = NaN
   }
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void
-
   onCut_Event: (e: Event) => void
   onCopy_Event: (e: Event) => void
   onPaste_Event: (e: Event) => void
@@ -527,26 +506,12 @@ export default class BaseEvents extends Vue {
   onMouseMove_Event: (e: Event) => void
   onMoudeDown_Event: (e: Event) => void
   onMoudeUp_Event: (e: Event) => void
-
   onBoxSelect_Event: (e: MouseEvent) => void
-
   onDragEnd_Event: () => void
   onDragOver_Event: (el: Element) => boolean
   onDragClone_Event: (el: Element) => void
-
   onDragOut_Event: (el: Element, targetContainer: Element) => boolean
   onDrag_Event: (el: Element, dragdata: DragItemData<any>) => void
   onDrop_Event: (el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata?: DragItemData<any>) => boolean
-
-  // onDragMove_Event: (
-  //   startLeft_screen: number,
-  //   startTop_screen: number,
-  //   endLeft_screen: number,
-  //   endTop_screen: number,
-  //   el: Element
-  // ) => boolean = function() {
-  //   return true
-  // }
-
   onDragMove_Event: (xChange: number, yChange: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>) => boolean
 }

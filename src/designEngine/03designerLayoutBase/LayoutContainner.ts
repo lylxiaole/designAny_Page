@@ -1,7 +1,5 @@
 import LayoutBase, { SaveInfo, Point } from './LayoutBase'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
-import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-
 import { Property } from './commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
 import { ComponentBase } from '../03designerLayoutBase'
@@ -26,7 +24,6 @@ export default class LayoutContainer extends LayoutBase {
       this.onDragMove_Event = this.listenOnDragMove
       this.onDelete_Event = this.onDeleteKey
       this.onDragEnd_Event = this.listenOnDragEnd
-
       this.onCut_Event = (e) => {
         if (this.IsDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
@@ -85,13 +82,11 @@ export default class LayoutContainer extends LayoutBase {
       this.onMouseMove_Event = this.onMouseMoveE
     }
   }
-
   /**********************************privates ******************************/
   private onMouseMoveE(e: MouseEvent) {
     this.mouseX = e.offsetX
     this.mouseY = e.offsetY
   }
-
   private listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): boolean {
     //window.console.log('listenOnDrop', dragdata)
     if (!dragdata) {
@@ -183,7 +178,6 @@ export default class LayoutContainer extends LayoutBase {
     // window.console.log('感知到drop', this.Id)
     return false
   }
-
   public onDeleteKey(e: Event) {
     e.preventDefault()
     // window.console.log('按了删除键', this.name)
@@ -198,7 +192,6 @@ export default class LayoutContainer extends LayoutBase {
       }
     }
   }
-
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
     //  window.console.log('listenOnDragMove')
     if (!dragdata) {
@@ -250,12 +243,8 @@ export default class LayoutContainer extends LayoutBase {
       // window.console.log(compInfo.position)
       return false
     }
-    //else {
-    //   return this.onListenDragMoveExtand(xchanged, ychanged, left, top, el, dragdata)
-    // }
     return true
   }
-
   private changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
     let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
@@ -303,7 +292,6 @@ export default class LayoutContainer extends LayoutBase {
         break
     }
   }
-
   private cuteNearbyPointInPage(x: number, y: number, target: LayoutBase): Point {
     let respoint: Point = { X: x, Y: y }
     for (let index = 0; index < this.children.length; index++) {
@@ -315,7 +303,6 @@ export default class LayoutContainer extends LayoutBase {
     }
     return respoint
   }
-
   /**计算一个点相对于控件的四边，最近的距离 */
   private cuteNearbyPointToComp(childComp: LayoutBase, point: Point) {
     let size = 5
@@ -347,7 +334,6 @@ export default class LayoutContainer extends LayoutBase {
       // this.clearHorRule()
     }
   }
-
   private drawHorRule(top: number) {
     if (!this.horRule) {
       let domid = common.getUuid()
@@ -358,7 +344,6 @@ export default class LayoutContainer extends LayoutBase {
     $(this.horRule).show()
     $(this.horRule).css('top', top)
   }
-
   private drawVerRule(left: number) {
     if (!this.verRule) {
       let domid = common.getUuid()
@@ -369,20 +354,16 @@ export default class LayoutContainer extends LayoutBase {
     $(this.verRule).show()
     $(this.verRule).css('left', left)
   }
-
   private clearHorRule() {
     $(this.horRule).hide()
   }
-
   private clearVerRule() {
     $(this.verRule).hide()
   }
-
   private listenOnDragEnd() {
     this.clearHorRule()
     this.clearVerRule()
   }
-
   /************************************publics***********************/
   public chooseComps(comps: LayoutBase[]) {
     this.cancelCompSelected(this.children)
@@ -391,7 +372,6 @@ export default class LayoutContainer extends LayoutBase {
       o.isSelected = true
     })
   }
-
   private cancelCompSelected(comps: LayoutBase[]) {
     comps.filter((o) => {
       if (o.isSelected == true) {
@@ -401,7 +381,6 @@ export default class LayoutContainer extends LayoutBase {
     })
     this.isSelected = false
   }
-
   // *************************overrides****************************************************************************
   protected renderChildFromData(data: SaveInfo) {
     // let compclass = findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
@@ -413,25 +392,20 @@ export default class LayoutContainer extends LayoutBase {
     //   comp.loadData(data)
     // }
   }
-
   /************************************virtuals***********************/
   protected renderComponent(compCon: LayoutBase, layoutInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
     return compCon
   }
-
   public deleteChildComponents(compId: string): boolean {
     return false
   }
-
   protected onListenDragMoveExtand(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
     return true
   }
-
   /************************************protected***********************/
   protected getCompTemplateData(tempId: string): any {
     return null
   }
-
   /**添加一个组件 */
   public insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
     // window.console.log('绘制组件')
@@ -457,16 +431,11 @@ export default class LayoutContainer extends LayoutBase {
 
     return dropcomp as LayoutBase
   }
-
   /************************************Emits***********************/
-
   protected onComponentPropertyChanged(propertyId: string, property: Property, comp: LayoutBase): void {}
-
   protected onComponentChildrenCountChange(): void {}
-
   //是否需要重绘，目前只有表格组件需要重绘
   protected isNeedRecalculate: boolean = false
-
   //缩放结束事件
   protected onAfterResize(): void {}
 }

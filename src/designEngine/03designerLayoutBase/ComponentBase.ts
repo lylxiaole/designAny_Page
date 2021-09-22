@@ -1,5 +1,4 @@
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
 import { PageBase, SaveInfo, LayoutContainner, DragItemData, DragItemTypeEnum, param, factory } from '.'
 
