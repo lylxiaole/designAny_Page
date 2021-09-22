@@ -1,10 +1,9 @@
-import LayoutBase, { LayoutInfo, SaveInfo, Point } from './LayoutBase'
+import LayoutBase, { SaveInfo, Point } from './LayoutBase'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
 
 import { Property } from './commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
-import { CurrentApis } from '../01designerContext'
 import { ComponentBase } from '../03designerLayoutBase'
 import { findSystemComp, findSystemCompByCode } from '../04designerComponents'
 
@@ -111,7 +110,7 @@ export default class LayoutContainer extends LayoutBase {
     if (!dragdata) {
       return true
     }
-    let compInfo = dragdata.dragData as LayoutInfo
+    let compInfo = dragdata.dragData as any
     if (!compInfo) {
       return true
     }
@@ -419,22 +418,18 @@ export default class LayoutContainer extends LayoutBase {
 
   // *************************overrides****************************************************************************
   protected renderChildFromData(data: SaveInfo) {
-    if (!data.layoutInfo) {
-      return
-    }
-
-    let compclass = findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
-    if (!compclass) {
-      return
-    }
-    let comp = this.insertComponentLayout(compclass, data.layoutInfo, null, data)
-    if (comp) {
-      comp.LoadData(data)
-    }
+    // let compclass = findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
+    // if (!compclass) {
+    //   return
+    // }
+    // let comp = this.insertComponentLayout(compclass, data.layoutInfo, null, data)
+    // if (comp) {
+    //   comp.LoadData(data)
+    // }
   }
 
   /************************************virtuals***********************/
-  protected renderComponent(compCon: LayoutBase, layoutInfo: LayoutInfo, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
+  protected renderComponent(compCon: LayoutBase, layoutInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
     return compCon
   }
 
@@ -448,18 +443,11 @@ export default class LayoutContainer extends LayoutBase {
 
   /************************************protected***********************/
   protected getCompTemplateData(tempId: string): any {
-    let res = CurrentApis.GetComponentTemplateDetail(tempId)
-    let pagecontent = res[0].design_content
-    pagecontent = decodeURIComponent(atob(pagecontent))
-    pagecontent = common.strUnZip(pagecontent)
-    if (pagecontent) {
-      return common.deserialize(pagecontent)
-    }
     return null
   }
 
   /**添加一个组件 */
-  public insertComponentLayout(dropcompclass: any, compInfo: LayoutInfo, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
+  public insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
     // window.console.log('绘制组件')
     compInfo.compCode = dropcompclass.compCode
     let dropcomp = new dropcompclass()

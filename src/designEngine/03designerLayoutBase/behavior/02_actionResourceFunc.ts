@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import { CurrentContext, CurrentApis, fileInfo } from '../../01designerContext'
 import { getUuid } from '@src/utils'
 import PageBase from '../PageBase'
 import { ComponentBase } from '../../03designerLayoutBase'
@@ -447,30 +446,6 @@ class breakBehaviorAllFunc implements actResFuncBase {
   updateInparam(obj: object_Method) {}
 }
 
-@resourceFuncAttr(resourceType.serverTimeNow)
-class getServerTimeFunc implements actResFuncBase {
-  currentLayout: LayoutBase
-  currentPage: PageBase
-  currentBehavior: behavior
-  getFunc(obj: object_Method) {
-    return CurrentApis.GetServerTime()
-  }
-  setFunc(obj: object_Method, val: any) {
-    throw '不可以赋值'
-  }
-  getDesc(obj: objectBase): string {
-    return '获取系统当前时间'
-  }
-  isExit(obj: objectBase): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
-    return null
-  }
-  updateInparam(obj: object_Method) {}
-}
-
 @resourceFuncAttr(resourceType.callback)
 class callbackFunc implements actResFuncBase {
   currentLayout: LayoutBase
@@ -557,66 +532,6 @@ class externalLinksFunc implements actResFuncBase {
   }
   getDesc(obj: objectBase): string {
     return '外部链接地址'
-  }
-  isExit(obj: objectBase): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
-    return null
-  }
-  updateInparam(obj: object_Method) {}
-}
-
-@resourceFuncAttr(resourceType.callLocalProgram)
-class callLocalProgramFunc implements actResFuncBase {
-  static loadingind: any = null
-  currentLayout: LayoutBase
-  currentPage: PageBase
-  currentBehavior: behavior
-  getFunc(obj_method: object_Method) {
-    //window.console.log('打开本地程序')
-    var programname = obj_method.inputParams.find((o) => o.name == '本地程序名称').obj.ref
-    var args = obj_method.inputParams.find((o) => o.name == '参数').obj.ref
-    window.location.href = programname + ':///' + args
-  }
-  setFunc(obj: objectBase, val: any) {
-    throw '不能赋值'
-  }
-  getDesc(obj: objectBase): string {
-    return '调用本地程序'
-  }
-  isExit(obj: objectBase): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
-    return null
-  }
-  updateInparam(obj: object_Method) {}
-}
-
-@resourceFuncAttr(resourceType.openLocalExeToOpenFile)
-class openLocalExeToOpenFileProgramFunc implements actResFuncBase {
-  static loadingind: any = null
-  currentLayout: LayoutBase
-  currentPage: PageBase
-  currentBehavior: behavior
-  getFunc(obj_method: object_Method) {
-    var url = obj_method.inputParams.find((o) => o.name == '文件相对路径').obj.ref
-    var programname = 'GenoAny'
-    var data = {
-      domain: CurrentContext.FileServerAddress,
-      url: url,
-      compId: CurrentContext.GetCompanyId()
-    }
-    window.location.href = programname + ':///' + JSON.stringify(data)
-  }
-  setFunc(obj: objectBase, val: any) {
-    throw '不能赋值'
-  }
-  getDesc(obj: objectBase): string {
-    return '调用本地程序打开附件'
   }
   isExit(obj: objectBase): boolean {
     return true
@@ -769,26 +684,7 @@ class reportPrint_Func implements actResFuncBase {
   updateInparam(obj: object_Method) {}
 }
 
-var allFuncs: any[] = [
-  propertiesInPageFunc,
-  behaviorInParamFunc,
-  behaviorsFunc,
-  pageInParamsFunc,
-  getServerTimeFunc,
-  variablesFunc,
-  fixedValFunc,
-  signsFunc,
-  filterSignsFunc,
-  breakBehaviorAllFunc,
-  controlMethodsFunc,
-  callbackFunc,
-  consoleSettingsFunc,
-  externalLinksFunc,
-  callLocalProgramFunc,
-  reportPrintPreview_Func,
-  reportPrint_Func,
-  openLocalExeToOpenFileProgramFunc
-]
+var allFuncs: any[] = [propertiesInPageFunc, behaviorInParamFunc, behaviorsFunc, pageInParamsFunc, variablesFunc, fixedValFunc, signsFunc, filterSignsFunc, breakBehaviorAllFunc, controlMethodsFunc, callbackFunc, consoleSettingsFunc, externalLinksFunc, reportPrintPreview_Func, reportPrint_Func]
 
 function getResouceFunc(resType: resourceType): actResFuncBase {
   // window.console.log('行为代码2', resType)

@@ -1,7 +1,4 @@
 import x from './ceph'
-import { toFixedNumber } from 'xe-utils/methods'
-import { CurrentContext } from '../../01designerContext'
-import common from '../commonMethod'
 var AWS = x as any
 
 export default class fileUpload {
@@ -51,7 +48,6 @@ export default class fileUpload {
       })
       .on('httpUploadProgress', (e: any) => {
         var precent = parseInt(e.loaded, 10) / parseInt(e.total, 10)
-        precent = toFixedNumber(precent, 2) * 100
         this.onUploadProgress(e.part, precent)
       })
 
@@ -102,7 +98,7 @@ export default class fileUpload {
   /**拼接文件路径 */
   public getFilePath(relativePath: string) {
     //window.console.log(this.serverAddr + relativePath + '&access_token=' + token)
-    return BuildingFileUrlForShow(this.serverAddr, relativePath)
+    return relativePath
   }
 
   /**********可注册时间************************************************************* */

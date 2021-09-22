@@ -2774,6 +2774,11 @@
   "resolved" "https://registry.npm.taobao.org/asynckit/download/asynckit-0.4.0.tgz"
   "version" "0.4.0"
 
+"atoa@1.0.0":
+  "integrity" "sha1-DMDpGkgOc4+SPrwQNnZHF3mzSkk="
+  "resolved" "https://registry.npmjs.org/atoa/-/atoa-1.0.0.tgz"
+  "version" "1.0.0"
+
 "atob@^2.1.2":
   "integrity" "sha1-bZUX654DDSQ2ZmZR6GvZ9vE1M8k="
   "resolved" "https://registry.npm.taobao.org/atob/download/atob-2.1.2.tgz"
@@ -4341,6 +4346,14 @@
   "resolved" "https://registry.nlark.com/content-type/download/content-type-1.0.4.tgz"
   "version" "1.0.4"
 
+"contra@1.9.4":
+  "integrity" "sha1-9TveQtfltZhcrk2ZqNYQUm3o8o0="
+  "resolved" "https://registry.npmjs.org/contra/-/contra-1.9.4.tgz"
+  "version" "1.9.4"
+  dependencies:
+    "atoa" "1.0.0"
+    "ticky" "1.0.1"
+
 "convert-source-map@^1.1.0", "convert-source-map@^1.4.0", "convert-source-map@^1.5.1", "convert-source-map@^1.7.0":
   "integrity" "sha1-8zc8MtIbTXgN2ABFFGhPt5HKQ2k="
   "resolved" "https://registry.nlark.com/convert-source-map/download/convert-source-map-1.8.0.tgz?cache=0&sync_timestamp=1624045304679&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fconvert-source-map%2Fdownload%2Fconvert-source-map-1.8.0.tgz"
@@ -4541,6 +4554,13 @@
     "path-key" "^3.1.0"
     "shebang-command" "^2.0.0"
     "which" "^2.0.1"
+
+"crossvent@1.5.5":
+  "integrity" "sha1-rSCHjkkh6b5z2daXb4suzQ9xoLE="
+  "resolved" "https://registry.npmjs.org/crossvent/-/crossvent-1.5.5.tgz"
+  "version" "1.5.5"
+  dependencies:
+    "custom-event" "^1.0.0"
 
 "crypto-browserify@^3.11.0", "crypto-browserify@^3.12.0":
   "integrity" "sha1-OWz58xN/A+S45TLFj2mCVOAPgOw="
@@ -4801,6 +4821,11 @@
   "integrity" "sha1-0iZqeScp+yJ80hb7Vy9Dco4a00A= sha512-jXKhWqXPmlUeoQnF/EhTtTl4C9SnrxSH/jZUih3jmO6lBKr99rP3/+FmrMj4EFpOXzMtXHAZkd3x0E6h6Fgflw=="
   "resolved" "https://registry.nlark.com/csstype/download/csstype-3.0.8.tgz"
   "version" "3.0.8"
+
+"custom-event@^1.0.0":
+  "integrity" "sha1-XQKkaFCt8bSjF5RqOSj8y1v9BCU="
+  "resolved" "https://registry.npmjs.org/custom-event/-/custom-event-1.0.1.tgz"
+  "version" "1.0.1"
 
 "cyclist@^1.0.1":
   "integrity" "sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk="
@@ -5331,6 +5356,14 @@
   "integrity" "sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-6.2.0.tgz"
   "version" "6.2.0"
+
+"dragula@^3.7.3":
+  "integrity" "sha512-/rRg4zRhcpf81TyDhaHLtXt6sEywdfpv1cRUMeFFy7DuypH2U0WUL0GTdyAQvXegviT4PJK4KuMmOaIDpICseQ=="
+  "resolved" "https://registry.npmjs.org/dragula/-/dragula-3.7.3.tgz"
+  "version" "3.7.3"
+  dependencies:
+    "contra" "1.9.4"
+    "crossvent" "1.5.5"
 
 "duck@^0.1.12":
   "integrity" "sha512-wkctla1O6VfP89gQ+J/yDesM0S7B7XLXjKGzXxMDVFg7uEn706niAtyYovKbyq1oT9YwDcly721/iUWoc8MVRg=="
@@ -12956,6 +12989,11 @@
   "integrity" "sha1-Wrr3FKlAXbBQRzK7zNLO3Z75U30="
   "resolved" "https://registry.npm.taobao.org/thunky/download/thunky-1.1.0.tgz"
   "version" "1.1.0"
+
+"ticky@1.0.1":
+  "integrity" "sha1-t8+nHnaPHJAAxJe5FRswlHxQ5G0="
+  "resolved" "https://registry.npmjs.org/ticky/-/ticky-1.0.1.tgz"
+  "version" "1.0.1"
 
 "timers-browserify@^2.0.4":
   "integrity" "sha1-RKRcEfv0B/NPl7zNFXfGUjYbAO4="

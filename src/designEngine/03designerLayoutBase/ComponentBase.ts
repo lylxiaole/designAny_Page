@@ -2,7 +2,6 @@ import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorat
 
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
 import { PageBase, SaveInfo, LayoutContainner, DragItemData, DragItemTypeEnum, param, factory } from '.'
-import { ModelProperty, propertyValidator, DecoratorOption, DecoratorRule, modelTypeEnum } from '../02common/impResourcesCache/modelAnalysis'
 
 @Component
 export default class ComponentBase extends LayoutContainner {
@@ -182,7 +181,7 @@ export default class ComponentBase extends LayoutContainner {
   // *******************************publics**************************************************************************************
   protected loadCompleted(childrenData: SaveInfo[]): void {}
   /**通用的验证方法，根据编码获取 */
-  public CommonValid(validatorArr: propertyValidator[], value: any, callback: any, message: any) {
+  public CommonValid(validatorArr: any[], value: any, callback: any, message: any) {
     if (value === 0) {
       value = '0'
     }

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import dragHelper, { dragulaExtand } from '../02common/dragHelper'
-import HookBase from './HookBase'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
   drop_system_component = 'drop_system_component',

@@ -1,4 +1,3 @@
-import { fileInfo } from '../../01designerContext'
 class breadcrumIcons {
   name: string
   value: string
@@ -15,17 +14,12 @@ export default class breadcrumAttributeInfos {
   breadcrumIcon: breadcrumIcons
 
   //上传的图片
-  breadcrumImage: fileInfo[]
+  breadcrumImage: any[]
   // imageUrl: string
 
   get allBreadcrumIcons(): any[] {
     if (this.breadcrumIconType == 1) {
-      return [
-        { name: '根图标', value: 'home' },
-        { name: '用户图标', value: 'user' },
-        { name: '添加用户', value: 'user-add' },
-        { name: '删除用户', value: 'user-delete' },
-      ]
+      return [{ name: '根图标', value: 'home' }, { name: '用户图标', value: 'user' }, { name: '添加用户', value: 'user-add' }, { name: '删除用户', value: 'user-delete' }]
     } else {
       return this.breadcrumImage
     }

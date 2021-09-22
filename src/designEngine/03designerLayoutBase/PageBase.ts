@@ -1,13 +1,10 @@
 import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
-import { ModelInfo, modelSimpleInfo, modelDetailInfo, ModelProperty, propertyValidator, ModelBindingProperty, DecoratorOption, DecoratorRule, modelTypeEnum } from '../02common/impResourcesCache/modelAnalysis'
-import { modelAnalysis, functionCache, dictCache, modelMapperCache, pageCache, pageContentTable, pageStatus } from '../02common/impResourcesCache'
 
 import ComponentBase from './ComponentBase'
 import common from '../02common/commonMethod'
 import LayoutBase, { SaveInfo } from '../03designerLayoutBase/LayoutBase'
 import LayoutContainer from '../03designerLayoutBase/LayoutContainner'
 import paramInfo from './commonClasses/pageInParamInfo'
-import { CurrentApis } from '../01designerContext'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 
@@ -240,10 +237,10 @@ export default class PageBase extends LayoutContainer {
     var saveinfo = this.GetSaveData()
     var saveinfoStr = this.GetPageZipStr(saveinfo)
 
-    CurrentApis.SavePageData(this.Id, saveinfoStr, null).then((res) => {
-      this.isNeedSave = false
-      this.onPageSaveSuccess(saveinfo.id)
-    })
+    // CurrentApis.SavePageData(this.Id, saveinfoStr, null).then((res) => {
+    //   this.isNeedSave = false
+    //   this.onPageSaveSuccess(saveinfo.id)
+    // })
   }
 
   public GetPageZipStr(saveInfo: any) {
@@ -256,7 +253,7 @@ export default class PageBase extends LayoutContainer {
     this.Id = pageId
     var pageData = null
     //需要判断一下是组件模板还是页面，数据查询方式不一样
-    let pageDatafromdb = (await pageCache.getPageData(pageId)) as pageContentTable
+    let pageDatafromdb = {} as any
     pageData = pageDatafromdb.content
     await this.LoadPageByData(pageId, pageData, params)
     //触发组件的重绘，目前只用于表格 xww 2020-09-05

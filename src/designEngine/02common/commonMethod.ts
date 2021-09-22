@@ -2,7 +2,6 @@
 import pako from 'pako'
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
 import { Modal, notification, message, Spin } from 'ant-design-vue'
-import { CurrentContext } from '../01designerContext'
 import clonedeep from 'lodash.clonedeep'
 import { Store } from 'vuex'
 
@@ -41,15 +40,7 @@ export default class common {
 
   //深度clone对象
   public static clone(item: any): any {
-    if (
-      item == undefined ||
-      item == null ||
-      item.constructor == String ||
-      item.constructor == Number ||
-      item.constructor == Boolean ||
-      (item.constructor == Object && Object.keys(item).length == 0) ||
-      (item.constructor == Array && item.length == 0)
-    ) {
+    if (item == undefined || item == null || item.constructor == String || item.constructor == Number || item.constructor == Boolean || (item.constructor == Object && Object.keys(item).length == 0) || (item.constructor == Array && item.length == 0)) {
       /**此处判断条件不能更改，要考虑NaN的情况 */
       return item
     }
@@ -134,8 +125,7 @@ export default class common {
     } else {
       relativePath += '&'
     }
-    let x = CurrentContext.GetUserToken()
-    return fileserverAddr + relativePath + 'Access-Token=' + CurrentContext.GetUserToken() + '&&Company-Id=' + CurrentContext.GetCompanyId()
+    return fileserverAddr + relativePath
   }
 
   public static getMillionSecond(): number {

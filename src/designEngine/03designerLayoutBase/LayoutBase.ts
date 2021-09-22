@@ -2,9 +2,7 @@ import eventBase from './BaseEvents'
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 import { layoutEventBehaviors } from './behavior/behaviorTypes'
-import { CurrentApis, fileInfo, CurrentContext } from '../01designerContext'
 
-import { ModelInfo, ModelBindingProperty, ModelPropertyType } from '../02common/impResourcesCache/modelAnalysis'
 import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from './commonClasses/LayoutProperty'
 import common from '../02common/commonMethod'
 
@@ -16,15 +14,15 @@ export enum LayoutType {
   /**功能组件 */
   functional_component = 'functional_component'
 }
+
 export class LayoutInfo {
-  constructor(_type: LayoutType, _groupName: string, _name: string, _component: any, _icon: any, _sourceId?: string, _modelDetail?: ModelInfo, _compCode?: string) {
+  constructor(_type: LayoutType, _groupName: string, _name: string, _component: any, _icon: any, _sourceId?: string, _compCode?: string) {
     this.type = _type
     this.groupName = _groupName
     this.name = _name
     this.component = _component
     this.sourceId = _sourceId
     this.icon = _icon
-    this.modelDetail = _modelDetail
     this.compCode = _compCode
   }
   type: LayoutType
@@ -35,8 +33,6 @@ export class LayoutInfo {
   icon: any
   ///
   sourceId: string
-  modelDetail: ModelInfo
-  bindingProperty: ModelBindingProperty
   isNew: boolean
   data: any
 }
@@ -47,7 +43,6 @@ class propertyValidatorType {
 }
 export class SaveInfo {
   id: string
-  layoutInfo: LayoutInfo
   properties: Property[]
   children: SaveInfo[]
 }
@@ -424,7 +419,7 @@ export default class LayoutBase extends eventBase {
     }
     this.setPropertyVal(property.id, val)
   }
-  get background_img(): fileInfo {
+  get background_img(): any {
     // window.console.log('获取背景图片')
     var property = this.findPropertyByName(PropertyGroupName.normal, '背景图片')
     if (property && property.value && property.value.length > 0) {
@@ -433,7 +428,7 @@ export default class LayoutBase extends eventBase {
       return null
     }
   }
-  set background_img(val: fileInfo) {
+  set background_img(val: any) {
     var property = this.findPropertyByName(PropertyGroupName.normal, '背景图片')
     if (!property) {
       return
@@ -565,13 +560,11 @@ export default class LayoutBase extends eventBase {
   // *************************对外公布方法****************************************************************************
   public GetSaveData(): SaveInfo {
     this.beforeGetSaveData(this)
-    let layoutcloneData: LayoutInfo = null
 
     var saveinfo: SaveInfo = {
       id: this.Id,
       properties: this.properties,
-      children: [],
-      layoutInfo: layoutcloneData
+      children: []
     }
     saveinfo.children = this.getChildrenData()
     return saveinfo
