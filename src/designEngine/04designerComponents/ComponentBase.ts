@@ -1,16 +1,10 @@
-import { SaveInfo } from '../03designerLayoutBase/LayoutBase'
-import LayoutContainner from '../03designerLayoutBase/LayoutContainner'
-import { DragItemData, DragItemTypeEnum } from '../03designerLayoutBase/BaseEvents'
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import { param } from '../03designerLayoutBase/commonClasses/layoutEvent'
 
-import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '../02common/commonClasses/LayoutProperty'
-import PageBase from '../05designerLayouts/PageBase'
-
-import { factory } from '../02common/behavior'
+import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '../03designerLayoutBase'
+import { PageBase, SaveInfo, LayoutContainner, DragItemData, DragItemTypeEnum, param, factory } from '../03designerLayoutBase'
 import { ModelProperty, propertyValidator, DecoratorOption, DecoratorRule, modelTypeEnum } from '../02common/impResourcesCache/modelAnalysis'
 import modelBingding, { bindingModelVal_InProperty, modelBingValue, bindTypeEnum, modelDataTypeEnum } from '../02common/commonClasses/modelBingding'
-import { isArray, isObject } from 'xe-utils/methods'
+import { isArray, isObject } from 'xe-utils'
 
 @Component
 export default class ComponentBase extends LayoutContainner {
@@ -331,7 +325,7 @@ export default class ComponentBase extends LayoutContainner {
       return
     }
     // window.console.log('触发事件:', name, this.$el)
-    var event = this.DesignerEvents.find((o) => o.eventName == name)
+    var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件调用失败,该事件不存在')
       return
@@ -361,90 +355,10 @@ export default class ComponentBase extends LayoutContainner {
     //TODO 在事件设计的数据中找到事件,并调用事件
     return
   }
-  /*属性值发生改变，需要改变它绑定的模型实例 */
-  protected afterSetPropertyVal(propertyId: string, propertyVal: any) {
-    var bindinfo = this.getPropertyBindInfo(propertyId)
-    if (!bindinfo) {
-      return
-    }
-    let modelbindInfo = this.parentPage.getModelBindInfo(bindinfo)
-    //TODO 根据属性绑定的字段，更新模型实例的中的某些值，然后再通知其它的所有组件
-    this.analysisModelBindVal_UsePropertyVal(modelbindInfo, bindinfo, propertyVal)
 
-    if (modelbindInfo.modelBindingType == 2) {
-      this.parentPage.setModelBindVal(bindinfo.modelName, modelbindInfo.val, propertyId)
-    }
-    if (modelbindInfo.modelBindingType == 1) {
-      this.parentPage.setModelBindVal(bindinfo.modelName, modelbindInfo.val.data, propertyId)
-    }
-  }
-  protected isHavePermission(authCode: string): boolean {
-    if (!authCode) {
-      return
-    }
-
-    if (this.IsDesigning == false) {
-      var page = this.parentPage
-      while (page.parentPage) {
-        page = page.parentPage
-      }
-      if (!page.permissions) {
-        return
-      }
-      var find = page.permissions.find((o) => o.permissionCode == authCode)
-      if (find) {
-        window.console.log('权限[' + authCode + ']，有权限', this.$el)
-        return true
-      } else {
-        window.console.log('权限[' + authCode + ']，没有权限', this.$el)
-        return false
-      }
-    }
-    return
-  }
   // *******************************publics**************************************************************************************
-  /**获取属性绑定信息，绑定信息存在于组件中*/
-  public getPropertyBindInfo(propertyId: string): bindingModelVal_InProperty {
-    //获取属性的模型绑定信息
-    if (this.bindInfos != null && this.bindInfos != undefined && propertyId && this.parentPage) {
-      let bindInfo: bindingModelVal_InProperty = null
-      for (let index = 0; index < this.bindInfos.length; index++) {
-        const o = this.bindInfos[index]
-        if (o.propertyId == propertyId && this.parentPage.getModelBindInfo(o)) {
-          bindInfo = o
-        }
-      }
 
-      if (bindInfo) {
-        return bindInfo
-      } else {
-        return null
-      }
-    } else {
-      return null
-    }
-  }
-  /**获取属性绑定模型实例信息---模型实例存在于页面中*/
-  public getPropertyBindModelInfo(propertyId: string): modelBingding {
-    let bindInfo = this.getPropertyBindInfo(propertyId)
-    if (bindInfo) {
-      return this.parentPage.getModelBindInfo(bindInfo)
-    } else {
-      return null
-    }
-  }
-
-  protected loadCompleted(childrenData: SaveInfo[]): void {
-    /****************************权限判断**** */
-    if (this.isHavePermission(this.authorityCode) == undefined) {
-      return
-    }
-
-    if (this.isHavePermission(this.authorityCode) == false && this.display == true) {
-      this.display = false
-    }
-    /******************************** */
-  }
+  protected loadCompleted(childrenData: SaveInfo[]): void {}
 
   //设置模型实例的数据，需要改变绑定它的属性
   public setModelBindInfo(modelBindName: string, modelBindInfo: modelBingding, sourcePropertyId?: string) {

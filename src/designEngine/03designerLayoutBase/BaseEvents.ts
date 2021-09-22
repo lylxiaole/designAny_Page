@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import dragHelper, { dragulaExtand } from '../02common/dragHelper'
 import HookBase from './HookBase'
 /**拖拽行为类型 */
@@ -32,7 +33,7 @@ class optionsClass {
   public clickTimer: number = null
 }
 
-export default class BaseEvents extends HookBase {
+export default class BaseEvents extends Vue {
   protected _dragHelper: dragHelper
   protected _currentDom: Element
   public IsDesigning: boolean = false
