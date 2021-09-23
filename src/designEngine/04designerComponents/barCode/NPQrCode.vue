@@ -9,18 +9,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-
-import { LayoutBase,ComponentBase } from '@src/designEngine/03designerLayoutBase'
-import QRCode from 'qrcode'
-import {
-  Property,
-  PropertyGroupName,
-  Color_Property,
-  Number_Property,
-  Text_Property,
-  Boolean_Property,
-  Enum_Property
-} from '@src/designEngine/03designerLayoutBase'
+ import QRCode from 'qrcode'
+import { LayoutBase,ComponentBase,LayoutType,layoutCompTypeAttr } from '@src/designEngine/03designerLayoutBase' 
+import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property,Color_Property } from '@src/designEngine/03designerLayoutBase'
+ 
 import { getUuid, deepClone } from '@src/utils'
 
 @Component

@@ -46,25 +46,14 @@ import {
   npGridIco,
   reportFormIco
 } from '@src/designEngine/assets/icons.js'
-
+import { CompIndex } from '../03designerLayoutBase'
 //////////////////////////////////////////
 
-export class CompIndex {
-  static indexs = {}
-}
-
-/** */
-export function findSystemCompByCode(code: string): any {
-  var comp: any = CompIndex.indexs[code].component
-  comp.compCode = code
-  return comp
-}
-
 /**动态读取propertyGrid Cell组件 */
-const modulesFiles = require.context('./', true, /\.(js|ts|vue)$/)
+const modulesFiles = require.context('./', true, /\.(vue)$/)
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath)
-  if (value.default.$Meta.compCode) {
+  if (value.default.$Meta && value.default.$Meta.compCode) {
     CompIndex.indexs['compCode'] = value.default.$Meta.compCode
   }
   return modules

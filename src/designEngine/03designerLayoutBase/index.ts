@@ -1,9 +1,8 @@
 /**********此处import时需要保证类的继承顺序***************** */
 import BaseEvents, { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import LayoutBase, { LayoutType, LayoutInfo, SaveInfo } from './LayoutBase'
-import ComponentBase from './ComponentBase'
-
 import LayoutContainer from './LayoutContainer'
+import ComponentBase from './ComponentBase'
 import PageBase from './PageBase'
 
 export { BaseEvents, LayoutBase, LayoutContainer, ComponentBase, PageBase }
@@ -43,6 +42,7 @@ export {
 export { param, paramType, layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
 export { paramInfo } from './commonClasses/pageInParamInfo'
 export { factory } from './behavior'
+export { CompIndex } from './commonClasses/memoryCache'
 
 export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, groupName: string, name: string, compCode: string, icon: any) {
   return function(target: Function) {

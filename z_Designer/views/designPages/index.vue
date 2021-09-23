@@ -32,7 +32,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import { DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import pagelist from './pagelist.vue'
-import PropertyGrid from './06propertyGrid/PropertyGrid.vue'
+import PropertyGrid from './PropertyGrid.vue'
 @Component({
   components: {
     pagelist: pagelist,

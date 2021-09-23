@@ -2,11 +2,10 @@ import { Component } from 'vue-property-decorator'
 
 import LayoutBase, { SaveInfo, Point } from './LayoutBase'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
-import ComponentBase from './ComponentBase'
 
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
-import { findSystemCompByCode } from '../04designerComponents'
+import { findSystemCompByCode } from './commonClasses/memoryCache'
 
 @Component
 export default class LayoutContainer extends LayoutBase {
@@ -16,7 +15,7 @@ export default class LayoutContainer extends LayoutBase {
   private verRule: Element = null
   //当前页面的缩放尺寸
   public currentScaleSize: number = 1
-  private static copyComp: ComponentBase
+  private static copyComp: LayoutBase
   private static isCut: boolean = false
 
   private mouseX: number = 0
@@ -31,7 +30,7 @@ export default class LayoutContainer extends LayoutBase {
       this.onCut_Event = (e) => {
         if (this.IsDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
-            LayoutContainer.copyComp = this.selectedChildren[0] as ComponentBase
+            LayoutContainer.copyComp = this.selectedChildren[0] as LayoutBase
             // this.$message.success('组件已剪切', 2)
             LayoutContainer.isCut = true
             e.stopPropagation()
@@ -41,7 +40,7 @@ export default class LayoutContainer extends LayoutBase {
       this.onCopy_Event = (e) => {
         if (this.IsDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
-            LayoutContainer.copyComp = this.selectedChildren[0] as ComponentBase
+            LayoutContainer.copyComp = this.selectedChildren[0] as LayoutBase
             // this.$message.success('组件已复制', 2)
             LayoutContainer.isCut = false
             e.stopPropagation()
@@ -206,13 +205,13 @@ export default class LayoutContainer extends LayoutBase {
       return true
     }
     /** */
-    let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as ComponentBase
+    let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as LayoutBase
     // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
     if (!dragComp) {
       return false
     }
 
-    let parentPageCurrentScaleSize = dragComp.parentPage.currentScaleSize
+    let parentPageCurrentScaleSize = (dragComp as any).parentPage.currentScaleSize
     /**do */
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       /**范围控制 */

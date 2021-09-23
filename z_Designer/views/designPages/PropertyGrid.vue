@@ -33,7 +33,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { Property, PropertyType, PropertyTypeEnum } from '@src/designEngine'
 import { PageBase, LayoutBase } from '@src/designEngine'
 import { deepClone, serialize, deserialize } from '@src/utils'
-import propertyCellBase from './common'
+import propertyCellBase from './propertyGridCells/common'
 
 class PropertyGroupInfo {
   groupName: string
@@ -69,10 +69,10 @@ class propertyFilterInfo {
 
 /**动态读取propertyGrid Cell组件 */ 
 var cellControls: Function[] = []
-const modulesFiles = require.context('./', true, /\.(js|ts|vue)$/)
-const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
+modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath)
-  if (value.default.$Meta.celltype) {
+  if (value.default.$Meta && value.default.$Meta.celltype) {
     cellControls.push(value.default)
   }
   return modules
