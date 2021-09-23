@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start_Designer_Dev": "cross-env NODE_ENV=development webpack serve --config buildConfigs/webpack.designerConfig.js --mode development",
-    "start_Designer_Pro": "cross-env NODE_ENV=production webpack serve --config buildConfigs/webpack.designerConfig.js --mode production",
-    "build_Designer": "cross-env NODE_ENV=production webpack --config buildConfigs/webpack.designerConfig.js --mode production",
+    "start_Designer_Dev": "cross-env NODE_ENV=development webpack serve --config buildConfigs/designer.config.js --mode development",
+    "start_Designer_Pro": "cross-env NODE_ENV=production webpack serve --config buildConfigs/designer.config.js --mode production",
+    "build_Designer": "cross-env NODE_ENV=production webpack --config buildConfigs/designer.config.js --mode production",
     "start_App_Dev": "cross-env NODE_ENV=development webpack serve --config buildConfigs/app.config.js --mode development",
     "start_App_Pro": "cross-env NODE_ENV=production webpack serve --config buildConfigs/app.config.js --mode production",
-    "build_App": "cross-env NODE_ENV=production webpack --config buildConfigs/app.config.js --mode production"
+    "build_App": "cross-env NODE_ENV=production webpack --config buildConfigs/app.config.js --mode production",
+    "start_Demo_Dev": "cross-env NODE_ENV=development webpack serve --config buildConfigs/app.config.js --mode development",
   },
   "repository": {
     "type": "git",
