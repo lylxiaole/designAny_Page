@@ -1,36 +1,40 @@
 <template>
   <div style="overflow-x:hidden;overflow-y:auto">
-    <a-radio-group @change="changeActivekey" style="margin-left:30px;margin-top:10px;" v-model="activeKey">
-      <a-radio-button style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;" v-for="group in propertyGroups"
+    <el-radio-group @change="changeActivekey" style="margin-left:30px;margin-top:10px;" v-model="activeKey">
+      <a-radio style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;" v-for="group in propertyGroups"
         :key="group.groupName" :value='group.groupName'>
         {{group.groupName}}
-      </a-radio-button>
-    </a-radio-group>
-    <a-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;"></a-row>
+      </a-radio>
+    </el-radio-group>
+    <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;"></el-row>
     <div v-show="propIsShow">
-      <a-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyData" v-show="propertyInfo.isShow"
+      <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyData" v-show="propertyInfo.isShow"
         :key="propertyInfo.name" :disabled="propertyInfo.isEnable==false">
-        <a-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
-          {{propertyInfo.name}}</a-col>
-        <a-col :span="10" style="margin-left:4px">
+        <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
+          {{propertyInfo.name}}</el-col>
+        <el-col :span="10" style="margin-left:4px">
           <component :is="propertyInfo.comp" :outerProperty.sync="propertyInfo.property" :outerPropertyValue.sync="propertyInfo.property.value"
             :currentPage="currentPage" :currentLayouts="currentLayouts" @selectDict="selectDict">
           </component>
-        </a-col>
-        <a-col :span="4">
+        </el-col>
+        <el-col :span="4">
           <span>{{propertyInfo.property.propertyType.unit}}</span>
-        </a-col>
-      </a-row>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+
+
+
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { Property, PropertyType, PropertyTypeEnum } from '@src/designEngine'
 import { PageBase, LayoutBase } from '@src/designEngine'
 import { deepClone, serialize, deserialize } from '@src/utils'
-import { getCellControl, propertyCellBase } from './commonTypes'
+import propertyCellBase from './common'
+
 class PropertyGroupInfo {
   groupName: string
   children: propertyInfo[] = []
@@ -62,6 +66,22 @@ class propertyFilterInfo {
   groupName: string
   propertyName: string
 }
+
+/**动态读取propertyGrid Cell组件 */ 
+var cellControls: Function[] = []
+const modulesFiles = require.context('./', true, /\.(js|ts|vue)$/)
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  const value = modulesFiles(modulePath)
+  if (value.default.$Meta.celltype) {
+    cellControls.push(value.default)
+  }
+  return modules
+}, {})
+
+  function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase {
+  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertyType)[0] as typeof propertyCellBase
+}
+// *****************************************
 
 @Component({
   name: 'propertyGrid',

@@ -39,8 +39,8 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
-import propertyCellBase from '../propertyCellBase'
+import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import propertyCellBase from '../common'
  import { getUuid, deepClone } from '@src/utils'
 class groupInfo {
   name: string

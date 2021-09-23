@@ -3,8 +3,6 @@ import TextComponent from './textComponents/TextComponent.vue'
 import NpBarCode from './barCode/NpBarCode.vue'
 import NPQrCode from './barCode/NPQrCode.vue'
 
-import { CompIndex } from '../02common/componentHelper/componentsCache'
-
 import {
   buttonIco,
   tabsIco,
@@ -54,25 +52,25 @@ import {
   reportFormIco
 } from '@src/designEngine/assets/icons.js'
 
-export var AllComponents: LayoutInfo[] = [
-  //功能组件
-  new LayoutInfo(LayoutType.system_component, '功能组件', '文本组件', TextComponent, textIco, 'TextComponent'),
-  new LayoutInfo(LayoutType.system_component, '内容展示', '条形码', NpBarCode, npGridIco, null, 'NpBarCode'),
-  new LayoutInfo(LayoutType.system_component, '内容展示', '二维码', NPQrCode, cardIco, null, 'NPQrCode')
-]
-
-//////////////计算组件的索引字典/////////////////////////
-export function cuteCompIndex() {
-  for (let index = 0; index < AllComponents.length; index++) {
-    const element = AllComponents[index]
-    CompIndex.indexs[element.compCode] = element
-    if (CompIndex.indexs[element.groupName]) {
-      CompIndex.indexs[element.groupName][element.name] = element
-    } else {
-      CompIndex.indexs[element.groupName] = {}
-      CompIndex.indexs[element.groupName][element.name] = element
-    }
-  }
-}
-cuteCompIndex()
 //////////////////////////////////////////
+
+export class CompIndex {
+  static indexs = {}
+}
+
+/** */
+export function findSystemCompByCode(code: string): any {
+  var comp: any = CompIndex.indexs[code].component
+  comp.compCode = code
+  return comp
+}
+
+/**动态读取propertyGrid Cell组件 */
+const modulesFiles = require.context('./', true, /\.(js|ts|vue)$/)
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  const value = modulesFiles(modulePath)
+  if (value.default.$Meta.compCode) {
+    CompIndex.indexs['compCode'] = value.default.$Meta.compCode
+  }
+  return modules
+}, {})

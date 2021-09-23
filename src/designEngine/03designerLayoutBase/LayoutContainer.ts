@@ -6,7 +6,7 @@ import ComponentBase from './ComponentBase'
 
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
-import { findSystemComp, findSystemCompByCode } from '../02common/componentHelper/componentsCache'
+import { findSystemCompByCode } from '../04designerComponents'
 
 @Component
 export default class LayoutContainer extends LayoutBase {
@@ -65,7 +65,7 @@ export default class LayoutContainer extends LayoutBase {
           //复制操作需要给组件新Id
           compData.id = getUuid()
         }
-        let compclass = findSystemComp(compData.layoutInfo.groupName, compData.layoutInfo.name)
+        let compclass = findSystemCompByCode(compData.layoutInfo.code)
         //为了准确性
         let findchildren = this.findSelectedLayoutsRecursion(this.children)
         let newcopyComp: LayoutBase = null
@@ -108,7 +108,7 @@ export default class LayoutContainer extends LayoutBase {
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {
-          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemCompByCode(compInfo.code)
           if (!compclass) {
             break
           }
@@ -120,7 +120,7 @@ export default class LayoutContainer extends LayoutBase {
         break
       case DragItemTypeEnum.drop_component_template:
         {
-          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemCompByCode(compInfo.code)
           if (!compclass) {
             break
           }
@@ -141,7 +141,7 @@ export default class LayoutContainer extends LayoutBase {
             return true
           }
 
-          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemCompByCode(compInfo.code)
           if (!compclass) {
             break
           }
@@ -156,7 +156,7 @@ export default class LayoutContainer extends LayoutBase {
         {
           compInfo.groupName = '内容展示'
           compInfo.name = '表单'
-          let compclass = findSystemComp(compInfo.groupName, compInfo.name)
+          let compclass = findSystemCompByCode(compInfo.code)
           if (!compclass) {
             break
           }
@@ -387,7 +387,7 @@ export default class LayoutContainer extends LayoutBase {
   }
   // *************************overrides****************************************************************************
   protected renderChildFromData(data: SaveInfo) {
-    // let compclass = findSystemComp(data.layoutInfo.groupName, data.layoutInfo.name)
+    // let compclass = findSystemCompByCode(data.layoutInfo.groupName, data.layoutInfo.name)
     // if (!compclass) {
     //   return
     // }

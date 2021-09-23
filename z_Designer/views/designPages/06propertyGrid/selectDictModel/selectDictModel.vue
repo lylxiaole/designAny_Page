@@ -6,8 +6,8 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
-import propertyCellBase from '../propertyCellBase'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
+import propertyCellBase from '../common'
+import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 
 @propertyCellTypeAttr(PropertyTypeEnum.selectDictModel)
 @Component

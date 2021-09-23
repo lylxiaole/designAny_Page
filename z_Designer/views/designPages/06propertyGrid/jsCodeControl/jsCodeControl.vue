@@ -14,8 +14,8 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
 import npAceEditor from '@src/components/commonComponents/npAceEditor.vue'
 
-import propertyCellBase from '../propertyCellBase'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
+import propertyCellBase from '../common'
+import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 
 @propertyCellTypeAttr(PropertyTypeEnum.javaScriptCode)
 @Component({

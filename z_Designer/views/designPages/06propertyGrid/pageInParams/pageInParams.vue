@@ -75,8 +75,8 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
 import { paramInfo } from '@src/designEngine'
- import propertyCellBase from '../propertyCellBase'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
+ import propertyCellBase from '../common'
+import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
  import { pageInParamsIco } from '@src/designEngine/assets/icons.js'
 
 @propertyCellTypeAttr(PropertyTypeEnum.pageInParams)

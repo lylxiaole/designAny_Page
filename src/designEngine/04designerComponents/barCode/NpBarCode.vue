@@ -8,13 +8,17 @@
 </template>
 
 <script lang="ts">
-import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import LayoutBase from '@src/designEngine/03designerLayoutBase/LayoutBase'
+import { LayoutBase,ComponentBase,LayoutType,layoutCompTypeAttr } from '@src/designEngine/03designerLayoutBase' 
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@src/designEngine/03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@src/utils'
+import {layoutCompTypeAttr} from '../common'
+ 
+import { npGridIco } from '@src/designEngine/assets/icons.js'
 
+
+@layoutCompTypeAttr('pc',LayoutType.system_component,'系统组件','二维码组件,','NpBarCode',npGridIco)
 @Component
 export default class NpBarCode extends ComponentBase {
   private barcodeId: string = 'barcode'
