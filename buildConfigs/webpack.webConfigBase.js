@@ -292,7 +292,7 @@ let baseconfig = {
     // },
     // contentBase: path.resolve(currentDir, 'dists/dist_report'),
     compress: true,
-    host: '0.0.0.0',
+    host: '127.0.0.1',
     port: 9000,
     hot: true,
     open: true,

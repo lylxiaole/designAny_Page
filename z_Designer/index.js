@@ -13,9 +13,9 @@ registerRouteHook(system.router, system.store)
 require('@src/assets/iconfont1/iconfont.css')
 require('@src/assets/iconfont1/iconfont.js')
 
-import antDesign from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
-Vue.use(antDesign)
+// import antDesign from 'ant-design-vue'
+// import 'ant-design-vue/dist/antd.css'
+// Vue.use(antDesign)
 
 import Element from 'element-ui'
 require('element-ui/lib/theme-chalk/index.css')
