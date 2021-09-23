@@ -16,6 +16,7 @@
     "experimentalDecorators": true,
     "strictFunctionTypes": false,
     "noImplicitAny": false,
+    "skipLibCheck": true,
     "strictNullChecks": false,
     "allowSyntheticDefaultImports": true,
     "paths": {

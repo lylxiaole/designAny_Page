@@ -53,7 +53,7 @@ let baseconfig = {
         exclude: /node_modules/
       },
       {
-        test: /\.js$/,
+        test: /\.(js|ts)$/,
         // 只加载你关心的目录下的 Source Map，以提升构建速度
         use: ['source-map-loader'],
         // 要把 source-map-loader 的执行顺序放到最前面，如果在 source-map-loader 之前有 Loader 转换了该 JavaScript 文件，会导致 Source Map 映射错误

@@ -4,7 +4,7 @@ import ComponentBase from './ComponentBase'
 import { getUuid, deepClone, serialize, strZip, closeLoading_Async, showLoading_Async } from '@src/utils'
 
 import LayoutBase, { SaveInfo } from '../03designerLayoutBase/LayoutBase'
-import LayoutContainer from '../03designerLayoutBase/LayoutContainner'
+import LayoutContainer from './LayoutContainer'
 import { paramInfo } from './commonClasses/pageInParamInfo'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'

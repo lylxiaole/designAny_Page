@@ -1,9 +1,9 @@
 import { LayoutType, LayoutInfo } from '../03designerLayoutBase/LayoutBase'
 
-import TextComponent from './textComponents/TextComponent.vue'
+// import TextComponent from './textComponents/TextComponent.vue'
 
-import NpBarCode from './barCode/NpBarCode.vue'
-import NPQrCode from './barCode/NPQrCode.vue'
+// import NpBarCode from './barCode/NpBarCode.vue'
+// import NPQrCode from './barCode/NPQrCode.vue'
 
 import {
   buttonIco,
@@ -60,9 +60,9 @@ class CompIndex {
 
 export var AllComponents: LayoutInfo[] = [
   //功能组件
-  new LayoutInfo(LayoutType.system_component, '功能组件', '文本组件', TextComponent, textIco, 'TextComponent'),
-  new LayoutInfo(LayoutType.system_component, '内容展示', '条形码', NpBarCode, npGridIco, null, 'NpBarCode'),
-  new LayoutInfo(LayoutType.system_component, '内容展示', '二维码', NPQrCode, cardIco, null, 'NPQrCode')
+  // new LayoutInfo(LayoutType.system_component, '功能组件', '文本组件', TextComponent, textIco, 'TextComponent'),
+  // new LayoutInfo(LayoutType.system_component, '内容展示', '条形码', NpBarCode, npGridIco, null, 'NpBarCode'),
+  // new LayoutInfo(LayoutType.system_component, '内容展示', '二维码', NPQrCode, cardIco, null, 'NPQrCode')
 ]
 
 //////////////计算组件的索引字典/////////////////////////

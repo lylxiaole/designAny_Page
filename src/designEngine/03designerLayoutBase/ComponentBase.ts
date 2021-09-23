@@ -1,9 +1,9 @@
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
-import { PageBase, SaveInfo, LayoutContainner, DragItemData, DragItemTypeEnum, param, factory } from '.'
+import { PageBase, SaveInfo, LayoutContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
 
 @Component
-export default class ComponentBase extends LayoutContainner {
+export default class ComponentBase extends LayoutContainer {
   public wheelIndex: any = 1
   public defaultValue: any
   public parentPage: PageBase

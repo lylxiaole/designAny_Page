@@ -1,10 +1,14 @@
+import { Component } from 'vue-property-decorator'
+
 import LayoutBase, { SaveInfo, Point } from './LayoutBase'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
+import ComponentBase from './ComponentBase'
+
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
-import { ComponentBase } from '../03designerLayoutBase'
-import { findSystemComp, findSystemCompByCode } from '../04designerComponents'
+import { findSystemComp, findSystemCompByCode } from '../04designerComponents/index'
 
+@Component
 export default class LayoutContainer extends LayoutBase {
   //横向尺子
   private horRule: Element = null

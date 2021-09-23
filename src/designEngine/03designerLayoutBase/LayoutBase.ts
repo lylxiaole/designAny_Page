@@ -1,5 +1,6 @@
-import eventBase from './BaseEvents'
-import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+
+import BaseEvents from './BaseEvents'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 import { layoutEventBehaviors } from './behavior/behaviorTypes'
 
@@ -50,8 +51,8 @@ export class Point {
   X: number = -1
   Y: number = -1
 }
-
-export default class LayoutBase extends eventBase {
+@Component
+export default class LayoutBase extends BaseEvents {
   public isSelected: boolean = false
   /**属性 */
   private properties_old: any[] = []
