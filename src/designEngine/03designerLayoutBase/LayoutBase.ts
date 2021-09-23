@@ -448,7 +448,6 @@ export default class LayoutBase extends eventBase {
       delete this[key]
     }
   }
-
   private async getChildrenData(): Promise<SaveInfo[]> {
     var res: SaveInfo[] = []
     for (let index = 0; index < this.children.length; index++) {
@@ -693,7 +692,6 @@ export default class LayoutBase extends eventBase {
     var toparent = find.parentLayout.children.find((x) => x.Id === childId)
     find.parentLayout.removeChild(toparent)
   }
-
   /**通过已有数据加载 */
   public loadingProperties(layoutId: string, layout_properties: Property[]) {
     this.Id = layoutId

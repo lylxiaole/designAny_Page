@@ -167,7 +167,7 @@ class controlMethodsFunc implements actResFuncBase {
   getFunc(obj: object_Method) {
     var compId = obj.resourceId
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var comp = containerPage.findLayoutRecursion(compId)
+    var comp = containerPage.findLayoutRecursion(compId, containerPage.children)
     var params: any[] = []
     obj.inputParams.filter((o) => {
       var m_param = o.obj.ref === undefined ? (o.obj.resourceId.split('&').length > 1 ? o.obj.resourceId.split('&')[1] : o.obj.resourceId[0]) : o.obj.ref
@@ -185,7 +185,7 @@ class controlMethodsFunc implements actResFuncBase {
   getDesc(obj: objectBase): string {
     var compId = obj.resourceId
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var comp = containerPage.findLayoutRecursion(compId)
+    var comp = containerPage.findLayoutRecursion(compId, containerPage.children)
     if (!comp) {
       return '页面控件(已删除)'
     }
