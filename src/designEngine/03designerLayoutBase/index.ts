@@ -1,10 +1,11 @@
+/**********此处import时需要保证类的继承顺序***************** */
 import BaseEvents, { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import LayoutBase, { LayoutType, LayoutInfo, SaveInfo } from './LayoutBase'
-import PageBase from './PageBase'
-import ComponentBase from './ComponentBase'
 import LayoutContainer from './LayoutContainer'
+import ComponentBase from './ComponentBase'
+import PageBase from './PageBase'
 
-export { BaseEvents, LayoutBase, LayoutContainer, PageBase, ComponentBase }
+export { BaseEvents, LayoutBase, LayoutContainer, ComponentBase, PageBase }
 export { DragItemData, DragItemTypeEnum, LayoutType, LayoutInfo, SaveInfo }
 export { Property, PropertyType, PropertyTypeEnum } from './commonClasses/LayoutProperty'
 
@@ -40,5 +41,4 @@ export {
 
 export { param, paramType, layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
 export { paramInfo } from './commonClasses/pageInParamInfo'
-
 export { factory } from './behavior'

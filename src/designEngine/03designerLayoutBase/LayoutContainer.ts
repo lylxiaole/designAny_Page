@@ -6,7 +6,7 @@ import ComponentBase from './ComponentBase'
 
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
-import { findSystemComp, findSystemCompByCode } from '../04designerComponents/index'
+import { findSystemComp, findSystemCompByCode } from '../02common/componentHelper/componentsCache'
 
 @Component
 export default class LayoutContainer extends LayoutBase {
