@@ -1,8 +1,3 @@
-import { LayoutType, LayoutInfo, ComponentBase } from '../03designerLayoutBase'
-import TextComponent from './textComponents/TextComponent.vue'
-import NpBarCode from './barCode/NpBarCode.vue'
-import NPQrCode from './barCode/NPQrCode.vue'
-
 import {
   buttonIco,
   tabsIco,

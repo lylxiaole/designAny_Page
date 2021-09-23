@@ -13,8 +13,7 @@ import { LayoutBase,ComponentBase,LayoutType,layoutCompTypeAttr } from '@src/des
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@src/designEngine/03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@src/utils'
-import {layoutCompTypeAttr} from '../common'
- 
+  
 import { npGridIco } from '@src/designEngine/assets/icons.js'
 
 

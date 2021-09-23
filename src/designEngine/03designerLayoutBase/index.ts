@@ -1,23 +1,10 @@
 /**********此处import时需要保证类的继承顺序***************** */
 import BaseEvents, { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import LayoutBase, { LayoutType, LayoutInfo, SaveInfo } from './LayoutBase'
-import LayoutContainer from './LayoutContainer'
-
 import ComponentBase from './ComponentBase'
-import PageBase from './PageBase'
 
-export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, groupName: string, name: string, compCode: string, icon: any) {
-  return function(target: Function) {
-    !target.prototype.$Meta && (target.prototype.$Meta = {})
-    target.prototype.$Meta.layoutType = layoutType
-    target.prototype.$Meta.groupName = groupName
-    target.prototype.$Meta.name = name
-    target.prototype.$Meta.compCode = compCode
-    target.prototype.$Meta.icon = icon
-    target.prototype.$Meta.paltform = paltform
-    // window.console.log('类型访问器:', target)
-  }
-}
+import LayoutContainer from './LayoutContainer'
+import PageBase from './PageBase'
 
 export { BaseEvents, LayoutBase, LayoutContainer, ComponentBase, PageBase }
 export { DragItemData, DragItemTypeEnum, LayoutType, LayoutInfo, SaveInfo }
@@ -56,3 +43,16 @@ export {
 export { param, paramType, layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
 export { paramInfo } from './commonClasses/pageInParamInfo'
 export { factory } from './behavior'
+
+export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, groupName: string, name: string, compCode: string, icon: any) {
+  return function(target: Function) {
+    !target.prototype.$Meta && (target.prototype.$Meta = {})
+    target.prototype.$Meta.layoutType = layoutType
+    target.prototype.$Meta.groupName = groupName
+    target.prototype.$Meta.name = name
+    target.prototype.$Meta.compCode = compCode
+    target.prototype.$Meta.icon = icon
+    target.prototype.$Meta.paltform = paltform
+    // window.console.log('类型访问器:', target)
+  }
+}
