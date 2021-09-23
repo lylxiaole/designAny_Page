@@ -21,7 +21,7 @@ import aceEditor from 'vue2-ace-editor'
 // import 'ace-builds/src-noconflict/theme-monokai' // 默认设置的主题
 // import 'ace-builds/src-noconflict/mode-javascript' // 默认设置的语言模式
 // import 'ace-builds/src-noconflict/ext-language_tools'
-import { npAceEditorIco } from '../assets/icons.js'
+import { npAceEditorIco } from '@src/designEngine/assets/icons.js'
 
 @Component({
   components: {

@@ -182,7 +182,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { PageBase, ComponentBase, LayoutBase, LayoutInfo } from '../../03designerLayoutBase'
+import { PageBase, ComponentBase, LayoutBase, LayoutInfo } from '@src/designEngine/03designerLayoutBase'
 
 import PagePreview from '../page_Preview/PagePreview.vue'
 import { pagenNodeType } from '../../01designerContext'

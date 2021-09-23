@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
-import npDatePicker from '../../07commonComponents/npDatePicker.vue'
+import npDatePicker from '@src/components/commonComponents/npDatePicker.vue'
 
 import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'

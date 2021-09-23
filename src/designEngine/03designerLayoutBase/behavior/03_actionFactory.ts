@@ -1,8 +1,8 @@
 import { param } from '../commonClasses/layoutEvent'
 import { deepClone } from '@src/utils'
 import PageBase from '../PageBase'
-import { ComponentBase } from '../../03designerLayoutBase'
-import LayoutBase from '../../03designerLayoutBase/LayoutBase'
+import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
+import LayoutBase from '@src/designEngine/03designerLayoutBase/LayoutBase'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType, resourceType } from './01_actionCommon'

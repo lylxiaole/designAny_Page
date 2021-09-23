@@ -1,10 +1,11 @@
 import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
 
 import ComponentBase from './ComponentBase'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize, strZip, closeLoading_Async, showLoading_Async } from '@src/utils'
+
 import LayoutBase, { SaveInfo } from '../03designerLayoutBase/LayoutBase'
 import LayoutContainer from '../03designerLayoutBase/LayoutContainner'
-import paramInfo from './commonClasses/pageInParamInfo'
+import { paramInfo } from './commonClasses/pageInParamInfo'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 
@@ -228,8 +229,8 @@ export default class PageBase extends LayoutContainer {
   }
 
   public GetPageZipStr(saveInfo: any) {
-    var saveinfoStr = common.serialize(saveInfo)
-    return common.strZip(saveinfoStr)
+    var saveinfoStr = serialize(saveInfo)
+    return strZip(saveinfoStr)
   }
 
   public async loadPageById(pageId: string, params?: paramInfo[], justLoadData: boolean = false, justLoadPageData = false): Promise<SaveInfo> {
@@ -247,7 +248,7 @@ export default class PageBase extends LayoutContainer {
   public async LoadPageByData(pageId: string, pageData: SaveInfo, params?: paramInfo[]) {
     this.Id = pageId
 
-    let index = common.showLoading_Async(true)
+    let index = showLoading_Async(true)
     try {
       //////////////////////////////////////////////
       if (pageData) {
@@ -264,7 +265,7 @@ export default class PageBase extends LayoutContainer {
     } catch (error) {
       window.console.error(error)
     } finally {
-      common.closeLoading_Async(index, true)
+      closeLoading_Async(index, true)
     }
   }
   public async ReLoadPageData(pageData: SaveInfo) {

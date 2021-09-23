@@ -205,12 +205,6 @@ let baseconfig = {
           priority: 100,
           name: 'vendors'
         },
-        antVenodr: {
-          test: /ant/,
-          priority: 100, // 设置高于async-commons，避免打包到async-common中
-          name: 'antVenodr',
-          chunks: 'async'
-        },
         nodemoudles: {
           test: /[\\/]node_modules[\\/]/,
           priority: 100, // 高于async-commons优先级

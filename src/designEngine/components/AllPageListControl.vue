@@ -101,7 +101,8 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { CurrentApis, CurrentContext, pagenNodeType, APIRequestClass, PageOrderClass } from '../01designerContext'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize } from '@src/utils'
+
 import fileUpload from '../02common/uploadFile/fileUpload'
 var VueContextMenu = require('vue-context-menu')
 import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
@@ -180,7 +181,7 @@ export default class PageListControl extends Vue {
     if (this.seachVal == '' || !this.seachVal) {
       return this.dataList
     }
-    var x = this.search(this.seachVal, common.clone(this.dataList))
+    var x = this.search(this.seachVal, deepClone(this.dataList))
     return x
   }
 
@@ -1068,7 +1069,7 @@ export default class PageListControl extends Vue {
 
   private selectedPage: any
   private onSelectPage(selectedKeys: any, e: { selected: boolean; selectedNodes: any; node: any; event: any }) {
-    this.selectedPage = common.clone(e.node.dataRef)
+    this.selectedPage = deepClone(e.node.dataRef)
     //window.console.log('---------------------选择了页面', e.node.dataRef)
   }
 }

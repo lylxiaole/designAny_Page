@@ -8,10 +8,10 @@
 </template>
 
 <script lang="ts">
-import { ComponentBase } from '../../03designerLayoutBase'
+import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import LayoutBase from '../../03designerLayoutBase/LayoutBase'
-import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '../../03designerLayoutBase'
+import LayoutBase from '@src/designEngine/03designerLayoutBase/LayoutBase'
+import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@src/designEngine/03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@src/utils'
 

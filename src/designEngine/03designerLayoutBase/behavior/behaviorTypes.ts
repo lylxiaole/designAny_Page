@@ -1,5 +1,5 @@
 /******************************行为相关 **************************/
-import paramInfo from '../commonClasses/pageInParamInfo'
+import { paramInfo } from '../commonClasses/pageInParamInfo'
 import { objectBase, objectType } from './01_actionCommon'
 
 //布局的事件所包含的行为列表

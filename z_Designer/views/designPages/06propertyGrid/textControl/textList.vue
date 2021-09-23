@@ -86,7 +86,7 @@ export default class textList extends propertyCellBase {
       this.addVisible = false
       return
     }
-    let uuid: string = common.getUuid()
+    let uuid: string = getUuid()
     this.currentValue.push({ key: uuid, value: currentLen + 1 })
 
     let newCurrentLen: number = this.currentValue.length

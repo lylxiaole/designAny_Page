@@ -59,12 +59,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize } from '@src/utils'
+
 import dragHelper from '../02common/dragHelper'
 
 import { CurrentApis, CurrentContext } from '../01designerContext'
 import { LayoutInfo, LayoutType } from '../03designerLayoutBase/LayoutBase'
-import { modelControlIco, addModelIco, searchIco } from '../assets/icons.js'
+import { modelControlIco, addModelIco, searchIco } from '@src/designEngine/assets/icons.js'
 
 // 所有系统组件
 import { AllComponents, ComponentBase } from '../04designerComponents'

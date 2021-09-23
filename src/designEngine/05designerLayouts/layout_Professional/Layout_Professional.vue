@@ -7,11 +7,11 @@
 
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator'
-import { PageBase, ComponentBase, LayoutBase, LayoutInfo } from '../../03designerLayoutBase'
+import { PageBase, ComponentBase, LayoutBase, LayoutInfo } from '@src/designEngine/03designerLayoutBase'
 import { getUuid, deepClone } from '@src/utils'
 import CompIncrustationPro from './CompIncrustationPro.vue'
 import { CurrentContext } from '../../01designerContext'
-import { DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
+import { DragItemTypeEnum } from '@src/designEngine/03designerLayoutBase/BaseEvents'
 
 export default class Layout_Professional extends PageBase {
   get backgroundCute(): string {

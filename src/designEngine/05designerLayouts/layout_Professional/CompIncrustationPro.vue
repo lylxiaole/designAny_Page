@@ -35,9 +35,9 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
-import BaseEvent from '../../03designerLayoutBase/BaseEvents'
-import { ComponentBase } from '../../03designerLayoutBase'
-import { DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase/BaseEvents'
+import BaseEvent from '@src/designEngine/03designerLayoutBase/BaseEvents'
+import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
+import { DragItemData, DragItemTypeEnum } from '@src/designEngine/03designerLayoutBase/BaseEvents'
 
 // @Component
 export default class CompIncrustationPro extends BaseEvent {
@@ -170,35 +170,35 @@ export default class CompIncrustationPro extends BaseEvent {
     //   if (el == you_xia) {
     //     this._dragHelper.makeDomCanDrag(you_xia)
     //     dragdata.dragData = { position: 'you_xia', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(you_xia, common.clone(common.clone(dragdata)))
+    //     this._dragHelper.makeDragItemInfo(you_xia, deepClone(deepClone(dragdata)))
     //   } else if (el == zuo_xia) {
     //     this._dragHelper.makeDomCanDrag(zuo_xia)
     //     dragdata.dragData = { position: 'zuo_xia', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(zuo_xia, common.clone(dragdata))
+    //     this._dragHelper.makeDragItemInfo(zuo_xia, deepClone(dragdata))
     //   } else if (el == you_shang) {
     //     this._dragHelper.makeDomCanDrag(you_shang)
     //     dragdata.dragData = { position: 'you_shang', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(you_shang, common.clone(dragdata))
+    //     this._dragHelper.makeDragItemInfo(you_shang, deepClone(dragdata))
     //   } else if (el == zuo_shang) {
     //     this._dragHelper.makeDomCanDrag(zuo_shang)
     //     dragdata.dragData = { position: 'zuo_shang', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(zuo_shang, common.clone(dragdata))
+    //     this._dragHelper.makeDragItemInfo(zuo_shang, deepClone(dragdata))
     //   } else if (el == shang) {
     //     this._dragHelper.makeDomCanDrag(shang)
     //     dragdata.dragData = { position: 'shang', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(shang, common.clone(dragdata))
+    //     this._dragHelper.makeDragItemInfo(shang, deepClone(dragdata))
     //   } else if (el == xia) {
     //     this._dragHelper.makeDomCanDrag(xia)
     //     dragdata.dragData = { position: 'xia', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(xia, common.clone(dragdata))
+    //     this._dragHelper.makeDragItemInfo(xia, deepClone(dragdata))
     //   } else if (el == zuo) {
     //     this._dragHelper.makeDomCanDrag(zuo)
     //     dragdata.dragData = { position: 'zuo', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(zuo, common.clone(dragdata))
+    //     this._dragHelper.makeDragItemInfo(zuo, deepClone(dragdata))
     //   } else if (el == you) {
     //     this._dragHelper.makeDomCanDrag(you)
     //     dragdata.dragData = { position: 'you', compId: this.Component.Id }
-    //     this._dragHelper.makeDragItemInfo(you, common.clone(dragdata))
+    //     this._dragHelper.makeDragItemInfo(you, deepClone(dragdata))
     //   }
   }
 }

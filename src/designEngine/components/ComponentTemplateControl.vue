@@ -70,7 +70,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize } from '@src/utils'
+
 import dragHelper from '../02common/dragHelper'
 var VueContextMenu = require('vue-context-menu')
 import { CurrentApis, CurrentContext, pagenNodeType } from '../01designerContext'
@@ -80,7 +81,7 @@ import { AllComponents } from '../04designerComponents'
 import { DragItemData, DragItemTypeEnum } from '../03designerLayoutBase/BaseEvents'
 import PageBase from '../05designerLayouts/PageBase'
 import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
-import { comTemplateIco, addModelIco, searchIco } from '../assets/icons.js'
+import { comTemplateIco, addModelIco, searchIco } from  '@src/designEngine/assets/icons.js'
 
 class ComponentGroupInfo {
   // constructor(_groupName: string) {

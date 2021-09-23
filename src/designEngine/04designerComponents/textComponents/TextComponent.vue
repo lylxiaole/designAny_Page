@@ -26,8 +26,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '../../03designerLayoutBase'
-import { ComponentBase } from '../../03designerLayoutBase'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '@src/designEngine/03designerLayoutBase'
+import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
 
 @Component
 export default class TextComponent extends ComponentBase {

@@ -4,7 +4,7 @@ import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/lay
 import { layoutEventBehaviors } from './behavior/behaviorTypes'
 
 import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from './commonClasses/LayoutProperty'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize } from '@src/utils'
 
 export enum LayoutType {
   /**系统组件 */
@@ -55,7 +55,7 @@ export default class LayoutBase extends eventBase {
   public isSelected: boolean = false
   /**属性 */
   private properties_old: any[] = []
-  private properties: Property[] = []
+  public properties: Property[] = []
   /**父级布局 */
   public parentLayout: LayoutBase
   /**子级布局 */
@@ -112,7 +112,7 @@ export default class LayoutBase extends eventBase {
   /**生命周期 */
   created() {
     if (this.IsDesigning) {
-      this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), common.getUuid(), false, false)
+      this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
       this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
       this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, true, 'px')
       this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, true, 'px')
@@ -472,10 +472,10 @@ export default class LayoutBase extends eventBase {
         //..新增了一个属性
         this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
         this.onPropertyChanged(newproperty.id, newproperty, this)
-      } else if (common.serialize(filter_oldproperty) != common.serialize(newproperty)) {
+      } else if (serialize(filter_oldproperty) != serialize(newproperty)) {
         //..修改了一个属性的内容
         var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
-        //var newpropertyClone = common.clone(newproperty) as Property
+        //var newpropertyClone = deepClone(newproperty) as Property
         // window.console.log('检测到数据变化:', newproperty)
         /**替换旧的属性 */
         var index = this.properties_old.indexOf(filter_oldproperty)
@@ -742,7 +742,7 @@ export default class LayoutBase extends eventBase {
     }
 
     let convert_value = findproperty.convert(val)
-    if (isForce == false && common.serialize(findproperty.value) == common.serialize(convert_value)) {
+    if (isForce == false && serialize(findproperty.value) == serialize(convert_value)) {
       return false
     }
 

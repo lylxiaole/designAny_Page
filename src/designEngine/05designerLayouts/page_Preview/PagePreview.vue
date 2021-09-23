@@ -198,14 +198,14 @@ export default {
     },
     menuItemClick(data) {
       let targetMenuId = data.key
-      let menuIdPath = common.clone(data.keyPath)
+      let menuIdPath = deepClone(data.keyPath)
       let firstParentMenuId = menuIdPath.reverse()[0]
       let firstParentMenu = this.menuPageData.find((x) => x.id == firstParentMenuId)
       if (firstParentMenu) {
         let targetPane = this.panes.find((x) => x.key == targetMenuId)
         if (!targetPane) {
           let menuNames = []
-          let cloneMenuIdPath = common.clone(menuIdPath)
+          let cloneMenuIdPath = deepClone(menuIdPath)
           let targetPane = this.getTabPaneDataByPath(cloneMenuIdPath, firstParentMenu)
           if (targetPane) {
             this.panes.push(targetPane)
@@ -251,7 +251,7 @@ export default {
       } else {
         for (let j = 0; j < menu.children.length; j++) {
           let sonMenu = menu.children[j]
-          let sonpathItems = common.clone(pathItems)
+          let sonpathItems = deepClone(pathItems)
           let data = this.getTabPaneDataById(targetMenuId, sonMenu, sonpathItems)
           if (data) {
             return data

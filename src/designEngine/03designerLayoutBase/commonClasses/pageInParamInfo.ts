@@ -1,4 +1,4 @@
-export default class paramInfo {
+export class paramInfo {
   key: string
   /**参数名称 */
   paramName: string

@@ -41,8 +41,23 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 import propertyCellBase from '../propertyCellBase'
-import selectElementInfo from '../../02common/commonClasses/selectElementInfo'
-import { getUuid, deepClone } from '@src/utils'
+ import { getUuid, deepClone } from '@src/utils'
+class groupInfo {
+  name: string
+  disabled: boolean
+}
+  class selectElementInfo {
+  key: string
+  //是否设置组别 2:不设置   1：设置
+  // selectGroupType: number
+  //组别名称
+  selectGroupName: string
+  //选择项名称
+  selectEleName: string
+  //选择项是否可选
+  selectEleDisabled: boolean
+  selectGroupEleInfo: groupInfo[]
+}
 
 @propertyCellTypeAttr(PropertyTypeEnum.selectGroupElement)
 @Component
@@ -96,7 +111,7 @@ export default class selectGroupElement extends propertyCellBase {
   }
   private newSelectEle() {
     var newRow = new selectElementInfo()
-    newRow.key = common.getUuid()
+    newRow.key = getUuid()
     newRow.selectGroupName = ''
     newRow.selectEleName = ''
     newRow.selectEleDisabled = false
@@ -115,7 +130,7 @@ export default class selectGroupElement extends propertyCellBase {
 
   private modalSure() {
     this.windowVisible = false
-    this.currentValue = common.clone(this.data)
+    this.currentValue = deepClone(this.data)
   }
 
   private modalCancel() {
@@ -133,5 +148,4 @@ export default class selectGroupElement extends propertyCellBase {
 </script>
 
 <style lang="less" scoped>
-@import '../../assets/globlaTheme.less';
-</style>
+ </style>

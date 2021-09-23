@@ -52,7 +52,7 @@ import {
   npFormIco,
   npGridIco,
   reportFormIco
-} from '../assets/icons.js'
+} from '@src/designEngine/assets/icons.js'
 
 class CompIndex {
   static indexs = {}

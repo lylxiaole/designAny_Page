@@ -460,14 +460,15 @@ export function BuildingFileUrlForShow(fileserverAddr, relativePath) {
 }
 
 /////////////////////////////////////////////////////////////////
+var asyncLoadingWindowInfo = []
 
 /**isMain:防止闪烁 */
 export function showLoading_Async(isMain = false) {
-  if (common.asyncLoadingWindowInfo.length > 1) {
+  if (asyncLoadingWindowInfo.length > 1) {
     return
   }
-  let newKey = common.getUuid()
-  common.asyncLoadingWindowInfo.push({ key: newKey, layerIndex: -1, isMain: isMain })
+  let newKey = getUuid()
+  asyncLoadingWindowInfo.push({ key: newKey, layerIndex: -1, isMain: isMain })
   window.setTimeout(() => {
     let findh = common.findLoadingInfo(newKey)
     if (!findh || findh.isMain != isMain) {
@@ -490,7 +491,9 @@ export function closeLoading_Async(key, isMain = false) {
   window.layer.close(findh.layerIndex)
   common.removeLoadingInfo(key)
 }
-
+function findLoadingInfo(key) {
+  return asyncLoadingWindowInfo.find((o) => o.key == key)
+}
 // ////////////////////虚拟dom绘制/////////////////////////////////////////////
 // export function  drawVueOnVirtualDom(comp: Vue): DocumentFragment {
 //   let fragment = window.document.createDocumentFragment()

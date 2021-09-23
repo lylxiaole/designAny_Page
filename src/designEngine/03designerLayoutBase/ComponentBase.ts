@@ -16,17 +16,6 @@ export default class ComponentBase extends LayoutContainner {
     return res
   }
 
-  /**当前组件的权限码 */
-  public get authorityCode(): string {
-    return this.findPropertyByName(PropertyGroupName.normal, '权限设置').value
-  }
-  public set authorityCode(val: string) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '权限设置')
-    if (property) {
-      property.value = val
-    }
-  }
-
   get foreground(): string {
     var property = this.findPropertyByName(PropertyGroupName.normal, '前景色')
     if (property) {
@@ -180,7 +169,7 @@ export default class ComponentBase extends LayoutContainner {
   // *******************************publics**************************************************************************************
   protected loadCompleted(childrenData: SaveInfo[]): void {}
   /**通用的验证方法，根据编码获取 */
-  public CommonValid(validatorArr: any[], value: any, callback: any, message: any) {
+  public commonValid(validatorArr: any[], value: any, callback: any, message: any) {
     if (value === 0) {
       value = '0'
     }

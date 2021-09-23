@@ -1,7 +1,7 @@
 import LayoutBase, { SaveInfo, Point } from './LayoutBase'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import { Property } from './commonClasses/LayoutProperty'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize } from '@src/utils'
 import { ComponentBase } from '../03designerLayoutBase'
 import { findSystemComp, findSystemCompByCode } from '../04designerComponents'
 
@@ -49,7 +49,7 @@ export default class LayoutContainer extends LayoutBase {
           return
         }
         // window.console.log('onPaste_Event')
-        let compData = common.clone(LayoutContainer.copyComp.getSaveData())
+        let compData = deepClone(LayoutContainer.copyComp.getSaveData())
 
         if (LayoutContainer.isCut) {
           //剪切--删除原有组件
@@ -59,7 +59,7 @@ export default class LayoutContainer extends LayoutBase {
           }
         } else {
           //复制操作需要给组件新Id
-          compData.id = common.getUuid()
+          compData.id = getUuid()
         }
         let compclass = findSystemComp(compData.layoutInfo.groupName, compData.layoutInfo.name)
         //为了准确性
@@ -336,7 +336,7 @@ export default class LayoutContainer extends LayoutBase {
   }
   private drawHorRule(top: number) {
     if (!this.horRule) {
-      let domid = common.getUuid()
+      let domid = getUuid()
       let dom = '<div id="' + domid + '" style="width:9999px;height:2px;background:red;position:absolute" z-index="999"></div>'
       // $(this.$el).append(dom)
       this.horRule = $('#' + domid)[0]
@@ -346,7 +346,7 @@ export default class LayoutContainer extends LayoutBase {
   }
   private drawVerRule(left: number) {
     if (!this.verRule) {
-      let domid = common.getUuid()
+      let domid = getUuid()
       let dom = '<div id="' + domid + '" style="width:2px;height:9999px;background:red;position:absolute" z-index="999"></div>'
       // $(this.$el).append(dom)
       this.verRule = $('#' + domid)[0]

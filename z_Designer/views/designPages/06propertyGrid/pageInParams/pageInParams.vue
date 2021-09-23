@@ -74,12 +74,10 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
-import paramInfo from '../../02common/commonClasses/pageInParamInfo'
-
-import propertyCellBase from '../propertyCellBase'
+import { paramInfo } from '@src/designEngine'
+ import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
-import modelAnalysis, { modelSimpleInfo } from '../../02common/impResourcesCache/modelAnalysis'
-import { pageInParamsIco } from '../../assets/icons.js'
+ import { pageInParamsIco } from '@src/designEngine/assets/icons.js'
 
 @propertyCellTypeAttr(PropertyTypeEnum.pageInParams)
 @Component
@@ -116,13 +114,11 @@ export default class pageInParams extends propertyCellBase {
 
   private data: paramInfo[] = []
 
-  private allSimpleClasses: modelSimpleInfo[] = []
-  created() {
+   created() {
     this.pageicon = pageInParamsIco
   }
   mounted() {
-    this.allSimpleClasses = modelAnalysis.getAllSimpleClass()
-  }
+   }
 
   private rowdelete(key: string) {
     const newData = [...this.data]
@@ -136,12 +132,11 @@ export default class pageInParams extends propertyCellBase {
 
   private async newParam() {
     var newRow = new paramInfo()
-    newRow.key = common.getUuid()
+    newRow.key = getUuid()
     newRow.paramName = ''
     newRow.paramType = 1
 
-    newRow.paramClass = this.allSimpleClasses[0]
-    newRow.paramIsList = false
+     newRow.paramIsList = false
     this.data.push(newRow)
   }
 
@@ -159,15 +154,14 @@ export default class pageInParams extends propertyCellBase {
       newparaminfo.key = o.key
       newparaminfo.paramName = o.paramName
       newparaminfo.paramType = o.paramType
-      newparaminfo.paramClass = o.paramClass
-      newparaminfo.paramIsList = o.paramIsList
+       newparaminfo.paramIsList = o.paramIsList
       this.data.push(newparaminfo)
     })
   }
   private modalSure() {
     //window.console.log('确认提交')
     this.windowVisible = false
-    this.currentValue = common.clone(this.data)
+    this.currentValue = deepClone(this.data)
     this.data = []
   }
   private modalCancel() {
@@ -186,5 +180,4 @@ export default class pageInParams extends propertyCellBase {
 
  
 <style lang="less" scoped>
-@import '../../assets/globlaTheme.less';
-</style>
+ </style>

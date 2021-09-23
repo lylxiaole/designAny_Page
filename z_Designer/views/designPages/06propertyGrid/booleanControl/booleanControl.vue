@@ -10,16 +10,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
- import npColorPicker from '../../07commonComponents/npColorPicker.vue'
-
+ 
 import propertyCellBase from '../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
 
 @propertyCellTypeAttr(PropertyTypeEnum.boolean)
 @Component({
   components: {
-    npColorPicker: npColorPicker,
-  },
+   },
 })
 export default class booleanControl extends propertyCellBase {
   mounted() {}

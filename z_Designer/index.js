@@ -14,7 +14,7 @@ require('@src/assets/iconfont1/iconfont.css')
 require('@src/assets/iconfont1/iconfont.js')
 
 import antDesign from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.less'
+import 'ant-design-vue/dist/antd.css'
 Vue.use(antDesign)
 
 import Element from 'element-ui'

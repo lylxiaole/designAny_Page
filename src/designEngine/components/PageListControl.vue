@@ -235,7 +235,8 @@
 <script lang="ts">
 import {Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator'
 import {CurrentApis, CurrentContext, pagenNodeType, PageOrderClass} from '../01designerContext'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize } from '@src/utils'
+
 import fileUpload from '../02common/uploadFile/fileUpload'
 import iconManage from '@views/npicon/iconManage.vue'
 
@@ -330,7 +331,7 @@ export default class PageListControl extends Vue {
     if (this.seachVal == '' || !this.seachVal) {
       return this.dataList
     }
-    var x = this.search(this.seachVal, common.clone(this.dataList))
+    var x = this.search(this.seachVal, deepClone(this.dataList))
     // console.info('---------树菜单图标-----------', x)
     return x
   }
@@ -1420,7 +1421,7 @@ export default class PageListControl extends Vue {
   private selectedPages: any[] = []
 
   private onSelectPage(selectedKeys: any, e: { selected: boolean; selectedNodes: any; node: any; event: any }) {
-    this.selectedPage = common.clone(e.node.dataRef)
+    this.selectedPage = deepClone(e.node.dataRef)
   }
 
   /**把后端数据转换成tree的数据源数据 */
@@ -1492,7 +1493,7 @@ export default class PageListControl extends Vue {
       })
     } else {
       this.title = '编辑'
-      this.mdl = common.clone(this.currentRightNode.tag)
+      this.mdl = deepClone(this.currentRightNode.tag)
       console.info('----选中了----', this.mdl)
       if (!this.mdl.jumpMode) {
         this.mdl.jumpMode = '1'
@@ -1527,7 +1528,7 @@ export default class PageListControl extends Vue {
 
   showFirstMenuIcons() {
     this.firstMenuIconModalvisible = true
-    this.mdl = common.clone(this.currentRightNode.tag)
+    this.mdl = deepClone(this.currentRightNode.tag)
     this.$nextTick(() => {
       this.form.setFieldsValue(pick(this.mdl, 'menuName'))
     })

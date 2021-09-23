@@ -31,7 +31,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../02common/commonMethod'
+import { getUuid, deepClone, serialize } from '@src/utils'
+
 import dragHelper from '../02common/dragHelper'
 
 import { CurrentApis, CurrentContext } from '../01designerContext'
@@ -59,7 +60,7 @@ export default class ComponentListControl extends Vue {
     }
 
     for (let index = 0; index < this.systemCompGroups.length; index++) {
-      const element = common.clone(this.systemCompGroups[index]) as ComponentGroupInfo
+      const element = deepClone(this.systemCompGroups[index]) as ComponentGroupInfo
       if (this.sys_limitGroupNames.indexOf(element.groupName) < 0) {
         element.components = element.components.filter((comp) => this.sys_limitCompCodes.indexOf(comp.compCode) < 0)
         res.push(element)

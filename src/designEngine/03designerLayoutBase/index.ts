@@ -38,4 +38,6 @@ export {
 } from './commonClasses/LayoutProperty'
 
 export { param, paramType, layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
+export { paramInfo } from './commonClasses/pageInParamInfo'
+
 export { factory } from './behavior'

@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import { getUuid } from '@src/utils'
 import PageBase from '../PageBase'
-import { ComponentBase } from '../../03designerLayoutBase'
+import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
 import factory from './03_actionFactory'
-import LayoutBase from '../../03designerLayoutBase/LayoutBase'
+import LayoutBase from '@src/designEngine/03designerLayoutBase/LayoutBase'
 import { Property } from '../commonClasses/LayoutProperty'
 import { behavior } from './behaviorTypes'
-import genoPrintDesigner from '../../genoPrintDesigner.vue'
 
 import { resourceFuncAttr, resourceType, objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
 
@@ -543,148 +542,7 @@ class externalLinksFunc implements actResFuncBase {
   updateInparam(obj: object_Method) {}
 }
 
-@resourceFuncAttr(resourceType.reportPrintPreview)
-class reportPrintPreview_Func implements actResFuncBase {
-  currentLayout: LayoutBase
-  currentPage: PageBase
-  currentBehavior: behavior
-  currentDesigner: genoPrintDesigner
-  getFunc(obj: object_Method) {
-    let datasourceArr = []
-    var datasource = (obj.inputParams.find((o) => o.name == '报表数据源').obj as any).ref
-    if (obj.inputParams.length > 2) {
-      for (let index = 2; index < obj.inputParams.length; index++) {
-        const element = obj.inputParams[index]
-        datasourceArr.push((element.obj as any).ref)
-      }
-    }
-    datasourceArr.push(datasource)
-    var template = (obj.inputParams.find((o) => o.name == '报表模板id').obj as any).ref
-    let templateContent = template
-    var domid = getUuid()
-    var div = ' <div id="' + domid + '"> </div> '
-    var designer: genoPrintDesigner = new genoPrintDesigner()
-    this.currentDesigner = designer
-    var oldIsDesigning = this.currentPage.IsDesigning
-    var layerpopupIndex = (window as any).layer.open({
-      type: 1,
-      title: '打印',
-      skin: 'popup-class',
-      area: ['90%', '90%'],
-      closeBtn: 1, //显示关闭按钮
-      anim: 2,
-      resize: false,
-      shade: 0.6,
-      shadeClose: false, //开启遮罩关闭
-      zIndex: 100, //表格的tips是101，弹窗的zindex不能大于100 xuww 2020-04-02 add
-      content: div,
-      end: async () => {
-        this.currentPage.IsDesigning = oldIsDesigning
-      },
-      cancel: async () => {},
-      success: function(layero, index) {}
-    })
-    this.currentPage.IsDesigning = true
-    this.currentDesigner.$mount('#' + domid)
-    ;(this.currentDesigner as any).StartPrint()
-    let modelList: any[] = []
-    for (let index = 0; index < datasourceArr.length; index++) {
-      let element = datasourceArr[index]
-      let data = element.data ? (element.data.content && element.data.content instanceof Array ? element.data.content : element.data) : element
-      modelList.push({ modelCode: element.modelCode, isList: data instanceof Array ? true : false, data: data })
-    }
-    //window.console.log('--------------------------打印预览入参',modelList)
-    ;(this.currentDesigner as any).PreviewPrint(templateContent, modelList, () => {})
-  }
-  setFunc(obj: object_Method, val: any) {
-    throw '不可以赋值'
-  }
-  getDesc(obj: objectBase): string {
-    return '打印预览'
-  }
-  isExit(obj: objectBase): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
-    return null
-  }
-  updateInparam(obj: object_Method) {}
-}
-
-@resourceFuncAttr(resourceType.reportPrint)
-class reportPrint_Func implements actResFuncBase {
-  currentLayout: LayoutBase
-  currentPage: PageBase
-  currentBehavior: behavior
-  currentDesigner: genoPrintDesigner
-  getFunc(obj: object_Method) {
-    var datasource = (obj.inputParams.find((o) => o.name == '报表数据源').obj as any).ref
-    let datasourceArr = []
-    var datasource = (obj.inputParams.find((o) => o.name == '报表数据源').obj as any).ref
-    if (obj.inputParams.length > 2) {
-      for (let index = 2; index < obj.inputParams.length; index++) {
-        const element = obj.inputParams[index]
-        datasourceArr.push((element.obj as any).ref)
-      }
-    }
-    datasourceArr.push(datasource)
-    var template = (obj.inputParams.find((o) => o.name == '报表模板id').obj as any).ref
-    let templateContent = template
-    var domid = getUuid()
-    var div = ' <div id="' + domid + '"> </div> '
-    var designer: genoPrintDesigner = new genoPrintDesigner()
-    this.currentDesigner = designer
-    var oldIsDesigning = this.currentPage.IsDesigning
-    var layerpopupIndex = (window as any).layer.open({
-      type: 1,
-      title: '打印',
-      skin: 'popup-class',
-      area: ['90%', '90%'],
-      closeBtn: 1, //显示关闭按钮
-      anim: 2,
-      resize: false,
-      shade: 0.6,
-      shadeClose: false, //开启遮罩关闭
-      zIndex: 100, //表格的tips是101，弹窗的zindex不能大于100 xuww 2020-04-02 add
-      content: div,
-      end: async () => {
-        this.currentPage.IsDesigning = oldIsDesigning
-      },
-      cancel: async () => {},
-      success: function(layero, index) {}
-    })
-    this.currentPage.IsDesigning = true
-    this.currentDesigner.$mount('#' + domid)
-    ;(this.currentDesigner as any).StartPrint()
-    let modelList: any[] = []
-    for (let index = 0; index < datasourceArr.length; index++) {
-      let element = datasourceArr[index]
-      let data = element.data ? (element.data.content && element.data.content instanceof Array ? element.data.content : element.data) : element
-      modelList.push({ modelCode: element.modelCode, isList: data instanceof Array ? true : false, data: data })
-    }
-    ;(this.currentDesigner as any).PrintPage(templateContent, modelList, () => {
-      ;(this.currentDesigner as any).onClosePage(templateContent)
-      ;(window as any).layer.close(layerpopupIndex)
-    })
-  }
-  setFunc(obj: object_Method, val: any) {
-    throw '不可以赋值'
-  }
-  getDesc(obj: objectBase): string {
-    return '打印报表'
-  }
-  isExit(obj: objectBase): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
-    return null
-  }
-  updateInparam(obj: object_Method) {}
-}
-
-var allFuncs: any[] = [propertiesInPageFunc, behaviorInParamFunc, behaviorsFunc, pageInParamsFunc, variablesFunc, fixedValFunc, signsFunc, filterSignsFunc, breakBehaviorAllFunc, controlMethodsFunc, callbackFunc, consoleSettingsFunc, externalLinksFunc, reportPrintPreview_Func, reportPrint_Func]
+var allFuncs: any[] = [propertiesInPageFunc, behaviorInParamFunc, behaviorsFunc, pageInParamsFunc, variablesFunc, fixedValFunc, signsFunc, filterSignsFunc, breakBehaviorAllFunc, controlMethodsFunc, callbackFunc, consoleSettingsFunc, externalLinksFunc]
 
 function getResouceFunc(resType: resourceType): actResFuncBase {
   // window.console.log('行为代码2', resType)
