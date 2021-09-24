@@ -461,7 +461,6 @@ export function BuildingFileUrlForShow(fileserverAddr, relativePath) {
 
 /////////////////////////////////////////////////////////////////
 var asyncLoadingWindowInfo = []
-
 /**isMain:防止闪烁 */
 export function showLoading_Async(isMain = false) {
   if (asyncLoadingWindowInfo.length > 1) {
@@ -470,7 +469,7 @@ export function showLoading_Async(isMain = false) {
   let newKey = getUuid()
   asyncLoadingWindowInfo.push({ key: newKey, layerIndex: -1, isMain: isMain })
   window.setTimeout(() => {
-    let findh = common.findLoadingInfo(newKey)
+    let findh = findLoadingInfo(newKey)
     if (!findh || findh.isMain != isMain) {
       return
     }
@@ -483,17 +482,22 @@ export function showLoading_Async(isMain = false) {
 }
 // isMain:防止闪烁
 export function closeLoading_Async(key, isMain = false) {
-  let findh = common.findLoadingInfo(key)
+  let findh = findLoadingInfo(key)
   if (!findh || findh.isMain != isMain) {
     return
   }
   window.console.log('*********************关闭loading:', $('body'))
   window.layer.close(findh.layerIndex)
-  common.removeLoadingInfo(key)
+  removeLoadingInfo(key)
 }
 function findLoadingInfo(key) {
   return asyncLoadingWindowInfo.find((o) => o.key == key)
 }
+function removeLoadingInfo(key) {
+  let index = asyncLoadingWindowInfo.findIndex((o) => o.key == key)
+  asyncLoadingWindowInfo.splice(index, 1)
+}
+
 // ////////////////////虚拟dom绘制/////////////////////////////////////////////
 // export function  drawVueOnVirtualDom(comp: Vue): DocumentFragment {
 //   let fragment = window.document.createDocumentFragment()

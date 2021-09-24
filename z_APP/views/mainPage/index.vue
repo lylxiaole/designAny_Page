@@ -85,8 +85,10 @@ import position from './position/index.vue'
 import equipmentAccount from './equipmentAccount/index.vue'
 import alarmInformation from './alarmInformation/index.vue'
 import PageBase from '@src/views/PageBase'
-import { jkzl, jlbjk } from '../../serviceAPIs/service'
+import { jkzl, jlbjk, appTokenValidate } from '../../serviceAPIs/service'
 import { Route } from 'vue-router'
+import { param2Obj } from '@src/utils'
+
 // *****************************************************************
 const alarmInfoBarIcon_normal = require('../../assets/img/alarmInfoBarIcon.png')
 const equipmentBarIcon_normal = require('../../assets/img/equipmentBarIcon.png')
@@ -125,7 +127,17 @@ export default class Index extends PageBase {
   // ********************************************************************************
   mounted() {
     this.currentRoute = this.$router.currentRoute
+    this.getUserInfo()
     this.getFlowmeterStatus()
+  }
+
+  // ***********用户信息*******************************************************
+  private async getUserInfo() {
+    let browserparams = param2Obj(location.search)
+    let token = browserparams.token
+    let res = await appTokenValidate(token)
+    window.console.log('validate user token result:', res)
+    // this.flowmeterStatus = res[0]
   }
   // ***********计量表状态*******************************************************
   private flowmeterStatus: any = {}

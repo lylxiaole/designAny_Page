@@ -58,3 +58,11 @@ export async function xjjh(xjjhsj: string, xjzt: string): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
+
+export async function appTokenValidate(token: string): Promise<any> {
+  var formData = new FormData()
+  formData.append('token', token)
+  let url = `${apiAddr()}/appTokenValidate.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}

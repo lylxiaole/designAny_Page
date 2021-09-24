@@ -6,8 +6,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+
 @Component
-export default class App extends Vue {}
+export default class App extends Vue {
+  mounted() {}
+}
 </script>
 <style>
 @import '@/assets/css/main.css';
