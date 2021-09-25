@@ -83,6 +83,7 @@ export default class index extends PageBase {
       default:
         break
     }
+    designLayout.loadData()
     window.console.log('onEditPage:', this.$refs[pageId])
     window.console.log('onEditPage:', res)
   }
