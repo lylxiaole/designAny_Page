@@ -297,7 +297,7 @@ export default class quickActionBar extends Vue {
     if (!this.CurrentPage) {
       return
     }
-    this.CurrentPage.Save()
+    this.CurrentPage.save()
   }
 
   public savePageAndClose() {}

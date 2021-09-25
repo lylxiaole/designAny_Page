@@ -61,7 +61,7 @@ export default class index extends PageBase {
     let res = await GetPageDetail(pageId)
     this.openPage(res)
     await this.$nextTick()
-    window.console.log('onEditPage:', this.$refs[res.id])
+    window.console.log('onEditPage:', res)
   }
   private async onDeletePage(pageId: string) {}
   // **********属性窗**********************************************************

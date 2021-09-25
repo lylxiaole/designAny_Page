@@ -12,7 +12,6 @@ import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/lay
 export default class PageBase extends LayoutContainer {
   public parentPage: PageBase
   public isNeedSave: boolean = false
-  public isReadyToDraw: boolean = false
   /***************************** */
   /**行为列表*/
   public get behaviors(): behavior[] {
@@ -121,7 +120,6 @@ export default class PageBase extends LayoutContainer {
     return
   }
   // *******************************privates **************************************************************************************
-
   private onWindowResize(e: Event): void {
     // let parentdom = $(this.$el).parent()
     // window.setTimeout(() => {
@@ -138,7 +136,6 @@ export default class PageBase extends LayoutContainer {
     //   this.onScaleSized()
     // }, 500)
   }
-
   /**
    * 子组件递归重绘，目前只用于表格
    * @param childrendatas
@@ -154,7 +151,6 @@ export default class PageBase extends LayoutContainer {
       this.resizeChange(childrendatas[index].children)
     }
   }
-
   public adaptSize(newwidth, newheight) {
     if (this.IsDesigning == true) {
       return
@@ -195,20 +191,18 @@ export default class PageBase extends LayoutContainer {
   }
   // *******************************publics **************************************************************************************
   //添加一个不用自适应的参数，窗口缩放的时候大小不变
-  public StartShow(notadaptSize?: boolean, targetWidth?: number, targetHeight?: number) {
+  public startShow(notadaptSize?: boolean, targetWidth?: number, targetHeight?: number) {
     if (!notadaptSize) {
       this.onWindowResize_NotScale(window.event)
       $(window).bind('resize', this.onWindowResize_NotScale as any)
     }
   }
-
-  public StartShowNew(notadaptSize?: boolean, targetWidth?: number, targetHeight?: number) {
+  public startShowNew(notadaptSize?: boolean, targetWidth?: number, targetHeight?: number) {
     if (!notadaptSize) {
       this.onWindowResize(window.event)
       $(window).bind('resize', this.onWindowResize as any)
     }
   }
-
   public scaleSize(sizechange: number) {
     var newsize = this.currentScaleSize + sizechange
     if (newsize < 0.01) {
@@ -217,22 +211,16 @@ export default class PageBase extends LayoutContainer {
     //千万不能用zoom缩放，不然缩放后的元素坐标，大小无法计算
     this.scaleToSize(newsize)
   }
-
-  public Save(): void {
+  public save(): void {
+    /**数据压缩 */
     var saveinfo = this.getSaveData()
-    var saveinfoStr = this.GetPageZipStr(saveinfo)
-
+    var saveinfoStr = serialize(saveinfo)
+    saveinfoStr = strZip(saveinfoStr)
     // CurrentApis.SavePageData(this.Id, saveinfoStr, null).then((res) => {
     //   this.isNeedSave = false
     //   this.onPageSaveSuccess(saveinfo.id)
     // })
   }
-
-  public GetPageZipStr(saveInfo: any) {
-    var saveinfoStr = serialize(saveInfo)
-    return strZip(saveinfoStr)
-  }
-
   public async loadPageById(pageId: string, params?: paramInfo[], justLoadData: boolean = false, justLoadPageData = false): Promise<SaveInfo> {
     // let s1 = common.getMillionSecond()
     this.Id = pageId
@@ -240,12 +228,12 @@ export default class PageBase extends LayoutContainer {
     //需要判断一下是组件模板还是页面，数据查询方式不一样
     let pageDatafromdb = {} as any
     pageData = pageDatafromdb.content
-    await this.LoadPageByData(pageId, pageData, params)
+    await this.loadPageByData(pageId, pageData, params)
     //触发组件的重绘，目前只用于表格 xww 2020-09-05
     this.resizeChange(this.children)
     return pageData
   }
-  public async LoadPageByData(pageId: string, pageData: SaveInfo, params?: paramInfo[]) {
+  public async loadPageByData(pageId: string, pageData: SaveInfo, params?: paramInfo[]) {
     this.Id = pageId
 
     let index = showLoading_Async(true)
@@ -255,7 +243,7 @@ export default class PageBase extends LayoutContainer {
         this.loadData(pageData)
       }
       //**组织页面参数 */
-      this.SetPageInParams(params)
+      this.setPageInParams(params)
       this.scaleSize(1 - this.currentScaleSize)
 
       if (this.triggeEvent) {
@@ -268,7 +256,7 @@ export default class PageBase extends LayoutContainer {
       closeLoading_Async(index, true)
     }
   }
-  public async ReLoadPageData(pageData: SaveInfo) {
+  public async reLoadPageData(pageData: SaveInfo) {
     // window.console.log('reLoadPageData')
     this.reLoadData(pageData)
     if (this.triggeEvent) {
@@ -276,7 +264,7 @@ export default class PageBase extends LayoutContainer {
     }
   }
 
-  public SetPageInParams(params?: paramInfo[]) {
+  public setPageInParams(params?: paramInfo[]) {
     if (!params) {
       return
     }

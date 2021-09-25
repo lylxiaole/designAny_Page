@@ -7,15 +7,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '../PageBase'
+import { PageBase } from '../../03designerLayoutBase'
 
 @Component
 export default class pc_preview extends Vue {
   @Prop() private CurrentPage: PageBase
 
   private onPageMounted(layout: PageBase) {
-    layout.Load(this.CurrentPage.Id) //给layout加载新数据
-    layout.StartShow()
+    layout.loadPageById(this.CurrentPage.Id) //给layout加载新数据
+    layout.startShow()
   }
 }
 </script>

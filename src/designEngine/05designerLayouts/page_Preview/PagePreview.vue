@@ -135,7 +135,7 @@ export default {
               if (!Array.isArray(param)) {
                 param = [param]
               }
-              thePage.SetPageInParams(param)
+              thePage.setPageInParams(param)
             }
           }
           let sumenuIds = pathItems.filter((x) => x.id != pageId).map((x) => x.id)
@@ -296,7 +296,7 @@ export default {
       let findpane = this.panes.find((o) => o.pageId == id)
       findpane.page = layout
       //window.console.log('-----------------渲染页面xxxxxx,onPageMounted')
-      layout.StartShow(false)
+      layout.startShow(false)
     },
     async viewHistroy(histroyId) {
       let histroydata = await CurrentApis.GetPageHistoryContent(histroyId)
