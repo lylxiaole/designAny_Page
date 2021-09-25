@@ -3,7 +3,7 @@
     <el-header class="toolbarheader">Header</el-header>
     <el-container class="designcontainer">
       <el-aside width="250px">
-        <pagelist :currentAppId="applicationId" :pageGroups="pageDataList" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
+        <pagelist :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
       </el-aside>
       <el-container>
         <el-tabs v-model="currentOpenPageId" closable type="border-card" style="width:100%">
@@ -30,20 +30,32 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { DesignPageDC, GetPageDetail } from '@src/apis/designPage'
+import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
+import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
+import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
+
 @Component({
   components: {
     pagelist: pagelist,
-    propertyGrid: PropertyGrid
+    propertyGrid: PropertyGrid,
+    mobilePageDesign: MobilePageDesign,
+    mobilePagePreview: MobilePagePreview,
+    pCPageDesign: PCPageDesign,
+    pCPagePreview: PCPagePreview
   }
 })
 export default class index extends PageBase {
   private applicationId: string = null
+  private application: ApplicationDC = null
   private pageDataList: any[] = []
   mounted() {
     this.applicationId = this.$route.query.appId as string
+    GetApplication(this.applicationId).then((res) => {
+      this.application = res
+      // window.console.log('GetApplication:', res)
+    })
   }
   // **********页面Tabs**********************************************************
   private currentOpenPageId: string = null
@@ -55,12 +67,23 @@ export default class index extends PageBase {
     }
     this.currentOpenPageId = page.id
   }
-
   // **********页面列表**********************************************************
   private async onEditPage(pageId: string) {
     let res = await GetPageDetail(pageId)
     this.openPage(res)
     await this.$nextTick()
+    let designLayout: any = null
+    switch (res.type) {
+      case pageType.pcPage:
+        designLayout = new PCPageDesign()
+        break
+      case pageType.pcPage:
+        designLayout = new MobilePageDesign()
+        break
+      default:
+        break
+    }
+    window.console.log('onEditPage:', this.$refs[pageId])
     window.console.log('onEditPage:', res)
   }
   private async onDeletePage(pageId: string) {}

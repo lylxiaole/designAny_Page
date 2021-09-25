@@ -58,7 +58,6 @@ export default class index extends ComponentBase {
   mounted() {}
 
   private async startDesignApp() {
-    window.console.log('startDesignApp:', this.currentApplication)
     this.$router.push({ path: '/designPages', query: { appId: this.currentApplication.id } })
   }
 }

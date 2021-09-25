@@ -21,6 +21,13 @@ export async function GetApplicationList() {
   const resp = await ajaxGet(url)
   return resp.data
 }
+
+export async function GetApplication(appId: string) {
+  let url = apiAddr() + 'api/designApplication/GetApplication?appId=' + appId
+  const resp = await ajaxGet(url)
+  return resp.data
+}
+
 export async function AddApplication(data: ApplicationDC) {
   let url = apiAddr() + 'api/designApplication/AddApplication'
   const resp = await ajaxPost(url, data)

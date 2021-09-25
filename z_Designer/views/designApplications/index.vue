@@ -18,12 +18,9 @@ import applicationDetail from './applicationDetail.vue'
 })
 export default class index extends PageBase {
   private currentApplication: any = null
-  mounted() {
-    window.console.log('xxxxxxxxxxxxxxxxxxxxxxx')
-  }
+  mounted() {}
   // ******************************************************************
   private async onCurrentApplicationChanged(app: any) {
-    window.console.log('onCurrentApplicationChanged:', app)
     this.currentApplication = app
   }
 }

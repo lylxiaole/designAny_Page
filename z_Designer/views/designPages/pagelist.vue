@@ -58,11 +58,13 @@ import {
   UpdateGroupName,
   UpdateNodesSort,
   DeletePage,
-  DeleteGroup
+  DeleteGroup,
+  pageType
 } from '@src/apis/designPage'
 let VueContextMenu = require('vue-context-menu')
 import btreeNode from '@src/components/Treenode/bTreeNode.vue'
 import { types } from 'util'
+import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
 
 enum rightMenus {
   addPage = '新建页面',
@@ -84,10 +86,14 @@ export default class index extends ComponentBase {
   private rightMenus: string[] = []
   private treeData: TreeNodeDC[] = []
   @Prop()
-  private currentAppId: string
-  @Watch('currentAppId', { deep: true })
-  private async onPageGroupsChanged(currentAppId: string) {
-    this.treeData = await GetApplicationPages(currentAppId)
+  private currentApplication: ApplicationDC
+  @Watch('currentApplication', { deep: true })
+  private async onApplicationChanged(application: ApplicationDC) {
+    if (application) {
+      this.treeData = await GetApplicationPages(application.id)
+    } else {
+      this.treeData = []
+    }
     // window.console.log('onPageGroupsChanged:', this.treeData)
   }
   // *********pageGroups管理**************************************************
@@ -142,7 +148,7 @@ export default class index extends ComponentBase {
     let data: any = {
       id: node.id,
       name: node.label,
-      appId: this.currentAppId,
+      appId: this.currentApplication.id,
       index: node.index,
       parentGroupId: node.parentGroupId
     }
@@ -152,7 +158,7 @@ export default class index extends ComponentBase {
     let data: any = {
       id: node.id,
       name: node.label,
-      appId: this.currentAppId,
+      appId: this.currentApplication.id,
       index: node.index,
       parentGroupId: node.parentGroupId
     }
@@ -332,7 +338,7 @@ export default class index extends ComponentBase {
     } else {
       index = this.cuteGroupMaxIndex(this.treeData) + 1
     }
-    let res = await AddGroup({ name: '新建分组', appId: this.currentAppId, parentGroupId: parentGroupId, index: index } as any)
+    let res = await AddGroup({ name: '新建分组', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index } as any)
     let newnode: TreeNodeDC = {
       id: res.id,
       parentGroupId: res.parentGroupId,
@@ -354,7 +360,18 @@ export default class index extends ComponentBase {
     let parentGroupId = this.currentRightClickNode.id
     let datadc = this.searchNodeById(parentGroupId, this.treeData)
     let index = this.cuteChildrenMaxIndex(datadc) + 1
-    let res = await AddPage({ name: '新建页面', appId: this.currentAppId, parentGroupId: parentGroupId, index: index } as any)
+    let pType = pageType.pcPage
+    switch (this.currentApplication.type) {
+      case applicationType.dashBoard:
+      case applicationType.report:
+      case applicationType.webSystem:
+        pType = pageType.pcPage
+        break
+      default:
+        break
+    }
+
+    let res = await AddPage({ name: '新建页面', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index, type: pType } as any)
 
     let newnode: TreeNodeDC = {
       id: res.id,
