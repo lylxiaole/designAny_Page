@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { getUuid } from '@src/utils'
-import PageBase from '../PageBase'
-import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
+import { EngineComponentBase, EnginePageBase } from '@src/designEngine/03designerLayoutBase'
 import factory from './03_actionFactory'
 import LayoutBase from '@src/designEngine/03designerLayoutBase/LayoutBase'
 import { Property } from '../commonClasses/LayoutProperty'
@@ -9,8 +8,8 @@ import { behavior } from './behaviorTypes'
 
 import { resourceFuncAttr, resourceType, objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
 
-function findContainerPage(page: PageBase, pageId?: string, getTopIfNull: boolean = true): PageBase {
-  var find: PageBase
+function findContainerPage(page: EnginePageBase, pageId?: string, getTopIfNull: boolean = true): EnginePageBase {
+  var find: EnginePageBase
   if (getTopIfNull) {
     find = findContainerPageloop2(page, pageId)
   } else {
@@ -22,7 +21,7 @@ function findContainerPage(page: PageBase, pageId?: string, getTopIfNull: boolea
   return page
 }
 
-function findContainerPageloop1(page: PageBase, pageId?: string): PageBase {
+function findContainerPageloop1(page: EnginePageBase, pageId?: string): EnginePageBase {
   if (!pageId) {
     return null
   }
@@ -35,7 +34,7 @@ function findContainerPageloop1(page: PageBase, pageId?: string): PageBase {
   return findContainerPageloop1(page.parentPage, pageId)
 }
 
-function findContainerPageloop2(page: PageBase, pageId?: string): PageBase {
+function findContainerPageloop2(page: EnginePageBase, pageId?: string): EnginePageBase {
   if (!pageId) {
     return page
   }
@@ -50,7 +49,7 @@ function findContainerPageloop2(page: PageBase, pageId?: string): PageBase {
 
 export interface actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: objectBase): any
   setFunc(obj: objectBase, val: any): void
@@ -67,7 +66,7 @@ export interface actResFuncBase {
 @resourceFuncAttr(resourceType.behaviorInParam)
 class behaviorInParamFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: objectBase) {
     var inparam = this.currentBehavior.inparam
@@ -93,7 +92,7 @@ class behaviorInParamFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.propertiesInPage)
 class propertiesInPageFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: objectBase) {
     var containerPage = findContainerPage(this.currentPage, obj.pageId)
@@ -125,14 +124,14 @@ class propertiesInPageFunc implements actResFuncBase {
     return null
   }
 
-  private findPropertyInPage(propertyId: string, comps: ComponentBase[]): Property {
+  private findPropertyInPage(propertyId: string, comps: EngineComponentBase[]): Property {
     var result: Property = null
     comps.filter((comp) => {
       var property = comp.findPropertyById(propertyId)
       if (property) {
         result = property
       } else {
-        let findinChildren = this.findPropertyInPage(propertyId, comp.children as ComponentBase[])
+        let findinChildren = this.findPropertyInPage(propertyId, comp.children as EngineComponentBase[])
         if (findinChildren) {
           result = findinChildren
         }
@@ -141,14 +140,14 @@ class propertiesInPageFunc implements actResFuncBase {
     return result
   }
 
-  private findComponentInPage(propertyId: string, comps: ComponentBase[]): ComponentBase {
-    var result: ComponentBase = null
+  private findComponentInPage(propertyId: string, comps: EngineComponentBase[]): EngineComponentBase {
+    var result: EngineComponentBase = null
     comps.filter((comp) => {
       var property = comp.findPropertyById(propertyId)
       if (property) {
         result = comp
       } else {
-        let findinChildren = this.findComponentInPage(propertyId, comp.children as ComponentBase[])
+        let findinChildren = this.findComponentInPage(propertyId, comp.children as EngineComponentBase[])
         if (findinChildren) {
           result = findinChildren
         }
@@ -161,7 +160,7 @@ class propertiesInPageFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.controlMethods)
 class controlMethodsFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_Method) {
     var compId = obj.resourceId
@@ -207,7 +206,7 @@ class controlMethodsFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.behaviors)
 class behaviorsFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_Method) {
     // window.console.log('模型实例')
@@ -245,7 +244,7 @@ class behaviorsFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.pageInParams)
 class pageInParamsFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: objectBase) {
     var containerPage = findContainerPage(this.currentPage, obj.pageId, false)
@@ -281,7 +280,7 @@ class pageInParamsFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.variables)
 class variablesFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_Variable) {
     return this.currentBehavior.variableFormulas[obj.name]
@@ -307,7 +306,7 @@ class variablesFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.fixedVal)
 class fixedValFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_FixedVal) {
     // window.console.log('处理固定值')
@@ -376,7 +375,7 @@ class fixedValFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.signs)
 class signsFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_Signs) {
     return allCuteSigns.find((o) => o.title == obj.name).value
@@ -400,7 +399,7 @@ class signsFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.filterSigns)
 class filterSignsFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_Signs) {
     return allFilterSigns.find((o) => o.title == obj.name).value
@@ -424,7 +423,7 @@ class filterSignsFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.breakBehaviorAll)
 class breakBehaviorAllFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_Method) {
     throw undefined
@@ -448,7 +447,7 @@ class breakBehaviorAllFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.callback)
 class callbackFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: object_callback) {
     var fact = new factory(this.currentLayout, this.currentPage, obj.behavior)
@@ -475,7 +474,7 @@ class callbackFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.consoleSettings)
 class consoleSettingsFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj_method: object_Method) {
     for (let index = 0; index < obj_method.inputParams.length; index++) {
@@ -505,7 +504,7 @@ class consoleSettingsFunc implements actResFuncBase {
 @resourceFuncAttr(resourceType.externalLinks)
 class externalLinksFunc implements actResFuncBase {
   currentLayout: LayoutBase
-  currentPage: PageBase
+  currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj_method: object_Method) {
     let params = obj_method.inputParams

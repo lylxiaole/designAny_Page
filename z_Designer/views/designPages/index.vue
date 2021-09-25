@@ -33,7 +33,7 @@ import PageBase from '@src/views/PageBase'
 import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
-import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
+import { EnginePageBase, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
 
 @Component({
@@ -72,13 +72,13 @@ export default class index extends PageBase {
     let res = await GetPageDetail(pageId)
     this.openPage(res)
     await this.$nextTick()
-    let designLayout: any = null
+    let designLayout: EnginePageBase = null
     switch (res.type) {
       case pageType.pcPage:
-        designLayout = new PCPageDesign()
+        designLayout = new PCPageDesign() as any
         break
       case pageType.pcPage:
-        designLayout = new MobilePageDesign()
+        designLayout = new MobilePageDesign() as any
         break
       default:
         break

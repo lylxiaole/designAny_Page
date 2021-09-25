@@ -5,10 +5,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { PageBase } from '../03designerLayoutBase'
+import { EnginePageBase } from '../03designerLayoutBase'
 
 @Component
-export default class PCPagePreview extends PageBase {}
+export default class PCPagePreview extends EnginePageBase {}
 </script>
  
 <style scoped>

@@ -2,10 +2,10 @@
 import BaseEvents, { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import LayoutBase, { LayoutType, LayoutInfo, SaveInfo } from './LayoutBase'
 import LayoutContainer from './LayoutContainer'
-import ComponentBase from './ComponentBase'
-import PageBase from './PageBase'
+import EngineComponentBase from './EngineComponentBase'
+import EnginePageBase from './EnginePageBase'
 
-export { BaseEvents, LayoutBase, LayoutContainer, ComponentBase, PageBase }
+export { BaseEvents, LayoutBase, LayoutContainer, EngineComponentBase, EnginePageBase }
 export { DragItemData, DragItemTypeEnum, LayoutType, LayoutInfo, SaveInfo }
 export { Property, PropertyType, PropertyTypeEnum } from './commonClasses/LayoutProperty'
 

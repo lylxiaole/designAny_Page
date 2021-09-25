@@ -1,16 +1,16 @@
 import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
 
-import ComponentBase from './ComponentBase'
+import ComponentBase from './EngineComponentBase'
 import { getUuid, deepClone, serialize, strZip, closeLoading_Async, showLoading_Async } from '@src/utils'
 
-import LayoutBase, { SaveInfo } from '../03designerLayoutBase/LayoutBase'
+import LayoutBase, { SaveInfo } from './LayoutBase'
 import LayoutContainer from './LayoutContainer'
 import { paramInfo } from './commonClasses/pageInParamInfo'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 
-export default class PageBase extends LayoutContainer {
-  public parentPage: PageBase
+export default class EnginePageBase extends LayoutContainer {
+  public parentPage: EnginePageBase
   public isNeedSave: boolean = false
   /***************************** */
   /**行为列表*/
