@@ -1,4 +1,5 @@
 var CircularJSON = require('circular-json-es6')
+import pako from 'pako'
 
 /**
  * Parse the time to string
@@ -447,16 +448,7 @@ export function strUnZip(str) {
 
 /**使用相对路径，转换成文件的绝对路径，供给页面使用 */
 export function BuildingFileUrlForShow(fileserverAddr, relativePath) {
-  if (!relativePath) {
-    return ''
-  }
-  if (relativePath.indexOf('?') < 1) {
-    relativePath += '?'
-  } else {
-    relativePath += '&'
-  }
-  let x = CurrentContext.GetUserToken()
-  return fileserverAddr + relativePath + 'Access-Token=' + CurrentContext.GetUserToken() + '&&Company-Id=' + CurrentContext.GetCompanyId()
+  return fileserverAddr + relativePath
 }
 
 /////////////////////////////////////////////////////////////////
@@ -499,11 +491,10 @@ function removeLoadingInfo(key) {
 }
 
 // ////////////////////虚拟dom绘制/////////////////////////////////////////////
-// export function  drawVueOnVirtualDom(comp: Vue): DocumentFragment {
-//   let fragment = window.document.createDocumentFragment()
-//   let divdom = window.document.createElement('div')
-//   fragment.appendChild(divdom)
-//   comp.$mount(divdom)
-
-//   return fragment
-// }
+export function drawVueOnVirtualDom(vueComp) {
+  let fragment = window.document.createDocumentFragment()
+  let divdom = window.document.createElement('div')
+  fragment.appendChild(divdom)
+  vueComp.$mount(divdom)
+  return fragment
+}

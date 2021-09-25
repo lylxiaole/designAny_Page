@@ -401,9 +401,9 @@ export default class index extends ComponentBase {
 
   // **************对外事件*****************************************************
   @Emit('onEditPage')
-  private onEditPage(pageId: string) {}
+  private async onEditPage(pageId: string) {}
   @Emit('onDeletePage')
-  private onDeletePage(pageId: string) {}
+  private async onDeletePage(pageId: string) {}
 }
 </script>
 

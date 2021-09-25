@@ -33,6 +33,7 @@ import PageBase from '@src/views/PageBase'
 import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
+import { drawVueOnVirtualDom } from '@src/utils'
 import { EnginePageBase, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
 
@@ -72,6 +73,7 @@ export default class index extends PageBase {
     let res = await GetPageDetail(pageId)
     this.openPage(res)
     await this.$nextTick()
+    window.console.log('onEditPage:', this.$refs[pageId])
     let designLayout: EnginePageBase = null
     switch (res.type) {
       case pageType.pcPage:
@@ -83,8 +85,12 @@ export default class index extends PageBase {
       default:
         break
     }
-    designLayout.loadData()
-    window.console.log('onEditPage:', this.$refs[pageId])
+
+    let documentFrag = drawVueOnVirtualDom(designLayout)
+    // designLayout.loadData(pageId)
+    $(this.$refs[pageId][0]).append(documentFrag)
+
+    // designLayout.loadData()
     window.console.log('onEditPage:', res)
   }
   private async onDeletePage(pageId: string) {}
