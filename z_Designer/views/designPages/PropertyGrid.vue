@@ -26,12 +26,9 @@
 </template>
 
 <script lang="ts">
-
-
-
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { Property, PropertyType, PropertyTypeEnum } from '@src/designEngine'
-import { PageBase, LayoutBase } from '@src/designEngine'
+import { EnginePageBase, LayoutBase } from '@src/designEngine'
 import { deepClone, serialize, deserialize } from '@src/utils'
 import propertyCellBase from './propertyGridCells/common'
 
@@ -67,7 +64,8 @@ class propertyFilterInfo {
   propertyName: string
 }
 
-/**动态读取propertyGrid Cell组件 */ 
+/**动态读取propertyGrid Cell组件 */
+
 var cellControls: Function[] = []
 const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
 modulesFiles.keys().reduce((modules, modulePath) => {
@@ -78,7 +76,7 @@ modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-  function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase {
+function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase {
   return cellControls.filter((o) => o.prototype.$Meta.celltype == propertyType)[0] as typeof propertyCellBase
 }
 // *****************************************
@@ -129,7 +127,7 @@ export default class PropertyGrid extends Vue {
   private allowedPropertys: propertyFilterInfo[]
   /**当前的布局页面 */
   @Prop()
-  private currentPage: PageBase
+  private currentPage: EnginePageBase
   /**当前需要设置的所有布局*/
   @Prop()
   private currentLayouts: LayoutBase[] | LayoutBase

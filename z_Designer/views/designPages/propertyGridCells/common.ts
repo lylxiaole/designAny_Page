@@ -1,5 +1,5 @@
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import { PropertyTypeEnum, Property, PropertyType, PageBase, LayoutBase } from '@src/designEngine'
+import { PropertyTypeEnum, Property, PropertyType, EnginePageBase, LayoutBase } from '@src/designEngine'
 
 export { PropertyTypeEnum }
 
@@ -37,7 +37,7 @@ export default class propertyCellBase extends Vue {
 
   /**当前的布局页面 */
   @Prop()
-  protected currentPage: PageBase
+  protected currentPage: EnginePageBase
   /**当前需要设置的布局类 */
   @Prop()
   protected currentLayouts: LayoutBase[] | LayoutBase
