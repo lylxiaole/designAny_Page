@@ -109,7 +109,7 @@ export default class LayoutBase extends BaseEvents {
   }
   /**生命周期 */
   created() {
-    if (this.IsDesigning) {
+    if (this.isDesigning) {
       this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
       this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
       this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, true, 'px')
@@ -137,7 +137,7 @@ export default class LayoutBase extends BaseEvents {
   /**生命周期 */
   mounted() {
     //开始捕捉鼠标键盘事件
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       this.CaptureEvent()
     }
   }

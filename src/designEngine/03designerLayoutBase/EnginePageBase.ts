@@ -65,7 +65,7 @@ export default class EnginePageBase extends LayoutContainer {
     this.registerEvents('定时器触发事件', '定时器触发', [], null)
   }
   mounted() {
-    if (this.IsDesigning) {
+    if (this.isDesigning) {
       this.onChangedScale_Event = (sizeChange: number): boolean => {
         this.scaleSize(sizeChange)
         return false
@@ -86,7 +86,7 @@ export default class EnginePageBase extends LayoutContainer {
   }
   // *******************************overrides **************************************************************************************
   protected async triggeEvent(name: string, inparam: any) {
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       return
     }
     var event = this.designerEvents.find((o) => o.eventName == name)
@@ -165,7 +165,7 @@ export default class EnginePageBase extends LayoutContainer {
   // *******************************publics **************************************************************************************
   //让页面按照指定尺寸进行缩放
   public adaptSize(newwidth, newheight) {
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       return
     }
     newwidth = parseInt(newwidth)

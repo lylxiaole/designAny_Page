@@ -9,7 +9,9 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { EnginePageBase } from '../03designerLayoutBase'
 
 @Component
-export default class PCPageDesign extends EnginePageBase {}
+export default class PCPageDesign extends EnginePageBase {
+  public isDesigning: boolean = true
+}
 </script>
  
 <style scoped>

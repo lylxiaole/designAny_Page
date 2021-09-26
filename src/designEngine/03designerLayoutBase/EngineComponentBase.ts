@@ -76,7 +76,7 @@ export default class EngineComponentBase extends LayoutContainer {
   }
 
   created() {
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
       this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
       this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Property(), [], true, false)
@@ -107,7 +107,7 @@ export default class EngineComponentBase extends LayoutContainer {
   }
 
   mounted() {
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       this.canDrop = false
       this.canDrag = true
       this.width = 200
@@ -132,7 +132,7 @@ export default class EngineComponentBase extends LayoutContainer {
   }
   // *******************************protecteds**************************************************************************************
   protected async triggeEvent(name: string, inparam: any) {
-    if (!this.parentPage || this.parentPage.IsDesigning == true) {
+    if (!this.parentPage || this.parentPage.isDesigning == true) {
       return
     }
     // window.console.log('触发事件:', name, this.$el)

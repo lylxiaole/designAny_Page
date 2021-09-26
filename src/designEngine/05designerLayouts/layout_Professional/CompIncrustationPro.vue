@@ -3,30 +3,30 @@
     :style="{'width':Component==null?0:Component.width+'px','height':Component==null?0:Component.height+'px','z-index':Component==null?0:Component.zIndex,'left':Component==null?0:Component.left+'px','top':Component==null?0:Component.top+'px',
       'margin-left':Component==null?0:Component.margin_left+'px','margin-right':Component==null?0:Component.margin_right+'px','margin-top':Component==null?0:Component.margin_top+'px','margin-bottom':Component==null?0:Component.margin_bottom+'px',
       'padding-left':Component==null?0:Component.padding_left+'px','padding-right':Component==null?0:Component.padding_right+'px','padding-top':Component==null?0:Component.padding_top+'px','padding-bottom':Component==null?0:Component.padding_bottom+'px',
-       'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':(IsDesigning===true||display===true)?'block':'none','tabindex':'1' }">
+       'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':(isDesigning===true||display===true)?'block':'none','tabindex':'1' }">
     <div :class="themeClass" style="width:100%;height:100%;tab-index:1"
-      :style="{zIndex:IsDesigning===true?0:3,'font-family':Component==null?'':Component.fontFamily }">
+      :style="{zIndex:isDesigning===true?0:3,'font-family':Component==null?'':Component.fontFamily }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="semove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="semove"
       style="width:16px;height:16px;right:-16px; bottom:-16px;position:absolute;cursor: se-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="swmove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="swmove"
       style="width:16px;height:16px;left:-16px; bottom:-16px;position:absolute;cursor: sw-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="nemove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nemove"
       style="width:16px;height:16px;right:-16px; top:-16px;position:absolute;cursor: ne-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="nwmove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nwmove"
       style="width:16px;height:16px;left:-16px; top:-16px;position:absolute;cursor: nw-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="nmove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nmove"
       style="width:96%;height:16px;left:2%; top:-16px;position:absolute;cursor:n-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="smove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="smove"
       style="width:96%;height:16px;left:2%; bottom:-16px;position:absolute;cursor:s-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="wmove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="wmove"
       style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&IsDesigning===true" class="dragbutton" ref="emove"
+    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="emove"
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
     <div v-if="Component&&Component.disabled===true" ref="dragmengb" type="drag"
-      style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:IsDesigning===true?0:3 }"></div>
-    <a-icon ref="dragIcon" type="drag" v-if="isSelectedArea===true&&IsDesigning===true"
+      style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:isDesigning===true?0:3 }"></div>
+    <a-icon ref="dragIcon" type="drag" v-if="isSelectedArea===true&&isDesigning===true"
       style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4" />
   </div>
 
@@ -36,12 +36,12 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
 import BaseEvent from '@src/designEngine/03designerLayoutBase/BaseEvents'
-import { ComponentBase } from '@src/designEngine/03designerLayoutBase'
+import { EngineComponentBase } from '@src/designEngine/03designerLayoutBase'
 import { DragItemData, DragItemTypeEnum } from '@src/designEngine/03designerLayoutBase/BaseEvents'
 
 // @Component
 export default class CompIncrustationPro extends BaseEvent {
-  private Component: ComponentBase = null
+  private Component: EngineComponentBase = null
   public positionval: string = null
 
   get backGroundColor(): string {
@@ -64,14 +64,14 @@ export default class CompIncrustationPro extends BaseEvent {
 
   /**是否是当前选中的区域 */
   get isSelectedArea(): boolean {
-    if (this.IsDesigning) {
+    if (this.isDesigning) {
       if (!this.Component) {
         return false
       }
       if (this.Component.isSelected) {
         return true
       }
-      if (this.Component.findSelectedLayoutsRecursion && this.Component.findSelectedLayoutsRecursion().length > 0) {
+      if (this.Component.findSelectedLayoutsRecursion && this.Component.findSelectedLayoutsRecursion(this.Component.children).length > 0) {
         return true
       }
     }
@@ -79,7 +79,7 @@ export default class CompIncrustationPro extends BaseEvent {
   }
 
   get hoverClass(): string {
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       return 'gad-mengb'
     } else {
       return ''
@@ -102,7 +102,7 @@ export default class CompIncrustationPro extends BaseEvent {
   }
 
   get boarderStyle(): string {
-    if (this.IsDesigning == true && this.isSelectedArea == true) {
+    if (this.isDesigning == true && this.isSelectedArea == true) {
       return '#faad14 solid 1px'
     } else {
       return ''
@@ -110,13 +110,13 @@ export default class CompIncrustationPro extends BaseEvent {
   }
 
   mounted() {
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       this.CaptureEvent()
       this.canDrop = false
       this.canDrag = true
       this.onDrag_Event = this.onDragSize
       this.onClick_Event = (e: Event, target: any) => {
-        if (this.IsDesigning) {
+        if (this.isDesigning) {
           if (this.Component.parentPage) {
             this.Component.parentPage.chooseComps([])
           }
@@ -139,9 +139,9 @@ export default class CompIncrustationPro extends BaseEvent {
     // }
   }
 
-  public AddComponent(comp: ComponentBase) {
+  public AddComponent(comp: EngineComponentBase) {
     if (this.Component != null) {
-      this.Component.destory()
+      this.Component.$destroy()
     }
     this.Component = comp
     // this.Component.$mount(this.$refs.compContent as Element)

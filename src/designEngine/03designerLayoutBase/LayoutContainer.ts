@@ -22,13 +22,13 @@ export default class LayoutContainer extends LayoutBase {
   private mouseY: number = 0
 
   mounted() {
-    if (this.IsDesigning) {
+    if (this.isDesigning) {
       this.onDrop_Event = this.listenOnDrop
       this.onDragMove_Event = this.listenOnDragMove
       this.onDelete_Event = this.onDeleteKey
       this.onDragEnd_Event = this.listenOnDragEnd
       this.onCut_Event = (e) => {
-        if (this.IsDesigning) {
+        if (this.isDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
             LayoutContainer.copyComp = this.selectedChildren[0] as LayoutBase
             // this.$message.success('组件已剪切', 2)
@@ -38,7 +38,7 @@ export default class LayoutContainer extends LayoutBase {
         }
       }
       this.onCopy_Event = (e) => {
-        if (this.IsDesigning) {
+        if (this.isDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
             LayoutContainer.copyComp = this.selectedChildren[0] as LayoutBase
             // this.$message.success('组件已复制', 2)

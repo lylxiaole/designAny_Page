@@ -7,19 +7,18 @@
 
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator'
-import { PageBase, ComponentBase, LayoutBase, LayoutInfo } from '@src/designEngine/03designerLayoutBase'
-import { getUuid, deepClone } from '@src/utils'
+import { EnginePageBase, EngineComponentBase, LayoutBase, LayoutInfo } from '@src/designEngine/03designerLayoutBase'
+import { getUuid, deepClone, BuildingFileUrlForShow } from '@src/utils'
 import CompIncrustationPro from './CompIncrustationPro.vue'
-import { CurrentContext } from '../../01designerContext'
 import { DragItemTypeEnum } from '@src/designEngine/03designerLayoutBase/BaseEvents'
 
-export default class Layout_Professional extends PageBase {
+export default class Layout_Professional extends EnginePageBase {
   get backgroundCute(): string {
     // let property = this.findPropertyByName('基础设置', '背景图片')
     if (!this.background_img || !this.background_img.url) {
       return this.background
     }
-    return 'url("' + BuildingFileUrlForShow(CurrentContext.FileServerAddress, this.background_img.url) + '")'
+    return 'url("' + BuildingFileUrlForShow(this.background_img.url) + '")'
   }
 
   // ***********文件上传相关*******************
@@ -32,7 +31,7 @@ export default class Layout_Professional extends PageBase {
   public PageComponentIncrustations: CompIncrustationPro[] = []
 
   private _loadTimeTick() {
-    if (this.IsDesigning) {
+    if (this.isDesigning) {
       return
     }
 
@@ -70,7 +69,7 @@ export default class Layout_Professional extends PageBase {
     //   this.domCache = null
     // })
     // this.onSave_Event = (e) => {
-    //   if (this.IsDesigning) {
+    //   if (this.isDesigning) {
     //     this.Save()
     //     this.$message.success('页面已保存', 2)
     //   }
@@ -94,7 +93,7 @@ export default class Layout_Professional extends PageBase {
   }
 
   // *******************************public**************************************************************************************
-  protected renderComponent(compCon: ComponentBase, layoutInfo: LayoutInfo, dragType?: DragItemTypeEnum): LayoutBase {
+  protected renderComponent(compCon: EngineComponentBase, layoutInfo: LayoutInfo, dragType?: DragItemTypeEnum): LayoutBase {
     // let tmpNode = window.document.createElement('div')
     // if (this.domCache) {
     //   this.domCache.appendChild(tmpNode)
@@ -105,7 +104,7 @@ export default class Layout_Professional extends PageBase {
     // let compIn = new CompIncrustationPro()
     // compIn.$mount(tmpNode)
     // compIn.$forceUpdate()
-    // if (this.IsDesigning == true) {
+    // if (this.isDesigning == true) {
     //   this._dragHelper.makeDomCanDrag(compIn.$el)
     // }
     // /**在组件壳子中添加组件 */

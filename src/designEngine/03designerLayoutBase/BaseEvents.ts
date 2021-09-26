@@ -35,7 +35,7 @@ class optionsClass {
 export default class BaseEvents extends Vue {
   protected _dragHelper: dragHelper
   protected _currentDom: Element
-  public IsDesigning: boolean = false
+  public isDesigning: boolean = false
   public isDraging: boolean = false
 
   public isCaptureEvent: boolean = false
@@ -87,7 +87,7 @@ export default class BaseEvents extends Vue {
   beforeCreate() {}
 
   mounted() {
-    if (this.IsDesigning == true) {
+    if (this.isDesigning == true) {
       this._dragHelper = new dragHelper(this._currentDom)
       this._dragHelper.makeDomContainer()
     }
@@ -154,7 +154,7 @@ export default class BaseEvents extends Vue {
   /********************Drag事件****************************************************** */
   private _onDrag(el: Element, sourceContainer: Element) {
     // window.console.log('从本布局中开始拖拽一个东西出去了')
-    if (this.IsDesigning == false) {
+    if (this.isDesigning == false) {
       return
     }
 
@@ -175,7 +175,7 @@ export default class BaseEvents extends Vue {
     }
   }
   private _onDrop(el: Element, targetContainer: Element): boolean {
-    if (this.IsDesigning == false) {
+    if (this.isDesigning == false) {
       return true
     }
     if (this.canDrop && this.onDrop_Event) {
@@ -187,7 +187,7 @@ export default class BaseEvents extends Vue {
     return true
   }
   private _onDragOver(el: Element, targetContainer: Element): boolean {
-    if (this.IsDesigning == false || !this.onDragOver_Event) {
+    if (this.isDesigning == false || !this.onDragOver_Event) {
       return true
     }
     if (targetContainer != this._currentDom) {
@@ -200,12 +200,12 @@ export default class BaseEvents extends Vue {
     // window.console.log('dropover')
   }
   private _onDragShadow(shadow: Element, targetContainer: Element) {
-    if (this.IsDesigning == false) {
+    if (this.isDesigning == false) {
       return
     }
   }
   private _onDragMove(el: Element, targetContainer: Element): boolean {
-    if (this.IsDesigning == false || this.canDrop == false || !this.onDragMove_Event) {
+    if (this.isDesigning == false || this.canDrop == false || !this.onDragMove_Event) {
       return true
     }
     if (!el) {
@@ -240,7 +240,7 @@ export default class BaseEvents extends Vue {
     return iscontinue
   }
   private _onDragEnd(el: Element) {
-    if (this.IsDesigning == false || !this.onDragEnd_Event) {
+    if (this.isDesigning == false || !this.onDragEnd_Event) {
       return
     }
     this.clearCachePoint()
@@ -249,7 +249,7 @@ export default class BaseEvents extends Vue {
     this.onDragEnd_Event()
   }
   private _onDragOut(el: Element, targetContainer: Element): boolean {
-    if (this.IsDesigning == false || !this.onDragOut_Event) {
+    if (this.isDesigning == false || !this.onDragOut_Event) {
       return true
     }
     if (targetContainer != this._currentDom) {
@@ -263,7 +263,7 @@ export default class BaseEvents extends Vue {
     // }
   }
   private _onDragClone(clone: Element) {
-    if (this.IsDesigning == false || !this.onDragClone_Event) {
+    if (this.isDesigning == false || !this.onDragClone_Event) {
       return true
     }
     this.onDragClone_Event(clone)
@@ -271,7 +271,7 @@ export default class BaseEvents extends Vue {
   /************************************************************************** */
   private _onClick(e: Event) {
     //window.console.log('最底层,_onClick')
-    if (this.IsDesigning == false || !this.onClick_Event) {
+    if (this.isDesigning == false || !this.onClick_Event) {
       return
     }
     e.stopPropagation()
@@ -284,7 +284,7 @@ export default class BaseEvents extends Vue {
     this.onClick_Event(e, this)
   }
   private _onDoubleClick(e: Event) {
-    if (this.IsDesigning == false || !this.onDoubleClick_Event) {
+    if (this.isDesigning == false || !this.onDoubleClick_Event) {
       return
     }
     // e.stopPropagation()
@@ -293,7 +293,7 @@ export default class BaseEvents extends Vue {
   }
   private _onKeyUp(e: any) {
     // window.console.log('按了键盘')
-    if (this.IsDesigning == false) {
+    if (this.isDesigning == false) {
       return true
     }
 
@@ -305,7 +305,7 @@ export default class BaseEvents extends Vue {
     }
   }
   private _onKeyDown(e: any) {
-    if (this.IsDesigning == false) {
+    if (this.isDesigning == false) {
       return true
     }
     var keyCode = e.keyCode || e.which || e.charCode
@@ -370,7 +370,7 @@ export default class BaseEvents extends Vue {
     }
   }
   private _onMouseWheel(e: any) {
-    if (this.IsDesigning == false) {
+    if (this.isDesigning == false) {
       return true
     }
     var ctrlKey = e.ctrlKey || e.metaKey
@@ -387,7 +387,7 @@ export default class BaseEvents extends Vue {
     }
   }
   private _mouseMove(e: any) {
-    if (this.IsDesigning == false || !this.onMouseMove_Event) {
+    if (this.isDesigning == false || !this.onMouseMove_Event) {
       return true
     }
     if (this.isDraging == true) {
@@ -422,7 +422,7 @@ export default class BaseEvents extends Vue {
     }
   }
   private _mouseUp(e: any) {
-    if (this.IsDesigning == false || !this.onMoudeUp_Event) {
+    if (this.isDesigning == false || !this.onMoudeUp_Event) {
       return true
     }
     // window.console.log('最底层,mouseUp')
@@ -445,7 +445,7 @@ export default class BaseEvents extends Vue {
     }
   }
   private _mouseDown(e: any) {
-    if (this.IsDesigning == false) {
+    if (this.isDesigning == false) {
       return true
     }
     this.clickTimer = window.setTimeout(() => {

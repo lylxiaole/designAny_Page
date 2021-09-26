@@ -1,6 +1,6 @@
 var CircularJSON = require('circular-json-es6')
 import pako from 'pako'
-
+import { Loading } from 'element-ui'
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
@@ -459,15 +459,17 @@ export function showLoading_Async(isMain = false) {
     return
   }
   let newKey = getUuid()
-  asyncLoadingWindowInfo.push({ key: newKey, layerIndex: -1, isMain: isMain })
+  asyncLoadingWindowInfo.push({ key: newKey, loadingWindow: null, isMain: isMain })
   window.setTimeout(() => {
     let findh = findLoadingInfo(newKey)
     if (!findh || findh.isMain != isMain) {
       return
     }
-    // window.console.log('*********************打开loading:', isMain)
-    findh.layerIndex = window.layer.load(1, {
-      shade: [0.3, '#000'] //0.1透明度的白色背景
+    findh.loadingWindow = Loading.service({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
     })
   }, 150)
   return newKey
@@ -478,8 +480,9 @@ export function closeLoading_Async(key, isMain = false) {
   if (!findh || findh.isMain != isMain) {
     return
   }
-  window.console.log('*********************关闭loading:', $('body'))
-  window.layer.close(findh.layerIndex)
+  if (findh.loadingWindow) {
+    findh.loadingWindow.close()
+  }
   removeLoadingInfo(key)
 }
 function findLoadingInfo(key) {
