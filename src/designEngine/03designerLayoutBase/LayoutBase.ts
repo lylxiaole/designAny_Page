@@ -1,11 +1,9 @@
 import { Component } from 'vue-property-decorator'
-
 import BaseEvents from './BaseEvents'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 import { layoutEventBehaviors } from './behavior/behaviorTypes'
-
 import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from './commonClasses/LayoutProperty'
-import { getUuid, deepClone, serialize } from '@src/utils'
+import { getUuid, deepClone, serialize, drawVueOnVirtualDom } from '@src/utils'
 
 export enum LayoutType {
   /**系统组件 */
@@ -15,7 +13,6 @@ export enum LayoutType {
   /**功能组件 */
   functional_component = 'functional_component'
 }
-
 export class LayoutInfo {
   constructor(_type: LayoutType, _groupName: string, _name: string, _component: any, _icon: any, _sourceId?: string, _compCode?: string) {
     this.type = _type
@@ -723,7 +720,6 @@ export default class LayoutBase extends BaseEvents {
   public findPropertyById(Id: string): Property {
     return this.properties.find((o) => o.id == Id)
   }
-
   public validatorPropertyValue(propertyId: string, val: any): boolean {
     var valodators = this.propertyValidators.filter((o) => o.propertyId == propertyId)
     for (var i = 0; i < valodators.length; i++) {

@@ -73,7 +73,6 @@ export default class index extends PageBase {
     let res = await GetPageDetail(pageId)
     this.openPage(res)
     await this.$nextTick()
-    window.console.log('onEditPage:', this.$refs[pageId])
     let designLayout: EnginePageBase = null
     switch (res.type) {
       case pageType.pcPage:
@@ -85,12 +84,10 @@ export default class index extends PageBase {
       default:
         break
     }
-
+    /************************渲染页面 */
     let documentFrag = drawVueOnVirtualDom(designLayout)
-    // designLayout.loadData(pageId)
+    designLayout.loadPageById(pageId)
     $(this.$refs[pageId][0]).append(documentFrag)
-
-    // designLayout.loadData()
     window.console.log('onEditPage:', res)
   }
   private async onDeletePage(pageId: string) {}

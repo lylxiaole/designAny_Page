@@ -23,7 +23,6 @@ export class DesignPageGroupDC extends dataContactBase {
   childrenGroups: DesignPageGroupDC[]
   childrenPages: DesignPageDC[]
 }
-
 export class TreeNodeDC {
   id: string
   parentGroupId: string
