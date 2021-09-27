@@ -20,7 +20,9 @@ export default class LayoutContainer extends LayoutBase {
 
   private mouseX: number = 0
   private mouseY: number = 0
-
+  created() {
+    window.console.log('LayoutContainer created')
+  }
   mounted() {
     if (this.isDesigning) {
       this.onDrop_Event = this.listenOnDrop

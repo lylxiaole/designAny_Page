@@ -11,6 +11,9 @@ import { EnginePageBase } from '../03designerLayoutBase'
 @Component
 export default class PCPageDesign extends EnginePageBase {
   public isDesigning: boolean = true
+  created() {
+    window.console.log('PCPageDesign created')
+  }
 }
 </script>
  

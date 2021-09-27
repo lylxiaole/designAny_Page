@@ -80,6 +80,8 @@ export default class LayoutBase extends BaseEvents {
   }
   /**生命周期 */
   created() {
+    window.console.log('LayoutBase created')
+
     if (this.isDesigning) {
       this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
       this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
@@ -103,11 +105,9 @@ export default class LayoutBase extends BaseEvents {
       this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
       this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())
     }
-    this.onCreated(this)
   }
   /**生命周期 */
   mounted() {
-    super.mounted()
     //开始捕捉鼠标键盘事件
     if (this.isDesigning == true) {
       this.CaptureEvent()

@@ -76,6 +76,7 @@ export default class EngineComponentBase extends LayoutContainer {
   }
 
   created() {
+    window.console.log('EngineComponentBase created')
     if (this.isDesigning == true) {
       this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
       this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())

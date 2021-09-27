@@ -1,5 +1,5 @@
 <template>
-  <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgba(9, 87, 106, 1)"
+  <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgb(61, 61, 61)"
     :style="{ height: height + 'px', width: '100%' }">
     <div :style="{ height: height + 'px', width: '200px' }" style="display: flex; min-width: 200px">
       <div style="padding: 9px; line-height: 0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }">
@@ -11,7 +11,7 @@
       </div>
     </div>
     <!-- *************************************************************************** -->
-    <div :style="{ height: height + 'px' }" style="left: 21%" class="verticalAlignCenter">
+    <div :style="{ height: height + 'px' }" class="verticalAlignCenter">
       <!-- *************************************************************************** -->
       <div :style="{ width:'60px'}" class="iconitem themeHover" @click="savePage">
         <div class="flexHorilanLayout">
@@ -23,9 +23,10 @@
     </div>
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
-      <div :style="{ width:  '200px' }" class="iconitem themeHover">
+      <div :style="{ width:  '120px' }" class="iconitem themeHover">
         <div class="flexHorilanLayout">
-          <el-input-number v-model="pageScale" label="描述文字" :min="0.01" :step="0.01" :max="1000" :precision="2" />
+          <el-input-number v-model="pageScale" controls-position="right" label="描述文字" size="mini" :min="0.01" :step="0.01" :max="1000"
+            :precision="2" />
         </div>
         <div class="flexHorilanLayout verticalAlignCenter">缩放窗口</div>
       </div>
@@ -70,18 +71,18 @@ export default class quickActionBar extends Vue {
 
   private get pageScale(): number {
     if (!this.currentPage) {
-      return 0
+      return 1
     }
     return this.currentPage.currentScaleSize
   }
   private set pageScale(val: number) {
-    // window.console.log('aaaaaa')
     if (!this.currentPage) {
       return
     }
     var valchange = val - this.currentPage.currentScaleSize
     this.currentPage.scaleSize(valchange)
   }
+
   created() {}
   public savePage() {
     if (!this.currentPage) {
@@ -109,7 +110,9 @@ export default class quickActionBar extends Vue {
     this.previewWindowVisible = true
   }
   /*************定制化控制项************************************************************************ */
-  public title: string = '二次开发平台'
+  private async onQuit() {
+    this.$router.back()
+  }
   /*************对外公布事件************************************************************************ */
   @Emit('onSaveAs')
   private onSaveAs() {}
@@ -122,9 +125,6 @@ export default class quickActionBar extends Vue {
 
   @Emit('onRevert')
   private onRevert() {}
-
-  @Emit('onQuit')
-  private onQuit() {}
 
   @Emit('onPrint')
   public onPrint() {}

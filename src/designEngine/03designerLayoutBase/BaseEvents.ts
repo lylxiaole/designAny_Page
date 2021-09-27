@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+
 import dragHelper, { dragulaExtand } from '../02common/dragHelper'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
@@ -31,7 +33,7 @@ class optionsClass {
   public mousedownPointY: number = null
   public clickTimer: number = null
 }
-
+@Component
 export default class BaseEvents extends Vue {
   protected _dragHelper: dragHelper
 
@@ -90,7 +92,9 @@ export default class BaseEvents extends Vue {
   beforeDestroy() {
     this.RealseEvent()
   }
-  created(): void {}
+  created(): void {
+    window.console.log('BaseEvents created')
+  }
   beforeMount(): void {}
   beforeUpdate(): void {}
   updated(): void {}
