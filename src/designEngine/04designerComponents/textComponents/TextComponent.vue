@@ -1,7 +1,4 @@
-/**
- * 文本组件
- * Modified by GG 新增字体大小,粗体,斜体设置
- */
+ 
 <template>
   <div style="height:100%;">
     <a-tooltip placement="right" :title="TooltipTitle">

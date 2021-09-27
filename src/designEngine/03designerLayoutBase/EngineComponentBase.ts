@@ -1,6 +1,7 @@
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
-import { LayoutType, Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
+import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
 import { EnginePageBase, SaveInfo, LayoutContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
+import { LayoutType } from '../03designerLayoutBase/commonClasses/componentInfos'
 
 @Component
 export default class EngineComponentBase extends LayoutContainer {

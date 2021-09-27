@@ -23,6 +23,18 @@
     </div>
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
+      <el-tooltip placement="bottom" overlayClassName="nptooltip" style="background: transparent"
+        :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+        <div slot="content" style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
+          <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
+        </div>
+        <div :style="{ width: '100px' }" class="iconitem themeHover">
+          <div class="flexHorilanLayout">
+          </div>
+          <div class="flexHorilanLayout verticalAlignCenter">系统组件</div>
+        </div>
+      </el-tooltip>
+      <!-- *************************************************************************** -->
       <div :style="{ width:  '120px' }" class="iconitem themeHover">
         <div class="flexHorilanLayout">
           <el-input-number v-model="pageScale" controls-position="right" label="描述文字" size="mini" :min="0.01" :step="0.01" :max="1000"
@@ -56,12 +68,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { EnginePageBase, EngineComponentBase, LayoutBase, LayoutInfo } from '@src/designEngine/03designerLayoutBase'
-import ComponentListControl from './ComponentListControl.vue'
+import { EnginePageBase, EngineComponentBase, LayoutBase, LayoutInfo } from '@src/designEngine'
+import componentListControl from './ComponentListControl.vue'
 
 @Component({
   components: {
-    ComponentListControl
+    componentListControl
   }
 })
 export default class quickActionBar extends Vue {

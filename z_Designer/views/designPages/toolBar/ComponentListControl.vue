@@ -1,32 +1,29 @@
 <template>
-  <div style="height:357px;">
-    <a-col :span="7">
+  <el-row style="height:357px;">
+    <el-col :span="7">
       <div style="height:357px;width:124px;overflow-x:hidden;overflow-y:auto;">
-        <a-menu v-model="systemCompsActiveKey" style="width:124px;background-color:rgba(240,242,245,1);color:rgba(40,40,40,1);text-align:center">
-          <a-menu-item v-for="group in systemComponents" :key="group.groupName" @click="onClick">
+        <el-menu v-model="systemCompsActiveKey" style="width:124px;background-color:rgba(240,242,245,1);color:rgba(40,40,40,1);text-align:center">
+          <el-menu-item v-for="group in systemComponents" :key="group.groupName" @click="onClick">
             {{group.groupName}}
-          </a-menu-item>
-        </a-menu>
+          </el-menu-item>
+        </el-menu>
       </div>
-    </a-col>
-    <a-col :span="17">
+    </el-col>
+    <el-col :span="17">
       <div style="margin-left:10px;">
-        <a-list class="container" style="background-color:transparent;" :grid="{ gutter: 16, column: 4 }" :dataSource="dataSource">
-          <a-list-item slot="renderItem" style="background-color:transparent;" slot-scope="item, index" :span="4">
-            <a-card :index="index" class="mydragItem" :compGroupName="compGroupName" :dragType="dragType" :compName="item.name" :compType="item.type"
-              hoverable style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
-              <div style="width:100%;height:35px;text-align:center" alt="example" slot="cover">
-                <a-icon style="font-size:30px;margin-top:10px" :component="item.icon" />
-              </div>
-              <div style="font-size:12px;padding-top:3px;text-align:center;color:rgba(0,0,0,0.5);width:100%;height:20px" slot="cover">
-                {{item.name}}
-              </div>
-            </a-card>
-          </a-list-item>
-        </a-list>
+        <el-card v-for="item in dataSource" :key="item.compCode" class="mydragItem" :compGroupName="compGroupName" :dragType="dragType"
+          :compName="item.name" :compType="item.type" hoverable
+          style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
+          <div style="width:100%;height:35px;text-align:center" alt="example" slot="cover">
+            <el-image style="font-size:30px;margin-top:10px" :src="item.icon" />
+          </div>
+          <div style="font-size:12px;padding-top:3px;text-align:center;color:rgba(0,0,0,0.5);width:100%;height:20px" slot="cover">
+            {{item.name}}
+          </div>
+        </el-card>
       </div>
-    </a-col>
-  </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script lang="ts">
@@ -34,8 +31,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@src/utils'
 import dragHelper from '@src/designEngine/02common/dragHelper'
 // 所有系统组件
-import { LayoutInfo, LayoutType, allComponents } from '@src/designEngine/03designerLayoutBase'
-import { DragItemData, DragItemTypeEnum, EngineComponentBase } from '@src/designEngine/03designerLayoutBase'
+import * as engin from '@src/designEngine'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {
@@ -43,13 +39,14 @@ class ComponentGroupInfo {
   }
   groupId: string
   groupName: string
-  components: LayoutInfo[] = []
+  components: engin.LayoutInfo[] = []
 }
 
 @Component
 export default class ComponentListControl extends Vue {
   private systemCompsActiveKey: string[] = []
   private get systemComponents(): ComponentGroupInfo[] {
+    window.console.log('systemComponents:', this.systemCompGroups)
     var res: ComponentGroupInfo[] = []
     if (!this.systemCompGroups || !this.sys_limitGroupNames) {
       return res
@@ -72,13 +69,15 @@ export default class ComponentListControl extends Vue {
   private sys_limitCompCodes: string[]
   ///////////////////////
   private dragHelpers: dragHelper[] = []
-  private dragType: DragItemTypeEnum = DragItemTypeEnum.drop_system_component
-  private dataSource: LayoutInfo[] = []
+  private dragType: engin.DragItemTypeEnum = engin.DragItemTypeEnum.drop_system_component
+  private dataSource: engin.LayoutInfo[] = []
   private compGroupName: string = ''
   private defaultSelectedKeys: any[] = []
 
   mounted() {
+    window.console.log('123123123')
     this.CuteSystemComponents()
+
     this.renderStyle()
   }
   beforeDestroy() {
@@ -137,15 +136,15 @@ export default class ComponentListControl extends Vue {
     // window.console.log('---------------------11111111111111', this.dragHelpers)
   }
   /**包含组件的分组名，和组件的名字。不包含组件的类型信息 */
-  private GetDragData(el: Element): DragItemData<any> {
-    var dragType = $(el).attr('dragType') as DragItemTypeEnum
-    var type = $(el).attr('compType') as LayoutType
+  private GetDragData(el: Element): engin.DragItemData<any> {
+    var dragType = $(el).attr('dragType') as engin.DragItemTypeEnum
+    var type = $(el).attr('compType') as engin.LayoutType
     var compName = $(el).attr('compName')
     var compGroupName = $(el).attr('compGroupName')
     //window.console.info('compGroupName', compGroupName)
-    var compInfo = new LayoutInfo(type, compGroupName, compName, null, '')
+    var compInfo = new engin.LayoutInfo(type, compGroupName, compName, null, '')
     //window.console.log('---------------------------------------------------compInfocompInfocompInfocompInfocompInfo', compInfo)
-    var dragd = new DragItemData<any>()
+    var dragd = new engin.DragItemData<any>()
     dragd.type = dragType
     dragd.dragData = compInfo
     return dragd
@@ -158,8 +157,9 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private CuteSystemComponents() {
-    allComponents
-      .filter((o) => o.type == LayoutType.system_component)
+    window.console.log('wwwwwwww', engin.allComponents)
+    engin.allComponents
+      .filter((o) => o.type == engin.LayoutType.system_component)
       .filter((element) => {
         let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
         if (findgroup.length < 1) {

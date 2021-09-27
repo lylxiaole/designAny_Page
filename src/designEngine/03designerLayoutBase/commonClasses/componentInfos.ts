@@ -42,6 +42,7 @@ export function findSystemCompByCode(code: string): any {
 export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, groupName: string, name: string, compCode: string, icon: any) {
   return function(target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
+    window.console.log('layoutCompTypeAttr', target.prototype.$Meta, compCode)
     target.prototype.$Meta.layoutType = layoutType
     target.prototype.$Meta.groupName = groupName
     target.prototype.$Meta.name = name
@@ -52,17 +53,4 @@ export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, gro
   }
 }
 
-/**动态读取propertyGrid Cell组件 */
-const modulesFiles = require.context('./', true, /\.(vue)$/)
-const modules = modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath)
-  if (value.default.$Meta && value.default.$Meta.compCode) {
-    CompIndex.indexs['compCode'] = value.default
-    let metadata = value.default.$Meta
-    let layoutInfo = new LayoutInfo(metadata.layoutType, metadata.groupName, metadata.name, value.default, metadata.icon)
-    allComponents.push(layoutInfo)
-  }
-
-  return modules
-}, {})
 // *******************组件相关*******************************************************
