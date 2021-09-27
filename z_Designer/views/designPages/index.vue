@@ -86,6 +86,7 @@ export default class index extends PageBase {
     }
     /************************渲染页面 */
     let documentFrag = drawVueOnVirtualDom(designLayout)
+    await designLayout.$nextTick()
     designLayout.loadPageById(pageId)
     $(this.$refs[pageId][0]).append(documentFrag)
     window.console.log('onEditPage:', res)

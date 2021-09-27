@@ -34,10 +34,9 @@ class optionsClass {
 
 export default class BaseEvents extends Vue {
   protected _dragHelper: dragHelper
-  protected _currentDom: Element
+
   public isDesigning: boolean = false
   public isDraging: boolean = false
-
   public isCaptureEvent: boolean = false
   public startDragMovePoint_left: number = NaN
   public startDragMovePoint_top: number = NaN
@@ -58,37 +57,33 @@ export default class BaseEvents extends Vue {
       this._dragHelper.makeContainerCannotDrop()
     }
   }
-
   get canDrop(): boolean {
     if (!this._dragHelper) {
       return false
     }
     return this._dragHelper.IsCanDrop()
   }
-
   set canDrag(can: boolean) {
     if (!this._dragHelper) {
       return
     }
     if (can) {
       // window.console.log('makeDomCanDrag')
-      this._dragHelper.makeDomCanDrag(this._currentDom)
+      this._dragHelper.makeDomCanDrag(this.$el)
     } else {
-      this._dragHelper.makeDomCannotDrag(this._currentDom)
+      this._dragHelper.makeDomCannotDrag(this.$el)
     }
   }
   get canDrag(): boolean {
     if (!this._dragHelper) {
       return false
     }
-    return this._dragHelper.IsCanDrag(this._currentDom)
+    return this._dragHelper.IsCanDrag(this.$el)
   }
-
   beforeCreate() {}
-
   mounted() {
     if (this.isDesigning == true) {
-      this._dragHelper = new dragHelper(this._currentDom)
+      this._dragHelper = new dragHelper(this.$el)
       this._dragHelper.makeDomContainer()
     }
   }
@@ -110,15 +105,15 @@ export default class BaseEvents extends Vue {
     }
     this.isCaptureEvent = true
     // window.console.log('捕捉鼠标键盘动作')
-    this._currentDom.addEventListener('click', this._onClick)
-    this._currentDom.addEventListener('dblclick', this._onDoubleClick)
-    this._currentDom.addEventListener('keyup', this._onKeyUp)
-    this._currentDom.addEventListener('keydown', this._onKeyDown)
-    this._currentDom.addEventListener('mousemove', this._mouseMove)
-    this._currentDom.addEventListener('mouseup', this._mouseUp)
-    this._currentDom.addEventListener('mousedown', this._mouseDown)
+    this.$el.addEventListener('click', this._onClick)
+    this.$el.addEventListener('dblclick', this._onDoubleClick)
+    this.$el.addEventListener('keyup', this._onKeyUp)
+    this.$el.addEventListener('keydown', this._onKeyDown)
+    this.$el.addEventListener('mousemove', this._mouseMove)
+    this.$el.addEventListener('mouseup', this._mouseUp)
+    this.$el.addEventListener('mousedown', this._mouseDown)
     // $('html').bind('mousewheel', this._onMouseWheel)
-    $(this._currentDom)[0].addEventListener('mousewheel', this._onMouseWheel, { passive: false })
+    $(this.$el)[0].addEventListener('mousewheel', this._onMouseWheel, { passive: false })
     $(window).bind('onbeforeunload', this._onWindowUnload)
     this._dragHelper.makeDomContainer()
     this._dragHelper.registerOnDrag(this._onDrag)
@@ -137,16 +132,16 @@ export default class BaseEvents extends Vue {
     }
     // window.console.log('释放鼠标键盘动作')
     this.isCaptureEvent = false
-    if (this._currentDom) {
-      this._currentDom.removeEventListener('click', this._onClick)
-      this._currentDom.removeEventListener('dblclick', this._onDoubleClick)
-      this._currentDom.removeEventListener('keyup', this._onKeyUp)
-      this._currentDom.removeEventListener('keydown', this._onKeyDown)
-      this._currentDom.removeEventListener('mousemove', this._mouseMove)
-      this._currentDom.removeEventListener('mouseup', this._mouseUp)
-      this._currentDom.removeEventListener('mousedown', this._mouseDown)
+    if (this.$el) {
+      this.$el.removeEventListener('click', this._onClick)
+      this.$el.removeEventListener('dblclick', this._onDoubleClick)
+      this.$el.removeEventListener('keyup', this._onKeyUp)
+      this.$el.removeEventListener('keydown', this._onKeyDown)
+      this.$el.removeEventListener('mousemove', this._mouseMove)
+      this.$el.removeEventListener('mouseup', this._mouseUp)
+      this.$el.removeEventListener('mousedown', this._mouseDown)
       // $('html').unbind('mousewheel', this._onMouseWheel)
-      $(this._currentDom)[0].removeEventListener('mousewheel', this._onMouseWheel)
+      $(this.$el)[0].removeEventListener('mousewheel', this._onMouseWheel)
       $(window).unbind('beforeunload unload', this._onWindowUnload)
       this._dragHelper.RemoveContainer()
     }
@@ -158,7 +153,7 @@ export default class BaseEvents extends Vue {
       return
     }
 
-    if (sourceContainer != this._currentDom) {
+    if (sourceContainer != this.$el) {
       return
     }
     this.clearBoxSelectInfo(window.event)
@@ -190,7 +185,7 @@ export default class BaseEvents extends Vue {
     if (this.isDesigning == false || !this.onDragOver_Event) {
       return true
     }
-    if (targetContainer != this._currentDom) {
+    if (targetContainer != this.$el) {
       return true
     }
     this.startDragMovePoint_left = $(el).offset().left
@@ -252,7 +247,7 @@ export default class BaseEvents extends Vue {
     if (this.isDesigning == false || !this.onDragOut_Event) {
       return true
     }
-    if (targetContainer != this._currentDom) {
+    if (targetContainer != this.$el) {
       return true
     }
 

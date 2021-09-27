@@ -136,6 +136,7 @@ export default class LayoutBase extends BaseEvents {
   }
   /**生命周期 */
   mounted() {
+    super.mounted()
     //开始捕捉鼠标键盘事件
     if (this.isDesigning == true) {
       this.CaptureEvent()
