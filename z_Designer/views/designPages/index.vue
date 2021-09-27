@@ -1,9 +1,12 @@
 <template>
   <el-container style="height:100%;width:100%">
-    <el-header class="toolbarheader">Header</el-header>
+    <el-header class="toolbarheader">
+      <toolBar></toolBar>
+    </el-header>
     <el-container class="designcontainer">
       <el-aside width="250px">
-        <pagelist :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
+        <pagelist :currentPage="currentShowEngine" :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage"
+          @onDeletePage="onDeletePage"></pagelist>
       </el-aside>
       <el-container>
         <el-tabs v-model="currentOpenPageId" closable type="border-card" style="width:100%">
@@ -33,6 +36,8 @@ import PageBase from '@src/views/PageBase'
 import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
+import toolBar from './toolBar/index.vue'
+
 import { drawVueOnVirtualDom } from '@src/utils'
 import { EnginePageBase, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
@@ -40,6 +45,7 @@ import { applicationType, ApplicationDC, GetApplication } from '@src/apis/design
 @Component({
   components: {
     pagelist: pagelist,
+    toolBar: toolBar,
     propertyGrid: PropertyGrid,
     mobilePageDesign: MobilePageDesign,
     mobilePagePreview: MobilePagePreview,
@@ -61,6 +67,11 @@ export default class index extends PageBase {
   // **********页面Tabs**********************************************************
   private currentOpenPageId: string = null
   private openPages: DesignPageDC[] = []
+  private openPageEngines: EnginePageBase[] = []
+  private get currentShowEngine(): EnginePageBase {
+    let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
+    return findengine
+  }
   private openPage(page: DesignPageDC) {
     let findopen = this.openPages.find((o) => o.id === page.id)
     if (!findopen) {
@@ -68,6 +79,23 @@ export default class index extends PageBase {
     }
     this.currentOpenPageId = page.id
   }
+  private cachePageEngine(pageId: string, pageEngine: EnginePageBase) {
+    let engine = this.openPageEngines.find((o) => o.Id === pageId)
+    if (!engine) {
+      this.openPageEngines.push(engine)
+    }
+  }
+  private closePage(pageId: string) {
+    let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
+    if (engineIndex > -1) {
+      this.openPageEngines.splice(engineIndex, 1)
+    }
+    let pagedataIndex = this.openPages.findIndex((o) => o.id === pageId)
+    if (pagedataIndex > -1) {
+      this.openPages.splice(pagedataIndex, 1)
+    }
+  }
+
   // **********页面列表**********************************************************
   private async onEditPage(pageId: string) {
     let res = await GetPageDetail(pageId)
@@ -89,9 +117,11 @@ export default class index extends PageBase {
     await designLayout.$nextTick()
     designLayout.loadPageById(pageId)
     $(this.$refs[pageId][0]).append(documentFrag)
-    window.console.log('onEditPage:', res)
+    this.cachePageEngine(pageId, designLayout)
   }
-  private async onDeletePage(pageId: string) {}
+  private async onDeletePage(pageId: string) {
+    this.closePage(pageId)
+  }
   // **********属性窗**********************************************************
 }
 </script>

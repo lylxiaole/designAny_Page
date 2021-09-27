@@ -24,7 +24,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '我的接口'
         },
-        component: () => import(/* webpackChunkName: "HelloWorld" */ './views/designApis/index.vue')
+        component: () => import(/* webpackChunkName: "designApis" */ './views/designApis/index.vue')
       },
       {
         icon: 'icon-all-fill',
