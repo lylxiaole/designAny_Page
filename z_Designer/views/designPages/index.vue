@@ -1,7 +1,7 @@
 <template>
   <el-container style="height:100%;width:100%">
     <el-header class="toolbarheader">
-      <toolBar></toolBar>
+      <toolBar :currentPage="currentShowEngine" :height="60"></toolBar>
     </el-header>
     <el-container class="designcontainer">
       <el-aside width="250px">
@@ -82,7 +82,7 @@ export default class index extends PageBase {
   private cachePageEngine(pageId: string, pageEngine: EnginePageBase) {
     let engine = this.openPageEngines.find((o) => o.Id === pageId)
     if (!engine) {
-      this.openPageEngines.push(engine)
+      this.openPageEngines.push(pageEngine)
     }
   }
   private closePage(pageId: string) {
@@ -129,6 +129,7 @@ export default class index extends PageBase {
 <style lang="less">
 .toolbarheader {
   height: 42px;
+  padding: 0px;
 }
 .designcontainer {
   height: calc(100% - 42px);

@@ -32,14 +32,10 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@src/utils'
-
-import dragHelper from '../02common/dragHelper'
-
-import { CurrentApis, CurrentContext } from '../01designerContext'
+import dragHelper from '@src/designEngine/02common/dragHelper'
 // 所有系统组件
-import { LayoutInfo, LayoutType } from '../03designerLayoutBase/LayoutBase'
-import { AllComponents, ComponentBase } from '../04designerComponents'
-import { DragItemData, DragItemTypeEnum } from '../03designerLayoutBase/BaseEvents'
+import { LayoutInfo, LayoutType, allComponents } from '@src/designEngine/03designerLayoutBase'
+import { DragItemData, DragItemTypeEnum, EngineComponentBase } from '@src/designEngine/03designerLayoutBase'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {
@@ -162,16 +158,18 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private CuteSystemComponents() {
-    AllComponents.filter((o) => o.type == LayoutType.system_component).filter((element) => {
-      let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
-      if (findgroup.length < 1) {
-        let newgroup = new ComponentGroupInfo(element.groupName)
-        this.systemCompGroups.push(newgroup)
-        // this.systemCompsActiveKey.push(newgroup.groupName)
-      }
-      let group = this.systemCompGroups.filter((o) => o.groupName == element.groupName)[0]
-      group.components.push(element)
-    })
+    allComponents
+      .filter((o) => o.type == LayoutType.system_component)
+      .filter((element) => {
+        let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
+        if (findgroup.length < 1) {
+          let newgroup = new ComponentGroupInfo(element.groupName)
+          this.systemCompGroups.push(newgroup)
+          // this.systemCompsActiveKey.push(newgroup.groupName)
+        }
+        let group = this.systemCompGroups.filter((o) => o.groupName == element.groupName)[0]
+        group.components.push(element)
+      })
     //window.console.info('this.systemComponents', this.systemComponents)
     let defaultSelectedKey = this.systemCompGroups[0].groupName
     this.systemCompsActiveKey.push(defaultSelectedKey)
@@ -200,7 +198,6 @@ export default class ComponentListControl extends Vue {
 </script>
 
 <style  lang="less" scoped>
- 
 .ant-card-body {
   padding: 3px;
 }

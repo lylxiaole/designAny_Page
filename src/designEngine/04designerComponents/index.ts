@@ -48,13 +48,3 @@ import {
 } from '@src/designEngine/assets/icons.js'
 import { CompIndex } from '../03designerLayoutBase'
 //////////////////////////////////////////
-
-/**动态读取propertyGrid Cell组件 */
-const modulesFiles = require.context('./', true, /\.(vue)$/)
-const modules = modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath)
-  if (value.default.$Meta && value.default.$Meta.compCode) {
-    CompIndex.indexs['compCode'] = value.default.$Meta.compCode
-  }
-  return modules
-}, {})

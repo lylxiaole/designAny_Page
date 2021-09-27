@@ -5,35 +5,6 @@ import { layoutEventBehaviors } from './behavior/behaviorTypes'
 import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize, drawVueOnVirtualDom } from '@src/utils'
 
-export enum LayoutType {
-  /**系统组件 */
-  system_component = 'system_component',
-  /**组件模板 */
-  component_template = 'component_template',
-  /**功能组件 */
-  functional_component = 'functional_component'
-}
-export class LayoutInfo {
-  constructor(_type: LayoutType, _groupName: string, _name: string, _component: any, _icon: any, _sourceId?: string, _compCode?: string) {
-    this.type = _type
-    this.groupName = _groupName
-    this.name = _name
-    this.component = _component
-    this.sourceId = _sourceId
-    this.icon = _icon
-    this.compCode = _compCode
-  }
-  type: LayoutType
-  compCode: string
-  groupName: string = ''
-  name: string = ''
-  component: any
-  icon: any
-  ///
-  sourceId: string
-  isNew: boolean
-  data: any
-}
 type propertyValidatorHandle = (newval: any) => boolean
 class propertyValidatorType {
   propertyId: string

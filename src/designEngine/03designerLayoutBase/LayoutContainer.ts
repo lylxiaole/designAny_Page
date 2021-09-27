@@ -5,7 +5,7 @@ import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
-import { findSystemCompByCode } from './commonClasses/memoryCache'
+import { findSystemCompByCode } from './commonClasses/componentInfos'
 
 @Component
 export default class LayoutContainer extends LayoutBase {
