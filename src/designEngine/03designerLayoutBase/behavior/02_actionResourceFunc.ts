@@ -8,45 +8,6 @@ import { behavior } from './behaviorTypes'
 
 import { resourceFuncAttr, resourceType, objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
 
-function findContainerPage(page: EnginePageBase, pageId?: string, getTopIfNull: boolean = true): EnginePageBase {
-  var find: EnginePageBase
-  if (getTopIfNull) {
-    find = findContainerPageloop2(page, pageId)
-  } else {
-    find = findContainerPageloop1(page, pageId)
-  }
-  if (find) {
-    return find
-  }
-  return page
-}
-
-function findContainerPageloop1(page: EnginePageBase, pageId?: string): EnginePageBase {
-  if (!pageId) {
-    return null
-  }
-  if (page.Id == pageId) {
-    return page
-  }
-  if (!page.parentPage) {
-    return null
-  }
-  return findContainerPageloop1(page.parentPage, pageId)
-}
-
-function findContainerPageloop2(page: EnginePageBase, pageId?: string): EnginePageBase {
-  if (!pageId) {
-    return page
-  }
-  if (page.Id == pageId) {
-    return page
-  }
-  if (!page.parentPage) {
-    return page
-  }
-  return findContainerPageloop2(page.parentPage, pageId)
-}
-
 export interface actResFuncBase {
   currentLayout: LayoutBase
   currentPage: EnginePageBase

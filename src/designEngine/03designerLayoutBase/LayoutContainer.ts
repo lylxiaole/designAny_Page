@@ -109,11 +109,11 @@ export default class LayoutContainer extends LayoutBase {
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {
-          let compclass = findSystemCompByCode(compInfo.compCode)
-          if (!compclass) {
+          let compVue = findSystemCompByCode(compInfo.compCode)
+          if (!compVue) {
             break
           }
-          dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
+          dropcomp = this.insertComponentLayout(compVue, compInfo, dragdata.type)
           if (dropcomp) {
             dropcomp.loadData(null)
           }
@@ -415,6 +415,8 @@ export default class LayoutContainer extends LayoutBase {
   public insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
     // window.console.log('绘制组件')
     compInfo.compCode = dropcompclass.compCode
+    // window.console.log('insertComponentLayout:', dropcompclass.prototype)
+    dropcompclass.prototype.isDesigning = this.isDesigning
     let dropcomp = new dropcompclass()
     dropcomp.parentLayout = this
     dropcomp.layoutInfo = compInfo

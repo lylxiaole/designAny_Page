@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue, { ComponentOptions } from 'vue'
 import { Component } from 'vue-property-decorator'
 import dragHelper from '../02common/dragHelper'
 /**拖拽行为类型 */
@@ -36,9 +36,17 @@ class optionsClass {
 @Component
 export default class BaseEvents extends Vue {
   public static isDraging: boolean = false
-  public isDesigning: boolean = false
+
+  protected _isDesigning: boolean = false
+  public get isDesigning(): boolean {
+    return this._isDesigning
+  }
+  public set isDesigning(val: boolean) {
+    this._isDesigning = val
+  }
   protected _dragHelper: dragHelper
   protected eventsOptions: optionsClass
+
   //是否正在设计
   set canDrop(can: boolean) {
     if (!this._dragHelper) {
@@ -75,6 +83,11 @@ export default class BaseEvents extends Vue {
     }
     return this._dragHelper.IsCanDrag(this.$el)
   }
+
+  constructor() {
+    super()
+  }
+
   beforeCreate() {}
   created() {
     if (this.isDesigning === true) {

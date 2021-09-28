@@ -34,7 +34,7 @@ export const allComponents: LayoutInfo[] = []
 
 /** */
 export function findSystemCompByCode(code: string): any {
-  var comp: any = CompIndex.indexs[code].component
+  var comp: any = CompIndex.indexs[code]
   comp.compCode = code
   return comp
 }

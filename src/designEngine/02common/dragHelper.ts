@@ -67,7 +67,7 @@ class dragulaExtand {
     },
     accepts: function(el, targetContainer, sourceContainer, sibling) {
       //这个事件相当于DragMove事件，会实时触发
-      window.console.log('最底层dragmove触发:', targetContainer)
+      //window.console.log('最底层dragmove触发:', targetContainer)
       if (dragulaExtand.IsCanDrop(targetContainer) == false) {
         return false //
       }
@@ -90,7 +90,7 @@ class dragulaExtand {
     dragulaExtand.drag_third.containers.push(container)
     /**添加dragMove事件拓展 */
     var dragulaContainer = new dragulaContainerClass(container)
-    window.console.log('registerContainer:', container)
+    //window.console.log('registerContainer:', container)
     dragulaExtand._dragulaContainer.push(dragulaContainer)
     dragulaExtand._dragulaContainer = dragulaExtand._dragulaContainer.sort((a, b) => {
       if ($(a.container).find(b.container).length > 0) {
@@ -153,7 +153,7 @@ class dragulaExtand {
   // **************监听dragula所有对外事件*****************************************************************************
   private static _onDrag(el: Element, sourceContainer: Element) {
     dragulaExtand.dragSource = el
-    // window.console.log('拖拽最底层',el)
+    //  //window.console.log('拖拽最底层',el)
     var findDragMoveExtands = dragulaExtand.getContainerDesc(sourceContainer)
     if (findDragMoveExtands.length < 1) {
       return
@@ -170,7 +170,7 @@ class dragulaExtand {
   //如果拖拽到其它容器中,targetContainer不为空,targetContainer_Self为空
   //如果拖拽到本身容器中,targetContainer为空,targetContainer_Self不为空
   private static _onDrop(el: Element, targetContainer: Element, sourceContainer: Element, targetContainer_Self: Element) {
-    window.console.log('_onDrop:', targetContainer)
+    //window.console.log('_onDrop:', targetContainer)
     var findDragMoveExtands = null
     if (targetContainer == null && targetContainer_Self != null) {
       findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer_Self)
@@ -198,7 +198,7 @@ class dragulaExtand {
     })
   }
   private static _onDragOver(el: Element, targetContainer: Element, sourceContainer: Element) {
-    window.console.log('_onDragOver:', targetContainer)
+    //window.console.log('_onDragOver:', targetContainer)
     var findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer)
     if (findDragMoveExtands.length < 1) {
       return
@@ -269,13 +269,13 @@ class dragulaExtand {
     dragulaExtand.dragOverContainer = null
   }
   private static _onDragMove(e: Event) {
-    // window.console.log(dragulaExtand.dragSource)
+    //  //window.console.log(dragulaExtand.dragSource)
     if (!dragulaExtand.dragSource) {
       return
     }
-    // window.console.log('**********最底层拖拽')
+    //  //window.console.log('**********最底层拖拽')
     var findDragMoveExtands = dragulaExtand.getContainerDesc(dragulaExtand.dragOverContainer)
-    // window.console.log('**********最底层拖拽:', findDragMoveExtands.length)
+    //  //window.console.log('**********最底层拖拽:', findDragMoveExtands.length)
     for (let index = 0; index < findDragMoveExtands.length; index++) {
       const findDragMoveExtand = findDragMoveExtands[index]
       if (!findDragMoveExtand.dragMoveEvent || !dragulaExtand.dragSource) {
@@ -291,7 +291,7 @@ class dragulaExtand {
         return false
       }
     }
-    //window.console.log('accepts当前是容器，可以拖拽进来')
+    // //window.console.log('accepts当前是容器，可以拖拽进来')
     return true //
   }
 }
@@ -347,7 +347,7 @@ export default class dragHelper {
     return dragulaExtand.IsCanDrag(dragItem)
   }
   public makeDomCanDrag(dragItem: Element) {
-    // window.console.log('makeDomCanDrag')
+    //  //window.console.log('makeDomCanDrag')
     $(dragItem).attr(dragEnums.canDrag, 'true')
   }
   public makeDomCannotDrag(dragItem: Element) {
@@ -356,7 +356,7 @@ export default class dragHelper {
   // *****************定义dragItem的附加内容*****************************************
   public makeDragItemInfo(dragItem: Element, Info: any): void {
     var infostr = common.serialize(Info)
-    //window.console.log('infostr',infostr)
+    // //window.console.log('infostr',infostr)
     $(dragItem).attr(dragEnums.dragItem_Info, infostr)
   }
   public getDragItemInfo(dragItem: Element): any {

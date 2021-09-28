@@ -11,7 +11,9 @@ import { truncate } from 'fs'
 
 @Component
 export default class PCPageDesign extends EnginePageBase {
-  public isDesigning: boolean = true
+  public get isDesigning(): boolean {
+    return true
+  }
   created() {
     window.console.log('PCPageDesign created')
   }
