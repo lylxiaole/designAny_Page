@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-cell title="流程">
+    <van-cell title="物料流程">
       <template #label>
         <van-grid :column-num="3" :border="false">
           <van-grid-item style="height:8rem" v-for="item in positionList" :key="item.QYMC" @click="onItemClick(item)">

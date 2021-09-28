@@ -8,7 +8,7 @@
     <van-cell>
       <template #title>
         <van-row style="width:100%">
-          <van-col :span="12">最近报警信息(一条)</van-col>
+          <van-col :span="12">最近报警信息(当前)</van-col>
           <van-col :span="12">
             <div class="moreBtn" @click="showMachinesPopup=true">
               <span style="margin-left:auto;margin-right:0.2rem">{{currentMachine.text}}</span>
@@ -22,7 +22,7 @@
       </template>
     </van-cell>
 
-    <van-cell title="最近报警信息(多条)">
+    <van-cell title="最近报警信息(历史)">
       <template #label>
         <van-list>
           <alarmInfoCard style="padding-top:0.5rem;margin-bottom:0.5rem;border-top:1px solid #EFEFEF;box-sizing:border-box"
@@ -194,6 +194,10 @@ export default class Index extends PageBase {
     let moreMachine = await jlbjk(formDataMore)
     this.nearestList = []
     window.console.log('moreMachine：', moreMachine)
+    if (!moreMachine) {
+      moreMachine = []
+    }
+
     for (let index = 0; index < moreMachine.length; index++) {
       const element = moreMachine[index]
       this.nearestList.push({

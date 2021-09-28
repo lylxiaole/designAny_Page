@@ -183,7 +183,7 @@ export default class Index extends PageBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
-        height: '100%',
+        height: '90%',
         width: '100%',
         containLabel: true
       },
@@ -203,9 +203,12 @@ export default class Index extends PageBase {
       ],
       series: [
         {
-          name: '',
-          type: 'bar',
-          barWidth: '60%',
+          realtimeSort: true,
+          name: '值',
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          sampling: 'lttb',
           data: this.wenduOption.datas
         }
       ]
@@ -225,6 +228,7 @@ export default class Index extends PageBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
+        height: '90%',
         width: '100%',
         containLabel: true
       },
@@ -244,9 +248,12 @@ export default class Index extends PageBase {
       ],
       series: [
         {
-          name: '',
-          type: 'bar',
-          barWidth: '60%',
+          realtimeSort: true,
+          name: '值',
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          sampling: 'lttb',
           data: this.miduOption.datas
         }
       ]
@@ -266,6 +273,7 @@ export default class Index extends PageBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
+        height: '90%',
         width: '100%',
         containLabel: true
       },
@@ -285,9 +293,12 @@ export default class Index extends PageBase {
       ],
       series: [
         {
-          name: '',
-          type: 'bar',
-          barWidth: '60%',
+          realtimeSort: true,
+          name: '值',
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          sampling: 'lttb',
           data: this.shunjianOption.datas
         }
       ]
@@ -307,6 +318,7 @@ export default class Index extends PageBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
+        height: '90%',
         width: '100%',
         containLabel: true
       },
@@ -326,9 +338,12 @@ export default class Index extends PageBase {
       ],
       series: [
         {
-          name: '',
-          type: 'bar',
-          barWidth: '60%',
+          realtimeSort: true,
+          name: '值',
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          sampling: 'lttb',
           data: this.leijiOption.datas
         }
       ]

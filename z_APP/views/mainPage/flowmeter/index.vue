@@ -2,7 +2,7 @@
   <div style="height:100%">
     <van-row style="height:4rem;background-color:white;padding:0.9rem 0.4rem;box-sizing:border-box">
       <van-col :span="12" style="height:2.2rem">
-        <van-field v-model="searchStr" class="smallInput" placeholder="请输入位号或计量表名称" />
+        <van-field v-model="searchStr" class="smallInput" placeholder="请输入位号" />
       </van-col>
       <van-col :span="12" style="padding-left:3rem">
         <van-dropdown-menu>
