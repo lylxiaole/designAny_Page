@@ -14,7 +14,7 @@ import { LayoutBase, EngineComponentBase, LayoutType, layoutCompTypeAttr } from 
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property, Color_Property } from '@src/designEngine'
 
 import { getUuid, deepClone } from '@src/utils'
-@layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '一维码组件,', 'NPQrCode', null)
+@layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '一维码组件', 'NPQrCode', null)
 @Component
 export default class NPQrCode extends EngineComponentBase {
   private qrCodeId: string = 'qrcode'

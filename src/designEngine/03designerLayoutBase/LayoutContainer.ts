@@ -66,7 +66,7 @@ export default class LayoutContainer extends LayoutBase {
           //复制操作需要给组件新Id
           compData.id = getUuid()
         }
-        let compclass = findSystemCompByCode(compData.layoutInfo.code)
+        let compclass = findSystemCompByCode(compData.layoutInfo.compCode)
         //为了准确性
         let findchildren = this.findSelectedLayoutsRecursion(this.children)
         let newcopyComp: LayoutBase = null
@@ -109,7 +109,7 @@ export default class LayoutContainer extends LayoutBase {
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {
-          let compclass = findSystemCompByCode(compInfo.code)
+          let compclass = findSystemCompByCode(compInfo.compCode)
           if (!compclass) {
             break
           }
@@ -121,7 +121,7 @@ export default class LayoutContainer extends LayoutBase {
         break
       case DragItemTypeEnum.drop_component_template:
         {
-          let compclass = findSystemCompByCode(compInfo.code)
+          let compclass = findSystemCompByCode(compInfo.compCode)
           if (!compclass) {
             break
           }
@@ -142,7 +142,7 @@ export default class LayoutContainer extends LayoutBase {
             return true
           }
 
-          let compclass = findSystemCompByCode(compInfo.code)
+          let compclass = findSystemCompByCode(compInfo.compCode)
           if (!compclass) {
             break
           }
@@ -157,7 +157,7 @@ export default class LayoutContainer extends LayoutBase {
         {
           compInfo.groupName = '内容展示'
           compInfo.name = '表单'
-          let compclass = findSystemCompByCode(compInfo.code)
+          let compclass = findSystemCompByCode(compInfo.compCode)
           if (!compclass) {
             break
           }

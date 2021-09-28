@@ -2,25 +2,22 @@
   <el-row style="height:357px;">
     <el-col :span="7">
       <div style="height:357px;width:124px;overflow-x:hidden;overflow-y:auto;">
-        <el-menu v-model="systemCompsActiveKey" style="width:124px;background-color:rgba(240,242,245,1);color:rgba(40,40,40,1);text-align:center">
-          <el-menu-item v-for="group in systemComponents" :key="group.groupName" @click="onClick">
-            {{group.groupName}}
-          </el-menu-item>
-        </el-menu>
+        <div v-for="group in systemComponents" :key="group.groupName" class="compGroup verticalAlignCenter flexHorilanLayout" @click="onClick(group)">
+          {{group.groupName}}
+        </div>
       </div>
     </el-col>
     <el-col :span="17">
-      <div style="margin-left:10px;">
-        <el-card v-for="item in dataSource" :key="item.compCode" class="mydragItem" :compGroupName="compGroupName" :dragType="dragType"
-          :compName="item.name" :compType="item.type" hoverable
-          style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
-          <div style="width:100%;height:35px;text-align:center" alt="example" slot="cover">
-            <el-image style="font-size:30px;margin-top:10px" :src="item.icon" />
+      <div style="display:flex;flex-wrap: wrap">
+        <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" :dragType="dragType" :compName="item.name" :compCode="item.compCode"
+          :compType="item.type" style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
+          <div style="width:100%;height:35px;text-align:center">
+            <el-image style="font-size:30px;" :src="item.icon" />
           </div>
           <div style="font-size:12px;padding-top:3px;text-align:center;color:rgba(0,0,0,0.5);width:100%;height:20px" slot="cover">
             {{item.name}}
           </div>
-        </el-card>
+        </div>
       </div>
     </el-col>
   </el-row>
@@ -46,7 +43,6 @@ class ComponentGroupInfo {
 export default class ComponentListControl extends Vue {
   private systemCompsActiveKey: string[] = []
   private get systemComponents(): ComponentGroupInfo[] {
-    window.console.log('systemComponents:', this.systemCompGroups)
     var res: ComponentGroupInfo[] = []
     if (!this.systemCompGroups || !this.sys_limitGroupNames) {
       return res
@@ -75,9 +71,7 @@ export default class ComponentListControl extends Vue {
   private defaultSelectedKeys: any[] = []
 
   mounted() {
-    window.console.log('123123123')
-    this.CuteSystemComponents()
-
+    this.cuteSystemComponents()
     this.renderStyle()
   }
   beforeDestroy() {
@@ -94,7 +88,6 @@ export default class ComponentListControl extends Vue {
   changeActivekey(key: any) {
     this.renderStyle()
   }
-
   renderStyle() {
     this.$nextTick(() => {
       $(this.$el)
@@ -113,6 +106,7 @@ export default class ComponentListControl extends Vue {
    * 4.属性compType=""用来标识组件类型；类型分为system,compMoudle,fromModel
    */
   private refreshDrags() {
+    window.console.log('refreshDrags')
     this.dragHelpers = []
     $(this.$el)
       .find('.mydragItem')
@@ -128,23 +122,22 @@ export default class ComponentListControl extends Vue {
           var dragItem = $(element).children()[0]
           draghelper.makeDomCanDrag(dragItem)
           //获取dom节点上的信息，这些信息包含了组件的简要信息
-          var dragdata = this.GetDragData(element)
+          var dragdata = this.organizeDragData(element)
           draghelper.makeDragItemInfo(dragItem, dragdata)
           this.dragHelpers.push(draghelper)
         }
       })
-    // window.console.log('---------------------11111111111111', this.dragHelpers)
   }
   /**包含组件的分组名，和组件的名字。不包含组件的类型信息 */
-  private GetDragData(el: Element): engin.DragItemData<any> {
-    var dragType = $(el).attr('dragType') as engin.DragItemTypeEnum
-    var type = $(el).attr('compType') as engin.LayoutType
-    var compName = $(el).attr('compName')
-    var compGroupName = $(el).attr('compGroupName')
-    //window.console.info('compGroupName', compGroupName)
-    var compInfo = new engin.LayoutInfo(type, compGroupName, compName, null, '')
+  private organizeDragData(el: Element): engin.DragItemData<any> {
+    let dragType = $(el).attr('dragType') as engin.DragItemTypeEnum
+    let type = $(el).attr('compType') as engin.LayoutType
+    let compName = $(el).attr('compName')
+    let compGroupName = $(el).attr('compGroupName')
+    let compCode = $(el).attr('compCode')
+    let compInfo = new engin.LayoutInfo(type, compGroupName, compName, null, '', compCode)
     //window.console.log('---------------------------------------------------compInfocompInfocompInfocompInfocompInfo', compInfo)
-    var dragd = new engin.DragItemData<any>()
+    let dragd = new engin.DragItemData<any>()
     dragd.type = dragType
     dragd.dragData = compInfo
     return dragd
@@ -156,8 +149,8 @@ export default class ComponentListControl extends Vue {
     })
   }
   /**计算系统自带组件的分组 */
-  private CuteSystemComponents() {
-    window.console.log('wwwwwwww', engin.allComponents)
+  private cuteSystemComponents() {
+    window.console.log('cuteSystemComponents:', engin.allComponents)
     engin.allComponents
       .filter((o) => o.type == engin.LayoutType.system_component)
       .filter((element) => {
@@ -165,7 +158,6 @@ export default class ComponentListControl extends Vue {
         if (findgroup.length < 1) {
           let newgroup = new ComponentGroupInfo(element.groupName)
           this.systemCompGroups.push(newgroup)
-          // this.systemCompsActiveKey.push(newgroup.groupName)
         }
         let group = this.systemCompGroups.filter((o) => o.groupName == element.groupName)[0]
         group.components.push(element)
@@ -179,38 +171,20 @@ export default class ComponentListControl extends Vue {
       this.dataSource.push(element)
     })
   }
-  private onClick(item, key, keyPath) {
-    //window.console.info('item', item)
-    //this.clearDrags()
+  private onClick(item) {
     this.dataSource = []
     this.compGroupName = ''
-    let findgroup = this.systemCompGroups.filter((o) => o.groupName == item.key)[0]
-    //window.console.info('findgroup', Object.assign([], findgroup))
+    let findgroup = this.systemCompGroups.filter((o) => o.groupName == item.groupName)[0]
     this.compGroupName = findgroup.groupName
-    //window.console.info('this.compGroupName', this.compGroupName)
     findgroup.components.forEach((element) => {
       this.dataSource.push(element)
     })
-    //window.console.info('this.dataSource', Object.assign([], this.dataSource))
   }
   // ***********************************************************************
 }
 </script>
 
 <style  lang="less" scoped>
-.ant-card-body {
-  padding: 3px;
-}
-.ant-collapse-content-box {
-  background-color: transparent;
-}
-.ant-collapse-content {
-  background-color: transparent;
-}
-.ant-collapse-header {
-  padding: 0px;
-  background: #000000;
-}
 .titlePoint {
   content: '';
   display: inline-block;
@@ -219,5 +193,18 @@ export default class ComponentListControl extends Vue {
   vertical-align: middle;
   margin-right: 7px;
   border-radius: 8px;
+}
+
+.compGroup {
+  width: 100%;
+  height: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: rgba(240, 242, 245, 1);
+  color: rgba(40, 40, 40, 1);
+}
+
+.mydragItem.container {
+  padding: 20px 10px;
 }
 </style>

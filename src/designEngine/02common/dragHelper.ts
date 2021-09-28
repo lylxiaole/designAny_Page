@@ -1,13 +1,12 @@
 import dragula, { Drake } from 'dragula'
-
-import commonMethod from './commonMethod'
+import * as common from '@src/utils'
 
 export enum dragEnums {
   canDrop = 'geno_candrop',
   canDrag = 'geno_candrag',
   dropContainer = 'geno_dropContainer',
   dargItem = 'geno_dargItem',
-  dragItem_Info = 'geno_dragItem_Info',
+  dragItem_Info = 'geno_dragItem_Info'
 }
 
 type onDragEventType = (el: Element, sourceContainer: Element) => void
@@ -44,25 +43,26 @@ export class dragulaExtand {
     direction: '',
     revertOnSpill: false, // 如果拖到容器外面是否复位、还是就近排序。
     removeOnSpill: false,
+    mirrorContainer: document.body,
     copy: (el: Element, source: Element) => {
       return true
     }, // elements are moved by default, not copied
     invalid: (el, handle) => {
       //拖拽是否无效，如果无效，现实禁止标志：true拖拽无效,false拖拽有效
       if (dragulaExtand.IsCanDrag(el) == true) {
-        // window.console.log('invalid当前是DragItem，拖拽有效')
+        //window.console.log('invalid当前是DragItem，拖拽有效:', handle)
         return false //
       } else {
-        // window.console.log('invalid当前不是DragItem，拖拽无效')
+        //  window.console.log('invalid当前不是DragItem，拖拽无效:', handle)
         return true //
       }
     },
     moves: function(el, source, handle, sibling) {
       if (dragulaExtand.IsCanDrag(el) == true) {
-        // window.console.log('moves当前是DragItem，可以moves')
+        // window.console.log('moves当前是DragItem，可以moves:', sibling)
         return true //
       } else {
-        // window.console.log('moves当前不是DragItem，不可以moves')
+        // window.console.log('moves当前不是DragItem，不可以moves:', sibling)
         return false //
       }
     },
@@ -92,7 +92,7 @@ export class dragulaExtand {
       // }
       // //window.console.log('accepts当前是容器，可以拖拽进来')
       // return true //
-    },
+    }
   })
     .on('drag', dragulaExtand._onDrag)
     .on('drop', dragulaExtand._onDrop)
@@ -391,7 +391,7 @@ export default class dragHelper {
   // *****************定义dragItem的附加内容*****************************************
 
   public makeDragItemInfo(dragItem: Element, Info: any): void {
-    var infostr = commonMethod.serialize(Info)
+    var infostr = common.serialize(Info)
     //window.console.log('infostr',infostr)
     $(dragItem).attr(dragEnums.dragItem_Info, infostr)
   }
@@ -400,7 +400,7 @@ export default class dragHelper {
     if (!infostr) {
       return null
     }
-    var info = commonMethod.deserialize(infostr)
+    var info = common.deserialize(infostr)
     return info
   }
   // *******************注册事件*********************************************************************

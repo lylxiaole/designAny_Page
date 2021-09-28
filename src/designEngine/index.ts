@@ -19,7 +19,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
     if (!engine.CompIndex.indexs[compCode]) {
       engine.CompIndex.indexs[compCode] = value.default
       let metadata = value.default.prototype.$Meta
-      let layoutInfo = new engine.LayoutInfo(metadata.layoutType, metadata.groupName, metadata.name, value.default, metadata.icon)
+      let layoutInfo = new engine.LayoutInfo(metadata.layoutType, metadata.groupName, metadata.name, value.default, metadata.icon, metadata.compCode)
       engine.allComponents.push(layoutInfo)
     }
   }

@@ -15,7 +15,7 @@ import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@src/utils'
 import { npGridIco } from '@src/designEngine/assets/icons.js'
 
-@layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '二维码组件,', 'NpBarCode', npGridIco)
+@layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '二维码组件', 'NpBarCode', npGridIco)
 @Component
 export default class NpBarCode extends EngineComponentBase {
   private barcodeId: string = 'barcode'
