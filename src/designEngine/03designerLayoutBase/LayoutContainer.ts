@@ -93,7 +93,7 @@ export default class LayoutContainer extends LayoutBase {
     this.mouseY = e.offsetY
   }
   private listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): boolean {
-    //window.console.log('listenOnDrop', dragdata)
+    window.console.log('listenOnDrop', dragdata)
     if (!dragdata) {
       return true
     }

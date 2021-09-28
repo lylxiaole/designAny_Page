@@ -7,12 +7,16 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { EnginePageBase } from '../03designerLayoutBase'
+import { truncate } from 'fs'
 
 @Component
 export default class PCPageDesign extends EnginePageBase {
   public isDesigning: boolean = true
   created() {
     window.console.log('PCPageDesign created')
+  }
+  mounted() {
+    // this.canDrop = true
   }
 }
 </script>

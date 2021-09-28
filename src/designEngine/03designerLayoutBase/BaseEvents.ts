@@ -75,7 +75,8 @@ export default class BaseEvents extends Vue {
     }
     return this._dragHelper.IsCanDrag(this.$el)
   }
-  beforeCreate() {
+  beforeCreate() {}
+  created() {
     if (this.isDesigning === true) {
       this.eventsOptions = new optionsClass()
     }
@@ -83,13 +84,12 @@ export default class BaseEvents extends Vue {
   mounted() {
     if (this.isDesigning == true) {
       this._dragHelper = new dragHelper(this.$el)
-      this._dragHelper.makeDomContainer()
     }
   }
   beforeDestroy() {
     this.realseEvent()
   }
-  created(): void {}
+
   beforeMount(): void {}
   beforeUpdate(): void {}
   updated(): void {}
