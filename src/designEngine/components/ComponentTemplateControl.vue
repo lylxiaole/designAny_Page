@@ -81,7 +81,7 @@ import { AllComponents } from '../04designerComponents'
 import { DragItemData, DragItemTypeEnum } from '../03designerLayoutBase/BaseEvents'
 import PageBase from '../05designerLayouts/PageBase'
 import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
-import { comTemplateIco, addModelIco, searchIco } from  '@src/designEngine/assets/icons.js'
+import { comTemplateIco, addModelIco, searchIco } from '@src/designEngine/assets/icons.js'
 
 class ComponentGroupInfo {
   // constructor(_groupName: string) {
@@ -96,7 +96,7 @@ enum rightMenusEnum {
   edit = '编辑',
   delete = '删除',
   rename = '重命名',
-  revert = '还原默认',
+  revert = '还原默认'
 }
 
 class treeNodeData {
@@ -113,8 +113,8 @@ class treeNodeData {
 @Component({
   components: {
     VueContextMenu: VueContextMenu,
-    btreeNode: btreeNode,
-  },
+    btreeNode: btreeNode
+  }
 })
 export default class ComponentTemplateControl extends Vue {
   private systemCompsActiveKey: string[] = []
@@ -170,10 +170,10 @@ export default class ComponentTemplateControl extends Vue {
         {
           code: 'parent_group_id',
           type: 'EQ',
-          value: key,
-        },
+          value: key
+        }
       ],
-      modelCode: 'app_component_template',
+      modelCode: 'app_component_template'
     }
     //652538577883893800
     //组件模板1
@@ -217,15 +217,15 @@ export default class ComponentTemplateControl extends Vue {
         {
           code: 'parent_group_id',
           type: 'EQ',
-          value: key,
+          value: key
         },
         {
           code: 'template_name',
           type: 'ALL_LIKE',
-          value: tempName,
-        },
+          value: tempName
+        }
       ],
-      modelCode: 'app_component_template',
+      modelCode: 'app_component_template'
     }
     //652538577883893800
     //组件模板1
@@ -302,7 +302,7 @@ export default class ComponentTemplateControl extends Vue {
   }
   private clearDrags() {
     this.dragHelpers.filter((o) => {
-      o.RemoveContainer()
+      o.removeContainer()
       o.makeDomCannotDrag($(o.currentContainer).children()[0])
     })
   }
@@ -343,14 +343,14 @@ export default class ComponentTemplateControl extends Vue {
       data: [
         {
           code: 'id',
-          value: newgroup.groupId,
+          value: newgroup.groupId
         },
         {
           code: 'group_name',
-          value: newgroup.groupName,
-        },
+          value: newgroup.groupName
+        }
       ],
-      modelCode: 'app_component_template_group',
+      modelCode: 'app_component_template_group'
     }
     // window.console.log('新建参数', param)
     CurrentApis.SimpleAdd(param).then((res: any) => {
@@ -370,10 +370,10 @@ export default class ComponentTemplateControl extends Vue {
         {
           code: 'id',
           type: 'EQ',
-          value: key,
-        },
+          value: key
+        }
       ],
-      modelCode: 'app_component_template_group',
+      modelCode: 'app_component_template_group'
     }
     CurrentApis.SimpleDelete(param).then(() => {
       let tempGroups = this.ComponentGroups.filter((item) => item.groupId !== key)
@@ -396,10 +396,10 @@ export default class ComponentTemplateControl extends Vue {
         {
           code: 'id',
           type: 'EQ',
-          value: templateId,
-        },
+          value: templateId
+        }
       ],
-      modelCode: 'app_component_template',
+      modelCode: 'app_component_template'
     }
     CurrentApis.SimpleDelete(param).then(() => {
       let tempGroups = this.ComponentGroups.find((item) => item.groupId === groupId)
@@ -426,14 +426,14 @@ export default class ComponentTemplateControl extends Vue {
       data: [
         {
           code: 'id',
-          value: templateContentId,
+          value: templateContentId
         },
         {
           code: 'design_content',
-          value: '',
-        },
+          value: ''
+        }
       ],
-      modelCode: 'app_component_template_content',
+      modelCode: 'app_component_template_content'
     }
     //添加组件模板内容记录，然后添加组件模板
     CurrentApis.SimpleAdd(param).then((res: any) => {
@@ -442,22 +442,22 @@ export default class ComponentTemplateControl extends Vue {
         data: [
           {
             code: 'id',
-            value: template.Id,
+            value: template.Id
           },
           {
             code: 'template_content_id',
-            value: templateContentId,
+            value: templateContentId
           },
           {
             code: 'template_name',
-            value: template.name,
+            value: template.name
           },
           {
             code: 'parent_group_id',
-            value: this.groupId,
-          },
+            value: this.groupId
+          }
         ],
-        modelCode: 'app_component_template',
+        modelCode: 'app_component_template'
       }
       // window.console.log('新建参数', param111)
       //添加组件模板内容记录，然后添加组件模板
@@ -557,17 +557,17 @@ export default class ComponentTemplateControl extends Vue {
         data: [
           {
             code: 'group_name',
-            value: newtitle,
-          },
+            value: newtitle
+          }
         ],
         filter: [
           {
             code: 'id',
             type: 'EQ',
-            value: nodeKey,
-          },
+            value: nodeKey
+          }
         ],
-        modelCode: 'app_component_template_group',
+        modelCode: 'app_component_template_group'
       }
       CurrentApis.SimpleUpdate(param).then(() => {
         //window.console.log('更新成功')
@@ -577,17 +577,17 @@ export default class ComponentTemplateControl extends Vue {
         data: [
           {
             code: 'template_name',
-            value: newtitle,
-          },
+            value: newtitle
+          }
         ],
         filter: [
           {
             code: 'id',
             type: 'EQ',
-            value: nodeKey,
-          },
+            value: nodeKey
+          }
         ],
-        modelCode: 'app_component_template',
+        modelCode: 'app_component_template'
       }
       CurrentApis.SimpleUpdate(param).then(() => {
         //window.console.log('更新成功')
@@ -631,7 +631,6 @@ export default class ComponentTemplateControl extends Vue {
 </script>
 
 <style  lang="less" scoped>
- 
 .ant-card-body {
   padding: 3px;
 }

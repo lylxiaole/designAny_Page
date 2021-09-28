@@ -332,7 +332,7 @@ export default class dragHelper {
       this.makeContainerCanDrop()
     }
   }
-  public RemoveContainer() {
+  public removeContainer() {
     this.makeContainerCannotDrop()
     $(this._container).removeAttr('tabindex')
     $(this._container).removeClass('container')

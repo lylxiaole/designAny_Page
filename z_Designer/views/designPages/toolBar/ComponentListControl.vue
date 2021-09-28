@@ -145,7 +145,7 @@ export default class ComponentListControl extends Vue {
   }
   private clearDrags() {
     this.dragHelpers.filter((o) => {
-      o.RemoveContainer()
+      o.removeContainer()
       o.makeDomCannotDrag($(o.currentContainer).children()[0])
     })
   }

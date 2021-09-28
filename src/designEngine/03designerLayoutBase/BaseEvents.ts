@@ -35,11 +35,11 @@ class optionsClass {
 
 @Component
 export default class BaseEvents extends Vue {
+  public static isDraging: boolean = false
+  public isDesigning: boolean = false
   protected _dragHelper: dragHelper
   protected eventsOptions: optionsClass
-  public static isDraging: boolean = false
   //是否正在设计
-  public isDesigning: boolean = false
   set canDrop(can: boolean) {
     if (!this._dragHelper) {
       return
@@ -55,6 +55,7 @@ export default class BaseEvents extends Vue {
     if (!this._dragHelper) {
       return false
     }
+
     return this._dragHelper.IsCanDrop()
   }
   set canDrag(can: boolean) {
@@ -75,9 +76,9 @@ export default class BaseEvents extends Vue {
     return this._dragHelper.IsCanDrag(this.$el)
   }
   beforeCreate() {
-    // this.canDrag = true
-    // this.canDrop = true
-    this.eventsOptions = new optionsClass()
+    if (this.isDesigning === true) {
+      this.eventsOptions = new optionsClass()
+    }
   }
   mounted() {
     if (this.isDesigning == true) {
@@ -142,7 +143,7 @@ export default class BaseEvents extends Vue {
       // $('html').unbind('mousewheel', this._onMouseWheel)
       $(this.$el)[0].removeEventListener('mousewheel', this._onMouseWheel)
       $(window).unbind('beforeunload unload', this._onWindowUnload)
-      this._dragHelper.RemoveContainer()
+      this._dragHelper.removeContainer()
     }
   }
   /********************Drag事件****************************************************** */

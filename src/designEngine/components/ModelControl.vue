@@ -86,8 +86,8 @@ class ComponentGroupInfo {
 
 @Component({
   components: {
-    addBasemodel: AddBasemodel,
-  },
+    addBasemodel: AddBasemodel
+  }
 })
 export default class ModelControl extends Vue {
   private systemCompsActiveKey: string[] = []
@@ -166,8 +166,12 @@ export default class ModelControl extends Vue {
 
   renderStyle() {
     this.$nextTick(() => {
-      $(this.$el).find('.ant-collapse-content').css('background-color', '#03303B')
-      $(this.$el).find('.ant-collapse-content').css('border', 'none')
+      $(this.$el)
+        .find('.ant-collapse-content')
+        .css('background-color', '#03303B')
+      $(this.$el)
+        .find('.ant-collapse-content')
+        .css('border', 'none')
     })
   }
 
@@ -216,7 +220,7 @@ export default class ModelControl extends Vue {
   }
   private clearDrags() {
     this.dragHelpers.filter((o) => {
-      o.RemoveContainer()
+      o.removeContainer()
       o.makeDomCannotDrag($(o.currentContainer).children()[0])
     })
   }
@@ -306,14 +310,14 @@ export default class ModelControl extends Vue {
       data: [
         {
           code: 'id',
-          value: newgroup.groupId,
+          value: newgroup.groupId
         },
         {
           code: 'group_name',
-          value: newgroup.groupName,
-        },
+          value: newgroup.groupName
+        }
       ],
-      modelCode: 'model_group',
+      modelCode: 'model_group'
     }
     CurrentApis.SimpleAdd(param).then((res: any) => {})
   }
@@ -332,8 +336,7 @@ export default class ModelControl extends Vue {
 }
 </script>
 
-<style  lang="less" scoped> 
-
+<style  lang="less" scoped>
 .ant-card-body {
   padding: 3px;
 }
