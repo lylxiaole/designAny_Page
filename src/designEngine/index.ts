@@ -2,11 +2,10 @@ import MobilePageDesign from './05designerLayouts/PCPageDesign.vue'
 import MobilePagePreview from './05designerLayouts/PCPageDesign.vue'
 import PCPageDesign from './05designerLayouts/PCPageDesign.vue'
 import PCPagePreview from './05designerLayouts/PCPageDesign.vue'
+export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 
 import * as engine from './03designerLayoutBase'
 export * from './03designerLayoutBase'
-
-export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 
 /**动态读取设计器组件 */
 const modulesFiles = require.context('./04designerComponents', true, /\.(vue)$/)

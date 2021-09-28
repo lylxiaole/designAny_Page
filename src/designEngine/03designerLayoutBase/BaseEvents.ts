@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
-
 import dragHelper from '../02common/dragHelper'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
@@ -33,26 +32,19 @@ class optionsClass {
   public mousedownPointY: number = null
   public clickTimer: number = null
 }
+
 @Component
 export default class BaseEvents extends Vue {
   protected _dragHelper: dragHelper
-
+  protected eventsOptions: optionsClass
+  public static isDraging: boolean = false
+  //是否正在设计
   public isDesigning: boolean = false
-  public isDraging: boolean = false
-  public isCaptureEvent: boolean = false
-  public startDragMovePoint_left: number = NaN
-  public startDragMovePoint_top: number = NaN
-  public isMouseDown: boolean = false
-  public boxSelectBorder: any = null
-  public mousedownPointX: number = null
-  public mousedownPointY: number = null
-  public clickTimer: number = null
-
   set canDrop(can: boolean) {
     if (!this._dragHelper) {
       return
     }
-    if (can) {
+    if (can && this.isDesigning == true) {
       // window.console.log('makeContainerCanDrop')
       this._dragHelper.makeContainerCanDrop()
     } else {
@@ -69,7 +61,7 @@ export default class BaseEvents extends Vue {
     if (!this._dragHelper) {
       return
     }
-    if (can) {
+    if (can && this.isDesigning == true) {
       // window.console.log('makeDomCanDrag')
       this._dragHelper.makeDomCanDrag(this.$el)
     } else {
@@ -82,7 +74,11 @@ export default class BaseEvents extends Vue {
     }
     return this._dragHelper.IsCanDrag(this.$el)
   }
-  beforeCreate() {}
+  beforeCreate() {
+    // this.canDrag = true
+    // this.canDrop = true
+    this.eventsOptions = new optionsClass()
+  }
   mounted() {
     if (this.isDesigning == true) {
       this._dragHelper = new dragHelper(this.$el)
@@ -90,11 +86,9 @@ export default class BaseEvents extends Vue {
     }
   }
   beforeDestroy() {
-    this.RealseEvent()
+    this.realseEvent()
   }
-  created(): void {
-    window.console.log('BaseEvents created')
-  }
+  created(): void {}
   beforeMount(): void {}
   beforeUpdate(): void {}
   updated(): void {}
@@ -102,12 +96,13 @@ export default class BaseEvents extends Vue {
   deactivated(): void {}
   destroyed(): void {}
   errorCaptured(): void {}
+
   /**开始捕捉鼠标键盘 */
-  protected CaptureEvent() {
-    if (this.isCaptureEvent == true) {
+  protected captureEvent() {
+    if (this.eventsOptions.isCaptureEvent == true) {
       return
     }
-    this.isCaptureEvent = true
+    this.eventsOptions.isCaptureEvent = true
     // window.console.log('捕捉鼠标键盘动作')
     this.$el.addEventListener('click', this._onClick)
     this.$el.addEventListener('dblclick', this._onDoubleClick)
@@ -130,12 +125,12 @@ export default class BaseEvents extends Vue {
     this._dragHelper.registerOnDragClone(this._onDragClone)
   }
   /**停止捕捉鼠标键盘 */
-  protected RealseEvent() {
-    if (this.isCaptureEvent == false) {
+  protected realseEvent() {
+    if (this.eventsOptions.isCaptureEvent == false) {
       return
     }
     // window.console.log('释放鼠标键盘动作')
-    this.isCaptureEvent = false
+    this.eventsOptions.isCaptureEvent = false
     if (this.$el) {
       this.$el.removeEventListener('click', this._onClick)
       this.$el.removeEventListener('dblclick', this._onDoubleClick)
@@ -161,7 +156,7 @@ export default class BaseEvents extends Vue {
       return
     }
     this.clearBoxSelectInfo(window.event)
-    this.isDraging = true
+    BaseEvents.isDraging = true
     //只有继承自BaseEvent的组件才能感知此事件
     if (this.canDrag && this.onDrag_Event) {
       // window.console.log('从本布局中开始拖拽一个东西出去了');
@@ -180,7 +175,7 @@ export default class BaseEvents extends Vue {
     if (this.canDrop && this.onDrop_Event) {
       // window.console.log('drop')
       var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
-      return this.onDrop_Event(el, targetContainer, this.startDragMovePoint_left, this.startDragMovePoint_top, dragdata)
+      return this.onDrop_Event(el, targetContainer, this.eventsOptions.startDragMovePoint_left, this.eventsOptions.startDragMovePoint_top, dragdata)
     }
     this._dragHelper.dragCancel()
     return true
@@ -192,8 +187,8 @@ export default class BaseEvents extends Vue {
     if (targetContainer != this.$el) {
       return true
     }
-    this.startDragMovePoint_left = $(el).offset().left
-    this.startDragMovePoint_top = $(el).offset().top
+    this.eventsOptions.startDragMovePoint_left = $(el).offset().left
+    this.eventsOptions.startDragMovePoint_top = $(el).offset().top
     return this.onDragOver_Event(el)
     //只有继承自BaseEvent的组件才能感知此事件
     // window.console.log('dropover')
@@ -219,23 +214,23 @@ export default class BaseEvents extends Vue {
     // window.console.log('********************clone:', currentDragLeft, '****', currentDragTop)
 
     //如果是刚开始拖拽，初始化drag的值
-    if (isNaN(this.startDragMovePoint_left) || this.startDragMovePoint_left < 1) {
-      this.startDragMovePoint_left = currentDragLeft
+    if (isNaN(this.eventsOptions.startDragMovePoint_left) || this.eventsOptions.startDragMovePoint_left < 1) {
+      this.eventsOptions.startDragMovePoint_left = currentDragLeft
     }
 
-    if (isNaN(this.startDragMovePoint_top) || this.startDragMovePoint_top < 1) {
-      this.startDragMovePoint_top = currentDragTop
+    if (isNaN(this.eventsOptions.startDragMovePoint_top) || this.eventsOptions.startDragMovePoint_top < 1) {
+      this.eventsOptions.startDragMovePoint_top = currentDragTop
     }
     //如果前后值相等，就不触发事件了
-    if (this.startDragMovePoint_left == currentDragLeft && this.startDragMovePoint_top == currentDragTop) {
+    if (this.eventsOptions.startDragMovePoint_left == currentDragLeft && this.eventsOptions.startDragMovePoint_top == currentDragTop) {
       return iscontinue
     }
-    var xchanged = currentDragLeft - this.startDragMovePoint_left
-    var ychanged = currentDragTop - this.startDragMovePoint_top
+    var xchanged = currentDragLeft - this.eventsOptions.startDragMovePoint_left
+    var ychanged = currentDragTop - this.eventsOptions.startDragMovePoint_top
     var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
     iscontinue = this.onDragMove_Event(xchanged, ychanged, currentDragLeft, currentDragTop, el, dragdata)
-    this.startDragMovePoint_left = currentDragLeft
-    this.startDragMovePoint_top = currentDragTop
+    this.eventsOptions.startDragMovePoint_left = currentDragLeft
+    this.eventsOptions.startDragMovePoint_top = currentDragTop
     return iscontinue
   }
   private _onDragEnd(el: Element) {
@@ -243,7 +238,7 @@ export default class BaseEvents extends Vue {
       return
     }
     this.clearCachePoint()
-    this.isDraging = false
+    BaseEvents.isDraging = false
     // window.console.log('dragend')
     this.onDragEnd_Event()
   }
@@ -274,11 +269,11 @@ export default class BaseEvents extends Vue {
       return
     }
     e.stopPropagation()
-    if (!this.clickTimer) {
+    if (!this.eventsOptions.clickTimer) {
       return
     }
-    window.clearTimeout(this.clickTimer)
-    this.clickTimer = null
+    window.clearTimeout(this.eventsOptions.clickTimer)
+    this.eventsOptions.clickTimer = null
     //window.console.log('最底层,_onClick')
     this.onClick_Event(e, this)
   }
@@ -295,7 +290,6 @@ export default class BaseEvents extends Vue {
     if (this.isDesigning == false) {
       return true
     }
-
     var keyCode = e.keyCode || e.which || e.charCode
     if (keyCode == 46 && this.onDelete_Event) {
       //删除
@@ -389,19 +383,18 @@ export default class BaseEvents extends Vue {
     if (this.isDesigning == false || !this.onMouseMove_Event) {
       return true
     }
-    if (this.isDraging == true) {
+    if (BaseEvents.isDraging == true) {
       return
     }
     this.onMouseMove_Event(e)
-
-    if (e.which === 1 && this.isDraging == false && this.isMouseDown == true) {
+    if (e.which === 1 && BaseEvents.isDraging == false && this.eventsOptions.isMouseDown == true) {
       //鼠标左键是按下状态
       // this.onSelectChanged.call(this, data)
-      if (this.boxSelectBorder == null && this.onBoxSelect_Event) {
-        this.boxSelectBorder = $('<div class="boxSelectBorder" style="border:1px solid red;position:absolute;background-color:transparent;z-index:199"></div>')
-        this.boxSelectBorder.bind('mousemove', this._mouseMove)
-        this.boxSelectBorder.bind('mouseup', this._mouseUp)
-        $('body').append(this.boxSelectBorder)
+      if (this.eventsOptions.boxSelectBorder == null && this.onBoxSelect_Event) {
+        this.eventsOptions.boxSelectBorder = $('<div class="boxSelectBorder" style="border:1px solid red;position:absolute;background-color:transparent;z-index:199"></div>')
+        this.eventsOptions.boxSelectBorder.bind('mousemove', this._mouseMove)
+        this.eventsOptions.boxSelectBorder.bind('mouseup', this._mouseUp)
+        $('body').append(this.eventsOptions.boxSelectBorder)
       }
       if (this.onBoxSelect_Event) {
         this.onBoxSelect_Event(e)
@@ -428,7 +421,7 @@ export default class BaseEvents extends Vue {
     /***************** */
     this.clearBoxSelectInfo(e)
     /********************** */
-    this.isMouseDown = false
+    this.eventsOptions.isMouseDown = false
     this.clearCachePoint()
     this.onMoudeUp_Event(e)
   }
@@ -436,10 +429,10 @@ export default class BaseEvents extends Vue {
     $('.boxSelectBorder').unbind('mousemove', this._mouseMove)
     $('.boxSelectBorder').unbind('mouseup', this._mouseUp)
     $('.boxSelectBorder').remove()
-    if (this.boxSelectBorder) {
-      this.boxSelectBorder = null
-      this.mousedownPointX = null
-      this.mousedownPointY = null
+    if (this.eventsOptions.boxSelectBorder) {
+      this.eventsOptions.boxSelectBorder = null
+      this.eventsOptions.mousedownPointX = null
+      this.eventsOptions.mousedownPointY = null
       e.stopPropagation()
     }
   }
@@ -447,18 +440,18 @@ export default class BaseEvents extends Vue {
     if (this.isDesigning == false) {
       return true
     }
-    this.clickTimer = window.setTimeout(() => {
-      window.clearTimeout(this.clickTimer)
-      this.clickTimer = null
+    this.eventsOptions.clickTimer = window.setTimeout(() => {
+      window.clearTimeout(this.eventsOptions.clickTimer)
+      this.eventsOptions.clickTimer = null
     }, 300)
 
     if (!this.onMoudeDown_Event) {
       return
     }
 
-    this.mousedownPointX = e.clientX
-    this.mousedownPointY = e.clientY
-    this.isMouseDown = true
+    this.eventsOptions.mousedownPointX = e.clientX
+    this.eventsOptions.mousedownPointY = e.clientY
+    this.eventsOptions.isMouseDown = true
     this.onMoudeDown_Event(e)
   }
   private _onWindowUnload(e: any) {
@@ -475,8 +468,8 @@ export default class BaseEvents extends Vue {
     }, 500)
   }
   private clearCachePoint() {
-    this.startDragMovePoint_left = NaN
-    this.startDragMovePoint_top = NaN
+    this.eventsOptions.startDragMovePoint_left = NaN
+    this.eventsOptions.startDragMovePoint_top = NaN
   }
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void
