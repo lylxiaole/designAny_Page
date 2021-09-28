@@ -2,11 +2,11 @@ import dragula, { Drake } from 'dragula'
 import * as common from '@src/utils'
 
 export enum dragEnums {
-  canDrop = 'geno_candrop',
-  canDrag = 'geno_candrag',
-  dropContainer = 'geno_dropContainer',
-  dargItem = 'geno_dargItem',
-  dragItem_Info = 'geno_dragItem_Info'
+  canDrop = 'lyl_candrop',
+  canDrag = 'lyl_candrag',
+  dropContainer = 'lyl_dropContainer',
+  dargItem = 'lyl_dargItem',
+  dragItem_Info = 'lyl_dragItem_Info'
 }
 
 type onDragEventType = (el: Element, sourceContainer: Element) => void
@@ -34,7 +34,7 @@ class dragEventClass {
   public dragOutEvent: onDragOutEventType
 }
 
-export class dragulaExtand {
+class dragulaExtand {
   public static dragClone: Element
   public static dragSource: Element
   public static dragShadow: Element
@@ -43,26 +43,21 @@ export class dragulaExtand {
     direction: '',
     revertOnSpill: false, // 如果拖到容器外面是否复位、还是就近排序。
     removeOnSpill: false,
-    mirrorContainer: document.body,
     copy: (el: Element, source: Element) => {
       return true
     }, // elements are moved by default, not copied
     invalid: (el, handle) => {
       //拖拽是否无效，如果无效，现实禁止标志：true拖拽无效,false拖拽有效
       if (dragulaExtand.IsCanDrag(el) == true) {
-        //window.console.log('invalid当前是DragItem，拖拽有效:', handle)
         return false //
       } else {
-        //  window.console.log('invalid当前不是DragItem，拖拽无效:', handle)
         return true //
       }
     },
     moves: function(el, source, handle, sibling) {
       if (dragulaExtand.IsCanDrag(el) == true) {
-        // window.console.log('moves当前是DragItem，可以moves:', sibling)
         return true //
       } else {
-        // window.console.log('moves当前不是DragItem，不可以moves:', sibling)
         return false //
       }
     },
@@ -76,22 +71,7 @@ export class dragulaExtand {
       if (dragulaExtand.IsCanDrop(targetContainer) == false) {
         return false //
       }
-      // dragulaExtand._onDragMove(null)
       return true
-      // var findDragMoveExtands = dragulaExtand.getEventClass(targetContainer)
-
-      // var iscontinue = true
-      // if (findDragMoveExtands.length > 0) {
-      //   findDragMoveExtands.filter((findDragMoveExtand) => {
-      //     if (findDragMoveExtand.dragMoveEvent && iscontinue != false) {
-      //       iscontinue = findDragMoveExtand.dragMoveEvent(el, findDragMoveExtand.container)
-      //     } else {
-      //       return true
-      //     }
-      //   })
-      // }
-      // //window.console.log('accepts当前是容器，可以拖拽进来')
-      // return true //
     }
   })
     .on('drag', dragulaExtand._onDrag)
@@ -156,30 +136,6 @@ export class dragulaExtand {
       }
     })
   }
-
-  // public static getEventClassByPosition(container: Element): dragEventClass[] {
-  //   var centerX = ($(container).offset().left * 2 + $(container).width()) / 2
-  //   var centerY = ($(container).offset().left * 2 + $(container).height()) / 2
-
-  //   var res = dragulaExtand._dragMoveEvents.filter((o) => {
-  //     var leftp = $(o.container).offset().left
-  //     var rightp = $(o.container).offset().left + $(o.container).width()
-  //     var topp = $(o.container).offset().top
-  //     var bottomp = $(o.container).offset().top + $(o.container).height()
-  //     if (centerX >= leftp && centerX <= rightp && centerY >= topp && centerY <= bottomp) {
-  //       return true
-  //     } else {
-  //       return false
-  //     }
-  //   })
-  //   return res.sort((a, b) => {
-  //     if ($(a.container).find(b.container).length > 0) {
-  //       return 1
-  //     } else {
-  //       return -1
-  //     }
-  //   })
-  // }
 
   // **************监听dragula所有对外事件*****************************************************************************
   private static _onDrag(el: Element, sourceContainer: Element) {
@@ -254,15 +210,15 @@ export class dragulaExtand {
   }
   private static _onDragClone(clone: Element, original: Element, type: string) {
     dragulaExtand.dragClone = clone
-
     dragulaExtand.dragClone.addEventListener('mousemove', dragulaExtand._onDragMove)
-
     dragulaExtand._dragMoveEvents.filter((o) => {
       if (o.clonedEvent) {
         o.clonedEvent(clone)
       }
     })
-    // $(clone).css('opacity', 0)
+    $(clone).css('z-index', '99999')
+    $(clone).css('display', 'block')
+    $(clone).css('position', 'absolute')
   }
   private static _onDragOut(el: Element, targetContainer: Element, sourceContainer: Element) {
     var findDragMoveExtands = dragulaExtand.getEventClass(targetContainer)
@@ -310,9 +266,6 @@ export class dragulaExtand {
         continue
       }
 
-      // if ($(findDragMoveExtand.container).find(dragulaExtand.dragSource).length < 1) {
-      //   continue
-      // }
       var iscontinue = findDragMoveExtand.dragMoveEvent(dragulaExtand.dragSource, findDragMoveExtand.container)
       if (!iscontinue) {
         if (e) {

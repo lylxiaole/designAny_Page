@@ -120,6 +120,7 @@ export default class ComponentListControl extends Vue {
           draghelper.makeContainerCannotDrop()
           //让每个包装层里面的内容可拖拽
           var dragItem = $(element).children()[0]
+          window.console.log('dragItem:', dragItem)
           draghelper.makeDomCanDrag(dragItem)
           //获取dom节点上的信息，这些信息包含了组件的简要信息
           var dragdata = this.organizeDragData(element)
@@ -150,7 +151,7 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private cuteSystemComponents() {
-    window.console.log('cuteSystemComponents:', engin.allComponents)
+    // window.console.log('cuteSystemComponents:', engin.allComponents)
     engin.allComponents
       .filter((o) => o.type == engin.LayoutType.system_component)
       .filter((element) => {

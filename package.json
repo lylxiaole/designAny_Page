@@ -90,7 +90,7 @@
     "constants-browserify": "^1.0.0",
     "crypto-browserify": "^3.12.0",
     "devextreme": "21.1.4",
-    "dragula": "^3.7.3",
+    "dragula": "^3.7.2",
     "echarts": "^5.2.0",
     "element-resize-detector": "^1.2.3",
     "element-ui": "2.13.2",

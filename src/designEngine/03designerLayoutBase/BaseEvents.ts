@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 
-import dragHelper, { dragulaExtand } from '../02common/dragHelper'
+import dragHelper from '../02common/dragHelper'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
   drop_system_component = 'drop_system_component',
