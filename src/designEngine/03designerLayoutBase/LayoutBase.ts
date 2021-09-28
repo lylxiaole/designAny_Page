@@ -31,7 +31,15 @@ export default class LayoutBase extends BaseEvents {
   public children: LayoutBase[] = []
   /**当前选中的直接子级布局 */
   public get selectedChildren(): LayoutBase[] {
-    return this.children.filter((o) => o.isSelected == true)
+    let res: any[] = []
+    for (let index = 0; index < this.children.length; index++) {
+      const o = this.children[index]
+      if (o.isSelected == true) {
+        res.push(o)
+      }
+    }
+
+    return res
   }
   /***属性的值验证 */
   public propertyValidators: propertyValidatorType[] = []
@@ -42,7 +50,6 @@ export default class LayoutBase extends BaseEvents {
       this._designerEvents = []
     }
     var property = this.findPropertyByName(PropertyGroupName.normal, '行为设置')
-
     if (property && !property.value) {
       property.value = []
     }
@@ -51,10 +58,15 @@ export default class LayoutBase extends BaseEvents {
 
     for (let index = 0; index < this._designerEvents.length; index++) {
       const event = this._designerEvents[index]
-      var find = eventBehaviors.find((o) => o.eventName == event.eventName)
-      if (find) {
-        event.behaviorIds = find.behaviorIds
+      let behaviorIds: any[] = []
+      for (let index = 0; index < eventBehaviors.length; index++) {
+        const o = eventBehaviors[index]
+        if (o.eventName === event.eventName) {
+          behaviorIds = o.behaviorIds
+          break
+        }
       }
+      event.behaviorIds = behaviorIds
     }
     return this._designerEvents
   }
@@ -80,7 +92,7 @@ export default class LayoutBase extends BaseEvents {
   }
   /**生命周期 */
   created() {
-    window.console.log('LayoutBase created')
+    // window.console.log('LayoutBase created')
     if (this.isDesigning) {
       this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
       this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
@@ -111,6 +123,15 @@ export default class LayoutBase extends BaseEvents {
     if (this.isDesigning == true) {
       this.captureEvent()
     }
+
+    this.$nextTick(() => {
+      if (!this.onMounted) {
+        return
+      }
+      this.onMounted(this)
+      this.properties_old = deepClone(this.properties)
+      this.$watch('properties', this.watch_properties, { deep: true, immediate: false })
+    })
   }
   /**生命周期 */
   updated() {
@@ -504,7 +525,16 @@ export default class LayoutBase extends BaseEvents {
     }
   }
   protected addProperty(proper: Property) {
-    let find = this.properties.find((o) => o.propertyName == proper.propertyName && o.groupName == proper.groupName)
+    let find: any = null
+
+    for (let index = 0; index < this.properties.length; index++) {
+      const o = this.properties[index]
+      if (o.propertyName === proper.propertyName && o.groupName === proper.groupName) {
+        find = o
+        break
+      }
+    }
+
     if (find) {
       window.console.warn('已经存在相同分组相同名称的属性')
       return
@@ -520,7 +550,14 @@ export default class LayoutBase extends BaseEvents {
   }
   /**触发事件 */
   protected async triggeEvent(name: string, inparams: any[]) {
-    var event = this.designerEvents.find((o) => o.eventName == name)
+    let event: any = null
+    for (let index = 0; index < this.designerEvents.length; index++) {
+      const o = this.designerEvents[index]
+      if (o.eventName === name) {
+        event = o
+        break
+      }
+    }
     if (!event) {
       window.console.error('事件调用失败,该事件不存在')
       return
@@ -647,7 +684,14 @@ export default class LayoutBase extends BaseEvents {
   }
   /**执行组件自定义方法 */
   public async excuteMethod(name: string, inparams: any[]) {
-    var method = this.designerMethods.find((o) => o.eventName == name)
+    let method: any = null
+    for (let index = 0; index < this.designerMethods.length; index++) {
+      const o = this.designerMethods[index]
+      if (o.eventName === name) {
+        method = o
+        break
+      }
+    }
     if (!method) {
       window.console.error('方法调用失败,该方法不存在')
       return
@@ -658,41 +702,78 @@ export default class LayoutBase extends BaseEvents {
   /**递归删除子组件 */
   public async removeChildRecursion(childId: string) {
     var find = this.findLayoutRecursion(childId, this.children)
-    var toparent = find.parentLayout.children.find((x) => x.Id === childId)
+    let toparent: any = null
+
+    for (let index = 0; index < find.parentLayout.children.length; index++) {
+      const x = find.parentLayout.children[index]
+      if (x.Id === childId) {
+        toparent = x
+        break
+      }
+    }
     find.parentLayout.removeChild(toparent)
   }
   /**通过已有数据加载 */
   public loadingProperties(layoutId: string, layout_properties: Property[]) {
     this.Id = layoutId
-    if (layout_properties) {
-      for (let index = 0; index < layout_properties.length; index++) {
-        const item = layout_properties[index]
-        let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
-        if (find) {
-          find.id = item.id
-          this.setPropertyVal(item.id, item.value, true)
-        } else {
-          var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
-          newperperty.canSetting = item.canSetting
-          newperperty.canBindModel = item.canBindModel
-          newperperty.id = item.id
-          this.addProperty(newperperty)
-          this.setPropertyVal(item.id, item.value, true)
-        }
+
+    if (!layout_properties) {
+      return
+    }
+    /**实验性的：直接赋值 */
+    this.properties = layout_properties
+    /**旧版本的：比较赋值 */
+    // for (let index = 0; index < layout_properties.length; index++) {
+    //   const item = layout_properties[index]
+    //   let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
+    //   if (find) {
+    //     find.id = item.id
+    //     this.setPropertyVal(item.id, item.value, true)
+    //   } else {
+    //     var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
+    //     newperperty.canSetting = item.canSetting
+    //     newperperty.canBindModel = item.canBindModel
+    //     newperperty.id = item.id
+    //     this.addProperty(newperperty)
+    //     this.setPropertyVal(item.id, item.value, true)
+    //   }
+    // }
+  }
+  public findProperties(groupName: string, name: string): Property[] {
+    let res: any[] = []
+    for (let index = 0; index < this.properties.length; index++) {
+      const o = this.properties[index]
+      if (o.groupName === groupName && o.propertyName === name) {
+        res.push(o)
+      }
+    }
+    return res
+  }
+  public findPropertyByName(groupName: string, name: string): Property {
+    for (let index = 0; index < this.properties.length; index++) {
+      const o = this.properties[index]
+      if (o.groupName === groupName && o.propertyName === name) {
+        return o
       }
     }
   }
-  public findProperties(groupName: string, name: string): Property[] {
-    return this.properties.filter((o) => o.groupName == groupName && o.propertyName == name)
-  }
-  public findPropertyByName(groupName: string, name: string): Property {
-    return this.properties.find((o) => o.groupName == groupName && o.propertyName == name)
-  }
   public findPropertyById(Id: string): Property {
-    return this.properties.find((o) => o.id == Id)
+    for (let index = 0; index < this.properties.length; index++) {
+      const o = this.properties[index]
+      if (o.id == Id) {
+        return o
+      }
+    }
   }
   public validatorPropertyValue(propertyId: string, val: any): boolean {
-    var valodators = this.propertyValidators.filter((o) => o.propertyId == propertyId)
+    let valodators: any[] = []
+    for (let index = 0; index < this.propertyValidators.length; index++) {
+      const o = this.propertyValidators[index]
+      if (o.propertyId === propertyId) {
+        valodators.push(o)
+      }
+    }
+
     for (var i = 0; i < valodators.length; i++) {
       var o = valodators[i]
       if (o.handle(val) == false) {
@@ -703,7 +784,14 @@ export default class LayoutBase extends BaseEvents {
     return true
   }
   public setPropertyVal(propertyId: string, val: any, isForce: boolean = false): boolean {
-    var findproperty = this.properties.find((p) => p.id == propertyId)
+    let findproperty: any = null
+    for (let index = 0; index < this.properties.length; index++) {
+      const o = this.properties[index]
+      if (o.id == propertyId) {
+        findproperty = o
+      }
+    }
+
     if (!findproperty) {
       // window.console.error('设置属性值失败，没有找到对应的属性')
       return false
