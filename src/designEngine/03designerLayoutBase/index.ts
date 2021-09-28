@@ -8,7 +8,6 @@ import EnginePageBase from './EnginePageBase'
 export { BaseEvents, LayoutBase, LayoutContainer, EngineComponentBase, EnginePageBase }
 export { DragItemData, DragItemTypeEnum, SaveInfo }
 export { Property, PropertyType, PropertyTypeEnum } from './commonClasses/LayoutProperty'
-
 export {
   PropertyGroupName,
   Boolean_Property,

@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import MobilePageDesign from './05designerLayouts/PCPageDesign.vue'
 import MobilePagePreview from './05designerLayouts/PCPageDesign.vue'
 import PCPageDesign from './05designerLayouts/PCPageDesign.vue'
@@ -9,13 +8,13 @@ export * from './03designerLayoutBase'
 
 export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 
-/**动态读取propertyGrid Cell组件 */
+/**动态读取设计器组件 */
 const modulesFiles = require.context('./04designerComponents', true, /\.(vue)$/)
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles<any>(modulePath)
   if (value.default.prototype.$Meta && value.default.prototype.$Meta.compCode) {
     let compCode = value.default.prototype.$Meta.compCode
-    window.console.log('require.context', compCode, engine.CompIndex.indexs[compCode])
+    // window.console.log('require.context', compCode, engine.CompIndex.indexs[compCode])
     if (!engine.CompIndex.indexs[compCode]) {
       engine.CompIndex.indexs[compCode] = value.default
       let metadata = value.default.prototype.$Meta
