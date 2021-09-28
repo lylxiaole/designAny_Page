@@ -67,7 +67,7 @@ class dragulaExtand {
     },
     accepts: function(el, targetContainer, sourceContainer, sibling) {
       //这个事件相当于DragMove事件，会实时触发
-      window.console.log('最底层dragmove触发:', targetContainer, sourceContainer)
+      window.console.log('最底层dragmove触发:', targetContainer)
       if (dragulaExtand.IsCanDrop(targetContainer) == false) {
         return false //
       }
@@ -90,6 +90,7 @@ class dragulaExtand {
     dragulaExtand.drag_third.containers.push(container)
     /**添加dragMove事件拓展 */
     var dragulaContainer = new dragulaContainerClass(container)
+    window.console.log('registerContainer:', container)
     dragulaExtand._dragulaContainer.push(dragulaContainer)
     dragulaExtand._dragulaContainer = dragulaExtand._dragulaContainer.sort((a, b) => {
       if ($(a.container).find(b.container).length > 0) {
@@ -233,6 +234,7 @@ class dragulaExtand {
     $(clone).css('z-index', '99999')
     $(clone).css('display', 'block')
     $(clone).css('position', 'absolute')
+    $(clone).css('pointer-events', 'none')
   }
   private static _onDragOut(el: Element, targetContainer: Element, sourceContainer: Element) {
     var findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer)
