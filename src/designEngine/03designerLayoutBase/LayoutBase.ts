@@ -81,7 +81,6 @@ export default class LayoutBase extends BaseEvents {
   /**生命周期 */
   created() {
     window.console.log('LayoutBase created')
-
     if (this.isDesigning) {
       this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
       this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
@@ -110,7 +109,7 @@ export default class LayoutBase extends BaseEvents {
   mounted() {
     //开始捕捉鼠标键盘事件
     if (this.isDesigning == true) {
-      this.CaptureEvent()
+      this.captureEvent()
     }
   }
   /**生命周期 */

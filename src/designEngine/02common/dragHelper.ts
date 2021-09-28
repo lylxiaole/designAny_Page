@@ -83,25 +83,30 @@ class dragulaExtand {
     .on('out', dragulaExtand._onDragOut)
 
   private static _dragulaContainer: dragulaContainerClass[] = []
-
   public static registerContainer(container: Element): boolean {
-    if (dragulaExtand.drag_third.containers.indexOf(container) < 0) {
-      dragulaExtand.drag_third.containers.push(container)
-      /**添加dragMove事件拓展 */
-      var dragEvent = new dragulaContainerClass(container)
-      dragulaExtand._dragulaContainer.push(dragEvent)
-      // container.addEventListener('mousemove', dragulaExtand._onMouseMove)
-      return true
+    if (dragulaExtand.drag_third.containers.indexOf(container) > -1) {
+      return false
     }
-    return false
+    dragulaExtand.drag_third.containers.push(container)
+    /**添加dragMove事件拓展 */
+    var dragulaContainer = new dragulaContainerClass(container)
+    dragulaExtand._dragulaContainer.push(dragulaContainer)
+    dragulaExtand._dragulaContainer = dragulaExtand._dragulaContainer.sort((a, b) => {
+      if ($(a.container).find(b.container).length > 0) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+    return true
   }
   public static removeContainer(container: Element): boolean {
     if (dragulaExtand.drag_third.containers.indexOf(container) > -1) {
       dragulaExtand.drag_third.containers.splice(dragulaExtand.drag_third.containers.indexOf(container), 1)
       /**移除dragMove事件拓展 */
-      var findDragMoveExtand = dragulaExtand.getContainerDesc(container).filter((o) => o.container == container)[0]
-      var findDragMoveExtandIndex = dragulaExtand._dragulaContainer.indexOf(findDragMoveExtand)
-      dragulaExtand._dragulaContainer.splice(findDragMoveExtandIndex, 1)
+      var finddragulaContainer = dragulaExtand.getContainerDesc(container).filter((o) => o.container == container)[0]
+      var finddragulaContainerIndex = dragulaExtand._dragulaContainer.indexOf(finddragulaContainer)
+      dragulaExtand._dragulaContainer.splice(finddragulaContainerIndex, 1)
       // container.removeEventListener('mousemove', dragulaExtand._onMouseMove)
     }
     return true
@@ -127,16 +132,23 @@ class dragulaExtand {
   }
   /**当前注册的事件类 */
   public static getContainerDesc(container: Element): dragulaContainerClass[] {
-    var res = dragulaExtand._dragulaContainer.filter((o) => o.container === container || $(o.container).find(container).length > 0)
-    return res.sort((a, b) => {
-      if ($(a.container).find(b.container).length > 0) {
-        return 1
-      } else {
-        return -1
+    let res: any[] = []
+    for (let index = 0; index < dragulaExtand._dragulaContainer.length; index++) {
+      const element = dragulaExtand._dragulaContainer[index]
+      if (element.container === container || $(element.container).find(container).length > 0) {
+        res.push(element)
       }
-    })
+    }
+    /**理论上在注册的时候已经排序 */
+    // return res.sort((a, b) => {
+    //   if ($(a.container).find(b.container).length > 0) {
+    //     return 1
+    //   } else {
+    //     return -1
+    //   }
+    // })
+    return res
   }
-
   // **************监听dragula所有对外事件*****************************************************************************
   private static _onDrag(el: Element, sourceContainer: Element) {
     dragulaExtand.dragSource = el
@@ -307,15 +319,12 @@ export default class dragHelper {
   public IsCanDrop(): boolean {
     return dragulaExtand.IsCanDrop(this._container)
   }
-
   public makeContainerCanDrop() {
     $(this._container).attr(dragEnums.canDrop, 'true')
   }
-
   public makeContainerCannotDrop() {
     $(this._container).attr(dragEnums.canDrop, 'false')
   }
-
   public makeDomContainer() {
     if (dragulaExtand.registerContainer(this._container) == true) {
       $(this._container).attr('tabindex', -1)
@@ -323,7 +332,6 @@ export default class dragHelper {
       this.makeContainerCanDrop()
     }
   }
-
   public RemoveContainer() {
     this.makeContainerCannotDrop()
     $(this._container).removeAttr('tabindex')
@@ -342,7 +350,6 @@ export default class dragHelper {
     $(dragItem).attr(dragEnums.canDrag, 'false')
   }
   // *****************定义dragItem的附加内容*****************************************
-
   public makeDragItemInfo(dragItem: Element, Info: any): void {
     var infostr = common.serialize(Info)
     //window.console.log('infostr',infostr)
@@ -357,7 +364,6 @@ export default class dragHelper {
     return info
   }
   // *******************注册事件*********************************************************************
-
   public registerOnDrag(callback: onDragEventType) {
     if (this.currentEventClass) {
       this.currentEventClass.dragEvent = callback
@@ -379,7 +385,6 @@ export default class dragHelper {
       //window.console.error('在注册DragOver事件之前，请把当前container注册成拖拽组件')
     }
   }
-
   public registerOnDragShadow(callback: onShadowEventType) {
     if (this.currentEventClass) {
       this.currentEventClass.shadowEvent = callback
@@ -387,7 +392,6 @@ export default class dragHelper {
       //window.console.error('在注册DragShadow事件之前，请把当前container注册成拖拽组件')
     }
   }
-
   public registerOnDragClone(callback: onClonedEventType) {
     if (this.currentEventClass) {
       this.currentEventClass.clonedEvent = callback
@@ -395,7 +399,6 @@ export default class dragHelper {
       //window.console.error('在注册DragClone事件之前，请把当前container注册成拖拽组件')
     }
   }
-
   public registerOnDragEnd(callback: onDragEndEventType) {
     if (this.currentEventClass) {
       this.currentEventClass.dragEndEvent = callback
@@ -403,7 +406,6 @@ export default class dragHelper {
       window.console.error('在注册DragEnd事件之前，请把当前container注册成拖拽组件')
     }
   }
-
   public registerOnDragMove(callback: onDragMoveEventType) {
     if (this.currentEventClass) {
       this.currentEventClass.dragMoveEvent = callback
@@ -411,7 +413,6 @@ export default class dragHelper {
       window.console.error('在注册dragmove事件之前，请把当前container注册成拖拽组件')
     }
   }
-
   public registerOnDragOut(callback: onDragOutEventType) {
     if (this.currentEventClass) {
       this.currentEventClass.dragOutEvent = callback
