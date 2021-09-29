@@ -316,11 +316,29 @@ export default class EngineContainer extends EngineLayout {
   private clearVerRule() {
     $(this.verRule).hide()
   }
-
+  /**添加一个组件 */
+  private insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
+    window.console.log('绘制组件')
+    // compInfo.compCode = dropcompclass.compCode
+    dropcompclass.prototype.isDesigning = this.isDesigning
+    let dropcomp = new dropcompclass() as EngineLayout
+    dropcomp.parentLayout = this
+    if (data) {
+      dropcomp.loadData(data)
+    }
+    dropcomp = this.renderComponent(dropcomp)
+    // window.console.error('绘制子组件失败,请不要保存!!!')
+    // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
+    this.addChild(dropcomp)
+    dropcomp.$on('onChildrenCountChange', this.onComponentChildrenCountChange)
+    dropcomp.$on('onComponentChildrenCountChange', this.onComponentChildrenCountChange)
+    dropcomp.$on('onPropertyChanged', this.onComponentPropertyChanged)
+    dropcomp.$on('onComponentPropertyChanged', this.onComponentPropertyChanged)
+    return dropcomp as EngineLayout
+  }
   /************************************publics***********************/
   public chooseComps(comps: EngineLayout[]) {
     this.cancelCompSelected(this.children)
-
     comps.filter((o) => {
       o.isSelected = true
     })
@@ -347,32 +365,9 @@ export default class EngineContainer extends EngineLayout {
   public deleteChildComponents(compId: string): boolean {
     return false
   }
-  protected onListenDragMoveExtand(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    return true
-  }
   /************************************protected***********************/
   protected getCompTemplateData(tempId: string): any {
     return null
-  }
-  /**添加一个组件 */
-  public insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
-    // window.console.log('绘制组件')
-    // compInfo.compCode = dropcompclass.compCode
-    dropcompclass.prototype.isDesigning = this.isDesigning
-    let dropcomp = new dropcompclass() as EngineLayout
-    dropcomp.parentLayout = this
-    if (data) {
-      dropcomp.loadData(data)
-    }
-    dropcomp = this.renderComponent(dropcomp)
-    // window.console.error('绘制子组件失败,请不要保存!!!')
-    // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
-    this.addChild(dropcomp)
-    dropcomp.$on('onChildrenCountChange', this.onComponentChildrenCountChange)
-    dropcomp.$on('onComponentChildrenCountChange', this.onComponentChildrenCountChange)
-    dropcomp.$on('onPropertyChanged', this.onComponentPropertyChanged)
-    dropcomp.$on('onComponentPropertyChanged', this.onComponentPropertyChanged)
-    return dropcomp as EngineLayout
   }
   /************************************Emits***********************/
   protected onComponentPropertyChanged(propertyId: string, property: Property, comp: EngineLayout): void {}

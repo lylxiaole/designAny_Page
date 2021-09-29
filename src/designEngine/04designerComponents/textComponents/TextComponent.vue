@@ -1,10 +1,9 @@
  
 <template>
   <div style="height:100%;">
-    <a-tooltip placement="right" :title="TooltipTitle">
-      <div :id="Id" :style="{backgroundColor:background,borderWidth:isShowBorder?'1px':'0px',borderStyle:'solid',borderColor:'#000000'}"
-        style="height:100%;display: table;table-layout: fixed;width:100%;">
-        <span :contentEditable="contentEditable" :style="{
+    <div :id="Id" :style="{backgroundColor:background,borderWidth:isShowBorder?'1px':'0px',borderStyle:'solid',borderColor:'#000000'}"
+      style="height:100%;display: table;table-layout: fixed;width:100%;">
+      <span :contentEditable="contentEditable" :style="{
           'height':'100%','width':'100%',
           'font-weight':fontWeight,
           'color':foreground,
@@ -16,16 +15,16 @@
           'overflow':'hidden',
           'display':'table-cell',
           'white-space':space}" v-html="CurrentText"></span>
-      </div>
-    </a-tooltip>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '@src/designEngine/03designerLayoutBase'
-import { EngineComponent } from '@src/designEngine'
+import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '@src/designEngine'
+import { EngineComponent, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
 
+@layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '文本组件', 'TextComponent', null)
 @Component
 export default class TextComponent extends EngineComponent {
   isShowIndex: boolean = false

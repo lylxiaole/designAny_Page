@@ -6,19 +6,30 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { EnginePage } from '../03designerLayoutBase'
-import { truncate } from 'fs'
+import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
+import { drawVueOnVirtualDom } from '@src/utils'
+import DesignShell from './ComponentShells/DesignShell.vue'
 
 @Component
 export default class PCPageDesign extends EnginePage {
   public get isDesigning(): boolean {
     return true
   }
-  created() {
-    window.console.log('PCPageDesign created')
-  }
-  mounted() {
-    // this.canDrop = true
+  public allShells: DesignShell[] = []
+
+  created() {}
+  mounted() {}
+
+  protected renderComponent(compCon: EngineComponent): EngineLayout {
+    window.console.log('renderComponent:', compCon)
+    let shell = new DesignShell()
+    let fragment = drawVueOnVirtualDom(shell)
+    this._dragHelper.makeDomCanDrag(shell.$el)
+    this.allShells.push(shell)
+    shell.AddComponent(compCon)
+    //
+    $(this.$el).append(fragment)
+    return compCon
   }
 }
 </script>

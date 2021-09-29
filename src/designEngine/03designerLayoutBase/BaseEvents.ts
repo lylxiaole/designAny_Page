@@ -382,7 +382,6 @@ export default class BaseEvents extends Vue {
     }
     var ctrlKey = e.ctrlKey || e.metaKey
     if (ctrlKey == true && this.onChangedScale_Event) {
-      //仅仅滚轮
       e.preventDefault()
       var wheelvalue = e.wheelDelta || -e.detail
       var scalesize = wheelvalue / 1000
@@ -390,6 +389,7 @@ export default class BaseEvents extends Vue {
         e.stopPropagation()
       }
     } else if (this.onMouseWheelInLayout_Event) {
+      //仅仅滚轮
       this.onMouseWheelInLayout_Event(e)
     }
   }
