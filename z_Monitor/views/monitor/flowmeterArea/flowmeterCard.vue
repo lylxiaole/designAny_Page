@@ -1,26 +1,26 @@
 <template>
-  <div style="height:100%;width:100%">
+  <div>
     <el-card class="box-card">
-      <el-row>
+      <el-row class="row">
         <el-col :span="12">位号:xxxxx</el-col>
         <el-col :span="12">状态:故障</el-col>
       </el-row>
-      <el-row>
+      <el-row class="row">
         <el-col :span="12">温度:12℃</el-col>
         <el-col :span="12">密度:34g/m3</el-col>
       </el-row>
-      <el-row>
+      <el-row class="row">
         <el-col :span="12">质量:67kg</el-col>
         <el-col :span="12">瞬间流量:46kg/m3</el-col>
       </el-row>
-      <el-row>
+      <el-row class="row">
         <el-col :span="12">是否有报警:5条</el-col>
       </el-row>
-      <el-row>
-        <el-button size="mini" @click="openFlowmeterInfo">单表信息</el-button>
-        <el-button size="mini" @click="openAlarmInfo">报警信息</el-button>
-        <el-button size="mini" @click="openFlowmeterHis">历史信息</el-button>
-        <el-button size="mini" @click="openFlowmeterCompare">双表对比</el-button>
+      <el-row class="row">
+        <el-button class="button" size="mini" @click="openFlowmeterInfo">单表信息</el-button>
+        <el-button class="button" size="mini" @click="openAlarmInfo">报警信息</el-button>
+        <el-button class="button" size="mini" @click="openFlowmeterHis">历史信息</el-button>
+        <el-button class="button" size="mini" @click="openFlowmeterCompare">双表对比</el-button>
       </el-row>
     </el-card>
   </div>
@@ -39,11 +39,8 @@ import { param2Obj } from '@src/utils'
 })
 export default class flowmeterCard extends ComponentBase {
   @Prop({
-    default: {
-      code: 'HT-4009',
-      time: '08-18 12:00:00',
-      desc: '维保到期xxxxxxxxxxxx',
-      timeLength: '3小时'
+    default: () => {
+      return { code: 'HT-4009', time: '08-18 12:00:00', desc: '维保到期xxxxxxxxxxxx', timeLength: '3小时' }
     }
   })
   cardInfo: any
@@ -66,5 +63,15 @@ export default class flowmeterCard extends ComponentBase {
   }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+.row {
+  margin: 12px 0px;
+}
+.button {
+  padding: 7px 8px;
+}
+
+/deep/ .el-card > .el-card__body {
+  padding: 10px !important;
+}
 </style>

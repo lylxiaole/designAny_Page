@@ -1,6 +1,27 @@
 <template>
-  <div style="height:100%;width:100%;display:flex;flex-wrap: wrap;">
-    <flowmeterCard class="flowmeterCard" v-for="item in allFlowmeters" :key="item.code" />
+  <div style="width:100%;height:100%">
+    <div style="height:60px;width:100%; ">
+      <el-form :inline="true" size="mini" :model="serachInfo" style="height:100%">
+        <el-form-item label="位号">
+          <el-input v-model="serachInfo.code" placeholder="审批人"></el-input>
+        </el-form-item>
+        <el-form-item label="作业区域">
+          <el-select v-model="serachInfo.area" placeholder="活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="serachInfo.state" placeholder="活动区域">
+            <el-option label="状态一" value="shanghai"></el-option>
+            <el-option label="状态二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div style="height:calc(100% - 60px);width:100%;display:flex;flex-wrap: wrap;">
+      <flowmeterCard class="flowmeterCard" v-for="item in allFlowmeters" :key="item.code" />
+    </div>
   </div>
 </template>
 
@@ -16,6 +37,12 @@ import flowmeterCard from './flowmeterCard.vue'
   components: { flowmeterCard }
 })
 export default class Index extends PageBase {
+  private serachInfo: any = {
+    code: '123',
+    area: 'shanghai',
+    state: 'shanghai'
+  }
+
   private allFlowmeters: any[] = [
     {
       code: '123'
@@ -31,7 +58,8 @@ export default class Index extends PageBase {
 </script>
 <style lang="less" scoped>
 .flowmeterCard {
-  width: 300px;
+  width: 340px;
   height: 250px;
+  margin: 8px;
 }
 </style>
