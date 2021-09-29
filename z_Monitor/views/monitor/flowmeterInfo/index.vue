@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%;width:100%">
-
+    计量表详细信息
   </div>
 </template>
 

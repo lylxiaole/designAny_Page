@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%;width:100%">
-
+    计量表历史信息
   </div>
 </template>
 

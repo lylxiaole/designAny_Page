@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%;width:100%">
-
+    贮运厂总览
   </div>
 </template>
 
