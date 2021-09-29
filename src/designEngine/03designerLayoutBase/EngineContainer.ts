@@ -27,73 +27,20 @@ export default class EngineContainer extends EngineLayout {
     if (this.isDesigning) {
       this.onDrop_Event = this.listenOnDrop
       this.onDragMove_Event = this.listenOnDragMove
-      this.onDelete_Event = this.onDeleteKey
+      this.onDelete_Event = this.listenOnDeleteKey
       this.onDragEnd_Event = this.listenOnDragEnd
-      this.onCut_Event = (e) => {
-        if (this.isDesigning) {
-          if (this.selectedChildren && this.selectedChildren.length > 0) {
-            EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
-            // this.$message.success('组件已剪切', 2)
-            EngineContainer.isCut = true
-            e.stopPropagation()
-          }
-        }
-      }
-      this.onCopy_Event = (e) => {
-        if (this.isDesigning) {
-          if (this.selectedChildren && this.selectedChildren.length > 0) {
-            EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
-            // this.$message.success('组件已复制', 2)
-            EngineContainer.isCut = false
-            e.stopPropagation()
-          }
-        }
-      }
-      this.onPaste_Event = (e) => {
-        if (!EngineContainer.copyComp) {
-          return
-        }
-        // window.console.log('onPaste_Event')
-        let compData = deepClone(EngineContainer.copyComp.getSaveData())
-
-        if (EngineContainer.isCut) {
-          //剪切--删除原有组件
-          let parentLayout = EngineContainer.copyComp.parentLayout as EngineContainer
-          if (parentLayout.deleteChildComponents(EngineContainer.copyComp.Id) == true) {
-            parentLayout.removeChildRecursion(EngineContainer.copyComp.Id)
-          }
-        } else {
-          //复制操作需要给组件新Id
-          compData.id = getUuid()
-        }
-        let compclass = findSystemCompByCode(compData.layoutInfo.compCode)
-        //为了准确性
-        let findchildren = this.findSelectedLayoutsRecursion(this.children)
-        let newcopyComp: EngineLayout = null
-        for (let index = 0; index < findchildren.length; index++) {
-          const element = findchildren[index]
-          if (element.canDrop == true && (element as any).insertComponentLayout) {
-            newcopyComp = (element as any).insertComponentLayout(compclass, compData.layoutInfo, null, compData)
-            break
-          }
-        }
-
-        if (!newcopyComp) {
-          newcopyComp = this.insertComponentLayout(compclass, compData.layoutInfo, null, compData)
-        }
-        newcopyComp.loadData(compData)
-        e.stopPropagation()
-      }
-      this.onMouseMove_Event = this.onMouseMoveE
+      this.onCut_Event = this.listenOnCut
+      this.onCopy_Event = this.listenOnCopy
+      this.onPaste_Event = this.listenOnPaste
+      this.onMouseMove_Event = this.listenOnMousemove
     }
   }
   /**********************************privates ******************************/
-  private onMouseMoveE(e: MouseEvent) {
+  private listenOnMousemove(e: MouseEvent) {
     this.mouseX = e.offsetX
     this.mouseY = e.offsetY
   }
   private listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): boolean {
-    window.console.log('listenOnDrop', dragdata)
     if (!dragdata) {
       return true
     }
@@ -101,89 +48,34 @@ export default class EngineContainer extends EngineLayout {
     if (!compInfo) {
       return true
     }
+    window.console.log('listenOnDrop')
     // window.console.log('$(this._dragHelper.dragCloneElement).offset()', $(this._dragHelper.dragCloneElement).offset())
     screenLeft = $(this._dragHelper.dragCloneElement).offset().left
     screenTop = $(this._dragHelper.dragCloneElement).offset().top
     let dropcomp: EngineLayout = null
+    let compVue = findSystemCompByCode(compInfo.compCode)
 
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {
-          let compVue = findSystemCompByCode(compInfo.compCode)
-          if (!compVue) {
-            break
-          }
           dropcomp = this.insertComponentLayout(compVue, compInfo, dragdata.type)
-          if (dropcomp) {
-            dropcomp.loadData(null)
-          }
         }
         break
       case DragItemTypeEnum.drop_component_template:
         {
-          let compclass = findSystemCompByCode(compInfo.compCode)
-          if (!compclass) {
-            break
-          }
-          dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
           let compdata = this.getCompTemplateData(compInfo.sourceId)
-          if (dropcomp) {
-            dropcomp.loadData(compdata)
-            // dropcomp.$once('onMounted', (layout: EngineLayout) => {
-            //   dropcomp.RefreshAllIdRecursion()
-            // })
-          }
-        }
-        break
-      case DragItemTypeEnum.drag_gridLayout_col:
-        {
-          let compId = compInfo['compId']
-          if (!compId) {
-            return true
-          }
-
-          let compclass = findSystemCompByCode(compInfo.compCode)
-          if (!compclass) {
-            break
-          }
-          dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
-          if (dropcomp) {
-            dropcomp.loadData(null)
-            this.removeChildRecursion(compId)
-          }
-        }
-        break
-      case DragItemTypeEnum.drop_model_component:
-        {
-          compInfo.groupName = '内容展示'
-          compInfo.name = '表单'
-          let compclass = findSystemCompByCode(compInfo.compCode)
-          if (!compclass) {
-            break
-          }
-          dropcomp = this.insertComponentLayout(compclass, compInfo, dragdata.type)
-          if (dropcomp) {
-            dropcomp.loadData(null)
-          }
-          // window.console.log('模型组件', compInfo.modelDetail)
-          // dropcomp = this.insertModelComponentLayout(compInfo.modelDetail)
-          // dropcomp.layoutInfo = new LayoutInfo(LayoutType.system_component, '内容展示', '表单', null, 'icon-kapian')
-          // dropcomp.$once('onMounted', () => {
-          //   dropcomp.makeFormByModelDetail(compInfo.modelDetail)
-          // })
+          dropcomp = this.insertComponentLayout(compVue, compInfo, dragdata.type, compdata)
         }
         break
       default:
         break
     }
-    if (dropcomp) {
-      // dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize
-      // dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize
-    }
-    // window.console.log('感知到drop', this.Id)
+
+    dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize
+    dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize
     return false
   }
-  public onDeleteKey(e: Event) {
+  private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     // window.console.log('按了删除键', this.name)
 
@@ -197,8 +89,62 @@ export default class EngineContainer extends EngineLayout {
       }
     }
   }
+  private listenOnCut(e) {
+    if (this.isDesigning) {
+      if (this.selectedChildren && this.selectedChildren.length > 0) {
+        EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
+        // this.$message.success('组件已剪切', 2)
+        EngineContainer.isCut = true
+        e.stopPropagation()
+      }
+    }
+  }
+  private listenOnCopy(e) {
+    if (this.isDesigning) {
+      if (this.selectedChildren && this.selectedChildren.length > 0) {
+        EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
+        // this.$message.success('组件已复制', 2)
+        EngineContainer.isCut = false
+        e.stopPropagation()
+      }
+    }
+  }
+  private listenOnPaste(e) {
+    if (!EngineContainer.copyComp) {
+      return
+    }
+    // window.console.log('onPaste_Event')
+    let compData = deepClone(EngineContainer.copyComp.getSaveData())
+
+    if (EngineContainer.isCut) {
+      //剪切--删除原有组件
+      let parentLayout = EngineContainer.copyComp.parentLayout as EngineContainer
+      if (parentLayout.deleteChildComponents(EngineContainer.copyComp.Id) == true) {
+        parentLayout.removeChildRecursion(EngineContainer.copyComp.Id)
+      }
+    } else {
+      //复制操作需要给组件新Id
+      compData.id = getUuid()
+    }
+    let compclass = findSystemCompByCode(compData.layoutInfo.compCode)
+    //为了准确性
+    let findchildren = this.findSelectedLayoutsRecursion(this.children)
+    let newcopyComp: EngineLayout = null
+    for (let index = 0; index < findchildren.length; index++) {
+      const element = findchildren[index]
+      if (element.canDrop == true && (element as any).insertComponentLayout) {
+        newcopyComp = (element as any).insertComponentLayout(compclass, compData.layoutInfo, null, compData)
+        break
+      }
+    }
+
+    if (!newcopyComp) {
+      newcopyComp = this.insertComponentLayout(compclass, compData.layoutInfo, null, compData)
+    }
+    newcopyComp.loadData(compData)
+    e.stopPropagation()
+  }
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    //  window.console.log('listenOnDragMove')
     if (!dragdata) {
       return true
     }
@@ -250,6 +196,11 @@ export default class EngineContainer extends EngineLayout {
     }
     return true
   }
+  private listenOnDragEnd() {
+    this.clearHorRule()
+    this.clearVerRule()
+  }
+
   private changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
     let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
@@ -365,10 +316,7 @@ export default class EngineContainer extends EngineLayout {
   private clearVerRule() {
     $(this.verRule).hide()
   }
-  private listenOnDragEnd() {
-    this.clearHorRule()
-    this.clearVerRule()
-  }
+
   /************************************publics***********************/
   public chooseComps(comps: EngineLayout[]) {
     this.cancelCompSelected(this.children)
@@ -388,17 +336,12 @@ export default class EngineContainer extends EngineLayout {
   }
   // *************************overrides****************************************************************************
   protected renderChildFromData(data: SaveInfo) {
-    // let compclass = findSystemCompByCode(data.layoutInfo.groupName, data.layoutInfo.name)
-    // if (!compclass) {
-    //   return
-    // }
-    // let comp = this.insertComponentLayout(compclass, data.layoutInfo, null, data)
-    // if (comp) {
-    //   comp.loadData(data)
-    // }
+    let compVue = findSystemCompByCode(data.meta.compCode)
+    let comp = this.insertComponentLayout(compVue, data.meta, null, data)
+    comp.loadData(data)
   }
   /************************************virtuals***********************/
-  protected renderComponent(compCon: EngineLayout, layoutInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
+  protected renderComponent(compCon: EngineLayout): EngineLayout {
     return compCon
   }
   public deleteChildComponents(compId: string): boolean {
@@ -414,35 +357,24 @@ export default class EngineContainer extends EngineLayout {
   /**添加一个组件 */
   public insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
     // window.console.log('绘制组件')
-    compInfo.compCode = dropcompclass.compCode
-    // window.console.log('insertComponentLayout:', dropcompclass.prototype)
+    // compInfo.compCode = dropcompclass.compCode
     dropcompclass.prototype.isDesigning = this.isDesigning
-    let dropcomp = new dropcompclass()
+    let dropcomp = new dropcompclass() as EngineLayout
     dropcomp.parentLayout = this
-    dropcomp.layoutInfo = compInfo
-
-    dropcomp = this.renderComponent(dropcomp, compInfo, dragType, data)
-    if (!dropcomp.parentPage) {
-      window.console.warn('绘制子组件异常！')
-      return null
+    if (data) {
+      dropcomp.loadData(data)
     }
+    dropcomp = this.renderComponent(dropcomp)
     // window.console.error('绘制子组件失败,请不要保存!!!')
     // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
     this.addChild(dropcomp)
-    if (dropcomp) {
-      dropcomp.$on('onChildrenCountChange', this.onComponentChildrenCountChange)
-      dropcomp.$on('onComponentChildrenCountChange', this.onComponentChildrenCountChange)
-      dropcomp.$on('onPropertyChanged', this.onComponentPropertyChanged)
-      dropcomp.$on('onComponentPropertyChanged', this.onComponentPropertyChanged)
-    }
-
+    dropcomp.$on('onChildrenCountChange', this.onComponentChildrenCountChange)
+    dropcomp.$on('onComponentChildrenCountChange', this.onComponentChildrenCountChange)
+    dropcomp.$on('onPropertyChanged', this.onComponentPropertyChanged)
+    dropcomp.$on('onComponentPropertyChanged', this.onComponentPropertyChanged)
     return dropcomp as EngineLayout
   }
   /************************************Emits***********************/
   protected onComponentPropertyChanged(propertyId: string, property: Property, comp: EngineLayout): void {}
   protected onComponentChildrenCountChange(): void {}
-  //是否需要重绘，目前只有表格组件需要重绘
-  protected isNeedRecalculate: boolean = false
-  //缩放结束事件
-  protected onAfterResize(): void {}
 }

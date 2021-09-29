@@ -12,6 +12,7 @@ class propertyValidatorType {
 }
 export class SaveInfo {
   id: string
+  meta: any
   properties: Property[]
   children: SaveInfo[]
 }
@@ -591,6 +592,7 @@ export default class EngineLayout extends BaseEvents {
   public async getSaveData(): Promise<SaveInfo> {
     var saveinfo: SaveInfo = {
       id: this.Id,
+      meta: (this as any).$Meta,
       properties: this.properties,
       children: []
     }
