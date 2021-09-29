@@ -1,4 +1,4 @@
-import PageBase from '../EnginePageBase'
+import PageBase from '../EnginePage'
 import { getUuid } from '@src/utils'
 import { behavior, variable, action, actionDetail } from './behaviorTypes'
 import { objectBase, objectType, resourceType, resourceSearchType, object_Method, object_Variable, allCuteSigns, allFilterSigns, resourceSearchAttr } from './01_actionCommon'

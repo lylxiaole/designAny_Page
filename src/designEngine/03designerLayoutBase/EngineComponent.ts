@@ -1,16 +1,16 @@
 import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
-import { EnginePageBase, SaveInfo, LayoutContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
-import { LayoutType } from '../03designerLayoutBase/commonClasses/componentInfos'
+import { EnginePage, SaveInfo, EngineContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
+import { LayoutType } from './commonClasses/componentInfos'
 
 @Component
-export default class EngineComponentBase extends LayoutContainer {
+export default class EngineComponent extends EngineContainer {
   public wheelIndex: any = 1
   public defaultValue: any
-  public parentPage: EnginePageBase
+  public parentPage: EnginePage
 
-  public get topParentPage(): EnginePageBase {
-    let res: EnginePageBase = this.parentPage
+  public get topParentPage(): EnginePage {
+    let res: EnginePage = this.parentPage
     while (res && res.parentPage) {
       res = res.parentPage
     }
@@ -77,7 +77,7 @@ export default class EngineComponentBase extends LayoutContainer {
   }
 
   created() {
-    window.console.log('EngineComponentBase created')
+    window.console.log('EngineComponent created')
     if (this.isDesigning == true) {
       this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
       this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())

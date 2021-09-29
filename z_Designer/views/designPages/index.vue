@@ -39,7 +39,7 @@ import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 
 import { drawVueOnVirtualDom } from '@src/utils'
-import { EnginePageBase, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
+import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
 
 @Component({
@@ -67,8 +67,8 @@ export default class index extends PageBase {
   // **********页面Tabs**********************************************************
   private currentOpenPageId: string = null
   private openPages: DesignPageDC[] = []
-  private openPageEngines: EnginePageBase[] = []
-  private get currentShowEngine(): EnginePageBase {
+  private openPageEngines: EnginePage[] = []
+  private get currentShowEngine(): EnginePage {
     let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
     return findengine
   }
@@ -79,7 +79,7 @@ export default class index extends PageBase {
     }
     this.currentOpenPageId = page.id
   }
-  private cachePageEngine(pageId: string, pageEngine: EnginePageBase) {
+  private cachePageEngine(pageId: string, pageEngine: EnginePage) {
     let engine = this.openPageEngines.find((o) => o.Id === pageId)
     if (!engine) {
       this.openPageEngines.push(pageEngine)
@@ -101,7 +101,7 @@ export default class index extends PageBase {
     let res = await GetPageDetail(pageId)
     this.openPage(res)
     await this.$nextTick()
-    let designLayout: EnginePageBase = null
+    let designLayout: EnginePage = null
     switch (res.type) {
       case pageType.pcPage:
         designLayout = new PCPageDesign() as any

@@ -5,10 +5,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { EnginePageBase } from '../03designerLayoutBase'
+import { EnginePage } from '../03designerLayoutBase'
 
 @Component
-export default class MobilePagePreview extends EnginePageBase {}
+export default class MobilePagePreview extends EnginePage {}
 </script>
  
 <style scoped>

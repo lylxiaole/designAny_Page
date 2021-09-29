@@ -6,11 +6,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { EnginePageBase } from '../03designerLayoutBase'
+import { EnginePage } from '../03designerLayoutBase'
 import { truncate } from 'fs'
 
 @Component
-export default class PCPageDesign extends EnginePageBase {
+export default class PCPageDesign extends EnginePage {
   public get isDesigning(): boolean {
     return true
   }

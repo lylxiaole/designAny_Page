@@ -24,10 +24,10 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '@src/designEngine/03designerLayoutBase'
-import { EngineComponentBase } from '@src/designEngine'
+import { EngineComponent } from '@src/designEngine'
 
 @Component
-export default class TextComponent extends EngineComponentBase {
+export default class TextComponent extends EngineComponent {
   isShowIndex: boolean = false
   isShowInput: boolean = false
 

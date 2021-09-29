@@ -28,7 +28,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { Property, PropertyType, PropertyTypeEnum } from '@src/designEngine'
-import { EnginePageBase, LayoutBase } from '@src/designEngine'
+import { EnginePage, EngineLayout } from '@src/designEngine'
 import { deepClone, serialize, deserialize } from '@src/utils'
 import propertyCellBase from './propertyGridCells/common'
 
@@ -127,16 +127,16 @@ export default class PropertyGrid extends Vue {
   private allowedPropertys: propertyFilterInfo[]
   /**当前的布局页面 */
   @Prop()
-  private currentPage: EnginePageBase
+  private currentPage: EnginePage
   /**当前需要设置的所有布局*/
   @Prop()
-  private currentLayouts: LayoutBase[] | LayoutBase
+  private currentLayouts: EngineLayout[] | EngineLayout
   /**当前所有布局的共有属性列表 */
   private propertyGroups: PropertyGroupInfo[] = []
   /**vue监视不到复杂类型的数据变化，需要用旧的做对比*/
   private propertyGroups_oldClone: PropertyGroupInfo[] = []
   @Watch('currentLayouts') //监视设置的布局变化，并重新计算所有属性
-  private watchCurrentLayoutsChanged(newlayouts: LayoutBase[] | LayoutBase) {
+  private watchCurrentLayoutsChanged(newlayouts: EngineLayout[] | EngineLayout) {
     window.console.log('当前布局变更', newlayouts)
     this.isWatchPropertiesChange = false
     this.propertyGroups = []
@@ -146,12 +146,12 @@ export default class PropertyGrid extends Vue {
       return
     }
     var property_extra: Property[] = [] //临时变量
-    var newlayouts_extra: LayoutBase[] = [] //临时变量
+    var newlayouts_extra: EngineLayout[] = [] //临时变量
 
-    if (newlayouts instanceof LayoutBase) {
-      newlayouts_extra = [newlayouts as LayoutBase]
+    if (newlayouts instanceof EngineLayout) {
+      newlayouts_extra = [newlayouts as EngineLayout]
     } else {
-      newlayouts_extra = newlayouts as LayoutBase[]
+      newlayouts_extra = newlayouts as EngineLayout[]
     }
     /**用第一个布局的属性列表当作临时属性列表 */
     if (newlayouts_extra.length > 0) {
@@ -233,11 +233,11 @@ export default class PropertyGrid extends Vue {
   }
   /**为了应付多选组件，批量设置属性 */
   private changeLayoutProperty(propertyName: string, propertyGroupName: string, newval: any): boolean {
-    var newlayouts_extra: LayoutBase[] = [] //临时变量
-    if (this.currentLayouts instanceof LayoutBase) {
-      newlayouts_extra = [this.currentLayouts as LayoutBase]
+    var newlayouts_extra: EngineLayout[] = [] //临时变量
+    if (this.currentLayouts instanceof EngineLayout) {
+      newlayouts_extra = [this.currentLayouts as EngineLayout]
     } else {
-      newlayouts_extra = this.currentLayouts as LayoutBase[]
+      newlayouts_extra = this.currentLayouts as EngineLayout[]
     }
 
     for (var i = 0; i < newlayouts_extra.length; i++) {

@@ -68,7 +68,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { EnginePageBase, EngineComponentBase, LayoutBase, LayoutInfo } from '@src/designEngine'
+import { EnginePage, EngineComponent, EngineLayout, LayoutInfo } from '@src/designEngine'
 import componentListControl from './ComponentListControl.vue'
 
 @Component({
@@ -79,7 +79,7 @@ import componentListControl from './ComponentListControl.vue'
 export default class quickActionBar extends Vue {
   @Prop() private height: number
   /**当前的布局页面属性，外部通过绑定传递进来 */
-  @Prop() public currentPage: EnginePageBase
+  @Prop() public currentPage: EnginePage
 
   private get pageScale(): number {
     if (!this.currentPage) {

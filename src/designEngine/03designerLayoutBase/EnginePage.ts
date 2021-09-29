@@ -1,18 +1,18 @@
 import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
-import ComponentBase from './EngineComponentBase'
+import ComponentBase from './EngineComponent'
 import { Component } from 'vue-property-decorator'
 
 import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoading_Async, showLoading_Async } from '@src/utils'
-import LayoutBase, { SaveInfo } from './LayoutBase'
-import LayoutContainer from './LayoutContainer'
+import EngineLayout, { SaveInfo } from './EngineLayout'
+import EngineContainer from './EngineContainer'
 import { paramInfo } from './commonClasses/pageInParamInfo'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 import { GetPageDetail, SavePageDetail } from '@src/apis/designPage'
 
 @Component
-export default class EnginePageBase extends LayoutContainer {
-  public parentPage: EnginePageBase
+export default class EnginePage extends EngineContainer {
+  public parentPage: EnginePage
   public isNeedSave: boolean = false
   /***************************** */
   /**行为列表*/
@@ -55,7 +55,7 @@ export default class EnginePageBase extends LayoutContainer {
     return property.value as paramInfo[]
   }
   created() {
-    window.console.log('EnginePageBase created')
+    window.console.log('EnginePage created')
     this.registerProperty(PropertyGroupName.normal, '拓展js', new JavaScriptCode_Property(), false, false, false)
     this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Property())
     this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())

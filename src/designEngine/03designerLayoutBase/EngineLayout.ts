@@ -20,17 +20,17 @@ export class Point {
   Y: number = -1
 }
 @Component
-export default class LayoutBase extends BaseEvents {
+export default class EngineLayout extends BaseEvents {
   public isSelected: boolean = false
   /**属性 */
   private properties_old: any[] = []
   public properties: Property[] = []
   /**父级布局 */
-  public parentLayout: LayoutBase
+  public parentLayout: EngineLayout
   /**子级布局 */
-  public children: LayoutBase[] = []
+  public children: EngineLayout[] = []
   /**当前选中的直接子级布局 */
-  public get selectedChildren(): LayoutBase[] {
+  public get selectedChildren(): EngineLayout[] {
     let res: any[] = []
     for (let index = 0; index < this.children.length; index++) {
       const o = this.children[index]
@@ -92,7 +92,7 @@ export default class LayoutBase extends BaseEvents {
   }
   /**生命周期 */
   created() {
-    // window.console.log('LayoutBase created')
+    // window.console.log('EngineLayout created')
     if (this.isDesigning) {
       this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
       this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
@@ -478,7 +478,7 @@ export default class LayoutBase extends BaseEvents {
   protected renderChildFromData(data: SaveInfo) {}
   protected loadCompleted(childrenData: SaveInfo[]) {}
   /**添加子级 */
-  protected addChild(child: LayoutBase) {
+  protected addChild(child: EngineLayout) {
     if (!this.children) {
       this.children = []
     }
@@ -487,7 +487,7 @@ export default class LayoutBase extends BaseEvents {
       this.onChildrenCountChange()
     }
   }
-  protected addChilds(childs: LayoutBase[]) {
+  protected addChilds(childs: EngineLayout[]) {
     if (!this.children) {
       this.children = []
     }
@@ -498,7 +498,7 @@ export default class LayoutBase extends BaseEvents {
       }
     }
   }
-  protected removeChild(child: LayoutBase) {
+  protected removeChild(child: EngineLayout) {
     let index = this.children.indexOf(child)
     if (index < 0) {
       return
@@ -507,7 +507,7 @@ export default class LayoutBase extends BaseEvents {
     this.children.splice(index, 1)
     this.onChildrenCountChange()
   }
-  protected removeChilds(childs: LayoutBase[]) {
+  protected removeChilds(childs: EngineLayout[]) {
     if (childs && childs.length > 0) {
       for (let index = 0; index < childs.length; index++) {
         const child = childs[index]
@@ -597,7 +597,7 @@ export default class LayoutBase extends BaseEvents {
     saveinfo.children = await this.getChildrenData()
     return saveinfo
   }
-  public async removeLayout(layout: LayoutBase) {
+  public async removeLayout(layout: EngineLayout) {
     try {
       $(layout.$el).remove()
       layout.$destroy()
@@ -605,8 +605,8 @@ export default class LayoutBase extends BaseEvents {
       window.console.error(error)
     }
   }
-  public findSelectedLayoutsRecursion(comps: LayoutBase[]): LayoutBase[] {
-    var res: LayoutBase[] = []
+  public findSelectedLayoutsRecursion(comps: EngineLayout[]): EngineLayout[] {
+    var res: EngineLayout[] = []
     for (let index = 0; index < comps.length; index++) {
       const comp = comps[index]
       if (comp.isSelected == true) {
@@ -619,7 +619,7 @@ export default class LayoutBase extends BaseEvents {
     }
     return res
   }
-  public findLayoutRecursion(id: string, lays: LayoutBase[]): LayoutBase {
+  public findLayoutRecursion(id: string, lays: EngineLayout[]): EngineLayout {
     //添加空值判断
     if (!lays) {
       return null
@@ -852,11 +852,11 @@ export default class LayoutBase extends BaseEvents {
     this.sizeChange_Right(changeVal_hor)
   }
   // *************************对外公布事件****************************************************************************
-  protected onPropertyChanged(propertyId: string, property: Property, layout: LayoutBase): void {}
+  protected onPropertyChanged(propertyId: string, property: Property, layout: EngineLayout): void {}
   protected onChildrenCountChange() {}
-  protected onCreated(layout: LayoutBase) {}
-  protected onMounted(layout: LayoutBase) {}
-  protected onUpdated(layout: LayoutBase) {}
+  protected onCreated(layout: EngineLayout) {}
+  protected onMounted(layout: EngineLayout) {}
+  protected onUpdated(layout: EngineLayout) {}
   protected onSizeChanged(e: any) {}
-  protected onDestroyed(layout: LayoutBase): void {}
+  protected onDestroyed(layout: EngineLayout): void {}
 }

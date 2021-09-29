@@ -1,6 +1,6 @@
 import { Component } from 'vue-property-decorator'
 
-import LayoutBase, { SaveInfo, Point } from './LayoutBase'
+import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 
 import { Property } from './commonClasses/LayoutProperty'
@@ -8,20 +8,20 @@ import { getUuid, deepClone, serialize } from '@src/utils'
 import { findSystemCompByCode } from './commonClasses/componentInfos'
 
 @Component
-export default class LayoutContainer extends LayoutBase {
+export default class EngineContainer extends EngineLayout {
   //横向尺子
   private horRule: Element = null
   //纵向尺子
   private verRule: Element = null
   //当前页面的缩放尺寸
   public currentScaleSize: number = 1
-  private static copyComp: LayoutBase
+  private static copyComp: EngineLayout
   private static isCut: boolean = false
 
   private mouseX: number = 0
   private mouseY: number = 0
   created() {
-    window.console.log('LayoutContainer created')
+    window.console.log('EngineContainer created')
   }
   mounted() {
     if (this.isDesigning) {
@@ -32,9 +32,9 @@ export default class LayoutContainer extends LayoutBase {
       this.onCut_Event = (e) => {
         if (this.isDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
-            LayoutContainer.copyComp = this.selectedChildren[0] as LayoutBase
+            EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
             // this.$message.success('组件已剪切', 2)
-            LayoutContainer.isCut = true
+            EngineContainer.isCut = true
             e.stopPropagation()
           }
         }
@@ -42,25 +42,25 @@ export default class LayoutContainer extends LayoutBase {
       this.onCopy_Event = (e) => {
         if (this.isDesigning) {
           if (this.selectedChildren && this.selectedChildren.length > 0) {
-            LayoutContainer.copyComp = this.selectedChildren[0] as LayoutBase
+            EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
             // this.$message.success('组件已复制', 2)
-            LayoutContainer.isCut = false
+            EngineContainer.isCut = false
             e.stopPropagation()
           }
         }
       }
       this.onPaste_Event = (e) => {
-        if (!LayoutContainer.copyComp) {
+        if (!EngineContainer.copyComp) {
           return
         }
         // window.console.log('onPaste_Event')
-        let compData = deepClone(LayoutContainer.copyComp.getSaveData())
+        let compData = deepClone(EngineContainer.copyComp.getSaveData())
 
-        if (LayoutContainer.isCut) {
+        if (EngineContainer.isCut) {
           //剪切--删除原有组件
-          let parentLayout = LayoutContainer.copyComp.parentLayout as LayoutContainer
-          if (parentLayout.deleteChildComponents(LayoutContainer.copyComp.Id) == true) {
-            parentLayout.removeChildRecursion(LayoutContainer.copyComp.Id)
+          let parentLayout = EngineContainer.copyComp.parentLayout as EngineContainer
+          if (parentLayout.deleteChildComponents(EngineContainer.copyComp.Id) == true) {
+            parentLayout.removeChildRecursion(EngineContainer.copyComp.Id)
           }
         } else {
           //复制操作需要给组件新Id
@@ -69,7 +69,7 @@ export default class LayoutContainer extends LayoutBase {
         let compclass = findSystemCompByCode(compData.layoutInfo.compCode)
         //为了准确性
         let findchildren = this.findSelectedLayoutsRecursion(this.children)
-        let newcopyComp: LayoutBase = null
+        let newcopyComp: EngineLayout = null
         for (let index = 0; index < findchildren.length; index++) {
           const element = findchildren[index]
           if (element.canDrop == true && (element as any).insertComponentLayout) {
@@ -104,7 +104,7 @@ export default class LayoutContainer extends LayoutBase {
     // window.console.log('$(this._dragHelper.dragCloneElement).offset()', $(this._dragHelper.dragCloneElement).offset())
     screenLeft = $(this._dragHelper.dragCloneElement).offset().left
     screenTop = $(this._dragHelper.dragCloneElement).offset().top
-    let dropcomp: LayoutBase = null
+    let dropcomp: EngineLayout = null
 
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
@@ -129,7 +129,7 @@ export default class LayoutContainer extends LayoutBase {
           let compdata = this.getCompTemplateData(compInfo.sourceId)
           if (dropcomp) {
             dropcomp.loadData(compdata)
-            // dropcomp.$once('onMounted', (layout: LayoutBase) => {
+            // dropcomp.$once('onMounted', (layout: EngineLayout) => {
             //   dropcomp.RefreshAllIdRecursion()
             // })
           }
@@ -207,7 +207,7 @@ export default class LayoutContainer extends LayoutBase {
       return true
     }
     /** */
-    let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as LayoutBase
+    let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as EngineLayout
     // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
     if (!dragComp) {
       return false
@@ -297,7 +297,7 @@ export default class LayoutContainer extends LayoutBase {
         break
     }
   }
-  private cuteNearbyPointInPage(x: number, y: number, target: LayoutBase): Point {
+  private cuteNearbyPointInPage(x: number, y: number, target: EngineLayout): Point {
     let respoint: Point = { X: x, Y: y }
     for (let index = 0; index < this.children.length; index++) {
       const layout = this.children[index]
@@ -309,7 +309,7 @@ export default class LayoutContainer extends LayoutBase {
     return respoint
   }
   /**计算一个点相对于控件的四边，最近的距离 */
-  private cuteNearbyPointToComp(childComp: LayoutBase, point: Point) {
+  private cuteNearbyPointToComp(childComp: EngineLayout, point: Point) {
     let size = 5
     let compLeft = childComp.left
     let compRight = childComp.left + childComp.width
@@ -370,14 +370,14 @@ export default class LayoutContainer extends LayoutBase {
     this.clearVerRule()
   }
   /************************************publics***********************/
-  public chooseComps(comps: LayoutBase[]) {
+  public chooseComps(comps: EngineLayout[]) {
     this.cancelCompSelected(this.children)
 
     comps.filter((o) => {
       o.isSelected = true
     })
   }
-  private cancelCompSelected(comps: LayoutBase[]) {
+  private cancelCompSelected(comps: EngineLayout[]) {
     comps.filter((o) => {
       if (o.isSelected == true) {
         o.isSelected = false
@@ -398,7 +398,7 @@ export default class LayoutContainer extends LayoutBase {
     // }
   }
   /************************************virtuals***********************/
-  protected renderComponent(compCon: LayoutBase, layoutInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
+  protected renderComponent(compCon: EngineLayout, layoutInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
     return compCon
   }
   public deleteChildComponents(compId: string): boolean {
@@ -412,7 +412,7 @@ export default class LayoutContainer extends LayoutBase {
     return null
   }
   /**添加一个组件 */
-  public insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): LayoutBase {
+  public insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
     // window.console.log('绘制组件')
     compInfo.compCode = dropcompclass.compCode
     // window.console.log('insertComponentLayout:', dropcompclass.prototype)
@@ -436,10 +436,10 @@ export default class LayoutContainer extends LayoutBase {
       dropcomp.$on('onComponentPropertyChanged', this.onComponentPropertyChanged)
     }
 
-    return dropcomp as LayoutBase
+    return dropcomp as EngineLayout
   }
   /************************************Emits***********************/
-  protected onComponentPropertyChanged(propertyId: string, property: Property, comp: LayoutBase): void {}
+  protected onComponentPropertyChanged(propertyId: string, property: Property, comp: EngineLayout): void {}
   protected onComponentChildrenCountChange(): void {}
   //是否需要重绘，目前只有表格组件需要重绘
   protected isNeedRecalculate: boolean = false

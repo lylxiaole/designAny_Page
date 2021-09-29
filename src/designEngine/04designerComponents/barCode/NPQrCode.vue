@@ -10,13 +10,13 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import QRCode from 'qrcode'
-import { LayoutBase, EngineComponentBase, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
+import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property, Color_Property } from '@src/designEngine'
 
 import { getUuid, deepClone } from '@src/utils'
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '一维码组件', 'NPQrCode', null)
 @Component
-export default class NPQrCode extends EngineComponentBase {
+export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'
 
   beforeMount() {
@@ -43,7 +43,7 @@ export default class NPQrCode extends EngineComponentBase {
     this.$off('onPropertyChanged', this.onPropertyChangedInner)
   }
 
-  protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponentBase): void {
+  protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
     this.initQrCode()
   }
 

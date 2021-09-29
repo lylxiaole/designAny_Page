@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import { LayoutBase, EngineComponentBase, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
+import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@src/designEngine'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@src/utils'
@@ -17,7 +17,7 @@ import { npGridIco } from '@src/designEngine/assets/icons.js'
 
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '二维码组件', 'NpBarCode', npGridIco)
 @Component
-export default class NpBarCode extends EngineComponentBase {
+export default class NpBarCode extends EngineComponent {
   private barcodeId: string = 'barcode'
 
   beforeMount() {

@@ -1,11 +1,11 @@
 /**********此处import时需要保证类的继承顺序***************** */
 import BaseEvents, { DragItemData, DragItemTypeEnum } from './BaseEvents'
-import LayoutBase, { SaveInfo } from './LayoutBase'
-import LayoutContainer from './LayoutContainer'
-import EngineComponentBase from './EngineComponentBase'
-import EnginePageBase from './EnginePageBase'
+import EngineLayout, { SaveInfo } from './EngineLayout'
+import EngineContainer from './EngineContainer'
+import EngineComponent from './EngineComponent'
+import EnginePage from './EnginePage'
 
-export { BaseEvents, LayoutBase, LayoutContainer, EngineComponentBase, EnginePageBase }
+export { BaseEvents, EngineLayout, EngineContainer, EngineComponent, EnginePage }
 export { DragItemData, DragItemTypeEnum, SaveInfo }
 export { Property, PropertyType, PropertyTypeEnum } from './commonClasses/LayoutProperty'
 export {
