@@ -1,33 +1,25 @@
 <template>
-  <el-container style="height:100%;width:100%">
-    <el-header class="toolbarheader">
+  <el-row style="height:100%;width:100%">
+    <el-row style="height:60px;width:100%">
       <toolBar :currentPage="currentShowEngine" :height="60"></toolBar>
-    </el-header>
-    <el-container class="designcontainer">
-      <el-aside width="250px">
+    </el-row>
+    <el-row style="height:calc(100% - 60px);width:100%;">
+      <el-col style="width:250px;height:100%">
         <pagelist :currentPage="currentShowEngine" :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage"
           @onDeletePage="onDeletePage"></pagelist>
-      </el-aside>
-      <el-container>
-        <el-tabs v-model="currentOpenPageId" closable type="border-card" style="width:100%">
+      </el-col>
+      <el-col class="pageList" style="width:calc(100% - 500px);height:100%">
+        <el-tabs v-model="currentOpenPageId" closable type="border-card" style="width:100%;height:100%">
           <el-tab-pane v-for="page in openPages" :key="page.id" :label="page.name" :name="page.id">
-            <div style="width:100%;height:100%" :ref="page.id"></div>
+            <div style="width:100%;height:100%;overflow:auto" :ref="page.id"></div>
           </el-tab-pane>
-          <!-- 
-          <el-tab-pane>
-            <span slot="label"><i class="el-icon-date"></i> 我的行程</span>
-            我的行程
-          </el-tab-pane>
-          <el-tab-pane label="消息中心">消息中心</el-tab-pane>
-          <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-          <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane> -->
         </el-tabs>
-      </el-container>
-      <el-aside width="250px">
+      </el-col>
+      <el-col style="width:250px;height:100%">
         <propertyGrid />
-      </el-aside>
-    </el-container>
-  </el-container>
+      </el-col>
+    </el-row>
+  </el-row>
 </template>
 
 <script lang="ts">
@@ -95,7 +87,6 @@ export default class index extends PageBase {
       this.openPages.splice(pagedataIndex, 1)
     }
   }
-
   // **********页面列表**********************************************************
   private async onEditPage(pageId: string) {
     let res = await GetPageDetail(pageId)
@@ -133,5 +124,18 @@ export default class index extends PageBase {
 }
 .designcontainer {
   height: calc(100% - 42px);
+}
+
+.pageList > .el-tabs--border-card {
+  box-sizing: border-box;
+}
+.pageList > .el-tabs--border-card > .el-tabs__header {
+  height: 39px;
+  box-sizing: border-box;
+}
+.pageList > .el-tabs--border-card > .el-tabs__content {
+  padding: 6px;
+  height: calc(100% - 39px);
+  box-sizing: border-box;
 }
 </style>
