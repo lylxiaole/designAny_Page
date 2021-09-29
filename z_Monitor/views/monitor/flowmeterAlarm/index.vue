@@ -1,5 +1,6 @@
 <template>
   <div style="height:100%;width:100%">
+    流量计报警
   </div>
 </template>
 

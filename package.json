@@ -10,7 +10,10 @@
     "build_Designer": "cross-env NODE_ENV=production webpack --config buildConfigs/designer.config.js --mode production",
     "start_App_Dev": "cross-env NODE_ENV=development webpack serve --config buildConfigs/app.config.js --mode development",
     "start_App_Pro": "cross-env NODE_ENV=production webpack serve --config buildConfigs/app.config.js --mode production",
-    "build_App": "cross-env NODE_ENV=production webpack --config buildConfigs/app.config.js --mode production"
+    "build_App": "cross-env NODE_ENV=production webpack --config buildConfigs/app.config.js --mode production",
+    "start_Monitor_Dev": "cross-env NODE_ENV=development webpack serve --config buildConfigs/monitor.config.js --mode development",
+    "start_Monitor_Pro": "cross-env NODE_ENV=production webpack serve --config buildConfigs/monitor.config.js --mode production",
+    "build_Monitor": "cross-env NODE_ENV=production webpack --config buildConfigs/monitor.config.js --mode production"
   },
   "repository": {
     "type": "git",
