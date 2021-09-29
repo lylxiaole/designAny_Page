@@ -56,8 +56,7 @@ class propertiesInPageFunc implements actResFuncBase {
   currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: objectBase) {
-    var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var findproperty = containerPage.findPropertyById(obj.resourceId)
+    var findproperty = this.currentPage.findPropertyById(obj.resourceId)
     if (!findproperty) {
       return null
     } else {
@@ -65,12 +64,10 @@ class propertiesInPageFunc implements actResFuncBase {
     }
   }
   setFunc(obj: objectBase, val: any) {
-    var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    containerPage.setPropertyVal(obj.resourceId, val, true)
+    this.currentPage.setPropertyVal(obj.resourceId, val, true)
   }
   getDesc(obj: objectBase): string {
-    var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var findproperty = containerPage.findPropertyById(obj.resourceId)
+    var findproperty = this.currentPage.findPropertyById(obj.resourceId)
     if (!findproperty) {
       return ''
     }
@@ -125,8 +122,7 @@ class controlMethodsFunc implements actResFuncBase {
   currentBehavior: behavior
   getFunc(obj: object_Method) {
     var compId = obj.resourceId
-    var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var comp = containerPage.findLayoutRecursion(compId, containerPage.children)
+    var comp = this.currentPage.findLayoutRecursion(compId, this.currentPage.children)
     var params: any[] = []
     obj.inputParams.filter((o) => {
       var m_param = o.obj.ref === undefined ? (o.obj.resourceId.split('&').length > 1 ? o.obj.resourceId.split('&')[1] : o.obj.resourceId[0]) : o.obj.ref
@@ -143,8 +139,7 @@ class controlMethodsFunc implements actResFuncBase {
   }
   getDesc(obj: objectBase): string {
     var compId = obj.resourceId
-    var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    var comp = containerPage.findLayoutRecursion(compId, containerPage.children)
+    var comp = this.currentPage.findLayoutRecursion(compId, this.currentPage.children)
     if (!comp) {
       return '页面控件(已删除)'
     }
@@ -171,22 +166,20 @@ class behaviorsFunc implements actResFuncBase {
   currentBehavior: behavior
   getFunc(obj: object_Method) {
     // window.console.log('模型实例')
-    var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    let behav = containerPage.behaviors.find((o) => o.id == obj.resourceId)
+    let behav = this.currentPage.behaviors.find((o) => o.id == obj.resourceId)
     if (!behav) {
       return
     }
     window.console.log('****执行行为:', behav.name)
     behav.inparam = obj.inputParams[0].obj.ref
-    var fact = new factory(this.currentLayout, containerPage, behav)
+    var fact = new factory(this.currentLayout, this.currentPage, behav)
     fact.exacteAction()
   }
   setFunc(obj: object_Method, val: any) {
     throw '行为不能被赋值'
   }
   getDesc(obj: object_Method): string {
-    var containerPage = findContainerPage(this.currentPage, obj.pageId)
-    let behav = containerPage.behaviors.find((o) => o.id == obj.resourceId)
+    let behav = this.currentPage.behaviors.find((o) => o.id == obj.resourceId)
     if (!behav) {
       return '页面行为:'
     }
@@ -208,8 +201,7 @@ class pageInParamsFunc implements actResFuncBase {
   currentPage: EnginePageBase
   currentBehavior: behavior
   getFunc(obj: objectBase) {
-    var containerPage = findContainerPage(this.currentPage, obj.pageId, false)
-    var itemvalue = containerPage.inParams.find((o) => o.key == obj.resourceId).paramVal
+    var itemvalue = this.currentPage.inParams.find((o) => o.key == obj.resourceId).paramVal
     if (itemvalue === undefined) {
       return null
     } else {
@@ -217,12 +209,10 @@ class pageInParamsFunc implements actResFuncBase {
     }
   }
   setFunc(obj: objectBase, val: any) {
-    var containerPage = findContainerPage(this.currentPage, obj.pageId, false)
-    containerPage.inParams.find((o) => o.key == obj.resourceId).paramVal = val
+    this.currentPage.inParams.find((o) => o.key == obj.resourceId).paramVal = val
   }
   getDesc(obj: objectBase): string {
-    var containerPage = findContainerPage(this.currentPage, obj.pageId, false)
-    var inparam = containerPage.inParams.find((o) => o.key == obj.resourceId)
+    var inparam = this.currentPage.inParams.find((o) => o.key == obj.resourceId)
     if (!inparam) {
       return ''
     }
