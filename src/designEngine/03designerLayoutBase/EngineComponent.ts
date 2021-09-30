@@ -5,8 +5,6 @@ import { LayoutType } from './commonClasses/componentInfos'
 
 @Component
 export default class EngineComponent extends EngineContainer {
-  public wheelIndex: any = 1
-  public defaultValue: any
   public parentPage: EnginePage
 
   public get topParentPage(): EnginePage {
@@ -16,7 +14,6 @@ export default class EngineComponent extends EngineContainer {
     }
     return res
   }
-
   get foreground(): string {
     var property = this.findPropertyByName(PropertyGroupName.normal, '前景色')
     if (property) {
@@ -25,7 +22,6 @@ export default class EngineComponent extends EngineContainer {
       return '#000000'
     }
   }
-
   get display(): boolean {
     // window.console.log('是否显示')
     var property = this.findPropertyByName(PropertyGroupName.normal, '是否显示')
@@ -34,14 +30,12 @@ export default class EngineComponent extends EngineContainer {
     }
     return false
   }
-
   set display(val: boolean) {
     var property = this.findPropertyByName(PropertyGroupName.normal, '是否显示')
     if (property) {
       property.value = val
     }
   }
-
   get disabled(): boolean {
     var property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
     if (property) {
@@ -49,14 +43,12 @@ export default class EngineComponent extends EngineContainer {
     }
     return false
   }
-
   set disabled(val: boolean) {
     var property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
     if (property) {
       property.value = val
     }
   }
-
   get zIndex(): number {
     var property = this.findPropertyByName(PropertyGroupName.normal, '层级设置')
     if (property) {
@@ -65,7 +57,6 @@ export default class EngineComponent extends EngineContainer {
       return null
     }
   }
-
   set zIndex(val: number) {
     var property = this.findPropertyByName(PropertyGroupName.normal, '层级设置')
     if (property) {
@@ -75,7 +66,6 @@ export default class EngineComponent extends EngineContainer {
   get tooltipText(): string {
     return null
   }
-
   created() {
     window.console.log('EngineComponent created')
     if (this.isDesigning == true) {
@@ -107,7 +97,6 @@ export default class EngineComponent extends EngineContainer {
       }
     })
   }
-
   mounted() {
     if (this.isDesigning == true) {
       this.canDrop = false
@@ -124,7 +113,6 @@ export default class EngineComponent extends EngineContainer {
       this.triggeEvent('控件加载完成事件', null)
     })
   }
-
   rendered(dom: Element) {}
   // *******************************privates**************************************************************************************
   protected listenOnDrag(el: Element, dragdata: DragItemData<any>) {
