@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '@src/views/PageBase'
+import ComponentBase from '@src/views/ComponentBase'
 import { jkzl, jlbjk, appTokenValidate } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
@@ -34,7 +34,7 @@ import { param2Obj } from '@src/utils'
 @Component({
   components: {}
 })
-export default class headerInfo extends PageBase {
+export default class headerInfo extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ***************底部Tab*********************************************
