@@ -4,17 +4,17 @@
       <flowmeterHeader style="width:100%;height:100%" />
     </el-row>
     <el-row style=" height:calc(100% - 120px)">
-      <el-col :span="18">
-        <el-row>
-          <currentAlarm />
+      <el-col :span="8">
+        <el-row style="height:50%">
+          <currentAlarm style="height:100%;width:100%" />
         </el-row>
-        <el-row>
-          <dataCompare />
+        <el-row style="height:50%">
+          <alarmTop7 style="height:100%;width:100%" />
         </el-row>
       </el-col>
       <!-- ************************************************************************* -->
-      <el-col :span="6">
-
+      <el-col :span="16">
+        <alarmHistory />
       </el-col>
     </el-row>
   </div>
@@ -29,13 +29,15 @@ import { param2Obj } from '@src/utils'
 import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 import currentAlarm from './currentAlarm.vue'
 import alarmTop7 from './alarmTop7.vue'
+import alarmHistory from './alarmHistory.vue'
 // *****************************************************************
 /***流量计报警 */
 @Component({
   components: {
     flowmeterHeader,
     currentAlarm,
-    alarmTop7
+    alarmTop7,
+    alarmHistory
   }
 })
 export default class Index extends PageBase {

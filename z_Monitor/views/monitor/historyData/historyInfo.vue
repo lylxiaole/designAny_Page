@@ -6,12 +6,10 @@
         end-placeholder="结束日期" :picker-options="pickerOptions">
       </el-date-picker>
       <span>或前:</span>
-      <el-input-number v-model="rangeDay" controls-position="right" :min="0"></el-input-number>
+      <el-input-number v-model="num" controls-position="right" :min="1"></el-input-number>
       <span>天</span>
     </el-row>
-    <el-row style="height:calc(100% - 50px)">
-
-    </el-row>
+    <el-row style="height:calc(100% - 50px)"></el-row>
   </div>
 </template>
 
