@@ -5,15 +5,15 @@
     </el-row>
     <el-row style=" height:calc(100% - 120px)">
       <el-col :span="12">
-        <el-row style="height:33%;border:1px solid #000">
-          <el-col desc="重要测量">
+        <el-row style="height:33%;">
+          <el-col :span="12" desc="重要测量" style="border:1px solid #000">
             <importantMeasure />
           </el-col>
-          <el-col desc="仪表状态">
+          <el-col :span="12" desc="仪表状态" style="border:1px solid #000">
           </el-col>
         </el-row>
         <el-row desc="关键测量" style="height:33%;border:1px solid #000">
-          <el-table :data="tableData" border>
+          <el-table :data="KeyMeasurementPoint" border>
             <el-table-column prop="date" label="数据采集点" width="180">
             </el-table-column>
             <el-table-column prop="name" label="实时数值" width="180">
@@ -25,7 +25,7 @@
           </el-table>
         </el-row>
         <el-row desc="仪表状态" style="height:33%;border:1px solid #000">
-          <el-table :data="tableData" height="250" border style="width: 100%">
+          <el-table :data="deviceStatus" border style="width: 100%">
             <el-table-column prop="date" label="数据采集点" width="180">
             </el-table-column>
             <el-table-column prop="name" label="实时数值" width="180">
@@ -40,7 +40,18 @@
       <!-- ************************************************************************* -->
       <el-col :span="12">
         <el-row desc="仪表报警" style="height:50%;border:1px solid #000"></el-row>
-        <el-row desc="仪表系数" style="height:50%;border:1px solid #000"></el-row>
+        <el-row desc="仪表系数" style="height:50%;border:1px solid #000">
+          <el-table :data="instrumentCoefficient" border>
+            <el-table-column prop="date" label="数据采集点" width="180">
+            </el-table-column>
+            <el-table-column prop="name" label="实时数值" width="180">
+            </el-table-column>
+            <el-table-column prop="address" label="计量单位">
+            </el-table-column>
+            <el-table-column prop="address" label="数据采集时间">
+            </el-table-column>
+          </el-table>
+        </el-row>
       </el-col>
     </el-row>
   </div>
@@ -63,9 +74,14 @@ import importantMeasure from './importantMeasure.vue'
   }
 })
 export default class Index extends PageBase {
-  // ********************************************************************************
   mounted() {}
-  // ***************底部Tab*********************************************
+
+  // ***************关键测量表格*********************************************
+  private keyMeasurementPoint: any[] = []
+  // ***************仪表状态表格*********************************************
+  private deviceStatus: any[] = []
+  // ***************仪表系数表格*********************************************
+  private instrumentCoefficient: any[] = []
 }
 </script>
 <style scoped>
