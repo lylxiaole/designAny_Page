@@ -26,8 +26,10 @@
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
     <div v-if="Component&&Component.disabled===true" ref="dragmengb" type="drag"
       style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:isDesigning===true?0:3 }"></div>
-    <a-icon ref="dragIcon" type="drag" v-if="isSelectedArea===true&&isDesigning===true"
-      style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4" />
+
+    <i ref="dragIcon" class="el-icon-rank" v-if="isSelectedArea===true&&isDesigning===true"
+      style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4"></i>
+
   </div>
 </template>
 
@@ -37,6 +39,9 @@ import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum
 import { deepClone } from '@src/utils'
 @Component
 export default class DesignShell extends BaseEvents {
+  public get isDesigning(): boolean {
+    return true
+  }
   private Component: EngineComponent = null
   public positionval: string = null
 
@@ -57,7 +62,6 @@ export default class DesignShell extends BaseEvents {
     }
     return this.Component.display
   }
-
   /**是否是当前选中的区域 */
   get isSelectedArea(): boolean {
     if (this.isDesigning) {
@@ -73,7 +77,6 @@ export default class DesignShell extends BaseEvents {
     }
     return false
   }
-
   get hoverClass(): string {
     if (this.isDesigning == true) {
       return 'gad-mengb'
@@ -81,7 +84,6 @@ export default class DesignShell extends BaseEvents {
       return ''
     }
   }
-
   get themeClass(): string {
     if (!this.Component) {
       return ''
@@ -91,12 +93,10 @@ export default class DesignShell extends BaseEvents {
     }
     return ''
   }
-
   /**当前组建壳子中的组件 */
   get InnerComponent() {
     return this.Component
   }
-
   get boarderStyle(): string {
     if (this.isDesigning == true && this.isSelectedArea == true) {
       return '#faad14 solid 1px'
@@ -112,6 +112,7 @@ export default class DesignShell extends BaseEvents {
       this.canDrag = true
       this.onDrag_Event = this.onDragSize
       this.onClick_Event = (e: Event, target: any) => {
+        window.console.log('DesignShell onClick_Event')
         if (this.isDesigning) {
           if (this.Component.parentPage) {
             this.Component.parentPage.chooseComps([])

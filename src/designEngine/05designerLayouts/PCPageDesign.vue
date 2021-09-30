@@ -34,5 +34,11 @@ export default class PCPageDesign extends EnginePage {
 }
 </script>
  
-<style scoped>
+<style lang="less" scoped>
+/deep/ .container {
+  padding: 0px;
+  background: transparent;
+  border: none;
+  border-radius: 0px;
+}
 </style>

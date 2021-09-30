@@ -11,5 +11,11 @@ import { EnginePage } from '../03designerLayoutBase'
 export default class PCPagePreview extends EnginePage {}
 </script>
  
-<style scoped>
+<style lang="less" scoped>
+/deep/ .container {
+  padding: 0px;
+  background: transparent;
+  border: none;
+  border-radius: 0px;
+}
 </style>
