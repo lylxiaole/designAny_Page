@@ -26,7 +26,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk, appTokenValidate } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, appTokenValidate } from '../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 // *****************************************************************
@@ -34,7 +34,7 @@ import { param2Obj } from '@src/utils'
 @Component({
   components: {}
 })
-export default class headerInfo extends ComponentBase {
+export default class flowmeterHeader extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ***************底部Tab*********************************************

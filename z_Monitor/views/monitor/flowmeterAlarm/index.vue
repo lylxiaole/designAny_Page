@@ -1,6 +1,22 @@
 <template>
-  <div style="height:100%;width:100%">
-    流量计报警
+  <div style="height:100%;width:100%;padding:10px;box-sizing:border-box">
+    <el-row style="height:120px">
+      <flowmeterHeader style="width:100%;height:100%" />
+    </el-row>
+    <el-row style=" height:calc(100% - 120px)">
+      <el-col :span="18">
+        <el-row>
+          <currentAlarm />
+        </el-row>
+        <el-row>
+          <dataCompare />
+        </el-row>
+      </el-col>
+      <!-- ************************************************************************* -->
+      <el-col :span="6">
+
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -10,10 +26,17 @@ import PageBase from '@src/views/PageBase'
 import { jkzl, jlbjk, appTokenValidate } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
+import flowmeterHeader from '../../../components/flowmeterHeader.vue'
+import currentAlarm from './currentAlarm.vue'
+import alarmTop7 from './alarmTop7.vue'
 // *****************************************************************
 /***流量计报警 */
 @Component({
-  components: {}
+  components: {
+    flowmeterHeader,
+    currentAlarm,
+    alarmTop7
+  }
 })
 export default class Index extends PageBase {
   // ********************************************************************************

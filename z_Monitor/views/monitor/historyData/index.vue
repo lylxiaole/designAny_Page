@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width:100%;padding:10px;box-sizing:border-box">
     <el-row style="height:120px">
-      <headerInfo style="width:100%;height:100%" />
+      <flowmeterHeader style="width:100%;height:100%" />
     </el-row>
     <el-row style=" height:calc(100% - 120px)">
       <el-col :span="18">
@@ -24,11 +24,13 @@ import { param2Obj } from '@src/utils'
 import importantMeasure from '../flowmeterInfo/importantMeasure.vue'
 import historyInfo from './historyInfo.vue'
 import dataCompare from './dataCompare.vue'
+import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 
 // *****************************************************************
 /***历史数据分析 */
 @Component({
   components: {
+    flowmeterHeader,
     importantMeasure,
     historyInfo,
     dataCompare
