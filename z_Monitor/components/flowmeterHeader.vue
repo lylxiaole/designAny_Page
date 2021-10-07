@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col style="width:200px">
+    <el-col style="width:150px">
       <el-button class="button" size="mini">选择流量计</el-button>
     </el-col>
     <el-col style="width:calc(100% - 400px);display:flex;flex-wrap:wrap">
@@ -12,11 +12,10 @@
       <span class="label">类型:质量流量计</span>
       <span class="label">状态:正常</span>
     </el-col>
-    <el-col style="width:120px">
+    <el-col style="width:250px">
       <el-row>
         <el-button class="button" size="mini">查看流量计报警</el-button>
-      </el-row>
-      <el-row>
+
         <el-button class="button" size="mini">查看流量计历史</el-button>
       </el-row>
     </el-col>
