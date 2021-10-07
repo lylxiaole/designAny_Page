@@ -18,12 +18,16 @@ export default class PCPageDesign extends EnginePage {
   public allShells: DesignShell[] = []
 
   created() {}
-  mounted() {}
+  mounted() {
+    this.canDrag = false
+    this.canDrop = true
+  }
 
   protected renderComponent(compCon: EngineComponent): EngineLayout {
     window.console.log('renderComponent:', compCon)
     let shell = new DesignShell()
     let fragment = drawVueOnVirtualDom(shell)
+    window.console.log('renderComponent:', shell.$el)
     this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(shell)
     shell.addComponent(compCon)

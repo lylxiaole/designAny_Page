@@ -44,12 +44,15 @@ export default class EngineContainer extends EngineLayout {
     if (!dragdata) {
       return true
     }
+    if (dragdata.type === DragItemTypeEnum.dragmove_component_inpage) {
+      return true
+    }
 
     let compInfo = dragdata.dragData as any
     if (!compInfo) {
       return true
     }
-    // window.console.log('listenOnDrop')
+    window.console.log('listenOnDrop:', dragdata)
     // window.console.log('$(this._dragHelper.dragCloneElement).offset()', $(this._dragHelper.dragCloneElement).offset())
     screenLeft = $(this._dragHelper.dragCloneElement).offset().left
     screenTop = $(this._dragHelper.dragCloneElement).offset().top
@@ -146,6 +149,7 @@ export default class EngineContainer extends EngineLayout {
     e.stopPropagation()
   }
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
+    window.console.log('listenOnDragMove:', dragdata)
     if (!dragdata) {
       return true
     }
