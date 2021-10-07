@@ -44,6 +44,7 @@ export default class EngineContainer extends EngineLayout {
     if (!dragdata) {
       return true
     }
+
     let compInfo = dragdata.dragData as any
     if (!compInfo) {
       return true

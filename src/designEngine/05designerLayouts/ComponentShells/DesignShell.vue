@@ -111,7 +111,7 @@ export default class DesignShell extends BaseEvents {
     this.canDrag = true
     this.onDrag_Event = this.onDragSize
     this.onClick_Event = (e: Event, target: any) => {
-      window.console.log('DesignShell onClick_Event')
+      // window.console.log('DesignShell onClick_Event')
       ;(this.Component.parentLayout as any).chooseComps([this.Component])
       $(this.$el).focus()
       e.stopPropagation()
@@ -145,6 +145,7 @@ export default class DesignShell extends BaseEvents {
 
   public onDragSize(el: Element, dragdata: DragItemData<any>) {
     if (el == this.$refs['dragIcon'] || el == this.$refs['dragmengb']) {
+      window.console.log('onDragSize:', el)
       dragdata.type = DragItemTypeEnum.dragmove_component_inpage
       dragdata.dragData = { compId: this.Component.Id }
       return
