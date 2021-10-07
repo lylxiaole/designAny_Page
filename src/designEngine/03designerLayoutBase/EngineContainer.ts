@@ -21,7 +21,7 @@ export default class EngineContainer extends EngineLayout {
   private mouseX: number = 0
   private mouseY: number = 0
   created() {
-    window.console.log('EngineContainer created')
+    // window.console.log('EngineContainer created')
   }
   mounted() {
     if (this.isDesigning) {
@@ -48,7 +48,7 @@ export default class EngineContainer extends EngineLayout {
     if (!compInfo) {
       return true
     }
-    window.console.log('listenOnDrop')
+    // window.console.log('listenOnDrop')
     // window.console.log('$(this._dragHelper.dragCloneElement).offset()', $(this._dragHelper.dragCloneElement).offset())
     screenLeft = $(this._dragHelper.dragCloneElement).offset().left
     screenTop = $(this._dragHelper.dragCloneElement).offset().top
@@ -318,7 +318,7 @@ export default class EngineContainer extends EngineLayout {
   }
   /**添加一个组件 */
   private insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
-    window.console.log('绘制组件')
+    // window.console.log('绘制组件')
     // compInfo.compCode = dropcompclass.compCode
     dropcompclass.prototype.isDesigning = this.isDesigning
     let dropcomp = new dropcompclass() as EngineLayout

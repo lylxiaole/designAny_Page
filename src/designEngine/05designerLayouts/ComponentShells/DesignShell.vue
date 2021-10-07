@@ -106,22 +106,15 @@ export default class DesignShell extends BaseEvents {
   }
 
   mounted() {
-    if (this.isDesigning == true) {
-      this.captureEvent()
-      this.canDrop = false
-      this.canDrag = true
-      this.onDrag_Event = this.onDragSize
-      this.onClick_Event = (e: Event, target: any) => {
-        window.console.log('DesignShell onClick_Event')
-        if (this.isDesigning) {
-          if (this.Component.parentPage) {
-            this.Component.parentPage.chooseComps([])
-          }
-          ;(this.Component.parentLayout as any).chooseComps([this.Component])
-          $(this.$el).focus()
-          e.stopPropagation()
-        }
-      }
+    this.captureEvent()
+    this.canDrop = false
+    this.canDrag = true
+    this.onDrag_Event = this.onDragSize
+    this.onClick_Event = (e: Event, target: any) => {
+      window.console.log('DesignShell onClick_Event')
+      ;(this.Component.parentLayout as any).chooseComps([this.Component])
+      $(this.$el).focus()
+      e.stopPropagation()
     }
   }
 
@@ -137,7 +130,7 @@ export default class DesignShell extends BaseEvents {
     }
   }
 
-  public AddComponent(comp: EngineComponent) {
+  public addComponent(comp: EngineComponent) {
     if (this.Component != null) {
       this.Component.$destroy()
     }

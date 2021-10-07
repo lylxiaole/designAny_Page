@@ -18,6 +18,7 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "strictNullChecks": false,
+    "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@src/*": [
