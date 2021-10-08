@@ -24,9 +24,10 @@ import XYZ from 'ol/source/XYZ'
 })
 export default class Index extends PageBase {
   private drawerOpen: boolean = false
+  private currentMap: Map = null
   // ********************************************************************************
   mounted() {
-    new Map({
+    this.currentMap = new Map({
       target: this.$refs.mapArea as any,
       layers: [
         new TileLayer({
