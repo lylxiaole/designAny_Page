@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '@src/views/PageBase'
+import ComponentBase from '@src/views/PageBase'
 import { jkzl, jlbjk, appTokenValidate } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
@@ -15,7 +15,7 @@ import { param2Obj } from '@src/utils'
 @Component({
   components: {}
 })
-export default class areaCard extends PageBase {
+export default class areaCard extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ***************底部Tab*********************************************

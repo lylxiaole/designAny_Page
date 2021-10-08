@@ -11,14 +11,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '@src/views/PageBase'
+import ComponentBase from '@src/views/ComponentBase'
 import { Route } from 'vue-router'
 // *****************************************************************
 /***流量计数据对比 */
 @Component({
   components: {}
 })
-export default class flowmeterChooseModal extends PageBase {
+export default class flowmeterChooseModal extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ***************底部Tab*********************************************
