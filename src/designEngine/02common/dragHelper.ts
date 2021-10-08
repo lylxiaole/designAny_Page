@@ -71,6 +71,7 @@ class dragulaExtand {
       if (dragulaExtand.IsCanDrop(targetContainer) == false) {
         return false //
       }
+      dragulaExtand._onDragMove(window.event)
       return true
     }
   })
@@ -90,7 +91,7 @@ class dragulaExtand {
     dragulaExtand.drag_third.containers.push(container)
     /**添加dragMove事件拓展 */
     var dragulaContainer = new dragulaContainerClass(container)
-    //window.console.log('registerContainer:', container)
+    ////window.console.log('registerContainer:', container)
     dragulaExtand._dragulaContainer.push(dragulaContainer)
     dragulaExtand._dragulaContainer = dragulaExtand._dragulaContainer.sort((a, b) => {
       if ($(a.container).find(b.container).length > 0) {
@@ -121,6 +122,7 @@ class dragulaExtand {
     }
   }
   public static IsCanDrag(dragItem: Element): boolean {
+    // //window.console.log('IsCanDrag:', dragItem)
     var candrag = $(dragItem).attr(dragEnums.canDrag)
     if (candrag == 'true') {
       return true
@@ -153,7 +155,7 @@ class dragulaExtand {
   // **************监听dragula所有对外事件*****************************************************************************
   private static _onDrag(el: Element, sourceContainer: Element) {
     dragulaExtand.dragSource = el
-    //window.console.log('拖拽最底层', el)
+    ////window.console.log('拖拽最底层', el)
     var findDragMoveExtands = dragulaExtand.getContainerDesc(sourceContainer)
     if (findDragMoveExtands.length < 1) {
       return
@@ -217,6 +219,7 @@ class dragulaExtand {
   }
   private static _onDragShadow(shadow: Element, targetContainer: Element, sourceContainer: Element) {
     dragulaExtand.dragShadow = shadow
+    //window.console.log('_onDragShadow:', targetContainer)
     $(dragulaExtand.dragShadow).hide()
     var findDragMoveExtand = dragulaExtand.getContainerDesc(targetContainer).filter((o) => o.container == sourceContainer)[0]
     if (findDragMoveExtand && findDragMoveExtand.shadowEvent) {
@@ -224,8 +227,10 @@ class dragulaExtand {
     }
   }
   private static _onDragClone(clone: Element, original: Element, type: string) {
+    //window.console.log('_onDragClone:', clone)
     dragulaExtand.dragClone = clone
-    dragulaExtand.dragClone.addEventListener('mousemove', dragulaExtand._onDragMove)
+
+    // dragulaExtand.dragClone.addEventListener('mousemove', dragulaExtand._onDragMove)
     dragulaExtand._dragulaContainer.filter((o) => {
       if (o.clonedEvent) {
         o.clonedEvent(clone)
@@ -269,13 +274,13 @@ class dragulaExtand {
     dragulaExtand.dragOverContainer = null
   }
   private static _onDragMove(e: Event) {
-    //  //window.console.log(dragulaExtand.dragSource)
+    //window.console.log('**********_onDragMove1')
     if (!dragulaExtand.dragSource) {
       return
     }
-    //  //window.console.log('**********最底层拖拽')
+    // //window.console.log('**********_onDragMove2')
     var findDragMoveExtands = dragulaExtand.getContainerDesc(dragulaExtand.dragOverContainer)
-    //  //window.console.log('**********最底层拖拽:', findDragMoveExtands.length)
+    // //window.console.log('**********_onDragMove:', findDragMoveExtands.length)
     for (let index = 0; index < findDragMoveExtands.length; index++) {
       const findDragMoveExtand = findDragMoveExtands[index]
       if (!findDragMoveExtand.dragMoveEvent || !dragulaExtand.dragSource) {
@@ -291,7 +296,7 @@ class dragulaExtand {
         return false
       }
     }
-    // //window.console.log('accepts当前是容器，可以拖拽进来')
+    // ////window.console.log('accepts当前是容器，可以拖拽进来')
     return true //
   }
 }
@@ -347,7 +352,7 @@ export default class dragHelper {
     return dragulaExtand.IsCanDrag(dragItem)
   }
   public makeDomCanDrag(dragItem: Element) {
-    //  //window.console.log('makeDomCanDrag')
+    //  ////window.console.log('makeDomCanDrag')
     $(dragItem).attr(dragEnums.canDrag, 'true')
   }
   public makeDomCannotDrag(dragItem: Element) {
@@ -356,7 +361,7 @@ export default class dragHelper {
   // *****************定义dragItem的附加内容*****************************************
   public makeDragItemInfo(dragItem: Element, Info: any): void {
     var infostr = common.serialize(Info)
-    // //window.console.log('infostr',infostr)
+    // ////window.console.log('infostr',infostr)
     $(dragItem).attr(dragEnums.dragItem_Info, infostr)
   }
   public getDragItemInfo(dragItem: Element): any {
