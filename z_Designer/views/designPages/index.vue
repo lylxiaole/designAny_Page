@@ -65,22 +65,24 @@ export default class index extends PageBase {
     let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
     return findengine
   }
-  private openPage(page: DesignPageDC) {
+  private openPage(page: DesignPageDC, pageengine: EnginePage) {
+    let engine = this.openPageEngines.find((o) => o.Id === page.id)
+    if (!engine) {
+      this.openPageEngines.push(pageengine)
+    }
+
     let findopen = this.openPages.find((o) => o.id === page.id)
     if (!findopen) {
       this.openPages.push(page)
     }
+
     this.currentOpenPageId = page.id
   }
-  private cachePageEngine(pageId: string, pageEngine: EnginePage) {
-    let engine = this.openPageEngines.find((o) => o.Id === pageId)
-    if (!engine) {
-      this.openPageEngines.push(pageEngine)
-    }
-  }
+
   private closePage(pageId: string) {
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
+      this.openPageEngines[engineIndex].$destroy()
       this.openPageEngines.splice(engineIndex, 1)
     }
     let pagedataIndex = this.openPages.findIndex((o) => o.id === pageId)
@@ -91,7 +93,7 @@ export default class index extends PageBase {
   // **********页面列表**********************************************************
   private async onEditPage(pageId: string) {
     let res = await GetPageDetail(pageId)
-    this.openPage(res)
+
     await this.$nextTick()
     let designLayout: EnginePage = null
     switch (res.type) {
@@ -109,7 +111,7 @@ export default class index extends PageBase {
     await designLayout.$nextTick()
     designLayout.loadPageById(pageId)
     $(this.$refs[pageId][0]).append(documentFrag)
-    this.cachePageEngine(pageId, designLayout)
+    this.openPage(res, designLayout)
   }
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)

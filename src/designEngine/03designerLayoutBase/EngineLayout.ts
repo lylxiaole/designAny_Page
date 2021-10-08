@@ -434,6 +434,7 @@ export default class EngineLayout extends BaseEvents {
   // *************************privates****************************************************************************
   private isLoaded: boolean = false
   private async destorymethod() {
+    this.$off()
     for (let index = 0; index < this.properties.length; index++) {
       const element = this.properties[index]
       element.destory()
