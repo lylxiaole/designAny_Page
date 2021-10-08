@@ -28,6 +28,18 @@ export default class EngineLayout extends BaseEvents {
   public properties: Property[] = []
   /**父级布局 */
   public parentLayout: EngineLayout
+  public get topLayout(): EngineLayout {
+    if (!this.parentLayout) {
+      return null
+    }
+
+    let top: EngineLayout = this.parentLayout
+
+    while (top.parentLayout) {
+      top = top.parentLayout
+    }
+    return top
+  }
   /**子级布局 */
   public children: EngineLayout[] = []
   /**当前选中的直接子级布局 */

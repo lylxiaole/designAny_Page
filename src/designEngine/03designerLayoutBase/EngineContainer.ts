@@ -6,6 +6,7 @@ import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
 import { findSystemCompByCode } from './commonClasses/componentInfos'
+import { EnginePage } from '.'
 
 @Component
 export default class EngineContainer extends EngineLayout {
@@ -164,7 +165,7 @@ export default class EngineContainer extends EngineLayout {
       return false
     }
 
-    let parentPageCurrentScaleSize = (dragComp as any).parentPage.currentScaleSize
+    let parentPageCurrentScaleSize = (dragComp.topLayout as EnginePage).currentScaleSize
     /**do */
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       /**范围控制 */
