@@ -100,7 +100,7 @@ export default class EngineComponent extends EngineContainer {
   mounted() {
     if (this.isDesigning == true) {
       this.canDrop = false
-      this.canDrag = true
+      this.canDrag = false
       this.width = 200
       this.height = 200
       this.onDrag_Event = this.listenOnDrag

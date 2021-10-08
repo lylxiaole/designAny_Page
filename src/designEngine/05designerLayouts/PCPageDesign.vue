@@ -27,8 +27,7 @@ export default class PCPageDesign extends EnginePage {
     window.console.log('renderComponent:', compCon)
     let shell = new DesignShell()
     let fragment = drawVueOnVirtualDom(shell)
-    window.console.log('renderComponent:', shell.$el)
-    this._dragHelper.makeDomCanDrag(shell.$el)
+    // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(shell)
     shell.addComponent(compCon)
     //

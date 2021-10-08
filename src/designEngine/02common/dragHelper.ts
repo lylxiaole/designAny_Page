@@ -172,7 +172,7 @@ class dragulaExtand {
   //如果拖拽到其它容器中,targetContainer不为空,targetContainer_Self为空
   //如果拖拽到本身容器中,targetContainer为空,targetContainer_Self不为空
   private static _onDrop(el: Element, targetContainer: Element, sourceContainer: Element, targetContainer_Self: Element) {
-    //window.console.log('_onDrop:', targetContainer)
+    window.console.log('_onDrop:', dragulaExtand._dragulaContainer)
     var findDragMoveExtands = null
     if (targetContainer == null && targetContainer_Self != null) {
       findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer_Self)
@@ -230,7 +230,7 @@ class dragulaExtand {
     //window.console.log('_onDragClone:', clone)
     dragulaExtand.dragClone = clone
 
-    // dragulaExtand.dragClone.addEventListener('mousemove', dragulaExtand._onDragMove)
+    dragulaExtand.dragClone.addEventListener('mousemove', dragulaExtand._onDragMove)
     dragulaExtand._dragulaContainer.filter((o) => {
       if (o.clonedEvent) {
         o.clonedEvent(clone)
@@ -352,7 +352,7 @@ export default class dragHelper {
     return dragulaExtand.IsCanDrag(dragItem)
   }
   public makeDomCanDrag(dragItem: Element) {
-    //  ////window.console.log('makeDomCanDrag')
+    // window.console.log('makeDomCanDrag')
     $(dragItem).attr(dragEnums.canDrag, 'true')
   }
   public makeDomCannotDrag(dragItem: Element) {

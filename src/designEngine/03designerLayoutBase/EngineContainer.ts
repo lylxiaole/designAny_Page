@@ -45,9 +45,6 @@ export default class EngineContainer extends EngineLayout {
     if (!dragdata) {
       return true
     }
-    if (dragdata.type === DragItemTypeEnum.dragmove_component_inpage) {
-      return true
-    }
 
     let compInfo = dragdata.dragData as any
     if (!compInfo) {
@@ -58,26 +55,29 @@ export default class EngineContainer extends EngineLayout {
     screenLeft = $(this._dragHelper.dragCloneElement).offset().left
     screenTop = $(this._dragHelper.dragCloneElement).offset().top
     let dropcomp: EngineLayout = null
-    let compVue = findSystemCompByCode(compInfo.compCode)
 
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {
+          let compVue = findSystemCompByCode(compInfo.compCode)
           dropcomp = this.insertComponentLayout(compVue, compInfo, dragdata.type)
         }
         break
       case DragItemTypeEnum.drop_component_template:
         {
           let compdata = this.getCompTemplateData(compInfo.sourceId)
+          let compVue = findSystemCompByCode(compInfo.compCode)
           dropcomp = this.insertComponentLayout(compVue, compInfo, dragdata.type, compdata)
         }
         break
       default:
         break
     }
+    if (dropcomp) {
+      dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize
+      dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize
+    }
 
-    dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize
-    dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize
     return false
   }
   private listenOnDeleteKey(e: Event) {
@@ -300,7 +300,7 @@ export default class EngineContainer extends EngineLayout {
     if (!this.horRule) {
       let domid = getUuid()
       let dom = '<div id="' + domid + '" style="width:9999px;height:2px;background:red;position:absolute" z-index="999"></div>'
-      // $(this.$el).append(dom)
+      $(this.$el).append(dom)
       this.horRule = $('#' + domid)[0]
     }
     $(this.horRule).show()
