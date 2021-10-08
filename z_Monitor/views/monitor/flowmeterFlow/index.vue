@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { jkzl, jlbjk, appTokenValidate } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import flowmeterTable from './flowmeterTable.vue'
 import flowmeterView from './flowmeterView.vue'

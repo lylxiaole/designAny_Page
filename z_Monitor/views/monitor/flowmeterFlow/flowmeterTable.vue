@@ -32,7 +32,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk, appTokenValidate } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 // *****************************************************************
 /***流量计数据对比 */

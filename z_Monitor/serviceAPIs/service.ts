@@ -59,10 +59,9 @@ export async function xjjh(xjjhsj: string, xjzt: string): Promise<any> {
   return resp
 }
 
-export async function appTokenValidate(token: string): Promise<any> {
-  var formData = new FormData()
-  formData.append('token', token)
-  let url = `${apiAddr()}/appTokenValidate.ashx`
+export async function getMapMarkerList(): Promise<any> {
+  var formData = { action: 'getQyPzJlbZtHz' }
+  let url = `${apiAddr()}/jlbjk/jlbjk.ashx?time=${new Date()}`
   const resp = await ajaxPost(url, formData)
   return resp
 }
