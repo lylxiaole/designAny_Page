@@ -1,7 +1,12 @@
 <template>
-  <div style="height:100%;width:100%">
+  <el-row style="height:100%;width:100%;">
+    <el-col style="width:350px;height:100%">
+      <el-tree></el-tree>
+    </el-col>
+    <el-col style="width:calc(100% - 350px);height:100%">
 
-  </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script lang="ts">

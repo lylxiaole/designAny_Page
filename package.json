@@ -111,6 +111,7 @@
     "moment": "^2.29.1",
     "net": "^1.0.2",
     "nprogress": "^0.2.0",
+    "ol": "^6.8.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^0.0.1",
     "pdfjs-dist": "^2.9.359",
