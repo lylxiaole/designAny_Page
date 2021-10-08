@@ -25,14 +25,15 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
+import { pageType, DesignPageDC, GetPageDetail } from '../../apis/designPage'
+import { applicationType, ApplicationDC, GetApplication } from '../../apis/designApplication'
+
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 
 import { drawVueOnVirtualDom } from '@src/utils'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
-import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
 
 @Component({
   components: {

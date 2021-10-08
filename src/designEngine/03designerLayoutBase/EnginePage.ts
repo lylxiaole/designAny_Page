@@ -8,7 +8,7 @@ import EngineContainer from './EngineContainer'
 import { paramInfo } from './commonClasses/pageInParamInfo'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
-import { GetPageDetail, SavePageDetail } from '@src/apis/designPage'
+import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 
 @Component
 export default class EnginePage extends EngineContainer {
@@ -200,7 +200,7 @@ export default class EnginePage extends EngineContainer {
     var saveinfo = this.getSaveData()
     var saveinfoStr = serialize(saveinfo)
     saveinfoStr = strZip(saveinfoStr)
-    await SavePageDetail({ appId: '', id: this.Id, designDetail: saveinfoStr } as any)
+    // await SavePageDetail({ appId: '', id: this.Id, designDetail: saveinfoStr } as any)
 
     // CurrentApis.SavePageData(this.Id, saveinfoStr, null).then((res) => {
     //   this.isNeedSave = false
