@@ -56,36 +56,34 @@ export default class EnginePage extends EngineContainer {
     return property.value as paramInfo[]
   }
   created() {
-    if (this.isDesigning) {
-      this.registerProperty(PropertyGroupName.normal, '拓展js', new JavaScriptCode_Property(), false, false, false)
-      this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Property())
-      this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
-      this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
-      this.registerProperty(PropertyGroupName.normal, '行为列表', new Behavior_Property(), false, false)
-      this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, true, '秒')
-    }
-
     this.registerEvents('加载完成', '页面加载完成时触发', [], null)
     this.registerMethods('关闭页面-触发回调', '', () => {}, [], null)
     this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
     this.registerEvents('定时器触发事件', '定时器触发', [], null)
   }
-  mounted() {
-    if (this.isDesigning) {
-      this.onChangedScale_Event = (sizeChange: number): boolean => {
-        this.scaleSize(sizeChange)
-        return false
-      }
-      this.onDragSelf_Event = (xmove: number, ymove: number) => {
-        this.left += xmove
-        this.top += ymove
-      }
-      this.onClick_Event = (e: Event, comp: ComponentBase) => {
-        this.chooseComps([])
-        e.stopPropagation()
-      }
+
+  initDesignContext() {
+    this.registerProperty(PropertyGroupName.normal, '拓展js', new JavaScriptCode_Property(), false, false, false)
+    this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Property())
+    this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
+    this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
+    this.registerProperty(PropertyGroupName.normal, '行为列表', new Behavior_Property(), false, false)
+    this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, true, '秒')
+
+    this.onChangedScale_Event = (sizeChange: number): boolean => {
+      this.scaleSize(sizeChange)
+      return false
+    }
+    this.onDragSelf_Event = (xmove: number, ymove: number) => {
+      this.left += xmove
+      this.top += ymove
+    }
+    this.onClick_Event = (e: Event, comp: ComponentBase) => {
+      this.chooseComps([])
+      e.stopPropagation()
     }
   }
+  mounted() {}
   beforeDestroy() {
     $(window).unbind('resize', this.onWindowResize_Scale as any)
     $(window).unbind('resize', this.onWindowResize_NotScale as any)

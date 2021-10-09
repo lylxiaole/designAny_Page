@@ -107,29 +107,36 @@ export default class EngineLayout extends BaseEvents {
   created() {
     // window.console.log('EngineLayout created')
     if (this.isDesigning) {
-      this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
-      this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
-      this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Property(-100000), 0, true, true, 'px')
-
-      this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Property(-100000), 0, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '字体', new Number_Property(), 14, true, true, 'px')
-      this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
-      this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'))
-      this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Property(), 'white')
-      this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
-      this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())
+      this.initDesignContext()
     }
   }
+  /**生命周期-用于注册属性/事件/方法 等------只有设计模式的时候，会触发
+   * 触发与vue周期created之中
+   */
+  initDesignContext() {
+    this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
+    this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
+    this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Property(-100000), 0, true, true, 'px')
+
+    this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Property(-100000), 0, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '字体', new Number_Property(), 14, true, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
+    this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'))
+    this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Property(), 'white')
+    this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
+    this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())
+  }
+
   /**生命周期 */
   mounted() {
     //开始捕捉鼠标键盘事件
@@ -156,6 +163,7 @@ export default class EngineLayout extends BaseEvents {
     this.onDestroyed(this)
     this.destorymethod()
   }
+
   // *************************基础属性****************************************************************************
   get Id(): string {
     if (!this.findPropertyByName) {

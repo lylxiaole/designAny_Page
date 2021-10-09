@@ -24,18 +24,19 @@ export default class EngineContainer extends EngineLayout {
   created() {
     // window.console.log('EngineContainer created')
   }
-  mounted() {
-    if (this.isDesigning) {
-      this.onDrop_Event = this.listenOnDrop
-      this.onDragMove_Event = this.listenOnDragMove
-      this.onDelete_Event = this.listenOnDeleteKey
-      this.onDragEnd_Event = this.listenOnDragEnd
-      this.onCut_Event = this.listenOnCut
-      this.onCopy_Event = this.listenOnCopy
-      this.onPaste_Event = this.listenOnPaste
-      this.onMouseMove_Event = this.listenOnMousemove
-    }
+
+  initDesignContext() {
+    this.onDrop_Event = this.listenOnDrop
+    this.onDragMove_Event = this.listenOnDragMove
+    this.onDelete_Event = this.listenOnDeleteKey
+    this.onDragEnd_Event = this.listenOnDragEnd
+    this.onCut_Event = this.listenOnCut
+    this.onCopy_Event = this.listenOnCopy
+    this.onPaste_Event = this.listenOnPaste
+    this.onMouseMove_Event = this.listenOnMousemove
   }
+
+  mounted() {}
   /**********************************privates ******************************/
   private listenOnMousemove(e: MouseEvent) {
     this.mouseX = e.offsetX

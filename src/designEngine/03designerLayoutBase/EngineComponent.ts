@@ -67,49 +67,37 @@ export default class EngineComponent extends EngineContainer {
     return null
   }
   created() {
-    window.console.log('EngineComponent created')
-    if (this.isDesigning == true) {
-      this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
-      this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
-      this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Property(), [], true, false)
-      this.registerProperty(PropertyGroupName.normal, '是否禁用', new Boolean_Property(), false)
-      this.registerProperty(PropertyGroupName.normal, '是否显示', new Boolean_Property(), true, true)
-      this.registerProperty(PropertyGroupName.normal, '层级设置', new Number_Property(), 1)
-
-      var numberproperty = new Number_Property()
-      numberproperty.min = -99999
-      this.registerProperty(PropertyGroupName.normal, '外边距-左', numberproperty, 0, false, false, 'px')
-      this.registerProperty(PropertyGroupName.normal, '外边距-右', numberproperty, 0, false, false, 'px')
-      this.registerProperty(PropertyGroupName.normal, '外边距-上', numberproperty, 0, false, false, 'px')
-      this.registerProperty(PropertyGroupName.normal, '外边距-下', numberproperty, 0, false, false, 'px')
-      this.registerProperty(PropertyGroupName.normal, '内边距-左', numberproperty, 0, false, false, 'px')
-      this.registerProperty(PropertyGroupName.normal, '内边距-右', numberproperty, 0, false, false, 'px')
-      this.registerProperty(PropertyGroupName.normal, '内边距-上', numberproperty, 0, false, false, 'px')
-      this.registerProperty(PropertyGroupName.normal, '内边距-下', numberproperty, 0, false, false, 'px')
-    }
-
     /**注册事件 */
     var inparams: param[] = []
     this.registerEvents('控件加载完成事件', '', inparams, null)
-    this.$nextTick(() => {
-      if (this.triggeEvent) {
-        // this.triggeEvent('控件初始化完成事件', null)
-      }
-    })
+  }
+
+  initDesignContext() {
+    this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
+    this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
+    this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Property(), [], true, false)
+    this.registerProperty(PropertyGroupName.normal, '是否禁用', new Boolean_Property(), false)
+    this.registerProperty(PropertyGroupName.normal, '是否显示', new Boolean_Property(), true, true)
+    this.registerProperty(PropertyGroupName.normal, '层级设置', new Number_Property(), 1)
+    var numberproperty = new Number_Property()
+    numberproperty.min = -99999
+    this.registerProperty(PropertyGroupName.normal, '外边距-左', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-右', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-上', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-下', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-左', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-右', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-上', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-下', numberproperty, 0, false, false, 'px')
+    this.canDrop = false
+    this.canDrag = false
+    this.width = 200
+    this.height = 200
+    this.onDrag_Event = this.listenOnDrag
   }
   mounted() {
-    if (this.isDesigning == true) {
-      this.canDrop = false
-      this.canDrag = false
-      this.width = 200
-      this.height = 200
-      this.onDrag_Event = this.listenOnDrag
-    }
     // this.onDragMove_Event = this.onDragMove
     this.$nextTick(() => {
-      if (!this.triggeEvent) {
-        return
-      }
       this.triggeEvent('控件加载完成事件', null)
     })
   }
