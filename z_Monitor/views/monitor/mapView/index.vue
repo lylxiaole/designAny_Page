@@ -1,8 +1,19 @@
 <template>
-  <div style="height:100%;width:100%">
+  <div style="height:100%;width:100%;position:relative">
     <div ref="mapArea"></div>
-
-    <el-drawer title="我是标题" :visible.sync="drawerOpen" :with-header="false">
+    <button style="position:absolute;right:8px;top:8px" @click="drawerOpen=true">展示列表</button>
+    <el-drawer show-close title="作业区概要" size="350px" style="height:100%" :visible.sync="drawerOpen" custom-class="mapdrawer">
+      <div style="height:100%;width:100%;overflow-y:auto">
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+        <areaCard style="height:170px;margin:8px" />
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -14,18 +25,19 @@ import { getMapMarkerList } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { getConfigByName } from '@src/baseConfigs'
 import resizer from 'element-resize-detector'
-/////////////////////////////////
+// *****************************************************************
+import areaCard from './areaCard.vue'
+// *****************************************************************
 require('ol/css')
 import Map from 'ol/Map'
 import * as olproj from 'ol/proj'
-
 import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import XYZ from 'ol/source/XYZ'
 // *****************************************************************
 /***贮运厂总览 */
 @Component({
-  components: {}
+  components: { areaCard }
 })
 export default class Index extends PageBase {
   private drawerOpen: boolean = false
@@ -72,5 +84,18 @@ export default class Index extends PageBase {
   }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+/deep/ .mapdrawer {
+  .el-drawer__header {
+    padding: 0px !important;
+    margin: 8px !important;
+    box-sizing: border-box !important;
+    height: 35px !important;
+  }
+
+  .el-drawer__body {
+    box-sizing: border-box !important;
+    height: calc(100% - 35px) !important;
+  }
+}
 </style>
