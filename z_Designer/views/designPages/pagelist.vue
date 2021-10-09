@@ -60,11 +60,11 @@ import {
   DeletePage,
   DeleteGroup,
   pageType
-} from '../../apis/designPage'
+} from '@src/apis/designPage'
 let VueContextMenu = require('vue-context-menu')
 import btreeNode from '@src/components/Treenode/bTreeNode.vue'
 import { types } from 'util'
-import { applicationType, ApplicationDC, GetApplication } from '../../apis/designApplication'
+import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
 
 enum rightMenus {
   addPage = '新建页面',

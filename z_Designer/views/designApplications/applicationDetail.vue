@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { applicationType } from '../../apis/designApplication'
+import { applicationType } from '@src/apis/designApplication'
 
 @Component
 export default class index extends ComponentBase {
