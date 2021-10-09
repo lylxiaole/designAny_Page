@@ -1,13 +1,13 @@
 <template>
   <div style="height:100%;width:100%">
-    选择流量计
+    选择流量计参数
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/PageBase'
-import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk } from '../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 // *****************************************************************
@@ -15,7 +15,7 @@ import { param2Obj } from '@src/utils'
 @Component({
   components: {}
 })
-export default class chooseFlowmeter extends ComponentBase {
+export default class choosePamaters extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ***************底部Tab*********************************************
