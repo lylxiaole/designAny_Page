@@ -66,3 +66,13 @@ export async function getMapMarkerList(): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
+
+export async function getErrorFlowmeters(): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getAllJlb')
+  formData.append('gzlx', '2')
+
+  let url = `${apiAddr()}/jlbjk/jlbjk.ashx?time=${new Date()}`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}

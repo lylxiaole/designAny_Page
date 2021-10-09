@@ -36,7 +36,7 @@
         </el-col>
       </el-row>
       <el-row class="inforow">
-        <el-button type="text">流量计明细</el-button>
+        <el-button @click="leadToDetail" type="text">流量计明细</el-button>
       </el-row>
     </div>
   </el-card>
@@ -51,6 +51,7 @@ import { param2Obj } from '@src/utils'
 import { Interface } from 'readline'
 // *****************************************************************
 export interface cardInfo {
+  areaId: string
   areaName: string
   totalCount: number //总数
   normalCount: number //正常数量
@@ -70,6 +71,7 @@ export default class areaCard extends ComponentBase {
   @Prop({
     default: () => {
       return {
+        areaId: '1',
         areaName: '油品作业区',
         totalCount: 12, //总数
         normalCount: 13, //正常数量
@@ -86,7 +88,10 @@ export default class areaCard extends ComponentBase {
 
   // ********************************************************************************
   mounted() {}
-  // ***************底部Tab*********************************************
+  // *************** *********************************************
+  private leadToDetail() {
+    this.$router.push({ path: '/flowmeterArea', query: { areaId: this.cardInfo.areaId } })
+  }
 }
 </script>
 <style scoped>

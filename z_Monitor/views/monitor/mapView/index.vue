@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { getMapMarkerList } from '../../../serviceAPIs/service'
+import { getMapMarkerList, getErrorFlowmeters } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { getConfigByName } from '@src/baseConfigs'
 import resizer from 'element-resize-detector'
@@ -35,6 +35,8 @@ import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import XYZ from 'ol/source/XYZ'
 import { request } from 'http'
+import { randomInt } from 'crypto'
+import { random } from 'xe-utils'
 // *****************************************************************
 var normalIcon = require('../../../assets/areaMap/dwg.png')
 var warnIcon = require('../../../assets/areaMap/dwy.png')
@@ -47,6 +49,7 @@ export default class Index extends PageBase {
   private drawerOpen: boolean = false
   private currentMap: Map = null
   private cardInfos: cardInfo[] = []
+  private timer: any = null
   // ********************************************************************************
   mounted() {
     let mapapiUrl = getConfigByName('mapApiAddr')
@@ -66,11 +69,49 @@ export default class Index extends PageBase {
     })
     this.listenChartDomSize()
     this.getMapMarkers()
+    this.timer = window.setInterval(this.getMapMarkers, 3000)
     this.currentMap.on('pointermove', this.onMapMouseMove)
   }
 
-  destoryed() {
+  destroyed() {
     this.unlisenDomSize()
+    if (this.timer) {
+      window.clearInterval(this.timer)
+    }
+    if (this.currentNotify) {
+      this.currentNotify.close()
+    }
+  }
+  private async getMapMarkers() {
+    let markers = await getMapMarkerList()
+    // window.console.log('getMapMarkers:', markers)
+    //todo 加载地图
+    for (let index = 0; index < this.allLayers.length; index++) {
+      const element = this.allLayers[index]
+      this.currentMap.removeLayer(element)
+    }
+    this.allLayers = []
+    this.setMarkerInMap(markers)
+    //todo加载卡片
+    let cardList = markers.filter((o) => o.QYJKLX === '1')
+    this.cardInfos = []
+    for (let index = 0; index < cardList.length; index++) {
+      const cardinfo = cardList[index]
+      this.cardInfos.push({
+        areaId: cardinfo.QYID,
+        areaName: cardinfo.QYMC,
+        totalCount: cardinfo.jlbsl, //总数
+        normalCount: cardinfo.zczt,
+        normalRate: this.rateStrFormat(cardinfo.zclv), //正常率
+        errorCount: cardinfo.gzzt, //故障数量
+        infoCount: cardinfo.xxtxzt, //信息数量
+        datacollectErrorCount: cardinfo.scczt, //数采异常数量
+        forbiddenConntectCount: cardinfo.jztxzt, //禁止通讯数量
+        conntectErrorCount: cardinfo.txsbzt //通讯失败数量
+      })
+    }
+    //todo显示报警消息
+    await this.notifyMessages(markers)
   }
   // ***************************************************************
   private currentResizer: any = null
@@ -87,36 +128,13 @@ export default class Index extends PageBase {
   private currentOverlay: any = null
   private needAddItem: any = null
   private needItemAddcallback: any = null
-  private async getMapMarkers() {
-    let markers = await getMapMarkerList()
-    window.console.log('getMapMarkers:', markers)
-    //todo 加载地图
-    this.setMarkerInMap(markers)
-    //加载卡片
-    let cardList = markers.filter((o) => o.QYJKLX === '1')
-    this.cardInfos = []
-    for (let index = 0; index < cardList.length; index++) {
-      const cardinfo = cardList[index]
-      this.cardInfos.push({
-        areaName: cardinfo.QYMC,
-        totalCount: cardinfo.jlbsl, //总数
-        normalCount: cardinfo.zczt,
-        normalRate: this.rateStrFormat(cardinfo.zclv), //正常率
-        errorCount: cardinfo.gzzt, //故障数量
-        infoCount: cardinfo.xxtxzt, //信息数量
-        datacollectErrorCount: cardinfo.scczt, //数采异常数量
-        forbiddenConntectCount: cardinfo.jztxzt, //禁止通讯数量
-        conntectErrorCount: cardinfo.txsbzt //通讯失败数量
-      })
-    }
-  }
+  private allLayers: any[] = []
 
   private rateStrFormat(val) {
     // window.console.log('rateStrFormat:', val)
     val = val.replace('%', '')
     return (parseFloat(val).toFixed(2) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,') + '%'
   }
-
   private onMapMouseMove(e: any) {
     if (this.needAddItem) {
       var lastDragMovePoint = olproj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326')
@@ -153,7 +171,6 @@ export default class Index extends PageBase {
       this.currentOverlay.setPosition(e.coordinate)
     }
   }
-
   private setMarkerInMap(datalist) {
     var x1 = 0
     var y1 = 0
@@ -198,26 +215,27 @@ export default class Index extends PageBase {
     // 当前状态：0 绿色为正常；1 橙色为有信息提醒；2 红色为有故障；
     //          3 深蓝色为数采错误；4 紫色为数据以前的，长时间未数采。
     //          6 通讯失败，用橙色
+    dqzt = parseInt(dqzt)
     switch (dqzt) {
-      case '0':
+      case 0:
         iconurl = normalIcon
         break
-      case '1':
+      case 1:
         iconurl = warnIcon
         break
-      case '2':
+      case 2:
         iconurl = errorIcon
         break
-      case '3':
+      case 3:
         iconurl = warnIcon
         break
-      case '4':
+      case 4:
         iconurl = warnIcon
         break
-      case '5':
+      case 5:
         iconurl = warnIcon
         break
-      case '6':
+      case 6:
         iconurl = warnIcon
         break
       default:
@@ -226,7 +244,7 @@ export default class Index extends PageBase {
 
     if (isNaN(x) || isNaN(y) || x < 1 || y < 1) {
     } else {
-      window.console.log(`addSingleMapMarker  ${title}当前状态`, dqzt)
+      // window.console.log(`addSingleMapMarker  ${title}当前状态`, dqzt)
       this.addPoint(x, y, content, iconurl, title, qyid, qyjklx)
     }
   }
@@ -274,6 +292,7 @@ export default class Index extends PageBase {
       source: vectorSource
     })
     this.currentMap.addLayer(vectorLayer)
+    this.allLayers.push(vectorLayer)
   }
   private needAddItemAdd(x, y) {
     var item = this.needAddItem
@@ -302,6 +321,40 @@ export default class Index extends PageBase {
       }
     })
     return overlay
+  }
+  // **********错误消息**************************************
+  private currentNotify: any = null
+  private currentNotifyString: string = ''
+  private async notifyMessages(markers: any[]) {
+    let errorFlows = await getErrorFlowmeters()
+    // window.console.log('getErrorFlowmeters:', errorFlows)
+    if (errorFlows.length < 1) {
+      if (this.currentNotify) {
+        this.currentNotifyString = ''
+        this.currentNotify.close()
+      }
+      return
+    }
+    let messagestr = '故障计量表提醒: <br/>'
+    for (let index = 0; index < errorFlows.length; index++) {
+      const element = errorFlows[index]
+      messagestr += index + 1 + '.&nbsp;&nbsp;' + element.JLBMC + '<br/>'
+    }
+
+    if (this.currentNotifyString === messagestr) {
+      return
+    }
+    if (this.currentNotify) {
+      this.currentNotify.close()
+    }
+    this.currentNotifyString = messagestr
+    this.currentNotify = this.$notify.error({
+      title: '故障',
+      message: messagestr,
+      dangerouslyUseHTMLString: true,
+      duration: 0,
+      position: 'bottom-right'
+    })
   }
 }
 </script>

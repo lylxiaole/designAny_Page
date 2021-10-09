@@ -1,9 +1,9 @@
 <template>
   <section class="app-main">
     <transition name="van-slide-right">
-      <keep-alive>
-        <router-view />
-      </keep-alive>
+      <!-- <keep-alive> -->
+      <router-view />
+      <!-- </keep-alive> -->
     </transition>
   </section>
 </template>
