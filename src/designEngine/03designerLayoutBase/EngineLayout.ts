@@ -1,4 +1,6 @@
-import { Component } from 'vue-property-decorator'
+import { Component, Emit, Vue } from 'vue-property-decorator'
+import { createDecorator } from 'vue-class-component'
+
 import BaseEvents from './BaseEvents'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 import { layoutEventBehaviors } from './behavior/behaviorTypes'
@@ -20,6 +22,7 @@ export class Point {
   X: number = -1
   Y: number = -1
 }
+
 @Component
 export default class EngineLayout extends BaseEvents {
   public isSelected: boolean = false
@@ -105,15 +108,6 @@ export default class EngineLayout extends BaseEvents {
   }
   /**生命周期 */
   created() {
-    // window.console.log('EngineLayout created')
-    if (this.isDesigning) {
-      this.initDesignContext()
-    }
-  }
-  /**生命周期-用于注册属性/事件/方法 等------只有设计模式的时候，会触发
-   * 触发与vue周期created之中
-   */
-  initDesignContext() {
     this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
     this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
     this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, true, 'px')
@@ -124,7 +118,6 @@ export default class EngineLayout extends BaseEvents {
     this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Property(-100000), 0, true, true, 'px')
-
     this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Property(-100000), 0, true, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Property(-100000), 0, true, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Property(-100000), 0, true, true, 'px')
@@ -136,6 +129,9 @@ export default class EngineLayout extends BaseEvents {
     this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
     this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())
   }
+  /**生命周期-用于注册属性/事件/方法 等------只有设计模式的时候，会触发
+   * 触发与vue周期created之中
+   */
 
   /**生命周期 */
   mounted() {

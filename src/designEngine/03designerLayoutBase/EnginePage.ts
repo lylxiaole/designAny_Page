@@ -1,6 +1,6 @@
 import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
 import ComponentBase from './EngineComponent'
-import { Component } from 'vue-property-decorator'
+import { Component, Emit } from 'vue-property-decorator'
 
 import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoading_Async, showLoading_Async } from '@src/utils'
 import EngineLayout, { SaveInfo } from './EngineLayout'
@@ -10,6 +10,7 @@ import { behavior, factory, action, actionDetail, resourceType, objectType, obje
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@src/apis/designPage'
+import { BaseClass } from '@src/apis/apiDesignManager'
 
 @Component
 export default class EnginePage extends EngineContainer {
@@ -56,20 +57,16 @@ export default class EnginePage extends EngineContainer {
     return property.value as paramInfo[]
   }
   created() {
-    this.registerEvents('加载完成', '页面加载完成时触发', [], null)
-    this.registerMethods('关闭页面-触发回调', '', () => {}, [], null)
-    this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
-    this.registerEvents('定时器触发事件', '定时器触发', [], null)
-  }
-
-  initDesignContext() {
     this.registerProperty(PropertyGroupName.normal, '拓展js', new JavaScriptCode_Property(), false, false, false)
     this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Property())
     this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
     this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
     this.registerProperty(PropertyGroupName.normal, '行为列表', new Behavior_Property(), false, false)
     this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, true, '秒')
-
+    this.registerEvents('加载完成', '页面加载完成时触发', [], null)
+    this.registerMethods('关闭页面-触发回调', '', () => {}, [], null)
+    this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
+    this.registerEvents('定时器触发事件', '定时器触发', [], null)
     this.onChangedScale_Event = (sizeChange: number): boolean => {
       this.scaleSize(sizeChange)
       return false
@@ -83,6 +80,7 @@ export default class EnginePage extends EngineContainer {
       e.stopPropagation()
     }
   }
+
   mounted() {}
   beforeDestroy() {
     $(window).unbind('resize', this.onWindowResize_Scale as any)

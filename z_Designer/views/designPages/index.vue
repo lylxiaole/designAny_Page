@@ -16,7 +16,7 @@
         </el-tabs>
       </el-col>
       <el-col style="width:250px;height:100%">
-        <propertyGrid />
+        <propertyGrid :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
       </el-col>
     </el-row>
   </el-row>
@@ -33,7 +33,7 @@ import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 
 import { drawVueOnVirtualDom } from '@src/utils'
-import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@src/designEngine'
+import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@src/designEngine'
 
 @Component({
   components: {
@@ -64,6 +64,20 @@ export default class index extends PageBase {
   private get currentShowEngine(): EnginePage {
     let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
     return findengine
+  }
+
+  protected get selectedComps(): EngineLayout[] {
+    if (this.currentShowEngine) {
+      var findchilds = this.currentShowEngine.findSelectedLayoutsRecursion(this.currentShowEngine.children)
+      // window.console.log('pppppppppppppppp',findchilds)
+      if (findchilds.length > 0) {
+        return findchilds
+      } else {
+        return [this.currentShowEngine]
+      }
+    } else {
+      return null
+    }
   }
   private openPage(page: DesignPageDC, pageengine: EnginePage) {
     let engine = this.openPageEngines.find((o) => o.Id === page.id)

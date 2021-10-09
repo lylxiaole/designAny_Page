@@ -1,11 +1,14 @@
 <template>
   <div style="overflow-x:hidden;overflow-y:auto">
-    <el-radio-group @change="changeActivekey" style="margin-left:30px;margin-top:10px;" v-model="activeKey">
-      <a-radio style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;" v-for="group in propertyGroups"
-        :key="group.groupName" :value='group.groupName'>
-        {{group.groupName}}
-      </a-radio>
+
+    <el-radio-group @change="changeActivekey" v-model="activeKey" size="mini" style="margin-left:30px;margin-top:10px;">
+
+      <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :label="group.groupName"
+        style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+
+      </el-radio-button>
     </el-radio-group>
+
     <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;"></el-row>
     <div v-show="propIsShow">
       <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyData" v-show="propertyInfo.isShow"
@@ -300,9 +303,9 @@ export default class PropertyGrid extends Vue {
 
   mounted() {}
 
-  changeActivekey(e: any) {
-    var groupName = e.target.value
-    this.selectGropName = e.target.value
+  changeActivekey(groupname: string) {
+    var groupName = groupname
+    this.selectGropName = groupname
     var tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
 
     this.propertyDataCache = tempGrop.children

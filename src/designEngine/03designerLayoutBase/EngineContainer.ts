@@ -1,4 +1,4 @@
-import { Component } from 'vue-property-decorator'
+import { Component, Emit } from 'vue-property-decorator'
 
 import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
@@ -22,10 +22,6 @@ export default class EngineContainer extends EngineLayout {
   private mouseX: number = 0
   private mouseY: number = 0
   created() {
-    // window.console.log('EngineContainer created')
-  }
-
-  initDesignContext() {
     this.onDrop_Event = this.listenOnDrop
     this.onDragMove_Event = this.listenOnDragMove
     this.onDelete_Event = this.listenOnDeleteKey
@@ -166,7 +162,7 @@ export default class EngineContainer extends EngineLayout {
       return false
     }
 
-    let parentPageCurrentScaleSize = (dragComp.topLayout as EnginePage).currentScaleSize
+    let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
     /**do */
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       /**范围控制 */

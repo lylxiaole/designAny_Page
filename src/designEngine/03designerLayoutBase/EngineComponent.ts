@@ -67,12 +67,6 @@ export default class EngineComponent extends EngineContainer {
     return null
   }
   created() {
-    /**注册事件 */
-    var inparams: param[] = []
-    this.registerEvents('控件加载完成事件', '', inparams, null)
-  }
-
-  initDesignContext() {
     this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
     this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
     this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Property(), [], true, false)
@@ -93,8 +87,12 @@ export default class EngineComponent extends EngineContainer {
     this.canDrag = false
     this.width = 200
     this.height = 200
+    /**注册事件 */
+    var inparams: param[] = []
+    this.registerEvents('控件加载完成事件', '', inparams, null)
     this.onDrag_Event = this.listenOnDrag
   }
+
   mounted() {
     // this.onDragMove_Event = this.onDragMove
     this.$nextTick(() => {
