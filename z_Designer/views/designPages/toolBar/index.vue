@@ -97,10 +97,11 @@ export default class quickActionBar extends Vue {
 
   created() {}
   public savePage() {
+    window.console.log('savePage:', this.currentPage)
     if (!this.currentPage) {
       return
     }
-    this.currentPage.save()
+    this.onSave(this.currentPage.Id)
   }
   private getPopupContainer() {
     this.$nextTick(() => {
@@ -126,6 +127,9 @@ export default class quickActionBar extends Vue {
     this.$router.back()
   }
   /*************对外公布事件************************************************************************ */
+  @Emit('onSave')
+  private onSave(pageId: string) {}
+
   @Emit('onSaveAs')
   private onSaveAs() {}
 

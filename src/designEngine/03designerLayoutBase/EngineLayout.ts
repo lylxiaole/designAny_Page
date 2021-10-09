@@ -432,7 +432,6 @@ export default class EngineLayout extends BaseEvents {
     return pro.value as boolean
   }
   // *************************privates****************************************************************************
-  private isLoaded: boolean = false
   private async destorymethod() {
     this.$off()
     for (let index = 0; index < this.properties.length; index++) {
@@ -583,12 +582,11 @@ export default class EngineLayout extends BaseEvents {
   // *************************对外公布方法****************************************************************************
   public async loadData(data: SaveInfo) {
     this.children = []
-    if (this.isLoaded) {
-      return
+    if (data.id) {
+      this.Id = data.id
+      this.loadingProperties(data.id, data.properties)
     }
-    this.Id = data.id
-    this.loadingProperties(data.id, data.properties)
-    this.isLoaded = true
+
     if (data.children) {
       this.loadChildrenData(data.children)
     }
@@ -599,7 +597,7 @@ export default class EngineLayout extends BaseEvents {
       element.destorymethod()
     }
     this.children = []
-    this.isLoaded = false
+
     this.loadData(data)
   }
   public async getSaveData(): Promise<SaveInfo> {
@@ -736,24 +734,23 @@ export default class EngineLayout extends BaseEvents {
     if (!layout_properties) {
       return
     }
-    /**实验性的：直接赋值 */
-    this.properties = layout_properties
+
     /**旧版本的：比较赋值 */
-    // for (let index = 0; index < layout_properties.length; index++) {
-    //   const item = layout_properties[index]
-    //   let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
-    //   if (find) {
-    //     find.id = item.id
-    //     this.setPropertyVal(item.id, item.value, true)
-    //   } else {
-    //     var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
-    //     newperperty.canSetting = item.canSetting
-    //     newperperty.canBindModel = item.canBindModel
-    //     newperperty.id = item.id
-    //     this.addProperty(newperperty)
-    //     this.setPropertyVal(item.id, item.value, true)
-    //   }
-    // }
+    for (let index = 0; index < layout_properties.length; index++) {
+      const item = layout_properties[index]
+      let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
+      if (find) {
+        find.id = item.id
+        this.setPropertyVal(item.id, item.value, true)
+      } else {
+        var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
+        newperperty.canSetting = item.canSetting
+        newperperty.canBindModel = item.canBindModel
+        newperperty.id = item.id
+        this.addProperty(newperperty)
+        this.setPropertyVal(item.id, item.value, true)
+      }
+    }
   }
   public findProperties(groupName: string, name: string): Property[] {
     let res: any[] = []

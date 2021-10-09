@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas style="width:100%;" :id="barcodeId" :jsbarcode-value="vlaue" :jsbarcode-width="codeWidth" :jsbarcode-height="codeHeight"
+    <canvas style="width:100%;" ref="barcoderef" :jsbarcode-value="vlaue" :jsbarcode-width="codeWidth" :jsbarcode-height="codeHeight"
       :jsbarcode-displayvalue="codeDisplayValue" :jsbarcode-format="codeFormat" :jsbarcode-textalign="codeTextAlign"
       :jsbarcode-textposition="codeTextPosition" :jsbarcode-textmargin="codeTextMargin" :jsbarcode-fontSize="codeFontSize">
     </canvas>
@@ -18,11 +18,7 @@ import { npGridIco } from '@src/designEngine/assets/icons.js'
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '二维码组件', 'NpBarCode', npGridIco)
 @Component
 export default class NpBarCode extends EngineComponent {
-  private barcodeId: string = 'barcode'
-
-  beforeMount() {
-    this.barcodeId = 'barcode_' + getUuid()
-  }
+  beforeMount() {}
 
   mounted() {
     this.width = 300
@@ -56,6 +52,8 @@ export default class NpBarCode extends EngineComponent {
     this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Property(true, ['底部', '顶部']), '底部')
     this.registerProperty(PropertyGroupName.special, '字边距', new Number_Property(), 2)
     this.registerProperty(PropertyGroupName.special, '字大小', new Number_Property(), 20)
+
+    this.initBarCode()
   }
 
   private barCodeText: string = '123456789'
@@ -64,7 +62,6 @@ export default class NpBarCode extends EngineComponent {
     if (prop && prop.value != undefined && prop.value != null) {
       let data = prop.value.toString()
       this.barCodeText = data
-      this.initBarCode()
       return data
     } else {
       return '123456789'
@@ -78,7 +75,6 @@ export default class NpBarCode extends EngineComponent {
     if (prop && prop.value) {
       data = prop.value.toString()
       this.barCodeFormat = data
-      this.initBarCode()
     } else {
       data = 'CODE128'
     }
@@ -93,7 +89,6 @@ export default class NpBarCode extends EngineComponent {
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
       this.barCodeWidth = data
-      this.initBarCode()
     } else {
       data = 2
     }
@@ -108,7 +103,6 @@ export default class NpBarCode extends EngineComponent {
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
       this.barCodeHeight = data
-      this.initBarCode()
     } else {
       data = 100
     }
@@ -123,7 +117,6 @@ export default class NpBarCode extends EngineComponent {
     if (prop && prop.value != undefined && prop.value != null) {
       data = Boolean(prop.value)
       this.barCodeDisplayValue = data
-      this.initBarCode()
     } else {
       data = true
     }
@@ -151,7 +144,6 @@ export default class NpBarCode extends EngineComponent {
           break
       }
       this.barCodeTextAlign = data
-      this.initBarCode()
     } else {
       data = 'center'
     }
@@ -176,7 +168,6 @@ export default class NpBarCode extends EngineComponent {
           break
       }
       this.barCodeTextPosition = data
-      this.initBarCode()
     } else {
       data = 'bottom'
     }
@@ -190,7 +181,6 @@ export default class NpBarCode extends EngineComponent {
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
       this.barCodeTextMargin = data
-      this.initBarCode()
     } else {
       data = 2
     }
@@ -205,7 +195,6 @@ export default class NpBarCode extends EngineComponent {
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
       this.barCodeFontSize = data
-      this.initBarCode()
     } else {
       data = 20
     }
@@ -225,7 +214,7 @@ export default class NpBarCode extends EngineComponent {
       fontSize: this.barCodeFontSize
     }
     try {
-      JsBarcode($(this.$el).find('#' + this.barcodeId)[0], this.barCodeText, options)
+      JsBarcode($(this.$refs.barcoderef)[0], this.barCodeText, options)
     } catch (error) {
       window.console.error(error)
     }

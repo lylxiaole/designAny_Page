@@ -9,6 +9,7 @@ import { paramInfo } from './commonClasses/pageInParamInfo'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
+import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@src/apis/designPage'
 
 @Component
 export default class EnginePage extends EngineContainer {
@@ -195,29 +196,32 @@ export default class EnginePage extends EngineContainer {
     //千万不能用zoom缩放，不然缩放后的元素坐标，大小无法计算
     this.scaleToSize(newsize)
   }
-  public async save() {
+  public async save(appId: string) {
     /**数据压缩 */
-    var saveinfo = this.getSaveData()
+    var saveinfo = await this.getSaveData()
+    window.console.log('save:', saveinfo)
     var saveinfoStr = serialize(saveinfo)
     saveinfoStr = strZip(saveinfoStr)
-    // await SavePageDetail({ appId: '', id: this.Id, designDetail: saveinfoStr } as any)
+    await SavePageDetail({ appId: appId, id: this.Id, designDetail: saveinfoStr } as any)
 
     // CurrentApis.SavePageData(this.Id, saveinfoStr, null).then((res) => {
     //   this.isNeedSave = false
     //   this.onPageSaveSuccess(saveinfo.id)
     // })
   }
-  public async loadPageById(pageId: string, params?: paramInfo[]): Promise<SaveInfo> {
-    let pageDC: any = {}
-    var pageData = null
-    if (pageDC.designDetail) {
-      pageData = strUnZip(pageDC.designDetail)
+  public async loadPageById(pageId: string, params?: paramInfo[]): Promise<void> {
+    let pageDC: DesignPageDC = await GetPageDetail(pageId)
+    await this.loadPageByData(pageId, pageDC.designDetail, params)
+  }
+
+  public async loadPageByData(pageId: string, pageDataStr: string, params?: paramInfo[]) {
+    window.console.log('loadPageByData')
+    let pageData: SaveInfo = null
+    if (pageDataStr) {
+      pageData = strUnZip(pageDataStr)
       pageData = deserialize(pageData)
     }
-    await this.loadPageByData(pageId, pageData, params)
-    return pageData
-  }
-  public async loadPageByData(pageId: string, pageData: SaveInfo, params?: paramInfo[]) {
+
     let index = showLoading_Async(true)
     try {
       this.Id = pageId

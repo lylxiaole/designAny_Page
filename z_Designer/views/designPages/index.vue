@@ -1,7 +1,7 @@
 <template>
   <el-row style="height:100%;width:100%">
     <el-row style="height:60px;width:100%">
-      <toolBar :currentPage="currentShowEngine" :height="60"></toolBar>
+      <toolBar :currentPage="currentShowEngine" :height="60" @onSave="onSaveCurrentPage"></toolBar>
     </el-row>
     <el-row style="height:calc(100% - 60px);width:100%;">
       <el-col style="width:250px;height:100%">
@@ -75,7 +75,7 @@ export default class index extends PageBase {
     if (!findopen) {
       this.openPages.push(page)
     }
-
+    window.console.log('openPage:', page.id)
     this.currentOpenPageId = page.id
   }
   private closePage(pageId: string) {
@@ -120,7 +120,8 @@ export default class index extends PageBase {
     /************************渲染页面 */
     let documentFrag = drawVueOnVirtualDom(designLayout)
     await designLayout.$nextTick()
-    designLayout.loadPageById(pageId)
+    await designLayout.loadPageByData(pageId, res.designDetail)
+    await this.$nextTick()
     this.openPage(res, designLayout)
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(documentFrag)
@@ -129,6 +130,11 @@ export default class index extends PageBase {
     this.closePage(pageId)
   }
   // **********属性窗**********************************************************
+  // **********topbar**********************************************************
+  private async onSaveCurrentPage(pageId: string) {
+    window.console.log('onSaveCurrentPage:', pageId)
+    await this.currentShowEngine.save(this.applicationId)
+  }
 }
 </script>
 
