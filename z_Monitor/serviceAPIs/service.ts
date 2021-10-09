@@ -60,7 +60,8 @@ export async function xjjh(xjjhsj: string, xjzt: string): Promise<any> {
 }
 
 export async function getMapMarkerList(): Promise<any> {
-  var formData = { action: 'getQyPzJlbZtHz' }
+  var formData = new FormData()
+  formData.append('action', 'getQyPzJlbZtHz')
   let url = `${apiAddr()}/jlbjk/jlbjk.ashx?time=${new Date()}`
   const resp = await ajaxPost(url, formData)
   return resp
