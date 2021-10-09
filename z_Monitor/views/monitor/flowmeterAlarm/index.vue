@@ -42,7 +42,9 @@ import alarmHistory from './alarmHistory.vue'
 })
 export default class Index extends PageBase {
   // ********************************************************************************
-  mounted() {}
+  mounted() {
+    window.console.log('报警界面，计量表Id:', this.$route.query.flowmeterId)
+  }
   // ***************底部Tab*********************************************
 }
 </script>

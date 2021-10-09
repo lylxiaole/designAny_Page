@@ -338,7 +338,8 @@ export default class Index extends PageBase {
     let messagestr = '故障计量表提醒: <br/>'
     for (let index = 0; index < errorFlows.length; index++) {
       const element = errorFlows[index]
-      messagestr += index + 1 + '.&nbsp;&nbsp;' + element.JLBMC + '<br/>'
+      let newmessage = `<a href='#/flowmeterAlarm?flowmeterId=${element.JLBID}'>${index + 1 + '.&nbsp;&nbsp;' + element.JLBMC}<a/><br/>`
+      messagestr += newmessage
     }
 
     if (this.currentNotifyString === messagestr) {
@@ -355,6 +356,10 @@ export default class Index extends PageBase {
       duration: 0,
       position: 'bottom-right'
     })
+  }
+
+  private alarmHerfClick() {
+    window.console.log('alarmHerfClick')
   }
 }
 </script>

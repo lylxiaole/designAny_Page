@@ -6,7 +6,9 @@
           <el-input v-model="serachInfo.code" placeholder="审批人"></el-input>
         </el-form-item>
         <el-form-item label="作业区域">
-          <el-select v-model="serachInfo.area" placeholder="活动区域">
+          <el-select v-model="serachInfo.areaId" placeholder="活动区域">
+            <el-option v-for="item in areaList" :key="item.value" :label="item.text" :value="item.value"></el-option>
+
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
@@ -28,7 +30,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, jlbzdcx } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 // *****************************************************************
 import flowmeterCard from './flowmeterCard.vue'
@@ -39,9 +41,10 @@ import flowmeterCard from './flowmeterCard.vue'
 export default class Index extends PageBase {
   private serachInfo: any = {
     code: '123',
-    area: 'shanghai',
+    areaId: 'shanghai',
     state: 'shanghai'
   }
+  private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
 
   private allFlowmeters: any[] = [
     {
@@ -53,10 +56,25 @@ export default class Index extends PageBase {
   ]
   // ********************************************************************************
   mounted() {
-    this.loadData()
+    this.getAllArea().then(() => {
+      this.loadData()
+    })
+  }
+
+  private async getAllArea() {
+    this.areaList = []
+    let res = await jlbzdcx()
+    for (let index = 0; index < res.length; index++) {
+      const element = res[index]
+      this.areaList.push({ text: element.QYMC, value: element.QYID })
+    }
+    this.serachInfo.areaId = this.areaList[0].value
   }
   private async loadData() {
     let areaId = this.$route.query.areaId
+    if (areaId) {
+      this.serachInfo.areaId = areaId
+    }
   }
 }
 </script>
