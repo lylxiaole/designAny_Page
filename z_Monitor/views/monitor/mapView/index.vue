@@ -2,17 +2,10 @@
   <div style="height:100%;width:100%;position:relative">
     <div ref="mapArea"></div>
     <button style="position:absolute;right:8px;top:8px" @click="drawerOpen=true">展示列表</button>
-    <el-drawer show-close title="作业区概要" size="350px" style="height:100%" :visible.sync="drawerOpen" custom-class="mapdrawer">
+    <el-drawer show-close title="作业区概要" size="400px" style="height:100%" :visible.sync="drawerOpen" custom-class="mapdrawer">
       <div style="height:100%;width:100%;overflow-y:auto">
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
-        <areaCard style="height:170px;margin:8px" />
+        <areaCard v-for="item in cardInfos" :key="item.areaName" :cardInfo="item" style="height:170px;margin:8px" />
+
       </div>
     </el-drawer>
   </div>
@@ -26,7 +19,7 @@ import { Route } from 'vue-router'
 import { getConfigByName } from '@src/baseConfigs'
 import resizer from 'element-resize-detector'
 // *****************************************************************
-import areaCard from './areaCard.vue'
+import areaCard, { cardInfo } from './areaCard.vue'
 // *****************************************************************
 require('ol/css')
 import Map from 'ol/Map'
@@ -53,11 +46,7 @@ var errorIcon = require('../../../assets/areaMap/dwr.png')
 export default class Index extends PageBase {
   private drawerOpen: boolean = false
   private currentMap: Map = null
-
-  private currentOverlay: any = null
-  private needAddItem: any = null
-  private needItemAddcallback: any = null
-
+  private cardInfos: cardInfo[] = []
   // ********************************************************************************
   mounted() {
     let mapapiUrl = getConfigByName('mapApiAddr')
@@ -94,11 +83,38 @@ export default class Index extends PageBase {
   unlisenDomSize() {
     this.currentResizer.removeAllListeners($(this.$el))
   }
-  // ****************************************************
+  // **************map操作**************************************
+  private currentOverlay: any = null
+  private needAddItem: any = null
+  private needItemAddcallback: any = null
   private async getMapMarkers() {
     let markers = await getMapMarkerList()
     window.console.log('getMapMarkers:', markers)
+    //todo 加载地图
     this.setMarkerInMap(markers)
+    //加载卡片
+    let cardList = markers.filter((o) => o.QYJKLX === '1')
+    this.cardInfos = []
+    for (let index = 0; index < cardList.length; index++) {
+      const cardinfo = cardList[index]
+      this.cardInfos.push({
+        areaName: cardinfo.QYMC,
+        totalCount: cardinfo.jlbsl, //总数
+        normalCount: cardinfo.zczt,
+        normalRate: this.rateStrFormat(cardinfo.zclv), //正常率
+        errorCount: cardinfo.gzzt, //故障数量
+        infoCount: cardinfo.xxtxzt, //信息数量
+        datacollectErrorCount: cardinfo.scczt, //数采异常数量
+        forbiddenConntectCount: cardinfo.jztxzt, //禁止通讯数量
+        conntectErrorCount: cardinfo.txsbzt //通讯失败数量
+      })
+    }
+  }
+
+  private rateStrFormat(val) {
+    // window.console.log('rateStrFormat:', val)
+    val = val.replace('%', '')
+    return (parseFloat(val).toFixed(2) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,') + '%'
   }
 
   private onMapMouseMove(e: any) {

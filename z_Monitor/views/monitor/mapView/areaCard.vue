@@ -1,10 +1,10 @@
 <template>
   <el-card class="box-card">
     <div style="height:100%;width:100%">
-      <el-row>
+      <el-row class="inforow">
         <span style="font-size:22px;">{{cardInfo.areaName}}</span>
       </el-row>
-      <el-row>
+      <el-row class="inforow">
         <el-col :span="8">
           <span class="infotext">总数: {{cardInfo.totalCount}}</span>
         </el-col>
@@ -15,7 +15,7 @@
           <span class="infotext">正常率: {{cardInfo.normalRate}}</span>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row class="inforow">
         <el-col :span="8">
           <span class="infotext">故障: {{cardInfo.errorCount}}</span>
         </el-col>
@@ -24,7 +24,7 @@
         </el-col>
         <el-col :span="8"></el-col>
       </el-row>
-      <el-row>
+      <el-row class="inforow">
         <el-col :span="8">
           <span class="infotext">数采异常: {{cardInfo.datacollectErrorCount}}</span>
         </el-col>
@@ -35,7 +35,7 @@
           <span class="infotext">通讯失败: {{cardInfo.conntectErrorCount}}</span>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row class="inforow">
         <el-button type="text">流量计明细</el-button>
       </el-row>
     </div>
@@ -90,4 +90,10 @@ export default class areaCard extends ComponentBase {
 }
 </script>
 <style scoped>
+.infotext {
+  font-size: 14px;
+}
+.inforow {
+  margin: 4px 0px;
+}
 </style>
