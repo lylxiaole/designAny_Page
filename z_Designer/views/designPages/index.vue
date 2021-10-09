@@ -78,7 +78,6 @@ export default class index extends PageBase {
 
     this.currentOpenPageId = page.id
   }
-
   private closePage(pageId: string) {
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
@@ -90,10 +89,22 @@ export default class index extends PageBase {
       this.openPages.splice(pagedataIndex, 1)
     }
   }
+  private isHaveOpened(pageId: string) {
+    let find = this.openPages.find((o) => o.id === pageId)
+    if (find) {
+      return true
+    } else {
+      return false
+    }
+  }
   // **********页面列表**********************************************************
   private async onEditPage(pageId: string) {
-    let res = await GetPageDetail(pageId)
+    if (this.isHaveOpened(pageId)) {
+      this.currentOpenPageId = pageId
+      return
+    }
 
+    let res = await GetPageDetail(pageId)
     await this.$nextTick()
     let designLayout: EnginePage = null
     switch (res.type) {
@@ -110,8 +121,9 @@ export default class index extends PageBase {
     let documentFrag = drawVueOnVirtualDom(designLayout)
     await designLayout.$nextTick()
     designLayout.loadPageById(pageId)
-    $(this.$refs[pageId][0]).append(documentFrag)
     this.openPage(res, designLayout)
+    await this.$nextTick()
+    $(this.$refs[pageId][0]).append(documentFrag)
   }
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)

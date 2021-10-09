@@ -150,7 +150,7 @@ export default class EngineContainer extends EngineLayout {
     e.stopPropagation()
   }
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    window.console.log('listenOnDragMove:', dragdata)
+    // window.console.log('listenOnDragMove:', dragdata)
     if (!dragdata) {
       return true
     }

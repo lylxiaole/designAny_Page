@@ -34,7 +34,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { validUsername } from '@src/utils/validate'
 import PageBase from '@src/views/PageBase'
-import { login } from '../../apis/user'
+import { login } from '@src/apis/user'
 
 const validateUsername = (rule, value, callback) => {
   if (!validUsername(value)) {
