@@ -52,8 +52,12 @@ export default class Index extends PageBase {
     }
   ]
   // ********************************************************************************
-  mounted() {}
-  // ***************底部Tab*********************************************
+  mounted() {
+    this.loadData()
+  }
+  private async loadData() {
+    let areaId = this.$route.query.areaId
+  }
 }
 </script>
 <style lang="less" scoped>
