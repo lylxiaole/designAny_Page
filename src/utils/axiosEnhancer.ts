@@ -80,8 +80,7 @@ axiosInstance.interceptors.response.use(
     }
   },
   (error: any) => {
-    window.console.error(error)
-
+    window.console.error('axios请求发生错误', error)
     if (error === undefined || error.code === 'ECONNABORTED') {
       notifyError('服务请求超时')
       return Promise.reject(error)
