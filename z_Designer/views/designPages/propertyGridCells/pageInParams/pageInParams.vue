@@ -10,13 +10,12 @@
       @click="startEditTable" size="small"> 设置入参</el-button>
 
     <el-dialog :maskClosable="false" title="编辑" :visible.sync="windowVisible" :destroyOnClose="true" width="900px">
-      <el-table size="small" :columns="columns" :dataSource="data" :pagination="false" style="height:450px;" :scroll="{ y: 420 }">
+      <el-table size="small" :data="data" :pagination="false" style="height:450px;" width="100%">
         <el-table-column prop="paramName" label="入参名称" width="300">
         </el-table-column>
         <el-table-column prop="paramType" label="入参类型" width="300">
         </el-table-column>
-
-        <el-table-column fixed="right" label="操作" width="100">
+        <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <a @click="() => rowdelete(scope.row.key)">删除</a>
           </template>
@@ -46,33 +45,6 @@ export default class pageInParams extends propertyCellBase {
   public windowVisible: boolean = false
   private pageicon: any
 
-  private columns: any[] = [
-    {
-      title: '入参名称',
-      dataIndex: 'paramName',
-      scopedSlots: { customRender: 'paramName' },
-      width: '30%'
-    },
-    {
-      title: '入参类型',
-      dataIndex: 'paramType',
-      scopedSlots: { customRender: 'paramType' },
-      width: '40%'
-    },
-    {
-      title: '集合/单模',
-      dataIndex: 'paramIsList',
-      scopedSlots: { customRender: 'paramIsList' },
-      width: '20%'
-    },
-    {
-      title: '操作',
-      dataIndex: 'operation',
-      scopedSlots: { customRender: 'operation' },
-      width: '10%'
-    }
-  ]
-
   private data: paramInfo[] = []
 
   created() {
@@ -96,7 +68,6 @@ export default class pageInParams extends propertyCellBase {
     newRow.paramName = ''
     newRow.paramType = 1
 
-    newRow.paramIsList = false
     this.data.push(newRow)
   }
 
@@ -114,7 +85,6 @@ export default class pageInParams extends propertyCellBase {
       newparaminfo.key = o.key
       newparaminfo.paramName = o.paramName
       newparaminfo.paramType = o.paramType
-      newparaminfo.paramIsList = o.paramIsList
       this.data.push(newparaminfo)
     })
   }

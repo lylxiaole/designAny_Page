@@ -88,9 +88,6 @@ export default class DesignShell extends BaseEvents {
     if (!this.Component) {
       return ''
     }
-    if (this.Component.isUseTheme) {
-      return 'designerThemeStyle'
-    }
     return ''
   }
   /**当前组建壳子中的组件 */

@@ -17,7 +17,7 @@ export default class PCPageDesign extends EnginePage {
     return true
   }
   private get backgroundCute(): string {
-    window.console.log('backgroundCute:', this.background_img)
+    // window.console.log('backgroundCute:', this.background_img)
     if (!this.background_img || !this.background_img.uid) {
       return this.background
     }
