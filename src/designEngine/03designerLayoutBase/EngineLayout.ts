@@ -124,7 +124,7 @@ export default class EngineLayout extends BaseEvents {
     this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '字体', new Number_Property(), 14, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
-    this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'))
+    this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'), [])
     this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Property(), 'white')
     this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
     this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())

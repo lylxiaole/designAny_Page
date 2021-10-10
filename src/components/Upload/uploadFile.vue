@@ -7,8 +7,8 @@
     </el-button>
     <el-dialog :maskClosable="false" title="选择文件" :visible.sync="windowVisible" width="60%" :destroyOnClose="true">
       <div style="min-height:7em">
-        <el-upload action="#" :auto-upload="false" :file-list="currentFileList" :before-upload="beforeUpload" :on-change="handleChange"
-          :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
+        <el-upload :action="uploadServerAddr" :headers="headers" :file-list="currentFileList" :before-upload="beforeUpload"
+          :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
           <!-- ****上传文件的按钮************************************ -->
           <div v-if="currentFileList.length<maxFileLength" slot="default" style="height:100%;width:100%"
             class="flexHorilanLayout verticalAlignCenter">
@@ -49,42 +49,38 @@
 </template>
 
 <script lang="ts">
-export class fileInfo {
-  uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
-  status: string = 'done' // 状态有：uploading done error removed
-  response: string = '{status: success}' // 服务端响应内容
-  name: string
-  get thumbUrl(): string {
-    //应对IE的兼容性
-    return this.url
-  }
-  url: string
-}
-
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 // import { CurrentApis, CurrentContext } from '../01designerContext'
 // import { fileInfo } from '../01designerContext'
 import { getUuid, deepClone } from '@src/utils'
 import fileUpload from './fileUpload'
-
+import { getConfigByName } from '@src/baseConfigs'
+const apiAddr = () => getConfigByName('apiAddr')
+export class fileInfo {
+  uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+  name: string
+  get url(): string {
+    return apiAddr() + 'api/file/GetFile?fileId=' + this.uid
+  }
+}
 @Component
 export default class uploadFile extends Vue {
   @Prop() private fileList: fileInfo[]
   @Prop() private maxFileLength: number
   @Prop() private fileType: string
-  // @Prop() private disabled: boolean
   @Prop() private upLoadSize: number
-
-  @Prop() private backgroundColor: string
-  @Prop() private fontColor: string
   @Prop() private imageUrl: string
-  // imageUrlC: string = ''
+
+  private uploadServerAddr = apiAddr() + 'api/file/UploadFile'
+  private headers: any = {
+    token: this.$store.state.system.token
+  }
 
   @Emit('update:fileList')
   UpdateFileList_Inner(flist: fileInfo[]) {}
 
   get currentFileList(): fileInfo[] {
-    if (!this.fileList || !this.fileUploadClass) {
+    if (!this.fileList) {
       return []
     }
     var files: fileInfo[] = []
@@ -92,7 +88,6 @@ export default class uploadFile extends Vue {
       var info = new fileInfo()
       info.uid = o.uid
       info.name = o.name
-      info.url = this.fileUploadClass.getFilePath(o.url)
       files.push(info)
     })
     return files
@@ -123,16 +118,11 @@ export default class uploadFile extends Vue {
   private windowVisible: boolean = false
   private previewVisible: boolean = false
   private previewImage: string = ''
-  private fileUploadClass: fileUpload = null
-  mounted() {
-    this.fileUploadClass = new fileUpload()
-    this.fileUploadClass.onUploadSuccess = this.onUploadSuccess
-    this.fileUploadClass.onUploadError = this.onUploadError
-    this.fileUploadClass.onUploadProgress = this.onUploadProgress
-  }
+
+  mounted() {}
 
   showUploadModal() {
-    window.console.log('showUploadModal')
+    window.console.log('this.$store.state.system.token:', this.$store.state.system.token)
     this.windowVisible = true
   }
 
@@ -140,63 +130,51 @@ export default class uploadFile extends Vue {
     //window.console.log('确定')
     this.windowVisible = false
   }
+  handleUploadSuccess(response: any, file: File) {
+    let uploadfileId = response.data
+    var newfileinfo: any = {
+      uid: uploadfileId,
+      name: file.name
+    }
+    var filesclone = [...this.fileList]
+    filesclone.push(newfileinfo)
+    this.UpdateFileList_Inner(filesclone)
+    window.console.log('handleUploadSuccess:', response)
+  }
 
+  handleUploadError(file: any) {
+    window.console.log('handleUploadError:', file)
+  }
+  beforeUpload(file: any, fileList: any[]) {
+    // window.console.log('beforeUpload:', file)
+    const isUpLoadSize = file.size / 1024 / 1024 < this.upLoadSize
+    if (!isUpLoadSize) {
+      this.$notify.error('file must smaller than ' + this.upLoadSize + 'MB!')
+      return false
+    }
+    return true
+  }
+  // *****************************************************
   handleWindowOK() {
     this.windowVisible = false
     this.upLoadCompleted(this.fileList)
   }
-
   handlePreviewClose() {
     this.previewVisible = false
   }
-
   handlePreview(file: any) {
     //window.console.log('aaaaaa')
     this.previewImage = file.url || file.thumbUrl
     this.previewVisible = true
   }
-
-  async handleChange(file: any) {
-    const isUpLoadSize = file.raw.size / 1024 / 1024 < this.upLoadSize
-    if (!isUpLoadSize) {
-      this.$notify.error('file must smaller than ' + this.upLoadSize + 'MB!')
-      return
-    } else {
-      await this.fileUploadClass.startUpload(file.raw)
-    }
-    return false
-  }
-
-  handleRemove(file: fileInfo) {
+  handleRemove(file: any) {
+    window.console.log('handleRemove:', file)
     var filesclone = [...this.fileList]
     var findfile = filesclone.filter((o) => o.uid == file.uid)[0]
 
     var findfileIndex = filesclone.indexOf(findfile)
     filesclone.splice(findfileIndex, 1)
     this.UpdateFileList_Inner(filesclone)
-  }
-  async beforeUpload(file: any, fileList: any[]) {}
-
-  onUploadProgress(part: string, precent: number) {
-    //window.console.log('上传了' + precent + '%')
-  }
-  onUploadError(error: any) {
-    this.$message.error(error + `file upload failed.`)
-  }
-
-  onUploadSuccess(relativePath: string, fileName: string) {
-    var fileinfo = new fileInfo()
-    fileinfo.uid = getUuid()
-    fileinfo.name = fileName
-    fileinfo.url = relativePath
-    //window.console.log('上传文件大小子')
-    var res = []
-    if (this.fileList) {
-      res = deepClone(this.fileList)
-    }
-    res.push(fileinfo)
-    this.UpdateFileList_Inner(res)
-    this.upLoadCallBack(relativePath)
   }
   //*********对外公布事件*********** */
   @Emit('upLoadCompleted')
