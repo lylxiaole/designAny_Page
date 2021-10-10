@@ -34,18 +34,18 @@ export default class TextComponent extends EngineComponent {
     this.width = 150
     this.height = 40
     this.background = 'white'
-    this.registerProperty('文本', PropertyGroupName.special, new Text_Property(), '文本组件')
+    this.registerProperty(PropertyGroupName.special, '文本', new Text_Property(), '文本组件')
     //var textPropertyId = this.findPropertyByName(PropertyGroupName.special, '文本').id
 
-    this.registerProperty('水平对齐', PropertyGroupName.special, new Enum_Property(true, ['居左', '居中', '居右']), '居中')
-    this.registerProperty('垂直对齐', PropertyGroupName.special, new Enum_Property(true, ['居上', '居中', '居下']), '居中')
+    this.registerProperty(PropertyGroupName.special, '水平对齐', new Enum_Property(true, ['居左', '居中', '居右']), '居中')
+    this.registerProperty(PropertyGroupName.special, '垂直对齐', new Enum_Property(true, ['居上', '居中', '居下']), '居中')
     // this.registerProperty('垂直对齐', PropertyGroupName.special, new Enum_Property(true, ['上', '中', '下']), '上')
-    this.registerProperty('提示文字', PropertyGroupName.special, new Text_Property(), '')
-    this.registerProperty('是否换行', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '是')
-    this.registerProperty('粗细', PropertyGroupName.special, new Enum_Property(true, ['normal', 'bold', 'bolder', 'lighter']), 'normal')
-    this.registerProperty('是否倾斜', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
-    this.registerProperty('是否可点击开启编辑', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
-    this.registerProperty('是否显示边框', PropertyGroupName.special, new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty(PropertyGroupName.special, '提示文字', new Text_Property(), '')
+    this.registerProperty(PropertyGroupName.special, '是否换行', new Enum_Property(true, ['是', '否']), '是')
+    this.registerProperty(PropertyGroupName.special, '粗细', new Enum_Property(true, ['normal', 'bold', 'bolder', 'lighter']), 'normal')
+    this.registerProperty(PropertyGroupName.special, '是否倾斜', new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty(PropertyGroupName.special, '是否可点击开启编辑', new Enum_Property(true, ['是', '否']), '否')
+    this.registerProperty(PropertyGroupName.special, '是否显示边框', new Enum_Property(true, ['是', '否']), '否')
     // this.CaptureEvent()
     // this.canDrag = true
     // this.canDrop = true

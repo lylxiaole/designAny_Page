@@ -1,19 +1,27 @@
 <template>
-  <div :style="{position:'relative','width':width+'px','height':height+'px','left':left+'px','top':top+'px' }" style="border-radius:0px">
-    <div>我是设计器</div>
+  <div :style="{position:'relative','width':width+'px','height':height+'px','left':left+'px','top':top+'px' ,'background':backgroundCute}"
+    oncontextmenu="self.event.returnValue=false" style="border-radius:0px">
+
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
-import { drawVueOnVirtualDom } from '@src/utils'
+import { drawVueOnVirtualDom, BuildingFileUrlForShow } from '@src/utils'
 import DesignShell from './ComponentShells/DesignShell.vue'
 
 @Component
 export default class PCPageDesign extends EnginePage {
   public get isDesigning(): boolean {
     return true
+  }
+  get backgroundCute(): string {
+    // let property = this.FindPropertyByName('基础设置', '背景图片')
+    if (!this.background_img || !this.background_img.url) {
+      return this.background
+    }
+    return 'url("' + BuildingFileUrlForShow(this.background_img.url) + '")'
   }
   public allShells: DesignShell[] = []
 
