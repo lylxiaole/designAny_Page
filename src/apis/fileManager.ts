@@ -2,9 +2,11 @@ import { ajaxGet, ajaxPost } from '@src/utils/axiosEnhancer'
 import { getConfigByName } from '@src/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 
-export async function uploadFile(file): Promise<string> {
+export async function uploadFile(file: File): Promise<string> {
+  let formdata: FormData = new FormData()
+  formdata.append('file', file)
   let url = apiAddr() + 'api/file/UploadFile'
-  const resp = await ajaxPost(url, file)
+  const resp = await ajaxPost(url, formdata)
   return resp.data
 }
 

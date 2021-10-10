@@ -12,6 +12,7 @@ export default class fileUpload {
     if (!file) {
       window.console.error('文件不存在')
     }
+
     let relativePath = await uploadFile(file)
     // this.onUploadProgress(e.part, precent)
     // this.onUploadError(err)

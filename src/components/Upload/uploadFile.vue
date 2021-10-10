@@ -7,19 +7,30 @@
     </el-button>
     <el-dialog :maskClosable="false" title="选择文件" :visible.sync="windowVisible" width="60%" :destroyOnClose="true">
       <div style="min-height:7em">
-        <el-upload :file-list="currentFileList" :multiple="false" :show-file-list="false" :on-preview="handlePreview" :on-remove="handleRemove"
-          :on-change="handleChange" :accept="fileTypes" :limit="maxFileLength" class="image-uploader" drag>
-          <div v-if="currentFileList.length<maxFileLength" onselectstart="return false;">
-            <i class="el-icon-upload" />
-            <div class="el-upload__text">
-              将文件拖到此处，或<em>点击上传</em>
-            </div>
+        <el-upload action="#" :auto-upload="false" :file-list="currentFileList" :before-upload="beforeUpload" :on-change="handleChange"
+          :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
+          <!-- ****上传文件的按钮************************************ -->
+          <div v-if="currentFileList.length<maxFileLength" slot="default" style="height:100%;width:100%"
+            class="flexHorilanLayout verticalAlignCenter">
+            <i class="el-icon-plus"></i>
           </div>
-          <div v-else onselectstart="return false;">
-            <div>已到达最大数量</div>
+          <div v-else slot="default" style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
+            上传数量已经到达最大
+          </div>
+          <!-- ****已上传文件************************************ -->
+          <div slot="file" slot-scope="{file}">
+            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+            <span class="el-upload-list__item-actions">
+              <span class="el-upload-list__item-preview" @click="handlePreview(file)">
+                <i class="el-icon-zoom-in"></i>
+              </span>
+              <span class="el-upload-list__item-delete" @click="handleRemove(file)">
+                <i class="el-icon-delete"></i>
+              </span>
+            </span>
           </div>
         </el-upload>
-
+        <!-- ****预览窗口************************************ -->
         <el-dialog :visible.sync="previewVisible">
           <img alt="example" style="width: 100%" :src="previewImage" cancelText="取消" okText="确定" />
           <div slot="footer" class="dialog-footer">
@@ -70,14 +81,7 @@ export default class uploadFile extends Vue {
   // imageUrlC: string = ''
 
   @Emit('update:fileList')
-  UpdateFileList_Inner(flist: fileInfo[]) {
-    //console.log(flist)
-  }
-
-  // @Watch('imageUrlF')
-  // imageUrlChange() {
-  //   this.imageUrlC = this.imageUrlF
-  // }
+  UpdateFileList_Inner(flist: fileInfo[]) {}
 
   get currentFileList(): fileInfo[] {
     if (!this.fileList || !this.fileUploadClass) {
@@ -119,7 +123,7 @@ export default class uploadFile extends Vue {
   private windowVisible: boolean = false
   private previewVisible: boolean = false
   private previewImage: string = ''
-  fileUploadClass: fileUpload = null
+  private fileUploadClass: fileUpload = null
   mounted() {
     this.fileUploadClass = new fileUpload()
     this.fileUploadClass.onUploadSuccess = this.onUploadSuccess
@@ -152,8 +156,15 @@ export default class uploadFile extends Vue {
     this.previewVisible = true
   }
 
-  handleChange(file: any) {
-    //window.console.log(file)
+  async handleChange(file: any) {
+    const isUpLoadSize = file.raw.size / 1024 / 1024 < this.upLoadSize
+    if (!isUpLoadSize) {
+      this.$notify.error('file must smaller than ' + this.upLoadSize + 'MB!')
+      return
+    } else {
+      await this.fileUploadClass.startUpload(file.raw)
+    }
+    return false
   }
 
   handleRemove(file: fileInfo) {
@@ -164,16 +175,7 @@ export default class uploadFile extends Vue {
     filesclone.splice(findfileIndex, 1)
     this.UpdateFileList_Inner(filesclone)
   }
-  beforeUpload(file: any, fileList: any[]) {
-    const isUpLoadSize = file.size / 1024 / 1024 < this.upLoadSize
-    if (!isUpLoadSize) {
-      this.$message.error('file must smaller than ' + this.upLoadSize + 'MB!')
-      return
-    } else {
-      this.fileUploadClass.startUpload(file)
-    }
-    return false
-  }
+  async beforeUpload(file: any, fileList: any[]) {}
 
   onUploadProgress(part: string, precent: number) {
     //window.console.log('上传了' + precent + '%')
