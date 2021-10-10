@@ -16,12 +16,12 @@ export default class PCPageDesign extends EnginePage {
   public get isDesigning(): boolean {
     return true
   }
-  get backgroundCute(): string {
-    // let property = this.FindPropertyByName('基础设置', '背景图片')
-    if (!this.background_img || !this.background_img.url) {
+  private get backgroundCute(): string {
+    window.console.log('backgroundCute:', this.background_img)
+    if (!this.background_img || !this.background_img.uid) {
       return this.background
     }
-    return 'url("' + BuildingFileUrlForShow(this.background_img.url) + '")'
+    return 'url("' + BuildingFileUrlForShow(this.background_img.uid) + '")'
   }
   public allShells: DesignShell[] = []
 

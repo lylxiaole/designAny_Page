@@ -1,6 +1,8 @@
 var CircularJSON = require('circular-json-es6')
 import pako from 'pako'
 import { Loading } from 'element-ui'
+import { getConfigByName } from '@src/baseConfigs'
+const apiAddr = () => getConfigByName('apiAddr')
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
@@ -447,8 +449,8 @@ export function strUnZip(str) {
 }
 
 /**使用相对路径，转换成文件的绝对路径，供给页面使用 */
-export function BuildingFileUrlForShow(fileserverAddr, relativePath) {
-  return fileserverAddr + relativePath
+export function BuildingFileUrlForShow(fileId) {
+  return apiAddr() + 'api/file/GetFile?fileId=' + fileId
 }
 
 /////////////////////////////////////////////////////////////////

@@ -52,7 +52,7 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 // import { CurrentApis, CurrentContext } from '../01designerContext'
 // import { fileInfo } from '../01designerContext'
-import { getUuid, deepClone } from '@src/utils'
+import { getUuid, deepClone, BuildingFileUrlForShow } from '@src/utils'
 import fileUpload from './fileUpload'
 import { getConfigByName } from '@src/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
@@ -60,7 +60,7 @@ export class fileInfo {
   uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
   name: string
   get url(): string {
-    return apiAddr() + 'api/file/GetFile?fileId=' + this.uid
+    return BuildingFileUrlForShow(this.uid)
   }
 }
 @Component
