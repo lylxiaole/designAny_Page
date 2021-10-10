@@ -4,20 +4,19 @@
  * 日期
  */
 <template>
-  <a-switch checkedChildren="是" unCheckedChildren="否" v-model="currentValue" />
-
+  <el-switch v-model="currentValue" active-text="是" inactive-text="否" active-color="#13ce66" inactive-color="#ff4949">
+  </el-switch>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
- 
+
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 
 @propertyCellTypeAttr(PropertyTypeEnum.boolean)
 @Component({
-  components: {
-   },
+  components: {}
 })
 export default class booleanControl extends propertyCellBase {
   mounted() {}

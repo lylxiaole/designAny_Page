@@ -5,7 +5,7 @@
  */
 <template>
   <div>
-    <a-input size="small" placeholder="请输入" v-model="currentValue" :defaultValue="currentValue" />
+    <el-input size="mini" v-model="currentValue" placeholder="请输入"></el-input>
   </div>
 </template>
 

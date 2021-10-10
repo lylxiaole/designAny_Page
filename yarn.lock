@@ -1422,7 +1422,7 @@
   "resolved" "https://registry.npm.taobao.org/@qixian.cs/path-to-regexp/download/@qixian.cs/path-to-regexp-6.1.0.tgz"
   "version" "6.1.0"
 
-"@simonwep/pickr@~1.7.0":
+"@simonwep/pickr@^1.4.2", "@simonwep/pickr@~1.7.0":
   "integrity" "sha512-fq7jgKJT21uWGC1mARBHvvd1JYlEf93o7SuVOB4Lr0x/2UPuNC9Oe9n/GzVeg4oVtqMDfh1wIEJpsdOJEZb+3g=="
   "resolved" "https://registry.npmjs.org/@simonwep/pickr/-/pickr-1.7.4.tgz"
   "version" "1.7.4"

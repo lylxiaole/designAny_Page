@@ -2,10 +2,8 @@
   <div style="overflow-x:hidden;overflow-y:auto">
 
     <el-radio-group @change="changeActivekey" v-model="activeKey" size="mini" style="margin-left:30px;margin-top:10px;">
-
       <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :label="group.groupName"
         style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
-
       </el-radio-button>
     </el-radio-group>
 
@@ -73,7 +71,7 @@ var cellControls: Function[] = []
 const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
 modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath)
-  if (value.default.$Meta && value.default.$Meta.celltype) {
+  if (value.default.prototype.$Meta && value.default.prototype.$Meta.celltype) {
     cellControls.push(value.default)
   }
   return modules
@@ -200,13 +198,14 @@ export default class PropertyGrid extends Vue {
     /** */
     this.isWatchPropertiesChange = true
   }
+
   @Watch('propertyGroups', { deep: true, immediate: true })
   //监视所有属性变化，并给当前选中的布局赋值
   private watchPropertyGroupsChanged(newgroup: PropertyGroupInfo[]) {
     if (this.isWatchPropertiesChange == false) {
       return
     }
-    // window.console.log('属性单元格变化了')
+    window.console.log('属性单元格变化了')
     if (!newgroup) {
       this.propertyGroups_oldClone = []
       return
@@ -304,9 +303,9 @@ export default class PropertyGrid extends Vue {
   mounted() {}
 
   changeActivekey(groupname: string) {
-    var groupName = groupname
+    let groupName = groupname
     this.selectGropName = groupname
-    var tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
+    let tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
 
     this.propertyDataCache = tempGrop.children
     this.propIsShow = true
