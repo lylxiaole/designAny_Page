@@ -1,15 +1,18 @@
 <template>
   <div style="width:100%;height:100%">
-    <a-button class="themeButton" type="primary"
+    <el-button class="themeButton" type="primary" size="mini" :icon="npicon"
       style="width:118px;height:34px;background:rgba(241,182,90,0.1);border-color:rgba(241,182,90,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
-      @click="startEditText" size="small">
-      <a-icon style="font-size:20px;margin-left:-20px;" :component="npicon" />扩展js</a-button>
-    <geno-modal :maskClosable="false" title="编辑" v-model="windowVisible" @cancel="handleCancel" @ok="onSure" :width="900" :destroyOnClose="true"
-      :okButtonProps="{ props: {icon: 'check'}}" :cancelButtonProps="{ props: {icon: 'close'}}" cancelText="取消" okText="确定">
-      <editor ref="editor" lang="javascript" 
-      @init="editorInit" v-model="currentCode" width="850" height="500" :options="options">
+      @click="startEditText">
+      扩展js
+    </el-button>
+    <el-dialog :maskClosable="false" title="编辑" v-model="windowVisible" width="900px" :destroyOnClose="true">
+      <editor ref="editor" lang="javascript" @init="editorInit" v-model="currentCode" width="850" height="500" :options="options">
       </editor>
-    </geno-modal>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="handleCancel">取 消</el-button>
+        <el-button type="primary" @click="onSure">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -38,11 +41,11 @@ export default class npAceEditor extends Vue {
   private modePath: string = 'ace/mode/javascript' // 同上
   private windowVisible: boolean = false
   private npicon: any
-  public options : any= {
-        enableBasicAutocompletion: true,
-        enableSnippets: true,
-        enableLiveAutocompletion: true /*自动补全*/,
-      }
+  public options: any = {
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true /*自动补全*/
+  }
   created() {
     this.npicon = npAceEditorIco
   }
@@ -94,13 +97,13 @@ export default class npAceEditor extends Vue {
   }
 
   //Ace编辑器
-   editorInit(editor) {
-      require('brace/ext/language_tools') //language extension prerequsite...
-      require('brace/mode/html')
-      require('brace/mode/javascript') //language
-      require('brace/mode/less')
-      require('brace/theme/chrome')
-      require('brace/snippets/javascript') //snippet
-    }
+  editorInit(editor) {
+    require('brace/ext/language_tools') //language extension prerequsite...
+    require('brace/mode/html')
+    require('brace/mode/javascript') //language
+    require('brace/mode/less')
+    require('brace/theme/chrome')
+    require('brace/snippets/javascript') //snippet
+  }
 }
 </script>

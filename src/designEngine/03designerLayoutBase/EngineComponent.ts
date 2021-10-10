@@ -69,20 +69,20 @@ export default class EngineComponent extends EngineContainer {
   created() {
     this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
     this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
-    this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Property(), [], true, false)
+    this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Property(), [], true)
     this.registerProperty(PropertyGroupName.normal, '是否禁用', new Boolean_Property(), false)
     this.registerProperty(PropertyGroupName.normal, '是否显示', new Boolean_Property(), true, true)
     this.registerProperty(PropertyGroupName.normal, '层级设置', new Number_Property(), 1)
     var numberproperty = new Number_Property()
     numberproperty.min = -99999
-    this.registerProperty(PropertyGroupName.normal, '外边距-左', numberproperty, 0, false, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-右', numberproperty, 0, false, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-上', numberproperty, 0, false, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-下', numberproperty, 0, false, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-左', numberproperty, 0, false, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-右', numberproperty, 0, false, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-上', numberproperty, 0, false, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-下', numberproperty, 0, false, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-左', numberproperty, 0, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-右', numberproperty, 0, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-上', numberproperty, 0, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-下', numberproperty, 0, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-左', numberproperty, 0, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-右', numberproperty, 0, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-上', numberproperty, 0, false, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-下', numberproperty, 0, false, 'px')
     this.canDrop = false
     this.canDrag = false
     this.width = 200

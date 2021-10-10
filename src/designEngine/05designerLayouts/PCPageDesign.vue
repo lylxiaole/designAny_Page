@@ -32,7 +32,7 @@ export default class PCPageDesign extends EnginePage {
   }
 
   protected renderComponent(compCon: EngineComponent): EngineLayout {
-    window.console.log('renderComponent:', compCon)
+    // window.console.log('renderComponent:', compCon)
     let shell = new DesignShell()
     let fragment = drawVueOnVirtualDom(shell)
     // this._dragHelper.makeDomCanDrag(shell.$el)

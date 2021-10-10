@@ -5,69 +5,30 @@
  */
 <template>
   <div>
-    <a-button type="primary" class="themeButton"
+    <el-button type="primary" class="themeButton" :icon="pageicon"
       style="width:118px;height:34px;background:rgba(124,225,170,0.1);border-color:rgba(124,225,170,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
-      @click="startEditTable" size="small">
-      <a-icon style="font-size:20px" :component="pageicon" />设置入参</a-button>
-    <geno-modal :maskClosable="false" title="编辑" v-model="windowVisible" :destroyOnClose="true" :okButtonProps="{ props: {icon: 'check'}}"
-      :cancelButtonProps="{ props: {icon: 'close'}}" :width="900" cancelText="取消" okText="确定" @cancel="modalCancel">
+      @click="startEditTable" size="small"> 设置入参</el-button>
 
-      <a-table size="small" :columns="columns" :dataSource="data" :pagination="false" style="height:450px;" :scroll="{ y: 420 }">
-        <template slot="paramName" slot-scope="text, record">
-          <div key="paramName">
-            <a-input :value="text" size="small" @change="e => handleChange(e.target.value, record.key, 'paramName')" />
-          </div>
-        </template>
+    <el-dialog :maskClosable="false" title="编辑" :visible.sync="windowVisible" :destroyOnClose="true" width="900px">
+      <el-table size="small" :columns="columns" :dataSource="data" :pagination="false" style="height:450px;" :scroll="{ y: 420 }">
+        <el-table-column prop="paramName" label="入参名称" width="300">
+        </el-table-column>
+        <el-table-column prop="paramType" label="入参类型" width="300">
+        </el-table-column>
 
-        <template slot="paramType" slot-scope="text, record">
-          <div key="paramType">
-            <a-radio-group style="width:50%;float:left" :value="record.paramType"
-              @change="e => handleChange(e.target.value, record.key, 'paramType')">
-              <a-row>
-                <a-col>
-                  <a-radio :value="1">系统模型</a-radio>
-                </a-col>
-                <a-col>
-                  <a-radio :value="2">简单类型</a-radio>
-                </a-col>
-              </a-row>
-            </a-radio-group>
+        <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <a @click="() => rowdelete(scope.row.key)">删除</a>
+          </template>
+        </el-table-column>
+      </el-table>
 
-            <a-tree-select v-if="record.paramType==2" :allowClear='false' style="width:50%;float:right" size="small"
-              :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }" placeholder='请选择' treeDefaultExpandAll
-              @change="e => handleChange(e, record.key, 'paramClass')">
-
-              <a-tree-select-node v-for="classinfo in allSimpleClasses" :value='classinfo.modelCode' :title='classinfo.name'
-                :key='classinfo.modelCode' />
-            </a-tree-select>
-
-          </div>
-        </template>
-
-        <template slot="paramIsList" slot-scope="text, record">
-          <div key="paramIsList">
-            <a-radio-group style="width:70px" :value="record.paramIsList" @change="e => handleChange(e.target.value, record.key, 'paramIsList')">
-              <a-radio :value="true">集合</a-radio>
-              <a-radio :value="false">单模</a-radio>
-            </a-radio-group>
-          </div>
-        </template>
-
-        <template slot="operation" slot-scope="text, record">
-          <div style="width:80px;margin:0 5px" class='editable-row-operations'>
-            <span>
-              <a @click="() => rowdelete(record.key)">删除</a>
-            </span>
-          </div>
-        </template>
-      </a-table>
-
-      <template slot="footer">
-        <a-button style="float:left" type="primary" @click="newParam" size="small">新增</a-button>
-        <a-button @click="modalCancel" size="small">取消</a-button>
-        <a-button type="primary" @click="modalSure" size="small">确定</a-button>
-      </template>
-    </geno-modal>
+      <div slot="footer" class="dialog-footer">
+        <el-button style="float:left" type="primary" @click="newParam" size="small">新增</el-button>
+        <el-button @click="modalCancel" size="small">取消</el-button>
+        <el-button type="primary" @click="modalSure" size="small">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -75,9 +36,9 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
 import { paramInfo } from '@src/designEngine'
- import propertyCellBase from '../common'
+import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
- import { pageInParamsIco } from '@src/designEngine/assets/icons.js'
+import { pageInParamsIco } from '@src/designEngine/assets/icons.js'
 
 @propertyCellTypeAttr(PropertyTypeEnum.pageInParams)
 @Component
@@ -114,11 +75,10 @@ export default class pageInParams extends propertyCellBase {
 
   private data: paramInfo[] = []
 
-   created() {
+  created() {
     this.pageicon = pageInParamsIco
   }
-  mounted() {
-   }
+  mounted() {}
 
   private rowdelete(key: string) {
     const newData = [...this.data]
@@ -136,7 +96,7 @@ export default class pageInParams extends propertyCellBase {
     newRow.paramName = ''
     newRow.paramType = 1
 
-     newRow.paramIsList = false
+    newRow.paramIsList = false
     this.data.push(newRow)
   }
 
@@ -154,7 +114,7 @@ export default class pageInParams extends propertyCellBase {
       newparaminfo.key = o.key
       newparaminfo.paramName = o.paramName
       newparaminfo.paramType = o.paramType
-       newparaminfo.paramIsList = o.paramIsList
+      newparaminfo.paramIsList = o.paramIsList
       this.data.push(newparaminfo)
     })
   }
@@ -180,4 +140,4 @@ export default class pageInParams extends propertyCellBase {
 
  
 <style lang="less" scoped>
- </style>
+</style>

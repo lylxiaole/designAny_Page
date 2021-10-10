@@ -19,10 +19,8 @@
 </template>
 
 <script>
-import { getToken } from '@/api/qiniu'
-
 export default {
-  name: 'SingleImageUpload',
+  name: 'singleImageUpload',
   props: {
     value: {
       type: String,

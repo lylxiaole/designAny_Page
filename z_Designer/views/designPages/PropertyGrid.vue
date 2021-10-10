@@ -1,14 +1,15 @@
 <template>
-  <div style="overflow-x:hidden;overflow-y:auto">
-
-    <el-radio-group @change="changeActivekey" v-model="activeKey" size="mini" style="margin-left:30px;margin-top:10px;">
+  <div style="overflow:hidden">
+    <el-radio-group @change="changeActivekey" v-model="activeKey" size="mini"
+      style="margin-left:30px;margin-top:10px;box-sizing:border-box;height:35px">
       <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :label="group.groupName"
         style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
       </el-radio-button>
     </el-radio-group>
-
-    <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;"></el-row>
-    <div v-show="propIsShow">
+    <!-- ******************************** -->
+    <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;box-sizing:border-box"></el-row>
+    <!-- ************************************* -->
+    <div v-show="propIsShow" style="width:100%;height:calc(100% - 56px);overflow-y:auto;box-sizing:border-box;margin-bottom:10px">
       <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyData" v-show="propertyInfo.isShow"
         :key="propertyInfo.name" :disabled="propertyInfo.isEnable==false">
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">

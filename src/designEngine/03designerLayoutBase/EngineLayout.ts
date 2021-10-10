@@ -108,22 +108,22 @@ export default class EngineLayout extends BaseEvents {
   }
   /**生命周期 */
   created() {
-    this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false, false)
+    this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false)
     this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
-    this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Property(-100000), 0, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '字体', new Number_Property(), 14, true, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true, true)
+    this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Property(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '字体', new Number_Property(), 14, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
     this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'))
     this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Property(), 'white')
     this.registerProperty(PropertyGroupName.normal, '是否使用主题', new Boolean_Property(), false)
@@ -670,7 +670,7 @@ export default class EngineLayout extends BaseEvents {
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */
-  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, canBindModel: boolean = true, unit?: string, secondGroup?: string) {
+  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, unit?: string, secondGroup?: string) {
     let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
@@ -683,7 +683,6 @@ export default class EngineLayout extends BaseEvents {
     if (unit) {
       newperperty.propertyType.unit = unit
     }
-    newperperty.canBindModel = canBindModel
     this.properties.push(newperperty)
   }
   /**注册事件 */
@@ -749,7 +748,6 @@ export default class EngineLayout extends BaseEvents {
       } else {
         var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
         newperperty.canSetting = item.canSetting
-        newperperty.canBindModel = item.canBindModel
         newperperty.id = item.id
         this.addProperty(newperperty)
         this.setPropertyVal(item.id, item.value, true)

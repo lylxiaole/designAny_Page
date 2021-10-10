@@ -5,7 +5,7 @@
  */
 <template>
   <div>
-    <npColorPicker :color.sync="currentValue"></npColorPicker>
+    <bcolorPicker :color.sync="currentValue" style="height:25px"></bcolorPicker>
   </div>
 </template>
 
@@ -16,15 +16,15 @@ import { getUuid, deepClone } from '@src/utils'
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 
-import npColorPicker from '@src/components/colorPickr/npColorPicker.vue'
+import bcolorPicker from '@src/components/colorPickr/colorPicker.vue'
 
 @propertyCellTypeAttr(PropertyTypeEnum.color)
 @Component({
   components: {
-    npColorPicker: npColorPicker
+    bcolorPicker
   }
 })
-export default class colorControl extends propertyCellBase {
+export default class colorPicker extends propertyCellBase {
   mounted() {
     window.console.log('图片组件加载')
   }

@@ -56,7 +56,6 @@ export class Property {
   public propertyName: string = '' //属性名称
   public groupName: string = '' //属性分组名称
   public canSetting: boolean = true //控制属性窗中按钮是否可见
-  public canBindModel: boolean = true //属性是否可以绑定模型
   public secondGroup: string //第二级分组
 
   public convert(val: any): any {
