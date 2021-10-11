@@ -80,7 +80,7 @@ export default class index extends ComponentBase {
   }
   private async loadData() {
     let flowmeters = await getFlowmetersInArea(this.searchInfo.areaId)
-    window.console.log('loadData:', flowmeters)
+    // window.console.log('loadData:', flowmeters)
     this.allFlowmeters = flowmeters
   }
   // ********************************************************************************

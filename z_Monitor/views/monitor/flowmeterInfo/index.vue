@@ -79,7 +79,7 @@ export default class Index extends PageBase {
   private flowmeterDetail: any = null
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
-    window.console.log('watchFlowmeterDetailChange:', data)
+    // window.console.log('watchFlowmeterDetailChange:', data)
     this.flowmeterId = data.JLBID
     //清数据
     this.clearChildrenData()
