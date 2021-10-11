@@ -40,7 +40,7 @@ import { param2Obj } from '@src/utils'
 export default class flowmeterCard extends ComponentBase {
   @Prop({
     default: () => {
-      return { code: 'HT-4009', status: '0', state: '正常', temp: ' ', density: ' ', weight: '', instantaneousFlow: '', alarmCount: 4 }
+      return { id: '', code: 'HT-4009', status: '0', state: '正常', temp: ' ', density: ' ', weight: '', instantaneousFlow: '', alarmCount: 4 }
     }
   })
   cardInfo: any
@@ -70,13 +70,13 @@ export default class flowmeterCard extends ComponentBase {
   mounted() {}
   // ************************************************************
   private async openFlowmeterInfo() {
-    this.$router.push({ path: '/flowmeterInfo', query: { code: this.cardInfo.code } })
+    this.$router.push({ path: '/flowmeterInfo', query: { id: this.cardInfo.id } })
   }
   private async openAlarmInfo() {
-    this.$router.push({ path: '/flowmeterAlarm', query: { code: this.cardInfo.code } })
+    this.$router.push({ path: '/flowmeterAlarm', query: { id: this.cardInfo.id } })
   }
   private async openFlowmeterHis() {
-    this.$router.push({ path: '/historyData', query: { code: this.cardInfo.code } })
+    this.$router.push({ path: '/historyData', query: { id: this.cardInfo.id } })
   }
   private async openFlowmeterCompare() {
     //TODO 选择计量表参数

@@ -92,6 +92,7 @@ export default class Index extends PageBase {
     for (let index = 0; index < flowmeters.length; index++) {
       const flowm = flowmeters[index]
       this.allFlowmeters.push({
+        id: flowm.JLBID,
         code: flowm.WEIHAO,
         status: flowm.ZXZT,
         state: flowm.ZXZTMS,
@@ -103,7 +104,7 @@ export default class Index extends PageBase {
       })
     }
 
-    window.console.log('loadData:', flowmeters)
+    // window.console.log('loadData:', flowmeters)
   }
   // ********************************************************************************
 

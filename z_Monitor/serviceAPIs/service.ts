@@ -90,3 +90,12 @@ export async function getErrorFlowmeters(): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
+
+export async function getFlowmeterDetail(code: string): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getJlbOneInfo')
+  formData.append('jlbid', code)
+  let url = `${apiAddr()}/jkzl/jkzl.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}

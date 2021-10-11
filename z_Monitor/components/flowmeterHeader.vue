@@ -2,16 +2,16 @@
   <el-row>
     <el-col style="width:150px">
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
-      <chooseFlowmeter :dialogVisible="chooseFlowmeterVisible" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
+      <chooseFlowmeter :dialogVisible.sync="chooseFlowmeterVisible" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
     <el-col style="width:calc(100% - 400px);display:flex;flex-wrap:wrap">
-      <span class="label">位号:FT-3001</span>
-      <span class="label">投用状态:投用</span>
-      <span class="label">厂家:艾默生</span>
-      <span class="label">区域:油品作业区</span>
-      <span class="label">计量表:93汽油进料</span>
-      <span class="label">类型:质量流量计</span>
-      <span class="label">状态:正常</span>
+      <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
+      <span class="label">投用状态:&nbsp;{{flowmeterDetail?flowmeterDetail.tyztms:''}}</span>
+      <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
+      <span class="label">区域:&nbsp;{{flowmeterDetail?flowmeterDetail.QYMC:''}}</span>
+      <span class="label">计量表:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBMC:''}}</span>
+      <span class="label">类型:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBLXMC:''}}</span>
+      <span class="label">状态:&nbsp;{{flowmeterDetail?flowmeterDetail.zxztms:''}}</span>
     </el-col>
     <el-col style="width:250px">
       <el-row>
@@ -25,10 +25,11 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk } from '../serviceAPIs/service'
+import { jkzl, jlbjk, getFlowmeterDetail } from '../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import chooseFlowmeter from './chooseFlowmeter/index.vue'
+import { watch } from 'fs'
 // *****************************************************************
 /*** */
 @Component({
@@ -39,35 +40,37 @@ import chooseFlowmeter from './chooseFlowmeter/index.vue'
 export default class flowmeterHeader extends ComponentBase {
   @Prop({
     default: () => {
-      return ''
+      return null
     }
   })
-  flowmeterCode: string
-  @Emit('update:flowmeterCode')
-  private updateValue_flowmeterCode(val: boolean) {}
+  private flowmeterDetail: any
+  @Emit('update:flowmeterDetail')
+  private updateValue_flowmeterDetail(val: boolean) {}
+  @Watch('flowmeterDetail')
+  private async watchflowmeterDetailChange(code: string) {}
+
   // ********************************************************************************
-  mounted() {
-    this.loadData()
-  }
+  mounted() {}
   // ***************加载当前流量计数据 *********************************************
-  private async loadData() {}
+
   // ******************choose flowmeter**************************************************************
   private chooseFlowmeterVisible: boolean = false
   private startChooseFlowmeter() {
     this.chooseFlowmeterVisible = true
   }
-
   private async onChooseFlowmeter(data: any) {
-    window.console.log('onChooseFlowmeter:', data)
-    this.loadData()
+    if (!data) {
+      return
+    }
+    this.updateValue_flowmeterDetail(data)
   }
   private async onCancelChooseFlometer() {}
   // *****************************************************************************
   private async openAlarmInfo() {
-    this.$router.push({ path: '/flowmeterAlarm', query: { code: this.flowmeterCode } })
+    this.$router.push({ path: '/flowmeterAlarm', query: { id: this.flowmeterDetail.JLBID } })
   }
   private async openFlowmeterHis() {
-    this.$router.push({ path: '/historyData', query: { code: this.flowmeterCode } })
+    this.$router.push({ path: '/historyData', query: { id: this.flowmeterDetail.JLBID } })
   }
 }
 </script>

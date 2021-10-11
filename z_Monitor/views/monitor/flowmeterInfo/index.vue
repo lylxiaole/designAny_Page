@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width:100%;padding:10px;box-sizing:border-box">
     <el-row style="height:120px">
-      <flowmeterHeader style="width:100%;height:100%" />
+      <flowmeterHeader :flowmeterDetail.sync="flowmeterDetail" style="width:100%;height:100%" />
     </el-row>
     <el-row style=" height:calc(100% - 120px)">
       <el-col :span="12">
@@ -60,7 +60,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getFlowmeterDetail } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 import importantMeasure from './importantMeasure.vue'
@@ -74,8 +74,24 @@ import importantMeasure from './importantMeasure.vue'
   }
 })
 export default class Index extends PageBase {
-  mounted() {}
+  private flowmeterId: string
+  private flowmeterDetail: any = null
+  @Watch('flowmeterDetail')
+  private async watchFlowmeterDetailChange(data: any) {}
 
+  mounted() {
+    if (this.$route.query.id) {
+      this.flowmeterId = this.$route.query.id as any
+      this.loadData()
+    }
+  }
+
+  private async loadData() {
+    let flowmeterDetails = await getFlowmeterDetail(this.flowmeterId)
+    if (flowmeterDetails && flowmeterDetails.length > 0) {
+      this.flowmeterDetail = flowmeterDetails[0]
+    }
+  }
   // ***************关键测量表格*********************************************
   private keyMeasurementPoint: any[] = []
   // ***************仪表状态表格*********************************************

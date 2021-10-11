@@ -52,13 +52,13 @@ export default class index extends ComponentBase {
     }
   })
   private dialogVisible: boolean
+
   @Emit('update:dialogVisible')
   private updateValue_dialogVisible(val: boolean) {}
   // *********************************
-  private searchInfo: any = { code: '', areaId: 'shanghai' }
-  private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
+  private searchInfo: any = { code: '', areaId: '' }
+  private areaList: any[] = []
   private allFlowmeters: any[] = []
-
   private currentSelectedRow: any = null
   private get tableData(): any[] {
     return this.allFlowmeters.filter((o) => o.WEIHAO.indexOf(this.searchInfo.code) > -1)
@@ -91,7 +91,6 @@ export default class index extends ComponentBase {
   private async tableChooseChange(val: any) {
     this.currentSelectedRow = val
   }
-
   // ************************************************************
   private async onSureChoose() {
     this.onSure(this.currentSelectedRow)
@@ -101,7 +100,7 @@ export default class index extends ComponentBase {
     this.onCancel()
     this.updateValue_dialogVisible(false)
   }
-  // ************** **********************************************
+  // ************************************************************
   @Emit('onSure')
   private onSure(row: any) {}
 
