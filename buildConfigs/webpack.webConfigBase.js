@@ -191,11 +191,11 @@ let baseconfig = {
     // 所有页面都会用到的公共代码提取到 common 代码块中
     new webpack.optimize.SplitChunksPlugin({
       chunks: 'all', // initial、async和all
-      maxAsyncRequests: 5, // 按需加载时候最大的并行请求数
+      maxAsyncRequests: 20, // 按需加载时候最大的并行请求数
       maxInitialRequests: 3, // 最大初始化请求数
       automaticNameDelimiter: '~', // 打包分割符
       name: true,
-      minSize: 256 * 1024, // 形成一个新代码块最小的体积
+      minSize: 128 * 1024, // 形成一个新代码块最小的体积
       maxSize: 512 * 1024,
       cacheGroups: {
         vendors: {
@@ -216,14 +216,14 @@ let baseconfig = {
           chunks: 'async',
           minChunks: 2,
           name: 'async-commons',
-          priority: 90
+          priority: 80
         },
         commons: {
           // 其余同步加载包
           chunks: 'all',
           minChunks: 2,
           name: 'commons',
-          priority: 80
+          priority: 90
         }
       }
     }),

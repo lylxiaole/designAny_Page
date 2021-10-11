@@ -38,7 +38,24 @@ export async function jlbzdcx(): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
-
+/**获取物理区域中所有流量计的概要信息 */
+export async function getFlowmetersInArea(areaCode: string): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getQyZtJlb')
+  formData.append('qy', areaCode)
+  let url = `${apiAddr()}/jlbjk/jlbzdcx.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+/**流量计状态列表 */
+export async function zdcx(): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getSysDic')
+  formData.append('pdicCode', 'JLBBJZT')
+  let url = `${apiAddr()}/zdcx.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
 export async function wbjh(wbjhsj: string, wbzt: string): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'GetDataAll')
@@ -48,7 +65,6 @@ export async function wbjh(wbjhsj: string, wbzt: string): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
-
 export async function xjjh(xjjhsj: string, xjzt: string): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'getXJJHAll')
@@ -58,7 +74,6 @@ export async function xjjh(xjjhsj: string, xjzt: string): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
-
 export async function getMapMarkerList(): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'getQyPzJlbZtHz')
@@ -66,7 +81,6 @@ export async function getMapMarkerList(): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
-
 export async function getErrorFlowmeters(): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'getAllJlb')

@@ -13,7 +13,7 @@
           </el-col>
         </el-row>
         <el-row desc="关键测量" style="height:33%;border:1px solid #000">
-          <el-table :data="KeyMeasurementPoint" border>
+          <el-table :data="keyMeasurementPoint" border>
             <el-table-column prop="date" label="数据采集点" width="180">
             </el-table-column>
             <el-table-column prop="name" label="实时数值" width="180">
