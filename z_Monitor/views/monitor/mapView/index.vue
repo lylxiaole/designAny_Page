@@ -69,7 +69,7 @@ export default class Index extends PageBase {
     })
     this.listenChartDomSize()
     this.getMapMarkers()
-    this.timer = window.setInterval(this.getMapMarkers, 3000)
+    this.timer = window.setInterval(this.getMapMarkers, 10000)
     this.currentMap.on('pointermove', this.onMapMouseMove)
   }
 

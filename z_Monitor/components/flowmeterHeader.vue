@@ -48,11 +48,8 @@ export default class flowmeterHeader extends ComponentBase {
   private updateValue_flowmeterDetail(val: boolean) {}
   @Watch('flowmeterDetail')
   private async watchflowmeterDetailChange(code: string) {}
-
   // ********************************************************************************
   mounted() {}
-  // ***************加载当前流量计数据 *********************************************
-
   // ******************choose flowmeter**************************************************************
   private chooseFlowmeterVisible: boolean = false
   private startChooseFlowmeter() {

@@ -74,6 +74,7 @@ import importantMeasure from './importantMeasure.vue'
   }
 })
 export default class Index extends PageBase {
+  private timer: any = null
   private flowmeterId: string
   private flowmeterDetail: any = null
   @Watch('flowmeterDetail')
@@ -84,14 +85,21 @@ export default class Index extends PageBase {
       this.flowmeterId = this.$route.query.id as any
       this.loadData()
     }
+    this.timer = window.setInterval(this.refreshData, 10000)
   }
-
+  destroyed() {
+    if (this.timer) {
+      window.clearInterval(this.timer)
+    }
+  }
+  // *****************************************************************
   private async loadData() {
     let flowmeterDetails = await getFlowmeterDetail(this.flowmeterId)
     if (flowmeterDetails && flowmeterDetails.length > 0) {
       this.flowmeterDetail = flowmeterDetails[0]
     }
   }
+  private async refreshData() {}
   // ***************关键测量表格*********************************************
   private keyMeasurementPoint: any[] = []
   // ***************仪表状态表格*********************************************
