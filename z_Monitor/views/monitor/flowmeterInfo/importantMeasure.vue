@@ -31,30 +31,12 @@ import { watch } from 'fs'
 @Component
 export default class importantMeasure extends ComponentBase {
   // **************定时器***************************************
-  private intervalTimer: number = -1
-  private currentjlbid: string = null
   mounted() {
     this.initChartsOption()
     this.listenChartDomSize()
-    this.currentjlbid = this.$route.query.id as any
-    this.startGetData()
-  }
-
-  private async startGetData() {
-    this.getDataList().then(async () => {
-      await this.chartsRendered()
-    })
-    this.intervalTimer = window.setInterval(() => {
-      this.getDataList().then(async () => {
-        await this.chartsRendered()
-      })
-    }, 10000)
   }
 
   beforeDestroy() {
-    if (this.intervalTimer > -1) {
-      window.clearInterval(this.intervalTimer)
-    }
     this.unlisenDomSize()
   }
   // *********监听尺寸变化 ***************************************
@@ -129,6 +111,12 @@ export default class importantMeasure extends ComponentBase {
   }
   private setWenduOption() {
     this.wenduChart.setOption({
+      title: {
+        text: '温度',
+        textStyle: {
+          fontSize: 16
+        }
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -174,6 +162,12 @@ export default class importantMeasure extends ComponentBase {
   }
   private setMiduOption() {
     this.miduChart.setOption({
+      title: {
+        text: '密度',
+        textStyle: {
+          fontSize: 16
+        }
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -219,6 +213,12 @@ export default class importantMeasure extends ComponentBase {
   }
   private setShunjianOption() {
     this.shunjianChart.setOption({
+      title: {
+        text: '瞬间流量',
+        textStyle: {
+          fontSize: 16
+        }
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -264,6 +264,12 @@ export default class importantMeasure extends ComponentBase {
   }
   private setLeijiOption() {
     this.leijiChart.setOption({
+      title: {
+        text: '累计量',
+        textStyle: {
+          fontSize: 16
+        }
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -308,61 +314,43 @@ export default class importantMeasure extends ComponentBase {
     })
   }
   // *****************初始化列表数据*******************************
-  private dataList: any[] = []
-  private async getDataList() {
-    var formData = new FormData()
-    formData.append('action', 'getJlbTagInfoShow')
-    formData.append('jlbid', this.currentjlbid)
-    let res = await jkzl(formData)
-    window.console.log('importantMeasure getDataList:', res)
-    this.dataList = []
-
-    for (let index = 0; index < res.length; index++) {
-      const element = res[index]
-      this.cuteChartOptions(element)
-      this.dataList.push({
-        key: element.PHDTAG,
-        count: element.PHDVALUE,
-        time: element.PHDTIME,
-        desc: element.TAGMC,
-        danwei: element.JLDW,
-        id: element.JLBID
-      })
-    }
-
-    // window.console.log('计量表详细信息:', res)
-    // window.console.log('温度:', this.wenduOption)
-    // window.console.log('密度:', this.miduOption)
-    // window.console.log('瞬间流量:', this.shunjianOption)
-    // window.console.log('累计流量:', this.leijiOption)
-  }
   private cuteChartOptions(item) {
-    let time = moment(item.PHDTIME).format('HH:mm:ss')
-    if (item.PHDTAG.indexOf('TI') > -1) {
+    let time = item.updateTime
+    if (item.tagCode.indexOf('TI') > -1) {
       //温度
       if (this.wenduOption.xAxis.indexOf(time) < 0) {
         this.wenduOption.xAxis.push(time)
-        this.wenduOption.datas.push(item.PHDVALUE)
+        this.wenduOption.datas.push(item.tagVal)
       }
-    } else if (item.PHDTAG.indexOf('DI') > -1) {
+    } else if (item.tagCode.indexOf('DI') > -1) {
       //密度
       if (this.miduOption.xAxis.indexOf(time) < 0) {
         this.miduOption.xAxis.push(time)
-        this.miduOption.datas.push(item.PHDVALUE)
+        this.miduOption.datas.push(item.tagVal)
       }
-    } else if (item.PHDTAG.indexOf('FI') > -1) {
+    } else if (item.tagCode.indexOf('FI') > -1) {
       //瞬间流量
       if (this.shunjianOption.xAxis.indexOf(time) < 0) {
         this.shunjianOption.xAxis.push(time)
-        this.shunjianOption.datas.push(item.PHDVALUE)
+        this.shunjianOption.datas.push(item.tagVal)
       }
-    } else if (item.PHDTAG.indexOf('FQ') > -1) {
+    } else if (item.tagCode.indexOf('FQ') > -1) {
       //累计流量
       if (this.leijiOption.xAxis.indexOf(time) < 0) {
         this.leijiOption.xAxis.push(time)
-        this.leijiOption.datas.push(item.PHDVALUE)
+        this.leijiOption.datas.push(item.tagVal)
       }
     }
+  }
+  public async addOneData(data: any[]) {
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index]
+      this.cuteChartOptions(element)
+    }
+    this.chartsRendered()
+  }
+  public clearData() {
+    this.initChartsOption()
   }
 }
 </script>
