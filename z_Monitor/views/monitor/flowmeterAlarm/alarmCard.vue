@@ -6,7 +6,8 @@
           <span>数采点:{{cardInfo.BJDZ}}</span>
         </el-col>
         <el-col :span="8">
-          <el-button class="button" size="mini">单表信息</el-button>
+          <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button>
+
         </el-col>
       </el-row>
       <el-row class="row">
@@ -56,8 +57,12 @@ export default class alarmCard extends ComponentBase {
     }
   })
   cardInfo: any
+
   //
   mounted() {}
+
+  @Emit('onDealAlarm')
+  private onDealAlarm(): any {}
 }
 </script>
 <style lang="less" scoped>

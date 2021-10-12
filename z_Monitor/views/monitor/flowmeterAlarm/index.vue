@@ -6,7 +6,7 @@
     <el-row style=" height:calc(100% - 120px)">
       <el-col :span="8">
         <el-row style="height:50%">
-          <currentAlarm :flowmeterId="flowmeterId" style="height:100%;width:100%" />
+          <currentAlarm :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" style="height:100%;width:100%" />
         </el-row>
         <el-row style="height:50%">
           <alarmTop7 :flowmeterId="flowmeterId" style="height:100%;width:100%" />
@@ -14,9 +14,10 @@
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="16">
-        <alarmHistory :flowmeterId="flowmeterId" />
+        <alarmHistory :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
       </el-col>
     </el-row>
+    <dealAlarm ref="alarmDialog" :dialogVisible.sync="dialogVisible" @onSure="dealSure" @onCancel="dealCancel" />
   </div>
 </template>
 
@@ -30,6 +31,7 @@ import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 import currentAlarm from './currentAlarm.vue'
 import alarmTop7 from './alarmTop7.vue'
 import alarmHistory from './alarmHistory.vue'
+import dealAlarm from './dealAlarm.vue'
 // *****************************************************************
 /***流量计报警 */
 @Component({
@@ -37,15 +39,18 @@ import alarmHistory from './alarmHistory.vue'
     flowmeterHeader,
     currentAlarm,
     alarmTop7,
-    alarmHistory
+    alarmHistory,
+    dealAlarm
   }
 })
 export default class Index extends PageBase {
   private flowmeterId: string = ''
   private flowmeterDetail: any = null
+  private dialogVisible: boolean = false
+
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
-    // window.console.log('watchFlowmeterDetailChange:', data)
+    window.console.log('watchFlowmeterDetailChange:', data)
     this.flowmeterId = data.JLBID
     //清数据
     this.clearChildrenData()
@@ -54,7 +59,6 @@ export default class Index extends PageBase {
   }
   // ********************************************************************************
   mounted() {
-    window.console.log('报警界面，计量表Id:', this.$route.query.id)
     if (this.$route.query.id) {
       this.flowmeterId = this.$route.query.id as any
       this.initData()
@@ -69,6 +73,14 @@ export default class Index extends PageBase {
   // ************************************************************
   private async refreshChildrenData() {}
   private async clearChildrenData() {}
+  // ************************************************************
+  private onDealAlarm(data: any) {
+    window.console.log('onDealAlarm:', data)
+    this.dialogVisible = true
+    ;(this.$refs.alarmDialog as dealAlarm).setCurrentAlarm(data)
+  }
+  private async dealSure() {}
+  private async dealCancel() {}
 }
 </script>
 <style scoped>

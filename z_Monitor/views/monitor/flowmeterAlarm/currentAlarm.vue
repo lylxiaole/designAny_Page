@@ -2,7 +2,7 @@
   <div>
     <el-carousel :interval="4000" type="card" height="100%">
       <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
-        <alarmCard :cardInfo="item" />
+        <alarmCard @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -40,9 +40,15 @@ export default class currentAlarm extends ComponentBase {
   mounted() {}
   // ************************************************************
   private async loadData(flowmeterId: string) {
-    this.currentAlrams = await getCurrentAlarm(flowmeterId)
-    window.console.log('currentAlrams:', this.currentAlrams)
+    let res = await getCurrentAlarm(flowmeterId)
+    if (!res) {
+      this.currentAlrams = []
+    } else {
+      this.currentAlrams = res
+    }
   }
+  @Emit('onDealAlarm')
+  private onDealAlarm(alarmData: any): any {}
 }
 </script>
 <style lang="less" scoped>

@@ -185,14 +185,17 @@ export default class alarmTop7 extends ComponentBase {
     this.drawChart()
   }
 
-  private async drawChart() {
+  private drawChart() {
     this.currentChart.setOption(this.option)
-    await this.$nextTick()
+
     this.currentChart.resize()
   }
   // ************************************************************
   private async loadData(flowmeterId: string) {
     let wranTop5 = await getAlarmTop5(flowmeterId)
+    if (!wranTop5) {
+      wranTop5 = []
+    }
     window.console.log('wranTop5:', wranTop5)
     this.option.radar[0].indicator = []
     this.option.series[0].data[0].value = []

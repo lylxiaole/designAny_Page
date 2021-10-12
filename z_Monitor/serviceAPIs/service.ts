@@ -117,10 +117,16 @@ export async function getAlarmTop5(flowmeterId): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
-export async function getAlarmHistory(flowmeterId): Promise<any> {
+export async function getAlarmHistory(flowmeterId: string, startTime: any, endtime: any): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'getJlbLsBjxx')
   formData.append('jlbid', flowmeterId)
+  if (startTime) {
+    formData.append('kssj', startTime)
+  }
+  if (endtime) {
+    formData.append('jssj', endtime)
+  }
   let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
   const resp = await ajaxPost(url, formData)
   return resp
