@@ -27,12 +27,6 @@ const routes: IRouteClass[] = [
       },
       {
         icon: 'icon-all-fill',
-        name: 'flowmeterFlow',
-        path: '/flowmeterFlow',
-        component: () => import('./views/monitor/flowmeterFlow/index.vue')
-      },
-      {
-        icon: 'icon-all-fill',
         name: 'flowmeterInfo',
         path: '/flowmeterInfo',
         component: () => import('./views/monitor/flowmeterInfo/index.vue')

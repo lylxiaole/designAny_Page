@@ -187,7 +187,6 @@ export default class alarmTop7 extends ComponentBase {
 
   private drawChart() {
     this.currentChart.setOption(this.option)
-
     this.currentChart.resize()
   }
   // ************************************************************
