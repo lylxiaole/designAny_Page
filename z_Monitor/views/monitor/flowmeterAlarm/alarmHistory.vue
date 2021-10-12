@@ -30,7 +30,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk  } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getAlarmHistory } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 // *****************************************************************
@@ -39,13 +39,18 @@ import { param2Obj } from '@src/utils'
   components: {}
 })
 export default class alarmHistory extends ComponentBase {
-    @Prop({
+  @Prop({
     default: () => {
       return null
     }
   })
   private flowmeterId: string
-
+  @Watch('flowmeterId')
+  private async watchflowmeterIdChange(val: any) {
+    if (val) {
+      this.loadData(val)
+    }
+  }
   //
   mounted() {}
   // **************************************************************
@@ -83,8 +88,11 @@ export default class alarmHistory extends ComponentBase {
   }
   // ************************************************************
   private historyData: any[] = []
-
   private async viewFlowmeterInfo(data: any) {}
+  private async loadData(flowmeterId: string) {
+    let alarmHis = await getAlarmHistory(flowmeterId)
+    window.console.log('getAlarmHistory:', alarmHis)
+  }
 }
 </script>
 <style lang="less" scoped>

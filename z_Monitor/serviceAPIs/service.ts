@@ -42,7 +42,10 @@ export async function jlbzdcx(): Promise<any> {
 export async function getFlowmetersInArea(areaCode: string): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'getQyZtJlb')
-  formData.append('qy', areaCode)
+  if (areaCode) {
+    formData.append('qy', areaCode)
+  }
+
   let url = `${apiAddr()}/jlbjk/jlbzdcx.ashx`
   const resp = await ajaxPost(url, formData)
   return resp
@@ -103,6 +106,22 @@ export async function getFlowmeterDetail(code: string): Promise<any> {
   formData.append('action', 'getJlbOneInfo')
   formData.append('jlbid', code)
   let url = `${apiAddr()}/jkzl/jkzl.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+export async function getAlarmTop5(flowmeterId): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getWranTop5')
+  formData.append('jlbid', flowmeterId)
+  let url = `${apiAddr()}/jkzl/jkzl.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+export async function getAlarmHistory(flowmeterId): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getJlbLsBjxx')
+  formData.append('jlbid', flowmeterId)
+  let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
   const resp = await ajaxPost(url, formData)
   return resp
 }

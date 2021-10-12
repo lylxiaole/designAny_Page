@@ -1,14 +1,8 @@
 <template>
   <div>
     <el-carousel :interval="4000" type="card" height="100%">
-      <el-carousel-item>
-        <alarmCard />
-      </el-carousel-item>
-      <el-carousel-item>
-        <alarmCard />
-      </el-carousel-item>
-      <el-carousel-item>
-        <alarmCard />
+      <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
+        <alarmCard :cardInfo="item" />
       </el-carousel-item>
     </el-carousel>
   </div>

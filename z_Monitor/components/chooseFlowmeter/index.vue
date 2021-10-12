@@ -61,7 +61,7 @@ export default class index extends ComponentBase {
   private allFlowmeters: any[] = []
   private currentSelectedRow: any = null
   private get tableData(): any[] {
-    return this.allFlowmeters.filter((o) => o.WEIHAO.indexOf(this.searchInfo.code) > -1)
+    return this.allFlowmeters.filter((o) => o.WEIHAO.toLowerCase().indexOf(this.searchInfo.code.toLowerCase()) > -1)
   }
   // ********************************************************************************
   mounted() {
@@ -71,6 +71,7 @@ export default class index extends ComponentBase {
   }
   private async getAllArea() {
     this.areaList = []
+    this.areaList.push({ text: '全部区域', value: null })
     let res = await jlbzdcx()
     for (let index = 0; index < res.length; index++) {
       const element = res[index]

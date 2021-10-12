@@ -6,10 +6,11 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getAlarmTop5 } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import * as echarts from 'echarts'
+import { parse } from 'querystring'
 
 // *****************************************************************
 /***作业区流量计 */
@@ -23,7 +24,14 @@ export default class alarmTop7 extends ComponentBase {
     }
   })
   private flowmeterId: string
-
+  @Watch('flowmeterId')
+  private async watchflowmeterIdChange(val: any) {
+    if (val) {
+      this.loadData(val)
+    }
+  }
+  // *******************************************
+  private currentChart: any = null
   private option: any = {
     title: {
       text: '执法异常问题',
@@ -78,7 +86,7 @@ export default class alarmTop7 extends ComponentBase {
         axisLine: {
           show: true,
           lineStyle: {
-            color: '#FFF'
+            color: '#000'
           }
         },
         //指示器轴的分割段数
@@ -173,16 +181,27 @@ export default class alarmTop7 extends ComponentBase {
   }
   //
   mounted() {
+    this.currentChart = echarts.init(this.$refs.domarea as any)
     this.drawChart()
   }
 
   private async drawChart() {
-    window.console.log('')
-    var myChart = echarts.init(this.$refs.domarea as any)
-    myChart.setOption(this.option)
-
+    this.currentChart.setOption(this.option)
     await this.$nextTick()
-    myChart.resize()
+    this.currentChart.resize()
+  }
+  // ************************************************************
+  private async loadData(flowmeterId: string) {
+    let wranTop5 = await getAlarmTop5(flowmeterId)
+    window.console.log('wranTop5:', wranTop5)
+    this.option.radar[0].indicator = []
+    this.option.series[0].data[0].value = []
+    for (let index = 0; index < wranTop5.length; index++) {
+      const element = wranTop5[index]
+      this.option.radar[0].indicator.push({ name: element.CWXXZW })
+      this.option.series[0].data[0].value.push(parseInt(element.VAL))
+    }
+    this.drawChart()
   }
 }
 </script>
