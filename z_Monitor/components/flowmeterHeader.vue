@@ -6,15 +6,16 @@
     </el-col>
     <el-col style="width:calc(100% - 400px);display:flex;flex-wrap:wrap">
       <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
-      <span class="label">投用状态:&nbsp;{{flowmeterDetail?flowmeterDetail.tyztms:''}}</span>
+      <span class="label">投用状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.tyztms||flowmeterDetail.TYZTMS):''}}</span>
       <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
       <span class="label">区域:&nbsp;{{flowmeterDetail?flowmeterDetail.QYMC:''}}</span>
       <span class="label">计量表:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBMC:''}}</span>
       <span class="label">类型:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBLXMC:''}}</span>
-      <span class="label">状态:&nbsp;{{flowmeterDetail?flowmeterDetail.zxztms:''}}</span>
+      <span class="label">状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.zxztms||flowmeterDetail.ZXZTMS):''}}</span>
     </el-col>
     <el-col style="width:250px">
       <el-row>
+        <el-button class="button" size="mini" @click="openFlowmeterInfo">查看流量计信息</el-button>
         <el-button class="button" size="mini" @click="openAlarmInfo">查看流量计报警</el-button>
         <el-button class="button" size="mini" @click="openFlowmeterHis">查看流量计历史</el-button>
       </el-row>
@@ -47,7 +48,7 @@ export default class flowmeterHeader extends ComponentBase {
   @Emit('update:flowmeterDetail')
   private updateValue_flowmeterDetail(val: boolean) {}
   @Watch('flowmeterDetail')
-  private async watchflowmeterDetailChange(code: string) {}
+  private async watchflowmeterDetailChange(val: any) {}
   // ********************************************************************************
   mounted() {}
   // ******************choose flowmeter**************************************************************
@@ -59,6 +60,7 @@ export default class flowmeterHeader extends ComponentBase {
     if (!data) {
       return
     }
+    window.console.log('onChooseFlowmeter:', data)
     this.updateValue_flowmeterDetail(data)
   }
   private async onCancelChooseFlometer() {}
@@ -68,6 +70,10 @@ export default class flowmeterHeader extends ComponentBase {
   }
   private async openFlowmeterHis() {
     this.$router.push({ path: '/historyData', query: { id: this.flowmeterDetail.JLBID } })
+  }
+
+  private async openFlowmeterInfo() {
+    this.$router.push({ path: '/flowmeterInfo', query: { id: this.flowmeterDetail.JLBID } })
   }
 }
 </script>

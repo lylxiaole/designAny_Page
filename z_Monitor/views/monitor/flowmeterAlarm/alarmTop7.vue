@@ -17,6 +17,13 @@ import * as echarts from 'echarts'
   components: {}
 })
 export default class alarmTop7 extends ComponentBase {
+  @Prop({
+    default: () => {
+      return null
+    }
+  })
+  private flowmeterId: string
+
   private option: any = {
     title: {
       text: '执法异常问题',

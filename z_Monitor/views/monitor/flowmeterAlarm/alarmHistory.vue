@@ -39,6 +39,13 @@ import { param2Obj } from '@src/utils'
   components: {}
 })
 export default class alarmHistory extends ComponentBase {
+    @Prop({
+    default: () => {
+      return null
+    }
+  })
+  private flowmeterId: string
+
   //
   mounted() {}
   // **************************************************************

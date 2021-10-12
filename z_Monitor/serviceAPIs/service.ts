@@ -90,7 +90,14 @@ export async function getErrorFlowmeters(): Promise<any> {
   const resp = await ajaxPost(url, formData)
   return resp
 }
-
+export async function getCurrentAlarm(flowmeterId): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getJlbBjxx')
+  formData.append('jlbid', flowmeterId)
+  let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
 export async function getFlowmeterDetail(code: string): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'getJlbOneInfo')
