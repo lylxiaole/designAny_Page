@@ -11,9 +11,10 @@
 
       <el-button type="primary" @click="refreshData">刷新数据</el-button>
       <el-button type="primary" @click="chooseParams">重新选择参数</el-button>
+      <chooseFlowmeterParams @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="paramDialog" />
     </el-row>
     <el-row style="height:calc(100% - 50px)">
-      <div ref="chartArea"></div>
+      <div style="width:100%;height:100%" ref="chartArea"></div>
     </el-row>
   </div>
 </template>
@@ -21,163 +22,165 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getParamsCompareData } from '../../../serviceAPIs/service'
 import chooseFlowmeterParams from '../../../components/chooseFlowmeterParams/index.vue'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import * as echarts from 'echarts'
+import resizer from 'element-resize-detector'
 
+const colors = ['#5793f3', '#d14a61', '#675bba', '#c04aab', '#a6c30f']
 const chartoption: any = {
-  title: {
-    text: '执法异常问题',
-    textStyle: {
-      color: '#fff'
+  color: colors,
+  tooltip: {
+    trigger: 'axis'
+  },
+  grid: {
+    right: '20%'
+  },
+  toolbox: {
+    feature: {
+      dataView: {
+        show: false,
+        readOnly: false
+      },
+      restore: {
+        show: false
+      },
+      saveAsImage: {
+        show: false
+      }
     }
   },
-  tooltip: {},
-
-  radar: [
+  legend: {
+    data: ['设备新增数量', '产品新增数量', '厂商新增数量', '注册用户新增数量', 'XXXXXX']
+  },
+  xAxis: [
     {
-      //这是雷达图的大小
-      radius: '50%',
-      //图外名称
-      name: {
-        formatter: '{value}',
-        // 字体样式
-        textStyle: {
-          fontSize: 14,
-          color: '#fff'
-        }
-      },
-      indicator: [
-        {
-          name: '异常问题1',
-          max: 6500
-        },
-        {
-          name: '异常问题6',
-          max: 16000
-        },
-        {
-          name: '异常问题5',
-          max: 30000
-        },
-        {
-          name: '异常问题4',
-          max: 38000
-        },
-        {
-          name: '异常问题3',
-          max: 52000
-        },
-        {
-          name: '异常问题2',
-          max: 25000
-        }
-      ],
-      //文字与图的距离
-      nameGap: 20,
-      //坐标轴线的设置
-      axisLine: {
-        show: true,
-        lineStyle: {
-          color: '#000'
-        }
-      },
-      //指示器轴的分割段数
-      splitNumber: 5,
+      type: 'category',
       axisTick: {
-        color: '#365079'
+        alignWithLabel: false
       },
-      axisLabel: {},
-      splitLine: {
+      data: ['2016-01', '2016-02', '2016-03', '2016-04', '2016-05', '2016-06', '2016-07', '2016-08', '2016-09', '2016-10', '2016-11', '2016-12']
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value',
+      name: '设备新增数量',
+      min: 0,
+      max: 11000,
+      position: 'left',
+      axisLine: {
         lineStyle: {
-          shadowBlur: 15,
-          shadowColor: null
+          color: colors[2]
         }
       },
-      //分割区域是否显示
-      splitArea: {
-        //分割区域的样式
-        areaStyle: {
-          color: ['#fff', '#fff', '#fff', '#c3c3c3', '#1F345E'],
-          shadowColor: 'rgba(0, 100, 0, 0.3)',
-          opacity: 0.2
+      axisLabel: {
+        formatter: '{value}'
+      }
+    },
+    {
+      type: 'value',
+      name: '产品新增数量',
+      min: 0,
+      max: 200,
+      position: 'right',
+      axisLine: {
+        lineStyle: {
+          color: colors[0]
         }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    },
+    {
+      type: 'value',
+      name: '厂商新增数量',
+      min: 0,
+      max: 200,
+      position: 'right',
+      offset: 80,
+      axisLine: {
+        lineStyle: {
+          color: colors[1]
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    },
+    {
+      type: 'value',
+      name: '注册用户新增数量',
+      min: 0,
+      max: 90000,
+      position: 'right',
+      offset: 200,
+      axisLine: {
+        lineStyle: {
+          color: colors[3]
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    },
+    {
+      type: 'value',
+      name: 'XXXXXX',
+      min: 0,
+      max: 1000000,
+      position: 'right',
+      offset: 280,
+      axisLine: {
+        lineStyle: {
+          color: colors[4]
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
       }
     }
   ],
   series: [
     {
-      name: '执法异常问题',
-      type: 'radar',
-      data: [
-        {
-          value: [4300, 10000, 18000, 15000, 10000, 19990],
-          name: '执法异常问题',
-          itemStyle: {
-            // 单个拐点标志的样式设置。
-            normal: {
-              borderColor: '#FFB9B0',
-              // 拐点的描边颜色。[ default: '#000' ]
-              borderWidth: 4
-              // 拐点的描边宽度，默认不描边。[ default: 0 ]
-            }
-          },
-          lineStyle: {
-            // 单项线条样式。
-            normal: {
-              opacity: 0.5 // 图形透明度
-            }
-          },
-          areaStyle: {
-            // 单项区域填充样式
-            normal: {
-              // color: 'red', // 填充的颜色。[ default: "#000" ]
-              //不透明
-              opacity: 1,
-              //数据阴影
-              shadowColor: '#2c3F56',
-              // 阴影长度
-              shadowBlur: 3,
-              // 阴影偏移
-              shadowOffsetY: 2,
-              shadowoffsetX: 5,
-              //填充区域颜色渐变
-              color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                // 柱子0%的颜色
-                { offset: 0, color: '#7EEE5c' },
-                //柱子50%的颜色
-                { offset: 0.5, color: '#89EF54' },
-                //柱子100%的颜色
-                { offset: 1, color: '#CFF91E' }
-              ])
-            }
-          }
-        }
-      ],
-      itemStyle: {
-        // 折线拐点标志的样式。
-        normal: {
-          // 普通状态时的样式
-          lineStyle: {
-            width: 0
-          },
-          opacity: 0.3
-        },
-        emphasis: {
-          // 高亮时的样式
-          lineStyle: {},
-          opacity: 1
-        }
-      }
+      name: '设备新增数量',
+      type: 'line',
+      data: [10000, 2000, 1065, 3620, 6530, 9510, 2000, 3002, 3580, 5063, 1520, 9000]
+    },
+    {
+      name: '产品新增数量',
+      type: 'line',
+      yAxisIndex: 1,
+      data: [10, 50, 100, 32, 56, 87, 41, 25, 46, 96, 30, 150]
+    },
+    {
+      name: '厂商新增数量',
+      type: 'line',
+      data: [12, 15, 26, 36, 25, 18, 16, 47, 58, 69, 93, 150]
+    },
+    {
+      name: '注册用户新增数量',
+      type: 'line',
+      yAxisIndex: 3,
+      data: [30000, 5000, 50000, 13436, 25555, 18000, 56416, 42227, 44658, 69002, 90013, 15330]
+    },
+    {
+      name: 'XXXXXX',
+      type: 'line',
+      yAxisIndex: 4,
+      data: [130000, 50100, 250000, 123436, 251555, 138000, 56416, 482227, 144658, 569002, 290013, 152230]
     }
   ]
 }
 // *****************************************************************
 /***贮运厂总览 */
 @Component({
-  components: {}
+  components: {
+    chooseFlowmeterParams
+  }
 })
 export default class historyInfo extends ComponentBase {
   @Prop()
@@ -186,6 +189,7 @@ export default class historyInfo extends ComponentBase {
   private async watchflowmeterIdChange(id: string) {
     // window.console.log('watchFlowmeterDetailChange:', data)
     this.flowmeterId = id
+    this.clearData()
   }
 
   private params: any[] = []
@@ -226,16 +230,47 @@ export default class historyInfo extends ComponentBase {
     ]
   }
   private beforeDays: number = 0
-
   // ********************************************************************************
   mounted() {
-    this.currentChart = echarts.init(this.$refs.domarea as any)
+    this.currentChart = echarts.init(this.$refs.chartArea as any)
     this.drawChart()
+    this.listenChartDomSize()
+  }
+  beforeDestroy() {
+    this.unlisenDomSize()
+  }
+  private currentResizer: any = null
+  listenChartDomSize() {
+    this.currentResizer = resizer()
+    this.currentResizer.listenTo($(this.$el), (element) => {
+      if (this.currentChart) {
+        this.currentChart.resize()
+      }
+    })
+  }
+  unlisenDomSize() {
+    this.currentResizer.removeAllListeners($(this.$el))
   }
   // *************** *********************************************
-  private async refreshData() {}
+  private async refreshData() {
+    window.console.log('refreshData1:', this.params)
+    let paramcodes: string[] = []
+    for (let index = 0; index < this.params.length; index++) {
+      const element = this.params[index]
+      paramcodes.push(element.PHDTAG)
+    }
+    let res = await getParamsCompareData(this.flowmeterId, paramcodes, this.chooseDate[0], this.chooseDate[1])
+    window.console.log('refreshData2:', res)
+  }
+  private async clearData() {}
   // *************** *********************************************
-  private chooseParams() {}
+  private async chooseParams() {
+    await (this.$refs.paramDialog as chooseFlowmeterParams).showDialog(this.flowmeterId)
+  }
+  private onChooseParams(params: any[]) {
+    this.setParams(params)
+  }
+  private onCancelChooseParams() {}
   // **************************************************************
   private drawChart() {
     this.currentChart.setOption(chartoption)

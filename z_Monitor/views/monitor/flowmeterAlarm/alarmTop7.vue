@@ -195,7 +195,7 @@ export default class alarmTop7 extends ComponentBase {
     if (!wranTop5) {
       wranTop5 = []
     }
-    window.console.log('wranTop5:', wranTop5)
+    // window.console.log('wranTop5:', wranTop5)
     this.option.radar[0].indicator = []
     this.option.series[0].data[0].value = []
     for (let index = 0; index < wranTop5.length; index++) {

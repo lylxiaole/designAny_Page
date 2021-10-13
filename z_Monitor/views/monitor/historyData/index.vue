@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width:100%;padding:10px;box-sizing:border-box">
     <el-row style="height:120px">
-      <flowmeterHeader style="width:100%;height:100%" />
+      <flowmeterHeader :flowmeterDetail.sync="flowmeterDetail" style="width:100%;height:100%" />
     </el-row>
     <el-row style="height:calc(100% - 120px)">
       <el-col :span="18">
@@ -9,7 +9,7 @@
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="6">
-        <dataCompare />
+        <dataCompare :flowmeterId="flowmeterId" />
       </el-col>
     </el-row>
   </div>
@@ -41,7 +41,7 @@ export default class Index extends PageBase {
   private flowmeterDetail: any = null
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
-    // window.console.log('watchFlowmeterDetailChange:', data)
+    window.console.log('watchFlowmeterDetailChange:', data)
     this.flowmeterId = data.JLBID
     //清数据
     this.clearChildrenData()

@@ -131,3 +131,41 @@ export async function getAlarmHistory(flowmeterId: string, startTime: any, endti
   const resp = await ajaxPost(url, formData)
   return resp
 }
+/**流量计参数 监控类型列表 */
+export async function getParamsTypeList(): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getSysDic')
+  formData.append('pdicCode', 'TAGJKLX')
+  let url = `${apiAddr()}/zdcx.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+/**获取流量计参数列表
+ * flowmeterId:流量计ID
+ *watchType:监控类型
+ */
+export async function getFlowmeterParams(flowmeterId: string, watchType: string): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getJlbTag')
+  formData.append('jlbid', flowmeterId)
+  if (watchType) {
+    formData.append('jklx', watchType)
+  }
+
+  let url = `${apiAddr()}/jlbjk/jlbzdcx.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+
+export async function getParamsCompareData(flowmeterId: string, paramCodes: string[], startTime: any, endTime: any): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getManyTagRealDataQsHisNew')
+  formData.append('jlbid', flowmeterId)
+  formData.append('tags', JSON.stringify(paramCodes))
+  formData.append('cxksrq', startTime)
+  formData.append('cxjsrq', endTime)
+
+  let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
