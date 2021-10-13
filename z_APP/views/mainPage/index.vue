@@ -133,10 +133,10 @@ export default class Index extends PageBase {
 
   // ***********用户信息*******************************************************
   private async getUserInfo() {
-    let browserparams = param2Obj(location.search)
+    let browserparams = param2Obj(location.href)
     let token = browserparams.token
     let res = await appTokenValidate(token)
-    window.console.log('validate user token result:', res)
+    window.console.log('validate user token result:', this.$route)
     // this.flowmeterStatus = res[0]
   }
   // ***********计量表状态*******************************************************

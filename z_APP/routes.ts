@@ -1,5 +1,5 @@
 import { IRouteClass } from '@src/baseConfigs'
-import appLayout from '@src/layouts/appLayout/index.vue'
+import appLayout from '@src/layouts/blankLayout/index.vue'
 import mainPageLayout from './views/mainPage/index.vue'
 
 const routes: IRouteClass[] = [
