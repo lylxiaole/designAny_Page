@@ -5,11 +5,11 @@
     </el-row>
     <el-row style="height:calc(100% - 120px)">
       <el-col :span="18">
-        <historyInfo :flowmeterId="flowmeterId" />
+        <historyInfo :flowmeterId="flowmeterId" @onSelectParams="onSelectParams" />
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="6">
-        <dataCompare :flowmeterId="flowmeterId" />
+        <dataCompare :flowmeterId="flowmeterId" :flowmeterParams="currentParams" />
       </el-col>
     </el-row>
   </div>
@@ -24,9 +24,9 @@ import { param2Obj } from '@src/utils'
 import importantMeasure from '../flowmeterInfo/importantMeasure.vue'
 import historyInfo from './historyInfo.vue'
 import dataCompare from './dataCompare.vue'
+
 import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 
-// *****************************************************************
 /***历史数据分析 */
 @Component({
   components: {
@@ -37,7 +37,7 @@ import flowmeterHeader from '../../../components/flowmeterHeader.vue'
   }
 })
 export default class Index extends PageBase {
-  private flowmeterId: string
+  private flowmeterId: string = null
   private flowmeterDetail: any = null
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
@@ -48,6 +48,8 @@ export default class Index extends PageBase {
     //查数据
     this.refreshChildrenData()
   }
+
+  private currentParams: any[] = []
   // ********************************************************************************
   mounted() {
     if (this.$route.query.id) {
@@ -70,6 +72,10 @@ export default class Index extends PageBase {
     window.console.log('refreshChildrenData:', res)
   }
   private async clearChildrenData() {}
+
+  private async onSelectParams(params: any[]) {
+    this.currentParams = params
+  }
 }
 </script>
 <style scoped>

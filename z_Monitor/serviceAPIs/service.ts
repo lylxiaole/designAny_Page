@@ -161,7 +161,7 @@ export async function getParamsCompareData(flowmeterId: string, paramCodes: stri
   var formData = new FormData()
   formData.append('action', 'getManyTagRealDataQsHisNew')
   formData.append('jlbid', flowmeterId)
-  formData.append('tags', JSON.stringify(paramCodes))
+  formData.append('tags', "'" + paramCodes.join("','") + "'")
   formData.append('cxksrq', startTime)
   formData.append('cxjsrq', endTime)
 

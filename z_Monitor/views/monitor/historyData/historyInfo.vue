@@ -28,7 +28,7 @@ import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import * as echarts from 'echarts'
 import resizer from 'element-resize-detector'
-
+import moment from 'moment'
 const colors = ['#5793f3', '#d14a61', '#675bba', '#c04aab', '#a6c30f']
 const chartoption: any = {
   color: colors,
@@ -253,14 +253,16 @@ export default class historyInfo extends ComponentBase {
   }
   // *************** *********************************************
   private async refreshData() {
-    window.console.log('refreshData1:', this.params)
     let paramcodes: string[] = []
     for (let index = 0; index < this.params.length; index++) {
       const element = this.params[index]
       paramcodes.push(element.PHDTAG)
     }
-    let res = await getParamsCompareData(this.flowmeterId, paramcodes, this.chooseDate[0], this.chooseDate[1])
-    window.console.log('refreshData2:', res)
+
+    let startdate = moment(this.chooseDate[0]).format('YYYY-MM-DD HH:mm:ss')
+    let enddate = moment(this.chooseDate[1]).format('YYYY-MM-DD HH:mm:ss')
+    let res = await getParamsCompareData(this.flowmeterId, paramcodes, startdate, enddate)
+    window.console.log('refreshData:', res)
   }
   private async clearData() {}
   // *************** *********************************************
@@ -276,6 +278,9 @@ export default class historyInfo extends ComponentBase {
     this.currentChart.setOption(chartoption)
     this.currentChart.resize()
   }
+  // **************************************************************
+  @Emit('onSelectParams')
+  private onSelectParams(params: any[]) {}
 }
 </script>
 <style scoped>
