@@ -3,9 +3,8 @@
     <el-row style="height:60px">
       <el-col :span="4">
         <el-button class="button" size="mini" @click="chooseFlowmeter">选择流量计</el-button>
-        <flowmeterChooseModal ref="flowmeterChooseModal" />
+        <flowmeterChooseModal @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="flowmeterChooseModal" />
       </el-col>
-
       <el-col :span="10">
         <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="firstFlowmeterDetail" style="width:100%;height:100%" />
       </el-col>
@@ -25,7 +24,6 @@
 
       <el-button type="primary" @click="refreshData">刷新数据</el-button>
       <el-button type="primary" @click="chooseParams">重新选择参数</el-button>
-     
     </el-row>
     <!-- ********************************************************************* -->
     <el-row style="height:calc(50% - 60px)">
@@ -49,7 +47,6 @@ import moment from 'moment'
 import resizer from 'element-resize-detector'
 import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 const colors = ['#5793f3', '#d14a61', '#675bba', '#c04aab', '#a6c30f']
-
 const chartoption: any = {
   color: colors,
   tooltip: {
@@ -195,7 +192,6 @@ const chartoption: any = {
     }
   ]
 }
-
 // *****************************************************************
 /***流量计数据对比 */
 @Component({
@@ -207,6 +203,7 @@ const chartoption: any = {
 export default class Index extends PageBase {
   private firstChart: any = null
   private secondChart: any = null
+  private beforeDays: number = 0
   private chooseDate: any[] = [new Date(), new Date()]
   private pickerOptions: any = {
     shortcuts: [
@@ -239,33 +236,11 @@ export default class Index extends PageBase {
       }
     ]
   }
-  private params: any[] = []
-  public setParams(val: any[]) {
-    this.params = val
-  }
-  private firstFlowmeterId: string
-  private firstFlowmeterDetail: any = null
-  @Watch('firstFlowmeterDetail')
-  private async watchFFlowmeterDetailChange(data: any) {
-    // window.console.log('watchFlowmeterDetailChange:', data)
-    this.firstFlowmeterId = data.JLBID
-    //清数据
-    this.clearChildrenData()
-    //查数据
-    this.refreshChildrenData()
-  }
 
-  private secondFlowmeterId: string
-  private secondFlowmeterDetail: any = null
-  @Watch('secondFlowmeterDetail')
-  private async watchSFlowmeterDetailChange(data: any) {
-    // window.console.log('watchFlowmeterDetailChange:', data)
-    this.secondFlowmeterId = data.JLBID
-    //清数据
-    this.clearChildrenData()
-    //查数据
-    this.refreshChildrenData()
-  }
+  private firstFlowmeter: any = null
+  private firstParams: any = null
+  private secondFlowmeter: any = null
+  private secondParams: any = null
   // ********************************************************************************
   mounted() {
     this.firstChart = echarts.init(this.$refs.firstarea as any)
@@ -273,7 +248,6 @@ export default class Index extends PageBase {
     this.drawChart()
     this.listenChartDomSize()
   }
-
   // ****************************************************************
   private currentResizer: any = null
   listenChartDomSize() {
@@ -292,42 +266,29 @@ export default class Index extends PageBase {
   }
   // ************************************************************
   private async chooseFlowmeter() {
-      await (this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseFlowmeter()
+    await (this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseFlowmeter(this.firstFlowmeter, this.secondFlowmeter)
   }
-
   private async chooseParams() {
-    await (this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseParams( )
+    await (this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseParams(
+      this.firstFlowmeter,
+      this.firstParams,
+      this.secondFlowmeter,
+      this.secondParams
+    )
   }
   // ************************************************************
-  private onChooseParams(params: any[]) {
-    this.setParams(params)
+  private onChooseParams(firstFlowmeter: any, firstParams: any, secondFlowmeter: any, secondParams: any) {
+    this.firstFlowmeter = firstFlowmeter
+    this.firstParams = firstParams
+    this.secondFlowmeter = secondFlowmeter
+    this.secondParams = secondParams
   }
   private onCancelChooseParams() {}
   // ************************************************************
-  private async refreshData() {
-    let paramcodes: string[] = []
-    for (let index = 0; index < this.params.length; index++) {
-      const element = this.params[index]
-      paramcodes.push(element.PHDTAG)
-    }
-
-    let startdate = moment(this.chooseDate[0]).format('YYYY-MM-DD HH:mm:ss')
-    let enddate = moment(this.chooseDate[1]).format('YYYY-MM-DD HH:mm:ss')
-    let res = await getParamsCompareData(this.firstFlowmeterId, paramcodes, startdate, enddate)
-    window.console.log('refreshData:', res)
-  }
-  private async refreshChildrenData() {
-    var formData = new FormData()
-    formData.append('action', 'getJlbTagInfoShow')
-    formData.append('jlbid', this.secondFlowmeterId)
-    let res = await jkzl(formData)
-  }
-  private async clearChildrenData() {}
 
   private drawChart() {
     this.firstChart.setOption(chartoption)
     this.firstChart.resize()
-
     this.secondChart.setOption(chartoption)
     this.secondChart.resize()
   }

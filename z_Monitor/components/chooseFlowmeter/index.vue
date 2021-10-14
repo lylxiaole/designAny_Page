@@ -46,9 +46,8 @@ import { Route } from 'vue-router'
   components: {}
 })
 export default class index extends ComponentBase {
- 
   private dialogVisible: boolean = false
- 
+
   // *********************************
   private searchInfo: any = { code: '', areaId: '' }
   private areaList: any[] = []
@@ -58,9 +57,7 @@ export default class index extends ComponentBase {
     return this.allFlowmeters.filter((o) => o.WEIHAO.toLowerCase().indexOf(this.searchInfo.code.toLowerCase()) > -1)
   }
   // ********************************************************************************
-  mounted() {
-  
-  }
+  mounted() {}
   private async getAllArea() {
     this.areaList = []
     this.areaList.push({ text: '全部区域', value: null })
@@ -85,20 +82,19 @@ export default class index extends ComponentBase {
     this.currentSelectedRow = val
   }
   // ************************************************************
-  public async chooseFlowmeter()
-  {
+  public async chooseFlowmeter() {
     this.dialogVisible = true
-      this.getAllArea().then(() => {
+    this.getAllArea().then(() => {
       this.loadData()
     })
   }
   private async onSureChoose() {
     this.onSure(this.currentSelectedRow)
-    this.updateValue_dialogVisible(false)
+    this.dialogVisible = false
   }
   private async onCancelChoose() {
     this.onCancel()
-    this.updateValue_dialogVisible(false)
+    this.dialogVisible = false
   }
   // ************************************************************
   @Emit('onSure')

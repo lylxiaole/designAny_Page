@@ -8,7 +8,7 @@
         <el-row>
           <el-button class="button" size="mini" @click="chooseFirstFlowmeter">选择流量计</el-button>
         </el-row>
-        <chooseFlowmeter :dialogVisible.sync="chooseFlowmeterVisible" @onSure="onChooseFlowmeter1" @onCancel="onCancelChooseFlometer1" />
+        <chooseFlowmeterDialog ref="chooseFlowmeter1" @onSure="onChooseFlowmeter1" @onCancel="onCancelChooseFlometer1" />
       </el-col>
       <el-col :span="12">
         <el-row><span>位号:xxxx</span></el-row>
@@ -17,7 +17,7 @@
         <el-row>
           <el-button class="button" size="mini" @click="chooseSecondFlowmeter">选择流量计</el-button>
         </el-row>
-        <chooseFlowmeter :dialogVisible.sync="chooseFlowmeterVisible" @onSure="onChooseFlowmeter2" @onCancel="onCancelChooseFlometer2" />
+        <chooseFlowmeterDialog ref="chooseFlowmeter2" @onSure="onChooseFlowmeter2" @onCancel="onCancelChooseFlometer2" />
       </el-col>
     </el-row>
   </div>
@@ -29,10 +29,13 @@ import ComponentBase from '@src/views/PageBase'
 import { jkzl, jlbjk } from '../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
+import chooseFlowmeterDialog from '../chooseFlowmeter/index.vue'
 // *****************************************************************
 /***流量计数据对比 */
 @Component({
-  components: {}
+  components: {
+    chooseFlowmeterDialog
+  }
 })
 export default class chooseFlowmeter extends ComponentBase {
   @Prop({
@@ -55,8 +58,12 @@ export default class chooseFlowmeter extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ************************************************************
-  private async chooseFirstFlowmeter() {}
-  private async chooseSecondFlowmeter() {}
+  private async chooseFirstFlowmeter() {
+    ;(this.$refs.chooseFlowmeter1 as chooseFlowmeterDialog).chooseFlowmeter()
+  }
+  private async chooseSecondFlowmeter() {
+    ;(this.$refs.chooseFlowmeter2 as chooseFlowmeterDialog).chooseFlowmeter()
+  }
   // ************************************************************
   private async onChooseFlowmeter1(data: any) {
     this.updateValue_firstFlowmeter(data)

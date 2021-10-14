@@ -67,7 +67,7 @@ export default class flowmeterChooseModal extends ComponentBase {
   }
   private async onSureChoose() {
     this.dialogVisible = false
-    this.onSure({})
+    this.onSure(this.firstFlowmeter, this.firstParams, this.secondFlowmeter, this.secondParams)
   }
   private async onCancelChoose() {
     this.dialogVisible = false
@@ -84,7 +84,7 @@ export default class flowmeterChooseModal extends ComponentBase {
   }
   // ************************************************************
   @Emit('onSure')
-  private onSure(row: any) {}
+  private onSure(firstFlowmeter: any, firstParams: any, secondFlowmeter: any, secondParams: any) {}
   @Emit('onCancel')
   private onCancel() {}
 }
