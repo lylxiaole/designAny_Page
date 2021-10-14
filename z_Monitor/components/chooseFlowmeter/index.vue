@@ -1,5 +1,6 @@
 <template>
-  <el-dialog :show-close="false" title="提示" :visible.sync="dialogVisible" width="700px" center>
+  <el-dialog :show-close="false" title="提示" :visible.sync="dialogVisible" width="700px" center :close-on-click-modal="false" destroy-on-close
+    append-to-body>
     <div style="width:100%;height:400px">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="物理区域">
