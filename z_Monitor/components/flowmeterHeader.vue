@@ -82,9 +82,9 @@ export default class flowmeterHeader extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ******************choose flowmeter**************************************************************
-   private startChooseFlowmeter() {
-    ( this.$refs.chooseFlowmeter as chooseFlowmeter).chooseFlowmeter()
-   }
+  private startChooseFlowmeter() {
+    ;(this.$refs.chooseFlowmeter as chooseFlowmeter).chooseFlowmeter()
+  }
   private async onChooseFlowmeter(data: any) {
     if (!data) {
       return

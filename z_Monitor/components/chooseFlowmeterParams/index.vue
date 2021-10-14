@@ -17,7 +17,6 @@
         </el-table-column>
         <el-table-column prop="TAGMC" label="参数">
         </el-table-column>
-
       </el-table>
     </div>
     <div slot="footer" class="dialog-footer">
