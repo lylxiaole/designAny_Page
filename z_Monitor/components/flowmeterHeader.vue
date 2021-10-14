@@ -15,9 +15,9 @@
     </el-col>
     <el-col style="width:450px">
       <el-row>
-        <el-button class="button" size="mini" @click="openFlowmeterInfo">查看流量计信息</el-button>
-        <el-button class="button" size="mini" @click="openAlarmInfo">查看流量计报警</el-button>
-        <el-button class="button" size="mini" @click="openFlowmeterHis">查看流量计历史</el-button>
+        <el-button class="button" size="mini" v-if="showBtns.indexOf('detail')>-1" @click="openFlowmeterInfo">查看流量计信息</el-button>
+        <el-button class="button" size="mini" v-if="showBtns.indexOf('alarm')>-1" @click="openAlarmInfo">查看流量计报警</el-button>
+        <el-button class="button" size="mini" v-if="showBtns.indexOf('history')>-1" @click="openFlowmeterHis">查看流量计历史</el-button>
       </el-row>
     </el-col>
   </el-row>
@@ -39,6 +39,13 @@ import { watch } from 'fs'
   }
 })
 export default class flowmeterHeader extends ComponentBase {
+  @Prop({
+    default: () => {
+      return []
+    }
+  })
+  private showBtns: string[]
+
   @Prop({
     default: () => {
       return null
@@ -71,7 +78,6 @@ export default class flowmeterHeader extends ComponentBase {
   private async openFlowmeterHis() {
     this.$router.push({ path: '/historyData', query: { id: this.flowmeterDetail.JLBID } })
   }
-
   private async openFlowmeterInfo() {
     this.$router.push({ path: '/flowmeterInfo', query: { id: this.flowmeterDetail.JLBID } })
   }
