@@ -1,10 +1,10 @@
 <template>
   <el-row>
-    <el-col style="width:150px">
+    <el-col :style="{width:chooseBtnWidth+'px'}" v-if="showChooseBtn">
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter :dialogVisible.sync="chooseFlowmeterVisible" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
-    <el-col style="width:calc(100% - 600px);display:flex;flex-wrap:wrap">
+    <el-col :style="{width:middleWith}" style="display:flex;flex-wrap:wrap">
       <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
       <span class="label">投用状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.tyztms||flowmeterDetail.TYZTMS):''}}</span>
       <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
@@ -13,7 +13,7 @@
       <span class="label">类型:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBLXMC:''}}</span>
       <span class="label">状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.zxztms||flowmeterDetail.ZXZTMS):''}}</span>
     </el-col>
-    <el-col style="width:450px">
+    <el-col :style="{width:leaderBtnWidth+'px'}">
       <el-row>
         <el-button class="button" size="mini" v-if="showBtns.indexOf('detail')>-1" @click="openFlowmeterInfo">查看流量计信息</el-button>
         <el-button class="button" size="mini" v-if="showBtns.indexOf('alarm')>-1" @click="openAlarmInfo">查看流量计报警</el-button>
@@ -41,6 +41,13 @@ import { watch } from 'fs'
 export default class flowmeterHeader extends ComponentBase {
   @Prop({
     default: () => {
+      return true
+    }
+  })
+  private showChooseBtn: boolean
+
+  @Prop({
+    default: () => {
       return []
     }
   })
@@ -56,6 +63,22 @@ export default class flowmeterHeader extends ComponentBase {
   private updateValue_flowmeterDetail(val: boolean) {}
   @Watch('flowmeterDetail')
   private async watchflowmeterDetailChange(val: any) {}
+
+  private get chooseBtnWidth(): number {
+    if (this.showChooseBtn) {
+      return 150
+    } else {
+      return 0
+    }
+  }
+
+  private get leaderBtnWidth(): number {
+    return this.showBtns.length * 140
+  }
+
+  private get middleWith(): string {
+    return `calc(100% - ${this.chooseBtnWidth + this.leaderBtnWidth}px)`
+  }
   // ********************************************************************************
   mounted() {}
   // ******************choose flowmeter**************************************************************
