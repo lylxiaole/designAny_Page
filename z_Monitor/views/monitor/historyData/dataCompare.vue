@@ -5,7 +5,7 @@
       <el-button type="primary" @click="startCompare">参数数据对比</el-button>
     </el-row>
     <el-row>
-      <el-table :data="tableData" height="250" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
+      <el-table :data="data" height="250" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>
         <el-table-column prop="WEIHAO" label="位号" width="180">
@@ -52,6 +52,8 @@ export default class dataCompare extends ComponentBase {
   private startCompare() {
     ;(this.$refs.valueCompareDialog as valueCompareDialog).showCompareData(this.data)
   }
+
+  private tableChooseChange(val: any[]) {}
 }
 </script>
 <style scoped>

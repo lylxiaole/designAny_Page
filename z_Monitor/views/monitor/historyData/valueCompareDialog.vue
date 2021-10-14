@@ -30,6 +30,8 @@ import { Route } from 'vue-router'
   components: {}
 })
 export default class index extends ComponentBase {
+  private areaList: any[] = []
+  private searchInfo: any = { areaId: '', code: '' }
   private dialogVisible: boolean = false
   // ********************************************************************************
   mounted() {}

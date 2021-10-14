@@ -4,7 +4,7 @@
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter :dialogVisible.sync="chooseFlowmeterVisible" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
-    <el-col style="width:calc(100% - 400px);display:flex;flex-wrap:wrap">
+    <el-col style="width:calc(100% - 600px);display:flex;flex-wrap:wrap">
       <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
       <span class="label">投用状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.tyztms||flowmeterDetail.TYZTMS):''}}</span>
       <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
@@ -13,7 +13,7 @@
       <span class="label">类型:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBLXMC:''}}</span>
       <span class="label">状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.zxztms||flowmeterDetail.ZXZTMS):''}}</span>
     </el-col>
-    <el-col style="width:250px">
+    <el-col style="width:450px">
       <el-row>
         <el-button class="button" size="mini" @click="openFlowmeterInfo">查看流量计信息</el-button>
         <el-button class="button" size="mini" @click="openAlarmInfo">查看流量计报警</el-button>
