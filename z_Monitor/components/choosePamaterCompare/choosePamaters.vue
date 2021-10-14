@@ -95,6 +95,10 @@ export default class choosePamaters extends ComponentBase {
     this.allParams1 = await getFlowmeterParams(flowmeterId1, null)
     this.allParams2 = await getFlowmeterParams(flowmeterId2, null)
   }
+  public async setCurrentParams(firstParams: any[], secondParams: any[]) {
+    this.updateValue_firstChooseParams(firstParams)
+    this.updateValue_secondChooseParams(secondParams)
+  }
 }
 </script>
 <style scoped>

@@ -38,7 +38,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { jkzl, jlbjk, getFlowmeterDetail, getParamsCompareData } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getFlowmeterDetail, getParamsCompareData, getFlowmeterCompareData } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import * as echarts from 'echarts'
@@ -286,6 +286,32 @@ export default class Index extends PageBase {
   }
   private onCancelChooseParams() {}
   // ************************************************************
+  private async refreshData() {
+    let startdate = moment(this.chooseDate[0]).format('YYYY-MM-DD HH:mm:ss')
+    let enddate = moment(this.chooseDate[1]).format('YYYY-MM-DD HH:mm:ss')
+    let param1codes: string[] = []
+    for (let index = 0; index < this.firstParams.length; index++) {
+      const element = this.firstParams[index]
+      param1codes.push(element.PHDTAG)
+    }
+    let param2codes: string[] = []
+    for (let index = 0; index < this.secondParams.length; index++) {
+      const element = this.secondParams[index]
+      param2codes.push(element.PHDTAG)
+    }
+    let compareData = await getFlowmeterCompareData(
+      this.firstFlowmeter.JLBID,
+      this.secondFlowmeter.JLBID,
+      param1codes,
+      param2codes,
+      startdate,
+      enddate
+    )
+    window.console.log('compareData:', compareData)
+    if (!compareData) {
+      return
+    }
+  }
   private drawChart() {
     this.firstChart.setOption(chartoption)
     this.firstChart.resize()

@@ -156,12 +156,28 @@ export async function getFlowmeterParams(flowmeterId: string, watchType: string)
   const resp = await ajaxPost(url, formData)
   return resp
 }
-
+/**一个计量表，多参数对比结果 */
 export async function getParamsCompareData(flowmeterId: string, paramCodes: string[], startTime: any, endTime: any): Promise<any> {
   var formData = new FormData()
   formData.append('action', 'getManyTagRealDataQsHisNew')
   formData.append('jlbid', flowmeterId)
   formData.append('tags', "'" + paramCodes.join("','") + "'")
+  formData.append('cxksrq', startTime)
+  formData.append('cxjsrq', endTime)
+
+  let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+
+/**两个计量表，单参数对比结果 */
+export async function getFlowmeterCompareData(flowmeter1Id: string, flowmeter2Id: string, paramCodes1: any[], paramCodes2: any[], startTime: any, endTime: any): Promise<any> {
+  var formData = new FormData()
+  formData.append('action', 'getManyTagRealDataQsHisNewDouble')
+  formData.append('jlbid', flowmeter1Id)
+  formData.append('jlbid1', flowmeter2Id)
+  formData.append('tags1', "'" + paramCodes1.join("','") + "'")
+  formData.append('tags2', "'" + paramCodes2.join("','") + "'")
   formData.append('cxksrq', startTime)
   formData.append('cxjsrq', endTime)
 
