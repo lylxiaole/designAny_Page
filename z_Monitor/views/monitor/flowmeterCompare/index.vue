@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;width:100%">
+  <div class="pageView" style="height:100%;width:100%">
     <el-row style="height:60px">
       <el-col :span="4">
         <el-button class="button" size="mini" @click="chooseFlowmeter">选择流量计</el-button>
@@ -320,5 +320,6 @@ export default class Index extends PageBase {
   }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+@import '../../../assets/monitorStyle.less';
 </style>

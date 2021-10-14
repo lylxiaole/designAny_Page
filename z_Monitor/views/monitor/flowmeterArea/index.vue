@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;height:100%">
+  <div class="pageView" style="width:100%;height:100%">
     <div style="height:60px;width:100%; ">
       <el-form :inline="true" size="mini" :model="serachInfo" style="height:100%">
         <el-form-item label="作业区域">
@@ -114,6 +114,7 @@ export default class Index extends PageBase {
 }
 </script>
 <style lang="less" scoped>
+@import '../../../assets/monitorStyle.less';
 .flowmeterCard {
   width: 400px;
   height: 225px;

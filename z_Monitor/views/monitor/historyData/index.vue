@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;width:100%;padding:10px;box-sizing:border-box">
+  <div class="pageView" style="height:100%;width:100%;padding:10px;box-sizing:border-box">
     <el-row style="height:120px">
       <flowmeterHeader :showBtns="['detail','alarm']" :flowmeterDetail.sync=" flowmeterDetail" style="width:100%;height:100%" />
     </el-row>
@@ -24,7 +24,6 @@ import { param2Obj } from '@src/utils'
 import importantMeasure from '../flowmeterInfo/importantMeasure.vue'
 import historyInfo from './historyInfo.vue'
 import dataCompare from './dataCompare.vue'
-
 import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 
 /***历史数据分析 */
@@ -78,5 +77,6 @@ export default class Index extends PageBase {
   }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+@import '../../../assets/monitorStyle.less';
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <el-dialog title="提示" :show-close="false" :visible.sync="dialogVisible" width="70%" center>
-    <div style="height:500px;width:100%">
+  <el-dialog title="提示" :show-close="false" :visible.sync="dialogVisible" width="900px" center>
+    <div style="height:400px;width:100%">
       <!-- *********stepContent******************************* -->
-      <el-row style="height:400px">
+      <el-row style="height:320px" class="flexHorilanLayout">
         <chooseFlowmeter v-show="step===1" ref="chooseFlowmeterRef" :firstFlowmeter.sync="firstFlowmeter" :secondFlowmeter.sync="secondFlowmeter" />
         <choosePamaters v-show="step===2" ref="choosePamatersRef" :firstChooseParams.sync="firstParams" :secondChooseParams.sync="secondParams" />
       </el-row>
@@ -60,7 +60,7 @@ export default class flowmeterChooseModal extends ComponentBase {
   mounted() {}
   // ********************************************************************************
   private async nextStep() {
-    ;(this.$refs.choosePamatersRef as choosePamaters).setFlowmeter(this.firstFlowmeter.JLBID, this.secondFlowmeter.JLBID)
+    ;(this.$refs.choosePamatersRef as choosePamaters).setFlowmeter(this.firstFlowmeter, this.secondFlowmeter)
     this.step = 2
   }
   private async preStep() {

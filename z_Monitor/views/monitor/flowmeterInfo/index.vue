@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;width:100%;padding:10px;box-sizing:border-box">
+  <div class="pageView" style="height:100%;width:100%;">
     <el-row style="height:120px">
       <flowmeterHeader :flowmeterDetail.sync="flowmeterDetail" :showBtns="['history','alarm']" style="width:100%;height:100%" />
     </el-row>
@@ -153,5 +153,6 @@ export default class Index extends PageBase {
   }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+@import '../../../assets/monitorStyle.less';
 </style>
