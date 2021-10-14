@@ -46,15 +46,9 @@ import { Route } from 'vue-router'
   components: {}
 })
 export default class index extends ComponentBase {
-  @Prop({
-    default: () => {
-      return false
-    }
-  })
-  private dialogVisible: boolean
-
-  @Emit('update:dialogVisible')
-  private updateValue_dialogVisible(val: boolean) {}
+ 
+  private dialogVisible: boolean = false
+ 
   // *********************************
   private searchInfo: any = { code: '', areaId: '' }
   private areaList: any[] = []
@@ -65,9 +59,7 @@ export default class index extends ComponentBase {
   }
   // ********************************************************************************
   mounted() {
-    this.getAllArea().then(() => {
-      this.loadData()
-    })
+  
   }
   private async getAllArea() {
     this.areaList = []
@@ -93,6 +85,13 @@ export default class index extends ComponentBase {
     this.currentSelectedRow = val
   }
   // ************************************************************
+  public async chooseFlowmeter()
+  {
+    this.dialogVisible = true
+      this.getAllArea().then(() => {
+      this.loadData()
+    })
+  }
   private async onSureChoose() {
     this.onSure(this.currentSelectedRow)
     this.updateValue_dialogVisible(false)

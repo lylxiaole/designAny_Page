@@ -2,7 +2,7 @@
   <el-row>
     <el-col :style="{width:chooseBtnWidth+'px'}" v-if="showChooseBtn">
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
-      <chooseFlowmeter :dialogVisible.sync="chooseFlowmeterVisible" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
+      <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
     <el-col :style="{width:middleWith}" style="display:flex;flex-wrap:wrap">
       <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
@@ -82,10 +82,9 @@ export default class flowmeterHeader extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ******************choose flowmeter**************************************************************
-  private chooseFlowmeterVisible: boolean = false
-  private startChooseFlowmeter() {
-    this.chooseFlowmeterVisible = true
-  }
+   private startChooseFlowmeter() {
+    ( this.$refs.chooseFlowmeter as chooseFlowmeter).chooseFlowmeter()
+   }
   private async onChooseFlowmeter(data: any) {
     if (!data) {
       return
