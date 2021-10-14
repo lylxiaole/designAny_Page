@@ -2,18 +2,18 @@
   <div style="height:100%;width:100%">
     <el-row style="height:100%">
       <el-col :span="12">
-        <el-row><span>位号:xxxx</span></el-row>
-        <el-row><span>产商:xxxx</span></el-row>
-        <el-row><span>计量表:xxxx</span></el-row>
+        <el-row><span>位号:{{firstFlowmeter?firstFlowmeter.WEIHAO:''}}</span></el-row>
+        <el-row><span>产商:{{firstFlowmeter?firstFlowmeter.JLBCJMC:''}}</span></el-row>
+        <el-row><span>计量表:{{firstFlowmeter?firstFlowmeter.JLBMC:''}}</span></el-row>
         <el-row>
           <el-button class="button" size="mini" @click="chooseFirstFlowmeter">选择流量计</el-button>
         </el-row>
         <chooseFlowmeterDialog ref="chooseFlowmeter1" @onSure="onChooseFlowmeter1" @onCancel="onCancelChooseFlometer1" />
       </el-col>
       <el-col :span="12">
-        <el-row><span>位号:xxxx</span></el-row>
-        <el-row><span>产商:xxxx</span></el-row>
-        <el-row><span>计量表:xxxx</span></el-row>
+        <el-row><span>位号:{{secondFlowmeter?firstFlowmeter.WEIHAO:''}}</span></el-row>
+        <el-row><span>产商:{{secondFlowmeter?firstFlowmeter.JLBCJMC:''}}</span></el-row>
+        <el-row><span>计量表:{{secondFlowmeter?firstFlowmeter.JLBMC:''}}</span></el-row>
         <el-row>
           <el-button class="button" size="mini" @click="chooseSecondFlowmeter">选择流量计</el-button>
         </el-row>
@@ -66,10 +66,12 @@ export default class chooseFlowmeter extends ComponentBase {
   }
   // ************************************************************
   private async onChooseFlowmeter1(data: any) {
+    window.console.log('onChooseFlowmeter1:', data)
     this.updateValue_firstFlowmeter(data)
   }
   private async onCancelChooseFlometer1() {}
   private async onChooseFlowmeter2(data: any) {
+    window.console.log('onChooseFlowmeter2:', data)
     this.updateValue_secondFlowmeter(data)
   }
   private async onCancelChooseFlometer2() {}

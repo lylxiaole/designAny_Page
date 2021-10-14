@@ -3,8 +3,8 @@
     <div style="height:500px;width:100%">
       <!-- *********stepContent******************************* -->
       <el-row style="height:400px">
-        <chooseFlowmeter v-if="step===1" :firstFlowmeter.sync="firstFlowmeter" :secondFlowmeter.sync="secondFlowmeter" />
-        <choosePamaters v-if="step===2" :firstChooseParams="firstParams" :secondChooseParams="secondParams" />
+        <chooseFlowmeter v-show="step===1" ref="chooseFlowmeterRef" :firstFlowmeter.sync="firstFlowmeter" :secondFlowmeter.sync="secondFlowmeter" />
+        <choosePamaters v-show="step===2" ref="choosePamatersRef" :firstChooseParams.sync="firstParams" :secondChooseParams.sync="secondParams" />
       </el-row>
       <!-- *********steps******************************* -->
       <el-row style="height:80px">
@@ -60,6 +60,7 @@ export default class flowmeterChooseModal extends ComponentBase {
   mounted() {}
   // ********************************************************************************
   private async nextStep() {
+    ;(this.$refs.choosePamatersRef as choosePamaters).setFlowmeter(this.firstFlowmeter.JLBID, this.secondFlowmeter.JLBID)
     this.step = 2
   }
   private async preStep() {
@@ -80,6 +81,7 @@ export default class flowmeterChooseModal extends ComponentBase {
   }
   public async showChooseParams(firstFlowmeter: any, firstParams: any, secondFlowmeter: any, secondParams: any) {
     this.step = 2
+    ;(this.$refs.choosePamatersRef as choosePamaters).setFlowmeter(firstFlowmeter.JLBID, secondFlowmeter.JLBID)
     this.dialogVisible = true
   }
   // ************************************************************

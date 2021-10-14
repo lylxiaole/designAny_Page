@@ -6,10 +6,10 @@
         <flowmeterChooseModal @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="flowmeterChooseModal" />
       </el-col>
       <el-col :span="10">
-        <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="firstFlowmeterDetail" style="width:100%;height:100%" />
+        <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="firstFlowmeter" style="width:100%;height:100%" />
       </el-col>
       <el-col :span="10" style="border-left:1px solid #000">
-        <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="secondFlowmeterDetail" style="width:100%;height:100%" />
+        <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="secondFlowmeter" style="width:100%;height:100%" />
       </el-col>
     </el-row>
     <!-- ********************************************************************* -->
@@ -282,10 +282,10 @@ export default class Index extends PageBase {
     this.firstParams = firstParams
     this.secondFlowmeter = secondFlowmeter
     this.secondParams = secondParams
+    window.console.log('onChooseParams:', firstFlowmeter, firstParams, secondFlowmeter, secondParams)
   }
   private onCancelChooseParams() {}
   // ************************************************************
-
   private drawChart() {
     this.firstChart.setOption(chartoption)
     this.firstChart.resize()
