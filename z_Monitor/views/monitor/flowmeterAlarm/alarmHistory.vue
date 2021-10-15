@@ -1,11 +1,8 @@
 <template>
   <div>
-    <el-row style="height:50px">
-      <span>时间范围:</span>
-      <el-date-picker v-model="chooseDates" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
-        end-placeholder="结束日期" :picker-options="pickerOptions">
-      </el-date-picker>
-      <el-button @click="loadData">查询</el-button>
+    <el-row style="height:50px;position:relative">
+      <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime" />
+      <el-button style="float:left;margin-left:16px" @click="loadData">查询</el-button>
     </el-row>
     <el-row style="height:calc(100% - 50px)">
       <el-table :data="historyData" border>
@@ -40,10 +37,13 @@ import { jkzl, jlbjk, getAlarmHistory } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import moment from 'moment'
+import dateRangePicker from '@src/components/TimePickr/dateRangePicker.vue'
 // *****************************************************************
 /***作业区流量计 */
 @Component({
-  components: {}
+  components: {
+    dateRangePicker
+  }
 })
 export default class alarmHistory extends ComponentBase {
   @Prop({
@@ -61,54 +61,18 @@ export default class alarmHistory extends ComponentBase {
   //
   mounted() {}
   // **************************************************************
-  private chooseDates: any[] = [new Date(), new Date()]
-  private pickerOptions: any = {
-    shortcuts: [
-      {
-        text: '最近一周',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-          picker.$emit('pick', [start, end])
-        }
-      },
-      {
-        text: '最近一个月',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-          picker.$emit('pick', [start, end])
-        }
-      },
-      {
-        text: '最近三个月',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-          picker.$emit('pick', [start, end])
-        }
-      }
-    ]
-  }
-
+  private startTime: any = new Date()
+  private endTime: any = new Date()
   // ************************************************************
   private historyData: any[] = []
   private async dealAlarm(data: any) {}
   private async loadData() {
-    let startTime = null
-    let endTime = null
-    if (this.chooseDates && this.chooseDates.length > 0) {
-      startTime = moment(this.chooseDates[0]).format('YYYY-MM-DD HH:MM:ss')
-      endTime = moment(this.chooseDates[1]).format('YYYY-MM-DD HH:MM:ss')
-    }
+    let startTime = moment(this.startTime).format('YYYY-MM-DD HH:MM:ss')
+    let endTime = moment(this.endTime).format('YYYY-MM-DD HH:MM:ss')
     let alarmHis = await getAlarmHistory(this.flowmeterId, startTime, endTime)
     this.historyData = alarmHis
     // window.console.log('getAlarmHistory:', alarmHis)
   }
-
   // ************************************************************
 
   @Emit('onDealAlarm')

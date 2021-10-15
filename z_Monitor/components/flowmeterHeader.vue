@@ -1,10 +1,10 @@
 <template>
-  <el-row>
-    <el-col :style="{width:chooseBtnWidth+'px'}" v-if="showChooseBtn">
+  <el-row class="verticalAlignCenter">
+    <el-col :style="{width:chooseBtnWidth+'px'}" class="verticalAlignCenter" v-if="showChooseBtn">
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
-    <el-col :style="{width:middleWith}" style="display:flex;flex-wrap:wrap">
+    <el-col :style="{width:middleWith}" class="verticalAlignCenter" style="display:flex;flex-wrap:wrap">
       <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
       <span class="label">投用状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.tyztms||flowmeterDetail.TYZTMS):''}}</span>
       <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
@@ -95,13 +95,28 @@ export default class flowmeterHeader extends ComponentBase {
   private async onCancelChooseFlometer() {}
   // *****************************************************************************
   private async openAlarmInfo() {
-    this.$router.push({ path: '/flowmeterAlarm', query: { id: this.flowmeterDetail.JLBID } })
+    let flowmeterId = this.flowmeterDetail ? this.flowmeterDetail.JLBID : null
+    if (flowmeterId) {
+      this.$router.push({ path: '/flowmeterAlarm', query: { id: flowmeterId } })
+    } else {
+      this.$router.push({ path: '/flowmeterAlarm' })
+    }
   }
   private async openFlowmeterHis() {
-    this.$router.push({ path: '/historyData', query: { id: this.flowmeterDetail.JLBID } })
+    let flowmeterId = this.flowmeterDetail ? this.flowmeterDetail.JLBID : null
+    if (flowmeterId) {
+      this.$router.push({ path: '/historyData', query: { id: flowmeterId } })
+    } else {
+      this.$router.push({ path: '/historyData' })
+    }
   }
   private async openFlowmeterInfo() {
-    this.$router.push({ path: '/flowmeterInfo', query: { id: this.flowmeterDetail.JLBID } })
+    let flowmeterId = this.flowmeterDetail ? this.flowmeterDetail.JLBID : null
+    if (flowmeterId) {
+      this.$router.push({ path: '/flowmeterInfo', query: { id: flowmeterId } })
+    } else {
+      this.$router.push({ path: '/flowmeterInfo' })
+    }
   }
 }
 </script>

@@ -12,7 +12,6 @@
             <el-option v-for="item in statusList" :key="item.value" :label="item.text" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item label="位号">
           <el-input v-model="serachInfo.code" placeholder="请输入"></el-input>
         </el-form-item>
@@ -107,7 +106,6 @@ export default class Index extends PageBase {
     // window.console.log('loadData:', flowmeters)
   }
   // ********************************************************************************
-
   private onSearchInfoChanged() {
     this.loadData()
   }

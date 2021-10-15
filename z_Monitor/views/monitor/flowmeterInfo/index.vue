@@ -109,7 +109,6 @@ export default class Index extends PageBase {
       window.clearInterval(this.timer)
     }
   }
-
   // ***************关键测量表格*********************************************
   private keyMeasurementPoint: any[] = []
   // ***************仪表状态表格*********************************************
@@ -137,7 +136,6 @@ export default class Index extends PageBase {
   private async clearChildrenData() {
     this.currentImportantMeasure.clearData()
   }
-
   private cuteResToTable(data: any[]) {
     let res: any[] = []
     for (let index = 0; index < data.length; index++) {

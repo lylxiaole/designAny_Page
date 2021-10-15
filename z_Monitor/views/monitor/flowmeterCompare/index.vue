@@ -14,10 +14,7 @@
     </el-row>
     <!-- ********************************************************************* -->
     <el-row style="height:60px">
-      <span>时间范围:</span>
-      <el-date-picker v-model="chooseDate" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
-        end-placeholder="结束日期" :picker-options="pickerOptions">
-      </el-date-picker>
+      <dateRangePicker :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
       <span>或前:</span>
       <el-input-number v-model="beforeDays" controls-position="right" :min="1"></el-input-number>
       <span>天</span>
@@ -45,7 +42,9 @@ import * as echarts from 'echarts'
 import flowmeterChooseModal from '../../../components/choosePamaterCompare/flowmeterChooseModal.vue'
 import moment from 'moment'
 import resizer from 'element-resize-detector'
+import dateRangePicker from '@src/components/TimePickr/dateRangePicker.vue'
 import flowmeterHeader from '../../../components/flowmeterHeader.vue'
+
 const colors = ['#5793f3', '#d14a61', '#675bba', '#c04aab', '#a6c30f']
 const chartoption: any = {
   color: colors,
@@ -203,39 +202,10 @@ const chartoption: any = {
 export default class Index extends PageBase {
   private firstChart: any = null
   private secondChart: any = null
+
+  private startTime: any = new Date()
+  private endTime: any = new Date()
   private beforeDays: number = 0
-  private chooseDate: any[] = [new Date(), new Date()]
-  private pickerOptions: any = {
-    shortcuts: [
-      {
-        text: '最近一周',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-          picker.$emit('pick', [start, end])
-        }
-      },
-      {
-        text: '最近一个月',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-          picker.$emit('pick', [start, end])
-        }
-      },
-      {
-        text: '最近三个月',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-          picker.$emit('pick', [start, end])
-        }
-      }
-    ]
-  }
 
   private firstFlowmeter: any = null
   private firstParams: any = null
@@ -287,8 +257,8 @@ export default class Index extends PageBase {
   private onCancelChooseParams() {}
   // ************************************************************
   private async refreshData() {
-    let startdate = moment(this.chooseDate[0]).format('YYYY-MM-DD HH:mm:ss')
-    let enddate = moment(this.chooseDate[1]).format('YYYY-MM-DD HH:mm:ss')
+    let startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
+    let enddate = moment(this.endTime).format('YYYY-MM-DD HH:mm:ss')
     let param1codes: string[] = []
     for (let index = 0; index < this.firstParams.length; index++) {
       const element = this.firstParams[index]

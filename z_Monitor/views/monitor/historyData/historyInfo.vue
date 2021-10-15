@@ -1,14 +1,10 @@
 <template>
   <div style="height:100%;width:100%">
     <el-row style="height:50px">
-      <span>时间范围:</span>
-      <el-date-picker v-model="chooseDate" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
-        end-placeholder="结束日期" :picker-options="pickerOptions">
-      </el-date-picker>
+      <dateRangePicker :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
       <span>或前:</span>
       <el-input-number v-model="beforeDays" controls-position="right" :min="1"></el-input-number>
       <span>天</span>
-
       <el-button type="primary" @click="refreshData">刷新数据</el-button>
       <el-button type="primary" @click="chooseParams">重新选择参数</el-button>
       <chooseFlowmeterParams @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="paramDialog" />
@@ -28,7 +24,9 @@ import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import * as echarts from 'echarts'
 import resizer from 'element-resize-detector'
+import dateRangePicker from '@src/components/TimePickr/dateRangePicker.vue'
 import moment from 'moment'
+
 const colors = ['#5793f3', '#d14a61', '#675bba', '#c04aab', '#a6c30f']
 const chartoption: any = {
   color: colors,
@@ -179,6 +177,7 @@ const chartoption: any = {
 /***贮运厂总览 */
 @Component({
   components: {
+    dateRangePicker,
     chooseFlowmeterParams
   }
 })
@@ -193,42 +192,9 @@ export default class historyInfo extends ComponentBase {
   }
 
   private params: any[] = []
-  public setParams(val: any[]) {
-    this.params = val
-  }
   private currentChart: any = null
-  private chooseDate: any[] = [new Date(), new Date()]
-  private pickerOptions: any = {
-    shortcuts: [
-      {
-        text: '最近一周',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-          picker.$emit('pick', [start, end])
-        }
-      },
-      {
-        text: '最近一个月',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-          picker.$emit('pick', [start, end])
-        }
-      },
-      {
-        text: '最近三个月',
-        onClick(picker) {
-          const end = new Date()
-          const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-          picker.$emit('pick', [start, end])
-        }
-      }
-    ]
-  }
+  private startTime: any = new Date()
+  private endTime: any = new Date()
   private beforeDays: number = 0
   // ********************************************************************************
   mounted() {
@@ -259,8 +225,8 @@ export default class historyInfo extends ComponentBase {
       paramcodes.push(element.PHDTAG)
     }
 
-    let startdate = moment(this.chooseDate[0]).format('YYYY-MM-DD HH:mm:ss')
-    let enddate = moment(this.chooseDate[1]).format('YYYY-MM-DD HH:mm:ss')
+    let startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
+    let enddate = moment(this.endTime).format('YYYY-MM-DD HH:mm:ss')
     let res = await getParamsCompareData(this.flowmeterId, paramcodes, startdate, enddate)
     window.console.log('refreshData:', res)
   }
@@ -270,7 +236,7 @@ export default class historyInfo extends ComponentBase {
     await (this.$refs.paramDialog as chooseFlowmeterParams).showDialog(this.flowmeterId)
   }
   private onChooseParams(params: any[]) {
-    this.setParams(params)
+    this.params = params
   }
   private onCancelChooseParams() {}
   // **************************************************************

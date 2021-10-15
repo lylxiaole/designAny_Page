@@ -1,9 +1,9 @@
 <template>
   <div class="pageView" style="height:100%;width:100%;">
-    <el-row style="height:120px">
+    <el-row style="height:60px">
       <flowmeterHeader :flowmeterDetail.sync="flowmeterDetail" :showBtns="['history','detail']" style="width:100%;height:100%" />
     </el-row>
-    <el-row style=" height:calc(100% - 120px)">
+    <el-row style=" height:calc(100% - 60px)">
       <el-col :span="8">
         <el-row style="height:50%">
           <currentAlarm :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" style="height:100%;width:100%" />

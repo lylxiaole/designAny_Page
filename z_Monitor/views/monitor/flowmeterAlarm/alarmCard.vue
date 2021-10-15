@@ -7,7 +7,6 @@
         </el-col>
         <el-col :span="8">
           <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button>
-
         </el-col>
       </el-row>
       <el-row class="row">
