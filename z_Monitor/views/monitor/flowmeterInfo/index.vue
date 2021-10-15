@@ -45,7 +45,7 @@
           </div>
           <el-carousel v-else :interval="4000" type="card" height="100%">
             <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
-              <alarmCard @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
+              <alarmCard style="height:380px" @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
             </el-carousel-item>
           </el-carousel>
         </el-row>

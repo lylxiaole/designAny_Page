@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card">
+    <el-card style="height:100%;width:100%" class="box-card">
       <el-row class="row">
         <el-col :span="24">
           数采点:{{cardInfo.tagAdds}}
