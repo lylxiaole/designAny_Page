@@ -5,7 +5,7 @@
       <el-button style="float:left;margin-left:16px" @click="loadData">查询</el-button>
     </el-row>
     <el-row style="height:calc(100% - 50px)">
-      <el-table :data="historyData" border>
+      <el-table :data="historyData" size="small" border>
         <el-table-column prop="TAGMC" label="数据采名称" width="180">
         </el-table-column>
         <el-table-column prop="ZTMS" label="状态" width="180">
@@ -69,9 +69,10 @@ export default class alarmHistory extends ComponentBase {
   private async loadData() {
     let startTime = moment(this.startTime).format('YYYY-MM-DD HH:MM:ss')
     let endTime = moment(this.endTime).format('YYYY-MM-DD HH:MM:ss')
+    window.console.log('getAlarmHistory1:', startTime, endTime)
     let alarmHis = await getAlarmHistory(this.flowmeterId, startTime, endTime)
     this.historyData = alarmHis
-    // window.console.log('getAlarmHistory:', alarmHis)
+    window.console.log('getAlarmHistory2:', alarmHis)
   }
   // ************************************************************
 

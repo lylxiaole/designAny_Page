@@ -5,14 +5,8 @@
         <el-form-item label="处理人">
           <el-input size="small" v-model="dealInfo.user" placeholder="处理人"></el-input>
         </el-form-item>
-        <el-form-item label="处理结果">
-          <el-input size="small" v-model="dealInfo.code" placeholder="处理结果"></el-input>
-        </el-form-item>
-        <el-form-item label="处理时长">
-          <el-input size="small" v-model="dealInfo.code" placeholder="处理结果"></el-input>
-        </el-form-item>
-        <el-form-item label="处理过程">
-          <el-input size="small" v-model="dealInfo.code" placeholder="处理结果"></el-input>
+        <el-form-item label="备注">
+          <el-input size="small" v-model="dealInfo.desc" placeholder="备注"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -26,7 +20,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk, getFlowmetersInArea, jlbzdcx } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getFlowmetersInArea, jlbzdcx, dealAlarmMethod } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 // *****************************************************************
 /***流量计数据对比 */
@@ -34,31 +28,25 @@ import { Route } from 'vue-router'
   components: {}
 })
 export default class dealAlarm extends ComponentBase {
-  @Prop({
-    default: () => {
-      return false
-    }
-  })
-  private dialogVisible: boolean
-
-  @Emit('update:dialogVisible')
-  private updateValue_dialogVisible(val: boolean) {}
+  private dialogVisible: boolean = false
   // *********************************
-  private dealInfo: any = { code: '', areaId: '' }
+  private dealInfo: any = { user: '', desc: '' }
   private currentAlarm: any = null
-
   // ********************************************************************************
   mounted() {}
   // ************************************************************
   private async onSureChoose() {
+    await dealAlarmMethod([this.currentAlarm.id], this.dealInfo.user, this.dealInfo.desc)
     this.onSure(this.dealInfo)
-    this.updateValue_dialogVisible(false)
+    this.dialogVisible = false
   }
   private async onCancelChoose() {
     this.onCancel()
-    this.updateValue_dialogVisible(false)
+    this.dialogVisible = false
   }
-  public setCurrentAlarm(alarm: any) {
+  public async dealCurrentAlarm(alarm: any) {
+    this.dialogVisible = true
+    window.console.log('dealCurrentAlarm:', alarm)
     this.currentAlarm = alarm
   }
   // ************************************************************

@@ -169,7 +169,6 @@ export async function getParamsCompareData(flowmeterId: string, paramCodes: stri
   const resp = await ajaxPost(url, formData)
   return resp
 }
-
 /**两个计量表，单参数对比结果 */
 export async function getFlowmeterCompareData(flowmeter1Id: string, flowmeter2Id: string, paramCodes1: any[], paramCodes2: any[], startTime: any, endTime: any): Promise<any> {
   var formData = new FormData()
@@ -182,6 +181,21 @@ export async function getFlowmeterCompareData(flowmeter1Id: string, flowmeter2Id
   formData.append('cxjsrq', endTime)
 
   let url = `${apiAddr()}/jlbjk/jlbjk.ashx`
+  const resp = await ajaxPost(url, formData)
+  return resp
+}
+/**报警处理
+ * bjids:报警Id集合
+ * clr:处理人
+ * bz:处理备注
+ */
+export async function dealAlarmMethod(bjids: string[], clr: string, bz: string) {
+  var formData = new FormData()
+  formData.append('action', 'handlingAlarms')
+  formData.append('bjids', "'" + bjids.join("','") + "'")
+  formData.append('clr', clr)
+  formData.append('bz', bz)
+  let url = `${apiAddr()}/jlbjk/jlbzdcx.ashx`
   const resp = await ajaxPost(url, formData)
   return resp
 }

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <el-carousel :interval="4000" type="card" height="100%">
+    <div v-if="!currentAlrams||currentAlrams.length<1" style="height:100%;width:100%;" class="verticalAlignCenter flexHorilanLayout">
+      暂无当前报警数据
+    </div>
+    <el-carousel v-else :interval="4000" type="card" height="100%">
       <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
         <alarmCard @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
       </el-carousel-item>

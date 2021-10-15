@@ -46,7 +46,6 @@ import dealAlarm from './dealAlarm.vue'
 export default class Index extends PageBase {
   private flowmeterId: string = ''
   private flowmeterDetail: any = null
-  private dialogVisible: boolean = false
 
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
@@ -75,11 +74,11 @@ export default class Index extends PageBase {
   private async clearChildrenData() {}
   // ************************************************************
   private onDealAlarm(data: any) {
-    window.console.log('onDealAlarm:', data)
-    this.dialogVisible = true
-    ;(this.$refs.alarmDialog as dealAlarm).setCurrentAlarm(data)
+    ;(this.$refs.alarmDialog as dealAlarm).dealCurrentAlarm(data)
   }
-  private async dealSure() {}
+  private async dealSure() {
+    //TODO 刷新各个子组件的数据
+  }
   private async dealCancel() {}
 }
 </script>

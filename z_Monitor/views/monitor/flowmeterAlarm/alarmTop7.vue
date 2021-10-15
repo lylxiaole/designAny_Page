@@ -11,7 +11,7 @@ import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import * as echarts from 'echarts'
 import { parse } from 'querystring'
-
+import resizer from 'element-resize-detector'
 // *****************************************************************
 /***作业区流量计 */
 @Component({
@@ -44,7 +44,7 @@ export default class alarmTop7 extends ComponentBase {
     radar: [
       {
         //这是雷达图的大小
-        radius: '50%',
+        radius: '80%',
         //图外名称
         name: {
           formatter: '{value}',
@@ -183,8 +183,23 @@ export default class alarmTop7 extends ComponentBase {
   mounted() {
     this.currentChart = echarts.init(this.$refs.domarea as any)
     this.drawChart()
+    this.listenChartDomSize()
   }
-
+  beforeDestroy() {
+    this.unlisenDomSize()
+  }
+  private currentResizer: any = null
+  listenChartDomSize() {
+    this.currentResizer = resizer()
+    this.currentResizer.listenTo($(this.$el), (element) => {
+      if (this.currentChart) {
+        this.currentChart.resize()
+      }
+    })
+  }
+  unlisenDomSize() {
+    this.currentResizer.removeAllListeners($(this.$el))
+  }
   private drawChart() {
     this.currentChart.setOption(this.option)
     this.currentChart.resize()
@@ -195,7 +210,7 @@ export default class alarmTop7 extends ComponentBase {
     if (!wranTop5) {
       wranTop5 = []
     }
-    // window.console.log('wranTop5:', wranTop5)
+    window.console.log('wranTop5:', wranTop5)
     this.option.radar[0].indicator = []
     this.option.series[0].data[0].value = []
     for (let index = 0; index < wranTop5.length; index++) {
