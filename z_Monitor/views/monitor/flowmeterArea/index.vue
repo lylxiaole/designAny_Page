@@ -18,7 +18,8 @@
       </el-form>
     </div>
     <div style="height:calc(100% - 60px);width:100%;display:flex;flex-wrap: wrap;justify-content:flex-start;align-content:flex-start">
-      <flowmeterCard class="flowmeterCard" v-for="item in filterFlowmeters" :key="item.code" :cardInfo="item" />
+      <flowmeterCard style="box-sizing:border-box;width:380px" class="flowmeterCard" v-for="item in filterFlowmeters" :key="item.code"
+        :cardInfo="item" />
     </div>
   </div>
 </template>
@@ -39,13 +40,23 @@ export default class Index extends PageBase {
   private serachInfo: any = {
     code: '',
     areaId: 'shanghai',
-    status: 'shanghai'
+    status: null
   }
-  private areaList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
-  private statusList: any[] = [{ text: '全部区域', value: 0 }, { text: '区域1', value: 1 }, { text: '区域2', value: 2 }]
+  private areaList: any[] = []
+  private statusList: any[] = []
 
   private get filterFlowmeters(): any[] {
-    return this.allFlowmeters.filter((o) => o.status === this.serachInfo.status && o.code.indexOf(this.serachInfo.code) > -1)
+    let res: any[] = []
+    for (let index = 0; index < this.allFlowmeters.length; index++) {
+      const element = this.allFlowmeters[index]
+      if (this.serachInfo.status && this.serachInfo.status === element.status && element.code.indexOf(this.serachInfo.code) > -1) {
+        res.push(element)
+      } else if (!this.serachInfo.status && element.code.indexOf(this.serachInfo.code) > -1) {
+        res.push(element)
+      }
+    }
+
+    return res
   }
   private allFlowmeters: any[] = [
     {
@@ -78,6 +89,7 @@ export default class Index extends PageBase {
   private async getAllStatus() {
     let statusList = await zdcx()
     this.statusList = []
+    this.statusList.push({ text: '全部', value: null })
     for (let index = 0; index < statusList.length; index++) {
       const statuinfo = statusList[index]
       this.statusList.push({ text: statuinfo.dicName, value: statuinfo.dicCode })

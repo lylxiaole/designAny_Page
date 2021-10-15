@@ -35,7 +35,6 @@ export default class importantMeasure extends ComponentBase {
     this.initChartsOption()
     this.listenChartDomSize()
   }
-
   beforeDestroy() {
     this.unlisenDomSize()
   }
@@ -129,7 +128,7 @@ export default class importantMeasure extends ComponentBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
-        height: '90%',
+        height: '75%',
         width: '100%',
         containLabel: true
       },
@@ -180,7 +179,7 @@ export default class importantMeasure extends ComponentBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
-        height: '90%',
+        height: '75%',
         width: '100%',
         containLabel: true
       },
@@ -231,7 +230,7 @@ export default class importantMeasure extends ComponentBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
-        height: '90%',
+        height: '75%',
         width: '100%',
         containLabel: true
       },
@@ -282,7 +281,7 @@ export default class importantMeasure extends ComponentBase {
         left: '3%',
         right: '4%',
         bottom: '3%',
-        height: '90%',
+        height: '75%',
         width: '100%',
         containLabel: true
       },
