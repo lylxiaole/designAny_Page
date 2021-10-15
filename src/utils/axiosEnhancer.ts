@@ -1,5 +1,5 @@
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { alertSuccess, alertWarning, confirmNotify, notifyError } from './devExtremeUtils'
+import { Notification } from 'element-ui'
 import { getCurrentRoute, getStore } from '@src/baseConfigs'
 
 const HttpStatusEnum = [
@@ -82,7 +82,7 @@ axiosInstance.interceptors.response.use(
   (error: any) => {
     window.console.error('axios请求发生错误', error)
     if (error === undefined || error.code === 'ECONNABORTED') {
-      notifyError('服务请求超时')
+      Notification.warning('服务请求超时')
       return Promise.reject(error)
     }
 
@@ -103,7 +103,7 @@ axiosInstance.interceptors.response.use(
       }
 
       if (status === 403) {
-        alertWarning(errorText || '权限不足...')
+        Notification.warning(errorText || '权限不足...')
         return Promise.reject(error)
       }
     } else if (error.request) {

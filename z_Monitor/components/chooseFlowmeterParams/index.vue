@@ -1,10 +1,10 @@
 <template>
-  <el-dialog :show-close="false" title="提示" :visible.sync="dialogVisible" width="700px" center :close-on-click-modal="false" destroy-on-close
+  <el-dialog :show-close="false" title="选择流量计参数" :visible.sync="dialogVisible" width="700px" center :close-on-click-modal="false" destroy-on-close
     append-to-body>
     <div style="width:100%;height:400px">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="监控类型">
-          <el-select size="small" v-model="searchInfo.watchType" placeholder="监控类型">
+          <el-select size="small" v-model="searchInfo.watchType" @change="onTypeChanged" placeholder="监控类型">
             <el-option v-for="item in watchTypes" :key="item.value" :label="item.text" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
@@ -74,6 +74,11 @@ export default class index extends ComponentBase {
   private async tableChooseChange(val: any) {
     window.console.log('tableChooseChange:', val)
     this.currentSelectedRows = val
+  }
+  private onTypeChanged(val: any) {
+    window.console.log('onTypeChanged:', val)
+    this.searchInfo.watchType = val
+    this.loadParams()
   }
   // ************************************************************
   public async showDialog(flowmeterId: string) {

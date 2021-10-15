@@ -1,5 +1,5 @@
 import Store from './store'
-import { notifyError } from './devExtremeUtils'
+import { Notification } from 'element-ui'
 
 /**
  * 处理401(未授权)响应,跳转登陆页.
@@ -13,14 +13,14 @@ export const notLoginResponseInterceptor = async (response: any) => {
 
   if (!response.status || response.status === 401 || respData.code === 401) {
     // 同时清空浏览器和Redux中缓存,防止脏数据,以及可能的死循环.如果以后使用Context保存token,这里也要处理.
-    notifyError('尚未登录或者会话超时,即将重新登录...')
+    Notification.error('尚未登录或者会话超时,即将重新登录...')
     Store.clear()
     // getDvaApp()._store.dispatch({ type: 'session/removeSession' })
     // history.push('/login');
     setTimeout(() => (window.location.href = '/login'), 500)
   }
   if (response.status === 403) {
-    notifyError('权限不足')
+    Notification.error('权限不足')
   }
   return response
 }

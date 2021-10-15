@@ -201,7 +201,7 @@ export default class historyInfo extends ComponentBase {
   // ********************************************************************************
   mounted() {
     this.currentChart = echarts.init(this.$refs.chartArea as any)
-    this.drawChart()
+    this.drawChart(chartoption)
     this.listenChartDomSize()
   }
   beforeDestroy() {
@@ -230,8 +230,13 @@ export default class historyInfo extends ComponentBase {
     let startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
     let enddate = moment(this.endTime).format('YYYY-MM-DD HH:mm:ss')
     let res = await getParamsCompareData(this.flowmeterId, paramcodes, startdate, enddate)
-    window.console.log('refreshData:', res)
+    this.cuteChartOption(res)
   }
+
+  private cuteChartOption(compareDatas: any[]) {
+    window.console.log('refreshData:', compareDatas)
+  }
+
   private async clearData() {}
   // *************** *********************************************
   private async chooseParams() {
@@ -242,8 +247,8 @@ export default class historyInfo extends ComponentBase {
   }
   private onCancelChooseParams() {}
   // **************************************************************
-  private drawChart() {
-    this.currentChart.setOption(chartoption)
+  private drawChart(option) {
+    this.currentChart.setOption(option)
     this.currentChart.resize()
   }
   // **************************************************************
