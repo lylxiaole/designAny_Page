@@ -1,6 +1,6 @@
 <template>
   <div class="pageView" style="height:100%;width:100%;padding:10px;box-sizing:border-box">
-    <el-row style="height:120px">
+    <el-row style="height:60px">
       <flowmeterHeader :showBtns="['detail','alarm']" :flowmeterDetail.sync=" flowmeterDetail" style="width:100%;height:100%" />
     </el-row>
     <el-row style="height:calc(100% - 120px)">

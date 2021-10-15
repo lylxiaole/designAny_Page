@@ -1,12 +1,12 @@
 <template>
   <div style="height:100%;width:100%">
-    <el-row style="height:50px">
-      <dateRangePicker :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
-      <span>或前:</span>
-      <el-input-number v-model="beforeDays" controls-position="right" :min="1"></el-input-number>
-      <span>天</span>
-      <el-button type="primary" @click="refreshData">刷新数据</el-button>
-      <el-button type="primary" @click="chooseParams">重新选择参数</el-button>
+    <el-row style="height:50px;position:relative" class="verticalAlignCenter">
+      <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
+      <span style="float:left">或前:</span>
+      <el-input-number v-model="beforeDays" style="float:left;width:100px" controls-position="right" :min="0"></el-input-number>
+      <span style="float:left">天</span>
+      <el-button type="primary" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
+      <el-button type="primary" style="float:left" @click="chooseParams">重新选择参数</el-button>
       <chooseFlowmeterParams @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="paramDialog" />
     </el-row>
     <el-row style="height:calc(100% - 50px)">
@@ -34,7 +34,9 @@ const chartoption: any = {
     trigger: 'axis'
   },
   grid: {
-    right: '20%'
+    right: '30%',
+    left: '5%',
+    bottom: '8%'
   },
   toolbox: {
     feature: {
