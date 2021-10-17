@@ -1,6 +1,6 @@
 <template>
-  <el-dialog title="提示" :show-close="false" :visible.sync="dialogVisible" width="900px" :close-on-click-modal="false" destroy-on-close append-to-body
-    center>
+  <el-dialog title="流量计参数对比" :show-close="false" :visible.sync="dialogVisible" width="900px" :close-on-click-modal="false" destroy-on-close
+    append-to-body center>
     <div style="height:400px;width:100%">
       <!-- *********stepContent******************************* -->
       <el-row style="height:320px" class="flexHorilanLayout">

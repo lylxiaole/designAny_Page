@@ -232,9 +232,68 @@ export default class historyInfo extends ComponentBase {
     let res = await getParamsCompareData(this.flowmeterId, paramcodes, startdate, enddate)
     this.cuteChartOption(res)
   }
+  // **************计算option*******************************************
+  private getYaxis(paramName: string, index: number) {
+    return {
+      type: 'value',
+      name: paramName,
+      // min: 0,
+      // max: 11000,
+      position: 'left',
+      axisLine: {
+        lineStyle: {
+          color: colors[index]
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    }
+  }
 
-  private cuteChartOption(compareDatas: any[]) {
-    window.console.log('refreshData:', compareDatas)
+  private getSeriesData(paramName: string, index: number, data: any[]) {
+    for (let index = 0; index < data.length; index++) {
+      let element = data[index]
+      data[index] = { name: element[0], value: element[1] }
+    }
+
+    return {
+      name: paramName,
+      type: 'line',
+      yAxisIndex: index,
+      data: data
+    }
+  }
+
+  private getXaxis(paramName: string, index: number, data: any[]) {
+    return {
+      name: paramName,
+      type: 'category',
+      axisTick: {
+        alignWithLabel: false
+      },
+      data: data
+    }
+  }
+  private cuteChartOption(compareData: any) {
+    chartoption.yAxis = []
+    chartoption.series = []
+    let xAxisDatas: string[] = []
+
+    for (let index = 0; index < compareData.resDataList.length; index++) {
+      const resdata = compareData.resDataList[index]
+      let paramCode = resdata.name
+      let param = this.params.find((o) => o.PHDTAG === paramCode)
+      let paramName = param.TAGMC
+
+      let newXais = this.getXaxis(paramName, index, [...resdata.data])
+      chartoption.xAxis.push(newXais)
+      chartoption.yAxis.push(this.getYaxis(paramName, index))
+      let newdata = this.getSeriesData(paramName, index, [...resdata.data])
+      chartoption.series.push(newdata)
+    }
+
+    window.console.log('refreshData:', chartoption)
   }
 
   private async clearData() {}
