@@ -3,7 +3,7 @@
     <el-row style="height:50px;position:relative" class="verticalAlignCenter">
       <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
       <span style="float:left">或前:</span>
-      <el-input-number v-model="beforeDays" style="float:left;width:100px" controls-position="right" :min="0"></el-input-number>
+      <el-input-number v-model="beforeDays" style="float:left;width:100px" controls-position="right" :min="0" :step="1"></el-input-number>
       <span style="float:left">天</span>
       <el-button type="primary" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
       <el-button type="primary" style="float:left" @click="chooseParams">重新选择参数</el-button>
@@ -201,6 +201,7 @@ export default class historyInfo extends ComponentBase {
   // ********************************************************************************
   mounted() {
     this.currentChart = echarts.init(this.$refs.chartArea as any)
+    this.currentChart.getZr().on('click', this.onChartClick)
     this.drawChart(chartoption)
     this.listenChartDomSize()
   }
@@ -227,7 +228,14 @@ export default class historyInfo extends ComponentBase {
       paramcodes.push(element.PHDTAG)
     }
 
-    let startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
+    let startdate = ''
+    if (this.beforeDays > 0) {
+      startdate = moment(this.startTime)
+        .subtract(10, 'days')
+        .format('YYYY-MM-DD HH:mm:ss')
+    } else {
+      startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
+    }
     let enddate = moment(this.endTime).format('YYYY-MM-DD HH:mm:ss')
     let res = await getParamsCompareData(this.flowmeterId, paramcodes, startdate, enddate)
     this.cuteChartOption(res)
@@ -250,7 +258,6 @@ export default class historyInfo extends ComponentBase {
       }
     }
   }
-
   private getSeriesData(paramName: string, index: number, data: any[]) {
     for (let index = 0; index < data.length; index++) {
       let element = data[index]
@@ -264,7 +271,6 @@ export default class historyInfo extends ComponentBase {
       data: data
     }
   }
-
   private getXaxis(paramName: string, index: number, data: any[]) {
     return {
       name: paramName,
@@ -276,26 +282,29 @@ export default class historyInfo extends ComponentBase {
     }
   }
   private cuteChartOption(compareData: any) {
-    chartoption.yAxis = []
-    chartoption.series = []
+    let newoption = { ...chartoption }
+    newoption.xAxis = []
+    newoption.yAxis = []
+    newoption.series = []
     let xAxisDatas: string[] = []
-
     for (let index = 0; index < compareData.resDataList.length; index++) {
       const resdata = compareData.resDataList[index]
       let paramCode = resdata.name
       let param = this.params.find((o) => o.PHDTAG === paramCode)
       let paramName = param.TAGMC
-
+      //xAxis
       let newXais = this.getXaxis(paramName, index, [...resdata.data])
-      chartoption.xAxis.push(newXais)
-      chartoption.yAxis.push(this.getYaxis(paramName, index))
+      newoption.xAxis.push(newXais)
+      //yAxis
+      let newyAxis = this.getYaxis(paramName, index)
+      newoption.yAxis.push(newyAxis)
+      //series
       let newdata = this.getSeriesData(paramName, index, [...resdata.data])
-      chartoption.series.push(newdata)
+      newoption.series.push(newdata)
     }
-
-    window.console.log('refreshData:', chartoption)
+    this.drawChart(newoption)
+    window.console.log('refreshData:', newoption)
   }
-
   private async clearData() {}
   // *************** *********************************************
   private async chooseParams() {
@@ -303,6 +312,7 @@ export default class historyInfo extends ComponentBase {
   }
   private onChooseParams(params: any[]) {
     this.params = params
+    this.onChooseParams(this.params)
   }
   private onCancelChooseParams() {}
   // **************************************************************
@@ -310,9 +320,26 @@ export default class historyInfo extends ComponentBase {
     this.currentChart.setOption(option)
     this.currentChart.resize()
   }
+  private onChartClick(params) {
+    window.console.log('onChartClick')
+    // 获取像素坐标点
+    const pointInPixel = [params.offsetX, params.offsetY]
+    const { target, topTarget } = params
+    // 判断点击的点在  点击在折线的拐点 || 折线上
+    if (target.z === 2 || topTarget.z === 2) {
+      // 获取这条折线的 信息 也就是 index
+      // 如果是拐点，直接读取 target.seriesIndex
+      // 如果是折线上的点，读取 topTarget 对象下的继续寻找parent的信息的index
+      const axs = target ? target.seriesIndex : topTarget.parent.parent.__ecComponentInfo.index
+      console.log(axs)
+    }
+    this.onSelectChartData({})
+  }
   // **************************************************************
   @Emit('onSelectParams')
   private onSelectParams(params: any[]) {}
+  @Emit('onSelectChartData')
+  private onSelectChartData(data: any) {}
 }
 </script>
 <style scoped>

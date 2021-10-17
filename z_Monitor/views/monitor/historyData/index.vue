@@ -5,11 +5,11 @@
     </el-row>
     <el-row style="height:calc(100% - 120px)">
       <el-col :span="18">
-        <historyInfo :flowmeterId="flowmeterId" @onSelectParams="onSelectParams" />
+        <historyInfo :flowmeterId="flowmeterId" @onSelectParams="onSelectParams" @onSelectChartData="onSelectChartData" />
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="6">
-        <dataCompare :flowmeterId="flowmeterId" :flowmeterParams="currentParams" />
+        <dataCompare ref="dataCompare" />
       </el-col>
     </el-row>
   </div>
@@ -73,7 +73,10 @@ export default class Index extends PageBase {
   private async clearChildrenData() {}
 
   private async onSelectParams(params: any[]) {
-    this.currentParams = params
+    ;(this.$refs.dataCompare as dataCompare).setParams(params)
+  }
+  private async onSelectChartData(data: any) {
+    ;(this.$refs.dataCompare as dataCompare).setData(data)
   }
 }
 </script>

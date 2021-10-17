@@ -43,7 +43,11 @@ export default class dataCompare extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ************************************************************
-  public showDataCompare(params: any[], data: any[]) {
+  public setParams(params: any[]) {
+    this.flowmeterParams = params
+    //TODO 计算动态列
+  }
+  public setData(params: any[]) {
     this.flowmeterParams = params
     //TODO 计算动态列
   }
@@ -52,7 +56,6 @@ export default class dataCompare extends ComponentBase {
   private startCompare() {
     ;(this.$refs.valueCompareDialog as valueCompareDialog).showCompareData(this.data)
   }
-
   private tableChooseChange(val: any[]) {}
 }
 </script>

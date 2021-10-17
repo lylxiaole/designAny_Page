@@ -257,7 +257,14 @@ export default class Index extends PageBase {
   private onCancelChooseParams() {}
   // ************************************************************
   private async refreshData() {
-    let startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
+    let startdate = ''
+    if (this.beforeDays > 0) {
+      startdate = moment(this.startTime)
+        .subtract(10, 'days')
+        .format('YYYY-MM-DD HH:mm:ss')
+    } else {
+      startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
+    }
     let enddate = moment(this.endTime).format('YYYY-MM-DD HH:mm:ss')
     let param1codes: string[] = []
     for (let index = 0; index < this.firstParams.length; index++) {
