@@ -4,16 +4,16 @@
       <flowmeterHeader :flowmeterDetail.sync="flowmeterDetail" :showBtns="['history','detail']" style="width:100%;height:100%" />
     </el-row>
     <el-row style="height:calc(100% - 60px)">
-      <el-col :span="8">
+      <el-col :span="8" style="box-sizing:border-box;height:100%;">
         <el-row style="height:50%;padding:15px" class="showblock">
           <currentAlarm :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" style="height:100%;width:100%" />
         </el-row>
-        <el-row style="height:50%" class="showblock">
+        <el-row style="height:50%;padding:6px" class="showblock">
           <alarmTop7 :flowmeterId="flowmeterId" style="height:100%;width:100%" />
         </el-row>
       </el-col>
       <!-- ************************************************************************* -->
-      <el-col :span="16">
+      <el-col :span="16" style=" height:100%;">
         <alarmHistory class="showblock" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
       </el-col>
     </el-row>

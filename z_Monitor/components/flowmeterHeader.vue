@@ -1,10 +1,10 @@
 <template>
   <el-row class="verticalAlignCenter">
-    <el-col :style="{width:chooseBtnWidth+'px'}" class="verticalAlignCenter" v-if="showChooseBtn">
+    <el-col :style="{width:chooseBtnWidth+'px'}" class="verticalAlignCenter flexHorilanLayout" v-if="showChooseBtn">
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
-    <el-col :style="{width:middleWith}" class="verticalAlignCenter" style="display:flex;flex-wrap:wrap">
+    <el-col :style="{width:middleWith}" class="verticalAlignCenter flexHorilanLayout" style="display:flex;flex-wrap:wrap">
       <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
       <span class="label">投用状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.tyztms||flowmeterDetail.TYZTMS):''}}</span>
       <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
@@ -14,7 +14,7 @@
       <span class="label">状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.zxztms||flowmeterDetail.ZXZTMS):''}}</span>
     </el-col>
     <el-col :style="{width:leaderBtnWidth+'px'}">
-      <el-row>
+      <el-row class="verticalAlignCenter flexHorilanLayout">
         <el-button class="button" size="mini" v-if="showBtns.indexOf('detail')>-1" @click="openFlowmeterInfo">查看流量计信息</el-button>
         <el-button class="button" size="mini" v-if="showBtns.indexOf('alarm')>-1" @click="openAlarmInfo">查看流量计报警</el-button>
         <el-button class="button" size="mini" v-if="showBtns.indexOf('history')>-1" @click="openFlowmeterHis">查看流量计历史</el-button>
