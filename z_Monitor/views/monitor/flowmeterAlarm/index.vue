@@ -5,7 +5,7 @@
     </el-row>
     <el-row style="height:calc(100% - 60px)">
       <el-col :span="8">
-        <el-row style="height:50%" class="showblock">
+        <el-row style="height:50%;padding:15px" class="showblock">
           <currentAlarm :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" style="height:100%;width:100%" />
         </el-row>
         <el-row style="height:50%" class="showblock">

@@ -1,29 +1,31 @@
 <template>
   <div>
-    <el-card style="height:90%;width:100%;padding-top:5%" class="box-card maincontainer   ">
-      <el-row class="row">
-        <el-col :span="16">
-          <span>数采点:{{cardInfo.BJDZ}}</span>
-        </el-col>
-        <el-col :span="8">
-          <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">数据值:{{cardInfo.PHDVALUE}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">可信度:{{cardInfo.CONFIDENCE}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">数采时间:{{cardInfo.PHDTIME}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">报警信息:{{cardInfo.CWXXZW}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">处理建议:{{cardInfo.CLJY}}</el-col>
-      </el-row>
+    <el-card style="height:100%;width:100%;" class="box-card maincontainer">
+      <div class="">
+        <el-row class="row">
+          <el-col :span="16">
+            <span>数采点:{{cardInfo.BJDZ}}</span>
+          </el-col>
+          <el-col :span="8">
+            <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button>
+          </el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24">数据值:{{cardInfo.PHDVALUE}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24">可信度:{{cardInfo.CONFIDENCE}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24">数采时间:{{cardInfo.PHDTIME}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24">报警信息:{{cardInfo.CWXXZW}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24">处理建议:{{cardInfo.CLJY}}</el-col>
+        </el-row>
+      </div>
     </el-card>
   </div>
 </template>
@@ -72,6 +74,5 @@ export default class alarmCard extends ComponentBase {
   background: #fff2f2;
   border: 1px solid #e35050;
   box-sizing: border-box;
-  padding: 20px;
 }
 </style>

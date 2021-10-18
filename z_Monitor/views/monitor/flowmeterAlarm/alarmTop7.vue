@@ -99,7 +99,7 @@ export default class alarmTop7 extends ComponentBase {
     this.option.series[0].data[0].value = []
     for (let index = 0; index < wranTop5.length; index++) {
       const element = wranTop5[index]
-      this.option.radar.indicator.push({ name: element.CWXXZW })
+      this.option.radar.indicator.push({ name: element.CWXXZW, max: parseInt(element.VAL) + 3 })
       this.option.series[0].data[0].value.push(parseInt(element.VAL))
     }
     this.drawChart()

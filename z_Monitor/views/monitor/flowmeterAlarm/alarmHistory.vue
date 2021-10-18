@@ -5,7 +5,7 @@
       <el-button style="float:left;margin-left:16px" @click="loadData">查询</el-button>
     </el-row>
     <el-row style="height:calc(100% - 50px)">
-      <el-table :data="historyData" size="small" border>
+      <el-table :data="historyData" size="small" border height="100%">
         <el-table-column prop="TAGMC" label="数据采名称" width="180">
         </el-table-column>
         <el-table-column prop="ZTMS" label="状态" width="180">
