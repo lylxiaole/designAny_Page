@@ -13,14 +13,14 @@
       </el-col>
     </el-row>
     <!-- ********************************************************************* -->
-    <el-row style="height:60px">
-      <dateRangePicker :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
-      <span>或前:</span>
-      <el-input-number v-model="beforeDays" controls-position="right" :min="1"></el-input-number>
-      <span>天</span>
+    <el-row style="height:60px;position:relative" class="verticalAlignCenter">
+      <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
+      <span style="float:left">或前:</span>
+      <el-input-number style="float:left" v-model="beforeDays" controls-position="right" :min="0"></el-input-number>
+      <span style="float:left">天</span>
 
-      <el-button type="primary" @click="refreshData">刷新数据</el-button>
-      <el-button type="primary" @click="chooseParams">重新选择参数</el-button>
+      <el-button type="primary" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
+      <el-button type="primary" style="float:left" @click="chooseParams">重新选择参数</el-button>
     </el-row>
     <!-- ********************************************************************* -->
     <el-row style="height:calc(50% - 60px)">
@@ -37,7 +37,7 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import { jkzl, jlbjk, getFlowmeterDetail, getParamsCompareData, getFlowmeterCompareData } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
-import { param2Obj } from '@src/utils'
+import { param2Obj, deepClone } from '@src/utils'
 import * as echarts from 'echarts'
 import flowmeterChooseModal from '../../../components/choosePamaterCompare/flowmeterChooseModal.vue'
 import moment from 'moment'
@@ -84,8 +84,6 @@ const chartoption: any = {
     {
       type: 'value',
       name: '设备新增数量',
-      min: 0,
-      max: 11000,
       position: 'left',
       axisLine: {
         lineStyle: {
@@ -95,98 +93,13 @@ const chartoption: any = {
       axisLabel: {
         formatter: '{value}'
       }
-    },
-    {
-      type: 'value',
-      name: '产品新增数量',
-      min: 0,
-      max: 200,
-      position: 'right',
-      axisLine: {
-        lineStyle: {
-          color: colors[0]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    },
-    {
-      type: 'value',
-      name: '厂商新增数量',
-      min: 0,
-      max: 200,
-      position: 'right',
-      offset: 80,
-      axisLine: {
-        lineStyle: {
-          color: colors[1]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    },
-    {
-      type: 'value',
-      name: '注册用户新增数量',
-      min: 0,
-      max: 90000,
-      position: 'right',
-      offset: 200,
-      axisLine: {
-        lineStyle: {
-          color: colors[3]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    },
-    {
-      type: 'value',
-      name: 'XXXXXX',
-      min: 0,
-      max: 1000000,
-      position: 'right',
-      offset: 280,
-      axisLine: {
-        lineStyle: {
-          color: colors[4]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
     }
   ],
   series: [
     {
-      name: '设备新增数量',
-      type: 'line',
-      data: [10000, 2000, 1065, 3620, 6530, 9510, 2000, 3002, 3580, 5063, 1520, 9000]
-    },
-    {
-      name: '产品新增数量',
-      type: 'line',
-      yAxisIndex: 1,
-      data: [10, 50, 100, 32, 56, 87, 41, 25, 46, 96, 30, 150]
-    },
-    {
-      name: '厂商新增数量',
-      type: 'line',
-      data: [12, 15, 26, 36, 25, 18, 16, 47, 58, 69, 93, 150]
-    },
-    {
-      name: '注册用户新增数量',
-      type: 'line',
-      yAxisIndex: 3,
-      data: [30000, 5000, 50000, 13436, 25555, 18000, 56416, 42227, 44658, 69002, 90013, 15330]
-    },
-    {
       name: 'XXXXXX',
       type: 'line',
-      yAxisIndex: 4,
+      yAxisIndex: 0,
       data: [130000, 50100, 250000, 123436, 251555, 138000, 56416, 482227, 144658, 569002, 290013, 152230]
     }
   ]
@@ -196,7 +109,8 @@ const chartoption: any = {
 @Component({
   components: {
     flowmeterChooseModal,
-    flowmeterHeader
+    flowmeterHeader,
+    dateRangePicker
   }
 })
 export default class Index extends PageBase {
@@ -214,8 +128,14 @@ export default class Index extends PageBase {
   // ********************************************************************************
   mounted() {
     this.firstChart = echarts.init(this.$refs.firstarea as any)
+    this.firstChart.setOption(chartoption)
+    this.firstChart.resize()
+    // ********************
     this.secondChart = echarts.init(this.$refs.secondarea as any)
-    this.drawChart()
+    this.secondChart.setOption(chartoption)
+    this.secondChart.resize()
+    // ********************
+
     this.listenChartDomSize()
   }
   // ****************************************************************
@@ -259,13 +179,14 @@ export default class Index extends PageBase {
   private async refreshData() {
     let startdate = ''
     if (this.beforeDays > 0) {
-      startdate = moment(this.startTime)
-        .subtract(10, 'days')
-        .format('YYYY-MM-DD HH:mm:ss')
+      startdate =
+        moment(this.startTime)
+          .subtract(this.beforeDays, 'days')
+          .format('YYYY-MM-DD') + ' 00:00:00'
     } else {
-      startdate = moment(this.startTime).format('YYYY-MM-DD HH:mm:ss')
+      startdate = moment(this.startTime).format('YYYY-MM-DD') + ' 00:00:00'
     }
-    let enddate = moment(this.endTime).format('YYYY-MM-DD HH:mm:ss')
+    let enddate = moment(this.endTime).format('YYYY-MM-DD') + ' 23:59:59'
     let param1codes: string[] = []
     for (let index = 0; index < this.firstParams.length; index++) {
       const element = this.firstParams[index]
@@ -288,11 +209,28 @@ export default class Index extends PageBase {
     if (!compareData) {
       return
     }
+    await this.drawChart(compareData)
   }
-  private drawChart() {
-    this.firstChart.setOption(chartoption)
+  private async drawChart(data: any) {
+    let firstoption = deepClone(chartoption)
+    let param1 = this.firstParams.find((o) => o.PHDTAG === data.names[0])
+    let paramName1 = param1.TAGMC
+    firstoption.xAxis[0].data = data.xData
+    firstoption.series[0].name = paramName1
+    firstoption.series[0].data = data.dataVals[0]
+    firstoption.yAxis[0].name = paramName1
+    this.firstChart.setOption(firstoption)
     this.firstChart.resize()
-    this.secondChart.setOption(chartoption)
+
+    ////////////////////////////
+    let secondoption = deepClone(chartoption)
+    let param2 = this.secondParams.find((o) => o.PHDTAG === data.names[1])
+    let paramName2 = param2.TAGMC
+    secondoption.xAxis[0].data = data.xData
+    secondoption.series[0].name = paramName2
+    secondoption.series[0].data = data.dataVals[1]
+    secondoption.yAxis[0].name = paramName2
+    this.secondChart.setOption(secondoption)
     this.secondChart.resize()
   }
 }

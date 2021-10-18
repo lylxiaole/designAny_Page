@@ -18,13 +18,13 @@
       </el-col>
       <el-col :span="12">
         <el-row class="rowspan flexHorilanLayout">
-          <span>位号:&nbsp;{{secondFlowmeter?firstFlowmeter.WEIHAO:''}}</span>
+          <span>位号:&nbsp;{{secondFlowmeter?secondFlowmeter.WEIHAO:''}}</span>
         </el-row>
         <el-row class="rowspan flexHorilanLayout">
-          <span>产商:&nbsp;{{secondFlowmeter?firstFlowmeter.JLBCJMC:''}}</span>
+          <span>产商:&nbsp;{{secondFlowmeter?secondFlowmeter.JLBCJMC:''}}</span>
         </el-row>
         <el-row class="rowspan flexHorilanLayout">
-          <span>计量表:&nbsp;{{secondFlowmeter?firstFlowmeter.JLBMC:''}}</span>
+          <span>计量表:&nbsp;{{secondFlowmeter?secondFlowmeter.JLBMC:''}}</span>
         </el-row>
         <el-row class="rowspan flexHorilanLayout">
           <el-button class="button" size="mini" @click="chooseSecondFlowmeter">选择流量计</el-button>
