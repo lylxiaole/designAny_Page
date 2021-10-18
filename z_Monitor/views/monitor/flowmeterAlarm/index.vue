@@ -1,20 +1,20 @@
 <template>
   <div class="pageView" style="height:100%;width:100%;">
-    <el-row style="height:60px">
+    <el-row style="height:60px" class="showblock">
       <flowmeterHeader :flowmeterDetail.sync="flowmeterDetail" :showBtns="['history','detail']" style="width:100%;height:100%" />
     </el-row>
-    <el-row style=" height:calc(100% - 60px)">
+    <el-row style="height:calc(100% - 60px)">
       <el-col :span="8">
-        <el-row style="height:50%">
+        <el-row style="height:50%" class="showblock">
           <currentAlarm :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" style="height:100%;width:100%" />
         </el-row>
-        <el-row style="height:50%">
+        <el-row style="height:50%" class="showblock">
           <alarmTop7 :flowmeterId="flowmeterId" style="height:100%;width:100%" />
         </el-row>
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="16">
-        <alarmHistory :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
+        <alarmHistory class="showblock" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
       </el-col>
     </el-row>
     <dealAlarm ref="alarmDialog" :dialogVisible.sync="dialogVisible" @onSure="dealSure" @onCancel="dealCancel" />

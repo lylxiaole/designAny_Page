@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card style="height:100%;width:100%" class="box-card">
+    <el-card style="height:90%;width:100%;padding-top:5%" class="box-card maincontainer   ">
       <el-row class="row">
         <el-col :span="16">
           <span>数采点:{{cardInfo.BJDZ}}</span>
@@ -67,5 +67,11 @@ export default class alarmCard extends ComponentBase {
 <style lang="less" scoped>
 .row {
   margin: 12px 0px;
+}
+.maincontainer {
+  background: #fff2f2;
+  border: 1px solid #e35050;
+  box-sizing: border-box;
+  padding: 20px;
 }
 </style>

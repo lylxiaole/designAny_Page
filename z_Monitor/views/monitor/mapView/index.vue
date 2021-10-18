@@ -5,7 +5,6 @@
     <el-drawer show-close title="作业区概要" size="400px" style="height:100%" :visible.sync="drawerOpen" custom-class="mapdrawer">
       <div style="height:100%;width:100%;overflow-y:auto">
         <areaCard v-for="item in cardInfos" :key="item.areaName" :cardInfo="item" style="height:170px;margin:8px" />
-
       </div>
     </el-drawer>
   </div>
@@ -95,11 +94,13 @@ export default class Index extends PageBase {
     //todo加载卡片
     let cardList = markers.filter((o) => o.QYJKLX === '1')
     this.cardInfos = []
+    window.console.log('cardList:', cardList)
     for (let index = 0; index < cardList.length; index++) {
       const cardinfo = cardList[index]
       this.cardInfos.push({
         areaId: cardinfo.QYID,
         areaName: cardinfo.QYMC,
+        status: cardinfo.ZXZT,
         totalCount: cardinfo.jlbsl, //总数
         normalCount: cardinfo.zczt,
         normalRate: this.rateStrFormat(cardinfo.zclv), //正常率
@@ -338,7 +339,7 @@ export default class Index extends PageBase {
     let messagestr = '故障计量表提醒: <br/>'
     for (let index = 0; index < errorFlows.length; index++) {
       const element = errorFlows[index]
-      let newmessage = `<a href='#/flowmeterAlarm?flowmeterId=${element.JLBID}'>${index + 1 + '.&nbsp;&nbsp;' + element.JLBMC}<a/><br/>`
+      let newmessage = `<a href='#/flowmeterAlarm?id=${element.JLBID}'>${index + 1 + '.&nbsp;&nbsp;' + element.JLBMC}<a/><br/>`
       messagestr += newmessage
     }
 
