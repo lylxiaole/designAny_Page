@@ -10,6 +10,7 @@
       <chooseFlowmeterParams @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="paramDialog" />
     </el-row>
     <el-row style="height:calc(100% - 50px)">
+      <!-- <highcharts></highcharts> -->
       <div style="width:100%;height:100%" ref="chartArea"></div>
     </el-row>
   </div>
@@ -21,160 +22,12 @@ import ComponentBase from '@src/views/ComponentBase'
 import { jkzl, jlbjk, getParamsCompareData } from '../../../serviceAPIs/service'
 import chooseFlowmeterParams from '../../../components/chooseFlowmeterParams/index.vue'
 import { Route } from 'vue-router'
-import { param2Obj } from '@src/utils'
+import { param2Obj, deepClone } from '@src/utils'
 import * as echarts from 'echarts'
 import resizer from 'element-resize-detector'
 import dateRangePicker from '@src/components/TimePickr/dateRangePicker.vue'
 import moment from 'moment'
-
-const colors = ['#5793f3', '#d14a61', '#675bba', '#c04aab', '#a6c30f']
-const chartoption: any = {
-  color: colors,
-  tooltip: {
-    trigger: 'axis'
-  },
-  grid: {
-    right: '30%',
-    left: '5%',
-    bottom: '8%'
-  },
-  toolbox: {
-    feature: {
-      dataView: {
-        show: false,
-        readOnly: false
-      },
-      restore: {
-        show: false
-      },
-      saveAsImage: {
-        show: false
-      }
-    }
-  },
-  legend: {
-    data: ['设备新增数量', '产品新增数量', '厂商新增数量', '注册用户新增数量', 'XXXXXX']
-  },
-  xAxis: [
-    {
-      type: 'category',
-      axisTick: {
-        alignWithLabel: false
-      },
-      data: ['2016-01', '2016-02', '2016-03', '2016-04', '2016-05', '2016-06', '2016-07', '2016-08', '2016-09', '2016-10', '2016-11', '2016-12']
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value',
-      name: '设备新增数量',
-      min: 0,
-      max: 11000,
-      position: 'left',
-      axisLine: {
-        lineStyle: {
-          color: colors[2]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    },
-    {
-      type: 'value',
-      name: '产品新增数量',
-      min: 0,
-      max: 200,
-      position: 'right',
-      axisLine: {
-        lineStyle: {
-          color: colors[0]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    },
-    {
-      type: 'value',
-      name: '厂商新增数量',
-      min: 0,
-      max: 200,
-      position: 'right',
-      offset: 80,
-      axisLine: {
-        lineStyle: {
-          color: colors[1]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    },
-    {
-      type: 'value',
-      name: '注册用户新增数量',
-      min: 0,
-      max: 90000,
-      position: 'right',
-      offset: 200,
-      axisLine: {
-        lineStyle: {
-          color: colors[3]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    },
-    {
-      type: 'value',
-      name: 'XXXXXX',
-      min: 0,
-      max: 1000000,
-      position: 'right',
-      offset: 280,
-      axisLine: {
-        lineStyle: {
-          color: colors[4]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
-      }
-    }
-  ],
-  series: [
-    {
-      name: '设备新增数量',
-      type: 'line',
-      data: [10000, 2000, 1065, 3620, 6530, 9510, 2000, 3002, 3580, 5063, 1520, 9000]
-    },
-    {
-      name: '产品新增数量',
-      type: 'line',
-      yAxisIndex: 1,
-      data: [10, 50, 100, 32, 56, 87, 41, 25, 46, 96, 30, 150]
-    },
-    {
-      name: '厂商新增数量',
-      type: 'line',
-      data: [12, 15, 26, 36, 25, 18, 16, 47, 58, 69, 93, 150]
-    },
-    {
-      name: '注册用户新增数量',
-      type: 'line',
-      yAxisIndex: 3,
-      data: [30000, 5000, 50000, 13436, 25555, 18000, 56416, 42227, 44658, 69002, 90013, 15330]
-    },
-    {
-      name: 'XXXXXX',
-      type: 'line',
-      yAxisIndex: 4,
-      data: [130000, 50100, 250000, 123436, 251555, 138000, 56416, 482227, 144658, 569002, 290013, 152230]
-    }
-  ]
-}
+import HighCharts from 'highcharts'
 // *****************************************************************
 /***贮运厂总览 */
 @Component({
@@ -200,9 +53,6 @@ export default class historyInfo extends ComponentBase {
   private beforeDays: number = 0
   // ********************************************************************************
   mounted() {
-    this.currentChart = echarts.init(this.$refs.chartArea as any)
-    this.currentChart.getZr().on('click', this.onChartClick)
-    this.drawChart(chartoption)
     this.listenChartDomSize()
   }
   beforeDestroy() {
@@ -241,69 +91,170 @@ export default class historyInfo extends ComponentBase {
     this.cuteChartOption(res)
   }
   // **************计算option*******************************************
-  private getYaxis(paramName: string, index: number) {
-    return {
-      type: 'value',
-      name: paramName,
-      // min: 0,
-      // max: 11000,
-      position: 'left',
-      axisLine: {
-        lineStyle: {
-          color: colors[index]
+  private cuteChartOption(datalist: any) {
+    window.console.log('cuteChartOption:', datalist)
+
+    let seriesOptions = new Array()
+    let ys = new Array()
+    let yszy = true
+    for (var i = 0; i < datalist.resDataList.length; i++) {
+      var obj: any = {}
+      var tagNameCn = datalist.resDataList[i].name
+      let param = this.params.find((o) => o.PHDTAG === tagNameCn)
+      let paramName = param.TAGMC
+      obj.name = paramName
+      //for (var resIndex = 0; resIndex < datalist.resDataList[i].data; resIndex++) {
+      //    var resdata = datalist.resDataList[i].data[resIndex]
+      //    resdata[1] = resdata[1]+''
+      //}
+
+      //window.console.log('datalist.resDataList[i]:', datalist.resDataList[i].data)
+      obj.data = datalist.resDataList[i].data
+      obj.yAxis = datalist.resDataList[i].yAxis
+      seriesOptions.push(obj)
+      let yobj: any = {}
+      yobj.lineWidth = 1
+      if (yszy == true) {
+        yobj.opposite = false
+        yszy = false
+      } else {
+        yobj.opposite = true
+        yszy = true
+      }
+
+      ys.push(yobj)
+    }
+    console.log(seriesOptions)
+    this.createChart(seriesOptions, datalist.dataTimeXes, ys)
+  }
+
+  private createChart(seriesOptions, dic, yaxis) {
+    for (var i = 0; i < yaxis.length; i++) {
+      var yax = yaxis[i]
+      yax.labels = {
+        enabled: true,
+        formatter: function() {
+          return parseFloat(this.value.toFixed(4))
         }
-      },
-      axisLabel: {
-        formatter: '{value}'
       }
     }
-  }
-  private getSeriesData(paramName: string, index: number, data: any[]) {
-    for (let index = 0; index < data.length; index++) {
-      let element = data[index]
-      data[index] = { name: element[0], value: element[1] }
-    }
 
-    return {
-      name: paramName,
-      type: 'line',
-      yAxisIndex: index,
-      data: data
-    }
-  }
-  private getXaxis(paramName: string, index: number, data: any[]) {
-    return {
-      name: paramName,
-      type: 'category',
-      axisTick: {
-        alignWithLabel: false
+    console.log(yaxis, 'yaxis')
+
+    HighCharts.setOptions({
+      global: {
+        useUTC: false
       },
-      data: data
-    }
-  }
-  private cuteChartOption(compareData: any) {
-    let newoption = { ...chartoption }
-    newoption.xAxis = []
-    newoption.yAxis = []
-    newoption.series = []
-    let xAxisDatas: string[] = []
-    for (let index = 0; index < compareData.resDataList.length; index++) {
-      const resdata = compareData.resDataList[index]
-      let paramCode = resdata.name
-      let param = this.params.find((o) => o.PHDTAG === paramCode)
-      let paramName = param.TAGMC
-      //xAxis
-      let newXais = this.getXaxis(paramName, index, [...resdata.data])
-      newoption.xAxis.push(newXais)
-      //yAxis
-      let newyAxis = this.getYaxis(paramName, index)
-      newoption.yAxis.push(newyAxis)
-      //series
-      let newdata = this.getSeriesData(paramName, index, [...resdata.data])
-      newoption.series.push(newdata)
-    }
-    this.drawChart(newoption)
-    window.console.log('refreshData:', newoption)
+      lang: {
+        contextButtonTitle: '图表导出菜单',
+        decimalPoint: '.',
+        downloadJPEG: '下载JPEG图片',
+        downloadPDF: '下载PDF文件',
+        downloadPNG: '下载PNG文件',
+        downloadSVG: '下载SVG文件',
+        drillUpText: '返回 {series.name}',
+        loading: '加载中',
+        months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        noData: '没有数据',
+        numericSymbols: ['千', '兆', 'G', 'T', 'P', 'E'],
+        printChart: '打印图表',
+        resetZoom: '恢复缩放',
+        resetZoomTitle: '恢复图表',
+        shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        thousandsSep: ',',
+        weekdays: ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+      }
+    })
+
+    HighCharts.chart(this.$refs.chartArea as any, {
+      rangeSelector: {
+        selected: 8,
+        buttons: [
+          {
+            type: 'minute',
+            count: 10,
+            text: '10分'
+          },
+          {
+            type: 'hour',
+            count: 5,
+            text: '5时'
+          },
+          {
+            type: 'day',
+            count: 1,
+            text: '1天'
+          },
+          {
+            type: 'month',
+            count: 1,
+            text: '1月'
+          },
+          {
+            type: 'month',
+            count: 3,
+            text: '3月'
+          },
+          {
+            type: 'month',
+            count: 6,
+            text: '半年'
+          },
+          {
+            type: 'ytd',
+            text: '近一年'
+          },
+          {
+            type: 'all',
+            text: '全部'
+          }
+        ]
+      },
+      yAxis: yaxis,
+      scrollbar: {
+        enabled: false
+      },
+      exporting: {
+        buttons: {
+          contextButton: {}
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      legend: {
+        enabled: true,
+        //align: 'right',
+        backgroundColor: '#ffffff',
+        borderColor: '#ffffff',
+        borderWidth: 1,
+        layout: 'horizontal',
+        itemStyle: { color: '#333333', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' },
+        //verticalAlign: 'top',
+        //y: 100,
+        shadow: true
+      },
+      plotOptions: {
+        series: {
+          compare: 'percent',
+          point: {
+            events: {
+              click: function(e) {}
+            }
+          }
+        }
+      },
+      tooltip: {
+        /* pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><b>{series.className}</b> ',*/
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b>',
+        valueDecimals: 4,
+        split: true,
+        distance: 30,
+        padding: 5
+      },
+
+      series: seriesOptions //[{name:name,data:[[时间戳,值]]}]
+    })
   }
   private async clearData() {}
   // *************** *********************************************
@@ -312,14 +263,10 @@ export default class historyInfo extends ComponentBase {
   }
   private onChooseParams(params: any[]) {
     this.params = params
-    this.onChooseParams(this.params)
+    this.onSelectParams(this.params)
   }
   private onCancelChooseParams() {}
   // **************************************************************
-  private drawChart(option) {
-    this.currentChart.setOption(option)
-    this.currentChart.resize()
-  }
   private onChartClick(params) {
     window.console.log('onChartClick')
     // 获取像素坐标点
