@@ -156,15 +156,10 @@ export default class Index extends PageBase {
   }
   // ************************************************************
   private async chooseFlowmeter() {
-    await (this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseFlowmeter(this.firstFlowmeter, this.secondFlowmeter)
+    await (this.$refs.flowmeterChooseModal as any).showChooseFlowmeter(this.firstFlowmeter, this.secondFlowmeter)
   }
   private async chooseParams() {
-    await (this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseParams(
-      this.firstFlowmeter,
-      this.firstParams,
-      this.secondFlowmeter,
-      this.secondParams
-    )
+    await (this.$refs.flowmeterChooseModal as any).showChooseParams(this.firstFlowmeter, this.firstParams, this.secondFlowmeter, this.secondParams)
   }
   // ************************************************************
   private onChooseParams(firstFlowmeter: any, firstParams: any, secondFlowmeter: any, secondParams: any) {

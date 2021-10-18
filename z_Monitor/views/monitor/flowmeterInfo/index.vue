@@ -102,7 +102,7 @@ export default class Index extends PageBase {
   }
 
   private get currentImportantMeasure(): importantMeasure {
-    return this.$refs.importantMeasure as importantMeasure
+    return this.$refs.importantMeasure as any
   }
 
   mounted() {

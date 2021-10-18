@@ -54,7 +54,7 @@ export default class dataCompare extends ComponentBase {
   // ************************************************************
   private clearTableData() {}
   private startCompare() {
-    ;(this.$refs.valueCompareDialog as valueCompareDialog).showCompareData(this.data)
+    ;(this.$refs.valueCompareDialog as any).showCompareData(this.data)
   }
   private tableChooseChange(val: any[]) {}
 }

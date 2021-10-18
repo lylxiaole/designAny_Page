@@ -228,10 +228,10 @@ let baseconfig = {
       }
     }),
 
-    new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env)
-    })
+    new VueLoaderPlugin()
+    // new webpack.DefinePlugin({
+    //   'process.env': JSON.stringify(process.env)
+    // })
   ],
 
   resolve: {

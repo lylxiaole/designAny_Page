@@ -259,7 +259,7 @@ export default class historyInfo extends ComponentBase {
   private async clearData() {}
   // *************** *********************************************
   private async chooseParams() {
-    await (this.$refs.paramDialog as chooseFlowmeterParams).showDialog(this.flowmeterId)
+    await (this.$refs.paramDialog as any).showDialog(this.flowmeterId)
   }
   private onChooseParams(params: any[]) {
     this.params = params

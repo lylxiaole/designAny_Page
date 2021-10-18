@@ -71,10 +71,10 @@ export default class chooseFlowmeter extends ComponentBase {
   mounted() {}
   // ************************************************************
   private async chooseFirstFlowmeter() {
-    ;(this.$refs.chooseFlowmeter1 as chooseFlowmeterDialog).chooseFlowmeter()
+    ;(this.$refs.chooseFlowmeter1 as any).chooseFlowmeter()
   }
   private async chooseSecondFlowmeter() {
-    ;(this.$refs.chooseFlowmeter2 as chooseFlowmeterDialog).chooseFlowmeter()
+    ;(this.$refs.chooseFlowmeter2 as any).chooseFlowmeter()
   }
   // ************************************************************
   private async onChooseFlowmeter1(data: any) {

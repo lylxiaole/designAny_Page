@@ -74,7 +74,7 @@ export default class Index extends PageBase {
   private async clearChildrenData() {}
   // ************************************************************
   private onDealAlarm(data: any) {
-    ;(this.$refs.alarmDialog as dealAlarm).dealCurrentAlarm(data)
+    ;(this.$refs.alarmDialog as any).dealCurrentAlarm(data)
   }
   private async dealSure() {
     //TODO 刷新各个子组件的数据
