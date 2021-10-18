@@ -4,7 +4,7 @@
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
-    <el-col :style="{width:middleWith}" class="verticalAlignCenter flexHorilanLayout" style="display:flex;flex-wrap:wrap">
+    <el-col :style="{width:middleWith}" class="verticalAlignCenter" style="position:relative">
       <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
       <span class="label">投用状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.tyztms||flowmeterDetail.TYZTMS):''}}</span>
       <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
@@ -122,6 +122,7 @@ export default class flowmeterHeader extends ComponentBase {
 </script>
 <style lang="less" scoped>
 .label {
-  margin-left: 25px;
+  margin-left: 15px;
+  float: left;
 }
 </style>

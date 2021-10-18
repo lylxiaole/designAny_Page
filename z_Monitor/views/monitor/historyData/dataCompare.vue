@@ -5,7 +5,7 @@
       <el-button type="primary" @click="startCompare">参数数据对比</el-button>
     </el-row>
     <el-row style="height:calc(100% - 50px)">
-      <el-table :data="data" height="100%" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
+      <el-table size="small" :data="data" height="100%" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>
         <el-table-column prop="WEIHAO" label="位号">

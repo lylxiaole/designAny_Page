@@ -1,6 +1,10 @@
 <template>
-  <div ref="domarea">
+  <div>
+    <div style="height:100%;width:100%" v-show="!ishaveData" class="verticalAlignCenter flexHorilanLayout">暂无数据</div>
+    <div style="height:100%;width:100%" v-show="ishaveData" ref="domarea">
+    </div>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -30,6 +34,8 @@ export default class alarmTop7 extends ComponentBase {
       this.loadData(val)
     }
   }
+
+  private ishaveData: boolean = false
   // *******************************************
   private currentChart: any = null
   private option: any = {
@@ -96,6 +102,12 @@ export default class alarmTop7 extends ComponentBase {
     let wranTop5 = await getAlarmTop5(flowmeterId)
     if (!wranTop5) {
       wranTop5 = []
+    }
+
+    if (wranTop5.length < 1) {
+      this.ishaveData = false
+    } else {
+      this.ishaveData = true
     }
     window.console.log('wranTop5:', wranTop5)
     this.option.radar.indicator = []

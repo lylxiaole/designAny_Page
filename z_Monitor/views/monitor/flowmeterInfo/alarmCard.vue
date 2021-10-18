@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card style="height:100%;width:100%" class="box-card">
+    <el-card style="height:100%;width:100%" class="box-card maincontainer">
       <el-row class="row">
         <el-col :span="24">
           数采点:{{cardInfo.tagAdds}}
@@ -58,5 +58,15 @@ export default class alarmCard extends ComponentBase {
 <style lang="less" scoped>
 .row {
   margin: 12px 0px;
+}
+.maincontainer {
+  background: #fff2f2;
+  border: 1px solid #e35050;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  /deep/ .el-card__body {
+    padding: 10px !important;
+  }
 }
 </style>

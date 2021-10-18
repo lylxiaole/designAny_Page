@@ -17,7 +17,7 @@
         <alarmHistory class="showblock" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
       </el-col>
     </el-row>
-    <dealAlarm ref="alarmDialog" :dialogVisible.sync="dialogVisible" @onSure="dealSure" @onCancel="dealCancel" />
+    <dealAlarm ref="alarmDialog" @onSure="dealSure" @onCancel="dealCancel" />
   </div>
 </template>
 

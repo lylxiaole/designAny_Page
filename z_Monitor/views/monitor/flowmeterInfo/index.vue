@@ -1,68 +1,72 @@
 <template>
   <div class="pageView" style="height:100%;width:100%;">
-    <el-row style="height:70px">
+    <el-row style="height:50px" class="showblock">
       <flowmeterHeader :flowmeterDetail.sync="flowmeterDetail" :showBtns="['history','alarm']" style="width:100%;height:100%" />
     </el-row>
-    <el-row style=" height:calc(100% - 70px)">
-      <el-col :span="12">
-        <el-row style="height:33%;">
-          <el-col :span="12" desc="重要测量" style="border:1px solid #000">
-            <importantMeasure ref="importantMeasure" />
-          </el-col>
-          <el-col :span="12" desc="仪表状态" style="border:1px solid #000">
-          </el-col>
-        </el-row>
-        <el-row desc="关键测量" style="height:33%;border:1px solid #000">
-          <el-table :data="keyMeasurementPoint" border height="100%" style="width: 100%">
-            <el-table-column prop="point" label="数据采集点">
-            </el-table-column>
-            <el-table-column prop="value" label="实时数值">
-            </el-table-column>
-            <el-table-column prop="unit" label="计量单位">
-            </el-table-column>
-            <el-table-column prop="time" label="数据采集时间">
-            </el-table-column>
-          </el-table>
-        </el-row>
-        <el-row desc="仪表状态" style="height:34%;border:1px solid #000">
-          <el-table :data="deviceStatus" border height="100%" style="width: 100%">
-            <el-table-column prop="point" label="数据采集点">
-            </el-table-column>
-            <el-table-column prop="value" label="实时数值">
-            </el-table-column>
-            <el-table-column prop="unit" label="计量单位">
-            </el-table-column>
-            <el-table-column prop="time" label="数据采集时间">
-            </el-table-column>
-          </el-table>
-        </el-row>
+    <!-- ************************************************* -->
+    <el-row style="height:200px">
+      <el-col class="showblock" style="width:calc(100% - 788px);height:100%">
+        <importantMeasure ref="importantMeasure" />
       </el-col>
-      <!-- ************************************************************************* -->
-      <el-col :span="12">
-        <el-row desc="仪表报警" style="height:50%;border:1px solid #000">
-          <div v-if="!currentAlrams||currentAlrams.length<1" style="height:100%;width:100%;" class="verticalAlignCenter flexHorilanLayout">
-            暂无当前报警数据
-          </div>
-          <el-carousel v-else :interval="4000" type="card" height="100%">
-            <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
-              <alarmCard style="height:380px" @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
-            </el-carousel-item>
-          </el-carousel>
-        </el-row>
-        <el-row desc="仪表系数" style="height:50%;border:1px solid #000">
-          <el-table :data="instrumentCoefficient" border height="100%" style="width: 100%">
-            <el-table-column prop="point" label="数据采集点">
-            </el-table-column>
-            <el-table-column prop="value" label="实时数值">
-            </el-table-column>
-            <el-table-column prop="unit" label="计量单位">
-            </el-table-column>
-            <el-table-column prop="time" label="数据采集时间">
-            </el-table-column>
-          </el-table>
-        </el-row>
+      <!-- ************************************************* -->
+      <el-col class="showblock" desc="仪表状态" style="width:240px;height:100%"></el-col>
+      <!-- ************************************************* -->
+      <el-col class="showblock" style="width:480px;height:100%;padding:8px">
+        <div v-if="!currentAlrams||currentAlrams.length<1" style="height:100%;width:100%;" class="verticalAlignCenter flexHorilanLayout">
+          暂无当前报警数据
+        </div>
+        <el-carousel v-else :interval="4000" type="card" height="100%">
+          <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
+            <alarmCard style="height:100%" @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
+          </el-carousel-item>
+        </el-carousel>
       </el-col>
     </el-row>
+    <!-- ************************************************* -->
+    <el-row style="height:calc(100% - 250px)">
+      <!-- ************************************************* -->
+      <el-col style="height:100%;width:calc(50% - 16px)" class="showblock">
+        <el-row desc="关键测量" style="height:50%;">
+          <el-table size="small" :data="keyMeasurementPoint" border height="100%" style="width: 100%">
+            <el-table-column prop="point" label="数据采集点">
+            </el-table-column>
+            <el-table-column prop="value" label="实时数值">
+            </el-table-column>
+            <el-table-column prop="unit" label="计量单位">
+            </el-table-column>
+            <el-table-column prop="time" label="数据采集时间">
+            </el-table-column>
+          </el-table>
+        </el-row>
+        <!-- ************************************************* -->
+        <el-row desc="仪表状态" style="height:50%;">
+          <el-table :data="deviceStatus" border size="small" height="calc(100% - 28px)" style="width: 100%;">
+            <el-table-column prop="point" label="数据采集点">
+            </el-table-column>
+            <el-table-column prop="value" label="实时数值">
+            </el-table-column>
+            <el-table-column prop="unit" label="计量单位">
+            </el-table-column>
+            <el-table-column prop="time" label="数据采集时间">
+            </el-table-column>
+          </el-table>
+        </el-row>
+      </el-col>
+      <!-- ************************************************* -->
+      <el-col style="height:100%;width:calc(50% - 16px)" class="showblock">
+        <el-table size="small" :data="instrumentCoefficient" border height="calc(100% - 28px)" style="width: 100%">
+          <el-table-column prop="point" label="数据采集点">
+          </el-table-column>
+          <el-table-column prop="value" label="实时数值">
+          </el-table-column>
+          <el-table-column prop="unit" label="计量单位">
+          </el-table-column>
+          <el-table-column prop="time" label="数据采集时间">
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
+
   </div>
 </template>
 
