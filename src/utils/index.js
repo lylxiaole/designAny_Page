@@ -472,7 +472,7 @@ export function showLoading_Async(isMain = false) {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-  }, 150)
+  }, 200)
   return newKey
 }
 // isMain:防止闪烁

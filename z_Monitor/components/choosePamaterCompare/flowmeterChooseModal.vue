@@ -78,11 +78,16 @@ export default class flowmeterChooseModal extends ComponentBase {
   // ********************************************************************************
   public async showChooseFlowmeter(firstFlowmeter: any, secondFlowmeter: any) {
     this.step = 1
+    this.firstFlowmeter = firstFlowmeter
+    this.secondFlowmeter = secondFlowmeter
     this.dialogVisible = true
   }
   public async showChooseParams(firstFlowmeter: any, firstParams: any, secondFlowmeter: any, secondParams: any) {
     this.step = 2
-    ;(this.$refs.choosePamatersRef as any).setFlowmeter(firstFlowmeter, secondFlowmeter)
+    this.firstParams = firstParams
+    this.secondParams = secondParams
+    await (this.$refs.choosePamatersRef as choosePamaters).setFlowmeter(firstFlowmeter, secondFlowmeter)
+    await (this.$refs.choosePamatersRef as choosePamaters).setCurrentParams(firstParams, secondParams)
     this.dialogVisible = true
   }
   // ************************************************************

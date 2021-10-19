@@ -1,32 +1,34 @@
 <template>
   <div class="pageView" style="height:100%;width:100%">
-    <el-row style="height:60px">
+    <el-row style="height:50px" class="showblock verticalAlignCenter">
       <el-col :span="4">
         <el-button class="button" size="mini" @click="chooseFlowmeter">选择流量计</el-button>
-        <flowmeterChooseModal @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="flowmeterChooseModal" />
+        <flowmeterChooseModal ref="flowmeterChooseModal" @onSure="onChooseParams" @onCancel="onCancelChooseParams" />
       </el-col>
-      <el-col :span="10">
+      <el-col :span="9">
         <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="firstFlowmeter" style="width:100%;height:100%" />
       </el-col>
-      <el-col :span="10" style="border-left:1px solid #000">
+      <el-col :span="1" style="height:100%;padding:3px 0px" class="flexHorilanLayout">
+        <div style="height:100%;width:1px;border-left:1px solid #000"></div>
+      </el-col>
+      <el-col :span="10">
         <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="secondFlowmeter" style="width:100%;height:100%" />
       </el-col>
     </el-row>
     <!-- ********************************************************************* -->
-    <el-row style="height:60px;position:relative" class="verticalAlignCenter">
+    <el-row style="height:60px;position:relative" class="verticalAlignCenter showblock">
       <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
       <span style="float:left">或前:</span>
       <el-input-number style="float:left" v-model="beforeDays" controls-position="right" :min="0"></el-input-number>
       <span style="float:left">天</span>
-
-      <el-button type="primary" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
-      <el-button type="primary" style="float:left" @click="chooseParams">重新选择参数</el-button>
+      <el-button type="primary" size="small" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
+      <el-button type="primary" size="small" style="float:left" @click="chooseParams">重新选择参数</el-button>
     </el-row>
     <!-- ********************************************************************* -->
-    <el-row style="height:calc(50% - 60px)">
+    <el-row style="height:calc(50% - 60px)" class="showblock">
       <div style="width:100%;height:100%" ref="firstarea"></div>
     </el-row>
-    <el-row style="height:calc(50% - 60px)">
+    <el-row style="height:calc(50% - 60px)" class="showblock">
       <div style="width:100%;height:100%" ref="secondarea"></div>
     </el-row>
   </div>
@@ -52,7 +54,10 @@ const chartoption: any = {
     trigger: 'axis'
   },
   grid: {
-    right: '20%'
+    right: '5%',
+    left: '5%',
+    bottom: '15%',
+    top: '12%'
   },
   toolbox: {
     feature: {
@@ -83,7 +88,7 @@ const chartoption: any = {
   yAxis: [
     {
       type: 'value',
-      name: '设备新增数量',
+      name: '暂无数据',
       position: 'left',
       axisLine: {
         lineStyle: {
@@ -97,10 +102,10 @@ const chartoption: any = {
   ],
   series: [
     {
-      name: 'XXXXXX',
+      name: '',
       type: 'line',
       yAxisIndex: 0,
-      data: [130000, 50100, 250000, 123436, 251555, 138000, 56416, 482227, 144658, 569002, 290013, 152230]
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
   ]
 }
@@ -134,9 +139,18 @@ export default class Index extends PageBase {
     this.secondChart = echarts.init(this.$refs.secondarea as any)
     this.secondChart.setOption(chartoption)
     this.secondChart.resize()
+    if (this.$route.query.id) {
+      this.loadData(this.$route.query.id as string)
+    }
     // ********************
-
     this.listenChartDomSize()
+  }
+  private async loadData(flowmeterId: string) {
+    let flowmeterDetails = await getFlowmeterDetail(flowmeterId)
+    if (flowmeterDetails && flowmeterDetails.length > 0) {
+      let flowmeterDetail = flowmeterDetails[0]
+      ;(this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseFlowmeter(flowmeterDetail, null)
+    }
   }
   // ****************************************************************
   private currentResizer: any = null
@@ -159,7 +173,12 @@ export default class Index extends PageBase {
     await (this.$refs.flowmeterChooseModal as any).showChooseFlowmeter(this.firstFlowmeter, this.secondFlowmeter)
   }
   private async chooseParams() {
-    await (this.$refs.flowmeterChooseModal as any).showChooseParams(this.firstFlowmeter, this.firstParams, this.secondFlowmeter, this.secondParams)
+    await (this.$refs.flowmeterChooseModal as flowmeterChooseModal).showChooseParams(
+      this.firstFlowmeter,
+      this.firstParams,
+      this.secondFlowmeter,
+      this.secondParams
+    )
   }
   // ************************************************************
   private onChooseParams(firstFlowmeter: any, firstParams: any, secondFlowmeter: any, secondParams: any) {
@@ -167,21 +186,36 @@ export default class Index extends PageBase {
     this.firstParams = firstParams
     this.secondFlowmeter = secondFlowmeter
     this.secondParams = secondParams
-    window.console.log('onChooseParams:', firstFlowmeter, firstParams, secondFlowmeter, secondParams)
+    // window.console.log('onChooseParams:', firstFlowmeter, firstParams, secondFlowmeter, secondParams)
   }
   private onCancelChooseParams() {}
   // ************************************************************
   private async refreshData() {
+    if (!this.firstFlowmeter) {
+      this.$notify.error('请先选择流量计!')
+      return
+    } else if (!this.secondFlowmeter) {
+      this.$notify.error('请先选择流量计!')
+      return
+    }
+    if (!this.firstParams || this.firstParams.length < 1) {
+      this.$notify.error('请先选择流量计参数!')
+      return
+    }
+    if (!this.secondParams || this.secondParams.length < 1) {
+      this.$notify.error('请先选择流量计参数!')
+      return
+    }
+
     let startdate = ''
     if (this.beforeDays > 0) {
-      startdate =
-        moment(this.startTime)
-          .subtract(this.beforeDays, 'days')
-          .format('YYYY-MM-DD') + ' 00:00:00'
+      startdate = moment(this.startTime)
+        .subtract(this.beforeDays, 'days')
+        .format('YYYY-MM-DD hh:mm:ss')
     } else {
-      startdate = moment(this.startTime).format('YYYY-MM-DD') + ' 00:00:00'
+      startdate = moment(this.startTime).format('YYYY-MM-DD hh:mm:ss')
     }
-    let enddate = moment(this.endTime).format('YYYY-MM-DD') + ' 23:59:59'
+    let enddate = moment(this.endTime).format('YYYY-MM-DD hh:mm:ss')
     let param1codes: string[] = []
     for (let index = 0; index < this.firstParams.length; index++) {
       const element = this.firstParams[index]
@@ -200,7 +234,7 @@ export default class Index extends PageBase {
       startdate,
       enddate
     )
-    window.console.log('compareData:', compareData)
+    // window.console.log('compareData:', compareData)
     if (!compareData) {
       return
     }
@@ -216,7 +250,6 @@ export default class Index extends PageBase {
     firstoption.yAxis[0].name = paramName1
     this.firstChart.setOption(firstoption)
     this.firstChart.resize()
-
     ////////////////////////////
     let secondoption = deepClone(chartoption)
     let param2 = this.secondParams.find((o) => o.PHDTAG === data.names[1])
