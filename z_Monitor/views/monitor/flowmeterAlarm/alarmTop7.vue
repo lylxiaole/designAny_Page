@@ -101,7 +101,8 @@ export default class alarmTop7 extends ComponentBase {
   private async loadData(flowmeterId: string) {
     let wranTop5 = await getAlarmTop5(flowmeterId)
     if (!wranTop5) {
-      wranTop5 = []
+      this.ishaveData = false
+      return
     }
 
     if (wranTop5.length < 1) {

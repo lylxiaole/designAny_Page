@@ -452,7 +452,6 @@ export function strUnZip(str) {
 export function BuildingFileUrlForShow(fileId) {
   return apiAddr() + 'api/file/GetFile?fileId=' + fileId
 }
-
 /////////////////////////////////////////////////////////////////
 var asyncLoadingWindowInfo = []
 /**isMain:防止闪烁 */

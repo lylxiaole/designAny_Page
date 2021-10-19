@@ -1,6 +1,9 @@
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Notification } from 'element-ui'
 import { getCurrentRoute, getStore } from '@src/baseConfigs'
+import { showLoading_Async, closeLoading_Async } from '@src/utils'
+
+let lodingWindow: any = null
 
 const HttpStatusEnum = [
   { status: 200, desc: '服务器成功返回请求的数据。', name: '' },
@@ -53,11 +56,16 @@ axiosInstance.interceptors.request.use(
     //   config.headers['Authorization'] = Store.get(configs.LOGINED_USER_SESSION as any).token;
     // }
     config.headers['token'] = window.localStorage.getItem('token')
+    if (!lodingWindow) {
+      lodingWindow = showLoading_Async(true)
+    }
     return config
   },
   function(error: any) {
     // 对请求错误做些什么(服务器没收到请求)
     console.log('axios request error: ', error)
+    closeLoading_Async(lodingWindow, true)
+    lodingWindow = null
     return Promise.reject(error)
   }
 )
@@ -70,6 +78,8 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    closeLoading_Async(lodingWindow, true)
+    lodingWindow = null
     if (response.data && response.data.success === false) {
       if (response.data.errCode === 401) {
         toLogin()
@@ -80,28 +90,25 @@ axiosInstance.interceptors.response.use(
     }
   },
   (error: any) => {
+    closeLoading_Async(lodingWindow, true)
+    lodingWindow = null
     window.console.error('axios请求发生错误', error)
     if (error === undefined || error.code === 'ECONNABORTED') {
       Notification.warning('服务请求超时')
       return Promise.reject(error)
     }
-
     const response: AxiosResponse = error.response
     if (response) {
       const { status, statusText } = response
-
       let errorText = statusText
       let findhttpstatus = HttpStatusEnum.find((item) => item.status === status)
-
       if (findhttpstatus && findhttpstatus.desc) {
         errorText = findhttpstatus.desc
       }
-
       if (status === 401) {
         toLogin()
         return Promise.reject(error)
       }
-
       if (status === 403) {
         Notification.warning(errorText || '权限不足...')
         return Promise.reject(error)
@@ -111,12 +118,11 @@ axiosInstance.interceptors.response.use(
       console.log(error.request)
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-
-      toLogin()
+      // toLogin()
       return Promise.reject(error)
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message)
+      // console.log('Error', error.message)
     }
     return Promise.reject(error)
   }
