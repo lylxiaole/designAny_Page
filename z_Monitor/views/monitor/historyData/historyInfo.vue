@@ -140,6 +140,16 @@ export default class historyInfo extends ComponentBase {
       this.$message.warning("开始时间必须早于结束时间！");
       return;
     }
+    var dateBegin = new Date(startdate);
+    var dateEnd = new Date(enddate);
+    var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
+    var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000));
+    if (dayDiff > 365 * 3) {
+      this.$message.warning(
+        "时间间隔太长，不能超过3年，参数越多，时间间隔越短，请重新选择！"
+      );
+      return;
+    }
     let res = await getParamsCompareData(
       this.flowmeterId,
       paramcodes,
@@ -460,6 +470,10 @@ export default class historyInfo extends ComponentBase {
   private async clearData() {}
   // *************** *********************************************
   private async chooseParams() {
+    if (this.flowmeterId === null) {
+      this.$message.warning("请选择流量计！");
+      return;
+    }
     await (this.$refs.paramDialog as chooseFlowmeterParams).showDialog(
       this.flowmeterId
     );
