@@ -4,13 +4,13 @@
       <span>时间范围:</span>
     </el-col>
     <el-col style="width:calc(50% - 52px)" class="verticalAlignCenter">
-      <el-date-picker v-model="startTimeInner" @change="onStartTimeChange" type="date" placeholder="选择开始日期" />
+      <el-date-picker v-model="startTimeInner" @change="onStartTimeChange" type="datetime" placeholder="选择开始日期" />
     </el-col>
     <el-col style="width:24px" class="verticalAlignCenter">
       <span>至</span>
     </el-col>
     <el-col style="width:calc(50% - 52px)" class="verticalAlignCenter">
-      <el-date-picker v-model="endTimeInner" @change="onEndTimeChange" type="date" placeholder="选择结束日期" />
+      <el-date-picker v-model="endTimeInner" @change="onEndTimeChange" type="datetime" placeholder="选择结束日期" />
     </el-col>
   </el-row>
 </template>
