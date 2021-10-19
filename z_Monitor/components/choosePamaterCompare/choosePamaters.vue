@@ -7,12 +7,12 @@
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
           <span style="width:80px">参数名:</span>
-          <el-input style="width:calc(100% - 80px)" v-model="paramName1"></el-input>
+          <el-input size="small" style="width:calc(100% - 120px)" v-model="paramName1"></el-input>
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
-          <el-table size="small" :data="tableData1" height="220" highlight-current-row @selection-change="tableChooseChange1" border
+          <el-table ref="table1" size="small" :data="tableData1" height="220" highlight-current-row @current-change="tableChooseChange1" border
             style="width: 100%">
-            <el-table-column type="selection" width="55">
+            <el-table-column type="index" width="55">
             </el-table-column>
             <el-table-column prop="TAGMC" label="参数">
             </el-table-column>
@@ -25,11 +25,12 @@
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
           <span style="width:80px">参数名:</span>
-          <el-input style="width:calc(100% - 80px)" v-model="paramName2"></el-input>
+          <el-input size="small" style="width:calc(100% - 120px)" v-model="paramName2"></el-input>
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
-          <el-table :data="tableData2" height="220" highlight-current-row @selection-change="tableChooseChange2" border style="width: 100%">
-            <el-table-column type="selection" width="55">
+          <el-table ref="table2" :data="tableData2" height="220" highlight-current-row @current-change="tableChooseChange2" border
+            style="width: 100%">
+            <el-table-column type="index" width="55">
             </el-table-column>
             <el-table-column prop="TAGMC" label="参数">
             </el-table-column>
@@ -86,14 +87,15 @@ export default class choosePamaters extends ComponentBase {
   // ********************************************************************************
   mounted() {}
   // ************************************************************
-  private tableChooseChange1(params: any[]) {
-    this.updateValue_firstChooseParams(params)
+  private tableChooseChange1(param: any) {
+    window.console.log('tableChooseChange1:', param)
+    this.updateValue_firstChooseParams([param])
   }
-  private tableChooseChange2(params: any[]) {
-    this.updateValue_secondChooseParams(params)
+  private tableChooseChange2(param: any) {
+    window.console.log('tableChooseChange2:', param)
+    this.updateValue_secondChooseParams([param])
   }
   // ************************************************************
-
   public async setFlowmeter(flowmeter1: any, flowmeter2: any) {
     this.flowmeter1 = flowmeter1
     this.flowmeter2 = flowmeter2
@@ -101,8 +103,15 @@ export default class choosePamaters extends ComponentBase {
     this.allParams2 = await getFlowmeterParams(flowmeter2.JLBID, null)
   }
   public async setCurrentParams(firstParams: any[], secondParams: any[]) {
-    this.updateValue_firstChooseParams(firstParams)
-    this.updateValue_secondChooseParams(secondParams)
+    window.console.log('setCurrentParams:', firstParams, secondParams)
+    if (firstParams) {
+      let param = this.allParams1.find((o) => o.id === firstParams[0].id)
+      ;(this.$refs.table1 as any).setCurrentRow(param)
+    }
+    if (secondParams) {
+      let param = this.allParams2.find((o) => o.id === secondParams[0].id)
+      ;(this.$refs.table2 as any).setCurrentRow(param)
+    }
   }
 }
 </script>

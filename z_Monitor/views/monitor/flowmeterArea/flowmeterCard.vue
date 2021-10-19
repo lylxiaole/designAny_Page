@@ -94,7 +94,7 @@ export default class flowmeterCard extends ComponentBase {
   }
   private async openFlowmeterCompare() {
     //TODO 选择计量表参数
-    this.$router.push({ path: '/flowmeterCompare', query: { code: this.cardInfo.code } })
+    this.$router.push({ path: '/flowmeterCompare', query: { id: this.cardInfo.id } })
   }
 }
 </script>

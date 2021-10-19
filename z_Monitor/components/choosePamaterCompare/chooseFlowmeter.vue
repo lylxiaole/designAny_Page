@@ -87,6 +87,7 @@ export default class chooseFlowmeter extends ComponentBase {
     this.updateValue_secondFlowmeter(data)
   }
   private async onCancelChooseFlometer2() {}
+  // ************************************************************
 }
 </script>
 <style lang="less" scoped>
