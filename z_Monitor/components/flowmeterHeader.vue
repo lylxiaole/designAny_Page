@@ -1,23 +1,32 @@
 <template>
   <el-row class="verticalAlignCenter">
-    <el-col :style="{width:chooseBtnWidth+'px'}" class="verticalAlignCenter flexHorilanLayout" v-if="showChooseBtn">
+    <el-col :style="{ width: chooseBtnWidth + 'px' }" class="verticalAlignCenter flexHorilanLayout" v-if="showChooseBtn">
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
-    <el-col :style="{width:middleWith}" class="verticalAlignCenter" style="position:relative">
-      <span class="label">位号:&nbsp;{{flowmeterDetail?flowmeterDetail.WEIHAO:''}}</span>
-      <span class="label">投用状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.tyztms||flowmeterDetail.TYZTMS):''}}</span>
-      <span class="label">厂家:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBCJMC:''}}</span>
-      <span class="label">区域:&nbsp;{{flowmeterDetail?flowmeterDetail.QYMC:''}}</span>
-      <span class="label">计量表:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBMC:''}}</span>
-      <span class="label">类型:&nbsp;{{flowmeterDetail?flowmeterDetail.JLBLXMC:''}}</span>
-      <span class="label">状态:&nbsp;{{flowmeterDetail?(flowmeterDetail.zxztms||flowmeterDetail.ZXZTMS):''}}</span>
+    <el-col :style="{ width: middleWith }" class="verticalAlignCenter" style="position: relative">
+      <span class="label">位号：&nbsp;{{ flowmeterDetail ? flowmeterDetail.WEIHAO : "" }}</span>
+      <span class="label">投用状态：&nbsp;{{
+          flowmeterDetail
+            ? flowmeterDetail.tyztms || flowmeterDetail.TYZTMS
+            : ""
+        }}</span>
+      <span class="label">厂家：&nbsp;{{ flowmeterDetail ? flowmeterDetail.JLBCJMC : "" }}</span>
+      <span class="label">区域：&nbsp;{{ flowmeterDetail ? flowmeterDetail.QYMC : "" }}</span>
+      <span class="label">计量表：&nbsp;{{ flowmeterDetail ? flowmeterDetail.JLBMC : "" }}</span>
+      <span class="label">类型：&nbsp;{{ flowmeterDetail ? flowmeterDetail.JLBLXMC : "" }}</span>
+      <span class="label">状态：&nbsp;{{
+          flowmeterDetail
+            ? flowmeterDetail.zxztms || flowmeterDetail.ZXZTMS
+            : ""
+        }}</span>
+      <el-image style="width: 25px; height: 25px;margin-left:20px" :src="imgUrl" fit="fill"></el-image>
     </el-col>
-    <el-col :style="{width:leaderBtnWidth+'px'}">
+    <el-col :style="{ width: leaderBtnWidth + 'px' }">
       <el-row class="verticalAlignCenter flexHorilanLayout">
-        <el-button class="button" size="mini" v-if="showBtns.indexOf('detail')>-1" @click="openFlowmeterInfo">查看流量计信息</el-button>
-        <el-button class="button" size="mini" v-if="showBtns.indexOf('alarm')>-1" @click="openAlarmInfo">查看流量计报警</el-button>
-        <el-button class="button" size="mini" v-if="showBtns.indexOf('history')>-1" @click="openFlowmeterHis">查看流量计历史</el-button>
+        <el-button class="button" size="mini" v-if="showBtns.indexOf('detail') > -1" @click="openFlowmeterInfo">查看流量计信息</el-button>
+        <el-button class="button" size="mini" v-if="showBtns.indexOf('alarm') > -1" @click="openAlarmInfo">查看流量计报警</el-button>
+        <el-button class="button" size="mini" v-if="showBtns.indexOf('history') > -1" @click="openFlowmeterHis">查看流量计历史</el-button>
       </el-row>
     </el-col>
   </el-row>
@@ -33,6 +42,14 @@ import chooseFlowmeter from './chooseFlowmeter/index.vue'
 import { watch } from 'fs'
 // *****************************************************************
 /*** */
+var zcIcon = require('../assets/areaMap/zc.png')
+var xxIcon = require('../assets/areaMap/xx.png')
+var wscIcon = require('../assets/areaMap/wsc.png')
+var txsbIcon = require('../assets/areaMap/txsb.png')
+var jztxIcon = require('../assets/areaMap/jztx.png')
+var gzIcon = require('../assets/areaMap/gz.png')
+var csjwcIcon = require('../assets/areaMap/csjwc.png')
+var cjycIcon = require('../assets/areaMap/cjyc.png')
 @Component({
   components: {
     chooseFlowmeter
@@ -45,7 +62,6 @@ export default class flowmeterHeader extends ComponentBase {
     }
   })
   private showChooseBtn: boolean
-
   @Prop({
     default: () => {
       return []
@@ -79,6 +95,38 @@ export default class flowmeterHeader extends ComponentBase {
   private get middleWith(): string {
     return `calc(100% - ${this.chooseBtnWidth + this.leaderBtnWidth}px)`
   }
+
+  private get imgUrl() {
+    if (!this.flowmeterDetail) {
+      return '../assets/areaMap/zc.png'
+    }
+    switch (this.flowmeterDetail.ZXZT) {
+      case '0':
+        return zcIcon
+        break
+      case '1':
+        return xxIcon
+        break
+      case '2':
+        return gzIcon
+        break
+      case '3':
+        return cjycIcon
+        break
+      case '4':
+        return csjwcIcon
+        break
+      case '5':
+        return jztxIcon
+        break
+      case '6':
+        return txsbIcon
+        break
+      case '8':
+        return wscIcon
+        break
+    }
+  }
   // ********************************************************************************
   mounted() {}
   // ******************choose flowmeter**************************************************************
@@ -97,7 +145,10 @@ export default class flowmeterHeader extends ComponentBase {
   private async openAlarmInfo() {
     let flowmeterId = this.flowmeterDetail ? this.flowmeterDetail.JLBID : null
     if (flowmeterId) {
-      this.$router.push({ path: '/flowmeterAlarm', query: { id: flowmeterId } })
+      this.$router.push({
+        path: '/flowmeterAlarm',
+        query: { id: flowmeterId }
+      })
     } else {
       this.$router.push({ path: '/flowmeterAlarm' })
     }
