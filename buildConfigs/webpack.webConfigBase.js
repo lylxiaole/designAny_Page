@@ -28,29 +28,30 @@ let baseconfig = {
   module: {
     rules: [
       {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        //
         // 命中 JavaScript 文件
         test: /\.(js|ts|jsx|tsx)$/,
         // 用 babel-loader 转换 JavaScript 文件
         // ?cacheDirectory 表示传给 babel-loader 的参数，用于缓存 babel 编译结果加快重新编译速度
-        use: {
-          loader: 'babel-loader',
-          options: {
-            plugins: ['@babel/plugin-syntax-top-level-await']
-          }
-        },
-        // 只命中src目录里的js文件，加快 Webpack 搜索速度
+        loader: 'babel-loader',
         include: currentDir,
-        exclude: /node_modules/
-      },
-      {
-        //vue ts文件需要
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
+        exclude: /node_modules/,
         options: {
-          appendTsSuffixTo: [/\.vue$/]
-        },
-        include: currentDir,
-        exclude: /node_modules/
+          plugins: ['@babel/plugin-syntax-top-level-await'],
+          presets: [
+            '@babel/preset-env',
+            [
+              '@babel/preset-typescript', // 引用Typescript插件
+              {
+                allExtensions: true // ?支持所有文件扩展名
+              }
+            ]
+          ]
+        }
       },
       {
         test: /\.(js|ts)$/,
@@ -170,10 +171,6 @@ let baseconfig = {
             esModule: false
           }
         }
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
       }
     ]
   },
@@ -228,10 +225,10 @@ let baseconfig = {
       }
     }),
 
-    new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env)
-    })
+    new VueLoaderPlugin()
+    // new webpack.DefinePlugin({
+    //   'process.env': JSON.stringify(process.env)
+    // })
   ],
 
   resolve: {

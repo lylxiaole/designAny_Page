@@ -1,29 +1,31 @@
 <template>
   <div>
-    <el-card style="height:100%;width:100%" class="box-card">
-      <el-row class="row">
-        <el-col :span="16">
-          <span>数采点:{{cardInfo.BJDZ}}</span>
-        </el-col>
-        <el-col :span="8">
-          <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">数据值:{{cardInfo.PHDVALUE}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">可信度:{{cardInfo.CONFIDENCE}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">数采时间:{{cardInfo.PHDTIME}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">报警信息:{{cardInfo.CWXXZW}}</el-col>
-      </el-row>
-      <el-row class="row">
-        <el-col :span="24">处理建议:{{cardInfo.CLJY}}</el-col>
-      </el-row>
+    <el-card style="height:100%;width:100%;" class="box-card maincontainer">
+      <div class="">
+        <el-row class="row">
+          <el-col :span="16" class="verticalAlignCenter">
+            <span>数采点:{{cardInfo.BJDZ}}</span>
+          </el-col>
+          <el-col :span="8" class="verticalAlignCenter flexHorilanLayout">
+            <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button>
+          </el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24" class="verticalAlignCenter">数据值:{{cardInfo.PHDVALUE}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24" class="verticalAlignCenter">可信度:{{cardInfo.CONFIDENCE}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24" class="verticalAlignCenter">数采时间:{{cardInfo.PHDTIME}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24" class="verticalAlignCenter">报警信息:{{cardInfo.CWXXZW}}</el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="24" class="verticalAlignCenter">处理建议:{{cardInfo.CLJY}}</el-col>
+        </el-row>
+      </div>
     </el-card>
   </div>
 </template>
@@ -66,6 +68,16 @@ export default class alarmCard extends ComponentBase {
 </script>
 <style lang="less" scoped>
 .row {
-  margin: 12px 0px;
+  margin: 6px 0px;
+}
+.maincontainer {
+  background: #fff2f2;
+  border: 1px solid #e35050;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  /deep/ .el-card__body {
+    padding: 10px !important;
+  }
 }
 </style>

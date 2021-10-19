@@ -61,7 +61,7 @@ export default class flowmeterChooseModal extends ComponentBase {
   mounted() {}
   // ********************************************************************************
   private async nextStep() {
-    ;(this.$refs.choosePamatersRef as choosePamaters).setFlowmeter(this.firstFlowmeter, this.secondFlowmeter)
+    ;(this.$refs.choosePamatersRef as any).setFlowmeter(this.firstFlowmeter, this.secondFlowmeter)
     this.step = 2
   }
   private async preStep() {
@@ -82,7 +82,7 @@ export default class flowmeterChooseModal extends ComponentBase {
   }
   public async showChooseParams(firstFlowmeter: any, firstParams: any, secondFlowmeter: any, secondParams: any) {
     this.step = 2
-    ;(this.$refs.choosePamatersRef as choosePamaters).setFlowmeter(firstFlowmeter.JLBID, secondFlowmeter.JLBID)
+    ;(this.$refs.choosePamatersRef as any).setFlowmeter(firstFlowmeter, secondFlowmeter)
     this.dialogVisible = true
   }
   // ************************************************************

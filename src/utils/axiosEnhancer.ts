@@ -40,7 +40,7 @@ const axiosInstance = _axios.create({
     Accept: 'application/json'
   },
   responseType: 'json',
-  timeout: 12000, // 超时时间.毫秒
+  timeout: 60000, // 超时时间.毫秒
   withCredentials: false // 跨域请求,是否携带cookie
 })
 /**

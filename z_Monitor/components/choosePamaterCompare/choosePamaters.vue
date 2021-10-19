@@ -10,7 +10,8 @@
           <el-input style="width:calc(100% - 80px)" v-model="paramName1"></el-input>
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
-          <el-table :data="tableData1" height="220" highlight-current-row @selection-change="tableChooseChange1" border style="width: 100%">
+          <el-table size="small" :data="tableData1" height="220" highlight-current-row @selection-change="tableChooseChange1" border
+            style="width: 100%">
             <el-table-column type="selection" width="55">
             </el-table-column>
             <el-table-column prop="TAGMC" label="参数">

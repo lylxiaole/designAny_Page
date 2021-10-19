@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-card class="box-card">
+  <div style="box-sizing:border-box;" :style="{'border-left-style': 'solid','border-left-width': '5px','border-left-color':borderColor}">
+    <el-card class="box-card" style="height:100%">
       <el-row class="row">
         <el-col :span="12">位号:{{cardInfo.code}}</el-col>
         <el-col :span="12">状态:{{cardInfo.state}}</el-col>
@@ -45,23 +45,37 @@ export default class flowmeterCard extends ComponentBase {
   })
   cardInfo: any
 
-  public get backgroundColor(): string {
+  public get borderColor(): string {
     if (!this.cardInfo) {
-      return ''
+      return '#29CC40'
     }
-
+    // 0 绿色为正常；1 橙色为有信息提醒；2 红色为有故障；
+    //          3 深蓝色为数采错误；4 紫色为数据以前的，长时间未数采。
+    //          6 通讯失败，用橙色
     switch (this.cardInfo.status) {
       case '0':
+        return '#29CC40'
         break
       case '1':
+        return '#6E87FF'
         break
       case '2':
+        return '#FF5959'
         break
       case '3':
+        return '#C50B0B'
         break
       case '4':
+        return '#000000'
+        break
+      case '5':
+        return '#ED5F00'
+        break
+      case '6':
+        return '#ED0F5D'
         break
       default:
+        return '#DBAE03'
         break
     }
   }
@@ -89,7 +103,8 @@ export default class flowmeterCard extends ComponentBase {
   margin: 12px 0px;
 }
 .button {
-  padding: 7px 8px;
+  box-sizing: border-box;
+  padding: 7px 4px;
 }
 
 /deep/ .el-card > .el-card__body {

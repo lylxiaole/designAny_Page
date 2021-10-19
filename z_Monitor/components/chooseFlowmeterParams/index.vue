@@ -13,7 +13,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table :data="tableData" height="250" highlight-current-row @selection-change="tableChooseChange" border style="width: 100%">
+      <el-table size="small" :data="tableData" height="250" highlight-current-row @selection-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="TAGMC" label="参数">

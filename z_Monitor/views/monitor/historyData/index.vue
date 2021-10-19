@@ -73,10 +73,10 @@ export default class Index extends PageBase {
   private async clearChildrenData() {}
 
   private async onSelectParams(params: any[]) {
-    ;(this.$refs.dataCompare as dataCompare).setParams(params)
+    ;(this.$refs.dataCompare as any).setParams(params)
   }
   private async onSelectChartData(data: any) {
-    ;(this.$refs.dataCompare as dataCompare).setData(data)
+    ;(this.$refs.dataCompare as any).setData(data)
   }
 }
 </script>

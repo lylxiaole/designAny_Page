@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div style="box-sizing:border-box;height:100%;width:100%;padding:8px 8px 18px 8px">
     <el-row style="height:50px;position:relative">
       <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime" />
       <el-button style="float:left;margin-left:16px" @click="loadData">查询</el-button>
     </el-row>
     <el-row style="height:calc(100% - 50px)">
-      <el-table :data="historyData" size="small" border>
-        <el-table-column prop="TAGMC" label="数据采名称" width="180">
+      <el-table :data="historyData" size="small" border height="100%">
+        <el-table-column prop="TAGMC" label="数据采名称">
         </el-table-column>
-        <el-table-column prop="ZTMS" label="状态" width="180">
+        <el-table-column prop="ZTMS" label="状态">
         </el-table-column>
-        <el-table-column prop="CWXXZW" label="报警信息" width="180">
+        <el-table-column prop="CWXXZW" label="报警信息">
         </el-table-column>
-        <el-table-column prop="PHDVALUE" label="实际数值" width="180">
+        <el-table-column prop="PHDVALUE" label="实际数值">
         </el-table-column>
         <el-table-column prop="CONFIDENCE" label="可信度">
         </el-table-column>

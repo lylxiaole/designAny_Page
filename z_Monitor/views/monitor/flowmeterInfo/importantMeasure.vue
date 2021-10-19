@@ -152,6 +152,25 @@ export default class importantMeasure extends ComponentBase {
           name: '值',
           type: 'line',
           smooth: true,
+          itemStyle: {
+            normal: {
+              lineStyle: {
+                color: 'rgba(0, 255, 240, 1)'
+              }
+            }
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgba(98, 227, 255, 1)'
+              },
+              {
+                offset: 1,
+                color: 'rgba(98, 227, 255, 0)'
+              }
+            ])
+          },
           symbol: 'none',
           sampling: 'lttb',
           data: this.wenduOption.datas
@@ -203,6 +222,25 @@ export default class importantMeasure extends ComponentBase {
           name: '值',
           type: 'line',
           smooth: true,
+          itemStyle: {
+            normal: {
+              lineStyle: {
+                color: 'rgba(0, 255, 240, 1)'
+              }
+            }
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgba(98, 227, 255, 1)'
+              },
+              {
+                offset: 1,
+                color: 'rgba(98, 227, 255, 0)'
+              }
+            ])
+          },
           symbol: 'none',
           sampling: 'lttb',
           data: this.miduOption.datas
@@ -254,6 +292,25 @@ export default class importantMeasure extends ComponentBase {
           name: '值',
           type: 'line',
           smooth: true,
+          itemStyle: {
+            normal: {
+              lineStyle: {
+                color: 'rgba(0, 255, 240, 1)'
+              }
+            }
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgba(98, 227, 255, 1)'
+              },
+              {
+                offset: 1,
+                color: 'rgba(98, 227, 255, 0)'
+              }
+            ])
+          },
           symbol: 'none',
           sampling: 'lttb',
           data: this.shunjianOption.datas
@@ -305,6 +362,25 @@ export default class importantMeasure extends ComponentBase {
           name: '值',
           type: 'line',
           smooth: true,
+          itemStyle: {
+            normal: {
+              lineStyle: {
+                color: 'rgba(0, 255, 240, 1)'
+              }
+            }
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgba(98, 227, 255, 1)'
+              },
+              {
+                offset: 1,
+                color: 'rgba(98, 227, 255, 0)'
+              }
+            ])
+          },
           symbol: 'none',
           sampling: 'lttb',
           data: this.leijiOption.datas

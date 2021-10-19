@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card" :style="{'background-color':backgroundColor}">
     <div style="height:100%;width:100%">
       <el-row class="inforow">
         <span style="font-size:22px;">{{cardInfo.areaName}}</span>
@@ -49,10 +49,12 @@ import { jkzl, jlbjk } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import { Interface } from 'readline'
+import { get } from 'xe-utils'
 // *****************************************************************
 export interface cardInfo {
   areaId: string
   areaName: string
+  status: string //状态
   totalCount: number //总数
   normalCount: number //正常数量
   normalRate: string //正常率
@@ -73,6 +75,7 @@ export default class areaCard extends ComponentBase {
       return {
         areaId: '1',
         areaName: '油品作业区',
+        status: '0',
         totalCount: 12, //总数
         normalCount: 13, //正常数量
         normalRate: '30%', //正常率
@@ -86,6 +89,39 @@ export default class areaCard extends ComponentBase {
   })
   private cardInfo: cardInfo
 
+  get backgroundColor(): string {
+    if (!this.cardInfo) {
+      return ''
+    }
+
+    let dqzt = parseInt(this.cardInfo.status)
+    switch (dqzt) {
+      case 0:
+        return '#29CC40'
+        break
+      case 1:
+        return '#DBAE03'
+        break
+      case 2:
+        return '#C50B0B'
+        break
+      case 3:
+        return '#DBAE03'
+        break
+      case 4:
+        return '#DBAE03'
+        break
+      case 5:
+        return '#DBAE03'
+        break
+      case 6:
+        return '#DBAE03'
+        break
+      default:
+        return '#29CC40'
+        break
+    }
+  }
   // ********************************************************************************
   mounted() {}
   // *************** *********************************************

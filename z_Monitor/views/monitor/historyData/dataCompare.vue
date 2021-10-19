@@ -76,6 +76,7 @@ export default class dataCompare extends ComponentBase {
     this.data = [];
   }
   private startCompare() {
+<<<<<<< HEAD
     if (this.seletRows.length != 2) {
       this.$message.warning("请选择两行要对比的数据！");
       return;
