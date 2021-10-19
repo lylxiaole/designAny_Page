@@ -3,10 +3,11 @@
     <el-row style="height: 50px; position: relative" class="verticalAlignCenter">
       <dateRangePicker style="width: 550px; float: left" :startTime.sync="startTime" :endTime.sync="endTime" type="datetimerange"></dateRangePicker>
       <span style="float: left">或前:</span>
-      <el-input-number v-model="beforeDays" style="float: left; width: 100px" controls-position="right" :min="0" :step="1"></el-input-number>
+      <el-input-number size="small" v-model="beforeDays" style="float: left; width: 100px" controls-position="right" :min="0" :step="1">
+      </el-input-number>
       <span style="float: left">天</span>
-      <el-button type="primary" style="float: left; margin-left: 16px" @click="refreshData">刷新数据</el-button>
-      <el-button type="primary" style="float: left" @click="chooseParams" size="small">重新选择参数</el-button>
+      <el-button size="small" type="primary" style="float: left; margin-left: 16px" @click="refreshData">刷新数据</el-button>
+      <el-button size="small" type="primary" style="float: left" @click="chooseParams">重新选择参数</el-button>
       <chooseFlowmeterParams @onSure="onChooseParams" @onCancel="onCancelChooseParams" ref="paramDialog" />
     </el-row>
     <el-row style="height: calc(100% - 50px)">
@@ -60,7 +61,9 @@ export default class historyInfo extends ComponentBase {
 
   private params: any[] = []
   private currentChart: any = null
-  private startTime: any = new Date()
+  private startTime: any = moment(new Date())
+    .subtract(5, 'days')
+    .toDate()
   private endTime: any = new Date()
   private beforeDays: number = 0
   // ********************************************************************************

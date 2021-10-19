@@ -54,7 +54,9 @@ export default class alarmHistory extends ComponentBase {
   //
   mounted() {}
   // **************************************************************
-  private startTime: any = new Date()
+  private startTime: any = moment(new Date())
+    .subtract(5, 'days')
+    .toDate()
   private endTime: any = new Date()
   // ************************************************************
   private historyData: any[] = []

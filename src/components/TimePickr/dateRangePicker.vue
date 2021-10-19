@@ -37,7 +37,7 @@ export default class index extends ComponentBase {
   private startTime: any
   @Emit('update:startTime')
   private updateStartTime_inner(val: any) {}
-  @Watch('startTime')
+  @Watch('startTime', { deep: true, immediate: true })
   private watchStartTimeChange(val: any) {
     this.startTimeInner = val
   }

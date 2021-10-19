@@ -5,17 +5,17 @@
       <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
     <el-col :style="{ width: middleWith }" class="verticalAlignCenter" style="position: relative">
-      <span class="label">位号：&nbsp;{{ flowmeterDetail ? flowmeterDetail.WEIHAO : "" }}</span>
-      <span class="label">投用状态：&nbsp;{{
+      <span class="label">位号：{{ flowmeterDetail ? flowmeterDetail.WEIHAO : "" }}</span>
+      <span class="label">投用状态：{{
           flowmeterDetail
             ? flowmeterDetail.tyztms || flowmeterDetail.TYZTMS
             : ""
         }}</span>
-      <span class="label">厂家：&nbsp;{{ flowmeterDetail ? flowmeterDetail.JLBCJMC : "" }}</span>
-      <span class="label">区域：&nbsp;{{ flowmeterDetail ? flowmeterDetail.QYMC : "" }}</span>
-      <span class="label">计量表：&nbsp;{{ flowmeterDetail ? flowmeterDetail.JLBMC : "" }}</span>
-      <span class="label">类型：&nbsp;{{ flowmeterDetail ? flowmeterDetail.JLBLXMC : "" }}</span>
-      <span class="label">状态：&nbsp;{{
+      <span class="label">厂家：{{ flowmeterDetail ? flowmeterDetail.JLBCJMC : "" }}</span>
+      <span class="label">区域：{{ flowmeterDetail ? flowmeterDetail.QYMC : "" }}</span>
+      <span class="label">计量表：{{ flowmeterDetail ? flowmeterDetail.JLBMC : "" }}</span>
+      <span class="label">类型：{{ flowmeterDetail ? flowmeterDetail.JLBLXMC : "" }}</span>
+      <span class="label">状态：{{
           flowmeterDetail
             ? flowmeterDetail.zxztms || flowmeterDetail.ZXZTMS
             : ""
@@ -173,7 +173,8 @@ export default class flowmeterHeader extends ComponentBase {
 </script>
 <style lang="less" scoped>
 .label {
-  margin-left: 15px;
+  margin-left: 12px;
+  font-size: 14px;
   float: left;
 }
 </style>
