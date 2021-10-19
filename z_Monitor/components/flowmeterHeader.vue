@@ -4,7 +4,7 @@
       <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
-    <el-col :style="{ width: middleWith }" class="verticalAlignCenter" style="position: relative">
+    <el-col :style="{ width: middleWith }" style="position: relative">
       <span class="label">位号：{{ flowmeterDetail ? flowmeterDetail.WEIHAO : "" }}</span>
       <span class="label">投用状态：{{
           flowmeterDetail
@@ -20,7 +20,7 @@
             ? flowmeterDetail.zxztms || flowmeterDetail.ZXZTMS
             : ""
         }}</span>
-      <el-image style="width: 25px; height: 25px;margin-left:20px" :src="imgUrl" fit="fill"></el-image>
+      <el-image style="width: 16px; height: 16px;margin-left:20px" :src="imgUrl" fit="contain"></el-image>
     </el-col>
     <el-col :style="{ width: leaderBtnWidth + 'px' }">
       <el-row class="verticalAlignCenter flexHorilanLayout">

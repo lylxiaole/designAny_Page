@@ -28,7 +28,7 @@
           <el-input size="small" style="width:calc(100% - 120px)" v-model="paramName2"></el-input>
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
-          <el-table ref="table2" :data="tableData2" height="220" highlight-current-row @current-change="tableChooseChange2" border
+          <el-table ref="table2" size="small" :data="tableData2" height="220" highlight-current-row @current-change="tableChooseChange2" border
             style="width: 100%">
             <el-table-column type="index" width="55">
             </el-table-column>

@@ -1,25 +1,25 @@
 <template>
   <div class="pageView" style="height:100%;width:100%">
     <el-row style="height:50px" class="showblock verticalAlignCenter">
-      <el-col :span="4">
+      <el-col style="width:129px;height:100%;padding-left:8px" class="verticalAlignCenter">
         <el-button class="button" size="mini" @click="chooseFlowmeter">选择流量计</el-button>
         <flowmeterChooseModal ref="flowmeterChooseModal" @onSure="onChooseParams" @onCancel="onCancelChooseParams" />
       </el-col>
-      <el-col :span="9">
+      <el-col style="width:calc(50% - 65px);height:100%">
         <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="firstFlowmeter" style="width:100%;height:100%" />
       </el-col>
-      <el-col :span="1" style="height:100%;padding:3px 0px" class="flexHorilanLayout">
+      <el-col style="height:100%;padding:3px 0px;width:1px" class="flexHorilanLayout">
         <div style="height:100%;width:1px;border-left:1px solid #000"></div>
       </el-col>
-      <el-col :span="10">
+      <el-col style="width:calc(50% - 65px);height:100%">
         <flowmeterHeader :showChooseBtn="false" :flowmeterDetail.sync="secondFlowmeter" style="width:100%;height:100%" />
       </el-col>
     </el-row>
     <!-- ********************************************************************* -->
-    <el-row style="height:60px;position:relative" class="verticalAlignCenter showblock">
+    <el-row style="height:60px;position:relative;padding-left:10px" class="verticalAlignCenter showblock">
       <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime"></dateRangePicker>
       <span style="float:left">或前:</span>
-      <el-input-number style="float:left" v-model="beforeDays" controls-position="right" :min="0"></el-input-number>
+      <el-input-number size="small" style="float:left" v-model="beforeDays" controls-position="right" :min="0"></el-input-number>
       <span style="float:left">天</span>
       <el-button type="primary" size="small" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
       <el-button type="primary" size="small" style="float:left" @click="chooseParams">重新选择参数</el-button>
@@ -122,7 +122,9 @@ export default class Index extends PageBase {
   private firstChart: any = null
   private secondChart: any = null
 
-  private startTime: any = new Date()
+  private startTime: any = moment(new Date())
+    .subtract(5, 'days')
+    .toDate()
   private endTime: any = new Date()
   private beforeDays: number = 0
 
