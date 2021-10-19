@@ -21,8 +21,8 @@
       <span style="float:left">或前:</span>
       <el-input-number style="float:left" v-model="beforeDays" controls-position="right" :min="0"></el-input-number>
       <span style="float:left">天</span>
-      <el-button type="primary" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
-      <el-button type="primary" style="float:left" @click="chooseParams">重新选择参数</el-button>
+      <el-button type="primary" size="small" style="float:left;margin-left:16px" @click="refreshData">刷新数据</el-button>
+      <el-button type="primary" size="small" style="float:left" @click="chooseParams">重新选择参数</el-button>
     </el-row>
     <!-- ********************************************************************* -->
     <el-row style="height:calc(50% - 60px)" class="showblock">

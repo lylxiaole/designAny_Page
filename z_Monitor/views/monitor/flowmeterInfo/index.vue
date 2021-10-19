@@ -9,7 +9,9 @@
         <importantMeasure ref="importantMeasure" />
       </el-col>
       <!-- ************************************************* -->
-      <el-col class="showblock" desc="仪表状态" style="width:240px;height:100%"></el-col>
+      <el-col class="showblock" desc="仪表状态" style="width:240px;height:100%">
+        <img style="width:100%;height:100%" :src="flowmeterStateIcon" />
+      </el-col>
       <!-- ************************************************* -->
       <el-col class="showblock" style="width:480px;height:100%;padding:8px">
         <div v-if="!currentAlrams||currentAlrams.length<1" style="height:100%;width:100%;" class="verticalAlignCenter flexHorilanLayout">
@@ -78,6 +80,9 @@ import { Route } from 'vue-router'
 import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 import importantMeasure from './importantMeasure.vue'
 import alarmCard from './alarmCard.vue'
+
+var flowmeterNormalImg = require('../../../assets/flowmeterImg/flowmeterNormal.gif')
+var flowmeterNotmalImg = require('../../../assets/flowmeterImg/flowmeterNotmal.gif')
 // *****************************************************************
 /***流量计信息 */
 @Component({
@@ -93,20 +98,20 @@ export default class Index extends PageBase {
   private flowmeterDetail: any = null
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
-    // window.console.log('watchFlowmeterDetailChange:', data)
+    window.console.log('watchFlowmeterDetailChange:', data)
     this.flowmeterId = data.JLBID
     //清数据
     this.clearChildrenData()
     //查数据
     this.refreshChildrenData()
   }
-
   private get currentImportantMeasure(): importantMeasure {
     return this.$refs.importantMeasure as any
   }
 
+  private flowmeterStateIcon: any = null
+
   mounted() {
-    window.console.log('flowmeterInfo:', this.$route.query)
     if (this.$route.query.id) {
       this.flowmeterId = this.$route.query.id as any
       this.initData()
@@ -148,7 +153,12 @@ export default class Index extends PageBase {
     //仪表系数
     this.instrumentCoefficient = this.cuteResToTable(res.coefficientTagInfo)
     //TODO仪表状态图
-
+    let directInfo = res.coefficientTagInfo.find((o) => o.tagCode.indexOf('DIRECT') > -1)
+    if (directInfo.tagVal === '0') {
+      this.flowmeterStateIcon = flowmeterNormalImg
+    } else {
+      this.flowmeterStateIcon = flowmeterNotmalImg
+    }
     //TODO报警卡片
     this.currentAlrams = res.warnTagInfo
   }

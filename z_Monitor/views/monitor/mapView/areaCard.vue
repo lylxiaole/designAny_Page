@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card" :style="{'background-color':backgroundColor}">
+  <el-card class="box-card" :style="{'border-left-style': 'solid','border-left-width': '5px','border-left-color':borderColor}">
     <div style="height:100%;width:100%">
       <el-row class="inforow">
         <span style="font-size:22px;">{{cardInfo.areaName}}</span>
@@ -89,7 +89,7 @@ export default class areaCard extends ComponentBase {
   })
   private cardInfo: cardInfo
 
-  get backgroundColor(): string {
+  get borderColor(): string {
     if (!this.cardInfo) {
       return ''
     }
