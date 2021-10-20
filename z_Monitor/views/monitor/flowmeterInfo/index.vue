@@ -29,7 +29,9 @@
       <!-- ************************************************* -->
       <el-col style="height: 100%; width: calc(50% - 16px)" class="showblock">
         <el-row desc="关键测量" style="height: 50%">
-          <div style="height:32px" class="verticalAlignCenter tabletitle">关键测量</div>
+          <div style="height:32px" class="verticalAlignCenter tabletitle">
+            <div></div>关键测量
+          </div>
           <el-table size="small" :data="keyMeasurementPoint" border height="calc(100% - 32px)" style="width: 100%">
             <el-table-column prop="point" label="数据采集点"> </el-table-column>
             <el-table-column prop="value" label="实时数值"> </el-table-column>
@@ -40,7 +42,9 @@
         </el-row>
         <!-- ************************************************* -->
         <el-row desc="仪表状态" style="height: 50%">
-          <div style="height:32px" class="verticalAlignCenter tabletitle">仪表状态</div>
+          <div style="height:32px" class="verticalAlignCenter tabletitle">
+            <div></div>仪表状态
+          </div>
           <el-table :data="deviceStatus" border size="small" height="calc(100% - 60px)" style="width: 100%">
             <el-table-column prop="point" label="数据采集点"> </el-table-column>
             <el-table-column prop="value" label="实时数值"> </el-table-column>
@@ -52,7 +56,9 @@
       </el-col>
       <!-- ************************************************* -->
       <el-col style="height: 100%; width: calc(50% - 16px)" class="showblock">
-        <div style="height:32px" class="verticalAlignCenter tabletitle">仪表系数</div>
+        <div style="height:32px; " class="verticalAlignCenter tabletitle">
+          <div></div>仪表系数
+        </div>
         <el-table size="small" :data="instrumentCoefficient" border height="calc(100% - 60px)" style="width: 100%">
           <el-table-column prop="point" label="数据采集点"> </el-table-column>
           <el-table-column prop="value" label="实时数值"> </el-table-column>
@@ -181,10 +187,14 @@ export default class Index extends PageBase {
 </script>
 <style lang="less" scoped>
 @import '../../../assets/monitorStyle.less';
+
 .tabletitle {
-  padding-left: 15px;
-  border-left-style: 'solid';
-  border-left-width: '5px' !important;
-  border-left-color: 'blue';
+  div {
+    box-sizing: border-box;
+    height: 70%;
+    width: 10px;
+    margin-left: 15px;
+    border-left: 5px solid #000;
+  }
 }
 </style>

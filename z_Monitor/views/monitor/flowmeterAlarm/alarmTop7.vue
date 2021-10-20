@@ -110,6 +110,7 @@ export default class alarmTop7 extends ComponentBase {
     } else {
       this.ishaveData = true
     }
+    await this.$nextTick()
     window.console.log('wranTop5:', wranTop5)
     this.option.radar.indicator = []
     this.option.series[0].data[0].value = []
