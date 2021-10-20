@@ -62,7 +62,7 @@ export default class historyInfo extends ComponentBase {
   private params: any[] = []
   private currentChart: any = null
   private startTime: any = moment(new Date())
-    .subtract(5, 'days')
+    .subtract(1, 'days')
     .toDate()
   private endTime: any = new Date()
   private beforeDays: number = 0
