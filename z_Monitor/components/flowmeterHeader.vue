@@ -20,7 +20,7 @@
             ? flowmeterDetail.zxztms || flowmeterDetail.ZXZTMS
             : ""
         }}</span>
-      <el-image style="width: 16px; height: 16px;margin-left:20px;margin-top:2px" :src="imgUrl" fit="contain"></el-image>
+      <el-image style="width: 16px; height: 16px;margin-left:20px;margin-top:2px;float:left" :src="imgUrl" fit="contain"></el-image>
     </el-col>
     <el-col :style="{ width: leaderBtnWidth + 'px' }">
       <el-row class="verticalAlignCenter flexHorilanLayout">

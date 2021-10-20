@@ -189,6 +189,7 @@ export default class Index extends PageBase {
     this.secondFlowmeter = secondFlowmeter
     this.secondParams = secondParams
     // window.console.log('onChooseParams:', firstFlowmeter, firstParams, secondFlowmeter, secondParams)
+    this.refreshData()
   }
   private onCancelChooseParams() {}
   // ************************************************************
