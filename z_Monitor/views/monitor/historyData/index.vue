@@ -1,14 +1,14 @@
 <template>
   <div class="pageView" style="height:100%;width:100%;padding:10px;box-sizing:border-box">
-    <el-row style="height:60px">
+    <el-row style="height:60px" class="showblock">
       <flowmeterHeader :showBtns="['detail','alarm']" :flowmeterDetail.sync=" flowmeterDetail" style="width:100%;height:100%" />
     </el-row>
-    <el-row style="height:calc(100% - 120px)">
+    <el-row style="height:calc(100% - 120px)" class="showblock">
       <el-col :span="18">
         <historyInfo :flowmeterId="flowmeterId" @onSelectParams="onSelectParams" @onSelectChartData="onSelectChartData" />
       </el-col>
       <!-- ************************************************************************* -->
-      <el-col :span="6">
+      <el-col :span="6" class="showblock">
         <dataCompare ref="dataCompare" />
       </el-col>
     </el-row>

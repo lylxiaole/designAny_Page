@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="流量计参数对比" :show-close="false" :visible.sync="dialogVisible" width="900px" :close-on-click-modal="false" destroy-on-close
+  <el-dialog title="流量计参数对比" :show-close="false" :visible.sync="dialogVisible" top="0px" width="900px" :close-on-click-modal="false" destroy-on-close
     append-to-body center>
     <div style="height:400px;width:100%">
       <!-- *********stepContent******************************* -->

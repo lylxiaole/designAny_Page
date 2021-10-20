@@ -1,6 +1,6 @@
 <template>
-  <el-dialog :show-close="false" title="选择流量计" :visible.sync="dialogVisible" width="700px" center :close-on-click-modal="false" destroy-on-close
-    append-to-body>
+  <el-dialog :show-close="false" title="选择流量计" :visible.sync="dialogVisible" top="0px" width="700px" center :close-on-click-modal="false"
+    destroy-on-close append-to-body>
     <div style="width:100%;height:300px">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="物理区域">
@@ -16,7 +16,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table size="small" :data="tableData" height="150" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
+      <el-table size="small" :data="tableData" height="200" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>
         <el-table-column prop="WEIHAO" label="位号" width="180">
