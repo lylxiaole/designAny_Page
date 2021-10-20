@@ -137,6 +137,9 @@ export default class Index extends PageBase {
   private currentAlrams: any[] = []
   // *****************************************************************
   private async refreshChildrenData() {
+    if (!this.flowmeterId) {
+      return
+    }
     var formData = new FormData()
     formData.append('action', 'getJlbTagInfoShow')
     formData.append('jlbid', this.flowmeterId)
