@@ -19,7 +19,7 @@
         </div>
         <el-carousel v-else :interval="4000" type="card" height="100%">
           <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
-            <alarmCard style="height: 100%" @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
+            <alarmCard style="height: 100%" :cardInfo="item" />
           </el-carousel-item>
         </el-carousel>
       </el-col>
@@ -132,7 +132,7 @@ export default class Index extends PageBase {
     formData.append('action', 'getJlbTagInfoShow')
     formData.append('jlbid', this.flowmeterId)
     let res = await jkzl(formData)
-    window.console.log('refreshChildrenData:', res)
+    // window.console.log('refreshChildrenData:', res)
     //重要测量
     await this.currentImportantMeasure.addOneData(res.tagInfo)
     //关键点测量
@@ -149,7 +149,14 @@ export default class Index extends PageBase {
       this.flowmeterStateIcon = flowmeterNotmalImg
     }
     //TODO报警卡片
-    this.currentAlrams = res.warnTagInfo
+    let currentAlrams = await getCurrentAlarm(this.flowmeterId)
+    window.console.log('currentAlrams:', currentAlrams)
+    if (!currentAlrams) {
+      currentAlrams = []
+    } else {
+      currentAlrams = res
+    }
+    this.currentAlrams = currentAlrams
   }
   private async clearChildrenData() {
     this.currentImportantMeasure.clearData()

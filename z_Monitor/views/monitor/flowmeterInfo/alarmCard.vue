@@ -1,19 +1,19 @@
 <template>
   <div>
-    <el-card style="height:100%;width:100%" class="box-card maincontainer">
+    <el-card style="height:100%;width:100%" class="box-card maincontainer" :style="containerStyle">
       <el-row class="row">
         <el-col :span="24">
-          数采点:{{cardInfo.tagAdds}}
+          数采点:{{cardInfo.BJDZ}}
         </el-col>
       </el-row>
       <el-row class="row">
-        <el-col :span="24">数据值:{{cardInfo.tagVal}}</el-col>
+        <el-col :span="24">数据值:{{cardInfo.PHDVALUE}}</el-col>
       </el-row>
       <el-row class="row">
-        <el-col :span="24">数采时间:{{cardInfo.updateTime}}</el-col>
+        <el-col :span="24">数采时间:{{cardInfo.PHDTIME}}</el-col>
       </el-row>
       <el-row class="row">
-        <el-col :span="24">报警信息:{{cardInfo.warnInfo}}</el-col>
+        <el-col :span="24">报警信息:{{cardInfo.CWXXZW}}</el-col>
       </el-row>
     </el-card>
   </div>
@@ -51,6 +51,14 @@ export default class alarmCard extends ComponentBase {
   //
   mounted() {}
 
+  get containerStyle(): any {
+    if (this.cardInfo && this.cardInfo.tagVal > 0) {
+      return { background: '#fff2f2', border: '1px solid #e35050' }
+    } else {
+      return { background: '#c1f397', border: '1px solid #29db50' }
+    }
+  }
+
   @Emit('onDealAlarm')
   private onDealAlarm(): any {}
 }
@@ -60,8 +68,6 @@ export default class alarmCard extends ComponentBase {
   margin: 12px 0px;
 }
 .maincontainer {
-  background: #fff2f2;
-  border: 1px solid #e35050;
   box-sizing: border-box;
   font-size: 14px;
 

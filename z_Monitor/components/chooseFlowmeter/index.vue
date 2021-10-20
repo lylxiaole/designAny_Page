@@ -4,7 +4,7 @@
     <div style="width:100%;height:400px">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="物理区域">
-          <el-select size="small" v-model="searchInfo.areaId" placeholder="物理区域">
+          <el-select @change="onAreaChanged" size="small" v-model="searchInfo.areaId" placeholder="物理区域">
             <el-option v-for="item in areaList" :key="item.value" :label="item.text" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
@@ -12,7 +12,7 @@
           <el-input size="small" v-model="searchInfo.code" placeholder="位号"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" @click="onSearchInfoSubmit">查询</el-button>
+          <!-- <el-button size="small" type="primary" @click="onSearchInfoSubmit">查询</el-button> -->
         </el-form-item>
       </el-form>
 
@@ -48,7 +48,6 @@ import { Route } from 'vue-router'
 })
 export default class index extends ComponentBase {
   private dialogVisible: boolean = false
-
   // *********************************
   private searchInfo: any = { code: '', areaId: '' }
   private areaList: any[] = []
@@ -71,7 +70,7 @@ export default class index extends ComponentBase {
   }
   private async loadData() {
     let flowmeters = await getFlowmetersInArea(this.searchInfo.areaId)
-    // window.console.log('loadData:', flowmeters)
+    window.console.log('loadData:', flowmeters)
     this.allFlowmeters = flowmeters
   }
   // ********************************************************************************
@@ -98,6 +97,9 @@ export default class index extends ComponentBase {
     this.dialogVisible = false
   }
   // ************************************************************
+  private async onAreaChanged(val: any) {
+    this.loadData()
+  }
   @Emit('onSure')
   private onSure(row: any) {}
 
