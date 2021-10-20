@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :show-close="false" title="选择流量计" :visible.sync="dialogVisible" width="700px" center :close-on-click-modal="false" destroy-on-close
+  <el-dialog :show-close="false" title="选择流量计" :visible.sync="dialogVisible" width="800px" center :close-on-click-modal="false" destroy-on-close
     append-to-body>
-    <div style="width:100%;height:400px">
+    <div style="width:100%;height:450px">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="物理区域">
           <el-select @change="onAreaChanged" size="small" v-model="searchInfo.areaId" placeholder="物理区域">
@@ -16,14 +16,14 @@
         </el-form-item>
       </el-form>
 
-      <el-table size="small" :data="tableData" height="250" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
+      <el-table size="small" :data="tableData" height="400" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>
-        <el-table-column prop="WEIHAO" label="位号" width="180">
+        <el-table-column prop="WEIHAO" label="位号" width="150px">
         </el-table-column>
-        <el-table-column prop="JLBMC" label="计量表" width="180">
+        <el-table-column prop="JLBMC" label="计量表" width="250px">
         </el-table-column>
-        <el-table-column prop="JLBCJMC" label="厂家">
+        <el-table-column prop="QYMC" label="区域" width="150px">
         </el-table-column>
         <el-table-column prop="ZXZTMS" label="状态">
         </el-table-column>
