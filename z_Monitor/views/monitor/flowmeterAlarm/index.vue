@@ -14,7 +14,7 @@
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="16" style=" height:100%;">
-        <alarmHistory class="showblock" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
+        <alarmHistory ref="alarmHistory" class="showblock" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
       </el-col>
     </el-row>
     <dealAlarm ref="alarmDialog" @onSure="dealSure" @onCancel="dealCancel" />
@@ -49,7 +49,6 @@ export default class Index extends PageBase {
 
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
-    window.console.log('watchFlowmeterDetailChange:', data)
     this.flowmeterId = data.JLBID
     //清数据
     this.clearChildrenData()
@@ -68,9 +67,12 @@ export default class Index extends PageBase {
     if (flowmeterDetails && flowmeterDetails.length > 0) {
       this.flowmeterDetail = flowmeterDetails[0]
     }
+    this.refreshChildrenData()
   }
   // ************************************************************
-  private async refreshChildrenData() {}
+  private async refreshChildrenData() {
+    // await (this.$refs.alarmHistory as alarmHistory).loadData()
+  }
   private async clearChildrenData() {}
   // ************************************************************
   private onDealAlarm(data: any) {

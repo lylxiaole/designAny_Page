@@ -17,7 +17,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div style="height:calc(100% - 60px);width:100%;display:flex;flex-wrap: wrap;justify-content:flex-start;align-content:flex-start">
+    <div style="height:calc(100% - 60px);width:100%;display:flex;flex-wrap: wrap;justify-content:flex-start;align-content:flex-start;overflow-y:auto">
       <flowmeterCard style="box-sizing:border-box;width:330px;height:200px" class="flowmeterCard" v-for="item in filterFlowmeters" :key="item.code"
         :cardInfo="item" />
     </div>
