@@ -69,11 +69,11 @@ export default class Index extends PageBase {
   // ********************************************************************************
   mounted() {
     axios.all([this.getAllArea(), this.getAllStatus()]).then(() => {
-      this.loadData()
       let areaId = this.$route.query.areaId
       if (areaId) {
         this.serachInfo.areaId = areaId
       }
+      this.loadData()
     })
   }
 
