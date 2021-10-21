@@ -46,10 +46,10 @@ export default class alarmTop7 extends ComponentBase {
     legend: {
       data: []
     },
-    grid: {
-      bottom: '10%'
-    },
+
     radar: {
+      center: ['50%', '50%'],
+      radius: '60%',
       // shape: 'circle',
       indicator: [
         { name: 'Sales' },

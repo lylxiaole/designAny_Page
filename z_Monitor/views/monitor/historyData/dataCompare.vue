@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%; width: 100%">
-    <el-row style="height: 50px">
+    <el-row style="height: 50px" class="verticalAlignCenter">
       <el-button type="primary" size="small" @click="clearTableData">清空对比数据</el-button>
       <el-button type="primary" size="small" @click="startCompare">参数数据对比</el-button>
     </el-row>

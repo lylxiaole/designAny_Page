@@ -155,7 +155,7 @@ export default class importantMeasure extends ComponentBase {
           itemStyle: {
             normal: {
               lineStyle: {
-                color: 'rgba(0, 255, 240, 1)'
+                color: 'rgba(255, 133, 66, 1)'
               }
             }
           },
@@ -163,11 +163,11 @@ export default class importantMeasure extends ComponentBase {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgba(98, 227, 255, 1)'
+                color: 'rgba(255, 133, 66, 1)'
               },
               {
                 offset: 1,
-                color: 'rgba(98, 227, 255, 0)'
+                color: 'rgba(255, 133, 66, 0)'
               }
             ])
           },
@@ -225,7 +225,7 @@ export default class importantMeasure extends ComponentBase {
           itemStyle: {
             normal: {
               lineStyle: {
-                color: 'rgba(0, 255, 240, 1)'
+                color: 'rgba(80, 227, 194, 1)'
               }
             }
           },
@@ -233,11 +233,11 @@ export default class importantMeasure extends ComponentBase {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgba(98, 227, 255, 1)'
+                color: 'rgba(80, 227, 194, 1)'
               },
               {
                 offset: 1,
-                color: 'rgba(98, 227, 255, 0)'
+                color: 'rgba(80, 227, 194, 0)'
               }
             ])
           },
@@ -295,7 +295,7 @@ export default class importantMeasure extends ComponentBase {
           itemStyle: {
             normal: {
               lineStyle: {
-                color: 'rgba(0, 255, 240, 1)'
+                color: 'rgba(43, 111, 238, 1)'
               }
             }
           },
@@ -303,11 +303,11 @@ export default class importantMeasure extends ComponentBase {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgba(98, 227, 255, 1)'
+                color: 'rgba(43, 111, 238, 1)'
               },
               {
                 offset: 1,
-                color: 'rgba(98, 227, 255, 0)'
+                color: 'rgba(43, 111, 238, 0)'
               }
             ])
           },
@@ -365,7 +365,7 @@ export default class importantMeasure extends ComponentBase {
           itemStyle: {
             normal: {
               lineStyle: {
-                color: 'rgba(0, 255, 240, 1)'
+                color: 'rgba(227, 80, 80, 1)'
               }
             }
           },
@@ -373,11 +373,11 @@ export default class importantMeasure extends ComponentBase {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgba(98, 227, 255, 1)'
+                color: 'rgba(227, 80, 80, 1)'
               },
               {
                 offset: 1,
-                color: 'rgba(98, 227, 255, 0)'
+                color: 'rgba(227, 80, 80, 0)'
               }
             ])
           },

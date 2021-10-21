@@ -32,7 +32,8 @@
           <div style="height:32px" class="verticalAlignCenter tabletitle">
             <div></div>关键测量
           </div>
-          <el-table size="small" :data="keyMeasurementPoint" border height="calc(100% - 32px)" style="width: 100%">
+          <el-table header-row-class-name="monitorTable" size="small" :data="keyMeasurementPoint" border height="calc(100% - 32px)"
+            style="width: 100%">
             <el-table-column prop="point" label="数据采集点"> </el-table-column>
             <el-table-column prop="value" label="实时数值"> </el-table-column>
             <el-table-column prop="unit" label="计量单位"> </el-table-column>
@@ -197,7 +198,10 @@ export default class Index extends PageBase {
     height: 70%;
     width: 10px;
     margin-left: 15px;
-    border-left: 5px solid #000;
+    border-left: 5px solid #1b4287;
   }
+}
+.monitorTable {
+  background-color: rgba(192, 212, 250, 1) !important;
 }
 </style>
