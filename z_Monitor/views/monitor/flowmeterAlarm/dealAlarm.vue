@@ -37,7 +37,7 @@ export default class dealAlarm extends ComponentBase {
   // ************************************************************
   private async onSureChoose() {
     if (!this.dealInfo.user || !this.dealInfo.desc) {
-      this.$notify.error('信息不全,请补全信息!')
+      this.$message.error('信息不全,请补全信息!')
       return
     }
 
