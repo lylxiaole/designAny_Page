@@ -16,7 +16,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table size="small" header-row-class-name="monitorTable" stripe :data="tableData" height="220" highlight-current-row
+      <el-table size="small" header-row-class-name="monitorTable" stripe :data="tableData" height="220px" highlight-current-row
         @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>
@@ -108,5 +108,6 @@ export default class index extends ComponentBase {
   private onCancel() {}
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+@import '../../assets/monitorStyle.less';
 </style>

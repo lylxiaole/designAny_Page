@@ -8,7 +8,7 @@ const router_beforeEach = async (to, from, next) => {
   window.console.log('router_beforeEach:', to)
   // start progress bar
   // set page title
-  document.title = to.meta.title
+  // document.title = to.meta.title
   // determine whether the user has logged in
   // window.console.log('to router before:', hasToken)
   await hasTokenOption(to, from, next)

@@ -108,5 +108,6 @@ export default class index extends ComponentBase {
   private onCancel() {}
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+@import '../../assets/monitorStyle.less';
 </style>
