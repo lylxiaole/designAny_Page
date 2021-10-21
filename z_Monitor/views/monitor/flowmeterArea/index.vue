@@ -15,11 +15,35 @@
         <el-form-item label="位号">
           <el-input v-model="serachInfo.code" placeholder="请输入"></el-input>
         </el-form-item>
+        <el-form-item label="展示方式">
+          <el-select v-model="serachInfo.showType" placeholder="展示方式">
+            <el-option label="卡片" :value="1"></el-option>
+            <el-option label="表格" :value="2"></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
     </div>
     <div style="height:calc(100% - 60px);width:100%;display:flex;flex-wrap: wrap;justify-content:flex-start;align-content:flex-start;overflow-y:auto">
-      <flowmeterCard style="box-sizing:border-box;width:330px;height:200px" class="flowmeterCard" v-for="item in filterFlowmeters" :key="item.code"
-        :cardInfo="item" />
+      <flowmeterCard v-for="item in filterFlowmeters" :key="item.code" :cardInfo="item" v-show="serachInfo.showType===1"
+        style="box-sizing:border-box;width:330px;height:200px" class="flowmeterCard" />
+
+      <el-table header-row-class-name="monitorTable" stripe :data="filterFlowmeters" border v-show="serachInfo.showType===2" size="small"
+        height="calc(100% - 60px)" style="width: 100%">
+        <el-table-column prop="code" label="位号"> </el-table-column>
+        <el-table-column prop="state" label="状态"> </el-table-column>
+        <el-table-column prop="temp" label="温度"> </el-table-column>
+        <el-table-column prop="density" label="密度"> </el-table-column>
+        <el-table-column prop="weight" label="累积量"> </el-table-column>
+        <el-table-column prop="instantaneousFlow" label="瞬间流量"> </el-table-column>
+        <el-table-column prop="address" label="操作">
+          <template slot-scope="scope">
+            <el-button @click="openFlowmeterInfo(scope.row)" type="text" size="small">单表信息</el-button>
+            <el-button @click="openAlarmInfo(scope.row)" type="text" size="small">报警信息</el-button>
+            <el-button @click="openFlowmeterHis(scope.row)" type="text" size="small">历史信息</el-button>
+            <el-button @click="openFlowmeterCompare(scope.row)" type="text" size="small">双表对比</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
@@ -40,7 +64,8 @@ export default class Index extends PageBase {
   private serachInfo: any = {
     code: '',
     areaId: 'shanghai',
-    status: null
+    status: null,
+    showType: 1 //1卡片，2表格
   }
   private areaList: any[] = []
   private statusList: any[] = []
@@ -120,6 +145,20 @@ export default class Index extends PageBase {
   // ********************************************************************************
   private onSearchInfoChanged() {
     this.loadData()
+  }
+  // ************************************************************
+  private async openFlowmeterInfo(row: any) {
+    this.$router.push({ path: '/flowmeterInfo', query: { id: row.id } })
+  }
+  private async openAlarmInfo(row: any) {
+    this.$router.push({ path: '/flowmeterAlarm', query: { id: row.id } })
+  }
+  private async openFlowmeterHis(row: any) {
+    this.$router.push({ path: '/historyData', query: { id: row.id } })
+  }
+  private async openFlowmeterCompare(row: any) {
+    //TODO 选择计量表参数
+    this.$router.push({ path: '/flowmeterCompare', query: { id: row.id } })
   }
 }
 </script>
