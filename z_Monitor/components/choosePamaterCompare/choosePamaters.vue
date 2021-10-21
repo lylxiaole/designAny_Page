@@ -10,8 +10,8 @@
           <el-input size="small" style="width:calc(100% - 120px)" v-model="paramName1"></el-input>
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
-          <el-table ref="table1" size="small" :data="tableData1" height="220" highlight-current-row @current-change="tableChooseChange1" border
-            style="width: 100%">
+          <el-table ref="table1" size="small" :data="tableData1" header-row-class-name="monitorTable" stripe height="220" highlight-current-row
+            @current-change="tableChooseChange1" border style="width: 100%">
             <el-table-column type="index" width="55">
             </el-table-column>
             <el-table-column prop="TAGMC" label="参数">
@@ -28,8 +28,8 @@
           <el-input size="small" style="width:calc(100% - 120px)" v-model="paramName2"></el-input>
         </el-row>
         <el-row class="flexHorilanLayout" style="margin-top:8px">
-          <el-table ref="table2" size="small" :data="tableData2" height="220" highlight-current-row @current-change="tableChooseChange2" border
-            style="width: 100%">
+          <el-table ref="table2" size="small" :data="tableData2" header-row-class-name="monitorTable" stripe height="220" highlight-current-row
+            @current-change="tableChooseChange2" border style="width: 100%">
             <el-table-column type="index" width="55">
             </el-table-column>
             <el-table-column prop="TAGMC" label="参数">

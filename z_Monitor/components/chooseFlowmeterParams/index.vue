@@ -13,8 +13,8 @@
         </el-form-item>
       </el-form>
 
-      <el-table size="small" ref="multipleTable" :data="tableData" height="250" highlight-current-row @selection-change="tableChooseChange"
-        tooltip-effect="dark" border style="width: 100%">
+      <el-table size="small" ref="multipleTable" header-row-class-name="monitorTable" stripe :data="tableData" height="250" highlight-current-row
+        @selection-change="tableChooseChange" tooltip-effect="dark" border style="width: 100%">
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column prop="TAGMC" label="参数"> </el-table-column>
       </el-table>

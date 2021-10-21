@@ -16,7 +16,8 @@
         </el-form-item>
       </el-form>
 
-      <el-table size="small" :data="tableData" height="220" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
+      <el-table size="small" header-row-class-name="monitorTable" stripe :data="tableData" height="220" highlight-current-row
+        @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>
         <el-table-column prop="WEIHAO" label="位号" width="150px">
