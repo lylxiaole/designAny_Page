@@ -19,11 +19,11 @@
       <el-table size="small" :data="tableData" height="200" highlight-current-row @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>
-        <el-table-column prop="WEIHAO" label="位号" width="180">
+        <el-table-column prop="WEIHAO" label="位号" width="150px">
         </el-table-column>
-        <el-table-column prop="JLBMC" label="计量表" width="180">
+        <el-table-column prop="JLBMC" label="计量表" width="250px">
         </el-table-column>
-        <el-table-column prop="JLBCJMC" label="厂家">
+        <el-table-column prop="QYMC" label="区域" width="150px">
         </el-table-column>
         <el-table-column prop="ZXZTMS" label="状态">
         </el-table-column>
