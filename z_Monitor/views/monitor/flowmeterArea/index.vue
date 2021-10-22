@@ -37,10 +37,23 @@
         <el-table-column prop="instantaneousFlow" label="瞬间流量"> </el-table-column>
         <el-table-column prop="address" label="操作">
           <template slot-scope="scope">
-            <el-button @click="openFlowmeterInfo(scope.row)" type="text" size="small">单表信息</el-button>
+            <el-tooltip class="item" effect="light" content="单表信息" placement="top">
+              <el-image class="tableIcon" size="small" fit="contain" :src="infoIcon" @click="openFlowmeterInfo(scope.row)" />
+            </el-tooltip>
+            <el-tooltip class="item" effect="light" content="报警信息" placement="top">
+              <el-image class="tableIcon" size="small" fit="contain" :src="alarmIcon" @click="openAlarmInfo(scope.row)" />
+            </el-tooltip>
+            <el-tooltip class="item" effect="light" content="历史信息" placement="top">
+              <el-image class="tableIcon" size="small" fit="contain" :src="historyIcon" @click="openFlowmeterHis(scope.row)" />
+            </el-tooltip>
+            <el-tooltip class="item" effect="light" content="双标对比" placement="top">
+              <el-image class="tableIcon" size="small" fit="contain" :src="compareIcon" @click="openFlowmeterCompare(scope.row)" />
+            </el-tooltip>
+
+            <!-- <el-button @click="openFlowmeterInfo(scope.row)" type="text" size="small">单表信息</el-button>
             <el-button @click="openAlarmInfo(scope.row)" type="text" size="small">报警信息</el-button>
             <el-button @click="openFlowmeterHis(scope.row)" type="text" size="small">历史信息</el-button>
-            <el-button @click="openFlowmeterCompare(scope.row)" type="text" size="small">双表对比</el-button>
+            <el-button @click="openFlowmeterCompare(scope.row)" type="text" size="small">双表对比</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -55,12 +68,22 @@ import { jkzl, jlbjk, jlbzdcx, zdcx, getFlowmetersInArea } from '../../../servic
 import { Route } from 'vue-router'
 import axios from 'axios'
 // *****************************************************************
+var alarmIcon = require('../../../assets/flowmeterAreaCard/alarm.png')
+var compareIcon = require('../../../assets/flowmeterAreaCard/compare.png')
+var historyIcon = require('../../../assets/flowmeterAreaCard/history.png')
+var infoIcon = require('../../../assets/flowmeterAreaCard/info.png')
+
 import flowmeterCard from './flowmeterCard.vue'
 /***作业区流量计 */
 @Component({
   components: { flowmeterCard }
 })
 export default class Index extends PageBase {
+  private alarmIcon = alarmIcon
+  private compareIcon = compareIcon
+  private historyIcon = historyIcon
+  private infoIcon = infoIcon
+  // *********************************************
   private serachInfo: any = {
     code: '',
     areaId: 'shanghai',
@@ -69,7 +92,6 @@ export default class Index extends PageBase {
   }
   private areaList: any[] = []
   private statusList: any[] = []
-
   private get filterFlowmeters(): any[] {
     let res: any[] = []
     for (let index = 0; index < this.allFlowmeters.length; index++) {
@@ -101,7 +123,6 @@ export default class Index extends PageBase {
       this.loadData()
     })
   }
-
   private async getAllArea() {
     this.areaList = []
     let res = await jlbzdcx()
@@ -169,5 +190,10 @@ export default class Index extends PageBase {
   height: 225px;
   margin: 8px;
   box-sizing: border-box;
+}
+
+.tableIcon {
+  margin-left: 8px;
+  cursor: pointer;
 }
 </style>
