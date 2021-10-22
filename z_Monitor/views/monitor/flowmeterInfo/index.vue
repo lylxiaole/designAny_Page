@@ -169,7 +169,7 @@ export default class Index extends PageBase {
     if (!currentAlrams) {
       currentAlrams = []
     } else {
-      currentAlrams = res
+      currentAlrams = currentAlrams
     }
     this.currentAlrams = currentAlrams
   }

@@ -52,7 +52,7 @@ export default class alarmCard extends ComponentBase {
   mounted() {}
 
   get containerStyle(): any {
-    if (this.cardInfo && this.cardInfo.tagVal > 0) {
+    if (this.cardInfo && this.cardInfo.PHDVALUE && parseInt(this.cardInfo.PHDVALUE) > 0) {
       return { background: '#fff2f2', border: '1px solid #e35050' }
     } else {
       return { background: '#c1f397', border: '1px solid #29db50' }
