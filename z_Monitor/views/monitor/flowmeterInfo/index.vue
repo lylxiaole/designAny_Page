@@ -34,11 +34,10 @@
           </div>
           <el-table header-row-class-name="monitorTable" stripe size="small" :data="keyMeasurementPoint" border height="calc(100% - 32px)"
             style="width: 100%">
-            <el-table-column prop="point" label="数据采集点"> </el-table-column>
-            <el-table-column prop="value" label="实时数值"> </el-table-column>
-            <el-table-column prop="unit" label="计量单位"> </el-table-column>
-            <el-table-column prop="time" label="数据采集时间">
-            </el-table-column>
+            <el-table-column prop="point" label="采集点" width="400px"> </el-table-column>
+            <el-table-column prop="value" label="实时数值" width="150px"> </el-table-column>
+            <el-table-column prop="unit" label="单位" width="80px"> </el-table-column>
+            <el-table-column prop="time" label="采集时间" width="180px"> </el-table-column>
           </el-table>
         </el-row>
         <!-- ************************************************* -->
@@ -48,11 +47,10 @@
           </div>
           <el-table header-row-class-name="monitorTable" stripe :data="deviceStatus" border size="small" height="calc(100% - 60px)"
             style="width: 100%">
-            <el-table-column prop="point" label="数据采集点"> </el-table-column>
-            <el-table-column prop="value" label="实时数值"> </el-table-column>
-            <el-table-column prop="unit" label="计量单位"> </el-table-column>
-            <el-table-column prop="time" label="数据采集时间">
-            </el-table-column>
+            <el-table-column prop="point" label="采集点" width="400px"> </el-table-column>
+            <el-table-column prop="value" label="实时数值" width="150px"> </el-table-column>
+            <el-table-column prop="unit" label="单位" width="80px"> </el-table-column>
+            <el-table-column prop="time" label="采集时间" width="180px"> </el-table-column>
           </el-table>
         </el-row>
       </el-col>
@@ -63,10 +61,10 @@
         </div>
         <el-table header-row-class-name="monitorTable" stripe size="small" :data="instrumentCoefficient" border height="calc(100% - 60px)"
           style="width: 100%">
-          <el-table-column prop="point" label="数据采集点"> </el-table-column>
-          <el-table-column prop="value" label="实时数值"> </el-table-column>
-          <el-table-column prop="unit" label="计量单位"> </el-table-column>
-          <el-table-column prop="time" label="数据采集时间"> </el-table-column>
+          <el-table-column prop="point" label="采集点" width="400px"> </el-table-column>
+          <el-table-column prop="value" label="实时数值" width="150px"> </el-table-column>
+          <el-table-column prop="unit" label="单位" width="80px"> </el-table-column>
+          <el-table-column prop="time" label="采集时间" width="180px"> </el-table-column>
         </el-table>
       </el-col>
     </el-row>
