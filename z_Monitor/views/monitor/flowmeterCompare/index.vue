@@ -195,18 +195,18 @@ export default class Index extends PageBase {
   // ************************************************************
   private async refreshData() {
     if (!this.firstFlowmeter) {
-      this.$notify.error('请先选择流量计!')
+      this.$message.error('请先选择流量计!')
       return
     } else if (!this.secondFlowmeter) {
-      this.$notify.error('请先选择流量计!')
+      this.$message.error('请先选择流量计!')
       return
     }
     if (!this.firstParams || this.firstParams.length < 1) {
-      this.$notify.error('请先选择流量计参数!')
+      this.$message.error('请先选择流量计参数!')
       return
     }
     if (!this.secondParams || this.secondParams.length < 1) {
-      this.$notify.error('请先选择流量计参数!')
+      this.$message.error('请先选择流量计参数!')
       return
     }
 

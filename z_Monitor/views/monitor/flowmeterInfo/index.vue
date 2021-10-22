@@ -32,7 +32,7 @@
           <div style="height:32px" class="verticalAlignCenter tabletitle">
             <div></div>关键测量
           </div>
-          <el-table header-row-class-name="monitorTable" size="small" :data="keyMeasurementPoint" border height="calc(100% - 32px)"
+          <el-table header-row-class-name="monitorTable" stripe size="small" :data="keyMeasurementPoint" border height="calc(100% - 32px)"
             style="width: 100%">
             <el-table-column prop="point" label="数据采集点"> </el-table-column>
             <el-table-column prop="value" label="实时数值"> </el-table-column>
@@ -46,7 +46,8 @@
           <div style="height:32px" class="verticalAlignCenter tabletitle">
             <div></div>仪表状态
           </div>
-          <el-table :data="deviceStatus" border size="small" height="calc(100% - 60px)" style="width: 100%">
+          <el-table header-row-class-name="monitorTable" stripe :data="deviceStatus" border size="small" height="calc(100% - 60px)"
+            style="width: 100%">
             <el-table-column prop="point" label="数据采集点"> </el-table-column>
             <el-table-column prop="value" label="实时数值"> </el-table-column>
             <el-table-column prop="unit" label="计量单位"> </el-table-column>
@@ -60,7 +61,8 @@
         <div style="height:32px; " class="verticalAlignCenter tabletitle">
           <div></div>仪表系数
         </div>
-        <el-table size="small" :data="instrumentCoefficient" border height="calc(100% - 60px)" style="width: 100%">
+        <el-table header-row-class-name="monitorTable" stripe size="small" :data="instrumentCoefficient" border height="calc(100% - 60px)"
+          style="width: 100%">
           <el-table-column prop="point" label="数据采集点"> </el-table-column>
           <el-table-column prop="value" label="实时数值"> </el-table-column>
           <el-table-column prop="unit" label="计量单位"> </el-table-column>
@@ -167,7 +169,7 @@ export default class Index extends PageBase {
     if (!currentAlrams) {
       currentAlrams = []
     } else {
-      currentAlrams = res
+      currentAlrams = currentAlrams
     }
     this.currentAlrams = currentAlrams
   }
@@ -200,8 +202,5 @@ export default class Index extends PageBase {
     margin-left: 15px;
     border-left: 5px solid #1b4287;
   }
-}
-.monitorTable {
-  background-color: rgba(192, 212, 250, 1) !important;
 }
 </style>

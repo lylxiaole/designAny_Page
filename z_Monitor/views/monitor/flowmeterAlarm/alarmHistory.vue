@@ -5,7 +5,7 @@
       <el-button size="small" type="primary" style="float: left; margin-left: 16px" @click="loadData">查询</el-button>
     </el-row>
     <el-row style="height: calc(100% - 50px)">
-      <el-table :data="historyData" size="small" border height="100%">
+      <el-table :data="historyData" size="small" border height="100%" header-row-class-name="monitorTable">
         <el-table-column prop="TAGMC" label="数据采名称" width="350px"> </el-table-column>
         <el-table-column prop="CWXXZW" label="报警信息" width="300px"> </el-table-column>
         <el-table-column prop="KSSJ" :formatter="dateFormat" label="开始时间" width="200px"> </el-table-column>

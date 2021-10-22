@@ -2,7 +2,7 @@
   <div style="height:100%;width:100%;position:relative">
     <div ref="mapArea"></div>
     <button style="position:absolute;right:8px;top:8px" @click="drawerOpen=true">展示列表</button>
-    <el-drawer show-close title="作业区概要" size="400px" style="height:100%" :visible.sync="drawerOpen" custom-class="mapdrawer">
+    <el-drawer show-close title="作业区概要" size="400px" :modal="false" style="height:100%" :visible.sync="drawerOpen" custom-class="mapdrawer">
       <div style="height:100%;width:100%;overflow-y:auto">
         <areaCard v-for="item in cardInfos" :key="item.areaName" :cardInfo="item" style="height:170px;margin:8px" />
       </div>

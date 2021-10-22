@@ -60,7 +60,7 @@ export default class index extends ComponentBase {
   private onStartTimeChange(val: any) {
     window.console.log('onStartTimeChange:', val)
     if (this.endTime && this.endTime < val) {
-      this.$notify.warning('开始日期不能大于结束日期')
+      this.$message.warning('开始日期不能大于结束日期')
       this.startTimeInner = this.startTime
     } else {
       this.updateStartTime_inner(val)
@@ -69,7 +69,7 @@ export default class index extends ComponentBase {
   private onEndTimeChange(val: any) {
     window.console.log('onEndTimeChange:', val)
     if (this.startTime && this.startTime > val) {
-      this.$notify.warning('结束日期不能小于开始日期')
+      this.$message.warning('结束日期不能小于开始日期')
       this.endTimeInner = this.endTime
     } else {
       this.updateEndtime_inner(val)

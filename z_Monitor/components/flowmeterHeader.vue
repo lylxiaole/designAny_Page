@@ -1,7 +1,7 @@
 <template>
   <el-row class="verticalAlignCenter">
     <el-col :style="{ width: chooseBtnWidth + 'px' }" class="verticalAlignCenter flexHorilanLayout" v-if="showChooseBtn">
-      <el-button class="button" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
+      <el-button class="button" type="primary" size="mini" @click="startChooseFlowmeter">选择流量计</el-button>
       <chooseFlowmeter ref="chooseFlowmeter" @onSure="onChooseFlowmeter" @onCancel="onCancelChooseFlometer" />
     </el-col>
     <el-col :style="{ width: middleWith }" style="position: relative">
@@ -25,9 +25,9 @@
 
     <el-col :style="{ width: leaderBtnWidth + 'px' }">
       <el-row class="verticalAlignCenter flexHorilanLayout">
-        <el-button class="button" size="mini" v-if="showBtns.indexOf('detail') > -1" @click="openFlowmeterInfo">查看流量计信息</el-button>
-        <el-button class="button" size="mini" v-if="showBtns.indexOf('alarm') > -1" @click="openAlarmInfo">查看流量计报警</el-button>
-        <el-button class="button" size="mini" v-if="showBtns.indexOf('history') > -1" @click="openFlowmeterHis">查看流量计历史</el-button>
+        <el-button class="button" type="primary" size="mini" v-if="showBtns.indexOf('detail') > -1" @click="openFlowmeterInfo">查看流量计信息</el-button>
+        <el-button class="button" type="primary" size="mini" v-if="showBtns.indexOf('alarm') > -1" @click="openAlarmInfo">查看流量计报警</el-button>
+        <el-button class="button" type="primary" size="mini" v-if="showBtns.indexOf('history') > -1" @click="openFlowmeterHis">查看流量计历史</el-button>
       </el-row>
     </el-col>
   </el-row>
