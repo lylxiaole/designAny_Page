@@ -5,7 +5,7 @@
     </el-row>
     <el-row style="height:calc(100% - 60px)" class="showblock">
       <el-col :span="18">
-        <historyInfo :flowmeterId="flowmeterId" @onSelectParams="onSelectParams" @onSelectChartData="onSelectChartData" />
+        <historyInfo ref="historyInfo" :flowmeterId="flowmeterId" @onSelectParams="onSelectParams" @onSelectChartData="onSelectChartData" />
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="6">
@@ -18,7 +18,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
-import { jkzl, jlbjk, getFlowmeterDetail } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getFlowmeterDetail, getFlowmeterParams } from '../../../serviceAPIs/service'
 import { Route } from 'vue-router'
 import { param2Obj } from '@src/utils'
 import importantMeasure from '../flowmeterInfo/importantMeasure.vue'
@@ -61,6 +61,17 @@ export default class Index extends PageBase {
     if (flowmeterDetails && flowmeterDetails.length > 0) {
       this.flowmeterDetail = flowmeterDetails[0]
     }
+    let defaultParams = await this.getDefaultParams()
+    await (this.$refs.historyInfo as historyInfo).setDefaultParams(defaultParams)
+    await (this.$refs.historyInfo as historyInfo).refreshData()
+  }
+
+  private async getDefaultParams() {
+    let res = await getFlowmeterParams(this.flowmeterId, null)
+    if (!res) {
+      res = []
+    }
+    return res.filter((element: any) => element.SFSSLL == '1' || element.SFSSLL == '2' || element.SFSSLL == '3' || element.SFSSLL == '5')
   }
   // *************** *********************************************
   private async refreshChildrenData() {

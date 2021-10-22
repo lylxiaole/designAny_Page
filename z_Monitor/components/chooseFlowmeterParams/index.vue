@@ -92,6 +92,17 @@ export default class index extends ComponentBase {
         this.$refs.multipleTable.toggleRowSelection(element)
     })
   }
+
+  public async initParams(flowmeterId: string) {
+    this.flowmeterId = flowmeterId
+    await this.loadParams()
+    this.allParams.forEach((element) => {
+      //根据条件 让某些行选中  sfssll, 1  流量，2 温度，3 密度，4 驱动，5累积量
+      if (element.SFSSLL == '1' || element.SFSSLL == '2' || element.SFSSLL == '3' || element.SFSSLL == '5')
+        this.$refs.multipleTable.toggleRowSelection(element)
+    })
+  }
+
   private async onSureChoose() {
     this.onSure(this.currentSelectedRows)
     this.dialogVisible = false

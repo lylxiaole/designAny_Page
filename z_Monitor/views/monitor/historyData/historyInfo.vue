@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { jkzl, jlbjk, getParamsCompareData } from '../../../serviceAPIs/service'
+import { jkzl, jlbjk, getParamsCompareData, getFlowmeterParams } from '../../../serviceAPIs/service'
 import chooseFlowmeterParams from '../../../components/chooseFlowmeterParams/index.vue'
 import { Route } from 'vue-router'
 import { param2Obj, deepClone } from '@src/utils'
@@ -54,15 +54,17 @@ export default class historyInfo extends ComponentBase {
   private flowmeterId: string
   @Watch('flowmeterId')
   private async watchflowmeterIdChange(id: string) {
-    // window.console.log('watchFlowmeterDetailChange:', data)
+    // window.console.log('watchFlowmeterDetailChange:', id)
     this.flowmeterId = id
-    this.clearData()
+    if (this.flowmeterId) {
+      await this.initDefaultParams()
+    }
   }
 
   private params: any[] = []
   private currentChart: any = null
   private startTime: any = moment(new Date())
-    .subtract(1, 'days')
+    .subtract(2, 'hours')
     .toDate()
   private endTime: any = new Date()
   private beforeDays: number = 0
@@ -87,8 +89,8 @@ export default class historyInfo extends ComponentBase {
     this.currentResizer.removeAllListeners($(this.$el))
   }
   // *************** *********************************************
-  private async refreshData() {
-    if (this.flowmeterId === null) {
+  public async refreshData() {
+    if (!this.flowmeterId) {
       this.$message.warning('请选择流量计！')
       return
     }
@@ -125,6 +127,9 @@ export default class historyInfo extends ComponentBase {
     let res = await getParamsCompareData(this.flowmeterId, paramcodes, startdate, enddate)
     console.log(res)
     this.cuteChartOption(res)
+  }
+  public async setDefaultParams(params: any[]) {
+    this.params = params
   }
   // **************计算option*******************************************
   private cuteChartOption(datalist: any) {
@@ -382,6 +387,13 @@ export default class historyInfo extends ComponentBase {
     })
   }
   private async clearData() {}
+  private async initDefaultParams() {
+    let res = await getFlowmeterParams(this.flowmeterId, null)
+    if (!res) {
+      res = []
+    }
+    this.params = res.filter((element: any) => element.SFSSLL == '1' || element.SFSSLL == '2' || element.SFSSLL == '3' || element.SFSSLL == '5')
+  }
   // *************** *********************************************
   private async chooseParams() {
     if (this.flowmeterId === null) {
