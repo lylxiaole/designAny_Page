@@ -38,6 +38,7 @@ export default class dataCompare extends ComponentBase {
   // ************************************************************
 
   public setParams(params: any[]) {
+    // window.console.log('setParams:', params)
     let colObj = {
       prop: 'clickTime',
       label: '采集时间'
@@ -54,7 +55,8 @@ export default class dataCompare extends ComponentBase {
 
     console.log(' this.flowmeterParams', this.columns)
   }
-  public setData(data: any[]) {
+  public setData(data: any) {
+    window.console.log('setData:', data)
     this.data.push(data)
     //TODO 计算表格事故局
   }

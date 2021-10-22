@@ -63,6 +63,8 @@ export default class Index extends PageBase {
     }
     let defaultParams = await this.getDefaultParams()
     await (this.$refs.historyInfo as historyInfo).setDefaultParams(defaultParams)
+    await (this.$refs.dataCompare as dataCompare).setParams(defaultParams)
+
     await (this.$refs.historyInfo as historyInfo).refreshData()
   }
 
