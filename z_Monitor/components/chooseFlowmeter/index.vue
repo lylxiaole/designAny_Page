@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :show-close="false" title="选择流量计" :visible.sync="dialogVisible" top="0px" width="700px" center :close-on-click-modal="false"
+  <el-dialog :show-close="false" title="选择流量计" :visible.sync="dialogVisible" top="0px" width="800px" center :close-on-click-modal="false"
     destroy-on-close append-to-body>
-    <div style="width:100%;height:300px">
+    <div style="width:100%;height:450px">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="物理区域">
           <el-select @change="onAreaChanged" size="small" v-model="searchInfo.areaId" placeholder="物理区域">
@@ -16,7 +16,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table size="small" header-row-class-name="monitorTable" stripe :data="tableData" height="220px" highlight-current-row
+      <el-table size="small" header-row-class-name="monitorTable" stripe :data="tableData" height="400px" highlight-current-row
         @current-change="tableChooseChange" border style="width: 100%">
         <el-table-column type="index" width="50">
         </el-table-column>

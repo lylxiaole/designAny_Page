@@ -20,8 +20,9 @@
             ? flowmeterDetail.zxztms || flowmeterDetail.ZXZTMS
             : ""
         }}</span>
-      <el-image style="width: 16px; height: 16px;margin-left:20px;margin-top:2px;float:left" :src="imgUrl" fit="contain"></el-image>
+      <el-image style="width: 15px; height: 15px; margin-left: 20px; " :src="imgUrl" fit="contain"> </el-image>
     </el-col>
+
     <el-col :style="{ width: leaderBtnWidth + 'px' }">
       <el-row class="verticalAlignCenter flexHorilanLayout">
         <el-button class="button" type="primary" size="mini" v-if="showBtns.indexOf('detail') > -1" @click="openFlowmeterInfo">查看流量计信息</el-button>
@@ -91,7 +92,6 @@ export default class flowmeterHeader extends ComponentBase {
   private get leaderBtnWidth(): number {
     return this.showBtns.length * 140
   }
-
   private get middleWith(): string {
     return `calc(100% - ${this.chooseBtnWidth + this.leaderBtnWidth}px)`
   }
@@ -173,8 +173,20 @@ export default class flowmeterHeader extends ComponentBase {
 </script>
 <style lang="less" scoped>
 .label {
-  margin-left: 12px;
+  margin-left: 15px;
   font-size: 14px;
-  float: left;
+  font-family: MicrosoftYaHei;
+  color: #808080;
+  line-height: 19px;
+}
+.button {
+  width: 141px;
+  height: 36px;
+  background: #6eb9ff;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: MicrosoftYaHei;
+  color: #ffffff;
+  line-height: 19px;
 }
 </style>
