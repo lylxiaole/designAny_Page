@@ -25,7 +25,7 @@
     </div>
     <div style="height:calc(100% - 60px);width:100%;display:flex;flex-wrap: wrap;justify-content:flex-start;align-content:flex-start;overflow-y:auto">
       <flowmeterCard v-for="item in filterFlowmeters" :key="item.code" :cardInfo="item" v-show="serachInfo.showType===1"
-        style="box-sizing:border-box;width:350px;height:200px" class="flowmeterCard" />
+        style="box-sizing:border-box;width:380px;height:230px" class="flowmeterCard" />
 
       <el-table header-row-class-name="monitorTable" stripe :data="filterFlowmeters" border v-show="serachInfo.showType===2" size="small"
         height="calc(100% - 60px)" style="width: 100%">
@@ -150,6 +150,7 @@ export default class Index extends PageBase {
       const flowm = flowmeters[index]
       this.allFlowmeters.push({
         id: flowm.JLBID,
+        name: flowm.JLBMC,
         code: flowm.WEIHAO,
         status: flowm.ZXZT,
         state: flowm.ZXZTMS,
@@ -161,7 +162,7 @@ export default class Index extends PageBase {
       })
     }
 
-    // window.console.log('loadData:', flowmeters)
+    window.console.log('loadData:', flowmeters)
   }
   // ********************************************************************************
   private onSearchInfoChanged() {

@@ -2,21 +2,26 @@
   <div style="box-sizing:border-box;" :style="{'border-left-style': 'solid','border-left-width': '5px','border-left-color':borderColor}">
     <el-card class="box-card" style="height:100%">
       <el-row class="row">
-        <el-col :span="12">位号:{{cardInfo.code}}</el-col>
-        <el-col :span="12">状态:{{cardInfo.state}}</el-col>
+        <el-col :span="24">计量表名称:&nbsp;{{cardInfo.name}}</el-col>
       </el-row>
       <el-row class="row">
-        <el-col :span="12">温度:{{cardInfo.temp}}</el-col>
-        <el-col :span="12">密度:{{cardInfo.density}}</el-col>
+        <el-col :span="12">位号:&nbsp;{{cardInfo.code}}</el-col>
+        <el-col :span="12">状态:&nbsp;{{cardInfo.state}}</el-col>
+      </el-row>
+
+      <el-row class="row">
+        <el-col :span="12">温度:&nbsp;{{cardInfo.temp}}</el-col>
+        <el-col :span="12">密度:&nbsp;{{cardInfo.density}}</el-col>
       </el-row>
       <el-row class="row">
-        <el-col :span="12">累积量:{{cardInfo.weight}}</el-col>
-        <el-col :span="12">瞬间流量:{{cardInfo.instantaneousFlow}}</el-col>
+        <el-col :span="12">累积量:&nbsp;{{cardInfo.weight}}</el-col>
+        <el-col :span="12">瞬间流量:&nbsp;{{cardInfo.instantaneousFlow}}</el-col>
       </el-row>
       <el-row class="row">
-        <el-col :span="12">是否有报警:{{cardInfo.alarmCount?cardInfo.alarmCount:'无'}}</el-col>
+        <el-col :span="12">是否有报警:&nbsp;{{cardInfo.alarmCount?cardInfo.alarmCount:'无'}}</el-col>
       </el-row>
-      <el-row class="row">
+
+      <el-row class="row flexHorilanLayout">
         <el-button class="button" size="mini" @click="openFlowmeterInfo">单表信息</el-button>
         <el-button class="button" size="mini" @click="openAlarmInfo">报警信息</el-button>
         <el-button class="button" size="mini" @click="openFlowmeterHis">历史信息</el-button>
