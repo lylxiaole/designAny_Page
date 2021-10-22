@@ -2,7 +2,7 @@
   <el-card class="box-card" :style="{'border-left-style': 'solid','border-left-width': '5px','border-left-color':borderColor}">
     <div style="height:100%;width:100%">
       <el-row class="inforow">
-        <span style="font-size:22px;">{{cardInfo.areaName}}</span>
+        <span style="font-size:18px;">{{cardInfo.areaName}}</span>
       </el-row>
       <el-row class="inforow">
         <el-col :span="8">
@@ -36,7 +36,7 @@
         </el-col>
       </el-row>
       <el-row class="inforow">
-        <el-button @click="leadToDetail" type="text">流量计明细</el-button>
+        <el-button class="button" @click="leadToDetail" type="text">流量计明细</el-button>
       </el-row>
     </div>
   </el-card>
@@ -136,5 +136,16 @@ export default class areaCard extends ComponentBase {
 }
 .inforow {
   margin: 4px 0px;
+}
+.button {
+  margin-left: 35%;
+  margin-top: 5px;
+  box-sizing: border-box;
+  padding: 5px 5px;
+  width: 100px;
+  height: 30px;
+  background: #1789f3;
+  border-radius: 4px;
+  color: white;
 }
 </style>

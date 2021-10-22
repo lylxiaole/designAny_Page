@@ -2,20 +2,20 @@
   <div style="box-sizing:border-box;height:100%;width:100%;padding:8px 8px 18px 8px">
     <el-row style="height:50px;position:relative">
       <dateRangePicker style="width:550px;float:left" :startTime.sync="startTime" :endTime.sync="endTime" />
-      <el-button style="float:left;margin-left:16px" size="small" @click="loadData">查询</el-button>
+      <el-button size="small" type="primary" style="float: left; margin-left: 16px" @click="loadData">查询</el-button>
     </el-row>
     <el-row style="height: calc(100% - 50px)">
       <el-table :data="historyData" size="small" border height="100%">
-        <el-table-column prop="TAGMC" label="数据采名称"> </el-table-column>
-        <el-table-column prop="ZTMS" label="状态"> </el-table-column>
-        <el-table-column prop="CWXXZW" label="报警信息"> </el-table-column>
-        <el-table-column prop="PHDVALUE" label="实际数值"> </el-table-column>
-        <el-table-column prop="CONFIDENCE" label="可信度"> </el-table-column>
-        <el-table-column prop="KSSJ" label="开始时间"> </el-table-column>
-        <el-table-column prop="JSSJ" label="结束时间"> </el-table-column>
-        <el-table-column prop="address" label="操作">
+        <el-table-column prop="TAGMC" label="数据采名称" width="350px"> </el-table-column>
+        <el-table-column prop="CWXXZW" label="报警信息" width="300px"> </el-table-column>
+        <el-table-column prop="KSSJ" :formatter="dateFormat" label="开始时间" width="200px"> </el-table-column>
+        <el-table-column prop="JSSJ" :formatter="dateFormat" label="结束时间" width="200px"> </el-table-column>
+        <el-table-column prop="PHDVALUE" label="实际数值" width="100px"> </el-table-column>
+        <el-table-column prop="ZTMS" label="状态" width="80px"> </el-table-column>
+        <el-table-column prop="CONFIDENCE" label="可信度" width="80px"> </el-table-column>
+        <el-table-column prop="address" label="操作" width="120px">
           <template slot-scope="scope">
-            <el-button @click="onDealAlarm(scope.row)" type="text" size="small">报警处理</el-button>
+            <el-button size="small" type="danger" @click="onDealAlarm(scope.row)">报警处理</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -54,6 +54,15 @@ export default class alarmHistory extends ComponentBase {
   }
   //
   mounted() {}
+  //时间格式化
+  private dateFormat(row, column, cellValue, index) {
+    const date = row[column.property]
+    console.log(date)
+    if (date == undefined) {
+      return ''
+    }
+    return date.substring(0, 11) + date.substring(15, 26)
+  }
   // **************************************************************
   private startTime: any = moment(new Date())
     .subtract(1, 'days')

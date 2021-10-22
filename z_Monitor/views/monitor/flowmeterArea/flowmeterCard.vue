@@ -104,7 +104,12 @@ export default class flowmeterCard extends ComponentBase {
 }
 .button {
   box-sizing: border-box;
-  padding: 7px 4px;
+  padding: 5px 5px;
+  width: 68px;
+  height: 30px;
+  background: #1789f3;
+  border-radius: 4px;
+  color: white;
 }
 
 /deep/ .el-card > .el-card__body {

@@ -3,8 +3,8 @@
     <div v-if="!currentAlrams||currentAlrams.length<1" style="height:100%;width:100%;" class="verticalAlignCenter flexHorilanLayout">
       暂无当前报警数据
     </div>
-    <el-carousel v-else :interval="4000" type="card" height="100%">
-      <el-carousel-item v-for="item in currentAlrams" :key="item.BJID">
+    <el-carousel v-else :interval="5000" type="card" height="100%" indicator-position="outside">
+      <el-carousel-item style="width:70%;  margin-left: -10%;" v-for="item in currentAlrams" :key="item.BJID">
         <alarmCard @onDealAlarm="onDealAlarm(item)" :cardInfo="item" />
       </el-carousel-item>
     </el-carousel>
