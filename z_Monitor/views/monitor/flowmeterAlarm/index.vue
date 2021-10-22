@@ -6,10 +6,10 @@
     <el-row style="height:calc(100% - 50px)">
       <el-col :span="8" style="box-sizing:border-box;height:100%;">
         <el-row style="height:40%;padding:15px" class="showblock">
-          <currentAlarm :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" style="height:100%;width:100%" />
+          <currentAlarm ref="currentAlarm" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" style="height:100%;width:100%" />
         </el-row>
         <el-row style="height:60%;padding:6px" class="showblock">
-          <alarmTop7 :flowmeterId="flowmeterId" style="height:100%;width:100%" />
+          <alarmTop7 ref="alarmTop7" :flowmeterId="flowmeterId" style="height:100%;width:100%" />
         </el-row>
       </el-col>
       <!-- ************************************************************************* -->
@@ -51,10 +51,6 @@ export default class Index extends PageBase {
   @Watch('flowmeterDetail')
   private async watchFlowmeterDetailChange(data: any) {
     this.flowmeterId = data.JLBID
-    //清数据
-    this.clearChildrenData()
-    //查数据
-    this.refreshChildrenData()
   }
   // ********************************************************************************
   mounted() {
@@ -68,13 +64,7 @@ export default class Index extends PageBase {
     if (flowmeterDetails && flowmeterDetails.length > 0) {
       this.flowmeterDetail = flowmeterDetails[0]
     }
-    this.refreshChildrenData()
   }
-  // ************************************************************
-  private async refreshChildrenData() {
-    // await (this.$refs.alarmHistory as alarmHistory).loadData()
-  }
-  private async clearChildrenData() {}
   // ************************************************************
   private onDealAlarm(data: any) {
     ;(this.$refs.alarmDialog as dealAlarm).dealCurrentAlarm(data)
@@ -85,11 +75,9 @@ export default class Index extends PageBase {
   }
 
   private async dealSure() {
-    //TODO 刷新各个子组件的数据
-    //清数据
-    this.clearChildrenData()
-    //查数据
-    this.refreshChildrenData()
+    await (this.$refs.currentAlarm as currentAlarm).loadData(this.flowmeterId)
+
+    await (this.$refs.alarmHistory as alarmHistory).loadData(this.flowmeterId)
   }
   private async dealCancel() {}
 }

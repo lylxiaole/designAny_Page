@@ -123,7 +123,7 @@ export default class Index extends PageBase {
   private secondChart: any = null
 
   private startTime: any = moment(new Date())
-    .subtract(5, 'days')
+    .subtract(2, 'hours')
     .toDate()
   private endTime: any = new Date()
   private beforeDays: number = 0

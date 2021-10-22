@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="提示" :show-close="false" :visible.sync="dialogVisible" width="700px" center>
+  <el-dialog title="提示" :show-close="false" :visible.sync="dialogVisible" width="700px" destroy-on-close center>
     <div style="width:100%;height:400px">
       <el-form :model="dealInfo">
         <el-form-item label="处理人">
@@ -71,7 +71,6 @@ export default class dealAlarm extends ComponentBase {
     this.dealInfo.desc = alarm.BZ
     this.canedit = false
   }
-
   // ************************************************************
   @Emit('onSure')
   private onSure(row: any) {}

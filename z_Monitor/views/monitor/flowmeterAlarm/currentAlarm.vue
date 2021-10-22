@@ -42,9 +42,9 @@ export default class currentAlarm extends ComponentBase {
   //
   mounted() {}
   // ************************************************************
-  private async loadData(flowmeterId: string) {
+  public async loadData(flowmeterId: string) {
     let res = await getCurrentAlarm(flowmeterId)
-    window.console.log('getCurrentAlarm:', res)
+    // window.console.log('getCurrentAlarm:', res)
     if (!res) {
       this.currentAlrams = []
     } else {

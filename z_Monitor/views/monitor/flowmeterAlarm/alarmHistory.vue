@@ -50,7 +50,7 @@ export default class alarmHistory extends ComponentBase {
   private async watchflowmeterIdChange(val: any) {
     // window.console.log('watchflowmeterIdChange', val)
     if (val) {
-      this.loadData()
+      this.loadData(val)
     }
   }
   //
@@ -72,9 +72,9 @@ export default class alarmHistory extends ComponentBase {
   // ************************************************************
   private historyData: any[] = []
   private async dealAlarm(data: any) {}
-  public async loadData() {
+  public async loadData(flowmeterId: string) {
     // window.console.log('history loadData')
-    if (this.flowmeterId === null) {
+    if (!flowmeterId) {
       this.$message.warning('请选择流量计！')
       return
     }
