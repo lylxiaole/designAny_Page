@@ -45,6 +45,7 @@ export default class dealAlarm extends ComponentBase {
     await dealAlarmMethod([this.currentAlarm.BJZID], this.dealInfo.user, this.dealInfo.desc)
     this.onSure(this.dealInfo)
     this.dialogVisible = false
+    this.$message.success('处理成功!')
   }
   private async onCancelChoose() {
     this.onCancel()

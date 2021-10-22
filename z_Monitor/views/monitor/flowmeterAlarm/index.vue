@@ -86,6 +86,10 @@ export default class Index extends PageBase {
 
   private async dealSure() {
     //TODO 刷新各个子组件的数据
+    //清数据
+    this.clearChildrenData()
+    //查数据
+    this.refreshChildrenData()
   }
   private async dealCancel() {}
 }
