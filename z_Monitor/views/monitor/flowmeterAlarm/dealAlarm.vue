@@ -1,12 +1,12 @@
 <template>
   <el-dialog title="提示" :show-close="false" :visible.sync="dialogVisible" width="700px" center>
     <div style="width:100%;height:400px">
-      <el-form :inline="true" :model="dealInfo">
+      <el-form :model="dealInfo">
         <el-form-item label="处理人">
-          <el-input size="small" v-model="dealInfo.user" placeholder="处理人"></el-input>
+          <el-input size="small" v-model="dealInfo.user" :disabled="true" placeholder="处理人"></el-input>
         </el-form-item>
         <el-form-item label="备注">
-          <el-input size="small" v-model="dealInfo.desc" placeholder="备注"></el-input>
+          <el-input size="small" type="textarea" :disabled="!canedit" v-model="dealInfo.desc" placeholder="备注"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -29,8 +29,9 @@ import { Route } from 'vue-router'
 })
 export default class dealAlarm extends ComponentBase {
   private dialogVisible: boolean = false
+  private canedit: boolean = true
   // *********************************
-  private dealInfo: any = { user: '', desc: '' }
+  private dealInfo: any = { user: '当前登录人', desc: '' }
   private currentAlarm: any = null
   // ********************************************************************************
   mounted() {}
@@ -41,7 +42,7 @@ export default class dealAlarm extends ComponentBase {
       return
     }
 
-    await dealAlarmMethod([this.currentAlarm.id], this.dealInfo.user, this.dealInfo.desc)
+    await dealAlarmMethod([this.currentAlarm.BJZID], this.dealInfo.user, this.dealInfo.desc)
     this.onSure(this.dealInfo)
     this.dialogVisible = false
   }
@@ -50,10 +51,26 @@ export default class dealAlarm extends ComponentBase {
     this.dialogVisible = false
   }
   public async dealCurrentAlarm(alarm: any) {
-    this.dialogVisible = true
     window.console.log('dealCurrentAlarm:', alarm)
+    if (window.parent && window.parent.window) {
+      this.dealInfo.user = window.parent.window.localStorage.getItem('yhqm')
+    }
+    if (process.env.NODE_ENV === 'development') {
+      this.dealInfo.user = '123'
+    }
+    this.dialogVisible = true
     this.currentAlarm = alarm
+    this.canedit = true
   }
+
+  public async watchAlarmDeal(alarm: any) {
+    this.dialogVisible = true
+    this.currentAlarm = alarm
+    this.dealInfo.user = alarm.CLR
+    this.dealInfo.desc = alarm.BZ
+    this.canedit = false
+  }
+
   // ************************************************************
   @Emit('onSure')
   private onSure(row: any) {}

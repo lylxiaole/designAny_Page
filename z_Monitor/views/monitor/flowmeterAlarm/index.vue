@@ -14,7 +14,8 @@
       </el-col>
       <!-- ************************************************************************* -->
       <el-col :span="16" style=" height:100%;">
-        <alarmHistory ref="alarmHistory" class="showblock" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm" />
+        <alarmHistory ref="alarmHistory" class="showblock" :flowmeterId="flowmeterId" @onDealAlarm="onDealAlarm"
+          @onWatchDealDeatil="onWatchDealDeatil" />
       </el-col>
     </el-row>
     <dealAlarm ref="alarmDialog" @onSure="dealSure" @onCancel="dealCancel" />
@@ -76,8 +77,13 @@ export default class Index extends PageBase {
   private async clearChildrenData() {}
   // ************************************************************
   private onDealAlarm(data: any) {
-    ;(this.$refs.alarmDialog as any).dealCurrentAlarm(data)
+    ;(this.$refs.alarmDialog as dealAlarm).dealCurrentAlarm(data)
   }
+
+  private onWatchDealDeatil(data: any) {
+    ;(this.$refs.alarmDialog as dealAlarm).watchAlarmDeal(data)
+  }
+
   private async dealSure() {
     //TODO 刷新各个子组件的数据
   }

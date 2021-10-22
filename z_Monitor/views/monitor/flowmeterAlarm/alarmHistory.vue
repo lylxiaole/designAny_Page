@@ -15,7 +15,8 @@
         <el-table-column prop="CONFIDENCE" label="可信度" width="80px"> </el-table-column>
         <el-table-column prop="address" label="操作" width="120px">
           <template slot-scope="scope">
-            <el-button size="small" type="danger" @click="onDealAlarm(scope.row)">报警处理</el-button>
+            <el-button v-if="scope.row.CLBZ==='1'" size="small" type="primary" @click="onWatchDealDeatil(scope.row)">处理记录</el-button>
+            <el-button v-else size="small" type="danger" @click="onDealAlarm(scope.row)">报警处理</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,11 +58,11 @@ export default class alarmHistory extends ComponentBase {
   //时间格式化
   private dateFormat(row, column, cellValue, index) {
     const date = row[column.property]
-    console.log(date)
-    if (date == undefined) {
+    // console.log(date)
+    if (!date) {
       return ''
     }
-    return date.substring(0, 11) + date.substring(15, 26)
+    return moment(date).format('YYYY-MM-DD HH:mm:ss')
   }
   // **************************************************************
   private startTime: any = moment(new Date())
@@ -72,7 +73,7 @@ export default class alarmHistory extends ComponentBase {
   private historyData: any[] = []
   private async dealAlarm(data: any) {}
   public async loadData() {
-    window.console.log('history loadData')
+    // window.console.log('history loadData')
     if (this.flowmeterId === null) {
       this.$message.warning('请选择流量计！')
       return
@@ -91,12 +92,16 @@ export default class alarmHistory extends ComponentBase {
       this.$message.warning('时间间隔太长，不能超过3年，参数越多，时间间隔越短，请重新选择！')
       return
     }
-    window.console.log('getAlarmHistory1:', startTime, endTime)
     let alarmHis = await getAlarmHistory(this.flowmeterId, startTime, endTime)
-    this.historyData = alarmHis
-    window.console.log('getAlarmHistory2:', alarmHis)
+    this.historyData = alarmHis.sort(function(a, b) {
+      return moment(b.KSSJ).valueOf() - moment(a.KSSJ).valueOf()
+    })
+
+    window.console.log('getAlarmHistory2:', this.historyData)
   }
   // ************************************************************
+  @Emit('onWatchDealDeatil')
+  private async onWatchDealDeatil(row: any) {}
 
   @Emit('onDealAlarm')
   private onDealAlarm(alarmData: any): any {}

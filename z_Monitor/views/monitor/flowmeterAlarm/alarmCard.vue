@@ -7,7 +7,7 @@
             <span>数采点:{{cardInfo.BJDZ}}</span>
           </el-col>
           <el-col :span="8" class="verticalAlignCenter flexHorilanLayout">
-            <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button>
+            <!-- <el-button class="button" size="mini" @click="onDealAlarm">报警处理</el-button> -->
           </el-col>
         </el-row>
         <el-row class="row">

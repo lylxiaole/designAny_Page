@@ -45,7 +45,7 @@ var errorIcon = require('../../../assets/areaMap/dwr.png')
   components: { areaCard }
 })
 export default class Index extends PageBase {
-  private drawerOpen: boolean = false
+  private drawerOpen: boolean = true
   private currentMap: Map = null
   private cardInfos: cardInfo[] = []
   private timer: any = null

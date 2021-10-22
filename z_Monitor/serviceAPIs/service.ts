@@ -192,8 +192,8 @@ export async function getFlowmeterCompareData(flowmeter1Id: string, flowmeter2Id
 export async function dealAlarmMethod(bjids: string[], clr: string, bz: string) {
   var formData = new FormData()
   formData.append('action', 'handlingAlarms')
-  formData.append('bjids', "'" + bjids.join("','") + "'")
-  formData.append('clr', clr)
+  formData.append('ids', "'" + bjids.join("','") + "'")
+  formData.append('wcr', clr)
   formData.append('bz', bz)
   let url = `${apiAddr()}/jlbjk/jlbzdcx.ashx`
   const resp = await ajaxPost(url, formData)
