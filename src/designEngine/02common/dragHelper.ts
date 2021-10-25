@@ -1,9 +1,8 @@
-import dragula, { Drake } from 'dragula'
 import * as common from '@src/utils'
 
 export enum dragEnums {
   canDrop = 'lyl_candrop',
-  canDrag = 'lyl_candrag',
+  canDrag = 'draggable',
   dropContainer = 'lyl_dropContainer',
   dargItem = 'lyl_dargItem',
   dragItem_Info = 'lyl_dragItem_Info'
@@ -19,10 +18,38 @@ type onDragMoveEventType = (el: Element, targetContainer: Element) => boolean
 type onDragOutEventType = (el: Element, targetContainer: Element) => boolean
 
 class dragulaContainerClass {
+  public container: Element
   constructor(contain: Element) {
     this.container = contain
+    // for (let index = 0; index < this.container.children.length; index++) {
+    //   const element = this.container.children[index]
+    //   element.addEventListener('οndragstart', this._dragEvent)
+    // }
+
+    this.container.addEventListener('drag', this._dragEvent)
+    this.container.addEventListener('ondragend', this._dragEndEvent)
+    this.container.addEventListener('ondragover', this._overEvent)
+    this.container.addEventListener('ondrop', this._dropEvent)
+    // this.container.addEventListener('ondragenter', this)
+    // this.container.addEventListener('ondragleave',this._dra)
+    // this.container.addEventListener('ondragstart',this.star)
   }
-  public container: Element
+
+  private _dragEvent(event: DragEvent) {
+    window.console.log('最底层_dragEvent：', event)
+    if (this.dragEvent) {
+      // this.dragEvent(event.,event.)
+    }
+    // event.dataTransfer.setData('key', 'val')
+    // event.dataTransfer.getData('key')
+  }
+  private _dropEvent(event: DragEvent) {}
+  private _overEvent(event: DragEvent) {}
+  private _dragEndEvent(event: DragEvent) {}
+  private _dragMoveEvent(event: DragEvent) {}
+  private _dragOutEvent(event: DragEvent) {}
+  private _shadowEvent(event: DragEvent) {} //拖拽到目标容器中时，绘制副本时触发
+  private _clonedEvent(event: DragEvent) {} //开始拖拽时触发
 
   public dragEvent: onDragEventType
   public dropEvent: onDropEventType
@@ -39,56 +66,12 @@ class dragulaExtand {
   public static dragSource: Element
   public static dragShadow: Element
   public static dragOverContainer: Element
-  public static drag_third: Drake = dragula({
-    direction: '',
-    revertOnSpill: false, // 如果拖到容器外面是否复位、还是就近排序。
-    removeOnSpill: false,
-    copy: (el: Element, source: Element) => {
-      return true
-    }, // elements are moved by default, not copied
-    invalid: (el, handle) => {
-      //拖拽是否无效，如果无效，现实禁止标志：true拖拽无效,false拖拽有效
-      if (dragulaExtand.IsCanDrag(el) == true) {
-        return false //
-      } else {
-        return true //
-      }
-    },
-    moves: function(el, source, handle, sibling) {
-      if (dragulaExtand.IsCanDrag(el) == true) {
-        return true //
-      } else {
-        return false //
-      }
-    },
-    isContainer: function(el) {
-      //当前拖拽的dom是不是容器，是容器的话，将不会触发drop。：true是容器，false：不是容器
-      return false
-    },
-    accepts: function(el, targetContainer, sourceContainer, sibling) {
-      //这个事件相当于DragMove事件，会实时触发
-      //window.console.log('最底层dragmove触发:', targetContainer)
-      if (dragulaExtand.IsCanDrop(targetContainer) == false) {
-        return false //
-      }
-      dragulaExtand._onDragMove(window.event)
-      return true
-    }
-  })
-    .on('drag', dragulaExtand._onDrag)
-    .on('drop', dragulaExtand._onDrop)
-    .on('over', dragulaExtand._onDragOver)
-    .on('shadow', dragulaExtand._onDragShadow)
-    .on('cloned', dragulaExtand._onDragClone)
-    .on('dragend', dragulaExtand._onDragEnd)
-    .on('out', dragulaExtand._onDragOut)
-
   private static _dragulaContainer: dragulaContainerClass[] = []
+
   public static registerContainer(container: Element): boolean {
-    if (dragulaExtand.drag_third.containers.indexOf(container) > -1) {
+    if (dragulaExtand._dragulaContainer.findIndex((o) => o.container == container) > -1) {
       return false
     }
-    dragulaExtand.drag_third.containers.push(container)
     /**添加dragMove事件拓展 */
     var dragulaContainer = new dragulaContainerClass(container)
     ////window.console.log('registerContainer:', container)
@@ -100,11 +83,21 @@ class dragulaExtand {
         return -1
       }
     })
+
+    dragulaContainer.dragEvent = dragulaExtand._onDrag
+    dragulaContainer.dropEvent = dragulaExtand._onDrop
+    dragulaContainer.overEvent = dragulaExtand._onDragOver
+    // dragulaContainer.shadowEvent = dragulaExtand._onDragShadow
+    // dragulaContainer.clonedEvent = dragulaExtand._onDragClone
+    dragulaContainer.dragEndEvent = dragulaExtand._onDragEnd
+    dragulaContainer.dragMoveEvent = dragulaExtand._onDragMove
+    dragulaContainer.dragOutEvent = dragulaExtand._onDragOut
     return true
   }
   public static removeContainer(container: Element): boolean {
-    if (dragulaExtand.drag_third.containers.indexOf(container) > -1) {
-      dragulaExtand.drag_third.containers.splice(dragulaExtand.drag_third.containers.indexOf(container), 1)
+    let findcontaindex = dragulaExtand._dragulaContainer.findIndex((o) => o.container == container)
+    if (findcontaindex > -1) {
+      dragulaExtand._dragulaContainer.splice(findcontaindex, 1)
       /**移除dragMove事件拓展 */
       var finddragulaContainer = dragulaExtand.getContainerDesc(container).filter((o) => o.container == container)[0]
       var finddragulaContainerIndex = dragulaExtand._dragulaContainer.indexOf(finddragulaContainer)
@@ -171,48 +164,34 @@ class dragulaExtand {
   }
   //如果拖拽到其它容器中,targetContainer不为空,targetContainer_Self为空
   //如果拖拽到本身容器中,targetContainer为空,targetContainer_Self不为空
-  private static _onDrop(el: Element, targetContainer: Element, sourceContainer: Element, targetContainer_Self: Element) {
-    window.console.log('_onDrop:', dragulaExtand._dragulaContainer)
-    var findDragMoveExtands = null
-    if (targetContainer == null && targetContainer_Self != null) {
-      findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer_Self)
-    } else if (targetContainer != null && targetContainer_Self == null) {
-      findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer)
-    } else if (targetContainer != null && targetContainer_Self != null) {
-      findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer)
-    } else {
-      // findDragMoveExtands = dragulaExtand.getContainerDesc(sourceContainer)
-      return
-    }
-
+  private static _onDrop(el: Element, targetContainer: Element): boolean {
+    let findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer)
     if (findDragMoveExtands.length < 1) {
       return
     }
-
-    var iscontinue = true
+    var iscontinue = true //当值为true事，事件继续冒泡。当值为false时，事件继续冒泡
     findDragMoveExtands.filter((findDragMoveExtand) => {
       if (findDragMoveExtand.dropEvent && iscontinue) {
         iscontinue = findDragMoveExtand.dropEvent(dragulaExtand.dragSource, findDragMoveExtand.container)
         if (iscontinue == false) {
-          return
+          return false
         }
       }
     })
   }
-  private static _onDragOver(el: Element, targetContainer: Element, sourceContainer: Element) {
+  private static _onDragOver(el: Element, targetContainer: Element): boolean {
     //window.console.log('_onDragOver:', targetContainer)
     var findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer)
     if (findDragMoveExtands.length < 1) {
       return
     }
     dragulaExtand.dragOverContainer = targetContainer
-
     var iscontinue = true
     findDragMoveExtands.filter((findDragMoveExtand) => {
       if (findDragMoveExtand.overEvent && iscontinue) {
         iscontinue = findDragMoveExtand.overEvent(el, findDragMoveExtand.container)
         if (iscontinue == false) {
-          return
+          return false
         }
       }
     })
@@ -230,7 +209,7 @@ class dragulaExtand {
     //window.console.log('_onDragClone:', clone)
     dragulaExtand.dragClone = clone
 
-    dragulaExtand.dragClone.addEventListener('mousemove', dragulaExtand._onDragMove)
+    // dragulaExtand.dragClone.addEventListener('mousemove', dragulaExtand._onDragMove)
     dragulaExtand._dragulaContainer.filter((o) => {
       if (o.clonedEvent) {
         o.clonedEvent(clone)
@@ -239,9 +218,9 @@ class dragulaExtand {
     $(clone).css('z-index', '99999')
     $(clone).css('display', 'block')
     $(clone).css('position', 'absolute')
-    $(clone).css('pointer-events', 'none')
+    $(clone).css('pointer-events', 'mousemove')
   }
-  private static _onDragOut(el: Element, targetContainer: Element, sourceContainer: Element) {
+  private static _onDragOut(el: Element, targetContainer: Element): boolean {
     var findDragMoveExtands = dragulaExtand.getContainerDesc(targetContainer)
     if (findDragMoveExtands.length < 1) {
       return
@@ -251,7 +230,7 @@ class dragulaExtand {
       if (findDragMoveExtand.dragOutEvent && iscontinue) {
         iscontinue = findDragMoveExtand.dragOutEvent(el, findDragMoveExtand.container)
         if (iscontinue == false) {
-          return
+          return false
         }
       }
     })
@@ -261,7 +240,7 @@ class dragulaExtand {
       $(dragulaExtand.dragShadow).remove()
     }
     if (dragulaExtand.dragClone) {
-      dragulaExtand.dragClone.removeEventListener('mousemove', dragulaExtand._onDragMove)
+      // dragulaExtand.dragClone.removeEventListener('mousemove', dragulaExtand._onDragMove)
     }
     dragulaExtand._dragulaContainer.filter((o) => {
       if (o.dragEndEvent) {
@@ -273,7 +252,7 @@ class dragulaExtand {
     dragulaExtand.dragShadow = null
     dragulaExtand.dragOverContainer = null
   }
-  private static _onDragMove(e: Event) {
+  private static _onDragMove(e: Element, targetContainer: Element): boolean {
     //window.console.log('**********_onDragMove1')
     if (!dragulaExtand.dragSource) {
       return
@@ -289,10 +268,6 @@ class dragulaExtand {
 
       var iscontinue = findDragMoveExtand.dragMoveEvent(dragulaExtand.dragSource, findDragMoveExtand.container)
       if (!iscontinue) {
-        if (e) {
-          e.stopPropagation()
-          e.stopImmediatePropagation()
-        }
         return false
       }
     }
@@ -318,11 +293,11 @@ export default class dragHelper {
   }
 
   public dragEnd() {
-    dragulaExtand.drag_third.end()
+    // dragulaExtand.drag_third.end()
   }
   public dragCancel() {
     //不加true会触发drop
-    dragulaExtand.drag_third.cancel(true)
+    // dragulaExtand.drag_third.cancel(true)
   }
   /*********container操作********************************************************* */
   public IsCanDrop(): boolean {
