@@ -111,7 +111,7 @@ export default class importantMeasure extends ComponentBase {
   private setWenduOption() {
     this.wenduChart.setOption({
       title: {
-        text: '温度',
+        text: '温度:' + this.wenduOption.datas[this.wenduOption.datas.length - 1] + '℃',
         textStyle: {
           fontSize: 16
         }
@@ -181,7 +181,7 @@ export default class importantMeasure extends ComponentBase {
   private setMiduOption() {
     this.miduChart.setOption({
       title: {
-        text: '密度',
+        text: '密度:' + this.miduOption.datas[this.miduOption.datas.length - 1] + 'm3/g',
         textStyle: {
           fontSize: 16
         }
@@ -251,7 +251,7 @@ export default class importantMeasure extends ComponentBase {
   private setShunjianOption() {
     this.shunjianChart.setOption({
       title: {
-        text: '瞬间流量',
+        text: '瞬间流量:' + this.shunjianOption.datas[this.shunjianOption.datas.length - 1] + 't/h',
         textStyle: {
           fontSize: 16
         }
@@ -321,7 +321,7 @@ export default class importantMeasure extends ComponentBase {
   private setLeijiOption() {
     this.leijiChart.setOption({
       title: {
-        text: '累计量',
+        text: '累计量:' + this.shunjianOption.datas[this.shunjianOption.datas.length - 1] + 't/h',
         textStyle: {
           fontSize: 16
         }
