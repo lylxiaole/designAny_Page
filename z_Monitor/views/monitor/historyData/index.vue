@@ -67,7 +67,6 @@ export default class Index extends PageBase {
 
     await (this.$refs.historyInfo as historyInfo).refreshData()
   }
-
   private async getDefaultParams() {
     let res = await getFlowmeterParams(this.flowmeterId, null)
     if (!res) {

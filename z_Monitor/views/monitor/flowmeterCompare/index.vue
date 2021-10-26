@@ -25,12 +25,10 @@
       <el-button type="primary" size="small" style="float:left" @click="chooseParams">重新选择参数</el-button>
     </el-row>
     <!-- ********************************************************************* -->
-    <el-row style="height:calc(50% - 60px)" class="showblock">
+    <el-row style="height:calc(100% - 120px)" class="showblock">
       <div style="width:100%;height:100%" ref="firstarea"></div>
     </el-row>
-    <el-row style="height:calc(50% - 60px)" class="showblock">
-      <div style="width:100%;height:100%" ref="secondarea"></div>
-    </el-row>
+
   </div>
 </template>
 
@@ -49,54 +47,89 @@ import flowmeterHeader from '../../../components/flowmeterHeader.vue'
 
 const colors = ['#5793f3', '#d14a61', '#675bba', '#c04aab', '#a6c30f']
 const chartoption: any = {
-  color: colors,
-  tooltip: {
-    trigger: 'axis'
+  title: {
+    text: '123',
+    subtext: '',
+    left: 'center'
   },
-  grid: {
-    right: '5%',
-    left: '5%',
-    bottom: '15%',
-    top: '12%'
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      animation: false
+    }
   },
   toolbox: {
     feature: {
-      dataView: {
-        show: false,
-        readOnly: false
+      dataZoom: {
+        yAxisIndex: 'none'
       },
-      restore: {
-        show: false
-      },
-      saveAsImage: {
-        show: false
-      }
+      restore: {},
+      saveAsImage: {}
     }
   },
-  legend: {
-    data: ['设备新增数量', '产品新增数量', '厂商新增数量', '注册用户新增数量', 'XXXXXX']
+  axisPointer: {
+    link: { xAxisIndex: 'all' }
   },
+  dataZoom: [
+    {
+      show: true,
+      realtime: true,
+      start: 30,
+      end: 70,
+      xAxisIndex: [0, 1]
+    },
+    {
+      type: 'inside',
+      realtime: true,
+      start: 30,
+      end: 70,
+      xAxisIndex: [0, 1]
+    }
+  ],
+  grid: [
+    {
+      left: 50,
+      right: 50,
+      height: '35%'
+    },
+    {
+      left: 50,
+      right: 50,
+      top: '55%',
+      height: '35%'
+    }
+  ],
   xAxis: [
     {
       type: 'category',
-      axisTick: {
-        alignWithLabel: false
-      },
-      data: ['2016-01', '2016-02', '2016-03', '2016-04', '2016-05', '2016-06', '2016-07', '2016-08', '2016-09', '2016-10', '2016-11', '2016-12']
+      boundaryGap: false,
+      axisLine: { onZero: true },
+      data: []
+    },
+    {
+      gridIndex: 1,
+      type: 'category',
+      boundaryGap: false,
+      axisLine: { onZero: true },
+      data: []
     }
   ],
   yAxis: [
     {
+      name: [],
       type: 'value',
-      name: '暂无数据',
       position: 'left',
-      axisLine: {
-        lineStyle: {
-          color: colors[2]
-        }
-      },
-      axisLabel: {
-        formatter: '{value}'
+      nameTextStyle: {
+        padding: [0, 0, 0, 100]
+      }
+    },
+    {
+      gridIndex: 1,
+      name: [],
+      type: 'value',
+      position: 'left',
+      nameTextStyle: {
+        padding: [0, 0, 0, 100]
       }
     }
   ],
@@ -104,8 +137,18 @@ const chartoption: any = {
     {
       name: '',
       type: 'line',
-      yAxisIndex: 0,
-      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      symbolSize: 8,
+      hoverAnimation: false,
+      data: []
+    },
+    {
+      name: '',
+      type: 'line',
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      symbolSize: 8,
+      hoverAnimation: false,
+      data: []
     }
   ]
 }
@@ -120,7 +163,6 @@ const chartoption: any = {
 })
 export default class Index extends PageBase {
   private firstChart: any = null
-  private secondChart: any = null
 
   private startTime: any = moment(new Date())
     .subtract(2, 'hours')
@@ -138,9 +180,6 @@ export default class Index extends PageBase {
     this.firstChart.setOption(chartoption)
     this.firstChart.resize()
     // ********************
-    this.secondChart = echarts.init(this.$refs.secondarea as any)
-    this.secondChart.setOption(chartoption)
-    this.secondChart.resize()
     if (this.$route.query.id) {
       this.loadData(this.$route.query.id as string)
     }
@@ -161,9 +200,6 @@ export default class Index extends PageBase {
     this.currentResizer.listenTo($(this.$el), (element) => {
       if (this.firstChart) {
         this.firstChart.resize()
-      }
-      if (this.secondChart) {
-        this.secondChart.resize()
       }
     })
   }
@@ -244,25 +280,26 @@ export default class Index extends PageBase {
     await this.drawChart(compareData)
   }
   private async drawChart(data: any) {
+    let title = data.names[0] + '与' + data.names[1] + '对比'
     let firstoption = deepClone(chartoption)
+    firstoption.title.text = title
+
     let param1 = this.firstParams.find((o) => o.PHDTAG === data.names[0])
     let paramName1 = param1.TAGMC
     firstoption.xAxis[0].data = data.xData
     firstoption.series[0].name = paramName1
     firstoption.series[0].data = data.dataVals[0]
     firstoption.yAxis[0].name = paramName1
-    this.firstChart.setOption(firstoption)
-    this.firstChart.resize()
-    ////////////////////////////
-    let secondoption = deepClone(chartoption)
+
     let param2 = this.secondParams.find((o) => o.PHDTAG === data.names[1])
     let paramName2 = param2.TAGMC
-    secondoption.xAxis[0].data = data.xData
-    secondoption.series[0].name = paramName2
-    secondoption.series[0].data = data.dataVals[1]
-    secondoption.yAxis[0].name = paramName2
-    this.secondChart.setOption(secondoption)
-    this.secondChart.resize()
+    firstoption.xAxis[1].data = data.xData
+    firstoption.series[1].name = paramName2
+    firstoption.series[1].data = data.dataVals[1]
+    firstoption.yAxis[1].name = paramName2
+
+    this.firstChart.setOption(firstoption)
+    this.firstChart.resize()
   }
 }
 </script>

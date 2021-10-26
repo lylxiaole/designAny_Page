@@ -35,6 +35,8 @@ import Highmaps from 'highcharts/modules/map'
 // 加载导出模块
 import Exporting from 'highcharts/modules/exporting'
 import { message } from 'ant-design-vue'
+import { func } from 'prop-types'
+import { parse } from 'querystring'
 // 初始化导出模块
 Exporting(HighCharts)
 HighchartsMore(HighCharts)
@@ -133,7 +135,7 @@ export default class historyInfo extends ComponentBase {
   }
   // **************计算option*******************************************
   private cuteChartOption(datalist: any) {
-    window.console.log('cuteChartOption:', datalist)
+    // window.console.log('cuteChartOption:', datalist)
 
     let seriesOptions = new Array()
     let ys = new Array()
@@ -169,7 +171,6 @@ export default class historyInfo extends ComponentBase {
     this.createChart(seriesOptions, datalist.dataTimeXes, ys, this.params)
   }
   // 初始化导出模块
-
   private createChart(seriesOptions, dic, yaxis, params) {
     console.log('', seriesOptions, dic, yaxis)
     for (var i = 0; i < yaxis.length; i++) {
@@ -184,7 +185,7 @@ export default class historyInfo extends ComponentBase {
 
     console.log(yaxis, 'yaxis')
 
-    HighCharts.setOptions({
+    let chart = HighCharts.setOptions({
       global: {
         useUTC: false
       },
@@ -207,184 +208,130 @@ export default class historyInfo extends ComponentBase {
         thousandsSep: ',',
         weekdays: ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
       }
-    })
+    } as any)
 
-    HighCharts.stockChart(this.$refs.chartArea as any, {
-      rangeSelector: {
-        selected: 8,
-        buttons: [
-          {
-            type: 'minute',
-            count: 10,
-            text: '10分'
-          },
-          {
-            type: 'hour',
-            count: 5,
-            text: '5时'
-          },
-          {
-            type: 'day',
-            count: 1,
-            text: '1天'
-          },
-          {
-            type: 'month',
-            count: 1,
-            text: '1月'
-          },
-          {
-            type: 'month',
-            count: 3,
-            text: '3月'
-          },
-          {
-            type: 'month',
-            count: 6,
-            text: '半年'
-          },
-          {
-            type: 'ytd',
-            text: '近一年'
-          },
-          {
-            type: 'all',
-            text: '全部'
-          }
-        ]
-      },
-      yAxis: yaxis,
-      scrollbar: {
-        enabled: false
-      },
-      exporting: {
-        buttons: {
-          contextButton: {
-            menuItems: [
-              {
-                text: '全屏',
-                onclick: function() {
-                  this.fullscreen.toggle()
-                }
-              },
-              {
-                text: '打印',
-                onclick: function() {
-                  print()
-                }
-              }
-            ]
-          }
-        }
-      },
-      credits: {
-        enabled: false
-      },
-      legend: {
-        enabled: true,
-        //align: 'right',
-        backgroundColor: '#ffffff',
-        borderColor: '#ffffff',
-        borderWidth: 1,
-        layout: 'horizontal',
-        itemStyle: {
-          color: '#333333',
-          cursor: 'pointer',
-          fontSize: '16px',
-          fontWeight: 'bold'
+    HighCharts.stockChart(
+      this.$refs.chartArea as any,
+      {
+        rangeSelector: {
+          selected: 8,
+          buttons: [
+            {
+              type: 'minute',
+              count: 10,
+              text: '10分'
+            },
+            {
+              type: 'hour',
+              count: 5,
+              text: '5时'
+            },
+            {
+              type: 'day',
+              count: 1,
+              text: '1天'
+            },
+            {
+              type: 'month',
+              count: 1,
+              text: '1月'
+            },
+            {
+              type: 'month',
+              count: 3,
+              text: '3月'
+            },
+            {
+              type: 'month',
+              count: 6,
+              text: '半年'
+            },
+            {
+              type: 'ytd',
+              text: '近一年'
+            },
+            {
+              type: 'all',
+              text: '全部'
+            }
+          ]
         },
-        //verticalAlign: 'top',
-        //y: 100,
-        shadow: true
-      },
-      plotOptions: {
-        series: {
-          compare: 'percent',
-          point: {
-            events: {
-              click: (e) => {
-                let clData = {}
-                for (var i = 0; i < params.length; i++) {
-                  if (dic.hasOwnProperty(params[i].PHDTAG))
-                    if (dic[params[i].PHDTAG].hasOwnProperty(e.point.category)) {
-                      //console.log("包含", dic[params[i].PHDTAG][e.point.category], params[i].PHDTAG, params[i].tagName);
-                      if (!clData.hasOwnProperty(params[i].PHDTAG)) clData[params[i].PHDTAG] = dic[params[i].PHDTAG][e.point.category]
-                      //clData[params[i].PHDTAG] = dic[params[i].PHDTAG][e.point.category];
-                      if (!clData.hasOwnProperty('clickTime')) {
-                        var date = new Date(e.point.category) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-                        var Y = date.getFullYear() + '-'
-                        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
-                        var D = date.getDate() + ' '
-                        var h = date.getHours() + ':'
-                        var m = date.getMinutes() + ':'
-                        var s = date.getSeconds()
-                        let rq = Y + M + D + h + m + s
-                        clData['clickTime'] = rq
-                      }
-
-                      if (!clData.hasOwnProperty('id')) clData['id'] = e.point.category
-                    } else {
-                      console.log('不包含', e.point.category)
-                      let num = e.point.category
-                      let newArr = []
-                      let newArrVal = []
-                      let arr = Object.keys(dic[params[i].PHDTAG])
-                      arr.map(function(x) {
-                        // 对数组各个数值求差值
-                        newArr.push(Math.abs(x - num))
-                        //newArrVal.push(x);
-                      })
-                      let arrMin = []
-                      for (var v = 0; v < 100; v++) {
-                        let endi = v * 100000 + 100000
-                        if (endi > newArr.length) endi = newArr.length - 1
-                        let da = newArr.slice(v * 100000, endi)
-                        arrMin.push(Math.min.apply(null, da))
-                      }
-                      console.log('对数组各个数值求差值', -Infinity, newArr.length)
-                      //var max = -Infinity;
-                      //for (var i = 0; i < arr.length; i++) if (arr[i] > max) max = arr[i];
-                      // 求最小值的索引
-                      let a = Math.min.apply(null, arrMin)
-                      let index = newArr.indexOf(a)
-                      //console.log("求最小值的索引", index, arr[index]);
-                      if (dic[params[i].PHDTAG].hasOwnProperty(arr[index])) {
-                        //console.log("包含", dic[params[i].PHDTAG][e.point.category], params[i].PHDTAG, params[i].tagName);
-                        if (!clData.hasOwnProperty(params[i].PHDTAG)) clData[params[i].PHDTAG] = dic[params[i].PHDTAG][arr[index]]
-                        //clData[params[i].PHDTAG] = dic[params[i].PHDTAG][e.point.category];
-                        if (!clData.hasOwnProperty('clickTime')) {
-                          var date = new Date(parseInt(arr[index])) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-                          var Y = date.getFullYear() + '-'
-                          var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
-                          var D = date.getDate() + ' '
-                          var h = date.getHours() + ':'
-                          var m = date.getMinutes() + ':'
-                          var s = date.getSeconds()
-                          let rq = Y + M + D + h + m + s
-                          clData['clickTime'] = rq
-                        }
-                        if (!clData.hasOwnProperty('id')) clData['id'] = arr[index]
-                      }
-                    }
-                  else console.log('不包含编码', params[i].PHDTAG)
-                }
-                this.onSelectChartData(clData)
-              }
+        chart: {
+          cursor: 'pointer',
+          events: {
+            click: (e) => {
+              this.onChartClick(e.xAxis[0].value, dic, params)
             }
           }
-        }
-      },
-      tooltip: {
-        /* pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><b>{series.className}</b> ',*/
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b>',
-        valueDecimals: 4,
-        split: true,
-        distance: 30,
-        padding: 5
-      },
-
-      series: seriesOptions //[{name:name,data:[[时间戳,值]]}]
-    })
+        },
+        yAxis: yaxis,
+        scrollbar: {
+          enabled: false
+        },
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: [
+                {
+                  text: '全屏',
+                  onclick: function() {
+                    ;(this as any).fullscreen.toggle()
+                  }
+                },
+                {
+                  text: '打印',
+                  onclick: function() {
+                    print()
+                  }
+                }
+              ]
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        legend: {
+          enabled: true,
+          //align: 'right',
+          backgroundColor: '#ffffff',
+          borderColor: '#ffffff',
+          borderWidth: 1,
+          layout: 'horizontal',
+          itemStyle: {
+            color: '#333333',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold'
+          },
+          //verticalAlign: 'top',
+          //y: 100,
+          shadow: true
+        },
+        plotOptions: {
+          series: {
+            events: {
+              click: (e) => {
+                this.onChartClick(e.point.category, dic, params)
+              }
+            },
+            compare: 'percent',
+            cursor: 'pointer',
+            enableMouseTracking: true
+          }
+        },
+        tooltip: {
+          /* pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><b>{series.className}</b> ',*/
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b>',
+          valueDecimals: 4,
+          split: true,
+          distance: 30,
+          padding: 5
+        },
+        series: seriesOptions //[{name:name,data:[[时间戳,值]]}]
+      } as any
+    )
+    // window.console.log('HighCharts:',xxx)
   }
   private async clearData() {}
   private async initDefaultParams() {
@@ -408,19 +355,75 @@ export default class historyInfo extends ComponentBase {
   }
   private onCancelChooseParams() {}
   // **************************************************************
-  private onChartClick(params) {
-    window.console.log('onChartClick')
-    // 获取像素坐标点
-    const pointInPixel = [params.offsetX, params.offsetY]
-    const { target, topTarget } = params
-    // 判断点击的点在  点击在折线的拐点 || 折线上
-    if (target.z === 2 || topTarget.z === 2) {
-      // 获取这条折线的 信息 也就是 index
-      // 如果是拐点，直接读取 target.seriesIndex
-      // 如果是折线上的点，读取 topTarget 对象下的继续寻找parent的信息的index
-      const axs = target ? target.seriesIndex : topTarget.parent.parent.__ecComponentInfo.index
-      console.log(axs)
+  private onChartClick(pointervalue, dic, params) {
+    let clickcategory = pointervalue
+
+    let clData = {}
+    for (var i = 0; i < params.length; i++) {
+      if (dic.hasOwnProperty(params[i].PHDTAG))
+        if (dic[params[i].PHDTAG].hasOwnProperty(clickcategory)) {
+          //console.log("包含", dic[params[i].PHDTAG][clickcategory], params[i].PHDTAG, params[i].tagName);
+          if (!clData.hasOwnProperty(params[i].PHDTAG)) clData[params[i].PHDTAG] = dic[params[i].PHDTAG][clickcategory]
+          //clData[params[i].PHDTAG] = dic[params[i].PHDTAG][clickcategory];
+          if (!clData.hasOwnProperty('clickTime')) {
+            var date = new Date(clickcategory) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-'
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+            var D = date.getDate() + ' '
+            var h = date.getHours() + ':'
+            var m = date.getMinutes() + ':'
+            var s = date.getSeconds()
+            let rq = Y + M + D + h + m + s
+            clData['clickTime'] = rq
+          }
+          if (!clData.hasOwnProperty('id')) clData['id'] = clickcategory
+        } else {
+          console.log('不包含', clickcategory)
+          let num = clickcategory
+          let newArr = []
+          let newArrVal = []
+          let arr = Object.keys(dic[params[i].PHDTAG])
+          arr.map(function(x: any) {
+            // 对数组各个数值求差值
+            newArr.push(Math.abs(x - num))
+            //newArrVal.push(x);
+          })
+          let arrMin = []
+          for (var v = 0; v < 100; v++) {
+            let endi = v * 100000 + 100000
+            if (endi > newArr.length) endi = newArr.length - 1
+            let da = newArr.slice(v * 100000, endi)
+            arrMin.push(Math.min.apply(null, da))
+          }
+          console.log('对数组各个数值求差值', -Infinity, newArr.length)
+          //var max = -Infinity;
+          //for (var i = 0; i < arr.length; i++) if (arr[i] > max) max = arr[i];
+          // 求最小值的索引
+          let a = Math.min.apply(null, arrMin)
+          let index = newArr.indexOf(a)
+          //console.log("求最小值的索引", index, arr[index]);
+          if (dic[params[i].PHDTAG].hasOwnProperty(arr[index])) {
+            //console.log("包含", dic[params[i].PHDTAG][clickcategory], params[i].PHDTAG, params[i].tagName);
+            if (!clData.hasOwnProperty(params[i].PHDTAG)) clData[params[i].PHDTAG] = dic[params[i].PHDTAG][arr[index]]
+            //clData[params[i].PHDTAG] = dic[params[i].PHDTAG][clickcategory];
+            if (!clData.hasOwnProperty('clickTime')) {
+              var date = new Date(parseInt(arr[index])) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+              var Y = date.getFullYear() + '-'
+              var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+              var D = date.getDate() + ' '
+              var h = date.getHours() + ':'
+              var m = date.getMinutes() + ':'
+              var s = date.getSeconds()
+              let rq = Y + M + D + h + m + s
+              clData['clickTime'] = rq
+            }
+            if (!clData.hasOwnProperty('id')) clData['id'] = arr[index]
+          }
+        }
+      else console.log('不包含编码', params[i].PHDTAG)
     }
+    // window.console.log('哈哈哈哈哈:', clData)
+    this.onSelectChartData(clData)
   }
   // **************************************************************
   @Emit('onSelectParams')
