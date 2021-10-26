@@ -2,7 +2,7 @@
   <div style="box-sizing:border-box;" :style="{'border-left-style': 'solid','border-left-width': '5px','border-left-color':borderColor}">
     <el-card class="box-card" style="height:100%">
       <el-row class="row">
-        <el-col :span="24">计量表名称:&nbsp;{{cardInfo.name}}</el-col>
+        <el-col :span="24">流量计名称:&nbsp;{{cardInfo.name}}</el-col>
       </el-row>
       <el-row class="row">
         <el-col :span="12">位号:&nbsp;{{cardInfo.code}}</el-col>
@@ -14,7 +14,7 @@
         <el-col :span="12">密度:&nbsp;{{cardInfo.density}}</el-col>
       </el-row>
       <el-row class="row">
-        <el-col :span="12">累积量:&nbsp;{{cardInfo.weight}}</el-col>
+        <el-col :span="12">累计量:&nbsp;{{cardInfo.weight}}</el-col>
         <el-col :span="12">瞬间流量:&nbsp;{{cardInfo.instantaneousFlow}}</el-col>
       </el-row>
       <el-row class="row">

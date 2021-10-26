@@ -30,10 +30,12 @@
       <el-table header-row-class-name="monitorTable" stripe :data="filterFlowmeters" border v-show="serachInfo.showType===2" size="small"
         height="calc(100% - 60px)" style="width: 100%">
         <el-table-column prop="code" label="位号"> </el-table-column>
+        <el-table-column prop="name" label="流量计名称"> </el-table-column>
         <el-table-column prop="state" label="状态"> </el-table-column>
         <el-table-column prop="temp" label="温度"> </el-table-column>
         <el-table-column prop="density" label="密度"> </el-table-column>
-        <el-table-column prop="weight" label="累积量"> </el-table-column>
+        <el-table-column prop="weight" label="累计量"> </el-table-column>
+        <el-table-column prop="alarmCount" label="是否有报警"> </el-table-column>
         <el-table-column prop="instantaneousFlow" label="瞬间流量"> </el-table-column>
         <el-table-column prop="address" label="操作">
           <template slot-scope="scope">
@@ -46,7 +48,7 @@
             <el-tooltip class="item" effect="light" content="历史信息" placement="top">
               <el-image class="tableIcon" size="small" fit="contain" :src="historyIcon" @click="openFlowmeterHis(scope.row)" />
             </el-tooltip>
-            <el-tooltip class="item" effect="light" content="双标对比" placement="top">
+            <el-tooltip class="item" effect="light" content="双表对比" placement="top">
               <el-image class="tableIcon" size="small" fit="contain" :src="compareIcon" @click="openFlowmeterCompare(scope.row)" />
             </el-tooltip>
 
