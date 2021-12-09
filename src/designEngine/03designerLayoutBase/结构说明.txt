@@ -13,4 +13,4 @@
             MobilePageDesign   PCPageDesign          |         components
 
 
-            下一步改造:使用Shell代替EngineContainer层，去除EngineContainer带来的设计弊端和冗余
+            下一步改造:使用Shell(DesignShell.vue,ViewShell.vue)代替EngineContainer层，去除EngineContainer带来的设计弊端和冗余
