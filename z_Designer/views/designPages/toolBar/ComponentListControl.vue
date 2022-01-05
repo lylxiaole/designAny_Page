@@ -9,10 +9,10 @@
     </el-col>
     <el-col :span="17">
       <div style="display:flex;flex-wrap: wrap">
-        <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" :dragType="dragType" :compName="item.name" :compCode="item.compCode"
-          :compType="item.type" style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
+        <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" draggable="true" :dragType="dragType" :compName="item.name"
+          :compCode="item.compCode" :compType="item.type" style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
           <div style="width:100%;height:35px;text-align:center">
-            <el-image style="font-size:30px;" :src="item.icon" />
+            <el-image style="font-size:30px;" draggable="false" :src="item.icon" />
           </div>
           <div style="font-size:12px;padding-top:3px;text-align:center;color:rgba(0,0,0,0.5);width:100%;height:20px" slot="cover">
             {{item.name}}
@@ -120,7 +120,7 @@ export default class ComponentListControl extends Vue {
           draghelper.makeContainerCannotDrop()
           //让每个包装层里面的内容可拖拽
           var dragItem = $(element).children()[0]
-          window.console.log('dragItem:', dragItem)
+          // window.console.log('dragItem:', dragItem)
           draghelper.makeDomCanDrag(dragItem)
           //获取dom节点上的信息，这些信息包含了组件的简要信息
           var dragdata = this.organizeDragData(element)
@@ -186,6 +186,11 @@ export default class ComponentListControl extends Vue {
 </script>
 
 <style  lang="less" scoped>
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 .titlePoint {
   content: '';
   display: inline-block;

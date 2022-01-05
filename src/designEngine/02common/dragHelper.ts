@@ -25,7 +25,7 @@ class dragulaContainerClass {
     //   const element = this.container.children[index]
     //   element.addEventListener('οndragstart', this._dragEvent)
     // }
-
+    // window.console.log('dragulaContainerClass init', this.container)
     this.container.addEventListener('drag', this._dragEvent)
     this.container.addEventListener('ondragend', this._dragEndEvent)
     this.container.addEventListener('ondragover', this._overEvent)
@@ -38,7 +38,7 @@ class dragulaContainerClass {
   private _dragEvent(event: DragEvent) {
     window.console.log('最底层_dragEvent：', event)
     if (this.dragEvent) {
-      // this.dragEvent(event.,event.)
+      this.dragEvent(event.target as any, event.target as any)
     }
     // event.dataTransfer.setData('key', 'val')
     // event.dataTransfer.getData('key')
