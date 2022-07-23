@@ -28,7 +28,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@src/utils'
-import dragHelper from '@src/designEngine/02common/dragHelper'
+import dragHelper from '@src/designEngine/02common/dragHelper_new'
 // 所有系统组件
 import * as engin from '@src/designEngine'
 

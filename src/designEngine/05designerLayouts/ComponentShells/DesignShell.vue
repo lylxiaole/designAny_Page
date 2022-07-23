@@ -24,7 +24,7 @@
       style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:2" draggable="true"></div>
     <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="emove"
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
-    <div v-if="Component&&Component.disabled===true" ref="dragmengb" type="drag"
+    <div v-if="Component&&Component.disabled===true" ref="dragmengb" class="dragmengb" type="drag"
       style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:isDesigning===true?0:3 }"></div>
 
     <i ref="dragIcon" class="el-icon-rank" v-if="isSelectedArea===true&&isDesigning===true"
@@ -77,6 +77,31 @@ export default class DesignShell extends BaseEvents {
     }
     return false
   }
+  @Watch('isSelectedArea')
+  private async watchIsSelectedAreaChanged(val) {
+    await this.$nextTick()
+
+    $(this.$el)
+      .find('.el-icon-rank')
+      .each((index, element) => {
+        if (val) {
+          this._dragHelper.makeDomCanDrag(element)
+        } else {
+          this._dragHelper.makeDomCannotDrag(element)
+        }
+      })
+
+    $(this.$el)
+      .find('.dragbutton')
+      .each((index, element) => {
+        if (val) {
+          this._dragHelper.makeDomCanDrag(element)
+        } else {
+          this._dragHelper.makeDomCannotDrag(element)
+        }
+      })
+  }
+
   get hoverClass(): string {
     if (this.isDesigning == true) {
       return 'gad-mengb'
@@ -105,8 +130,9 @@ export default class DesignShell extends BaseEvents {
   mounted() {
     this.captureEvent()
     this.canDrop = false
-    this.canDrag = true
-    this.onDrag_Event = this.onDragSize
+    this.canDrag = false
+
+    this.onDrag_Event = this.onStartDrag
     this.onClick_Event = (e: Event, target: any) => {
       // window.console.log('DesignShell onClick_Event')
       ;(this.Component.parentLayout as any).chooseComps([this.Component])
@@ -140,9 +166,9 @@ export default class DesignShell extends BaseEvents {
     })
   }
 
-  public onDragSize(el: Element, dragdata: DragItemData<any>) {
-    if (el == this.$refs['dragIcon'] || el == this.$refs['dragmengb']) {
-      window.console.log('onDragSize:', el)
+  public onStartDrag(el: Element, dragdata: DragItemData<any>) {
+    window.console.log('onDragSize:', el)
+    if (el.className.indexOf('el-icon-rank') > -1 || el.className.indexOf('dragmengb') > -1) {
       dragdata.type = DragItemTypeEnum.dragmove_component_inpage
       dragdata.dragData = { compId: this.Component.Id }
       return

@@ -1,6 +1,6 @@
 import Vue, { ComponentOptions } from 'vue'
 import { Component } from 'vue-property-decorator'
-import dragHelper from '../02common/dragHelper'
+import dragHelper from '../02common/dragHelper_new'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
   drop_system_component = 'drop_system_component',
@@ -131,12 +131,10 @@ export default class BaseEvents extends Vue {
     this._dragHelper.makeDomContainer()
     this._dragHelper.registerOnDrag(this._onDrag)
     this._dragHelper.registerOnDrop(this._onDrop)
-    this._dragHelper.registerOnDragShadow(this._onDragShadow)
     this._dragHelper.registerOnDragMove(this._onDragMove)
-    this._dragHelper.registerOnDragOver(this._onDragOver)
     this._dragHelper.registerOnDragEnd(this._onDragEnd)
     this._dragHelper.registerOnDragOut(this._onDragOut)
-    this._dragHelper.registerOnDragClone(this._onDragClone)
+    // this._dragHelper.registerOnDragClone(this._onDragClone)
   }
   /**停止捕捉鼠标键盘 */
   protected realseEvent() {
@@ -172,15 +170,11 @@ export default class BaseEvents extends Vue {
     this.clearBoxSelectInfo(window.event)
     BaseEvents.isDraging = true
     //只有继承自BaseEvent的组件才能感知此事件
-    if (this.canDrag && this.onDrag_Event) {
-      // window.console.log('从本布局中开始拖拽一个东西出去了');
-      var currentDragData = new DragItemData()
-      this.onDrag_Event(el, currentDragData)
-      this._dragHelper.makeDragItemInfo(el, currentDragData)
-      return true
-    } else {
-      this._dragHelper.dragEnd()
-    }
+    // window.console.log('从本布局中开始拖拽一个东西出去了');
+    var currentDragData = new DragItemData()
+    this.onDrag_Event(el, currentDragData)
+    this._dragHelper.makeDragItemInfo(el, currentDragData)
+    return true
   }
   private _onDrop(el: Element, targetContainer: Element): boolean {
     if (this.isDesigning == false) {
@@ -194,24 +188,7 @@ export default class BaseEvents extends Vue {
     this._dragHelper.dragCancel()
     return true
   }
-  private _onDragOver(el: Element, targetContainer: Element): boolean {
-    if (this.isDesigning == false || !this.onDragOver_Event) {
-      return true
-    }
-    if (targetContainer != this.$el) {
-      return true
-    }
-    this.eventsOptions.startDragMovePoint_left = $(el).offset().left
-    this.eventsOptions.startDragMovePoint_top = $(el).offset().top
-    return this.onDragOver_Event(el)
-    //只有继承自BaseEvent的组件才能感知此事件
-    // window.console.log('dropover')
-  }
-  private _onDragShadow(shadow: Element, targetContainer: Element) {
-    if (this.isDesigning == false) {
-      return
-    }
-  }
+
   private _onDragMove(el: Element, targetContainer: Element): boolean {
     if (this.isDesigning == false || this.canDrop == false || !this.onDragMove_Event) {
       return true
@@ -219,10 +196,10 @@ export default class BaseEvents extends Vue {
     if (!el) {
       return true
     }
-    // window.console.log('最底层拖拽')
+    window.console.log('最底层拖拽')
     var iscontinue: boolean = true
-    var currentDragLeft = $(this._dragHelper.dragCloneElement).offset().left - $(targetContainer).offset().left
-    var currentDragTop = $(this._dragHelper.dragCloneElement).offset().top - $(targetContainer).offset().top
+    var currentDragLeft = this._dragHelper.currentDragX - $(targetContainer).offset().left
+    var currentDragTop = this._dragHelper.currentDragY - $(targetContainer).offset().top
 
     // window.console.log('********************drag:', $(el).offset().left, '****', $(el).offset().top)
     // window.console.log('********************clone:', currentDragLeft, '****', currentDragTop)
@@ -514,7 +491,6 @@ export default class BaseEvents extends Vue {
   onMoudeUp_Event: (e: Event) => void
   onBoxSelect_Event: (e: MouseEvent) => void
   onDragEnd_Event: () => void
-  onDragOver_Event: (el: Element) => boolean
   onDragClone_Event: (el: Element) => void
   onDragOut_Event: (el: Element, targetContainer: Element) => boolean
   onDrag_Event: (el: Element, dragdata: DragItemData<any>) => void

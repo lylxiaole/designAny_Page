@@ -1,8 +1,6 @@
 import { Component, Emit } from 'vue-property-decorator'
-
 import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
-
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
 import { findSystemCompByCode } from './commonClasses/componentInfos'
@@ -50,8 +48,8 @@ export default class EngineContainer extends EngineLayout {
     }
     window.console.log('listenOnDrop:', dragdata)
     // window.console.log('$(this._dragHelper.dragCloneElement).offset()', $(this._dragHelper.dragCloneElement).offset())
-    screenLeft = $(this._dragHelper.dragCloneElement).offset().left
-    screenTop = $(this._dragHelper.dragCloneElement).offset().top
+    screenLeft = this._dragHelper.currentDragX
+    screenTop = this._dragHelper.currentDragY
     let dropcomp: EngineLayout = null
 
     switch (dragdata.type) {
@@ -148,7 +146,7 @@ export default class EngineContainer extends EngineLayout {
     e.stopPropagation()
   }
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    // window.console.log('listenOnDragMove:', dragdata)
+    window.console.log('listenOnDragMove:', dragdata)
     if (!dragdata) {
       return true
     }
