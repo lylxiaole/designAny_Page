@@ -47,25 +47,30 @@ import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePr
   }
 })
 export default class index extends PageBase {
+  // **********当前应用**********************************************************
   private applicationId: string = null
   private application: ApplicationDC = null
-  private pageDataList: any[] = []
   mounted() {
     this.applicationId = this.$route.query.appId as string
     GetApplication(this.applicationId).then((res) => {
       this.application = res
-      // window.console.log('GetApplication:', res)
     })
   }
-  // **********页面Tabs**********************************************************
+  // **********当前应用的页面**********************************************************
+  //当前的页面列表
+  private pageDataList: any[] = []
+  //当前打开进行设计的页面
   private currentOpenPageId: string = null
+  //所有打开的页面的数据
   private openPages: DesignPageDC[] = []
+  //所有打开的页面的引擎
   private openPageEngines: EnginePage[] = []
+  //当前设计的页面引擎
   private get currentShowEngine(): EnginePage {
     let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
     return findengine
   }
-
+  //当前选择的组件列表
   protected get selectedComps(): EngineLayout[] {
     if (this.currentShowEngine) {
       var findchilds = this.currentShowEngine.findSelectedLayoutsRecursion(this.currentShowEngine.children)
@@ -79,6 +84,7 @@ export default class index extends PageBase {
       return null
     }
   }
+  //打开新页面
   private openPage(page: DesignPageDC, pageengine: EnginePage) {
     let engine = this.openPageEngines.find((o) => o.Id === page.id)
     if (!engine) {
@@ -92,6 +98,7 @@ export default class index extends PageBase {
     window.console.log('openPage:', page.id)
     this.currentOpenPageId = page.id
   }
+  //关闭页面
   private closePage(pageId: string) {
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
@@ -111,7 +118,7 @@ export default class index extends PageBase {
       return false
     }
   }
-  // **********页面列表**********************************************************
+  // **********左侧页面列表操作**************************************************
   private async onEditPage(pageId: string) {
     if (this.isHaveOpened(pageId)) {
       this.currentOpenPageId = pageId
@@ -125,7 +132,7 @@ export default class index extends PageBase {
       case pageType.pcPage:
         designLayout = new PCPageDesign() as any
         break
-      case pageType.pcPage:
+      case pageType.mobilePage:
         designLayout = new MobilePageDesign() as any
         break
       default:
@@ -144,7 +151,8 @@ export default class index extends PageBase {
     this.closePage(pageId)
   }
   // **********属性窗**********************************************************
-  // **********topbar**********************************************************
+
+  // **********顶部操作栏**********************************************************
   private async onSaveCurrentPage(pageId: string) {
     window.console.log('onSaveCurrentPage:', pageId)
     await this.currentShowEngine.save(this.applicationId)

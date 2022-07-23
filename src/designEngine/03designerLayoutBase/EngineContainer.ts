@@ -39,6 +39,7 @@ export default class EngineContainer extends EngineLayout {
     this.mouseY = e.offsetY
   }
   private listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): boolean {
+    window.console.log('listenOnDrop:', 1)
     if (!dragdata) {
       return true
     }
