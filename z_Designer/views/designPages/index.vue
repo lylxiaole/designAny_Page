@@ -9,7 +9,7 @@
           @onDeletePage="onDeletePage"></pagelist>
       </el-col>
       <el-col class="pageList" style="width:calc(100% - 500px);height:100%">
-        <el-tabs v-model="currentOpenPageId" closable type="border-card" style="width:100%;height:100%">
+        <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width:100%;height:100%">
           <el-tab-pane v-for="page in openPages" :key="page.id" :label="page.name" :name="page.id">
             <div style="width:100%;height:100%;overflow:auto" :ref="page.id"></div>
           </el-tab-pane>
@@ -100,6 +100,7 @@ export default class index extends PageBase {
   }
   //关闭页面
   private closePage(pageId: string) {
+    window.console.log('closePage:', pageId)
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
       this.openPageEngines[engineIndex].$destroy()
@@ -177,7 +178,7 @@ export default class index extends PageBase {
   box-sizing: border-box;
 }
 .pageList > .el-tabs--border-card > .el-tabs__content {
-  padding: 6px;
+  padding: 0px;
   height: calc(100% - 39px);
   box-sizing: border-box;
 }

@@ -29,8 +29,8 @@ export default class dragHelper {
 
   public static dragClone: Element
 
-  public currentDragX: number = 0
-  public currentDragY: number = 0
+  public static currentDragX: number = 0
+  public static currentDragY: number = 0
 
   get dragCloneElement(): Element {
     return dragHelper.dragClone
@@ -75,8 +75,12 @@ export default class dragHelper {
     $(this._container).on('dragover', (e: any) => {
       //同时注册drop和dragover时, 调用e.preventDefault()才能让容器的drop事件得以触发
       e.preventDefault()
-      this.currentDragX = e.originalEvent.x
-      this.currentDragY = e.originalEvent.y
+
+      window.console.log('dragover:', e.originalEvent.layerX)
+
+      dragHelper.currentDragX = e.originalEvent.pageX
+      dragHelper.currentDragY = e.originalEvent.pageY
+
       if (!this.onDragMoveEventCallback) {
         return
       }
@@ -148,7 +152,6 @@ export default class dragHelper {
     //   }
     // })
     $(dragItem).on('dragend', (e: any) => {
-      window.console.log('dragend:', e)
       if (this.onDragEndEventCallback) {
         this.onDragEndEventCallback(dragItem)
       }

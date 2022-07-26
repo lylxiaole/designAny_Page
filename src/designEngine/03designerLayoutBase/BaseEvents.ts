@@ -171,7 +171,8 @@ export default class BaseEvents extends Vue {
     BaseEvents.isDraging = true
     //只有继承自BaseEvent的组件才能感知此事件
     // window.console.log('从本布局中开始拖拽一个东西出去了');
-    var currentDragData = new DragItemData()
+    var currentDragData = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
+
     this.onDrag_Event(el, currentDragData)
     this._dragHelper.makeDragItemInfo(el, currentDragData)
     return true
@@ -196,28 +197,29 @@ export default class BaseEvents extends Vue {
     if (!el) {
       return true
     }
-    window.console.log('最底层拖拽')
-    var iscontinue: boolean = true
-    var currentDragLeft = this._dragHelper.currentDragX - $(targetContainer).offset().left
-    var currentDragTop = this._dragHelper.currentDragY - $(targetContainer).offset().top
 
-    // window.console.log('********************drag:', $(el).offset().left, '****', $(el).offset().top)
-    // window.console.log('********************clone:', currentDragLeft, '****', currentDragTop)
+    var iscontinue: boolean = true
+    var currentDragLeft = dragHelper.currentDragX
+    var currentDragTop = dragHelper.currentDragY
 
     //如果是刚开始拖拽，初始化drag的值
     if (isNaN(this.eventsOptions.startDragMovePoint_left) || this.eventsOptions.startDragMovePoint_left < 1) {
       this.eventsOptions.startDragMovePoint_left = currentDragLeft
+      // window.console.log('最底层拖拽:X null')
     }
 
     if (isNaN(this.eventsOptions.startDragMovePoint_top) || this.eventsOptions.startDragMovePoint_top < 1) {
       this.eventsOptions.startDragMovePoint_top = currentDragTop
+      // window.console.log('最底层拖拽:Y null')
     }
     //如果前后值相等，就不触发事件了
     if (this.eventsOptions.startDragMovePoint_left == currentDragLeft && this.eventsOptions.startDragMovePoint_top == currentDragTop) {
       return iscontinue
     }
     var xchanged = currentDragLeft - this.eventsOptions.startDragMovePoint_left
+    // window.console.log('最底层拖拽 x:', currentDragLeft, this.eventsOptions.startDragMovePoint_left, xchanged)
     var ychanged = currentDragTop - this.eventsOptions.startDragMovePoint_top
+    // window.console.log('最底层拖拽 y:', currentDragTop, this.eventsOptions.startDragMovePoint_top, ychanged)
     var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
     iscontinue = this.onDragMove_Event(xchanged, ychanged, currentDragLeft, currentDragTop, el, dragdata)
     this.eventsOptions.startDragMovePoint_left = currentDragLeft
@@ -225,12 +227,12 @@ export default class BaseEvents extends Vue {
     return iscontinue
   }
   private _onDragEnd(el: Element) {
+    this.clearCachePoint()
+
     if (this.isDesigning == false || !this.onDragEnd_Event) {
       return
     }
-    this.clearCachePoint()
     BaseEvents.isDraging = false
-    // window.console.log('dragend')
     this.onDragEnd_Event()
   }
   private _onDragOut(el: Element, targetContainer: Element): boolean {
@@ -405,6 +407,7 @@ export default class BaseEvents extends Vue {
     }
   }
   private _mouseUp(e: any) {
+    this.clearCachePoint()
     if (this.isDesigning == false || !this.onMoudeUp_Event) {
       return true
     }
@@ -413,7 +416,7 @@ export default class BaseEvents extends Vue {
     this.clearBoxSelectInfo(e)
     /********************** */
     this.eventsOptions.isMouseDown = false
-    this.clearCachePoint()
+
     this.onMoudeUp_Event(e)
   }
   private clearBoxSelectInfo(e: any) {
@@ -461,6 +464,7 @@ export default class BaseEvents extends Vue {
   private clearCachePoint() {
     this.eventsOptions.startDragMovePoint_left = NaN
     this.eventsOptions.startDragMovePoint_top = NaN
+    window.console.log('clearCachePoint:', this.eventsOptions)
   }
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void

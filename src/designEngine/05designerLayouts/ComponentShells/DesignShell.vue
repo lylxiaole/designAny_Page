@@ -8,26 +8,26 @@
       :style="{zIndex:isDesigning===true?0:3,'font-family':Component==null?'':Component.fontFamily }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="semove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="semove"
       style="width:16px;height:16px;right:-16px; bottom:-16px;position:absolute;cursor: se-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="swmove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="swmove"
       style="width:16px;height:16px;left:-16px; bottom:-16px;position:absolute;cursor: sw-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nemove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nemove"
       style="width:16px;height:16px;right:-16px; top:-16px;position:absolute;cursor: ne-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nwmove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nwmove"
       style="width:16px;height:16px;left:-16px; top:-16px;position:absolute;cursor: nw-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nmove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nmove"
       style="width:96%;height:16px;left:2%; top:-16px;position:absolute;cursor:n-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="smove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="smove"
       style="width:96%;height:16px;left:2%; bottom:-16px;position:absolute;cursor:s-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="wmove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="wmove"
       style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:2" draggable="true"></div>
-    <div v-if="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="emove"
+    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="emove"
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
-    <div v-if="Component&&Component.disabled===true" ref="dragmengb" class="dragmengb" type="drag"
+    <div v-show="Component&&Component.disabled===true" ref="dragmengb" class="dragmengb" type="drag"
       style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:isDesigning===true?0:3 }"></div>
 
-    <i ref="dragIcon" class="el-icon-rank" v-if="isSelectedArea===true&&isDesigning===true"
+    <i ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true&&isDesigning===true"
       style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4"></i>
 
   </div>
@@ -77,30 +77,6 @@ export default class DesignShell extends BaseEvents {
     }
     return false
   }
-  @Watch('isSelectedArea')
-  private async watchIsSelectedAreaChanged(val) {
-    await this.$nextTick()
-
-    $(this.$el)
-      .find('.el-icon-rank')
-      .each((index, element) => {
-        if (val) {
-          this._dragHelper.makeDomCanDrag(element)
-        } else {
-          this._dragHelper.makeDomCannotDrag(element)
-        }
-      })
-
-    $(this.$el)
-      .find('.dragbutton')
-      .each((index, element) => {
-        if (val) {
-          this._dragHelper.makeDomCanDrag(element)
-        } else {
-          this._dragHelper.makeDomCannotDrag(element)
-        }
-      })
-  }
 
   get hoverClass(): string {
     if (this.isDesigning == true) {
@@ -121,7 +97,7 @@ export default class DesignShell extends BaseEvents {
   }
   get boarderStyle(): string {
     if (this.isDesigning == true && this.isSelectedArea == true) {
-      return '#faad14 solid 1px'
+      return '#faad14 solid 0.3px'
     } else {
       return ''
     }
@@ -164,17 +140,18 @@ export default class DesignShell extends BaseEvents {
     this.Component.$once('onDestroyed', () => {
       this.$destroy()
     })
+
+    this.startListenItemDrag()
   }
 
-  public onStartDrag(el: Element, dragdata: DragItemData<any>) {
-    window.console.log('onDragSize:', el)
-    if (el.className.indexOf('el-icon-rank') > -1 || el.className.indexOf('dragmengb') > -1) {
-      dragdata.type = DragItemTypeEnum.dragmove_component_inpage
-      dragdata.dragData = { compId: this.Component.Id }
-      return
-    }
-    dragdata.type = DragItemTypeEnum.drag_component_size
+  private startListenItemDrag() {
+    $(this.$el)
+      .find('.el-icon-rank')
+      .each((index, element) => {
+        this._dragHelper.makeDomCanDrag(element)
+      })
 
+    // ******************************************
     let you_xia = this.$refs['semove'] as Element
     let zuo_xia = this.$refs['swmove'] as Element
     let you_shang = this.$refs['nemove'] as Element
@@ -183,38 +160,49 @@ export default class DesignShell extends BaseEvents {
     let xia = this.$refs['smove'] as Element
     let zuo = this.$refs['wmove'] as Element
     let you = this.$refs['emove'] as Element
-    if (el == you_xia) {
-      this._dragHelper.makeDomCanDrag(you_xia)
-      dragdata.dragData = { position: 'you_xia', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(you_xia, deepClone(deepClone(dragdata)))
-    } else if (el == zuo_xia) {
-      this._dragHelper.makeDomCanDrag(zuo_xia)
-      dragdata.dragData = { position: 'zuo_xia', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(zuo_xia, deepClone(dragdata))
-    } else if (el == you_shang) {
-      this._dragHelper.makeDomCanDrag(you_shang)
-      dragdata.dragData = { position: 'you_shang', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(you_shang, deepClone(dragdata))
-    } else if (el == zuo_shang) {
-      this._dragHelper.makeDomCanDrag(zuo_shang)
-      dragdata.dragData = { position: 'zuo_shang', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(zuo_shang, deepClone(dragdata))
-    } else if (el == shang) {
-      this._dragHelper.makeDomCanDrag(shang)
-      dragdata.dragData = { position: 'shang', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(shang, deepClone(dragdata))
-    } else if (el == xia) {
-      this._dragHelper.makeDomCanDrag(xia)
-      dragdata.dragData = { position: 'xia', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(xia, deepClone(dragdata))
-    } else if (el == zuo) {
-      this._dragHelper.makeDomCanDrag(zuo)
-      dragdata.dragData = { position: 'zuo', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(zuo, deepClone(dragdata))
-    } else if (el == you) {
-      this._dragHelper.makeDomCanDrag(you)
-      dragdata.dragData = { position: 'you', compId: this.Component.Id }
-      this._dragHelper.makeDragItemInfo(you, deepClone(dragdata))
+    var dragdata: any = { type: DragItemTypeEnum.drag_component_size }
+    //
+    this._dragHelper.makeDomCanDrag(you_xia)
+    dragdata.dragData = { position: 'you_xia', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(you_xia, deepClone(deepClone(dragdata)))
+    //
+    this._dragHelper.makeDomCanDrag(zuo_xia)
+    dragdata.dragData = { position: 'zuo_xia', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(zuo_xia, deepClone(dragdata))
+    //
+    this._dragHelper.makeDomCanDrag(you_shang)
+    dragdata.dragData = { position: 'you_shang', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(you_shang, deepClone(dragdata))
+    //
+    this._dragHelper.makeDomCanDrag(zuo_shang)
+    dragdata.dragData = { position: 'zuo_shang', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(zuo_shang, deepClone(dragdata))
+    //
+    this._dragHelper.makeDomCanDrag(shang)
+    dragdata.dragData = { position: 'shang', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(shang, deepClone(dragdata))
+    //
+    this._dragHelper.makeDomCanDrag(xia)
+    dragdata.dragData = { position: 'xia', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(xia, deepClone(dragdata))
+    //
+    this._dragHelper.makeDomCanDrag(zuo)
+    dragdata.dragData = { position: 'zuo', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(zuo, deepClone(dragdata))
+    //
+    this._dragHelper.makeDomCanDrag(you)
+    dragdata.dragData = { position: 'you', compId: this.Component.Id }
+    this._dragHelper.makeDragItemInfo(you, deepClone(dragdata))
+  }
+
+  public onStartDrag(el: Element, dragdata: DragItemData<any>) {
+    window.console.log('DesignShell onStartDrag:', el)
+    if (el.className.indexOf('el-icon-rank') > -1 || el.className.indexOf('dragmengb') > -1) {
+      dragdata.type = DragItemTypeEnum.dragmove_component_inpage
+      dragdata.dragData = { compId: this.Component.Id }
+      return
+    } else {
+      dragdata.type = DragItemTypeEnum.drag_component_size
     }
   }
 }

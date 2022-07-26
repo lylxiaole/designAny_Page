@@ -5,6 +5,7 @@ import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@src/utils'
 import { findSystemCompByCode } from './commonClasses/componentInfos'
 import { EnginePage } from '.'
+import dragHelper from '@src/designEngine/02common/dragHelper_new'
 
 @Component
 export default class EngineContainer extends EngineLayout {
@@ -31,7 +32,7 @@ export default class EngineContainer extends EngineLayout {
   }
 
   mounted() {}
-  /**********************************privates ******************************/
+  /**********************************鼠标事件 ******************************/
   private listenOnMousemove(e: MouseEvent) {
     this.mouseX = e.offsetX
     this.mouseY = e.offsetY
@@ -48,8 +49,8 @@ export default class EngineContainer extends EngineLayout {
     }
     window.console.log('listenOnDrop:', dragdata)
     // window.console.log('$(this._dragHelper.dragCloneElement).offset()', $(this._dragHelper.dragCloneElement).offset())
-    screenLeft = this._dragHelper.currentDragX
-    screenTop = this._dragHelper.currentDragY
+    screenLeft = dragHelper.currentDragX
+    screenTop = dragHelper.currentDragY
     let dropcomp: EngineLayout = null
 
     switch (dragdata.type) {
@@ -76,6 +77,66 @@ export default class EngineContainer extends EngineLayout {
 
     return false
   }
+
+  protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
+    if (!dragdata) {
+      return true
+    }
+    let compInfo = dragdata.dragData as any
+    if (!compInfo) {
+      return true
+    }
+    /** */
+    let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as EngineLayout
+    // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
+    if (!dragComp) {
+      return false
+    }
+
+    let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
+    /**do */
+    if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
+      /**范围控制 */
+      if (left + dragComp.width * parentPageCurrentScaleSize < 10) {
+        left = 10
+      } else if (left > this.width * parentPageCurrentScaleSize - 10) {
+        left = this.width * parentPageCurrentScaleSize - 10
+      }
+
+      if (top + dragComp.height * parentPageCurrentScaleSize < 10) {
+        top = 10
+      } else if (top > this.height * parentPageCurrentScaleSize - 10) {
+        // window.console.log('this.height=', this.height)
+        top = this.height * parentPageCurrentScaleSize - 10
+        // window.console.log('cute top=', top)
+      }
+      // window.console.log('currentScaleSize=', parentPageCurrentScaleSize)
+      left = left / parentPageCurrentScaleSize
+      top = top / parentPageCurrentScaleSize
+      dragComp.left = left
+      dragComp.top = top
+      // window.console.log('before cute end point' + dragComp.left + '-' + dragComp.top + '')
+      let newpoint = this.cuteNearbyPointInPage(left, top, dragComp)
+      dragComp.left = newpoint.X
+      dragComp.top = newpoint.Y
+      // window.console.log('after cute end point' + dragComp.left + '-' + dragComp.top + '')
+      return false
+    } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
+      xchanged = xchanged / parentPageCurrentScaleSize
+      window.console.log(' DragItemTypeEnum.drag_component_size 1:', ychanged)
+      ychanged = ychanged / parentPageCurrentScaleSize
+      window.console.log(' DragItemTypeEnum.drag_component_size 2:', ychanged)
+      this.changeComponentSize(ychanged, xchanged, compInfo.compId, compInfo.position)
+      // window.console.log(compInfo.position)
+      return false
+    }
+    return true
+  }
+  private listenOnDragEnd() {
+    this.clearHorRule()
+    this.clearVerRule()
+  }
+  /**********************************键盘事件 ******************************/
   private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     // window.console.log('按了删除键', this.name)
@@ -145,64 +206,7 @@ export default class EngineContainer extends EngineLayout {
     newcopyComp.loadData(compData)
     e.stopPropagation()
   }
-  protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    window.console.log('listenOnDragMove:', dragdata)
-    if (!dragdata) {
-      return true
-    }
-    let compInfo = dragdata.dragData as any
-    if (!compInfo) {
-      return true
-    }
-    /** */
-    let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as EngineLayout
-    // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
-    if (!dragComp) {
-      return false
-    }
-
-    let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
-    /**do */
-    if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      /**范围控制 */
-      if (left + dragComp.width * parentPageCurrentScaleSize < 10) {
-        left = 10
-      } else if (left > this.width * parentPageCurrentScaleSize - 10) {
-        left = this.width * parentPageCurrentScaleSize - 10
-      }
-
-      if (top + dragComp.height * parentPageCurrentScaleSize < 10) {
-        top = 10
-      } else if (top > this.height * parentPageCurrentScaleSize - 10) {
-        // window.console.log('this.height=', this.height)
-        top = this.height * parentPageCurrentScaleSize - 10
-        // window.console.log('cute top=', top)
-      }
-      // window.console.log('currentScaleSize=', parentPageCurrentScaleSize)
-      left = left / parentPageCurrentScaleSize
-      top = top / parentPageCurrentScaleSize
-      dragComp.left = left
-      dragComp.top = top
-      // window.console.log('before cute end point' + dragComp.left + '-' + dragComp.top + '')
-      let newpoint = this.cuteNearbyPointInPage(left, top, dragComp)
-      dragComp.left = newpoint.X
-      dragComp.top = newpoint.Y
-      // window.console.log('after cute end point' + dragComp.left + '-' + dragComp.top + '')
-      return false
-    } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
-      xchanged = xchanged / parentPageCurrentScaleSize
-      ychanged = ychanged / parentPageCurrentScaleSize
-      this.changeComponentSize(ychanged, xchanged, compInfo.compId, compInfo.position)
-      // window.console.log(compInfo.position)
-      return false
-    }
-    return true
-  }
-  private listenOnDragEnd() {
-    this.clearHorRule()
-    this.clearVerRule()
-  }
-
+  /**********************************底层方法 ******************************/
   private changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
     let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
@@ -250,6 +254,7 @@ export default class EngineContainer extends EngineLayout {
         break
     }
   }
+  /**********************************拖拽时的描边尺子 ******************************/
   private cuteNearbyPointInPage(x: number, y: number, target: EngineLayout): Point {
     let respoint: Point = { X: x, Y: y }
     for (let index = 0; index < this.children.length; index++) {
@@ -318,6 +323,7 @@ export default class EngineContainer extends EngineLayout {
   private clearVerRule() {
     $(this.verRule).hide()
   }
+  // **********************************************************************
   /**添加一个组件 */
   private insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
     // window.console.log('绘制组件')
@@ -338,13 +344,14 @@ export default class EngineContainer extends EngineLayout {
     dropcomp.$on('onComponentPropertyChanged', this.onComponentPropertyChanged)
     return dropcomp as EngineLayout
   }
-  /************************************publics***********************/
+  //选中子组件
   public chooseComps(comps: EngineLayout[]) {
     this.cancelCompSelected(this.children)
     comps.filter((o) => {
       o.isSelected = true
     })
   }
+  //取消选中子组件
   private cancelCompSelected(comps: EngineLayout[]) {
     comps.filter((o) => {
       if (o.isSelected == true) {
@@ -354,24 +361,24 @@ export default class EngineContainer extends EngineLayout {
     })
     this.isSelected = false
   }
-  // *************************overrides****************************************************************************
+  // *************************overrides**************************************
   protected renderChildFromData(data: SaveInfo) {
     let compVue = findSystemCompByCode(data.meta.compCode)
     let comp = this.insertComponentLayout(compVue, data.meta, null, data)
     comp.loadData(data)
   }
-  /************************************virtuals***********************/
+  /*************容器渲染子组件的虚方法**********************/
   protected renderComponent(compCon: EngineLayout): EngineLayout {
     return compCon
   }
-  public deleteChildComponents(compId: string): boolean {
-    return false
-  }
-  /************************************protected***********************/
   protected getCompTemplateData(tempId: string): any {
     return null
   }
-  /************************************Emits***********************/
+  //删除子级组件
+  public deleteChildComponents(compId: string): boolean {
+    return false
+  }
+  /************************************对外公布的事件***********************/
   protected onComponentPropertyChanged(propertyId: string, property: Property, comp: EngineLayout): void {}
   protected onComponentChildrenCountChange(): void {}
 }
