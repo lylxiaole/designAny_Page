@@ -86,7 +86,7 @@ export default class EnginePage extends EngineContainer {
     $(window).unbind('resize', this.onWindowResize_Scale as any)
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }
-  // *******************************overrides **************************************************************************************
+  // *******************************页面行为**************************************************************************************
   protected async triggeEvent(name: string, inparam: any) {
     if (this.isDesigning == true) {
       return
@@ -119,7 +119,81 @@ export default class EnginePage extends EngineContainer {
     }
     return
   }
-  // *******************************privates **************************************************************************************
+  public async reLoadPageData(pageData: SaveInfo) {
+    this.reLoadData(pageData)
+    if (this.triggeEvent) {
+      await this.triggeEvent('加载完成', [])
+    }
+  }
+  public setPageInParams(params?: paramInfo[]) {
+    if (!params) {
+      return
+    }
+    for (let index = 0; index < params.length; index++) {
+      const param = params[index]
+      var inparamInPage = this.inParams.find((o) => o.key == param.key)
+      if (!inparamInPage) {
+        continue
+      }
+      inparamInPage.paramVal = param.paramVal
+    }
+  }
+  public getPropertyInPageById(propertyId: string): Property {
+    for (let compindex = 0; compindex < this.children.length; compindex++) {
+      let comp = this.children[compindex]
+      var property = comp.findPropertyById(propertyId)
+      if (property) {
+        return property
+      }
+    }
+    return null
+  }
+  public getCompMethodById(compId: string, methodName: string, comps?: ComponentBase[]): layoutMethod {
+    if (!comps) {
+      comps = this.children as ComponentBase[]
+    }
+    for (let index = 0; index < comps.length; index++) {
+      const comp = comps[index]
+      if (comp.Id == compId) {
+        return comp.designerMethods.find((o) => o.eventName == methodName)
+      }
+      if (comp.children) {
+        var findMethod = this.getCompMethodById(compId, methodName, comp.children as ComponentBase[])
+        if (findMethod) {
+          return findMethod
+        }
+      }
+    }
+    return null
+  }
+  // *******************************页面缩放 **************************************************************************************
+  //让页面按照指定尺寸进行缩放
+  public adaptSize(newwidth, newheight) {
+    if (this.isDesigning == true) {
+      return
+    }
+    newwidth = parseInt(newwidth)
+    newheight = parseInt(newheight)
+    var designWidth = this.width
+    var designHeight = this.height
+    //如果已经自适应尺寸，就直接返回了
+    if (newwidth === designWidth && designHeight === newheight) {
+      this.scaleToSize(1)
+    }
+
+    var widthrate = newwidth / designWidth
+    var heightrate = newheight / designHeight
+    this.scaleToSize(widthrate)
+  }
+  //让页面按照指定比例进行缩放
+  public scaleSize(sizechange: number) {
+    var newsize = this.currentScaleSize + sizechange
+    if (newsize < 0.01) {
+      return
+    }
+    //千万不能用zoom缩放，不然缩放后的元素坐标，大小无法计算
+    this.scaleToSize(newsize)
+  }
   private onWindowResize_Scale(e: Event): void {
     let parentdom = $(this.$el).parent()
     window.setTimeout(() => {
@@ -164,52 +238,25 @@ export default class EnginePage extends EngineContainer {
     this.onWindowResize_Scale(window.event)
     $(window).bind('resize', this.onWindowResize_Scale as any)
   }
-  // *******************************publics **************************************************************************************
-  //让页面按照指定尺寸进行缩放
-  public adaptSize(newwidth, newheight) {
-    if (this.isDesigning == true) {
-      return
-    }
-    newwidth = parseInt(newwidth)
-    newheight = parseInt(newheight)
-    var designWidth = this.width
-    var designHeight = this.height
-    //如果已经自适应尺寸，就直接返回了
-    if (newwidth === designWidth && designHeight === newheight) {
-      this.scaleToSize(1)
-    }
-
-    var widthrate = newwidth / designWidth
-    var heightrate = newheight / designHeight
-    this.scaleToSize(widthrate)
-  }
-  //让页面按照指定比例进行缩放
-  public scaleSize(sizechange: number) {
-    var newsize = this.currentScaleSize + sizechange
-    if (newsize < 0.01) {
-      return
-    }
-    //千万不能用zoom缩放，不然缩放后的元素坐标，大小无法计算
-    this.scaleToSize(newsize)
-  }
+  // *******************************页面数据保存和加载 **************************************************************************************
   public async save(appId: string) {
     /**数据压缩 */
     var saveinfo = await this.getSaveData()
     window.console.log('save:', saveinfo)
     var saveinfoStr = serialize(saveinfo)
     saveinfoStr = strZip(saveinfoStr)
-    await SavePageDetail({ appId: appId, id: this.Id, designDetail: saveinfoStr } as any)
-
-    // CurrentApis.SavePageData(this.Id, saveinfoStr, null).then((res) => {
-    //   this.isNeedSave = false
-    //   this.onPageSaveSuccess(saveinfo.id)
-    // })
+    try {
+      await SavePageDetail({ appId: appId, id: this.Id, designDetail: saveinfoStr } as any)
+      this.isNeedSave = false
+      this.onPageSaveSuccess(saveinfo.id)
+    } catch (error) {
+      this.$notify.error('保存页面错误:' + (error as any).message)
+    }
   }
   public async loadPageById(pageId: string, params?: paramInfo[]): Promise<void> {
     let pageDC: DesignPageDC = await GetPageDetail(pageId)
     await this.loadPageByData(pageId, pageDC.designDetail, params)
   }
-
   public async loadPageByData(pageId: string, pageDataStr: string, params?: paramInfo[]) {
     window.console.log('loadPageByData')
     let pageData: SaveInfo = null
@@ -235,55 +282,6 @@ export default class EnginePage extends EngineContainer {
     } finally {
       closeLoading_Async(index, true)
     }
-  }
-
-  public async reLoadPageData(pageData: SaveInfo) {
-    this.reLoadData(pageData)
-    if (this.triggeEvent) {
-      await this.triggeEvent('加载完成', [])
-    }
-  }
-  public setPageInParams(params?: paramInfo[]) {
-    if (!params) {
-      return
-    }
-    for (let index = 0; index < params.length; index++) {
-      const param = params[index]
-      var inparamInPage = this.inParams.find((o) => o.key == param.key)
-      if (!inparamInPage) {
-        continue
-      }
-      inparamInPage.paramVal = param.paramVal
-    }
-  }
-  // ***************************************************************
-  public getPropertyInPageById(propertyId: string): Property {
-    for (let compindex = 0; compindex < this.children.length; compindex++) {
-      let comp = this.children[compindex]
-      var property = comp.findPropertyById(propertyId)
-      if (property) {
-        return property
-      }
-    }
-    return null
-  }
-  public getCompMethodById(compId: string, methodName: string, comps?: ComponentBase[]): layoutMethod {
-    if (!comps) {
-      comps = this.children as ComponentBase[]
-    }
-    for (let index = 0; index < comps.length; index++) {
-      const comp = comps[index]
-      if (comp.Id == compId) {
-        return comp.designerMethods.find((o) => o.eventName == methodName)
-      }
-      if (comp.children) {
-        var findMethod = this.getCompMethodById(compId, methodName, comp.children as ComponentBase[])
-        if (findMethod) {
-          return findMethod
-        }
-      }
-    }
-    return null
   }
   // ***********************protecteds********************************** */
   public loadComponentsData(data: any) {}
