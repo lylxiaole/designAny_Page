@@ -55,7 +55,6 @@ export default class DesignShell extends BaseEvents {
       return '#FFF'
     }
   }
-
   get display(): boolean {
     if (!this.Component) {
       return true
@@ -77,7 +76,6 @@ export default class DesignShell extends BaseEvents {
     }
     return false
   }
-
   get hoverClass(): string {
     if (this.isDesigning == true) {
       return 'gad-mengb'
@@ -145,12 +143,13 @@ export default class DesignShell extends BaseEvents {
   }
 
   private startListenItemDrag() {
-    $(this.$el)
-      .find('.el-icon-rank')
-      .each((index, element) => {
-        this._dragHelper.makeDomCanDrag(element)
-      })
-
+    window.console.log('startListenItemDrag:', this.$el)
+    let dragdata: any = { type: DragItemTypeEnum.dragmove_component_inpage }
+    dragdata.dragData = { compId: this.Component.Id }
+    //
+    let dragicon = this.$refs.dragIcon as Element
+    this._dragHelper.makeDomCanDrag(dragicon)
+    this._dragHelper.makeDragItemInfo(dragicon, deepClone(dragdata))
     // ******************************************
     let you_xia = this.$refs['semove'] as Element
     let zuo_xia = this.$refs['swmove'] as Element
@@ -160,11 +159,11 @@ export default class DesignShell extends BaseEvents {
     let xia = this.$refs['smove'] as Element
     let zuo = this.$refs['wmove'] as Element
     let you = this.$refs['emove'] as Element
-    var dragdata: any = { type: DragItemTypeEnum.drag_component_size }
+    dragdata = { type: DragItemTypeEnum.drag_component_size }
     //
     this._dragHelper.makeDomCanDrag(you_xia)
     dragdata.dragData = { position: 'you_xia', compId: this.Component.Id }
-    this._dragHelper.makeDragItemInfo(you_xia, deepClone(deepClone(dragdata)))
+    this._dragHelper.makeDragItemInfo(you_xia, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(zuo_xia)
     dragdata.dragData = { position: 'zuo_xia', compId: this.Component.Id }
@@ -196,7 +195,7 @@ export default class DesignShell extends BaseEvents {
   }
 
   public onStartDrag(el: Element, dragdata: DragItemData<any>) {
-    window.console.log('DesignShell onStartDrag:', el)
+    // window.console.log('DesignShell onStartDrag:', el)
     if (el.className.indexOf('el-icon-rank') > -1 || el.className.indexOf('dragmengb') > -1) {
       dragdata.type = DragItemTypeEnum.dragmove_component_inpage
       dragdata.dragData = { compId: this.Component.Id }

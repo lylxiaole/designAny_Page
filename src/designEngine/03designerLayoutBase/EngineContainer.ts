@@ -79,6 +79,8 @@ export default class EngineContainer extends EngineLayout {
   }
 
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
+    window.console.log('EngineLayout drag move:', el)
+
     if (!dragdata) {
       return true
     }
