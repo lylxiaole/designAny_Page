@@ -96,31 +96,40 @@ export default class EngineContainer extends EngineLayout {
     }
 
     let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
-    /**do */
+    /**TODO */
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
+      window.console.log('currentScaleSize=', parentPageCurrentScaleSize)
+
+      let afterMovedLeft = (xchanged + dragComp.left) * parentPageCurrentScaleSize
+      let leftrangeVal = this.width * parentPageCurrentScaleSize
+      let afterMovedTop = (ychanged + dragComp.top) * parentPageCurrentScaleSize
+      let toprangeVal = this.height * parentPageCurrentScaleSize
+
+      let newleft = 0
+      let newtop = 0
+
       /**范围控制 */
-      if (left + dragComp.width * parentPageCurrentScaleSize < 10) {
-        left = 10
-      } else if (left > this.width * parentPageCurrentScaleSize - 10) {
-        left = this.width * parentPageCurrentScaleSize - 10
+      if (afterMovedLeft < 0) {
+        newleft = 0
+      } else if (afterMovedLeft > leftrangeVal) {
+        newleft = this.width - 5
       }
 
-      if (top + dragComp.height * parentPageCurrentScaleSize < 10) {
-        top = 10
-      } else if (top > this.height * parentPageCurrentScaleSize - 10) {
-        // window.console.log('this.height=', this.height)
-        top = this.height * parentPageCurrentScaleSize - 10
-        // window.console.log('cute top=', top)
+      if (afterMovedTop < 0) {
+        newtop = 0
+      } else if (afterMovedTop > toprangeVal) {
+        newtop = this.height - 5
       }
+
       // window.console.log('currentScaleSize=', parentPageCurrentScaleSize)
-      left = left / parentPageCurrentScaleSize
-      top = top / parentPageCurrentScaleSize
-      dragComp.left = left
-      dragComp.top = top
+      newleft = newleft / parentPageCurrentScaleSize
+      newtop = newtop / parentPageCurrentScaleSize
+      dragComp.left = newleft
+      dragComp.top = newtop
       // window.console.log('before cute end point' + dragComp.left + '-' + dragComp.top + '')
-      let newpoint = this.cuteNearbyPointInPage(left, top, dragComp)
-      dragComp.left = newpoint.X
-      dragComp.top = newpoint.Y
+      // let newpoint = this.cuteNearbyPointInPage(left, top, dragComp)
+      // dragComp.left = newpoint.X
+      // dragComp.top = newpoint.Y
       // window.console.log('after cute end point' + dragComp.left + '-' + dragComp.top + '')
       return false
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
