@@ -98,34 +98,32 @@ export default class EngineContainer extends EngineLayout {
     let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
     /**TODO */
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      window.console.log('currentScaleSize=', parentPageCurrentScaleSize)
+      if (xchanged !== 0) {
+        window.console.log('currentScaleSize=', this.getElementPos(this.$el))
+      }
 
-      let afterMovedLeft = (xchanged + dragComp.left) * parentPageCurrentScaleSize
-      let leftrangeVal = this.width * parentPageCurrentScaleSize
-      let afterMovedTop = (ychanged + dragComp.top) * parentPageCurrentScaleSize
-      let toprangeVal = this.height * parentPageCurrentScaleSize
+      let currentOffsetByPage = $(this.$el).offset()
+      let afterMovedLeft = left - currentOffsetByPage.left
+      let afterMovedTop = top - currentOffsetByPage.top
 
-      let newleft = 0
-      let newtop = 0
-
+      let newleft = afterMovedLeft / parentPageCurrentScaleSize
+      let newtop = afterMovedTop / parentPageCurrentScaleSize
       /**范围控制 */
-      if (afterMovedLeft < 0) {
+      if (newleft < 0) {
         newleft = 0
-      } else if (afterMovedLeft > leftrangeVal) {
-        newleft = this.width - 5
+      } else if (newleft > this.width) {
+        newleft = this.width - 1
       }
 
       if (afterMovedTop < 0) {
         newtop = 0
-      } else if (afterMovedTop > toprangeVal) {
-        newtop = this.height - 5
+      } else if (newtop > this.height) {
+        newtop = this.height - 1
       }
 
-      // window.console.log('currentScaleSize=', parentPageCurrentScaleSize)
-      newleft = newleft / parentPageCurrentScaleSize
-      newtop = newtop / parentPageCurrentScaleSize
       dragComp.left = newleft
       dragComp.top = newtop
+      //计算相邻点
       // window.console.log('before cute end point' + dragComp.left + '-' + dragComp.top + '')
       // let newpoint = this.cuteNearbyPointInPage(left, top, dragComp)
       // dragComp.left = newpoint.X
@@ -143,6 +141,28 @@ export default class EngineContainer extends EngineLayout {
     }
     return true
   }
+
+  // 获取元素相对于页面文档的位置----------------------------------------------
+  private getElementPos(el): any {
+    if (el.parentNode === null || el.style.display == 'none') {
+      return false
+    }
+    var parent = null
+    var pos = []
+
+    pos = [el.offsetLeft, el.offsetTop]
+    parent = el.offsetParent
+    if (parent != el) {
+      while (parent) {
+        pos[0] += parent.offsetLeft
+        pos[1] += parent.offsetTop
+        parent = parent.offsetParent
+      }
+    }
+
+    return { x: pos[0], y: pos[1] }
+  }
+
   private listenOnDragEnd() {
     this.clearHorRule()
     this.clearVerRule()
