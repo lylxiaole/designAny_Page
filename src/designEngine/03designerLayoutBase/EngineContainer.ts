@@ -79,7 +79,7 @@ export default class EngineContainer extends EngineLayout {
   }
 
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    window.console.log('EngineLayout drag move:', el)
+    window.console.log(`listenOnDragMove xchanged:${xchanged},ychanged:${ychanged},left:${left},top:${top}`)
 
     if (!dragdata) {
       return true
@@ -115,10 +115,10 @@ export default class EngineContainer extends EngineLayout {
       // window.console.log('currentScaleSize=', parentPageCurrentScaleSize)
       left = left / parentPageCurrentScaleSize
       top = top / parentPageCurrentScaleSize
-      dragComp.left = left
-      dragComp.top = top
+
       // window.console.log('before cute end point' + dragComp.left + '-' + dragComp.top + '')
       let newpoint = this.cuteNearbyPointInPage(left, top, dragComp)
+      window.console.log(`newpoint----x:${newpoint.X},y:${newpoint.Y}`)
       dragComp.left = newpoint.X
       dragComp.top = newpoint.Y
       // window.console.log('after cute end point' + dragComp.left + '-' + dragComp.top + '')

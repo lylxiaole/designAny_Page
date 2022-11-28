@@ -190,40 +190,17 @@ export default class BaseEvents extends Vue {
     return true
   }
 
-  private _onDragMove(el: Element, targetContainer: Element): boolean {
+  private _onDragMove(el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean {
     if (this.isDesigning == false || this.canDrop == false || !this.onDragMove_Event) {
       return true
     }
     if (!el) {
       return true
     }
-
-    var iscontinue: boolean = true
-    var currentDragLeft = dragHelper.currentDragX
-    var currentDragTop = dragHelper.currentDragY
-
-    //如果是刚开始拖拽，初始化drag的值
-    if (isNaN(this.eventsOptions.startDragMovePoint_left) || this.eventsOptions.startDragMovePoint_left < 1) {
-      this.eventsOptions.startDragMovePoint_left = currentDragLeft
-      // window.console.log('最底层拖拽:X null')
-    }
-
-    if (isNaN(this.eventsOptions.startDragMovePoint_top) || this.eventsOptions.startDragMovePoint_top < 1) {
-      this.eventsOptions.startDragMovePoint_top = currentDragTop
-      // window.console.log('最底层拖拽:Y null')
-    }
-    //如果前后值相等，就不触发事件了
-    if (this.eventsOptions.startDragMovePoint_left == currentDragLeft && this.eventsOptions.startDragMovePoint_top == currentDragTop) {
-      return iscontinue
-    }
-    var xchanged = currentDragLeft - this.eventsOptions.startDragMovePoint_left
-    // window.console.log('最底层拖拽 x:', currentDragLeft, this.eventsOptions.startDragMovePoint_left, xchanged)
-    var ychanged = currentDragTop - this.eventsOptions.startDragMovePoint_top
-    // window.console.log('最底层拖拽 y:', currentDragTop, this.eventsOptions.startDragMovePoint_top, ychanged)
     var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
-    iscontinue = this.onDragMove_Event(xchanged, ychanged, currentDragLeft, currentDragTop, el, dragdata)
-    this.eventsOptions.startDragMovePoint_left = currentDragLeft
-    this.eventsOptions.startDragMovePoint_top = currentDragTop
+    let iscontinue = this.onDragMove_Event(xchanged, ychanged, currentDragLeft, currentDragTop, el, dragdata)
+    // this.eventsOptions.startDragMovePoint_left = currentDragLeft
+    // this.eventsOptions.startDragMovePoint_top = currentDragTop
     return iscontinue
   }
   private _onDragEnd(el: Element) {

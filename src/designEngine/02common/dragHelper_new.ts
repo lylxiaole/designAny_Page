@@ -14,7 +14,7 @@ type onDragOverEventType = (el: Element, targetContainer: Element) => boolean
 type onShadowEventType = (el: Element, targetContainer: Element) => void
 type onClonedEventType = (clone: Element) => void
 type onDragEndEventType = (el: Element) => void
-type onDragMoveEventType = (el: Element, targetContainer: Element) => boolean
+type onDragMoveEventType = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop) => boolean
 type onDragOutEventType = (el: Element, targetContainer: Element) => boolean
 type onDragEnterEventType = (el: Element, targetContainer: Element) => boolean
 
@@ -29,8 +29,8 @@ export default class dragHelper {
 
   public static dragClone: Element
 
-  public static currentDragX: number = 0
-  public static currentDragY: number = 0
+  public static currentDragX: number = NaN
+  public static currentDragY: number = NaN
 
   get dragCloneElement(): Element {
     return dragHelper.dragClone
@@ -75,17 +75,23 @@ export default class dragHelper {
     $(this._container).on('dragover', (e: any) => {
       //同时注册drop和dragover时, 调用e.preventDefault()才能让容器的drop事件得以触发
       e.preventDefault()
+      window.console.log('dragover 1:', e.originalEvent.pageX)
 
-      window.console.log('dragover:', e.originalEvent.layerX)
-
+      if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
+        dragHelper.currentDragX = e.originalEvent.pageX
+        dragHelper.currentDragY = e.originalEvent.pageY
+        return
+      }
+      let xchanged = e.originalEvent.pageX - dragHelper.currentDragX
+      let ychanged = e.originalEvent.pageY - dragHelper.currentDragY
+      window.console.log('dragover 2:', xchanged)
       dragHelper.currentDragX = e.originalEvent.pageX
       dragHelper.currentDragY = e.originalEvent.pageY
-
       if (!this.onDragMoveEventCallback) {
         return
       }
       // window.console.log('dragover:', e)
-      let res = this.onDragMoveEventCallback(dragHelper.dragClone, this._container)
+      let res = this.onDragMoveEventCallback(dragHelper.dragClone, this._container, xchanged, ychanged, dragHelper.currentDragX, dragHelper.currentDragY)
       if (res === false) {
         e.stopPropagation()
       }
@@ -142,19 +148,13 @@ export default class dragHelper {
   public makeDomCanDrag(dragItem: Element) {
     // window.console.log('makeDomCanDrag')
     $(dragItem).attr(dragEnums.canDrag, 'true')
-    // $(dragItem).on('drag ', (e: any) => {
-    //   window.console.log('drag:', e)
-    //   if (e.target === this._container) {
-    //     let res = this.onDragMoveEventCallback(dragItem, this._container)
-    //     if (res === false) {
-    //       e.stopPropagation()
-    //     }
-    //   }
-    // })
+
     $(dragItem).on('dragend', (e: any) => {
       if (this.onDragEndEventCallback) {
         this.onDragEndEventCallback(dragItem)
       }
+      dragHelper.currentDragX = NaN
+      dragHelper.currentDragY = NaN
     })
     $(dragItem).on('dragstart', (e: any) => {
       // var data = e.originalEvent.dataTransfer
@@ -164,13 +164,6 @@ export default class dragHelper {
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)
       }
-
-      // window.console.log('dragstart:', e)
-      // if (e.target === this._container) {
-      //   this.onDragEndEventCallback(dragItem)
-      //   dragHelper.dragClone = e.target
-      //   this.onDragEventCallback(e.target, this._container)
-      // }
     })
   }
   public makeDomCannotDrag(dragItem: Element) {
