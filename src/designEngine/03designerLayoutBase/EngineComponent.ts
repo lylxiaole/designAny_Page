@@ -94,7 +94,6 @@ export default class EngineComponent extends EngineContainer {
   }
 
   mounted() {
-    // this.onDragMove_Event = this.onDragMove
     this.$nextTick(() => {
       this.triggeEvent('控件加载完成事件', null)
     })

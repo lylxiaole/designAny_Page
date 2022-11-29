@@ -6,6 +6,7 @@ import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/lay
 import { layoutEventBehaviors } from './behavior/behaviorTypes'
 import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize, drawVueOnVirtualDom } from '@src/utils'
+import { Event } from 'jquery'
 
 type propertyValidatorHandle = (newval: any) => boolean
 class propertyValidatorType {
@@ -857,11 +858,18 @@ export default class EngineLayout extends BaseEvents {
     this.sizeChange_Right(changeVal_hor)
   }
   // *************************对外公布事件****************************************************************************
+  @Emit('onPropertyChanged')
   protected onPropertyChanged(propertyId: string, property: Property, layout: EngineLayout): void {}
+  @Emit('onChildrenCountChange')
   protected onChildrenCountChange() {}
+  @Emit('onCreated')
   protected onCreated(layout: EngineLayout) {}
+  @Emit('onMounted')
   protected onMounted(layout: EngineLayout) {}
+  @Emit('onUpdated')
   protected onUpdated(layout: EngineLayout) {}
+  @Emit('onSizeChanged')
   protected onSizeChanged(e: any) {}
+  @Emit('onDestroyed')
   protected onDestroyed(layout: EngineLayout): void {}
 }

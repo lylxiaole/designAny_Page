@@ -54,8 +54,13 @@ export default class NpBarCode extends EngineComponent {
     this.registerProperty(PropertyGroupName.special, '字大小', new Number_Property(), 20)
 
     this.initBarCode()
+    this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
-
+  protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
+    if (property.groupName === PropertyGroupName.special) {
+      this.initBarCode()
+    }
+  }
   private barCodeText: string = '123456789'
   get vlaue(): string {
     let prop = this.findPropertyByName(PropertyGroupName.special, '内容')

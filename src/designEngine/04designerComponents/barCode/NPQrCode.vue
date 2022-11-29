@@ -39,9 +39,7 @@ export default class NPQrCode extends EngineComponent {
     this.initQrCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
-  beforeDestroy() {
-    this.$off('onPropertyChanged', this.onPropertyChangedInner)
-  }
+  beforeDestroy() {}
 
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
     this.initQrCode()
