@@ -3,6 +3,7 @@ import { isBoolean, isString, isNumber } from 'xe-utils'
 
 export enum PropertyTypeEnum {
   boolean = 'boolean',
+  compPosition = 'compPosition',
   text = 'text',
   textList = 'textList',
   number = 'number',
@@ -80,8 +81,11 @@ export class Property {
     return val
   }
   public destory() {
+    if (!this) {
+      debugger
+    }
     for (const key in this) {
-      this[key] = null
+      delete this[key]
     }
   }
 
@@ -117,15 +121,16 @@ export class Property {
   }
 }
 
+export class CompPosition_Property extends PropertyType {
+  public type: PropertyTypeEnum = PropertyTypeEnum.compPosition
+}
 //添加布尔类型属性
 export class Boolean_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.boolean
 }
-
 export class Text_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.text
 }
-
 export class Number_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.number
 
@@ -147,7 +152,6 @@ export class Number_Property extends PropertyType {
   public step: number = 1
   public unit: string = '' //属性单位
 }
-
 export class NumberList_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.numberList
   public min: number = 0
@@ -171,7 +175,6 @@ export class NumberList_Property extends PropertyType {
     }
   }
 }
-
 export class TextList_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.textList
   public minCount: number = 0
@@ -187,7 +190,6 @@ export class TextList_Property extends PropertyType {
     }
   }
 }
-
 export class Enum_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.enum
   constructor(_isSingleChoose?: boolean, _enums?: string[]) {
@@ -204,11 +206,9 @@ export class Enum_Property extends PropertyType {
   isSingleChoose: boolean = true
   enums: string[] = []
 }
-
 export class Color_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.color
 }
-
 export class UploadFile_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.uploadFile
   private maxFileLength: number = 1
@@ -221,11 +221,9 @@ export class UploadFile_Property extends PropertyType {
     this.fileType = filetype
   }
 }
-
 export class JavaScriptCode_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.javaScriptCode
 }
-
 export class TimePickerFile_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.timePicker
 
@@ -240,28 +238,24 @@ export class TimePickerFile_Property extends PropertyType {
     }
   }
 }
-
 export class Behavior_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.behavior
   constructor() {
     super()
   }
 }
-
 export class Authority_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.authority
   constructor() {
     super()
   }
 }
-
 export class BindingModels_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.bindingModels
   constructor() {
     super()
   }
 }
-
 export class PageInParams_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.pageInParams
   constructor() {
@@ -274,28 +268,24 @@ export class Button_Property extends PropertyType {
     super()
   }
 }
-
 export class EnumModal_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.enumModal
   constructor() {
     super()
   }
 }
-
 export class FileTemplateModal_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.fileTemplateModal
   constructor() {
     super()
   }
 }
-
 export class TableStyleSetting_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.tableStyleSetting
   constructor() {
     super()
   }
 }
-
 /**表格导出设置 */
 export class TableExportSetting_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.tableExportSetting
@@ -303,42 +293,36 @@ export class TableExportSetting_Property extends PropertyType {
     super()
   }
 }
-
 export class PageTemplateSetting_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.pageTemplateSetting
   constructor() {
     super()
   }
 }
-
 export class calendarEvents_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.calendarEvents
   constructor() {
     super()
   }
 }
-
 export class Breadcrum_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.breadcrumAttribute
   constructor() {
     super()
   }
 }
-
 export class Select_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.selectElement
   constructor() {
     super()
   }
 }
-
 export class SelectGroup_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.selectGroupElement
   constructor() {
     super()
   }
 }
-
 export class selectDict_Property extends PropertyType {
   public type: PropertyTypeEnum = PropertyTypeEnum.selectDictModel
   constructor() {

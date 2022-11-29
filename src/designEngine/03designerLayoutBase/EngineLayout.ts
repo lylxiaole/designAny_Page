@@ -4,7 +4,7 @@ import { createDecorator } from 'vue-class-component'
 import BaseEvents from './BaseEvents'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 import { layoutEventBehaviors } from './behavior/behaviorTypes'
-import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property } from './commonClasses/LayoutProperty'
+import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property, CompPosition_Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize, drawVueOnVirtualDom } from '@src/utils'
 import { Event } from 'jquery'
 
@@ -115,6 +115,9 @@ export default class EngineLayout extends BaseEvents {
     this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
+
+    this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), {}, true, '')
+
     this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, 'px')
@@ -615,7 +618,6 @@ export default class EngineLayout extends BaseEvents {
       window.console.error(error)
     }
   }
-
   public findSelectedLayoutsRecursion(comps: EngineLayout[]): EngineLayout[] {
     var res: EngineLayout[] = []
     for (let index = 0; index < comps.length; index++) {

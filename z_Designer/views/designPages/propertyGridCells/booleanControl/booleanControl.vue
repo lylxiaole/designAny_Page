@@ -1,8 +1,4 @@
-/**
- * BOOL类型设置
- * By LYL
- * 日期
- */
+ 
 <template>
   <el-switch v-model="currentValue" active-text="是" inactive-text="否" active-color="#13ce66" inactive-color="#ff4949">
   </el-switch>

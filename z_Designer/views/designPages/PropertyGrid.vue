@@ -38,7 +38,6 @@ class PropertyGroupInfo {
   groupName: string
   children: propertyInfo[] = []
 }
-
 class propertyInfo {
   name: string
   secondGroup: string
@@ -60,14 +59,11 @@ class propertyInfo {
 
   comp: typeof propertyCellBase
 }
-
 class propertyFilterInfo {
   groupName: string
   propertyName: string
 }
-
 /**动态读取propertyGrid Cell组件 */
-
 var cellControls: Function[] = []
 const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
 modulesFiles.keys().reduce((modules, modulePath) => {
@@ -85,12 +81,7 @@ function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase
 
 @Component({
   name: 'propertyGrid',
-  components: {
-    // ColorPicker: myComponents.colorPicker,
-    // UploadFile: myComponents.uploadFile,
-    // AceEditor: myComponents.aceEditor,
-    // DatePicker: myComponents.datePicker
-  }
+  components: {}
 })
 export default class PropertyGrid extends Vue {
   private activeKey: string[] = []
@@ -314,9 +305,7 @@ export default class PropertyGrid extends Vue {
 
   renderStyle() {
     this.$nextTick(() => {
-      var arrow = $(this.$el)
-        .find('.ant-collapse-header')
-        .find('.arrow')
+      var arrow = $(this.$el).find('.ant-collapse-header').find('.arrow')
       $(arrow).css('left', 'initial')
       $(arrow).css('right', '16px')
       var collapseHeader = $(this.$el).find('.ant-collapse-header')
