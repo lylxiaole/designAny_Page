@@ -209,9 +209,9 @@ export default class DesignShell extends BaseEvents {
  
 <style lang="less" scoped>
 .gad-mengb:hover {
-  -webkit-box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.1);
-  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
 .dragbutton {

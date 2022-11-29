@@ -329,6 +329,7 @@ export default class index extends ComponentBase {
         break
     }
   }
+
   private async addGroup() {
     let parentGroupId = this.currentRightClickNode ? this.currentRightClickNode.id : null
     let index = 0
