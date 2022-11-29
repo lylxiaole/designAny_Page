@@ -373,7 +373,4 @@ export default class EngineContainer extends EngineLayout {
   public deleteChildComponents(compId: string): boolean {
     return false
   }
-  /************************************对外公布的事件***********************/
-  protected onComponentPropertyChanged(propertyId: string, property: Property, comp: EngineLayout): void {}
-  protected onComponentChildrenCountChange(): void {}
 }
