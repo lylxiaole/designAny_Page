@@ -9,7 +9,7 @@ export enum dragEnums {
 }
 
 type onDragEventType = (el: Element, sourceContainer: Element) => void
-type onDropEventType = (el: Element, targetContainer: Element) => boolean
+type onDropEventType = (el: Element, targetContainer: Element) => Promise<boolean>
 type onDragOverEventType = (el: Element, targetContainer: Element) => boolean
 type onShadowEventType = (el: Element, targetContainer: Element) => void
 type onClonedEventType = (clone: Element) => void
@@ -62,12 +62,12 @@ export default class dragHelper {
   }
   public makeContainerCanDrop() {
     $(this._container).attr(dragEnums.canDrop, 'true')
-    $(this._container).on('drop', (e: any) => {
+    $(this._container).on('drop', async (e: any) => {
       if (!this.onDropEventCallback) {
         return
       }
       window.console.log('drop:', e)
-      let res = this.onDropEventCallback(dragHelper.dragClone, this._container)
+      let res = await this.onDropEventCallback(dragHelper.dragClone, this._container)
       if (res === false) {
         e.stopPropagation()
       }

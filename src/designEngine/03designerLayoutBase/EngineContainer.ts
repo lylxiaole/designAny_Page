@@ -37,7 +37,7 @@ export default class EngineContainer extends EngineLayout {
     this.mouseX = e.offsetX
     this.mouseY = e.offsetY
   }
-  private listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): boolean {
+  private async listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): Promise<boolean> {
     window.console.log('listenOnDrop:', 1)
     if (!dragdata) {
       return true
@@ -57,14 +57,14 @@ export default class EngineContainer extends EngineLayout {
       case DragItemTypeEnum.drop_system_component:
         {
           let compVue = findSystemCompByCode(compInfo.compCode)
-          dropcomp = this.insertComponentLayout(compVue, compInfo, dragdata.type)
+          dropcomp = await this.insertComponentLayout(compVue, compInfo, dragdata.type)
         }
         break
       case DragItemTypeEnum.drop_component_template:
         {
           let compdata = this.getCompTemplateData(compInfo.sourceId)
           let compVue = findSystemCompByCode(compInfo.compCode)
-          dropcomp = this.insertComponentLayout(compVue, compInfo, dragdata.type, compdata)
+          dropcomp = await this.insertComponentLayout(compVue, compInfo, dragdata.type, compdata)
         }
         break
       default:
@@ -79,8 +79,6 @@ export default class EngineContainer extends EngineLayout {
   }
 
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    window.console.log(`listenOnDragMove xchanged:${xchanged},ychanged:${ychanged},left:${left},top:${top}`)
-
     if (!dragdata) {
       return true
     }
@@ -88,7 +86,6 @@ export default class EngineContainer extends EngineLayout {
     if (!compInfo) {
       return true
     }
-    /** */
     let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as EngineLayout
     // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
     if (!dragComp) {
@@ -96,19 +93,15 @@ export default class EngineContainer extends EngineLayout {
     }
 
     let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
-    /**TODO */
+    // 在容器内拖拽组件位置
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      if (xchanged !== 0) {
-        window.console.log('currentScaleSize=', this.getElementPos(this.$el))
-      }
-
       let currentOffsetByPage = $(this.$el).offset()
       let afterMovedLeft = left - currentOffsetByPage.left
       let afterMovedTop = top - currentOffsetByPage.top
 
       let newleft = afterMovedLeft / parentPageCurrentScaleSize
       let newtop = afterMovedTop / parentPageCurrentScaleSize
-      /**范围控制 */
+      /**范围控制(拖拽不能超出容器范围) */
       if (newleft < 0) {
         newleft = 0
       } else if (newleft > this.width) {
@@ -123,44 +116,18 @@ export default class EngineContainer extends EngineLayout {
 
       dragComp.left = newleft
       dragComp.top = newtop
-      //计算相邻点
-      // window.console.log('before cute end point' + dragComp.left + '-' + dragComp.top + '')
-      // let newpoint = this.cuteNearbyPointInPage(left, top, dragComp)
-      // dragComp.left = newpoint.X
-      // dragComp.top = newpoint.Y
-      // window.console.log('after cute end point' + dragComp.left + '-' + dragComp.top + '')
       return false
-    } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
+    }
+    // 在容器内拖拽组件大小
+    else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
       xchanged = xchanged / parentPageCurrentScaleSize
-      window.console.log(' DragItemTypeEnum.drag_component_size 1:', ychanged)
+      window.console.log(' DragItemTypeEnum.drag_component_size 1:', compInfo.position)
       ychanged = ychanged / parentPageCurrentScaleSize
-      window.console.log(' DragItemTypeEnum.drag_component_size 2:', ychanged)
       this.changeComponentSize(ychanged, xchanged, compInfo.compId, compInfo.position)
       // window.console.log(compInfo.position)
       return false
     }
     return true
-  }
-
-  // 获取元素相对于页面文档的位置----------------------------------------------
-  private getElementPos(el): any {
-    if (el.parentNode === null || el.style.display == 'none') {
-      return false
-    }
-    var parent = null
-    var pos = []
-
-    pos = [el.offsetLeft, el.offsetTop]
-    parent = el.offsetParent
-    if (parent != el) {
-      while (parent) {
-        pos[0] += parent.offsetLeft
-        pos[1] += parent.offsetTop
-        parent = parent.offsetParent
-      }
-    }
-
-    return { x: pos[0], y: pos[1] }
   }
 
   private listenOnDragEnd() {
@@ -193,6 +160,7 @@ export default class EngineContainer extends EngineLayout {
     }
   }
   private listenOnCopy(e) {
+    window.console.log('listenOnCopy:', e)
     if (this.isDesigning) {
       if (this.selectedChildren && this.selectedChildren.length > 0) {
         EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
@@ -202,12 +170,12 @@ export default class EngineContainer extends EngineLayout {
       }
     }
   }
-  private listenOnPaste(e) {
+  private async listenOnPaste(e) {
     if (!EngineContainer.copyComp) {
       return
     }
     // window.console.log('onPaste_Event')
-    let compData = deepClone(EngineContainer.copyComp.getSaveData())
+    let compData = deepClone(await EngineContainer.copyComp.getSaveData())
 
     if (EngineContainer.isCut) {
       //剪切--删除原有组件
@@ -219,20 +187,20 @@ export default class EngineContainer extends EngineLayout {
       //复制操作需要给组件新Id
       compData.id = getUuid()
     }
-    let compclass = findSystemCompByCode(compData.layoutInfo.compCode)
-    //为了准确性
+    let compclass = findSystemCompByCode(compData.meta.compCode)
+    //如果选中了一些容器类的子组件,就把当前组件复制到其中
     let findchildren = this.findSelectedLayoutsRecursion(this.children)
     let newcopyComp: EngineLayout = null
     for (let index = 0; index < findchildren.length; index++) {
       const element = findchildren[index]
       if (element.canDrop == true && (element as any).insertComponentLayout) {
-        newcopyComp = (element as any).insertComponentLayout(compclass, compData.layoutInfo, null, compData)
+        newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData.meta, null, compData)
         break
       }
     }
-
+    // 如果没选中容器类的子组件, 就把当前组件复制到当前页面
     if (!newcopyComp) {
-      newcopyComp = this.insertComponentLayout(compclass, compData.layoutInfo, null, compData)
+      newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
     }
     newcopyComp.loadData(compData)
     e.stopPropagation()
@@ -356,16 +324,16 @@ export default class EngineContainer extends EngineLayout {
   }
   // **********************************************************************
   /**添加一个组件 */
-  private insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): EngineLayout {
+  private async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): Promise<EngineLayout> {
     // window.console.log('绘制组件')
     // compInfo.compCode = dropcompclass.compCode
     dropcompclass.prototype.isDesigning = this.isDesigning
     let dropcomp = new dropcompclass() as EngineLayout
     dropcomp.parentLayout = this
     if (data) {
-      dropcomp.loadData(data)
+      await dropcomp.loadData(data)
     }
-    dropcomp = this.renderComponent(dropcomp)
+    dropcomp = await this.renderComponent(dropcomp)
     // window.console.error('绘制子组件失败,请不要保存!!!')
     // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
     this.addChild(dropcomp)
@@ -393,13 +361,13 @@ export default class EngineContainer extends EngineLayout {
     this.isSelected = false
   }
   // *************************overrides**************************************
-  protected renderChildFromData(data: SaveInfo) {
+  protected async renderChildFromData(data: SaveInfo) {
     let compVue = findSystemCompByCode(data.meta.compCode)
-    let comp = this.insertComponentLayout(compVue, data.meta, null, data)
-    comp.loadData(data)
+    let comp = await this.insertComponentLayout(compVue, data.meta, null, data)
+    await comp.loadData(data)
   }
   /*************容器渲染子组件的虚方法**********************/
-  protected renderComponent(compCon: EngineLayout): EngineLayout {
+  protected async renderComponent(compCon: EngineLayout): Promise<EngineLayout> {
     return compCon
   }
   protected getCompTemplateData(tempId: string): any {

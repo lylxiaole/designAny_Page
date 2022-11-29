@@ -177,14 +177,14 @@ export default class BaseEvents extends Vue {
     this._dragHelper.makeDragItemInfo(el, currentDragData)
     return true
   }
-  private _onDrop(el: Element, targetContainer: Element): boolean {
+  private async _onDrop(el: Element, targetContainer: Element): Promise<boolean> {
     if (this.isDesigning == false) {
       return true
     }
     if (this.canDrop && this.onDrop_Event) {
       // window.console.log('drop')
       var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
-      return this.onDrop_Event(el, targetContainer, this.eventsOptions.startDragMovePoint_left, this.eventsOptions.startDragMovePoint_top, dragdata)
+      return await this.onDrop_Event(el, targetContainer, this.eventsOptions.startDragMovePoint_left, this.eventsOptions.startDragMovePoint_top, dragdata)
     }
     this._dragHelper.dragCancel()
     return true
@@ -475,6 +475,6 @@ export default class BaseEvents extends Vue {
   onDragClone_Event: (el: Element) => void
   onDragOut_Event: (el: Element, targetContainer: Element) => boolean
   onDrag_Event: (el: Element, dragdata: DragItemData<any>) => void
-  onDrop_Event: (el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata?: DragItemData<any>) => boolean
+  onDrop_Event: (el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata?: DragItemData<any>) => Promise<boolean>
   onDragMove_Event: (xChange: number, yChange: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>) => boolean
 }

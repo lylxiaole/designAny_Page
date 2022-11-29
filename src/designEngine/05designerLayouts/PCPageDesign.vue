@@ -32,7 +32,7 @@ export default class PCPageDesign extends EnginePage {
     this.canDrop = true
   }
 
-  protected renderComponent(compCon: EngineComponent): EngineLayout {
+  protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     // window.console.log('renderComponent:', compCon)
     let shell = new DesignShell()
     let fragment = drawVueOnVirtualDom(shell)

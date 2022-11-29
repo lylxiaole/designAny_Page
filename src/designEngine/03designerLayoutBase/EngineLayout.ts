@@ -579,8 +579,8 @@ export default class EngineLayout extends BaseEvents {
   public async loadData(data: SaveInfo) {
     this.children = []
     if (data.id) {
+      this.loadingProperties(data.properties)
       this.Id = data.id
-      this.loadingProperties(data.id, data.properties)
     }
 
     if (data.children) {
@@ -594,7 +594,7 @@ export default class EngineLayout extends BaseEvents {
     }
     this.children = []
 
-    this.loadData(data)
+    await this.loadData(data)
   }
   public async getSaveData(): Promise<SaveInfo> {
     var saveinfo: SaveInfo = {
@@ -723,9 +723,7 @@ export default class EngineLayout extends BaseEvents {
     find.parentLayout.removeChild(toparent)
   }
   /**通过已有数据加载 */
-  public loadingProperties(layoutId: string, layout_properties: Property[]) {
-    this.Id = layoutId
-
+  public loadingProperties(layout_properties: Property[]) {
     if (!layout_properties) {
       return
     }
