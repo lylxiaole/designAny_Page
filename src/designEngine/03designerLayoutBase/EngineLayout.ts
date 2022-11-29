@@ -116,7 +116,8 @@ export default class EngineLayout extends BaseEvents {
     this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
 
-    this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), {}, true, '')
+    let initCompPosition = { width: '', heigh: '', x: '', y: '' }
+    this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), initCompPosition, true, '')
 
     this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, 'px')
