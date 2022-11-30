@@ -3,22 +3,22 @@
   <div>
     <el-row>
       <el-col>
-        <span>width:</span>
+        <span class="normaltext">width:</span>
         <el-input size="mini" v-model="currentValue.width" placeholder="请输入" />
       </el-col>
       <el-col>
-        高:
+        <span class="normaltext">height:</span>
         <el-input size="mini" v-model="currentValue.height" placeholder="请输入" />
       </el-col>
     </el-row>
     <!-- ************************************************************************** -->
     <el-row>
       <el-col>
-        左:
+        <span class="normaltext">left:</span>
         <el-input size="mini" v-model="currentValue.x" placeholder="请输入" />
       </el-col>
       <el-col>
-        上:
+        <span class="normaltext">top:</span>
         <el-input size="mini" v-model="currentValue.y" placeholder="请输入" />
       </el-col>
     </el-row>
@@ -42,6 +42,11 @@ export default class index extends propertyCellBase {
 
 
 <style scoped>
+.normaltext {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.65);
+}
 /* .ant-switch-checked {
   background-color: #18aeb7;
 } */
