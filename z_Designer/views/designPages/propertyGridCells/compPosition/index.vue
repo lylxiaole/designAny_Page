@@ -3,7 +3,7 @@
   <div>
     <el-row>
       <el-col>
-        宽:
+        <span>width:</span>
         <el-input size="mini" v-model="currentValue.width" placeholder="请输入" />
       </el-col>
       <el-col>
