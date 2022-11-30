@@ -95,6 +95,7 @@ export default class EngineContainer extends EngineLayout {
     let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
     // 在容器内拖拽组件位置
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
+      window.console.log('dragmove_component_inpage:', (window.event as any).dataTransfer)
       let currentOffsetByPage = $(this.$el).offset()
       let afterMovedLeft = left - currentOffsetByPage.left
       let afterMovedTop = top - currentOffsetByPage.top

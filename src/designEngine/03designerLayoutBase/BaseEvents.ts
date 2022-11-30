@@ -160,6 +160,7 @@ export default class BaseEvents extends Vue {
   /********************Drag事件****************************************************** */
   private _onDrag(el: Element, sourceContainer: Element) {
     // window.console.log('从本布局中开始拖拽一个东西出去了')
+
     if (this.isDesigning == false) {
       return
     }

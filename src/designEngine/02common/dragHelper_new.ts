@@ -158,7 +158,12 @@ export default class dragHelper {
     $(dragItem).on('dragstart', (e: any) => {
       // var data = e.originalEvent.dataTransfer
       // data.setData('text/plain', $(this).attr('id'))
+      // var img = new Image()
+      // e.originalEvent.dataTransfer.setDragImage(img, 0, 0)
+      // e.originalEvent.dataTransfer.effectAllowed = 'none'
+      // e.originalEvent.dataTransfer.dropEffect = 'none'
       window.console.log('dragstart:', e)
+
       dragHelper.dragClone = e.delegateTarget
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)
