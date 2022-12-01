@@ -12,14 +12,21 @@
     </div>
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" class="verticalAlignCenter">
-      <!-- *************************************************************************** -->
       <div :style="{ width:'60px'}" class="iconitem themeHover" @click="savePage">
         <div class="flexHorilanLayout">
           <span class="icon iconfont">&#xe616;</span>
         </div>
         <div class="flexHorilanLayout verticalAlignCenter">保存</div>
       </div>
-      <!-- *************************************************************************** -->
+    </div>
+    <!-- *************************************************************************** -->
+    <div :style="{ height: height + 'px' }" class="verticalAlignCenter">
+      <div :style="{ width:'60px'}" class="iconitem themeHover" @click="leadinPlugin">
+        <div class="flexHorilanLayout">
+          <span class="icon iconfont">&#xe616;</span>
+        </div>
+        <div class="flexHorilanLayout verticalAlignCenter">导入插件</div>
+      </div>
     </div>
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
@@ -111,6 +118,8 @@ export default class quickActionBar extends Vue {
     })
     return this.$refs.miandiv
   }
+  //************导入插件********************************************************
+  private leadinPlugin() {}
   /****************预览功能************************************************************* */
   private previewWindowVisible: boolean = false
   private onPreviewOk() {
