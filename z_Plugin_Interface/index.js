@@ -1,0 +1,1 @@
+export { layoutCompTypeAttr } from './IPage'
