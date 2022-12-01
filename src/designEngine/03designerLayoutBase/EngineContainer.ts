@@ -32,13 +32,13 @@ export default class EngineContainer extends EngineLayout {
   }
 
   mounted() {}
-  /**********************************鼠标事件 ******************************/
+  /**********************************监听底层事件 ******************************/
   private listenOnMousemove(e: MouseEvent) {
     this.mouseX = e.offsetX
     this.mouseY = e.offsetY
   }
   private async listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): Promise<boolean> {
-    window.console.log('listenOnDrop:', 1)
+    // window.console.log('listenOnDrop:', 1)
     if (!dragdata) {
       return true
     }
@@ -47,8 +47,7 @@ export default class EngineContainer extends EngineLayout {
     if (!compInfo) {
       return true
     }
-    window.console.log('listenOnDrop:', dragdata)
-    // window.console.log('$(this._dragHelper.dragCloneElement).offset()', $(this._dragHelper.dragCloneElement).offset())
+    // window.console.log('listenOnDrop:', dragdata)
     screenLeft = dragHelper.currentDragX
     screenTop = dragHelper.currentDragY
     let dropcomp: EngineLayout = null
@@ -60,6 +59,7 @@ export default class EngineContainer extends EngineLayout {
           dropcomp = await this.insertComponentLayout(compVue, compInfo, dragdata.type)
         }
         break
+      //暂时保留
       case DragItemTypeEnum.drop_component_template:
         {
           let compdata = this.getCompTemplateData(compInfo.sourceId)
@@ -77,7 +77,6 @@ export default class EngineContainer extends EngineLayout {
 
     return false
   }
-
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
     if (!dragdata) {
       return true
@@ -130,12 +129,10 @@ export default class EngineContainer extends EngineLayout {
     }
     return true
   }
-
   private listenOnDragEnd() {
     this.clearHorRule()
     this.clearVerRule()
   }
-  /**********************************键盘事件 ******************************/
   private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     // window.console.log('按了删除键', this.name)

@@ -9,7 +9,6 @@ export enum DragItemTypeEnum {
   drag_gridLayout_col = 'drag_gridLayout_col',
   /**拖拽组件模板 */
   drop_component_template = 'drop_component_template',
-
   functional_component = 'functional_component',
   /**拖拽模型组件 */
   drop_model_component = 'drop_modal_component',

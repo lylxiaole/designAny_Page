@@ -7,7 +7,7 @@
       </div>
       <div class="verticalAlignCenter"
         style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">
-        LYL设计
+        看板
       </div>
     </div>
     <!-- *************************************************************************** -->
