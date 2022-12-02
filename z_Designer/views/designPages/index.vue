@@ -1,7 +1,8 @@
 <template>
   <el-row style="height:100%;width:100%">
     <el-row style="height:60px;width:100%">
-      <toolBar :currentPage="currentShowEngine" :height="60" @onSave="onSaveCurrentPage"></toolBar>
+      <div ref="toobar"></div>
+      <!-- <toolBar :currentPage="currentShowEngine" :height="60" @onSave="onSaveCurrentPage"></toolBar> -->
     </el-row>
     <el-row style="height:calc(100% - 60px);width:100%;">
       <el-col style="width:250px;height:100%">
@@ -34,7 +35,6 @@ import toolBar from './toolBar/index.vue'
 
 import { drawVueOnVirtualDom } from '@src/utils'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@src/designEngine'
-
 @Component({
   components: {
     pagelist: pagelist,
