@@ -103,7 +103,7 @@
     "less": "3.11.0",
     "less-loader": "8.1.0",
     "mammoth": "^1.4.18",
-    "mini-css-extract-plugin": "^2.2.0",
+    "mini-css-extract-plugin": "2.2.0",
     "moment": "^2.29.1",
     "net": "^1.0.2",
     "nprogress": "^0.2.0",
