@@ -38,15 +38,16 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 import propertyCellBase from '../common'
- import { getUuid, deepClone } from '@src/utils'
+import { getUuid, deepClone } from '@src/utils'
 class groupInfo {
   name: string
   disabled: boolean
 }
-  class selectElementInfo {
+class selectElementInfo {
   key: string
   //是否设置组别 2:不设置   1：设置
   // selectGroupType: number
@@ -60,7 +61,7 @@ class groupInfo {
 }
 
 @propertyCellTypeAttr(PropertyTypeEnum.selectGroupElement)
-@Component
+@Options({})
 export default class selectGroupElement extends propertyCellBase {
   public windowVisible: boolean = false
   private disabled: boolean = true
@@ -148,4 +149,4 @@ export default class selectGroupElement extends propertyCellBase {
 </script>
 
 <style lang="less" scoped>
- </style>
+</style>

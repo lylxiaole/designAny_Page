@@ -28,7 +28,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { Property, PropertyType, PropertyTypeEnum } from '@src/designEngine'
 import { EnginePage, EngineLayout } from '@src/designEngine'
 import { deepClone, serialize, deserialize } from '@src/utils'
@@ -79,7 +80,7 @@ function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase
 }
 // *****************************************
 
-@Component({
+@Options({
   name: 'propertyGrid',
   components: {}
 })

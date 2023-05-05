@@ -1,6 +1,6 @@
 var CircularJSON = require('circular-json-es6')
 import pako from 'pako'
-import { Loading } from 'element-ui'
+import { Loading } from 'element-plus'
 import { getConfigByName } from '@src/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 /**
@@ -159,15 +159,7 @@ export function param2Obj(url) {
   if (!search) {
     return {}
   }
-  return JSON.parse(
-    '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
-      '"}'
-  )
+  return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"').replace(/\+/g, ' ') + '"}')
 }
 
 /**
@@ -243,7 +235,7 @@ export function getTime(type) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function() {
+  const later = function () {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -260,7 +252,7 @@ export function debounce(func, wait, immediate) {
     }
   }
 
-  return function(...args) {
+  return function (...args) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout

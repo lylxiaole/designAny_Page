@@ -99,7 +99,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { CurrentApis, CurrentContext, pagenNodeType, APIRequestClass, PageOrderClass } from '../01designerContext'
 import { getUuid, deepClone, serialize } from '@src/utils'
 
@@ -161,7 +162,7 @@ class treeNodeData {
   style: string = ''
 }
 
-@Component({
+@Options({
   components: {
     VueContextMenu: VueContextMenu,
     btreeNode: btreeNode
@@ -215,9 +216,7 @@ export default class PageListControl extends Vue {
   }
   /*********样式重绘********************************************************************* */
   private renderDom(dom: Element) {
-    $(this.$el)
-      .find('.ant-tree-switcher')
-      .css('z-index', 5)
+    $(this.$el).find('.ant-tree-switcher').css('z-index', 5)
   }
   // ***************树节点数据********************************************************************
   private searchNodes(title: string, tree: treeNodeData[]): treeNodeData[] {

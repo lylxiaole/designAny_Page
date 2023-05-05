@@ -5,8 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-@Component
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
+@Options({})
 export default class App extends Vue {
   mounted() {
     $(this.$el)[0].addEventListener('mousewheel', this._onMouseWheel, { passive: false })

@@ -4,10 +4,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { EnginePage } from '../../03designerLayoutBase'
 
-@Component
+@Options({})
 export default class ViewShell extends Vue {}
 </script>
  

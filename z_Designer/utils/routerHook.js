@@ -1,5 +1,5 @@
 import NProgress from 'nprogress' // progress bar
-import { Message } from 'element-ui'
+import { Message } from 'element-plus'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 const whiteList = ['/login', '/auth-redirect', '/register'] // no redirect whitelist

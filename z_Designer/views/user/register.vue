@@ -47,14 +47,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { AxiosResponse } from 'axios'
 import { requestRegisterUser, CheckRegisterInfo } from '@src/apis/user'
 import { ElForm } from 'element-ui/types/form'
 import { validUsername } from '@src/utils/validate'
 import PageBase from '@src/views/PageBase'
 
-@Component
+@Options({})
 export default class register extends PageBase {
   private isRegister: boolean = true
   private get requestEmailForm(): ElForm {

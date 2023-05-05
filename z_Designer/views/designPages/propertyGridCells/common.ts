@@ -1,17 +1,18 @@
-import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { PropertyTypeEnum, Property, PropertyType, EnginePage, EngineLayout } from '@src/designEngine'
 
 export { PropertyTypeEnum }
 
 export function propertyCellTypeAttr(type: PropertyTypeEnum) {
-  return function(target: Function) {
+  return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
     target.prototype.$Meta.celltype = type
     // window.console.log('类型访问器:', target)
   }
 }
 
-@Component
+@Options({})
 export default class propertyCellBase extends Vue {
   @Prop()
   private outerProperty: Property

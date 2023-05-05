@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@src/designEngine'
 import JsBarcode from 'jsbarcode'
@@ -16,7 +17,7 @@ import { getUuid, deepClone } from '@src/utils'
 import { npGridIco } from '@src/designEngine/assets/icons.js'
 
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '一维码组件', 'NpBarCode', npGridIco)
-@Component
+@Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}
 
@@ -54,6 +55,7 @@ export default class NpBarCode extends EngineComponent {
     this.registerProperty(PropertyGroupName.special, '字大小', new Number_Property(), 20)
 
     this.initBarCode()
+
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {

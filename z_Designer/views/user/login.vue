@@ -31,7 +31,8 @@
 
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit, Watch } from 'vue-property-decorator'
 import { validUsername } from '@src/utils/validate'
 import PageBase from '@src/views/PageBase'
 import { login } from '@src/apis/user'
@@ -51,7 +52,7 @@ const validatePassword = (rule, value, callback) => {
   }
 }
 
-@Component
+@Options({})
 export default class loginPage extends PageBase {
   loginForm: any = {
     username: '',
@@ -93,7 +94,7 @@ export default class loginPage extends PageBase {
   // ********************************************************
   checkCapslock(e) {
     const { key } = e
-    this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
+    this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
   }
   async handleLogin() {
     try {

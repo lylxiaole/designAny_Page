@@ -8,14 +8,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import QRCode from 'qrcode'
 import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property, Color_Property } from '@src/designEngine'
 
 import { getUuid, deepClone } from '@src/utils'
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '二维码组件', 'NPQrCode', null)
-@Component
+@Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'
 
@@ -184,7 +185,7 @@ export default class NPQrCode extends EngineComponent {
     }
 
     // let canvasObj = document.getElementById(this.qrCodeId)
-    QRCode.toCanvas($(this.$el).find('#' + this.qrCodeId)[0], this.qrCodeValue, options, function(error) {
+    QRCode.toCanvas($(this.$el).find('#' + this.qrCodeId)[0], this.qrCodeValue, options, function (error) {
       if (error) {
         window.console.error(error)
       }

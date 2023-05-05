@@ -8,15 +8,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { CurrentApis } from '../01designerContext'
 import { SModal, VTable } from '@/components'
 
-@Component({
+@Options({
   components: {
     SModal,
-    VTable,
-  },
+    VTable
+  }
 })
 export default class PageHistory extends Vue {
   private visible: boolean = false
@@ -28,21 +29,21 @@ export default class PageHistory extends Vue {
     {
       title: '版本号',
       dataIndex: 'version',
-      columnType: 'date',
+      columnType: 'date'
     },
     {
       title: '描述',
-      dataIndex: 'description',
+      dataIndex: 'description'
     },
     {
       title: '修改人',
-      dataIndex: 'modifier',
+      dataIndex: 'modifier'
     },
     {
       title: '修改时间',
       dataIndex: 'modifyTime',
-      columnType: 'date',
-    },
+      columnType: 'date'
+    }
   ]
 
   private okText = '确定'

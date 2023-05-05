@@ -1,9 +1,10 @@
-import { Component, Prop, Vue, Emit, Watch, Provide } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
 import { EnginePage, SaveInfo, EngineContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
 import { LayoutType } from './commonClasses/componentInfos'
 
-@Component
+@Options({})
 export default class EngineComponent extends EngineContainer {
   public parentPage: EnginePage
 

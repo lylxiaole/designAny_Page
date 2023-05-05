@@ -18,12 +18,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import nptable from './npTable.vue'
-@Component({
+@Options({
   components: {
-    nptable: nptable,
-  },
+    nptable: nptable
+  }
 })
 export default class demo extends Vue {
   tableData: any[] = [
@@ -39,7 +40,7 @@ export default class demo extends Vue {
           name: '文件 11000',
           size: '11k',
           type: 'js',
-          date: '2019-05-16',
+          date: '2019-05-16'
         },
         {
           id: '12000',
@@ -60,27 +61,27 @@ export default class demo extends Vue {
                   name: '文件 12110',
                   size: '100k',
                   type: 'html',
-                  date: '2019-05-16',
-                },
-              ],
+                  date: '2019-05-16'
+                }
+              ]
             },
             {
               id: '122000',
               name: '文件 122000',
               size: '80k',
               type: 'avi',
-              date: '2019-05-16',
-            },
-          ],
-        },
-      ],
+              date: '2019-05-16'
+            }
+          ]
+        }
+      ]
     },
     {
       id: '20000',
       name: '文件 20000',
       size: '66k',
       type: 'png',
-      date: '2019-05-16',
+      date: '2019-05-16'
     },
     {
       id: '30000',
@@ -101,16 +102,16 @@ export default class demo extends Vue {
               name: '文件 31100',
               size: 'mp3',
               type: 'js',
-              date: '2019-05-16',
+              date: '2019-05-16'
             },
             {
               id: '31200',
               name: '文件 31200',
               size: '224k',
               type: 'java',
-              date: '2019-05-16',
-            },
-          ],
+              date: '2019-05-16'
+            }
+          ]
         },
         {
           id: '32000',
@@ -124,12 +125,12 @@ export default class demo extends Vue {
               name: '文件 32100',
               size: '35k',
               type: 'mp4',
-              date: '2019-05-16',
-            },
-          ],
-        },
-      ],
-    },
+              date: '2019-05-16'
+            }
+          ]
+        }
+      ]
+    }
   ]
 
   created() {}

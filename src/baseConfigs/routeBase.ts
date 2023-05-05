@@ -1,8 +1,6 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import { routes } from './baseInfo'
+import { createRouter, createWebHistory, RouteRecordRaw, Router } from 'vue-router'
 
-Vue.use(Router)
+import { routes } from './baseInfo'
 
 // ***********************路由注册*************************************
 let routeConfigs = []
@@ -10,10 +8,11 @@ let currentRoute: Router = null
 export function initRoutes(inroutes) {
   let newroutes = routes.concat(inroutes)
   routeConfigs = newroutes
-  currentRoute = new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 } as any),
-    routes: routeConfigs
+
+  const currentRoute = createRouter({
+    history: createWebHistory('/'),
+    routes: routeConfigs,
+    scrollBehavior: () => ({ y: 0 } as any)
   })
 
   return currentRoute

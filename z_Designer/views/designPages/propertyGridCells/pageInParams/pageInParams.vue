@@ -32,7 +32,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@src/utils'
 import { paramInfo } from '@src/designEngine'
 import propertyCellBase from '../common'
@@ -40,7 +41,7 @@ import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 import { pageInParamsIco } from '@src/designEngine/assets/icons.js'
 
 @propertyCellTypeAttr(PropertyTypeEnum.pageInParams)
-@Component
+@Options({})
 export default class pageInParams extends propertyCellBase {
   public windowVisible: boolean = false
   private pageicon: any

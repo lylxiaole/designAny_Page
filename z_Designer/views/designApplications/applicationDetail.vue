@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
 import { applicationType } from '@src/apis/designApplication'
 
-@Component
+@Options({})
 export default class index extends ComponentBase {
   @Prop({ default: null })
   private currentApplication: any

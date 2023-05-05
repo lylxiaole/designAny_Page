@@ -20,9 +20,8 @@
 </template>
 
 <script lang="ts">
-// require('./assets/iconfont1/iconfont')
-
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { toString } from 'xe-utils/methods'
 
 class tick {
@@ -30,7 +29,7 @@ class tick {
   tickVal: number
 }
 
-@Component
+@Options
 export default class Rule extends Vue {
   private horTicks: tick[] = []
   private verTicks: tick[] = []

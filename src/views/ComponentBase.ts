@@ -1,7 +1,8 @@
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { getConfigByName } from '@src/baseConfigs'
 import { ElNotification } from 'element-ui/types/notification'
-@Component
+@Options({})
 export default class ComponentBase extends Vue {
   //  *******************自定义上下文**********************************************
   protected $lyl_getConfigByName(configName: string) {

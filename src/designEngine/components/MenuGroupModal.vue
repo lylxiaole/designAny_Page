@@ -70,7 +70,8 @@
 
 <script lang="ts">
 import { error } from 'jquery'
-import { Component, Prop, PropSync, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { CurrentApis } from '../01designerContext'
 import { appMenuGroup } from '@/api/userManage'
 import { batchAdd, batchUpdate } from '@/api/crud'
@@ -82,12 +83,12 @@ import { DetailList } from '@/components'
 enum OperationType {
   ADD, // 新增
   UPDATE, // 更新
-  QUERY, // 查询
+  QUERY // 查询
 }
 
-@Component({
+@Options({
   name: 'MenuGroupModal',
-  components: { iconManage, AreaTitle, GButton, DetailList, DetailListItem: DetailList.Item },
+  components: { iconManage, AreaTitle, GButton, DetailList, DetailListItem: DetailList.Item }
 })
 export default class MenuGroupModal extends Vue {
   @Prop({ required: true })
@@ -117,20 +118,20 @@ export default class MenuGroupModal extends Vue {
         {
           title: '#',
           width: 50,
-          scopedSlots: { customRender: 'serial' },
+          scopedSlots: { customRender: 'serial' }
         },
         {
           title: '名称',
           dataIndex: 'group_name',
           key: 'group_name',
-          scopedSlots: { customRender: 'name' },
+          scopedSlots: { customRender: 'name' }
         },
         {
           title: '操作',
           key: 'action',
           width: 160,
-          scopedSlots: { customRender: 'action' },
-        },
+          scopedSlots: { customRender: 'action' }
+        }
       ]
     } else {
       this.rowSelection = { type: 'radio', onChange: this.onSelectChange }
@@ -138,14 +139,14 @@ export default class MenuGroupModal extends Vue {
         {
           title: '#',
           width: 50,
-          scopedSlots: { customRender: 'serial' },
+          scopedSlots: { customRender: 'serial' }
         },
         {
           title: '名称',
           dataIndex: 'group_name',
           key: 'group_name',
-          scopedSlots: { customRender: 'name' },
-        },
+          scopedSlots: { customRender: 'name' }
+        }
       ]
     }
   }
@@ -176,20 +177,20 @@ export default class MenuGroupModal extends Vue {
     {
       title: '#',
       width: 50,
-      scopedSlots: { customRender: 'serial' },
+      scopedSlots: { customRender: 'serial' }
     },
     {
       title: '名称',
       dataIndex: 'group_name',
       key: 'group_name',
-      scopedSlots: { customRender: 'name' },
+      scopedSlots: { customRender: 'name' }
     },
     {
       title: '操作',
       key: 'action',
       width: 160,
-      scopedSlots: { customRender: 'action' },
-    },
+      scopedSlots: { customRender: 'action' }
+    }
   ]
   private groupDataList: any[] = []
 
@@ -204,21 +205,21 @@ export default class MenuGroupModal extends Vue {
         {
           code: 'app_id',
           type: 'EQ',
-          value: this.appId,
+          value: this.appId
         },
         {
           code: 'parent_menu_id',
           type: 'EQ',
-          value: this.topMenuId,
-        },
+          value: this.topMenuId
+        }
       ],
       orders: [
         {
           code: 'modify_time',
-          type: 'ASC',
-        },
+          type: 'ASC'
+        }
       ],
-      modelCode: 'sys_app_menu_group',
+      modelCode: 'sys_app_menu_group'
     }
     CurrentApis.SimpleListQuery(param)
       .then((res: any) => {
@@ -275,7 +276,7 @@ export default class MenuGroupModal extends Vue {
       app_id: this.appId,
       parent_menu_id: this.topMenuId,
       is_default: 0,
-      operationType: OperationType.ADD,
+      operationType: OperationType.ADD
     }
     this.groupDataList.push(newMg)
   }
@@ -338,8 +339,8 @@ export default class MenuGroupModal extends Vue {
       on: {
         click: () => {
           this.currentMenuGroup = record
-        },
-      },
+        }
+      }
     }
   }
 
@@ -361,7 +362,7 @@ export default class MenuGroupModal extends Vue {
         menuId: this.topMenuId,
         appMenuGroupsToAdd: [],
         appMenuGroupsToDelete: [],
-        appMenuGroupsToUpdate: [],
+        appMenuGroupsToUpdate: []
       }
       //删除
       if (this.deleteGroupList && this.deleteGroupList.length > 0) {
@@ -387,14 +388,14 @@ export default class MenuGroupModal extends Vue {
             this.$notification['success']({
               message: '提示',
               description: '保存成功',
-              duration: 8,
+              duration: 8
             })
             that.isVisible = false
           } else {
             this.$notification['warn']({
               message: '提示',
               description: res ? res.msg : '删除失败',
-              duration: 8,
+              duration: 8
             })
           }
         })

@@ -3,46 +3,38 @@
   <div class="gad-plc">
     <a-row style="height: 50px; width: 100%; position: absolute;border-bottom: 1px solid rgb(223, 223, 223);">
       <a-row style="margin: 3px 15px">
-        <a-input-search size="small" style="margin-bottom: 8px; height: 30px" placeholder="搜索" v-model="seachVal"/>
+        <a-input-search size="small" style="margin-bottom: 8px; height: 30px" placeholder="搜索" v-model="seachVal" />
       </a-row>
     </a-row>
     <a-row style="overflow: hidden; width: 100%; position: absolute; top: 70px; bottom: 0px">
-      <div style="overflow: auto; width: 100%; height: 100%; padding-bottom: 90px"
-           @contextmenu.prevent="onTreeNodeRightClick">
-        <a-tree size="small" style="height: 100%; width: 100%; margin-left: 18px" :treeData="dataListForShow"
-                @select="onSelect"
-                :selectedKeys.sync="selectedKeys" draggable defaultExpandAll :multiple="false"
-                @rightClick="onTreeNodeRightClick" @drop="onNodeDrop"
-                @expand="onTreeExpand">
-          <div slot="group" slot-scope="{ key, title, iconMenuUrl,tag }"
-               style="position: relative; justify-content: left"
-               class="flexHorilanLayout pageFontHover">
+      <div style="overflow: auto; width: 100%; height: 100%; padding-bottom: 90px" @contextmenu.prevent="onTreeNodeRightClick">
+        <a-tree size="small" style="height: 100%; width: 100%; margin-left: 18px" :treeData="dataListForShow" @select="onSelect"
+          :selectedKeys.sync="selectedKeys" draggable defaultExpandAll :multiple="false" @rightClick="onTreeNodeRightClick" @drop="onNodeDrop"
+          @expand="onTreeExpand">
+          <div slot="group" slot-scope="{ key, title, iconMenuUrl,tag }" style="position: relative; justify-content: left"
+            class="flexHorilanLayout pageFontHover">
             <span class="pageListItem" style="height: 26px; position: absolute; left: -300px; right: -200px"></span>
             <span v-if="tag.iconUrl == null" style="z-index: 1" class="icon iconfont">&#xe626;</span>
             <!--            <img v-if="iconMenuUrl != null" style="height: 18px; width: 18px" v-lazy="iconMenuUrl" referrer="no-referrer|origin|unsafe-url" />-->
-            <v-icon v-if="tag.iconUrl != null" viewBox="0 0 100 100" :name="tag.iconUrl"/>
-            <btreeNode :value="title" style="margin-left: 3px; z-index: 1; min-width: 80px; min-height: 20px"
-                       :nodeKey="key"
-                       @onValueChanged="onNodeNameChanged" @onSureNodeName="onSureNodeName"></btreeNode>
+            <v-icon v-if="tag.iconUrl != null" viewBox="0 0 100 100" :name="tag.iconUrl" />
+            <btreeNode :value="title" style="margin-left: 3px; z-index: 1; min-width: 80px; min-height: 20px" :nodeKey="key"
+              @onValueChanged="onNodeNameChanged" @onSureNodeName="onSureNodeName"></btreeNode>
           </div>
-          <div slot="pro" slot-scope="{ key, title, tag }" style="position: relative; justify-content: left"
-               class="flexHorilanLayout pageFontHover">
+          <div slot="pro" slot-scope="{ key, title, tag }" style="position: relative; justify-content: left" class="flexHorilanLayout pageFontHover">
             <span class="pageListItem" style="height: 26px; position: absolute; left: -300px; right: -200px"></span>
-            <a-tooltip v-if="tag.pageStatus == 1" placement="topLeft" arrow-point-at-center
-                       :title="'已经被[' + tag.checkoutUserName + ']签出'">
-              <a-icon :component="lockIcon" style="z-index: 1"/>
+            <a-tooltip v-if="tag.pageStatus == 1" placement="topLeft" arrow-point-at-center :title="'已经被[' + tag.checkoutUserName + ']签出'">
+              <a-icon :component="lockIcon" style="z-index: 1" />
             </a-tooltip>
             <a-tooltip v-if="tag.pageStatus == 2" placement="topLeft" title="正在签出编辑" arrow-point-at-center>
-              <a-icon :component="unLockIcon" style="z-index: 1"/>
+              <a-icon :component="unLockIcon" style="z-index: 1" />
             </a-tooltip>
-            <btreeNode :value="title" style="margin-left: 3px; z-index: 1; min-width: 80px; min-height: 20px"
-                       :nodeKey="key"
-                       @onValueChanged="onNodeNameChanged" @onSureNodeName="onSureNodeName"></btreeNode>
+            <btreeNode :value="title" style="margin-left: 3px; z-index: 1; min-width: 80px; min-height: 20px" :nodeKey="key"
+              @onValueChanged="onNodeNameChanged" @onSureNodeName="onSureNodeName"></btreeNode>
           </div>
         </a-tree>
         <VueContextMenu id="context-menu" ref="ctxMenu" style="cursor: pointer">
           <li v-for="(menu, index) in rightMenus" :key="index" class="themeHover pageListItem" style="padding-left: 5px"
-              @click="onRightMenuChoose(menu)">
+            @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
           </li>
@@ -50,64 +42,57 @@
       </div>
     </a-row>
     <!-- ************************页面另存为*********************************** -->
-    <geno-modal :maskClosable="false" title="另存为" :destroyOnClose="true" v-model="renameWindowVisible" :width="400"
-                @ok="onRenameOk"
-                @cancel="onRenameCancel" cancelText="取消" okText="确定" :okButtonProps="{ props: { icon: 'check' } }"
-                :cancelButtonProps="{ props: { icon: 'close' } }">
+    <geno-modal :maskClosable="false" title="另存为" :destroyOnClose="true" v-model="renameWindowVisible" :width="400" @ok="onRenameOk"
+      @cancel="onRenameCancel" cancelText="取消" okText="确定" :okButtonProps="{ props: { icon: 'check' } }"
+      :cancelButtonProps="{ props: { icon: 'close' } }">
       <a-row>
         <a-col :span="5">
           <span>新名称:</span>
         </a-col>
         <a-col :span="19">
-          <a-input v-model="renameNewName"/>
+          <a-input v-model="renameNewName" />
         </a-col>
       </a-row>
     </geno-modal>
 
-    <geno-modal :maskClosable="false" title="资源列表" :destroyOnClose="true" v-model="pageResourceWindowVisible"
-                :width="400" :height="500"
-                @ok="onSelectPageOk" @cancel="onSelectPageCancel" cancelText="取消" okText="确定"
-                :okButtonProps="{ props: { icon: 'check' } }"
-                :cancelButtonProps="{ props: { icon: 'close' } }">
+    <geno-modal :maskClosable="false" title="资源列表" :destroyOnClose="true" v-model="pageResourceWindowVisible" :width="400" :height="500"
+      @ok="onSelectPageOk" @cancel="onSelectPageCancel" cancelText="取消" okText="确定" :okButtonProps="{ props: { icon: 'check' } }"
+      :cancelButtonProps="{ props: { icon: 'close' } }">
       <a-row>
-        <a-input-search size="small" style="margin-bottom: 8px; height: 30px" placeholder="搜索" v-model="seachPage"/>
-        <a-tree size="small" style="height: 100%; width: 98%; margin-left: 18px; max-height: 500px"
-                :treeData="pageSourceTreeShow" :multiple="false"
-                :checkable="true" @check="checkData"></a-tree>
+        <a-input-search size="small" style="margin-bottom: 8px; height: 30px" placeholder="搜索" v-model="seachPage" />
+        <a-tree size="small" style="height: 100%; width: 98%; margin-left: 18px; max-height: 500px" :treeData="pageSourceTreeShow" :multiple="false"
+          :checkable="true" @check="checkData"></a-tree>
       </a-row>
     </geno-modal>
     <div style="display:none">
       <a-upload :fileList="fileList" :remove="handleRemove" :beforeUpload="beforeUpload" accept=".jpg, .jpeg, .png">
         <a-button id="uploadMenuIcon">
-          <a-icon type="upload"/>
+          <a-icon type="upload" />
           上传图标
         </a-button>
       </a-upload>
     </div>
 
-    <mg-modal ref="mgModal" :visible.sync="menuGroupVisible" @onOk="handleMenuGroupOk" :isEditable="menuGroupEditable"
-              :topMenuId="menuGroupTopMenuId"
-              :appId="menuGroupAppId">
+    <mg-modal ref="mgModal" :visible.sync="menuGroupVisible" @onOk="handleMenuGroupOk" :isEditable="menuGroupEditable" :topMenuId="menuGroupTopMenuId"
+      :appId="menuGroupAppId">
     </mg-modal>
 
-    <a-drawer :title="title" placement="right" :width="520" :closable="false" :visible="editvisible"
-              :after-visible-change="afterVisibleChange"
-              @close="onClose">
+    <a-drawer :title="title" placement="right" :width="520" :closable="false" :visible="editvisible" :after-visible-change="afterVisibleChange"
+      @close="onClose">
       <a-form :form="form">
         <a-row :gutter="16">
           <a-col>
             <a-form-item label="菜单名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input maxlength="100" placeholder="请输入" v-decorator="formRules.name"/>
+              <a-input maxlength="100" placeholder="请输入" v-decorator="formRules.name" />
             </a-form-item>
           </a-col>
         </a-row>
         <a-row :gutter="16">
           <a-col>
             <a-form-item label="菜单分组" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-search placeholder="请选择分组" @search="openGroupModal" v-decorator="formRules.groupName"
-                              :read-only="true">
+              <a-input-search placeholder="请选择分组" @search="openGroupModal" v-decorator="formRules.groupName" :read-only="true">
                 <a-button slot="enterButton">
-                  <a-icon type="plus"/>
+                  <a-icon type="plus" />
                 </a-button>
               </a-input-search>
             </a-form-item>
@@ -116,7 +101,7 @@
         <a-row :gutter="16" style="display: none">
           <a-col>
             <a-form-item label="菜单分组" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="formRules.groupId" :read-only="true"/>
+              <a-input v-decorator="formRules.groupId" :read-only="true" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -133,7 +118,7 @@
         <a-row :gutter="16">
           <a-col>
             <a-form-item label="跳转路径" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input maxlength="200" placeholder="请输入" v-decorator="formRules.jumpPath"/>
+              <a-input maxlength="200" placeholder="请输入" v-decorator="formRules.jumpPath" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -150,10 +135,10 @@
         <a-row :gutter="16">
           <a-form-item label="大图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
             <a-col :span="16">
-              <v-icon viewBox="0 0 100 100" v-if="this.mdl.bigIconUrl!=null" :name="this.mdl.bigIconUrl"/>
+              <v-icon viewBox="0 0 100 100" v-if="this.mdl.bigIconUrl!=null" :name="this.mdl.bigIconUrl" />
             </a-col>
             <a-col :offset="4" :span="4">
-              <a-button shape="circle" icon="plus" @click="()=>{iconSelectorVisible=true;iconType=0;}"/>
+              <a-button shape="circle" icon="plus" @click="()=>{iconSelectorVisible=true;iconType=0;}" />
             </a-col>
           </a-form-item>
         </a-row>
@@ -176,33 +161,32 @@
     </a-drawer>
 
     <a-drawer title="设置图标" placement="right" :width="520" :closable="false" :visible="firstMenuIconModalvisible"
-              :after-visible-change="afterVisibleChange"
-              @close="onClose">
+      :after-visible-change="afterVisibleChange" @close="onClose">
       <a-form :form="form">
         <a-row :gutter="16">
           <a-col>
             <a-form-item label="菜单名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input maxlength="100" placeholder="请输入" v-decorator="formRules.name"/>
+              <a-input maxlength="100" placeholder="请输入" v-decorator="formRules.name" />
             </a-form-item>
           </a-col>
         </a-row>
         <a-row :gutter="16">
           <a-form-item label="菜单图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
             <a-col :span="16">
-              <v-icon viewBox="0 0 100 100" v-if="this.mdl.iconUrl!=null" :name="this.mdl.iconUrl"/>
+              <v-icon viewBox="0 0 100 100" v-if="this.mdl.iconUrl!=null" :name="this.mdl.iconUrl" />
             </a-col>
             <a-col :offset="4" :span="4">
-              <a-button shape="circle" icon="plus" @click="()=>{iconSelectorVisible=true;iconType=1;}"/>
+              <a-button shape="circle" icon="plus" @click="()=>{iconSelectorVisible=true;iconType=1;}" />
             </a-col>
           </a-form-item>
         </a-row>
         <a-row :gutter="16">
           <a-form-item label="大图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
             <a-col :span="16">
-              <v-icon viewBox="0 0 100 100" v-if="this.mdl.bigIconUrl!=null" :name="this.mdl.bigIconUrl"/>
+              <v-icon viewBox="0 0 100 100" v-if="this.mdl.bigIconUrl!=null" :name="this.mdl.bigIconUrl" />
             </a-col>
             <a-col :offset="4" :span="4">
-              <a-button shape="circle" icon="plus" @click="()=>{iconSelectorVisible=true;iconType=0;}"/>
+              <a-button shape="circle" icon="plus" @click="()=>{iconSelectorVisible=true;iconType=0;}" />
             </a-col>
           </a-form-item>
         </a-row>
@@ -223,18 +207,18 @@
       </div>
     </a-drawer>
 
-    <a-modal title="图标" :maskClosable="false" :destroyOnClose="true" v-model="iconSelectorVisible" :width="900"
-             :height="500" @ok="handleIconOk"
-             @cancel="handleIconCancel" cancelText="取消" okText="确定" :okButtonProps="{ props: { icon: 'check' } }"
-             :cancelButtonProps="{ props: { icon: 'close' } }">
+    <a-modal title="图标" :maskClosable="false" :destroyOnClose="true" v-model="iconSelectorVisible" :width="900" :height="500" @ok="handleIconOk"
+      @cancel="handleIconCancel" cancelText="取消" okText="确定" :okButtonProps="{ props: { icon: 'check' } }"
+      :cancelButtonProps="{ props: { icon: 'close' } }">
       <icon-manage :isMulti="false" :isSelector="true" @onSelected="onIconSelected"></icon-manage>
     </a-modal>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator'
-import {CurrentApis, CurrentContext, pagenNodeType, PageOrderClass} from '../01designerContext'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
+import { CurrentApis, CurrentContext, pagenNodeType, PageOrderClass } from '../01designerContext'
 import { getUuid, deepClone, serialize } from '@src/utils'
 
 import fileUpload from '../02common/uploadFile/fileUpload'
@@ -242,15 +226,15 @@ import iconManage from '@views/npicon/iconManage.vue'
 
 let VueContextMenu = require('vue-context-menu')
 import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
-import {behavior, action, actionDetail, object_Method} from '../02common/behavior'
-import {Modal, message, Switch} from 'ant-design-vue'
+import { behavior, action, actionDetail, object_Method } from '../02common/behavior'
+import { Modal, message, Switch } from 'ant-design-vue'
 import PageBase from '../05designerLayouts/PageBase'
 import pick from 'lodash.pick'
-import {getFlowList, workFlowBegin} from '@/api/workflow'
-import {batchDelete} from '@/api/crud'
-import {addTopAppUserMenu} from '@/api/userManage'
-import {pageCache} from '../02common/impResourcesCache'
-import {lock, unLock} from '../02common/icons.js'
+import { getFlowList, workFlowBegin } from '@/api/workflow'
+import { batchDelete } from '@/api/crud'
+import { addTopAppUserMenu } from '@/api/userManage'
+import { pageCache } from '../02common/impResourcesCache'
+import { lock, unLock } from '../02common/icons.js'
 import MenuGroupModal from './MenuGroupModal.vue'
 
 enum rightMenus {
@@ -266,7 +250,7 @@ enum rightMenus {
   edit = '编辑',
   setMenuIcon = '设置图标',
   delete = '删除',
-  menuGroupSettings = '管理分组',
+  menuGroupSettings = '管理分组'
   // chooseMenuGroup = '选择分组',
 }
 
@@ -283,11 +267,11 @@ class treeNodeData {
   class: string = '' //样式class
   get scopedSlots(): any {
     if (this.nodeType == pagenNodeType.group) {
-      return {title: 'group'}
+      return { title: 'group' }
     } else if (this.nodeType == pagenNodeType.pro) {
-      return {title: 'pro'}
+      return { title: 'pro' }
     } else {
-      return {title: 'grid'}
+      return { title: 'grid' }
     }
   }
 
@@ -302,13 +286,13 @@ class treeNodeData {
   style: string = ''
 }
 
-@Component({
+@Options({
   components: {
     VueContextMenu: VueContextMenu,
     btreeNode: btreeNode,
     MgModal: MenuGroupModal,
     iconManage: iconManage
-  },
+  }
 })
 export default class PageListControl extends Vue {
   private lockIcon: any = lock
@@ -352,18 +336,18 @@ export default class PageListControl extends Vue {
 
   private param: any = {
     filter: {
-      appId: CurrentContext.AppID,
+      appId: CurrentContext.AppID
     },
     orders: [
       {
         direction: 'ASC',
-        fieldName: 'orderIndex',
+        fieldName: 'orderIndex'
       },
       {
         direction: 'ASC',
-        fieldName: 'modifyTime',
-      },
-    ],
+        fieldName: 'modifyTime'
+      }
+    ]
   }
 
   mounted() {
@@ -373,15 +357,15 @@ export default class PageListControl extends Vue {
     if (this.activeKey === '1') {
       var loading = common.showLoading_Async()
       CurrentApis.GetAppMenuTree(this.param)
-          .then((res) => {
-            this.dataList = this.pageNodeToTreeNode(res as any[])
-          })
-          .catch((error) => {
-            this.$message.error(error)
-          })
-          .finally(() => {
-            common.closeLoading_Async(loading)
-          })
+        .then((res) => {
+          this.dataList = this.pageNodeToTreeNode(res as any[])
+        })
+        .catch((error) => {
+          this.$message.error(error)
+        })
+        .finally(() => {
+          common.closeLoading_Async(loading)
+        })
     }
   }
 
@@ -539,7 +523,7 @@ export default class PageListControl extends Vue {
     this.refreshListOrderIndex(parentId)
   }
 
-  private onTreeExpand(expandedKeys: string[], {expanded: bool, node}: any) {
+  private onTreeExpand(expandedKeys: string[], { expanded: bool, node }: any) {
     this.$nextTick(() => {
       this.renderDom(this.$el)
     })
@@ -549,7 +533,7 @@ export default class PageListControl extends Vue {
   public addNewProPage() {
     let node: treeNodeData = this.searchNodeByKey(this.selectedKeys[0], this.dataList)
     if (node.nodeType != pagenNodeType.group) {
-      this.$info({title: '提示', content: '只能在分组下添加页面'})
+      this.$info({ title: '提示', content: '只能在分组下添加页面' })
       return
     }
     this.addTreeNode(pagenNodeType.pro, '新建专业页面', this.selectedKeys[0])
@@ -578,12 +562,12 @@ export default class PageListControl extends Vue {
       this.addNewPage(newId, type, name, parentId)
     } else {
       CurrentApis.AddGroup(newId, name, parentId)
-          .then((res) => {
-            this.insertTreeNode(newId, type, name, parentId)
-          })
-          .catch((error) => {
-            this.$message.error(error)
-          })
+        .then((res) => {
+          this.insertTreeNode(newId, type, name, parentId)
+        })
+        .catch((error) => {
+          this.$message.error(error)
+        })
     }
   }
 
@@ -599,7 +583,7 @@ export default class PageListControl extends Vue {
     }
   }
 
-  private onNodeDrop({event, node, dragNode, dragNodesKeys}: any) {
+  private onNodeDrop({ event, node, dragNode, dragNodesKeys }: any) {
     this.cuteCurrentDragPosition(node)
     let targetNode = this.searchNodeByKey(node.dataRef.key, this.dataList)
     let sourceNode = this.searchNodeByKey(dragNode.dataRef.key, this.dataList)
@@ -634,21 +618,21 @@ export default class PageListControl extends Vue {
       data: [
         {
           code: 'menu_name',
-          value: sourceNode.title,
+          value: sourceNode.title
         },
         {
           code: 'parent_id',
-          value: parentId,
-        },
+          value: parentId
+        }
       ],
       filter: [
         {
           code: 'id',
           type: 'EQ',
-          value: sourceNode.key,
-        },
+          value: sourceNode.key
+        }
       ],
-      modelCode: 'sys_app_user_menu',
+      modelCode: 'sys_app_user_menu'
     }
     promiseres = CurrentApis.SimpleUpdate(param)
 
@@ -751,17 +735,17 @@ export default class PageListControl extends Vue {
       data: [
         {
           code: 'menu_name',
-          value: newtitle,
-        },
+          value: newtitle
+        }
       ],
       filter: [
         {
           code: 'id',
           type: 'EQ',
-          value: nodeKey,
-        },
+          value: nodeKey
+        }
       ],
-      modelCode: 'sys_app_user_menu',
+      modelCode: 'sys_app_user_menu'
     }
     CurrentApis.SimpleUpdate(param).then((res) => {
       findnode.title = newtitle
@@ -780,22 +764,22 @@ export default class PageListControl extends Vue {
         data: [
           {
             code: 'id',
-            value: CurrentApis.GetServerUUID(),
+            value: CurrentApis.GetServerUUID()
           },
           {
             code: 'page_id',
-            value: newId,
+            value: newId
           },
           {
             code: 'permission_id',
-            value: '444',
+            value: '444'
           },
           {
             code: 'is_deleted',
-            value: 0,
-          },
+            value: 0
+          }
         ],
-        modelCode: 'app_page_permission',
+        modelCode: 'app_page_permission'
       }
       await CurrentApis.SimpleAdd(param)
       this.insertTreeNode(newId, type, name, parentId)
@@ -821,19 +805,18 @@ export default class PageListControl extends Vue {
       data.orderIndex = ++index
       data.type = o.nodeType == pagenNodeType.group ? 1 : 0
       refreshData.push(data)
-      updateArr.push({modelCode: 'sys_app_user_menu', data: {id: o.key, order_index: data.orderIndex}})
+      updateArr.push({ modelCode: 'sys_app_user_menu', data: { id: o.key, order_index: data.orderIndex } })
     })
-    let workflowQueryParam = {filter: {}, pageNumber: 1, pageSize: 1}
-    workflowQueryParam.filter = {wfNo: 'multyModels_Update'}
+    let workflowQueryParam = { filter: {}, pageNumber: 1, pageSize: 1 }
+    workflowQueryParam.filter = { wfNo: 'multyModels_Update' }
     getFlowList(workflowQueryParam).then((res1) => {
       let saveParam = {
         modelsAdd: [],
         modelsUpdate: updateArr,
-        modelsDelete: [],
+        modelsDelete: []
       }
-      let workflowParam = {workflowId: res1.data.content[0].id, data: saveParam}
-      workFlowBegin(workflowParam).then((res2) => {
-      })
+      let workflowParam = { workflowId: res1.data.content[0].id, data: saveParam }
+      workFlowBegin(workflowParam).then((res2) => {})
     })
     //CurrentApis.RefreshPageIndex(refreshData)
   }
@@ -1035,16 +1018,18 @@ export default class PageListControl extends Vue {
       case rightMenus.saveAs:
         this.pageSaveAs(this.currentRightNode.key)
         break
-      case rightMenus.rename: {
-        // this.currentRightNode.isEdit = true
-      }
+      case rightMenus.rename:
+        {
+          // this.currentRightNode.isEdit = true
+        }
         break
-      case rightMenus.revert: {
-        let pageId = this.currentRightNode.key
-        CurrentApis.RestorPage(pageId).then((res) => {
-          this.RestorPage(pageId)
-        })
-      }
+      case rightMenus.revert:
+        {
+          let pageId = this.currentRightNode.key
+          CurrentApis.RestorPage(pageId).then((res) => {
+            this.RestorPage(pageId)
+          })
+        }
         break
       case rightMenus.hide: {
         this.setShowOrHide(this.currentRightNode.key, false)
@@ -1067,18 +1052,18 @@ export default class PageListControl extends Vue {
       case rightMenus.choosePage:
         let loading = common.showLoading_Async()
         CurrentApis.GetAllTreeList()
-            .then((res) => {
-              this.pageSourceTree = this.pageResourceNodeToTreeNode(res as any[])
-              this.selectedPages = []
-              this.seachPage = ''
-              this.pageResourceWindowVisible = true
-            })
-            .catch((error) => {
-              this.$message.error(error)
-            })
-            .finally(() => {
-              common.closeLoading_Async(loading)
-            })
+          .then((res) => {
+            this.pageSourceTree = this.pageResourceNodeToTreeNode(res as any[])
+            this.selectedPages = []
+            this.seachPage = ''
+            this.pageResourceWindowVisible = true
+          })
+          .catch((error) => {
+            this.$message.error(error)
+          })
+          .finally(() => {
+            common.closeLoading_Async(loading)
+          })
         break
       case rightMenus.edit:
         this.showRightModal(menuName)
@@ -1091,14 +1076,14 @@ export default class PageListControl extends Vue {
         this.menuGroupAppId = CurrentContext.AppID
         break
       }
-        // case rightMenus.chooseMenuGroup: {
-        //   let parentNode = this.getNodeParent(this.currentRightNode, this.dataList)
-        //   this.menuGroupVisible = true
-        //   this.menuGroupEditable = false
-        //   this.menuGroupTopMenuId = parentNode ? parentNode.key : 0
-        //   this.menuGroupAppId = CurrentContext.AppID
-        //   break
-        // }
+      // case rightMenus.chooseMenuGroup: {
+      //   let parentNode = this.getNodeParent(this.currentRightNode, this.dataList)
+      //   this.menuGroupVisible = true
+      //   this.menuGroupEditable = false
+      //   this.menuGroupTopMenuId = parentNode ? parentNode.key : 0
+      //   this.menuGroupAppId = CurrentContext.AppID
+      //   break
+      // }
 
       default:
         break
@@ -1125,17 +1110,17 @@ export default class PageListControl extends Vue {
       data: [
         {
           code: 'is_show',
-          value: isshow ? 1 : 0,
-        },
+          value: isshow ? 1 : 0
+        }
       ],
       filter: [
         {
           code: 'id',
           type: 'EQ',
-          value: pageId,
-        },
+          value: pageId
+        }
       ],
-      modelCode: 'sys_app_user_menu',
+      modelCode: 'sys_app_user_menu'
     }
     CurrentApis.SimpleUpdate(param).then(() => {
       let node = this.getNodeById(pageId, this.dataList)
@@ -1156,10 +1141,10 @@ export default class PageListControl extends Vue {
             {
               code: 'id',
               type: 'EQ',
-              value: this.currentRightNode.key,
-            },
+              value: this.currentRightNode.key
+            }
           ],
-          modelCode: 'sys_app_user_menu',
+          modelCode: 'sys_app_user_menu'
         }
         CurrentApis.SimpleDelete(param).then(() => {
           this.deleteNode(this.currentRightNode)
@@ -1170,15 +1155,14 @@ export default class PageListControl extends Vue {
             this.currentRightNode.children.forEach((item) => {
               ids.push(item.tag.id)
             })
-            let params = {ids: ids, modelCode: 'sys_app_user_menu'}
+            let params = { ids: ids, modelCode: 'sys_app_user_menu' }
             batchDelete(params).then(() => {
               //this.deleteNode(this.currentRightNode)
             })
           }
         }
       },
-      onCancel() {
-      },
+      onCancel() {}
     })
   }
 
@@ -1209,30 +1193,30 @@ export default class PageListControl extends Vue {
       data: [
         {
           code: 'icon_url',
-          value: relativePath,
-        },
+          value: relativePath
+        }
       ],
       filter: [
         {
           code: 'id',
           type: 'EQ',
-          value: pageId,
-        },
+          value: pageId
+        }
       ],
-      modelCode: 'sys_app_user_menu',
+      modelCode: 'sys_app_user_menu'
     }
     CurrentApis.SimpleUpdate(param).then(() => {
       let loading = common.showLoading_Async()
       CurrentApis.GetAppMenuTree(this.param)
-          .then((res) => {
-            this.dataList = this.pageNodeToTreeNode(res as any[])
-          })
-          .catch((error) => {
-            this.$message.error(error)
-          })
-          .finally(() => {
-            common.closeLoading_Async(loading)
-          })
+        .then((res) => {
+          this.dataList = this.pageNodeToTreeNode(res as any[])
+        })
+        .catch((error) => {
+          this.$message.error(error)
+        })
+        .finally(() => {
+          common.closeLoading_Async(loading)
+        })
     })
   }
 
@@ -1251,34 +1235,30 @@ export default class PageListControl extends Vue {
   }
 
   @Emit('onOpenPage')
-  public onOpenPage(pageId: string, pageName: string, pageType: pagenNodeType) {
-  }
+  public onOpenPage(pageId: string, pageName: string, pageType: pagenNodeType) {}
 
   @Emit('RestorPage')
-  public RestorPage(pageId: string) {
-  }
+  public RestorPage(pageId: string) {}
 
   @Emit('onClosePage')
-  public onClosePage(pageId: string) {
-  }
+  public onClosePage(pageId: string) {}
 
   @Emit('onNameChanged')
-  public onNameChanged(pageId: string, newname: string) {
-  }
+  public onNameChanged(pageId: string, newname: string) {}
 
   private changeActivekey(param: any) {
     if (param.target.value === '2') {
       let loading = common.showLoading_Async()
       CurrentApis.GetAllTreeList()
-          .then((res) => {
-            this.dataList = this.pageNodeToTreeNode(res as any[])
-          })
-          .catch((error) => {
-            this.$message.error(error)
-          })
-          .finally(() => {
-            common.closeLoading_Async(loading)
-          })
+        .then((res) => {
+          this.dataList = this.pageNodeToTreeNode(res as any[])
+        })
+        .catch((error) => {
+          this.$message.error(error)
+        })
+        .finally(() => {
+          common.closeLoading_Async(loading)
+        })
     } else {
       this.dataList = []
     }
@@ -1294,42 +1274,42 @@ export default class PageListControl extends Vue {
         data: [
           {
             code: 'id',
-            value: newId,
+            value: newId
           },
           {
             code: 'app_id',
-            value: CurrentContext.AppID,
+            value: CurrentContext.AppID
           },
           {
             code: 'page_id',
-            value: 0,
+            value: 0
           },
           {
             code: 'parent_id',
-            value: !parentId ? 0 : parentId,
+            value: !parentId ? 0 : parentId
           },
           {
             code: 'menu_name',
-            value: name,
+            value: name
           },
           {
             code: 'order_index',
-            value: 0,
+            value: 0
           },
           {
             code: 'is_show',
-            value: 1,
+            value: 1
           },
           {
             code: 'user_id',
-            value: 0,
+            value: 0
           },
           {
             code: 'is_deleted',
-            value: 0,
-          },
+            value: 0
+          }
         ],
-        modelCode: 'sys_app_user_menu',
+        modelCode: 'sys_app_user_menu'
       }
       addPost = CurrentApis.SimpleAdd(param)
     } else {
@@ -1343,25 +1323,25 @@ export default class PageListControl extends Vue {
         userId: 0,
         deleted: false,
         orderIndex: 0,
-        keepAlive: true,
+        keepAlive: true
       }
       addPost = addTopAppUserMenu(topMenu)
     }
     addPost
-        .then((res) => {
-          if (res.code == '0') {
-            this.insertTreeNode(newId, pagenNodeType.group, name, parentId)
-          } else {
-            this.$notification['warn']({
-              message: '提示',
-              description: res ? res.msg : '操作失败',
-              duration: 8,
-            })
-          }
-        })
-        .catch((error) => {
-          this.$message.error(error)
-        })
+      .then((res) => {
+        if (res.code == '0') {
+          this.insertTreeNode(newId, pagenNodeType.group, name, parentId)
+        } else {
+          this.$notification['warn']({
+            message: '提示',
+            description: res ? res.msg : '操作失败',
+            duration: 8
+          })
+        }
+      })
+      .catch((error) => {
+        this.$message.error(error)
+      })
   }
 
   private selectMenu: any
@@ -1385,7 +1365,7 @@ export default class PageListControl extends Vue {
         menu_name: o.title,
         order_index: findNode.children.length + 1,
         is_show: 1,
-        user_id: 0,
+        user_id: 0
       })
 
       let newnode = new treeNodeData()
@@ -1394,19 +1374,19 @@ export default class PageListControl extends Vue {
       newnode.nodeType = 2
       newnode.isNeedSave = false
       newnode.isSystem = false
-      newnode.tag = {id: ids[index], pageId: o.key, menuName: o.title, jumpMode: 1}
+      newnode.tag = { id: ids[index], pageId: o.key, menuName: o.title, jumpMode: 1 }
       findNode.children.push(newnode)
       index++
     })
-    let workflowQueryParam = {filter: {}, pageNumber: 1, pageSize: 1}
-    workflowQueryParam.filter = {wfNo: 'baseModel_Bacth'}
+    let workflowQueryParam = { filter: {}, pageNumber: 1, pageSize: 1 }
+    workflowQueryParam.filter = { wfNo: 'baseModel_Bacth' }
     getFlowList(workflowQueryParam).then((res1) => {
       let saveParam = {
-        addData: {modelCode: 'sys_app_user_menu', data: addArr},
-        updateData: {modelCode: 'sys_app_user_menu', data: []},
-        deleteData: {modelCode: 'sys_app_user_menu', data: []},
+        addData: { modelCode: 'sys_app_user_menu', data: addArr },
+        updateData: { modelCode: 'sys_app_user_menu', data: [] },
+        deleteData: { modelCode: 'sys_app_user_menu', data: [] }
       }
-      let workflowParam = {workflowId: res1.data.content[0].id, data: saveParam}
+      let workflowParam = { workflowId: res1.data.content[0].id, data: saveParam }
       workFlowBegin(workflowParam).then((res2) => {
         this.refreshListOrderIndex(this.currentRightNode.key)
       })
@@ -1459,12 +1439,12 @@ export default class PageListControl extends Vue {
   mdl: any = {}
   title: string = '编辑'
   labelCol: any = {
-    xs: {span: 5},
-    sm: {span: 5},
+    xs: { span: 5 },
+    sm: { span: 5 }
   }
   wrapperCol: any = {
-    xs: {span: 16},
-    sm: {span: 16},
+    xs: { span: 16 },
+    sm: { span: 16 }
   }
   //0-大图标，1-小图标
   iconType: Number = 0
@@ -1506,16 +1486,16 @@ export default class PageListControl extends Vue {
             {
               code: 'id',
               type: 'EQ',
-              value: this.mdl.groupId,
-            },
+              value: this.mdl.groupId
+            }
           ],
-          modelCode: 'sys_app_menu_group',
+          modelCode: 'sys_app_menu_group'
         }
         CurrentApis.SimpleListQuery(param).then((res: any) => {
           res.forEach((element) => {
             this.mdl.groupName = element.group_name
             this.$nextTick(() => {
-              this.form.setFieldsValue(pick({groupName: element.group_name}, 'groupName'))
+              this.form.setFieldsValue(pick({ groupName: element.group_name }, 'groupName'))
             })
           })
         })
@@ -1535,24 +1515,23 @@ export default class PageListControl extends Vue {
   }
 
   formRules: any = {
-    name: ['menuName', {rules: [{whitespace: true, required: true, message: '请输入菜单名称'}]}],
+    name: ['menuName', { rules: [{ whitespace: true, required: true, message: '请输入菜单名称' }] }],
     groupId: ['groupId'],
-    groupName: ['groupName', {rules: [{required: true, message: '请选择分组'}]}],
-    jumpMode: ['jumpMode', {initialValue: '1', rules: [{required: true, message: '请选择跳转方式'}]}],
+    groupName: ['groupName', { rules: [{ required: true, message: '请选择分组' }] }],
+    jumpMode: ['jumpMode', { initialValue: '1', rules: [{ required: true, message: '请选择跳转方式' }] }],
     jumpPath: ['routeUrl'],
-    keepAlive: ['keepAlive', {initialValue: true}],
+    keepAlive: ['keepAlive', { initialValue: true }]
   }
 
   formFirstRules: any = {
-    name: ['menuName', {rules: [{whitespace: true, required: true, message: '请输入菜单名称'}]}],
+    name: ['menuName', { rules: [{ whitespace: true, required: true, message: '请输入菜单名称' }] }]
   }
 
   editvisible: boolean = false
 
   firstMenuIconModalvisible: boolean = false
 
-  afterVisibleChange() {
-  }
+  afterVisibleChange() {}
 
   onClose() {
     this.mdl = {}
@@ -1575,23 +1554,23 @@ export default class PageListControl extends Vue {
           data: [
             {
               code: 'menu_name',
-              value: this.mdl.menuName,
+              value: this.mdl.menuName
             },
             {
               code: 'jump_mode',
-              value: values.jumpMode,
+              value: values.jumpMode
             },
             {
               code: 'route_url',
-              value: values.routeUrl,
+              value: values.routeUrl
             },
             {
               code: 'group_id',
-              value: values.groupId,
+              value: values.groupId
             },
             {
               code: 'is_keep_alive',
-              value: values.keepAlive ? 1 : 0,
+              value: values.keepAlive ? 1 : 0
             },
             {
               code: 'big_icon_url',
@@ -1602,23 +1581,23 @@ export default class PageListControl extends Vue {
             {
               code: 'id',
               type: 'EQ',
-              value: this.mdl.id,
-            },
+              value: this.mdl.id
+            }
           ],
-          modelCode: 'sys_app_user_menu',
+          modelCode: 'sys_app_user_menu'
         }
         CurrentApis.SimpleUpdate(param).then(() => {
           let loading = common.showLoading_Async()
           CurrentApis.GetAppMenuTree(this.param)
-              .then((res) => {
-                this.dataList = this.pageNodeToTreeNode(res as any[])
-              })
-              .catch((error) => {
-                this.$message.error(error)
-              })
-              .finally(() => {
-                common.closeLoading_Async(loading)
-              })
+            .then((res) => {
+              this.dataList = this.pageNodeToTreeNode(res as any[])
+            })
+            .catch((error) => {
+              this.$message.error(error)
+            })
+            .finally(() => {
+              common.closeLoading_Async(loading)
+            })
         })
       }
       this.onClose()
@@ -1635,7 +1614,7 @@ export default class PageListControl extends Vue {
         data: [
           {
             code: 'menu_name',
-            value: this.mdl.menuName,
+            value: this.mdl.menuName
           },
           {
             code: 'big_icon_url',
@@ -1650,23 +1629,23 @@ export default class PageListControl extends Vue {
           {
             code: 'id',
             type: 'EQ',
-            value: this.mdl.id,
-          },
+            value: this.mdl.id
+          }
         ],
-        modelCode: 'sys_app_user_menu',
+        modelCode: 'sys_app_user_menu'
       }
       CurrentApis.SimpleUpdate(param).then(() => {
         let loading = common.showLoading_Async()
         CurrentApis.GetAppMenuTree(this.param)
-            .then((res) => {
-              this.dataList = this.pageNodeToTreeNode(res as any[])
-            })
-            .catch((error) => {
-              this.$message.error(error)
-            })
-            .finally(() => {
-              common.closeLoading_Async(loading)
-            })
+          .then((res) => {
+            this.dataList = this.pageNodeToTreeNode(res as any[])
+          })
+          .catch((error) => {
+            this.$message.error(error)
+          })
+          .finally(() => {
+            common.closeLoading_Async(loading)
+          })
       })
       this.onClose()
     })
@@ -1682,56 +1661,56 @@ export default class PageListControl extends Vue {
         data: [
           {
             code: 'id',
-            value: newId,
+            value: newId
           },
           {
             code: 'app_id',
-            value: CurrentContext.AppID,
+            value: CurrentContext.AppID
           },
           {
             code: 'parent_group_id',
-            value: 0,
+            value: 0
           },
           {
             code: 'page_name',
-            value: values.menuName,
+            value: values.menuName
           },
           {
             code: 'jump_mode',
-            value: values.jumpMode,
+            value: values.jumpMode
           },
           {
             code: 'route_url',
-            value: values.routeUrl,
+            value: values.routeUrl
           },
           {
             code: 'page_type',
-            value: 2,
-          },
+            value: 2
+          }
         ],
-        modelCode: 'app_page',
+        modelCode: 'app_page'
       }
       CurrentApis.SimpleAdd(param).then(() => {
         param = {
           data: [
             {
               code: 'id',
-              value: CurrentApis.GetServerUUID(),
+              value: CurrentApis.GetServerUUID()
             },
             {
               code: 'page_id',
-              value: newId,
+              value: newId
             },
             {
               code: 'permission_id',
-              value: '444',
+              value: '444'
             },
             {
               code: 'is_deleted',
-              value: 0,
-            },
+              value: 0
+            }
           ],
-          modelCode: 'app_page_permission',
+          modelCode: 'app_page_permission'
         }
         CurrentApis.SimpleAdd(param)
         //添加菜单关联
@@ -1739,58 +1718,58 @@ export default class PageListControl extends Vue {
           data: [
             {
               code: 'id',
-              value: CurrentApis.GetServerUUID(),
+              value: CurrentApis.GetServerUUID()
             },
             {
               code: 'app_id',
-              value: CurrentContext.AppID,
+              value: CurrentContext.AppID
             },
             {
               code: 'page_id',
-              value: newId,
+              value: newId
             },
             {
               code: 'parent_id',
-              value: this.currentRightNode.key,
+              value: this.currentRightNode.key
             },
             {
               code: 'menu_name',
-              value: values.menuName,
+              value: values.menuName
             },
             {
               code: 'order_index',
-              value: 0,
+              value: 0
             },
             {
               code: 'is_show',
-              value: 1,
+              value: 1
             },
             {
               code: 'user_id',
-              value: 0,
+              value: 0
             },
             {
               code: 'is_deleted',
-              value: 0,
+              value: 0
             },
             {
               code: 'jump_mode',
-              value: values.jumpMode,
+              value: values.jumpMode
             },
             {
               code: 'route_url',
-              value: values.routeUrl,
+              value: values.routeUrl
             },
             {
               code: 'group_id',
-              value: values.groupId,
-            },
+              value: values.groupId
+            }
           ],
-          modelCode: 'sys_app_user_menu',
+          modelCode: 'sys_app_user_menu'
         }
         //this.insertTreeNode(newId, pagenNodeType.group, name, parentId)
         CurrentApis.SimpleAdd(param).then((res) => {
-          let tag = {pageId: newId, jumpMode: values.jumpMode, show: true}
+          let tag = { pageId: newId, jumpMode: values.jumpMode, show: true }
           this.insertTreeNode(newId, pagenNodeType.pro, values.menuName, this.currentRightNode.key, tag)
         })
       })
@@ -1807,74 +1786,74 @@ export default class PageListControl extends Vue {
         data: [
           {
             code: 'id',
-            value: values.id,
+            value: values.id
           },
           {
             code: 'app_id',
-            value: CurrentContext.AppID,
+            value: CurrentContext.AppID
           },
           {
             code: 'page_content_id',
-            value: newcontentId,
+            value: newcontentId
           },
           {
             code: 'parent_group_id',
-            value: 0,
+            value: 0
           },
           {
             code: 'page_name',
-            value: values.menuName,
+            value: values.menuName
           },
           {
             code: 'jump_mode',
-            value: values.jumpMode,
+            value: values.jumpMode
           },
           {
             code: 'route_url',
-            value: values.routeUrl,
+            value: values.routeUrl
           },
           {
             code: 'page_type',
-            value: 2,
-          },
+            value: 2
+          }
         ],
-        modelCode: 'app_page',
+        modelCode: 'app_page'
       }
       CurrentApis.SimpleAdd(param).then(() => {
         param = {
           data: [
             {
               code: 'id',
-              value: newcontentId,
+              value: newcontentId
             },
             {
               code: 'design_content',
-              value: values.pagedataStr,
-            },
+              value: values.pagedataStr
+            }
           ],
-          modelCode: 'app_page_content',
+          modelCode: 'app_page_content'
         }
         CurrentApis.SimpleAdd(param)
         param = {
           data: [
             {
               code: 'id',
-              value: CurrentApis.GetServerUUID(),
+              value: CurrentApis.GetServerUUID()
             },
             {
               code: 'page_id',
-              value: values.id,
+              value: values.id
             },
             {
               code: 'permission_id',
-              value: '444',
+              value: '444'
             },
             {
               code: 'is_deleted',
-              value: 0,
-            },
+              value: 0
+            }
           ],
-          modelCode: 'app_page_permission',
+          modelCode: 'app_page_permission'
         }
         CurrentApis.SimpleAdd(param)
         //添加菜单关联
@@ -1882,58 +1861,58 @@ export default class PageListControl extends Vue {
           data: [
             {
               code: 'id',
-              value: CurrentApis.GetServerUUID(),
+              value: CurrentApis.GetServerUUID()
             },
             {
               code: 'app_id',
-              value: CurrentContext.AppID,
+              value: CurrentContext.AppID
             },
             {
               code: 'page_id',
-              value: values.id,
+              value: values.id
             },
             {
               code: 'parent_id',
-              value: values.pid,
+              value: values.pid
             },
             {
               code: 'menu_name',
-              value: values.menuName,
+              value: values.menuName
             },
             {
               code: 'order_index',
-              value: 0,
+              value: 0
             },
             {
               code: 'is_show',
-              value: 1,
+              value: 1
             },
             {
               code: 'user_id',
-              value: 0,
+              value: 0
             },
             {
               code: 'is_deleted',
-              value: 0,
+              value: 0
             },
             {
               code: 'jump_mode',
-              value: values.jumpMode,
+              value: values.jumpMode
             },
             {
               code: 'route_url',
-              value: values.routeUrl,
+              value: values.routeUrl
             },
             {
               code: 'group_id',
-              value: values.groupId,
-            },
+              value: values.groupId
+            }
           ],
-          modelCode: 'sys_app_user_menu',
+          modelCode: 'sys_app_user_menu'
         }
         //this.insertTreeNode(newId, pagenNodeType.group, name, parentId)
         CurrentApis.SimpleAdd(param).then((res) => {
-          let tag = {pageId: values.id, jumpMode: values.jumpMode, show: true}
+          let tag = { pageId: values.id, jumpMode: values.jumpMode, show: true }
           this.insertTreeNode(values.id, pagenNodeType.pro, values.menuName, values.pid, tag)
         })
       })
@@ -2026,15 +2005,14 @@ export default class PageListControl extends Vue {
   private handleMenuGroupOk(data: any) {
     if (!this.menuGroupEditable) {
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick({groupId: data.id, groupName: data.group_name}, 'groupId', 'groupName'))
+        this.form.setFieldsValue(pick({ groupId: data.id, groupName: data.group_name }, 'groupId', 'groupName'))
       })
     }
   }
 }
 </script>
 
-<style scoped lang="less"> 
-
+<style scoped lang="less">
 .rightMenuNode {
   padding-left: 5px;
 }

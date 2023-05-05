@@ -26,7 +26,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@src/utils'
 import dragHelper from '@src/designEngine/02common/dragHelper_new'
 // 所有系统组件
@@ -41,7 +42,7 @@ class ComponentGroupInfo {
   components: engin.LayoutInfo[] = []
 }
 
-@Component
+@Options({})
 export default class ComponentListControl extends Vue {
   private systemCompsActiveKey: string[] = []
   private get systemComponents(): ComponentGroupInfo[] {
@@ -92,12 +93,8 @@ export default class ComponentListControl extends Vue {
   }
   renderStyle() {
     this.$nextTick(() => {
-      $(this.$el)
-        .find('.ant-collapse-content')
-        .css('background-color', '#03303B')
-      $(this.$el)
-        .find('.ant-collapse-content')
-        .css('border', 'none')
+      $(this.$el).find('.ant-collapse-content').css('background-color', '#03303B')
+      $(this.$el).find('.ant-collapse-content').css('border', 'none')
     })
   }
 

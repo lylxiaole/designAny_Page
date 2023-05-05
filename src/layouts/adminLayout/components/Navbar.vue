@@ -43,7 +43,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@src/components/Breadcrumb/index.vue'
@@ -54,7 +55,7 @@ import SizeSelect from '@src/components/SizeSelect/index.vue'
 import Search from '@src/components/HeaderSearch/index.vue'
 import TagsView from './TagsView/index.vue'
 
-@Component({
+@Options({
   components: {
     Breadcrumb,
     Hamburger,

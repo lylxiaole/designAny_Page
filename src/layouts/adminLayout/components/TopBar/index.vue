@@ -16,12 +16,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { isExternal } from '@src/utils/validate'
 import AppLink from '../Sidebar/Link.vue'
 
 // **********************************
-@Component({
+@Options({
   components: { AppLink }
 })
 export default class index extends Vue {

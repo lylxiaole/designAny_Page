@@ -1,5 +1,5 @@
-import Vue, { ComponentOptions } from 'vue'
-import { Component } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import dragHelper from '../02common/dragHelper_new'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
@@ -32,7 +32,7 @@ class optionsClass {
   public clickTimer: number = null
 }
 
-@Component
+@Options({})
 export default class BaseEvents extends Vue {
   public static isDraging: boolean = false
 
@@ -108,7 +108,6 @@ export default class BaseEvents extends Vue {
   activated(): void {}
   deactivated(): void {}
   destroyed(): void {}
-  errorCaptured(): void {}
 
   /**开始捕捉鼠标键盘 */
   protected captureEvent() {

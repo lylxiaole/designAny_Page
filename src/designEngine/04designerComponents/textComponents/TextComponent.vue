@@ -20,12 +20,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '@src/designEngine'
 import { EngineComponent, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
 
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '文本组件', 'TextComponent', null)
-@Component
+@Options({})
 export default class TextComponent extends EngineComponent {
   isShowIndex: boolean = false
   isShowInput: boolean = false

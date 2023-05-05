@@ -1,5 +1,5 @@
-import { Component, Emit, Vue } from 'vue-property-decorator'
-import { createDecorator } from 'vue-class-component'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 
 import BaseEvents from './BaseEvents'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
@@ -24,8 +24,46 @@ export class Point {
   Y: number = -1
 }
 
-@Component
+@Options({})
 export default class EngineLayout extends BaseEvents {
+  // ******实现vue2.0中的事件监听**************************
+  private lylevents: any = {}
+  private lyleventsOnce: any = {}
+  public $on(eventname, callback) {
+    if (!this.lylevents[eventname]) {
+      this.lylevents[eventname] = []
+    }
+    this.lylevents[eventname].push(callback)
+  }
+  public $once(eventname, callback) {
+    if (!this.lyleventsOnce[eventname]) {
+      this.lyleventsOnce[eventname] = []
+    }
+    this.lyleventsOnce[eventname].push(callback)
+  }
+  public $off() {
+    this.lylevents = {}
+    this.lyleventsOnce = {}
+  }
+
+  public $lylemit(event: string, ...args: any[]) {
+    super.$emit(event, args)
+    if (this.lylevents[event]) {
+      for (let index = 0; index < this.lylevents[event].length; index++) {
+        const callback = this.lylevents[event][index]
+        callback(args)
+      }
+    }
+    if (this.lyleventsOnce[event]) {
+      for (let index = 0; index < this.lyleventsOnce[event].length; index++) {
+        const callback = this.lyleventsOnce[event][index]
+        callback(args)
+      }
+    }
+  }
+
+  // ********************************
+
   public isSelected: boolean = false
   /**属性 */
   private properties_old: any[] = []
@@ -435,6 +473,7 @@ export default class EngineLayout extends BaseEvents {
   // *************************privates****************************************************************************
   private async destorymethod() {
     this.$off()
+
     for (let index = 0; index < this.properties.length; index++) {
       const element = this.properties[index]
       element.destory()

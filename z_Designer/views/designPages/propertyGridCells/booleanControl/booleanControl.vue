@@ -5,13 +5,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 
 @propertyCellTypeAttr(PropertyTypeEnum.boolean)
-@Component({
+@Options({
   components: {}
 })
 export default class booleanControl extends propertyCellBase {

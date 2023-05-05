@@ -16,15 +16,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
-import { Route } from 'vue-router'
 import { watchFile } from 'fs'
 // *****************************************************************
 /***流量计数据对比 */
-@Component({
-  components: {}
-})
+@Options({})
 export default class index extends ComponentBase {
   private startTimeInner: any = new Date()
   private endTimeInner: any = new Date()

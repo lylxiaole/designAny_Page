@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import Vuex, { Store } from 'vuex'
+import Vuex, { Store, createStore } from 'vuex'
 import { systemAppStore } from './baseInfo'
-Vue.use(Vuex)
 
 let localStore: Store<any> = null
 

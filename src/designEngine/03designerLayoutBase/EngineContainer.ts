@@ -1,4 +1,5 @@
-import { Component, Emit } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import { Property } from './commonClasses/LayoutProperty'
@@ -7,7 +8,7 @@ import { findSystemCompByCode } from './commonClasses/componentInfos'
 import { EnginePage } from '.'
 import dragHelper from '@src/designEngine/02common/dragHelper_new'
 
-@Component
+@Options({})
 export default class EngineContainer extends EngineLayout {
   //横向尺子
   private horRule: Element = null
@@ -91,7 +92,7 @@ export default class EngineContainer extends EngineLayout {
       return false
     }
 
-    let parentPageCurrentScaleSize = ((dragComp.topLayout as any) as EnginePage).currentScaleSize
+    let parentPageCurrentScaleSize = (dragComp.topLayout as any as EnginePage).currentScaleSize
     // 在容器内拖拽组件位置
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       window.console.log('dragmove_component_inpage:', (window.event as any).dataTransfer)

@@ -1,5 +1,5 @@
 import Store from './store'
-import { Notification } from 'element-ui'
+import { Notification } from 'element-plus'
 
 /**
  * 处理401(未授权)响应,跳转登陆页.

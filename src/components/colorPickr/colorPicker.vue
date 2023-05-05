@@ -5,13 +5,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit, Watch } from 'vue-property-decorator'
 const Pickr = require('@simonwep/pickr/dist/pickr.min.js')
 require('@simonwep/pickr/dist/themes/classic.min.css')
 require('@simonwep/pickr/dist/themes/monolith.min.css')
 require('@simonwep/pickr/dist/themes/nano.min.css')
 
-@Component
+@Options({})
 export default class npColorPicker extends Vue {
   @Prop() public color: string
 
@@ -80,9 +81,7 @@ export default class npColorPicker extends Vue {
       }
     })
 
-    $(this.$el)
-      .find('.pcr-button')
-      .css('border', '1px solid #ACACAC')
+    $(this.$el).find('.pcr-button').css('border', '1px solid #ACACAC')
 
     this._colorPicker.on('change', (color: any, instance: any) => {
       if (this.isListenColorChange == false) {

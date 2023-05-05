@@ -1,7 +1,7 @@
 import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
 import ComponentBase from './EngineComponent'
-import { Component, Emit } from 'vue-property-decorator'
-
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoading_Async, showLoading_Async } from '@src/utils'
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
@@ -12,7 +12,7 @@ import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/lay
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@src/apis/designPage'
 import { BaseClass } from '@src/apis/apiDesignManager'
 
-@Component
+@Options({})
 export default class EnginePage extends EngineContainer {
   public parentPage: EnginePage
   public isNeedSave: boolean = false

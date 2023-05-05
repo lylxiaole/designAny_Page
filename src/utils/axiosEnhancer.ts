@@ -1,5 +1,5 @@
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Notification } from 'element-ui'
+import { ElNotification } from 'element-plus'
 import { getCurrentRoute, getStore } from '@src/baseConfigs'
 import { showLoading_Async, closeLoading_Async } from '@src/utils'
 
@@ -51,7 +51,7 @@ const axiosInstance = _axios.create({
  * 1.在request-header中存入已登录用户的Authorization.后续接口都需要.
  */
 axiosInstance.interceptors.request.use(
-  function(config: any) {
+  function (config: any) {
     // if (Store.get(configs.LOGINED_USER_SESSION as any)?.token) {
     //   config.headers['Authorization'] = Store.get(configs.LOGINED_USER_SESSION as any).token;
     // }
@@ -61,7 +61,7 @@ axiosInstance.interceptors.request.use(
     }
     return config
   },
-  function(error: any) {
+  function (error: any) {
     // 对请求错误做些什么(服务器没收到请求)
     console.log('axios request error: ', error)
     closeLoading_Async(lodingWindow, true)
@@ -94,7 +94,7 @@ axiosInstance.interceptors.response.use(
     lodingWindow = null
     window.console.error('axios请求发生错误', error)
     if (error === undefined || error.code === 'ECONNABORTED') {
-      Notification.warning('服务请求超时')
+      ElNotification.warning('服务请求超时')
       return Promise.reject(error)
     }
     const response: AxiosResponse = error.response
@@ -110,7 +110,7 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error)
       }
       if (status === 403) {
-        Notification.warning(errorText || '权限不足...')
+        ElNotification.warning(errorText || '权限不足...')
         return Promise.reject(error)
       }
     } else if (error.request) {
@@ -157,7 +157,7 @@ function toLogin() {
  * })
  * ```
  */
-const ajaxPost = async function(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+const ajaxPost = async function (url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
   // window.console.log('ajaxPost:',url)
   const response = await axiosInstance.post(url, data, config)
   return response
@@ -175,7 +175,7 @@ const ajaxPost = async function(url: string, data?: any, config?: AxiosRequestCo
  * })
  * ```
  */
-const ajaxGet = async function(url: string, config?: AxiosRequestConfig): Promise<any> {
+const ajaxGet = async function (url: string, config?: AxiosRequestConfig): Promise<any> {
   const response = await axiosInstance.get(url, config)
   return response
 }
@@ -194,7 +194,7 @@ const ajaxGet = async function(url: string, config?: AxiosRequestConfig): Promis
  * })
  * ```
  */
-const ajaxPut = async function(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+const ajaxPut = async function (url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
   const response = await axiosInstance.put(url, data, config)
   return response
 }
@@ -211,7 +211,7 @@ const ajaxPut = async function(url: string, data?: any, config?: AxiosRequestCon
  * })
  * ```
  */
-const ajaxDelete = async function(url: string, config?: AxiosRequestConfig): Promise<any> {
+const ajaxDelete = async function (url: string, config?: AxiosRequestConfig): Promise<any> {
   const response = await axiosInstance.delete(url, config)
   return response
 }

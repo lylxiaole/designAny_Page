@@ -24,7 +24,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
@@ -35,7 +36,7 @@ import toolBar from './toolBar/index.vue'
 
 import { drawVueOnVirtualDom } from '@src/utils'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@src/designEngine'
-@Component({
+@Options({
   components: {
     pagelist: pagelist,
     toolBar: toolBar,

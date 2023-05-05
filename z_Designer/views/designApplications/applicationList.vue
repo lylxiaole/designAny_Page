@@ -32,11 +32,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
 import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication } from '@src/apis/designApplication'
 
-@Component
+@Options({})
 export default class applicationList extends ComponentBase {
   private allApps: any = []
   private currentApplication: any = null

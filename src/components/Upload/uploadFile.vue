@@ -49,7 +49,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 // import { CurrentApis, CurrentContext } from '../01designerContext'
 // import { fileInfo } from '../01designerContext'
 import { getUuid, deepClone, BuildingFileUrlForShow } from '@src/utils'
@@ -63,7 +64,7 @@ export class fileInfo {
     return BuildingFileUrlForShow(this.uid)
   }
 }
-@Component
+@Options({})
 export default class uploadFile extends Vue {
   @Prop() private fileList: fileInfo[]
   @Prop() private maxFileLength: number

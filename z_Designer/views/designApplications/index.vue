@@ -6,11 +6,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import applicationList from './applicationList.vue'
 import applicationDetail from './applicationDetail.vue'
-@Component({
+@Options({
   components: {
     applicationList: applicationList,
     applicationDetail: applicationDetail

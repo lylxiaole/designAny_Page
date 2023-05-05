@@ -74,11 +74,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout, LayoutInfo } from '@src/designEngine'
 import componentListControl from './ComponentListControl.vue'
 
-@Component({
+@Options({
   components: {
     componentListControl
   }
@@ -112,9 +113,7 @@ export default class quickActionBar extends Vue {
   }
   private getPopupContainer() {
     this.$nextTick(() => {
-      $(this.$el)
-        .find('.ant-tooltip-inner')
-        .css('padding', '0px')
+      $(this.$el).find('.ant-tooltip-inner').css('padding', '0px')
     })
     return this.$refs.miandiv
   }

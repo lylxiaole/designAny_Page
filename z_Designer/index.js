@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig } from '@src/baseConfigs'
 import registerRouteHook from './utils/routerHook'
@@ -13,21 +13,21 @@ registerRouteHook(system.router, system.store)
 require('@src/assets/iconfont1/iconfont.css')
 require('@src/assets/iconfont1/iconfont.js')
 
-// import antDesign from 'ant-design-vue'
-// import 'ant-design-vue/dist/antd.css'
-// Vue.use(antDesign)
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
-import Element from 'element-ui'
-require('element-ui/lib/theme-chalk/index.css')
-Vue.use(Element)
-
+import Vuex from 'vuex'
+import VueI18n from 'vue-i18n'
+import Router from 'vue-router'
 import App from './views/App.vue'
-Vue.config.productionTip = false
 
-new Vue({
-  el: '#app',
-  router: system.router,
-  store: system.store,
-  i18n: system.i18n,
-  render: (h) => h(App)
-})
+var currentApp = createApp(App)
+currentApp.use(ElementPlus)
+currentApp.use(Vuex)
+currentApp.use(VueI18n)
+currentApp.use(Router)
+currentApp.use(system.router)
+currentApp.use(system.store)
+currentApp.use(system.i18n)
+
+currentApp.mount('#app')

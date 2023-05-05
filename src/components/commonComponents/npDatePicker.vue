@@ -19,10 +19,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Prop, Component, Emit } from 'vue-property-decorator'
 import moment from 'moment'
 
-@Component
+@Options({})
 export default class npDatePicker extends Vue {
   private get currentTime(): moment.Moment {
     if (this.value) {
