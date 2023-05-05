@@ -1,6 +1,6 @@
 var CircularJSON = require('circular-json-es6')
 import pako from 'pako'
-import { Loading } from 'element-plus'
+import { ElLoading } from 'element-plus'
 import { getConfigByName } from '@src/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 /**
@@ -458,7 +458,7 @@ export function showLoading_Async(isMain = false) {
     if (!findh || findh.isMain != isMain) {
       return
     }
-    findh.loadingWindow = Loading.service({
+    findh.loadingWindow = ElLoading.service({
       lock: true,
       text: 'Loading',
       spinner: 'el-icon-loading',

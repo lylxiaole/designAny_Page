@@ -16,16 +16,10 @@ require('@src/assets/iconfont1/iconfont.js')
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-import Vuex from 'vuex'
-import VueI18n from 'vue-i18n'
-import Router from 'vue-router'
 import App from './views/App.vue'
 
 var currentApp = createApp(App)
 currentApp.use(ElementPlus)
-currentApp.use(Vuex)
-currentApp.use(VueI18n)
-currentApp.use(Router)
 currentApp.use(system.router)
 currentApp.use(system.store)
 currentApp.use(system.i18n)
