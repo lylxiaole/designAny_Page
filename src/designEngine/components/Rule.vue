@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { toString } from 'xe-utils/methods'
 
 class tick {

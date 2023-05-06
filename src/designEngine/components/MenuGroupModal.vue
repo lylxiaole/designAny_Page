@@ -71,7 +71,7 @@
 <script lang="ts">
 import { error } from 'jquery'
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { CurrentApis } from '../01designerContext'
 import { appMenuGroup } from '@/api/userManage'
 import { batchAdd, batchUpdate } from '@/api/crud'

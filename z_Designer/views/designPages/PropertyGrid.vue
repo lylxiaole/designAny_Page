@@ -29,11 +29,11 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Emit,Watch,Prop } from 'vue-property-decorator'
 import { Property, PropertyType, PropertyTypeEnum } from '@src/designEngine'
 import { EnginePage, EngineLayout } from '@src/designEngine'
 import { deepClone, serialize, deserialize } from '@src/utils'
-import propertyCellBase from './propertyGridCells/common'
+import propertyCellBase,{cellControls} from './propertyGridCells/common'
 
 class PropertyGroupInfo {
   groupName: string
@@ -65,15 +65,15 @@ class propertyFilterInfo {
   propertyName: string
 }
 /**动态读取propertyGrid Cell组件 */
-var cellControls: Function[] = []
-const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
-modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath)
-  if (value.default.prototype.$Meta && value.default.prototype.$Meta.celltype) {
-    cellControls.push(value.default)
-  }
-  return modules
-}, {})
+// var cellControls: Function[] = []
+// const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
+// modulesFiles.keys().reduce((modules, modulePath) => {
+//   const value = modulesFiles(modulePath)
+//   if (value.default.prototype.$Meta && value.default.prototype.$Meta.celltype) {
+//     cellControls.push(value.default)
+//   }
+//   return modules
+// }, {})
 
 function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase {
   return cellControls.filter((o) => o.prototype.$Meta.celltype == propertyType)[0] as typeof propertyCellBase

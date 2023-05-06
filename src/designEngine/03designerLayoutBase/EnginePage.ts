@@ -1,7 +1,7 @@
 import { Property, TimePickerFile_Property, Authority_Property, BindingModels_Property, UploadFile_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
 import ComponentBase from './EngineComponent'
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoading_Async, showLoading_Async } from '@src/utils'
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'

@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import QRCode from 'qrcode'
 import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@src/designEngine'
 import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property, Color_Property } from '@src/designEngine'

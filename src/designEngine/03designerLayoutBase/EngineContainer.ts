@@ -1,5 +1,5 @@
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
 import { Property } from './commonClasses/LayoutProperty'

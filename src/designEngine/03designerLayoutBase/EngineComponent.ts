@@ -1,5 +1,5 @@
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
 import { EnginePage, SaveInfo, EngineContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
 import { LayoutType } from './commonClasses/componentInfos'

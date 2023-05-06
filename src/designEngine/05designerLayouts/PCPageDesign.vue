@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
 import { drawVueOnVirtualDom, BuildingFileUrlForShow } from '@src/utils'
 import DesignShell from './ComponentShells/DesignShell.vue'

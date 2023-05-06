@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import {   Component, Emit,Watch,Prop } from 'vue-property-decorator'
 
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@src/components/Breadcrumb/index.vue'

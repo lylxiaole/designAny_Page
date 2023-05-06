@@ -217,14 +217,13 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { CurrentApis, CurrentContext, pagenNodeType, PageOrderClass } from '../01designerContext'
 import { getUuid, deepClone, serialize } from '@src/utils'
 
 import fileUpload from '../02common/uploadFile/fileUpload'
 import iconManage from '@views/npicon/iconManage.vue'
-
-let VueContextMenu = require('vue-context-menu')
+ 
 import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
 import { behavior, action, actionDetail, object_Method } from '../02common/behavior'
 import { Modal, message, Switch } from 'ant-design-vue'

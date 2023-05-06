@@ -3,15 +3,15 @@
     <el-row style="height:3rem;" class="middleAlign">
       <el-button style="height:25px" @click="addAppHandle" size="mini" type="primary">添加应用</el-button>
     </el-row>
-    <el-row style="height:calc(100% - 3rem);overflow-y:auto">
-      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem" style="height:36px;line-height:36px"
+    <el-row style="height:calc(100% - 3rem);overflow-y:auto;display:block">
+      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem" 
         @click="selectAppliction(app)">
         {{app.name}}
       </div>
     </el-row>
     <!-- ********************************************************** -->
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" center>
-      <el-form ref="applicationForm" :inline="true" :model="applicationForm" class="demo-form-inline">
+    <el-dialog title="提示" v-model="dialogVisible" width="30%" center>
+      <el-form ref="currentFrom" :inline="true" :model="applicationForm"   class="demo-form-inline">
         <el-form-item label="应用名称">
           <el-input v-model="applicationForm.name" placeholder="应用名称"></el-input>
         </el-form-item>
@@ -31,12 +31,13 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts"  >
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Prop, Component, Emit ,Ref} from 'vue-property-decorator'
+ 
 import ComponentBase from '@src/views/ComponentBase'
 import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication } from '@src/apis/designApplication'
-
+ 
 @Options({})
 export default class applicationList extends ComponentBase {
   private allApps: any = []
@@ -50,15 +51,16 @@ export default class applicationList extends ComponentBase {
   }
   // ************添加应用***********************************************************
   private dialogVisible: boolean = false
-  private applicationForm: any = {
+  @Ref('applicationForm')
+  private applicationForm: any =  {
     name: '',
     type: 0
-  }
+  } 
   private async addAppHandle() {
     this.dialogVisible = true
   }
   private async onSureHandle() {
-    let valid = await (this.$refs.applicationForm as any).validate()
+    let valid = await (this.$refs.currentFrom as any).validate()
     if (!valid) {
       return false
     }
@@ -95,6 +97,9 @@ export default class applicationList extends ComponentBase {
 .applicationItem {
   box-sizing: border-box;
   padding: 4px 8px;
+  width:100%;
+  height:36px;
+  line-height:36px;
   cursor: pointer;
 }
 

@@ -1,5 +1,5 @@
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import dragHelper from '../02common/dragHelper_new'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {

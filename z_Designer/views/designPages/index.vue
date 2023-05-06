@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'

@@ -100,13 +100,12 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { CurrentApis, CurrentContext, pagenNodeType, APIRequestClass, PageOrderClass } from '../01designerContext'
 import { getUuid, deepClone, serialize } from '@src/utils'
 
 import fileUpload from '../02common/uploadFile/fileUpload'
-var VueContextMenu = require('vue-context-menu')
-import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
+ import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from '../02common/behavior'
 import { Modal, message } from 'ant-design-vue'
 import { Notification } from 'ant-design-vue/types/notification'

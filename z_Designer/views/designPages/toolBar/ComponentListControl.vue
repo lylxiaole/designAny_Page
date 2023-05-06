@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@src/utils'
 import dragHelper from '@src/designEngine/02common/dragHelper_new'
 // 所有系统组件

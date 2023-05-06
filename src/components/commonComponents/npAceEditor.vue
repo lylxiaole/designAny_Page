@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator' // import ace from 'ace-builds'
+import { Component, Emit,Watch,Prop } from 'vue-property-decorator' // import ace from 'ace-builds'
 import aceEditor from 'vue2-ace-editor'
 // import 'ace-builds/webpack-resolver' // 在 webpack 环境中使用必须要导入
 // import 'ace-builds/src-noconflict/theme-monokai' // 默认设置的主题

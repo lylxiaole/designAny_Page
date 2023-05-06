@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit } from 'vue-property-decorator'
+import {   Emit,Watch,Prop } from 'vue-property-decorator'
 import ComponentBase from '@src/views/ComponentBase'
 import {
   DesignPageGroupDC,
@@ -62,7 +62,7 @@ import {
   DeleteGroup,
   pageType
 } from '@src/apis/designPage'
-let VueContextMenu = require('vue-context-menu')
+ 
 import btreeNode from '@src/components/Treenode/bTreeNode.vue'
 import { types } from 'util'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
