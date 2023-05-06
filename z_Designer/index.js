@@ -15,13 +15,20 @@ require('@src/assets/iconfont1/iconfont.js')
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-
+// *********************
 import App from './views/App.vue'
+// *********************
+import contextmenu from 'v-contextmenu'
+import 'v-contextmenu/dist/themes/default.css'
 
+// *********************
 var currentApp = createApp(App)
 currentApp.use(ElementPlus)
+currentApp.use(contextmenu)
+
 currentApp.use(system.router)
 currentApp.use(system.store)
 currentApp.use(system.i18n)
+
 // currentApp.config.globalProperties.notify=xxx
 currentApp.mount('#app')

@@ -39,11 +39,11 @@
               @onValueChanged="onNodeNameChanged" @onSureNodeName="onSureNodeName"></btreeNode>
           </div>
         </a-tree>
-        <VueContextMenu id="context-menu" ref="ctxMenu" style="cursor: pointer">
-          <li v-for="(menu, index) in rightMenus" :key="index" class="themeHover pageListItem" style="padding-left: 5px"
+
+<v-contextmenu ref="contextmenu">
+  <v-contextmenu-item  v-for="(menu, index) in rightMenus" :key="index" class="themeHover pageListItem" style="padding-left: 5px"
             @click="onRightMenuChoose(menu)">
-            <!-- <span v-if="menu=='新增栅栏布局页面'" style="font-size:14px;color:rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe622;</span> -->
-            <span v-if="menu == '新增专业布局页面'" style="font-size: 14px; color: rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe625;</span>
+             <span v-if="menu == '新增专业布局页面'" style="font-size: 14px; color: rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe625;</span>
             <span v-if="menu == '新增分组'" style="font-size: 14px; color: rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe626;</span>
             <span v-if="menu == '新增菜单'" style="font-size: 14px; color: rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe626;</span>
             <span v-if="menu == '选择页面'" style="font-size: 14px; color: rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe625;</span>
@@ -58,8 +58,10 @@
             <span v-if="menu == '导入'" style="font-size: 14px; color: rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe619;</span>
             <span v-if="menu == '导出'" style="font-size: 14px; color: rgba(0, 0, 0, 0.65)" class="icon iconfont">&#xe618;</span>
             <span style="maegin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
-          </li>
-        </VueContextMenu>
+        </v-contextmenu-item> 
+</v-contextmenu>
+
+     
       </div>
     </a-row>
     <!-- ************************页面另存为*********************************** -->
@@ -107,8 +109,7 @@ import { getUuid, deepClone, serialize } from '@src/utils'
 import fileUpload from '../02common/uploadFile/fileUpload'
  import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from '../02common/behavior'
-import { Modal, message } from 'ant-design-vue'
-import { Notification } from 'ant-design-vue/types/notification'
+ 
 import PageBase from '../05designerLayouts/PageBase'
 import Layout_Professional from '../05designerLayouts/layout_Professional/Layout_Professional.vue'
 import { modelAnalysis, functionCache, dictCache, modelMapperCache, pageCache, pageContentTable } from '../02common/impResourcesCache'
@@ -163,8 +164,7 @@ class treeNodeData {
 
 @Options({
   components: {
-    VueContextMenu: VueContextMenu,
-    btreeNode: btreeNode
+     btreeNode: btreeNode
   }
 })
 export default class PageListControl extends Vue {

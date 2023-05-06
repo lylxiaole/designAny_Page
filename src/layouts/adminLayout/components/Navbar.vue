@@ -7,8 +7,7 @@
     <div class="right-menu" style="width:205px">
       <template v-if="device!=='mobile'">
         <error-log class="errLog-container right-menu-item hover-effect" />
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-        <el-tooltip content="Global Size" effect="dark" placement="bottom">
+         <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
       </template>
@@ -50,8 +49,7 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@src/components/Breadcrumb/index.vue'
 import Hamburger from '@src/components/Hamburger/index.vue'
 import ErrorLog from '@src/components/ErrorLog/index.vue'
-import Screenfull from '@src/components/Screenfull/index.vue'
-import SizeSelect from '@src/components/SizeSelect/index.vue'
+ import SizeSelect from '@src/components/SizeSelect/index.vue'
 import Search from '@src/components/HeaderSearch/index.vue'
 import TagsView from './TagsView/index.vue'
 
@@ -59,8 +57,7 @@ import TagsView from './TagsView/index.vue'
   components: {
     Breadcrumb,
     Hamburger,
-    ErrorLog,
-    Screenfull,
+    ErrorLog, 
     SizeSelect,
     Search,
     TagsView

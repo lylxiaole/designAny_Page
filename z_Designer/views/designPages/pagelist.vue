@@ -1,12 +1,12 @@
 <template>
-  <div style="height:100%;width:100%">
+  <div style="height:100%;width:100%" @click="onClickWhiteArea">
     <el-row style="height: 50px; width: 100%;border-bottom: 1px solid rgb(223, 223, 223);">
       <el-row style="margin: 3px 15px">
         <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="请输入内容"></el-input>
       </el-row>
     </el-row>
-    <el-row style="overflow: hidden; width: 100%; bottom: 0px">
-      <div style="overflow: auto; width: 100%; height: 100%; " @contextmenu.prevent="onTreeRightClick">
+    <el-row style="overflow: hidden; width: 100%; bottom: 0px;height:calc(100% - 50px)">
+      <div style="overflow: auto; width: 100%; height: 100%; "   @contextmenu.prevent="onTreeRightClick">
         <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
           @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
           @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
@@ -31,12 +31,12 @@
           </div>
         </el-tree>
 
-        <VueContextMenu id="context-menu" ref="ctxMenu" style="cursor: pointer">
-          <li v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px" @click="onRightMenuChoose(menu)">
+<v-contextmenu ref="ctxMenu">  
+ <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px" @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
-          </li>
-        </VueContextMenu>
+          </v-contextmenu-item> 
+</v-contextmenu>  
       </div>
     </el-row>
   </div>
@@ -77,8 +77,7 @@ enum rightMenus {
 }
 
 @Options({
-  components: {
-    VueContextMenu: VueContextMenu,
+  components: { 
     btreeNode: btreeNode
   }
 })
@@ -268,8 +267,8 @@ export default class index extends ComponentBase {
     } else if (data.type === 'group') {
       this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
     }
-
-    ;(this.$refs.ctxMenu as any).open()
+ 
+    ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
   private onTreeRightClick(e: any) {
     //window.console.log('右击菜单树', e)
@@ -278,7 +277,8 @@ export default class index extends ComponentBase {
     this.currentRightClickNode = null
     this.rightMenus = []
     this.rightMenus = [rightMenus.addGroup]
-    ;(this.$refs.ctxMenu as any).open()
+     
+    ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
   private getMenuIconByRightMenus(rm: rightMenus): string {
     let iconString
@@ -400,7 +400,10 @@ export default class index extends ComponentBase {
     }
     this.deleteNodeById(nodeId, this.treeData)
   }
-
+private onClickWhiteArea()
+{
+      ;(this.$refs.ctxMenu as any).hide()
+}
   // **************对外事件*****************************************************
   @Emit('onEditPage')
   private async onEditPage(pageId: string) {}

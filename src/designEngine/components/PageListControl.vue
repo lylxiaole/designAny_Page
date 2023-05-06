@@ -32,13 +32,14 @@
               @onValueChanged="onNodeNameChanged" @onSureNodeName="onSureNodeName"></btreeNode>
           </div>
         </a-tree>
-        <VueContextMenu id="context-menu" ref="ctxMenu" style="cursor: pointer">
-          <li v-for="(menu, index) in rightMenus" :key="index" class="themeHover pageListItem" style="padding-left: 5px"
+
+<v-contextmenu ref="ctxMenu"> 
+   <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover pageListItem" style="padding-left: 5px"
             @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
-          </li>
-        </VueContextMenu>
+          </v-contextmenu-item> 
+</v-contextmenu> 
       </div>
     </a-row>
     <!-- ************************页面另存为*********************************** -->
@@ -226,8 +227,7 @@ import iconManage from '@views/npicon/iconManage.vue'
  
 import btreeNode from '../06propertyGrid/behaviorControl/behaviorTree/bTreeNode.vue'
 import { behavior, action, actionDetail, object_Method } from '../02common/behavior'
-import { Modal, message, Switch } from 'ant-design-vue'
-import PageBase from '../05designerLayouts/PageBase'
+ import PageBase from '../05designerLayouts/PageBase'
 import pick from 'lodash.pick'
 import { getFlowList, workFlowBegin } from '@/api/workflow'
 import { batchDelete } from '@/api/crud'
@@ -286,11 +286,10 @@ class treeNodeData {
 }
 
 @Options({
-  components: {
-    VueContextMenu: VueContextMenu,
+  components: { 
     btreeNode: btreeNode,
     MgModal: MenuGroupModal,
-    iconManage: iconManage
+    iconManage: iconManage 
   }
 })
 export default class PageListControl extends Vue {
