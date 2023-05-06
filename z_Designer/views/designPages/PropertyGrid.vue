@@ -64,16 +64,16 @@ class propertyFilterInfo {
   groupName: string
   propertyName: string
 }
-/**动态读取propertyGrid Cell组件 */
-// var cellControls: Function[] = []
-// const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
-// modulesFiles.keys().reduce((modules, modulePath) => {
-//   const value = modulesFiles(modulePath)
-//   if (value.default.prototype.$Meta && value.default.prototype.$Meta.celltype) {
-//     cellControls.push(value.default)
-//   }
-//   return modules
-// }, {})
+/**加载所有propertyGrid Cell组件 */
+ 
+const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
+modulesFiles.keys().reduce((modules, modulePath) => {
+  const value = modulesFiles(modulePath)
+  // if (value.default.prototype.$Meta && value.default.prototype.$Meta.celltype) {
+  //   cellControls.push(value.default)
+  // }
+  return modules
+}, {})
 
 function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase {
   return cellControls.filter((o) => o.prototype.$Meta.celltype == propertyType)[0] as typeof propertyCellBase

@@ -7,10 +7,10 @@ import PCPageDesign from './05designerLayouts/PCPageDesign.vue'
 import PCPagePreview from './05designerLayouts/PCPageDesign.vue'
 export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 
-/**动态读取设计器组件 */
+/**加载所有设计器组件 */
 const modulesFiles = require.context('./04designerComponents', true, /\.(vue)$/)
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
-  // const value = modulesFiles<any>(modulePath)
+  const value = modulesFiles<any>(modulePath)
   // if (value.default.prototype.$Meta && value.default.prototype.$Meta.compCode) {
   //   let compCode = value.default.prototype.$Meta.compCode
   //   // window.console.log('require.context', compCode, engine.CompIndex.indexs[compCode])
@@ -20,6 +20,6 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   //     let layoutInfo = new engine.LayoutInfo(metadata.layoutType, metadata.groupName, metadata.name, value.default, metadata.icon, metadata.compCode)
   //     engine.allComponents.push(layoutInfo)
   //   }
-  // } 
+  // }
   return modules
 }, {})

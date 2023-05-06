@@ -2,21 +2,21 @@
   <el-row style="height:100%;width:100%">
     <el-row style="height:60px;width:100%">
       <div ref="toobar"></div>
-      <!-- <toolBar :currentPage="currentShowEngine" :height="60" @onSave="onSaveCurrentPage"></toolBar> -->
+      <toolBar :currentPage="currentShowEngine" :height="60" @onSave="onSaveCurrentPage"></toolBar>
     </el-row>
     <el-row style="height:calc(100% - 60px);width:100%;">
-      <el-col style="width:250px;height:100%">
+      <el-col :span="4" style="width:250px;height:100%">
         <pagelist :currentPage="currentShowEngine" :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage"
           @onDeletePage="onDeletePage"></pagelist>
       </el-col>
-      <el-col class="pageList" style="width:calc(100% - 500px);height:100%">
+      <el-col :span="16" class="pageList" style="width:calc(100% - 500px);height:100%">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width:100%;height:100%">
           <el-tab-pane v-for="page in openPages" :key="page.id" :label="page.name" :name="page.id">
             <div style="width:100%;height:100%;overflow:auto" :ref="page.id"></div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
-      <el-col style="width:250px;height:100%">
+      <el-col :span="4" style="width:250px;height:100%">
         <propertyGrid :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
       </el-col>
     </el-row>
@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
+ 
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import PageBase from '@src/views/PageBase'
 import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
 import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
-
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
@@ -132,22 +132,21 @@ export default class index extends PageBase {
     let designLayout: EnginePage = null
     switch (res.type) {
       case pageType.pcPage:
-        designLayout = new PCPageDesign() as any
+        designLayout =  PCPageDesign
         break
       case pageType.mobilePage:
-        designLayout = new MobilePageDesign() as any
+        designLayout =  MobilePageDesign
         break
       default:
         break
     }
     /************************渲染页面 */
-    let documentFrag = drawVueOnVirtualDom(designLayout)
-    await designLayout.$nextTick()
-    await designLayout.loadPageByData(pageId, res.designDetail)
+    let drawer = drawVueOnVirtualDom(designLayout) 
+    await drawer.vueComp.loadPageByData(pageId, res.designDetail)
     await this.$nextTick()
-    this.openPage(res, designLayout)
+    this.openPage(res, drawer.vueComp)
     await this.$nextTick()
-    $(this.$refs[pageId][0]).append(documentFrag)
+    $(this.$refs[pageId][0]).append(drawer.virtualDom)
   }
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)

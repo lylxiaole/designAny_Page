@@ -150,7 +150,8 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private cuteSystemComponents() {
-    // window.console.log('cuteSystemComponents:', engin.allComponents)
+    window.console.log('cuteSystemComponents:', engin.allComponents)
+     
     engin.allComponents
       .filter((o) => o.type == engin.LayoutType.system_component)
       .filter((element) => {

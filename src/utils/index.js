@@ -1,5 +1,7 @@
 var CircularJSON = require('circular-json-es6')
 import pako from 'pako'
+import { ref, h, render, onMounted } from 'vue'
+
 import { ElLoading } from 'element-plus'
 import { getConfigByName } from '@src/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
@@ -491,6 +493,7 @@ export function drawVueOnVirtualDom(vueComp) {
   let fragment = window.document.createDocumentFragment()
   let divdom = window.document.createElement('div')
   fragment.appendChild(divdom)
-  vueComp.$mount(divdom)
-  return fragment
+  let comp = h(vueComp)
+  render(comp, divdom)
+  return { virtualDom: fragment, vueComp: comp.component.ctx }
 }

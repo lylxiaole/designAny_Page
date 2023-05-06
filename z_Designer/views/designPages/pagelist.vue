@@ -11,7 +11,7 @@
           @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
           @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
 
-          <div slot-scope="{node,data}">
+          <template #default="{node,data}">
             <div v-if="data.type==='page'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
                 @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
@@ -28,7 +28,7 @@
                 </template>
               </btreeNode>
             </div>
-          </div>
+          </template>
         </el-tree>
 
 <v-contextmenu ref="ctxMenu">  
