@@ -14,7 +14,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '我的应用'
         },
-        component: () => import(/* webpackChunkName: "designApplications" */ './views/designApplications/index.vue')
+        component: () => import('./views/designApplications/index.vue')
       },
 
       {
@@ -24,7 +24,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '我的接口'
         },
-        component: () => import(/* webpackChunkName: "designApis" */ './views/designApis/index.vue')
+        component: () => import('./views/designApis/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -33,7 +33,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '我的数据库'
         },
-        component: () => import(/* webpackChunkName: "designDatabases" */ './views/designDatabases/index.vue')
+        component: () => import('./views/designDatabases/index.vue')
       }
     ]
   },
@@ -45,7 +45,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '我的页面'
     },
-    component: () => import(/* webpackChunkName: "designPages" */ './views/designPages/index.vue')
+    component: () => import('./views/designPages/index.vue')
   },
   {
     path: '/login',
@@ -54,7 +54,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '登录'
     },
-    component: () => import(/* webpackChunkName: "user" */ './views/user/login.vue')
+    component: () => import('./views/user/login.vue')
   },
   {
     path: '/register',
@@ -63,7 +63,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '注册'
     },
-    component: () => import(/* webpackChunkName: "user" */ './views/user/register.vue')
+    component: () => import('./views/user/register.vue')
   }
 ]
 

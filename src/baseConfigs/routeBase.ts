@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw, Router } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw, Router } from 'vue-router'
 
 import { routes } from './baseInfo'
 
@@ -10,7 +10,7 @@ export function initRoutes(inroutes) {
   routeConfigs = newroutes
 
   const currentRoute = createRouter({
-    history: createWebHistory('/'),
+    history: createWebHashHistory(),
     routes: routeConfigs,
     scrollBehavior: () => ({ y: 0 } as any)
   })

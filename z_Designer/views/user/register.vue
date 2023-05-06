@@ -51,18 +51,17 @@ import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit } from 'vue-property-decorator'
 import { AxiosResponse } from 'axios'
 import { requestRegisterUser, CheckRegisterInfo } from '@src/apis/user'
-import { ElForm } from 'element-ui/types/form'
 import { validUsername } from '@src/utils/validate'
 import PageBase from '@src/views/PageBase'
 
 @Options({})
 export default class register extends PageBase {
   private isRegister: boolean = true
-  private get requestEmailForm(): ElForm {
-    return this.$refs.requestEmailForm as ElForm
+  private get requestEmailForm(): any {
+    return this.$refs.requestEmailForm as any
   }
-  private get checkEmailForm(): ElForm {
-    return this.$refs.checkEmailForm as ElForm
+  private get checkEmailForm(): any {
+    return this.$refs.checkEmailForm as any
   }
 
   mounted() {}

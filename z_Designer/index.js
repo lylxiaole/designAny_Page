@@ -23,5 +23,5 @@ currentApp.use(ElementPlus)
 currentApp.use(system.router)
 currentApp.use(system.store)
 currentApp.use(system.i18n)
-
+// currentApp.config.globalProperties.notify=xxx
 currentApp.mount('#app')

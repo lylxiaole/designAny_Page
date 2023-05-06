@@ -1,67 +1,45 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-      <div class="title-container">
-        <h3 class="title">登录</h3>
-      </div>
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <i class="el-icon-user" />
-        </span>
-        <el-input ref="username" v-model="loginForm.username" placeholder="用户名" name="username" type="text" tabindex="1" autocomplete="on" />
-      </el-form-item>
+    <div class="title-container">
+      <h3 class="title">登录</h3>
+    </div>
+    <el-row>
+      <span class="svg-container">
+        <i class="el-icon-user" />
+      </span>
+      <el-input ref="username" v-model="loginForm.username" placeholder="用户名" name="username" type="text" tabindex="1" autocomplete="on" />
+    </el-row>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
-          <span class="svg-container">
-            <i class="el-icon-lock" />
-          </span>
-          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="密码" name="password" tabindex="2"
-            autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
-        </el-form-item>
-      </el-tooltip>
-
+    <el-row>
+      <span class="svg-container">
+        <i class="el-icon-lock" />
+      </span>
+      <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="密码" name="password" tabindex="2"
+        autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+    </el-row>
+    <el-row>
       <el-button :loading="loading" type="primary" style="width:65%;margin-bottom:30px;" @click.native.prevent="handleLogin">账号密码登录</el-button>
       <el-button type="text" style="width:30%;margin-bottom:30px;" @click.native.prevent="handleLoginRegister">注册</el-button>
-
-    </el-form>
+    </el-row>
 
   </div>
 </template>
 
 
-<script lang="ts">
+<script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit, Watch } from 'vue-property-decorator'
+import { Prop, Component, Emit, Watch, ProvideReactive, InjectReactive, Ref } from 'vue-property-decorator'
 import { validUsername } from '@src/utils/validate'
 import PageBase from '@src/views/PageBase'
 import { login } from '@src/apis/user'
 
-const validateUsername = (rule, value, callback) => {
-  if (!validUsername(value)) {
-    callback(new Error('请输入合法的用户名'))
-  } else {
-    callback()
-  }
-}
-const validatePassword = (rule, value, callback) => {
-  if (value.length < 3) {
-    callback(new Error('密码最少3位'))
-  } else {
-    callback()
-  }
-}
-
 @Options({})
 export default class loginPage extends PageBase {
-  loginForm: any = {
-    username: '',
+  private loginForm: any = {
+    username: '1112222',
     password: ''
   }
-  loginRules: any = {
-    username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-    password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-  }
+
   passwordType: string = 'password'
   capsTooltip: boolean = false
   loading: boolean = false
@@ -69,27 +47,37 @@ export default class loginPage extends PageBase {
   redirect: string = undefined
   otherQuery: any = {}
   // ******************************************************************
-  @Watch('$route', { immediate: true })
-  onRouteChanged(route) {
-    const query = route.query
-    if (query) {
-      this.redirect = query.redirect
-      this.otherQuery = this.getOtherQuery(query)
-    }
+  @Watch('loginForm', { immediate: true, deep: true })
+  onloginFormChanged(val) {
+    window.console.log('loginForm changed', val)
   }
-
+  beforeCreate() {
+    window.console.log('**********beforeCreate')
+  }
   created() {
+    window.console.log('**********created')
     // window.addEventListener('storage', this.afterQRScan)
   }
+  beforeMount() {
+    window.console.log('**********beforeMount')
+  }
   mounted() {
-    if (this.loginForm.username === '') {
-      ;(this.$refs.username as any).focus()
-    } else if (this.loginForm.password === '') {
-      ;(this.$refs.passwordas as any).focus()
-    }
+    window.console.log('**********mounted')
+  }
+  beforeUnmount() {
+    window.console.log('**********beforeUnmount')
+  }
+  unmounted() {
+    window.console.log('**********unmounted')
   }
   destroyed() {
-    // window.removeEventListener('storage', this.afterQRScan)
+    window.console.log('**********destroyed')
+  }
+  activated() {
+    window.console.log('**********activated')
+  }
+  deactivated() {
+    window.console.log('**********deactivated')
   }
   // ********************************************************
   checkCapslock(e) {
@@ -98,11 +86,6 @@ export default class loginPage extends PageBase {
   }
   async handleLogin() {
     try {
-      let valid = await (this.$refs.loginForm as any).validate()
-      if (!valid) {
-        console.log('error submit!!')
-        return false
-      }
       this.loading = true
       let requdata = { username: this.loginForm.username.trim(), pwd: this.loginForm.password, machineType: 1 }
       let token = await login(requdata)
@@ -110,7 +93,7 @@ export default class loginPage extends PageBase {
 
       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
     } catch (error) {
-      console.error(error)
+      this.$lyl_msgPopup.error({ message: error.message })
     } finally {
       this.loading = false
     }
@@ -146,6 +129,10 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  .el-input__wrapper {
+    background-color: transparent;
+    box-shadow: none;
+  }
   .el-input {
     display: inline-block;
     height: 47px;
@@ -153,6 +140,7 @@ $cursor: #fff;
 
     input {
       background: transparent;
+
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
