@@ -1,5 +1,5 @@
-import { ajaxGet, ajaxPost } from 'common/utils/axiosEnhancer'
-import { getConfigByName } from 'common/baseConfigs'
+import { ajaxGet, ajaxPost } from '@common/utils/axiosEnhancer'
+import { getConfigByName } from '@common/baseConfigs'
 import dataContactBase from './dataContactBase'
 const apiAddr = () => getConfigByName('apiAddr')
 

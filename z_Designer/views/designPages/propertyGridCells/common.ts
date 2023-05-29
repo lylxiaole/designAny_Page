@@ -1,6 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { PropertyTypeEnum, Property, PropertyType, EnginePage, EngineLayout } from 'common/designEngine'
+import { PropertyTypeEnum, Property, PropertyType, EnginePage, EngineLayout } from '@common/designEngine'
 
 var cellControls = []
 export { PropertyTypeEnum, cellControls }

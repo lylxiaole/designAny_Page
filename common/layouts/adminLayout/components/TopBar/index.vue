@@ -1,7 +1,7 @@
 <template>
   <div style="width:100%;height:100%;position:relative;background-color:#3D3D3D">
     <div style="float:left;width:200px;height:30pt;line-height:30pt" class="item">
-      <!-- <img style="height: 20pt;margin-top:5pt" src="@src/assets/controllerImgs/logo.png" /> -->
+      <!-- <img style="height: 20pt;margin-top:5pt" src="@common/assets/controllerImgs/logo.png" /> -->
     </div>
     <template v-for="route in permission_routes">
       <div v-if="!route.hidden" style="float:left" :key="route.path" @click="linkClick(route.path)"

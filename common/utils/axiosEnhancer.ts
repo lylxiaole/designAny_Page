@@ -1,6 +1,6 @@
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ElNotification } from 'element-plus'
-import { getCurrentRoute, getStore } from 'common/baseConfigs'
+import { getCurrentRoute, getStore } from '@common/baseConfigs'
 import { showLoading_Async, closeLoading_Async } from '@common/utils'
 
 let lodingWindow: any = null

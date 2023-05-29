@@ -1,6 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { getConfigByName } from 'common/baseConfigs'
+import { getConfigByName } from '@common/baseConfigs'
 import { ElMessage, Message } from 'element-plus'
 @Options({})
 export default class ComponentBase extends Vue {

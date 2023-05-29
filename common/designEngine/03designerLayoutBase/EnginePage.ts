@@ -9,8 +9,8 @@ import { paramInfo } from './commonClasses/pageInParamInfo'
 import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
-import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from 'common/apis/designPage'
-import { BaseClass } from 'common/apis/apiDesignManager'
+import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
+import { BaseClass } from '@common/apis/apiDesignManager'
 
 @Options({})
 export default class EnginePage extends EngineContainer {

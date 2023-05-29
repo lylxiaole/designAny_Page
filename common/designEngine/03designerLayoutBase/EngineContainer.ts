@@ -6,7 +6,7 @@ import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import { findSystemCompByCode } from './commonClasses/componentInfos'
 import { EnginePage } from '.'
-import dragHelper from 'common/designEngine/02common/dragHelper_new'
+import dragHelper from '@common/designEngine/02common/dragHelper_new'
 
 @Options({})
 export default class EngineContainer extends EngineLayout {
