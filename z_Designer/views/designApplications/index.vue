@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import PageBase from '@src/views/PageBase'
+import PageBase from '@common/views/PageBase'
 import applicationList from './applicationList.vue'
 import applicationDetail from './applicationDetail.vue'
 @Options({

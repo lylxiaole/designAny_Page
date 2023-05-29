@@ -45,7 +45,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import {   Emit,Watch,Prop } from 'vue-property-decorator'
-import ComponentBase from '@src/views/ComponentBase'
+import ComponentBase from '@common/views/ComponentBase'
 import {
   DesignPageGroupDC,
   DesignPageDC,
@@ -61,11 +61,11 @@ import {
   DeletePage,
   DeleteGroup,
   pageType
-} from '@src/apis/designPage'
+} from '@common/apis/designPage'
  
-import btreeNode from '@src/components/Treenode/bTreeNode.vue'
+import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { types } from 'util'
-import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
+import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
 enum rightMenus {
   addPage = '新建页面',

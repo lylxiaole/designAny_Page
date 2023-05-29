@@ -22,8 +22,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import ComponentBase from '@src/views/ComponentBase'
-import { applicationType } from '@src/apis/designApplication'
+import ComponentBase from '@common/views/ComponentBase'
+import { applicationType } from '@common/apis/designApplication'
 
 @Options({})
 export default class index extends ComponentBase {

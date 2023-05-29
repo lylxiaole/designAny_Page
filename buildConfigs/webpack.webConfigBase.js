@@ -235,7 +235,7 @@ let baseconfig = {
     modules: [
       // 寻找模块的根目录，array 类型，默认以 node_modules 为根目录
       path.resolve(currentDir, 'node_modules'),
-      path.resolve(currentDir, 'src')
+      path.resolve(currentDir, 'common')
       // path.resolve(currentDir, 'z_Report')
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'], // 模块的后缀名，import时不需要后缀名
@@ -245,7 +245,7 @@ let baseconfig = {
     enforceExtension: false, // 是否强制导入语句必须要写明文件后缀
 
     alias: {
-      '@src': path.resolve(currentDir, 'src'), //引入模块时，自动寻找
+      '@common': path.resolve(currentDir, 'common'), //引入模块时，自动寻找
       // '@': path.resolve(currentDir, 'z_Report')
       path: false, // require.resolve('path-browserify'),
       stream: false, //require.resolve("stream-browserify"),
@@ -276,7 +276,7 @@ let baseconfig = {
     hints: false, // 关闭性能检查
     maxAssetSize: 200000, // 最大文件大小 (单位 bytes)
     maxEntrypointSize: 1024 * 200, // 最大入口文件大小 (单位 bytes)
-    assetFilter: function(assetFilename) {
+    assetFilter: function (assetFilename) {
       // 过滤要检查的文件
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js')
     }
@@ -334,6 +334,6 @@ module.exports = function initConifg(distDir, projectDir, templateFile, devPort)
   // baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
   console.log('baseconfig.resolve.alias', path.resolve(currentDir, projectDir))
   baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
-  baseconfig.resolve.alias['@src'] = path.resolve(currentDir, 'src')
+  baseconfig.resolve.alias['@common'] = path.resolve(currentDir, 'common')
   return baseconfig
 }

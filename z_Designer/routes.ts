@@ -1,5 +1,5 @@
-import { IRouteClass } from '@src/baseConfigs'
-import adminLayout from '@src/layouts/adminLayout/index.vue'
+import { IRouteClass } from 'common/baseConfigs'
+import adminLayout from '@common/layouts/adminLayout/index.vue'
 
 const routes: IRouteClass[] = [
   {

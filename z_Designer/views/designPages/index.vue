@@ -27,15 +27,15 @@
  
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import PageBase from '@src/views/PageBase'
-import { pageType, DesignPageDC, GetPageDetail } from '@src/apis/designPage'
-import { applicationType, ApplicationDC, GetApplication } from '@src/apis/designApplication'
+import PageBase from '@common/views/PageBase'
+import { pageType, DesignPageDC, GetPageDetail } from '@common/apis/designPage'
+import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 
-import { drawVueOnVirtualDom } from '@src/utils'
-import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@src/designEngine'
+import { drawVueOnVirtualDom } from '@common/utils'
+import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@common/designEngine'
 @Options({
   components: {
     pagelist: pagelist,

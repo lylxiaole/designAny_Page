@@ -35,8 +35,8 @@
 import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit ,Ref} from 'vue-property-decorator'
  
-import ComponentBase from '@src/views/ComponentBase'
-import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication } from '@src/apis/designApplication'
+import ComponentBase from '@common/views/ComponentBase'
+import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication } from '@common/apis/designApplication'
  
 @Options({})
 export default class applicationList extends ComponentBase {

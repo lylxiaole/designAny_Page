@@ -28,10 +28,10 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import { getUuid, deepClone, serialize } from '@src/utils'
-import dragHelper from '@src/designEngine/02common/dragHelper_new'
+import { getUuid, deepClone, serialize } from '@common/utils'
+import dragHelper from '@common/designEngine/02common/dragHelper_new'
 // 所有系统组件
-import * as engin from '@src/designEngine'
+import * as engin from '@common/designEngine'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {

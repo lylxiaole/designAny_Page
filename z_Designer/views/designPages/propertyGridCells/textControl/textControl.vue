@@ -12,8 +12,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import { getUuid, deepClone } from '@src/utils'
-import npColorPicker from '@src/components/commonComponents/npColorPicker.vue'
+import { getUuid, deepClone } from '@common/utils'
+import npColorPicker from '@common/components/commonComponents/npColorPicker.vue'
 
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'

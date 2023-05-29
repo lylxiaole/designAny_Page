@@ -22,8 +22,8 @@
     "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@src/*": [
-        "src/*"
+      "@common/*": [
+        "common/*"
       ],
       "tslib": [
         "node_modules/tslib/tslib.d.ts"

@@ -50,9 +50,9 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { AxiosResponse } from 'axios'
-import { requestRegisterUser, CheckRegisterInfo } from '@src/apis/user'
-import { validUsername } from '@src/utils/validate'
-import PageBase from '@src/views/PageBase'
+import { requestRegisterUser, CheckRegisterInfo } from '@common/apis/user'
+import { validUsername } from '@common/utils/validate'
+import PageBase from '@common/views/PageBase'
 
 @Options({})
 export default class register extends PageBase {

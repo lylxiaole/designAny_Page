@@ -18,7 +18,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
-import uploadFile from '@src/components/Upload/uploadFile.vue'
+import uploadFile from '@common/components/Upload/uploadFile.vue'
 
 @propertyCellTypeAttr(PropertyTypeEnum.uploadFile)
 @Options({

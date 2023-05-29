@@ -13,8 +13,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import { getUuid, deepClone } from '@src/utils'
-import npDatePicker from '@src/components/commonComponents/npDatePicker.vue'
+import { getUuid, deepClone } from '@common/utils'
+import npDatePicker from '@common/components/commonComponents/npDatePicker.vue'
 
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'

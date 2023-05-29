@@ -37,7 +37,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 import propertyCellBase from '../common'
-import { getUuid, deepClone } from '@src/utils'
+import { getUuid, deepClone } from '@common/utils'
 class groupInfo {
   name: string
   disabled: boolean

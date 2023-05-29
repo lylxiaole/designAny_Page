@@ -33,9 +33,9 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Watch } from 'vue-property-decorator'
-import { validUsername } from '@src/utils/validate'
-import PageBase from '@src/views/PageBase'
-import { login } from '@src/apis/user'
+import { validUsername } from '@common/utils/validate'
+import PageBase from '@common/views/PageBase'
+import { login } from '@common/apis/user'
 
 const validateUsername = (rule, value, callback) => {
   if (!validUsername(value)) {
