@@ -64,14 +64,10 @@ class propertyFilterInfo {
   groupName: string
   propertyName: string
 }
-/**加载所有propertyGrid Cell组件 */
- 
+/**加载所有propertyGrid Cell组件 */ 
 const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
 modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath)
-  // if (value.default.prototype.$Meta && value.default.prototype.$Meta.celltype) {
-  //   cellControls.push(value.default)
-  // }
+  const value = modulesFiles(modulePath) 
   return modules
 }, {})
 

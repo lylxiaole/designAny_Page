@@ -44,6 +44,7 @@ export function findSystemCompByCode(code: string): any {
 export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, groupName: string, name: string, compCode: string, icon: any) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
+    debugger
     window.console.log('layoutCompTypeAttr', target.prototype.$Meta, compCode)
     target.prototype.$Meta.layoutType = layoutType
     target.prototype.$Meta.groupName = groupName
