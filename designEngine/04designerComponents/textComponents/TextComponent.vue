@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '@designEngine'
 import { EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine'
 
