@@ -491,9 +491,9 @@ function removeLoadingInfo(key) {
 // ////////////////////虚拟dom绘制/////////////////////////////////////////////
 export function drawVueOnVirtualDom(vueComp) {
   let fragment = window.document.createDocumentFragment()
-  let divdom = window.document.createElement('div')
-  fragment.appendChild(divdom)
+  // let divdom = window.document.createElement('div')
+  // fragment.appendChild(divdom)
   let comp = h(vueComp)
-  render(comp, divdom)
+  render(comp, fragment)
   return { virtualDom: fragment, vueComp: comp.component.ctx }
 }
