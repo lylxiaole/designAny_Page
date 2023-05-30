@@ -1,4 +1,5 @@
 import { Options, Vue } from 'vue-class-component'
+import { ref, h, render, onMounted } from 'vue'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 import { DragItemData, DragItemTypeEnum } from './BaseEvents'
@@ -40,6 +41,7 @@ export default class EngineContainer extends EngineLayout {
   }
   private async listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): Promise<boolean> {
     // window.console.log('listenOnDrop:', 1)
+    debugger
     if (!dragdata) {
       return true
     }
@@ -327,7 +329,10 @@ export default class EngineContainer extends EngineLayout {
     // window.console.log('绘制组件')
     // compInfo.compCode = dropcompclass.compCode
     dropcompclass.prototype.isDesigning = this.isDesigning
-    let dropcomp = new dropcompclass() as EngineLayout
+    // let dropcomp = new dropcompclass() as EngineLayout
+
+    let dropcomp = h(dropcompclass) as any
+
     dropcomp.parentLayout = this
     if (data) {
       await dropcomp.loadData(data)

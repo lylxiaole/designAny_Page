@@ -11,35 +11,19 @@
       </div>
     </div>
     <!-- *************************************************************************** -->
-    <div :style="{ height: height + 'px' }" class="verticalAlignCenter">
-      <div :style="{ width:'60px'}" class="iconitem themeHover" @click="savePage">
-        <div class="flexHorilanLayout">
-          <span class="icon iconfont">&#xe616;</span>
-        </div>
-        <div class="flexHorilanLayout verticalAlignCenter">保存</div>
-      </div>
-    </div>
+    <optionBtn :style="{ height: height + 'px' }" label="保存" @click="savePage" />
     <!-- *************************************************************************** -->
-    <div :style="{ height: height + 'px' }" class="verticalAlignCenter">
-      <div :style="{ width:'60px'}" class="iconitem themeHover" @click="leadinPlugin">
-        <div class="flexHorilanLayout">
-          <span class="icon iconfont">&#xe616;</span>
-        </div>
-        <div class="flexHorilanLayout verticalAlignCenter">导入插件</div>
-      </div>
-    </div>
+    <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" />
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
-      <el-tooltip placement="bottom" overlayClassName="nptooltip" style="background: transparent"
+      <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparent"
         :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
-        <div slot="content" style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
-          <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
-        </div>
-        <div :style="{ width: '100px' }" class="iconitem themeHover">
-          <div class="flexHorilanLayout">
+        <template #content>
+          <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
+            <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
           </div>
-          <div class="flexHorilanLayout verticalAlignCenter">系统组件</div>
-        </div>
+        </template>
+        <optionBtn :style="{ height: height + 'px' }" label="系统组件" />
       </el-tooltip>
       <!-- *************************************************************************** -->
       <div :style="{ width:  '120px' }" class="iconitem themeHover">
@@ -50,38 +34,25 @@
         <div class="flexHorilanLayout verticalAlignCenter">缩放窗口</div>
       </div>
       <!-- *************************************************************************** -->
-      <div :style="{ width: '60px' }" class="iconitem themeHover" @click="onPrint">
-        <div class="flexHorilanLayout">
-        </div>
-        <div class="flexHorilanLayout verticalAlignCenter">打印</div>
-      </div>
+      <optionBtn :style="{ height: height + 'px' }" label="打印" @click="onPrint" />
       <!-- *************************************************************************** -->
-      <div :style="{ width: '60px' }" class="iconitem themeHover" @click="onPreView">
-        <div class="flexHorilanLayout">
-          <span class="icon iconfont">&#xe61e;</span>
-        </div>
-        <div class="flexHorilanLayout verticalAlignCenter">预览</div>
-      </div>
+      <optionBtn :style="{ height: height + 'px' }" label="预览" @click="onPreView" />
       <!-- *************************************************************************** -->
-      <div :style="{ width: '80px' }" class="iconitem themeHover" @click="onQuit">
-        <div class="flexHorilanLayout">
-          <span class="icon iconfont">&#xe61b;</span>
-        </div>
-        <div class="flexHorilanLayout verticalAlignCenter">退出设计</div>
-      </div>
+      <optionBtn :style="{ height: height + 'px' }" label="退出设计" @click="onQuit" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout, LayoutInfo } from '@common/designEngine'
 import componentListControl from './ComponentListControl.vue'
-
+import optionBtn from './optionBtn.vue'
 @Options({
   components: {
-    componentListControl
+    componentListControl,
+    optionBtn
   }
 })
 export default class quickActionBar extends Vue {
@@ -156,14 +127,4 @@ export default class quickActionBar extends Vue {
 </script>
 
 <style lang="less" scoped>
-.iconitem {
-  padding: 8px 0px;
-  box-sizing: border-box;
-  height: 100%;
-  width: 100%;
-  color: white;
-}
-.iconitem .iconfont {
-  font-size: 26px;
-}
 </style>

@@ -8,7 +8,9 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { ref, h, render, onMounted } from 'vue'
+
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
 import { drawVueOnVirtualDom, BuildingFileUrlForShow } from '@common/utils'
 import DesignShell from './ComponentShells/DesignShell.vue'
@@ -35,13 +37,14 @@ export default class PCPageDesign extends EnginePage {
 
   protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     // window.console.log('renderComponent:', compCon)
-    let shell = new DesignShell()
-    let fragment = drawVueOnVirtualDom(shell)
+
+    let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
     // this._dragHelper.makeDomCanDrag(shell.$el)
-    this.allShells.push(shell)
-    shell.addComponent(compCon)
+    this.allShells.push(vueComp)
+    vueComp.addComponent(compCon)
     //
-    $(this.$el).append(fragment)
+    debugger
+    $(this.$el).append(virtualDom)
     return compCon
   }
 }

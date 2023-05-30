@@ -141,12 +141,12 @@ export default class index extends PageBase {
         break
     }
     /************************渲染页面 */
-    let drawer = drawVueOnVirtualDom(designLayout) 
-    await drawer.vueComp.loadPageByData(pageId, res.designDetail)
+    let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout) 
+    await vueComp.loadPageByData(pageId, res.designDetail)
     await this.$nextTick()
-    this.openPage(res, drawer.vueComp)
+    this.openPage(res, vueComp)
     await this.$nextTick()
-    $(this.$refs[pageId][0]).append(drawer.virtualDom)
+    $(this.$refs[pageId][0]).append(virtualDom)
   }
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)

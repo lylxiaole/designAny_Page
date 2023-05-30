@@ -35,7 +35,9 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { ref, h, render, onMounted } from 'vue'
+
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase'
 import { deepClone } from '@common/utils'
 @Options({})
@@ -132,8 +134,9 @@ export default class DesignShell extends BaseEvents {
     if (this.Component != null) {
       this.Component.$destroy()
     }
-    this.Component = comp
-    this.Component.$mount(this.$refs.compContent as Element)
+
+    render(comp, this.$refs.compContent)
+    this.Component = comp.component.ctx
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
     this.Component.$once('onDestroyed', () => {

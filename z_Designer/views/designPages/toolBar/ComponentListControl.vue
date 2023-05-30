@@ -10,7 +10,8 @@
     <el-col :span="17">
       <div style="display:flex;flex-wrap: wrap">
         <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" draggable="true" :dragType="dragType" :compName="item.name"
-          :compCode="item.compCode" :compType="item.type" style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
+          :compCode="item.compCode" :compType="item.type" :platform="item.platform"
+          style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
           <div>
             <div style="width:100%;height:35px;text-align:center">
               <el-image style="font-size:30px;" draggable="false" :src="item.icon" />
@@ -27,7 +28,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import dragHelper from '@common/designEngine/02common/dragHelper_new'
 // 所有系统组件
@@ -80,9 +81,9 @@ export default class ComponentListControl extends Vue {
   beforeDestroy() {
     this.clearDrags()
   }
-  @Watch('systemCompsActiveKey')
+  @Watch('systemCompsActiveKey', { deep: true })
   private watchSystemCompsActiveKeyChange(keys: string[]) {
-    //window.console.info('systemCompsActiveKey', this.systemCompsActiveKey)
+    window.console.info('systemCompsActiveKey', this.systemCompsActiveKey)
     this.$nextTick(() => {
       //window.console.log('给组件列表添加拖拽事件了')
       this.refreshDrags()
@@ -112,6 +113,7 @@ export default class ComponentListControl extends Vue {
       .each((index, element) => {
         //window.console.log('---------------------组件列表', element)
         var find = this.dragHelpers.filter((o) => o.currentContainer == element)[0]
+
         if (!find) {
           //注册拖拽插件
           var draghelper = new dragHelper(element)
@@ -135,7 +137,9 @@ export default class ComponentListControl extends Vue {
     let compName = $(el).attr('compName')
     let compGroupName = $(el).attr('compGroupName')
     let compCode = $(el).attr('compCode')
-    let compInfo = new engin.LayoutInfo(type, compGroupName, compName, null, '', compCode)
+    let platform = $(el).attr('platform')
+
+    let compInfo = new engin.LayoutInfo(type, compGroupName, compName, null, '', platform, compCode)
     //window.console.log('---------------------------------------------------compInfocompInfocompInfocompInfocompInfo', compInfo)
     let dragd = new engin.DragItemData<any>()
     dragd.type = dragType
@@ -150,8 +154,6 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private cuteSystemComponents() {
-    window.console.log('cuteSystemComponents:', engin.allComponents)
-     
     engin.allComponents
       .filter((o) => o.type == engin.LayoutType.system_component)
       .filter((element) => {
