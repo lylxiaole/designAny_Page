@@ -17,6 +17,7 @@
 </template>
 
 <script lang="ts">
+
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator' // import ace from 'ace-builds'
 import aceEditor from 'vue2-ace-editor'
@@ -24,7 +25,7 @@ import aceEditor from 'vue2-ace-editor'
 // import 'ace-builds/src-noconflict/theme-monokai' // 默认设置的主题
 // import 'ace-builds/src-noconflict/mode-javascript' // 默认设置的语言模式
 // import 'ace-builds/src-noconflict/ext-language_tools'
-import { npAceEditorIco } from '@common/designEngine/assets/icons.js'
+import { npAceEditorIco } from '@designEngine/assets/icons.js'
 
 @Options({
   components: {

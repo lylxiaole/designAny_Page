@@ -246,6 +246,7 @@ let baseconfig = {
 
     alias: {
       '@common': path.resolve(currentDir, 'common'), //引入模块时，自动寻找
+      '@designEngine': path.resolve(currentDir, 'designEngine'), //引入模块时，自动寻找
       // '@': path.resolve(currentDir, 'z_Report')
       path: false, // require.resolve('path-browserify'),
       stream: false, //require.resolve("stream-browserify"),
@@ -335,5 +336,7 @@ module.exports = function initConifg(distDir, projectDir, templateFile, devPort)
   console.log('baseconfig.resolve.alias', path.resolve(currentDir, projectDir))
   baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
   baseconfig.resolve.alias['@common'] = path.resolve(currentDir, 'common')
+  baseconfig.resolve.alias['@designEngine'] = path.resolve(currentDir, 'designEngine')
+
   return baseconfig
 }

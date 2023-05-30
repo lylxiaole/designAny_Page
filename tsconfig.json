@@ -25,6 +25,9 @@
       "@common/*": [
         "common/*"
       ],
+      "@designEngine/*": [
+        "designEngine/*"
+      ],
       "tslib": [
         "node_modules/tslib/tslib.d.ts"
       ]

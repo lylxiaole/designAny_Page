@@ -33,12 +33,12 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
-import { paramInfo } from '@common/designEngine'
+import { paramInfo } from '@designEngine'
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
-import { pageInParamsIco } from '@common/designEngine/assets/icons.js'
+import { pageInParamsIco } from '@designEngine/assets/icons.js'
 
 @propertyCellTypeAttr(PropertyTypeEnum.pageInParams)
 @Options({})

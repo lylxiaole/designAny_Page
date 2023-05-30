@@ -35,7 +35,7 @@ import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 
 import { drawVueOnVirtualDom } from '@common/utils'
-import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@common/designEngine'
+import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine'
 @Options({
   components: {
     pagelist: pagelist,

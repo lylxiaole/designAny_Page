@@ -30,8 +30,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Emit,Watch,Prop } from 'vue-property-decorator'
-import { Property, PropertyType, PropertyTypeEnum } from '@common/designEngine'
-import { EnginePage, EngineLayout } from '@common/designEngine'
+import { Property, PropertyType, PropertyTypeEnum } from '@designEngine'
+import { EnginePage, EngineLayout } from '@designEngine'
 import { deepClone, serialize, deserialize } from '@common/utils'
 import propertyCellBase,{cellControls} from './propertyGridCells/common'
 
