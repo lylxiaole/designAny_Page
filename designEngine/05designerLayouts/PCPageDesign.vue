@@ -37,15 +37,13 @@ export default class PCPageDesign extends EnginePage {
 
   protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     // window.console.log('renderComponent:', compCon)
-
     let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp)
-    vueComp.addComponent(compCon)
+    let res = vueComp.addComponent(compCon)
     //
-    debugger
     $(this.$el).append(virtualDom)
-    return compCon
+    return res
   }
 }
 </script>

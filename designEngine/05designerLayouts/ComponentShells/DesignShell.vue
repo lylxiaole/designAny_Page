@@ -1,33 +1,31 @@
 <template>
-  <div :class="hoverClass"
-    :style="{'width':Component==null?0:Component.width+'px','height':Component==null?0:Component.height+'px','z-index':Component==null?0:Component.zIndex,'left':Component==null?0:Component.left+'px','top':Component==null?0:Component.top+'px',
+  <div :class="hoverClass" :style="{'width':Component==null?0:Component.width+'px','height':Component==null?0:Component.height+'px','z-index':Component==null?0:Component.zIndex,'left':Component==null?0:Component.left+'px','top':Component==null?0:Component.top+'px',
       'margin-left':Component==null?0:Component.margin_left+'px','margin-right':Component==null?0:Component.margin_right+'px','margin-top':Component==null?0:Component.margin_top+'px','margin-bottom':Component==null?0:Component.margin_bottom+'px',
       'padding-left':Component==null?0:Component.padding_left+'px','padding-right':Component==null?0:Component.padding_right+'px','padding-top':Component==null?0:Component.padding_top+'px','padding-bottom':Component==null?0:Component.padding_bottom+'px',
-       'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':(isDesigning===true||display===true)?'block':'none','tabindex':'1' }">
-    <div :class="themeClass" style="width:100%;height:100%;tab-index:1"
-      :style="{zIndex:isDesigning===true?0:3,'font-family':Component==null?'':Component.fontFamily }">
+       'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':'block','tabindex':'1' }">
+    <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':Component==null?'':Component.fontFamily }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="semove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="semove"
       style="width:16px;height:16px;right:-16px; bottom:-16px;position:absolute;cursor: se-resize;;z-index:2" draggable="true"></div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="swmove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="swmove"
       style="width:16px;height:16px;left:-16px; bottom:-16px;position:absolute;cursor: sw-resize;;z-index:2" draggable="true"></div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nemove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="nemove"
       style="width:16px;height:16px;right:-16px; top:-16px;position:absolute;cursor: ne-resize;;z-index:2" draggable="true"></div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nwmove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="nwmove"
       style="width:16px;height:16px;left:-16px; top:-16px;position:absolute;cursor: nw-resize;;z-index:2" draggable="true"></div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="nmove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="nmove"
       style="width:96%;height:16px;left:2%; top:-16px;position:absolute;cursor:n-resize;;z-index:2" draggable="true"></div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="smove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="smove"
       style="width:96%;height:16px;left:2%; bottom:-16px;position:absolute;cursor:s-resize;;z-index:2" draggable="true"></div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="wmove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="wmove"
       style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:2" draggable="true"></div>
-    <div v-show="isSelectedArea===true&&isDesigning===true" class="dragbutton" ref="emove"
+    <div v-show="isSelectedArea===true" class="dragbutton" ref="emove"
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
     <div v-show="Component&&Component.disabled===true" ref="dragmengb" class="dragmengb" type="drag"
-      style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:isDesigning===true?0:3 }"></div>
+      style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:0 }"></div>
 
-    <i ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true&&isDesigning===true"
+    <i ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"
       style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4"></i>
 
   </div>
@@ -66,25 +64,21 @@ export default class DesignShell extends BaseEvents {
   }
   /**是否是当前选中的区域 */
   get isSelectedArea(): boolean {
-    if (this.isDesigning) {
-      if (!this.Component) {
-        return false
-      }
-      if (this.Component.isSelected) {
-        return true
-      }
-      if (this.Component.findSelectedLayoutsRecursion && this.Component.findSelectedLayoutsRecursion(this.Component.children).length > 0) {
-        return true
-      }
+    debugger
+    if (!this.Component) {
+      return false
     }
+    if (this.Component.isSelected) {
+      return true
+    }
+    if (this.Component.findSelectedLayoutsRecursion && this.Component.findSelectedLayoutsRecursion(this.Component.children).length > 0) {
+      return true
+    }
+
     return false
   }
   get hoverClass(): string {
-    if (this.isDesigning == true) {
-      return 'gad-mengb'
-    } else {
-      return ''
-    }
+    return 'gad-mengb'
   }
   get themeClass(): string {
     if (!this.Component) {
@@ -97,7 +91,7 @@ export default class DesignShell extends BaseEvents {
     return this.Component
   }
   get boarderStyle(): string {
-    if (this.isDesigning == true && this.isSelectedArea == true) {
+    if (this.isSelectedArea == true) {
       return '#faad14 solid 0.3px'
     } else {
       return ''
@@ -113,6 +107,8 @@ export default class DesignShell extends BaseEvents {
     this.onClick_Event = (e: Event, target: any) => {
       // window.console.log('DesignShell onClick_Event')
       ;(this.Component.parentLayout as any).chooseComps([this.Component])
+
+      let x = this.Component.isSelected
       $(this.$el).focus()
       e.stopPropagation()
     }
@@ -137,6 +133,7 @@ export default class DesignShell extends BaseEvents {
 
     render(comp, this.$refs.compContent)
     this.Component = comp.component.ctx
+    debugger
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
     this.Component.$once('onDestroyed', () => {
@@ -144,6 +141,7 @@ export default class DesignShell extends BaseEvents {
     })
 
     this.startListenItemDrag()
+    return this.Component
   }
 
   private startListenItemDrag() {

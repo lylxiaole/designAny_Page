@@ -21,7 +21,7 @@ export default {
   watch: {
     $route(route) {
       // if you go to the redirect page, do not update the breadcrumbs
-      if (route.path.startsWith('/redirect/')) {
+      if (route.path.indexOf('/redirect/')==0) {
         return
       }
       this.getBreadcrumb()

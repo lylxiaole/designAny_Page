@@ -41,7 +41,6 @@ export default class EngineContainer extends EngineLayout {
   }
   private async listenOnDrop(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): Promise<boolean> {
     // window.console.log('listenOnDrop:', 1)
-    debugger
     if (!dragdata) {
       return true
     }
@@ -331,11 +330,13 @@ export default class EngineContainer extends EngineLayout {
     dropcompclass.prototype.isDesigning = this.isDesigning
     // let dropcomp = new dropcompclass() as EngineLayout
     let dropcomp = h(dropcompclass) as any
-    dropcomp.parentLayout = this
+
     if (data) {
       await dropcomp.loadData(data)
     }
     dropcomp = await this.renderComponent(dropcomp)
+
+    dropcomp.parentLayout = this
     // window.console.error('绘制子组件失败,请不要保存!!!')
     // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
     this.addChild(dropcomp)
