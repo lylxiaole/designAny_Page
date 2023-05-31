@@ -495,5 +495,5 @@ export function drawVueOnVirtualDom(vueComp) {
   // fragment.appendChild(divdom)
   let comp = h(vueComp)
   render(comp, fragment)
-  return { virtualDom: fragment, vueComp: comp.component.ctx }
+  return { virtualDom: fragment, vueComp: comp.component.proxy }
 }

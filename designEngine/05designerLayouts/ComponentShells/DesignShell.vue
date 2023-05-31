@@ -31,13 +31,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+<script lang="ts" >
+import { Options } from 'vue-class-component'
 import { ref, h, render, onMounted } from 'vue'
 
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop, Vue } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase'
 import { deepClone } from '@common/utils'
+import { debuggerStatement } from '@babel/types'
 @Options({})
 export default class DesignShell extends BaseEvents {
   public get isDesigning(): boolean {
@@ -111,8 +112,6 @@ export default class DesignShell extends BaseEvents {
     this.onClick_Event = (e: Event, target: any) => {
       // window.console.log('DesignShell onClick_Event')
       ;(this.Component.parentLayout as any).chooseComps([this.Component])
-
-      let x = this.Component.isSelected
       $(this.$el).focus()
       e.stopPropagation()
     }
@@ -136,7 +135,8 @@ export default class DesignShell extends BaseEvents {
     }
 
     render(comp, this.$refs.compContent)
-    this.Component = comp.component.ctx
+    this.Component = comp.component.proxy
+    debugger
 
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')

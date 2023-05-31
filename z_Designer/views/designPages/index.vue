@@ -6,8 +6,7 @@
     </el-row>
     <el-row style="height:calc(100% - 60px);width:100%;">
       <el-col :span="4" style="width:250px;height:100%">
-        <pagelist :currentPage="currentShowEngine" :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage"
-          @onDeletePage="onDeletePage"></pagelist>
+        <pagelist :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
       </el-col>
       <el-col :span="16" class="pageList" style="width:calc(100% - 500px);height:100%">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width:100%;height:100%">
@@ -24,9 +23,8 @@
 </template>
 
 <script lang="ts">
- 
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
 import { pageType, DesignPageDC, GetPageDetail } from '@common/apis/designPage'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
@@ -88,6 +86,7 @@ export default class index extends PageBase {
   //打开新页面
   private openPage(page: DesignPageDC, pageengine: EnginePage) {
     let engine = this.openPageEngines.find((o) => o.Id === page.id)
+    debugger
     if (!engine) {
       this.openPageEngines.push(pageengine)
     }
@@ -132,18 +131,17 @@ export default class index extends PageBase {
     let designLayout: EnginePage = null
     switch (res.type) {
       case pageType.pcPage:
-        designLayout =  PCPageDesign
+        designLayout = PCPageDesign
         break
       case pageType.mobilePage:
-        designLayout =  MobilePageDesign
+        designLayout = MobilePageDesign
         break
       default:
         break
     }
     /************************渲染页面 */
-    let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout) 
+    let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
     await vueComp.loadPageByData(pageId, res.designDetail)
-    await this.$nextTick()
     this.openPage(res, vueComp)
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(virtualDom)

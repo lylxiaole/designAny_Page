@@ -29,11 +29,11 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Emit,Watch,Prop } from 'vue-property-decorator'
+import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { Property, PropertyType, PropertyTypeEnum } from '@designEngine'
 import { EnginePage, EngineLayout } from '@designEngine'
 import { deepClone, serialize, deserialize } from '@common/utils'
-import propertyCellBase,{cellControls} from './propertyGridCells/common'
+import propertyCellBase, { cellControls } from './propertyGridCells/common'
 
 class PropertyGroupInfo {
   groupName: string
@@ -64,10 +64,10 @@ class propertyFilterInfo {
   groupName: string
   propertyName: string
 }
-/**加载所有propertyGrid Cell组件 */ 
+/**加载所有propertyGrid Cell组件 */
 const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
 modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath) 
+  const value = modulesFiles(modulePath)
   return modules
 }, {})
 
@@ -117,7 +117,7 @@ export default class PropertyGrid extends Vue {
   private allowedPropertys: propertyFilterInfo[]
   /**当前的布局页面 */
   @Prop()
-  private currentPage: EnginePage
+  public currentPage: EnginePage
   /**当前需要设置的所有布局*/
   @Prop()
   private currentLayouts: EngineLayout[] | EngineLayout

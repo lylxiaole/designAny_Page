@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
 import { ref, h, render, onMounted } from 'vue'
 

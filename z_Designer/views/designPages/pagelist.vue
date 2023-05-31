@@ -6,7 +6,7 @@
       </el-row>
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px;height:calc(100% - 50px)">
-      <div style="overflow: auto; width: 100%; height: 100%; "   @contextmenu.prevent="onTreeRightClick">
+      <div style="overflow: auto; width: 100%; height: 100%; " @contextmenu.prevent="onTreeRightClick">
         <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
           @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
           @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
@@ -31,12 +31,13 @@
           </template>
         </el-tree>
 
-<v-contextmenu ref="ctxMenu">  
- <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px" @click="onRightMenuChoose(menu)">
+        <v-contextmenu ref="ctxMenu">
+          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
+            @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
-          </v-contextmenu-item> 
-</v-contextmenu>  
+          </v-contextmenu-item>
+        </v-contextmenu>
       </div>
     </el-row>
   </div>
@@ -44,7 +45,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import {   Emit,Watch,Prop } from 'vue-property-decorator'
+import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import {
   DesignPageGroupDC,
@@ -62,7 +63,7 @@ import {
   DeleteGroup,
   pageType
 } from '@common/apis/designPage'
- 
+
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { types } from 'util'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
@@ -77,7 +78,7 @@ enum rightMenus {
 }
 
 @Options({
-  components: { 
+  components: {
     btreeNode: btreeNode
   }
 })
@@ -267,7 +268,7 @@ export default class index extends ComponentBase {
     } else if (data.type === 'group') {
       this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
     }
- 
+
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
   private onTreeRightClick(e: any) {
@@ -277,7 +278,6 @@ export default class index extends ComponentBase {
     this.currentRightClickNode = null
     this.rightMenus = []
     this.rightMenus = [rightMenus.addGroup]
-     
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
   private getMenuIconByRightMenus(rm: rightMenus): string {
@@ -400,10 +400,9 @@ export default class index extends ComponentBase {
     }
     this.deleteNodeById(nodeId, this.treeData)
   }
-private onClickWhiteArea()
-{
-      ;(this.$refs.ctxMenu as any).hide()
-}
+  private onClickWhiteArea() {
+    ;(this.$refs.ctxMenu as any).hide()
+  }
   // **************对外事件*****************************************************
   @Emit('onEditPage')
   private async onEditPage(pageId: string) {}

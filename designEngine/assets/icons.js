@@ -170,5 +170,5 @@ export {
   taskLevelIcon,
   lockIcon,
   dropIcon,
-  pageResourceIcon,
+  pageResourceIcon
 }
