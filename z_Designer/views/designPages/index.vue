@@ -86,7 +86,7 @@ export default class index extends PageBase {
   //打开新页面
   private openPage(page: DesignPageDC, pageengine: EnginePage) {
     let engine = this.openPageEngines.find((o) => o.Id === page.id)
-    debugger
+
     if (!engine) {
       this.openPageEngines.push(pageengine)
     }

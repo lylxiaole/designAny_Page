@@ -47,7 +47,7 @@ export default class DesignShell extends BaseEvents {
   private Component: EngineComponent = null
   public positionval: string = null
 
-  @Watch('Component', { deep: true })
+  @Watch('Component', { deep: true, immediate: true })
   private onComponentChanged(val) {
     debugger
   }
@@ -136,7 +136,6 @@ export default class DesignShell extends BaseEvents {
 
     render(comp, this.$refs.compContent)
     this.Component = comp.component.proxy
-    debugger
 
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
