@@ -22,12 +22,11 @@
       style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:2" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="emove"
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
-    <div v-show="Component&&Component.disabled===true" ref="dragmengb" class="dragmengb" type="drag"
+    <div v-show="Component" ref="dragmengb" class="dragmengb" type="drag"
       style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:0 }"></div>
 
-    <i ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"
-      style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4"></i>
-
+    <!-- <div ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"
+      style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4">拖拽</div> -->
   </div>
 </template>
 
@@ -35,10 +34,9 @@
 import { Options } from 'vue-class-component'
 import { ref, h, render, onMounted } from 'vue'
 
-import { Component, Emit, Watch, Prop, Vue } from 'vue-property-decorator'
+import { Emit, Watch, Prop, Vue } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase'
 import { deepClone } from '@common/utils'
-import { debuggerStatement } from '@babel/types'
 @Options({})
 export default class DesignShell extends BaseEvents {
   public get isDesigning(): boolean {
@@ -46,11 +44,6 @@ export default class DesignShell extends BaseEvents {
   }
   private Component: EngineComponent = null
   public positionval: string = null
-
-  @Watch('Component', { deep: true, immediate: true })
-  private onComponentChanged(val) {
-    debugger
-  }
 
   get backGroundColor(): string {
     if (!this.Component) {
@@ -152,7 +145,7 @@ export default class DesignShell extends BaseEvents {
     let dragdata: any = { type: DragItemTypeEnum.dragmove_component_inpage }
     dragdata.dragData = { compId: this.Component.Id }
     //
-    let dragicon = this.$refs.dragIcon as Element
+    let dragicon = this.$refs.dragmengb as Element
     this._dragHelper.makeDomCanDrag(dragicon)
     this._dragHelper.makeDragItemInfo(dragicon, deepClone(dragdata))
     // ******************************************

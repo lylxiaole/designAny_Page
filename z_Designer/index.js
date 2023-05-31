@@ -20,7 +20,6 @@ import App from './views/App.vue'
 // *********************
 import contextmenu from 'v-contextmenu'
 import 'v-contextmenu/dist/themes/default.css'
-
 // *********************
 var currentApp = createApp(App)
 currentApp.use(ElementPlus)
@@ -30,5 +29,4 @@ currentApp.use(system.router)
 currentApp.use(system.store)
 currentApp.use(system.i18n)
 
-// currentApp.config.globalProperties.notify=xxx
 currentApp.mount('#app')
