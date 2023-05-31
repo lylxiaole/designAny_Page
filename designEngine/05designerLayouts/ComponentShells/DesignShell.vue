@@ -46,6 +46,11 @@ export default class DesignShell extends BaseEvents {
   private Component: EngineComponent = null
   public positionval: string = null
 
+  @Watch('Component', { deep: true })
+  private onComponentChanged(val) {
+    debugger
+  }
+
   get backGroundColor(): string {
     if (!this.Component) {
       return '#FFF'
@@ -64,7 +69,6 @@ export default class DesignShell extends BaseEvents {
   }
   /**是否是当前选中的区域 */
   get isSelectedArea(): boolean {
-    debugger
     if (!this.Component) {
       return false
     }
@@ -133,7 +137,7 @@ export default class DesignShell extends BaseEvents {
 
     render(comp, this.$refs.compContent)
     this.Component = comp.component.ctx
-    debugger
+
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
     this.Component.$once('onDestroyed', () => {

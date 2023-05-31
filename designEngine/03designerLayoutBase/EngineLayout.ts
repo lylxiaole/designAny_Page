@@ -1,5 +1,24 @@
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import {
+  Component,
+  Emit,
+  Watch,
+  Prop,
+  Ref
+  //Prop
+  //PropSync
+  //Model
+  //ModelSync
+  //Watch
+  //Provide
+  //Inject
+  //ProvideReactive
+  //InjectReactive
+  //Emit
+  //Ref
+  //VModel
+  //Component (provided by vue-class-component)
+} from 'vue-property-decorator'
 
 import BaseEvents from './BaseEvents'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
@@ -63,7 +82,6 @@ export default class EngineLayout extends BaseEvents {
   }
 
   // ********************************
-
   public isSelected: boolean = false
   /**属性 */
   private properties_old: any[] = []
