@@ -1,14 +1,15 @@
                                            
                                               
    
-                                              EngineLayout
-
-                                              EngineContainer   
-
-                                  EnginePage                                          |      EngineComponent 
-    BaseEvents（DesignEvents）         |                                              |
-                                       |                                              |
-MobilePageDesign   PCPageDesign        |      MobilePagePreview PCPagePreview         |         components
 
 
+
+                                  |-》EngineComponent  |-》components
+                                  |                    |
+ EngineLayout-》EngineContainer   |                    |
+                                  |                    |-》MobilePagePreview;PCPagePreview
+                                  |-》EnginePage       |
+                                  |                    |
+                                  |                    |-》BaseEvents（DesignEvents） -》MobilePageDesign;PCPageDesign   
+ 
             下一步改造:使用Shell(DesignShell.vue,ViewShell.vue)代替EngineContainer层，去除EngineContainer带来的设计弊端和冗余
