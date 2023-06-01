@@ -1,13 +1,3 @@
-
-                                                baseLayouts
-                                      designLayouts     viewLayouts
-
-                                           
-                                           
-                                           
-                                           
-                                           
-                                           
                                            
                                               BaseEvents
    

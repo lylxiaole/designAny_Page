@@ -5,14 +5,14 @@
       :jsbarcode-textposition="codeTextPosition" :jsbarcode-textmargin="codeTextMargin" :jsbarcode-fontSize="codeFontSize">
     </canvas>
   </div>
-  
+
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine'
-import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@designEngine'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
+import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@designEngine/03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@common/utils'
 import { npGridIco } from '@designEngine/assets/icons.js'

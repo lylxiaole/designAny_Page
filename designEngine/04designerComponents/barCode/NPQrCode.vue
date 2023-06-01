@@ -9,13 +9,21 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import QRCode from 'qrcode'
-import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine'
-import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property, Color_Property } from '@designEngine'
-
+import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
+import {
+  Property,
+  PropertyGroupName,
+  Number_Property,
+  Text_Property,
+  Boolean_Property,
+  Enum_Property,
+  Color_Property
+} from '@designEngine/03designerLayoutBase'
 
 import { getUuid, deepClone } from '@common/utils'
+
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '二维码组件', 'NPQrCode', null)
 @Options({})
 export default class NPQrCode extends EngineComponent {
