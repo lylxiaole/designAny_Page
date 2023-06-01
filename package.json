@@ -74,6 +74,7 @@
   },
   "dependencies": {
     "@babel/plugin-syntax-top-level-await": "^7.14.5",
+    "@element-plus/icons-vue": "^2.1.0",
     "@simonwep/pickr": "^1.4.2",
     "@types/file-saver": "^2.0.3",
     "@types/uuid": "^8.3.1",

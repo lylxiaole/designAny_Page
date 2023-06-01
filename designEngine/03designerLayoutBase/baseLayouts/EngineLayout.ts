@@ -64,7 +64,6 @@ export default class EngineLayout extends BaseEvents {
     this.lylevents = {}
     this.lyleventsOnce = {}
   }
-
   public $lylemit(event: string, ...args: any[]) {
     super.$emit(event, args)
     if (this.lylevents[event]) {
