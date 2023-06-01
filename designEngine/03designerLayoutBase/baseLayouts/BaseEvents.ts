@@ -1,6 +1,6 @@
 import { Options, Vue, ClassComponentHooks } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import dragHelper from '../02common/dragHelper_new'
+import dragHelper from '@designEngine/02common/dragHelper_new'
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
   drop_system_component = 'drop_system_component',
