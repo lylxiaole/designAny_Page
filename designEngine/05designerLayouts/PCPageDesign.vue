@@ -13,7 +13,7 @@ import { ref, h, render, onMounted } from 'vue'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
 import { drawVueOnVirtualDom, BuildingFileUrlForShow } from '@common/utils'
-import DesignShell from './ComponentShells/DesignShell.vue'
+import DesignShell from './DesignShell.vue'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
