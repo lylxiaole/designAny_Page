@@ -7,7 +7,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
- import DesignShell from './ComponentShells/DesignShell.vue'
+ import DesignShell from './DesignShell.vue'
 
 @Options({})
 export default class MobilePageDesign extends EnginePage {
