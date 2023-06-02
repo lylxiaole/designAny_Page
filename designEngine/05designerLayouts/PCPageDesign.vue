@@ -2,7 +2,6 @@
   <div
     :style="{position:'relative','width':width+'px','height':height+'px','left':left+'px','top':top+'px' ,'background':backgroundCute,'padding':'0px' }"
     oncontextmenu="self.event.returnValue=false" style="border-radius:0px">
-
   </div>
 </template>
 

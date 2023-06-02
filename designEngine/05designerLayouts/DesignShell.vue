@@ -35,7 +35,7 @@ import { Options } from 'vue-class-component'
 import { ref, h, render, onMounted } from 'vue'
 
 import { Emit, Watch, Prop, Vue } from 'vue-property-decorator'
-import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum } from '../../03designerLayoutBase'
+import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum } from '../03designerLayoutBase'
 import { deepClone } from '@common/utils'
 @Options({})
 export default class DesignShell extends BaseEvents {
