@@ -44,7 +44,7 @@ export class Point {
 }
 
 @Options({})
-export default class EngineLayout extends BaseEvents {
+export default class EngineLayout extends Vue {
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}
@@ -79,7 +79,42 @@ export default class EngineLayout extends BaseEvents {
       }
     }
   }
+  //是否正在设计
+  set canDrop(can: boolean) {
+    if (!this._dragHelper) {
+      return
+    }
+    if (can) {
+      // window.console.log('makeContainerCanDrop')
+      this._dragHelper.makeContainerCanDrop()
+    } else {
+      this._dragHelper.makeContainerCannotDrop()
+    }
+  }
+  get canDrop(): boolean {
+    if (!this._dragHelper) {
+      return false
+    }
 
+    return this._dragHelper.IsCanDrop()
+  }
+  set canDrag(can: boolean) {
+    if (!this._dragHelper) {
+      return
+    }
+    if (can) {
+      // window.console.log('makeDomCanDrag')
+      this._dragHelper.makeDomCanDrag(this._vueComp.$el)
+    } else {
+      this._dragHelper.makeDomCannotDrag(this._vueComp.$el)
+    }
+  }
+  get canDrag(): boolean {
+    if (!this._dragHelper) {
+      return false
+    }
+    return this._dragHelper.IsCanDrag(this._vueComp.$el)
+  }
   // ********************************
   public isSelected: boolean = false
   /**属性 */
@@ -194,11 +229,6 @@ export default class EngineLayout extends BaseEvents {
 
   /**生命周期 */
   mounted() {
-    //开始捕捉鼠标键盘事件
-    if (this.isDesigning == true) {
-      this.captureEvent()
-    }
-
     this.$nextTick(() => {
       if (!this.onMounted) {
         return

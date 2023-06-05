@@ -88,9 +88,6 @@ export default class EnginePage extends EngineContainer {
   }
   // *******************************页面行为**************************************************************************************
   protected async triggeEvent(name: string, inparam: any) {
-    if (this.isDesigning == true) {
-      return
-    }
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件[' + name + ']调用失败,该事件不存在')
@@ -169,9 +166,6 @@ export default class EnginePage extends EngineContainer {
   // *******************************页面缩放 **************************************************************************************
   //让页面按照指定尺寸进行缩放
   public adaptSize(newwidth, newheight) {
-    if (this.isDesigning == true) {
-      return
-    }
     newwidth = parseInt(newwidth)
     newheight = parseInt(newheight)
     var designWidth = this.width

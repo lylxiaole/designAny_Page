@@ -17,8 +17,6 @@ export default class EngineContainer extends EngineLayout {
   private verRule: Element = null
   //当前页面的缩放尺寸
   public currentScaleSize: number = 1
-  private static copyComp: EngineLayout
-  private static isCut: boolean = false
 
   private mouseX: number = 0
   private mouseY: number = 0
@@ -150,13 +148,11 @@ export default class EngineContainer extends EngineLayout {
     }
   }
   private listenOnCut(e) {
-    if (this.isDesigning) {
-      if (this.selectedChildren && this.selectedChildren.length > 0) {
-        EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
-        // this.$message.success('组件已剪切', 2)
-        EngineContainer.isCut = true
-        e.stopPropagation()
-      }
+    if (this.selectedChildren && this.selectedChildren.length > 0) {
+      EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
+      // this.$message.success('组件已剪切', 2)
+      EngineContainer.isCut = true
+      e.stopPropagation()
     }
   }
   private listenOnCopy(e) {
@@ -316,18 +312,17 @@ export default class EngineContainer extends EngineLayout {
     $(this.verRule).show()
     $(this.verRule).css('left', left)
   }
-  private clearHorRule() {
+  public clearHorRule() {
     $(this.horRule).hide()
   }
-  private clearVerRule() {
+  public clearVerRule() {
     $(this.verRule).hide()
   }
   // **********************************************************************
   /**添加一个组件 */
-  private async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): Promise<EngineLayout> {
+  public async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: DragItemTypeEnum, data?: SaveInfo): Promise<EngineLayout> {
     // window.console.log('绘制组件')
     // compInfo.compCode = dropcompclass.compCode
-    dropcompclass.prototype.isDesigning = this.isDesigning
     // let dropcomp = new dropcompclass() as EngineLayout
     let dropcomp = h(dropcompclass) as any
 

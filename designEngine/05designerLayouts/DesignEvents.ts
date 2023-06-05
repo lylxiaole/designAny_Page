@@ -1,5 +1,10 @@
 import dragHelper from '@designEngine/02common/dragHelper_new'
 import { Options, Vue } from 'vue-class-component'
+import EngineLayout, { SaveInfo, Point } from '@designEngine/03designerLayoutBase/EngineLayout'
+import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
+import EngineContainer from '@designEngine/03designerLayoutBase/EngineContainer'
+import { getUuid, deepClone, serialize } from '@common/utils'
+
 /**拖拽行为类型 */
 export enum DragItemTypeEnum {
   drop_system_component = 'drop_system_component',
@@ -30,53 +35,34 @@ class optionsClass {
   public clickTimer: number = null
 }
 
-export default class BaseEvents {
+export default class DesignEvents {
   protected _dragHelper: dragHelper
   protected eventsOptions: optionsClass
-  private _vueComp: Vue
+  private _vueComp: EngineContainer
   public static isDraging: boolean = false
-
-  //是否正在设计
-  set canDrop(can: boolean) {
-    if (!this._dragHelper) {
-      return
-    }
-    if (can) {
-      // window.console.log('makeContainerCanDrop')
+  public currentScaleSize: number = 1
+  private static copyComp: EngineLayout
+  private static isCut: boolean = false
+  private mouseX: number = 0
+  private mouseY: number = 0
+  constructor(vueComp: EngineContainer) {
+    this._vueComp = vueComp
+    this.eventsOptions = new optionsClass()
+    this._dragHelper = new dragHelper(vueComp.$el)
+    //
+    if (this._vueComp.canDrop) {
       this._dragHelper.makeContainerCanDrop()
     } else {
       this._dragHelper.makeContainerCannotDrop()
     }
-  }
-  get canDrop(): boolean {
-    if (!this._dragHelper) {
-      return false
-    }
-
-    return this._dragHelper.IsCanDrop()
-  }
-  set canDrag(can: boolean) {
-    if (!this._dragHelper) {
-      return
-    }
-    if (can) {
-      // window.console.log('makeDomCanDrag')
+    //
+    if (this._vueComp.canDrag) {
       this._dragHelper.makeDomCanDrag(this._vueComp.$el)
     } else {
       this._dragHelper.makeDomCannotDrag(this._vueComp.$el)
     }
-  }
-  get canDrag(): boolean {
-    if (!this._dragHelper) {
-      return false
-    }
-    return this._dragHelper.IsCanDrag(this._vueComp.$el)
-  }
-
-  constructor(vueComp: Vue) {
-    this._vueComp = vueComp
-    this.eventsOptions = new optionsClass()
-    this._dragHelper = new dragHelper(vueComp.$el)
+    //
+    this.captureEvent()
   }
 
   /**开始捕捉鼠标键盘 */
@@ -132,7 +118,7 @@ export default class BaseEvents {
       return
     }
     this.clearBoxSelectInfo(window.event)
-    BaseEvents.isDraging = true
+    DesignEvents.isDraging = true
     //只有继承自BaseEvent的组件才能感知此事件
     // window.console.log('从本布局中开始拖拽一个东西出去了');
     var currentDragData = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
@@ -142,17 +128,20 @@ export default class BaseEvents {
     return true
   }
   private async _onDrop(el: Element, targetContainer: Element): Promise<boolean> {
-    if (this.canDrop && this.onDrop_Event) {
-      // window.console.log('drop')
-      var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
-      return await this.onDrop_Event(el, targetContainer, this.eventsOptions.startDragMovePoint_left, this.eventsOptions.startDragMovePoint_top, dragdata)
+    if (!this._vueComp.canDrop || !this.onDrop_Event) {
+      return true
     }
-    this._dragHelper.dragCancel()
-    return true
+
+    // window.console.log('drop')
+    var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
+    return await this.onDrop_Event(el, targetContainer, this.eventsOptions.startDragMovePoint_left, this.eventsOptions.startDragMovePoint_top, dragdata)
+
+    // this._dragHelper.dragCancel()
+    // return true
   }
 
   private _onDragMove(el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean {
-    if (this.canDrop == false || !this.onDragMove_Event) {
+    if (this._vueComp.canDrop == false || !this.onDragMove_Event) {
       return true
     }
     if (!el) {
@@ -170,7 +159,7 @@ export default class BaseEvents {
     if (!this.onDragEnd_Event) {
       return
     }
-    BaseEvents.isDraging = false
+    DesignEvents.isDraging = false
     this.onDragEnd_Event()
   }
   private _onDragOut(el: Element, targetContainer: Element): boolean {
@@ -304,11 +293,11 @@ export default class BaseEvents {
     if (!this.onMouseMove_Event) {
       return true
     }
-    if (BaseEvents.isDraging == true) {
+    if (DesignEvents.isDraging == true) {
       return
     }
     this.onMouseMove_Event(e)
-    if (e.which === 1 && BaseEvents.isDraging == false && this.eventsOptions.isMouseDown == true) {
+    if (e.which === 1 && DesignEvents.isDraging == false && this.eventsOptions.isMouseDown == true) {
       //鼠标左键是按下状态
       // this.onSelectChanged.call(this, data)
       if (this.eventsOptions.boxSelectBorder == null && this.onBoxSelect_Event) {
@@ -393,10 +382,71 @@ export default class BaseEvents {
   }
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void
-  onCut_Event: (e: Event) => void
-  onCopy_Event: (e: Event) => void
-  onPaste_Event: (e: Event) => void
-  onDelete_Event: (e: Event) => void
+  onCut_Event(e: Event) {
+    if (this._vueComp.selectedChildren && this._vueComp.selectedChildren.length > 0) {
+      DesignEvents.copyComp = this._vueComp.selectedChildren[0] as EngineLayout
+      // this.$message.success('组件已剪切', 2)
+      DesignEvents.isCut = true
+      e.stopPropagation()
+    }
+  }
+  onCopy_Event(e: Event) {
+    if (this._vueComp.selectedChildren && this._vueComp.selectedChildren.length > 0) {
+      DesignEvents.copyComp = this._vueComp.selectedChildren[0] as EngineLayout
+      // this.$message.success('组件已复制', 2)
+      DesignEvents.isCut = false
+      e.stopPropagation()
+    }
+  }
+  async onPaste_Event(e: Event) {
+    if (!DesignEvents.copyComp) {
+      return
+    }
+    // window.console.log('onPaste_Event')
+    let compData = deepClone(await DesignEvents.copyComp.getSaveData())
+
+    if (DesignEvents.isCut) {
+      //剪切--删除原有组件
+      let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
+      if (parentLayout.deleteChildComponents(DesignEvents.copyComp.Id) == true) {
+        parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
+      }
+    } else {
+      //复制操作需要给组件新Id
+      compData.id = getUuid()
+    }
+    let compclass = findSystemCompByCode(compData.meta.compCode)
+    //如果选中了一些容器类的子组件,就把当前组件复制到其中
+    let findchildren = this._vueComp.findSelectedLayoutsRecursion(this._vueComp.children)
+    let newcopyComp: EngineLayout = null
+    for (let index = 0; index < findchildren.length; index++) {
+      const element = findchildren[index]
+      if (element.canDrop == true && (element as any).insertComponentLayout) {
+        newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData.meta, null, compData)
+        break
+      }
+    }
+    // 如果没选中容器类的子组件, 就把当前组件复制到当前页面
+    if (!newcopyComp) {
+      newcopyComp = await this._vueComp.insertComponentLayout(compclass, compData.meta, null, compData)
+    }
+    newcopyComp.loadData(compData)
+    e.stopPropagation()
+  }
+  onDelete_Event(e: Event) {
+    e.preventDefault()
+    // window.console.log('按了删除键', this.name)
+
+    if (this._vueComp.selectedChildren.length > 0) {
+      e.stopPropagation()
+    }
+    for (let index = 0; index < this._vueComp.selectedChildren.length; index++) {
+      const comp = this._vueComp.selectedChildren[index]
+      if (this._vueComp.deleteChildComponents(comp.Id) == true) {
+        this._vueComp.removeChildRecursion(comp.Id)
+      }
+    }
+  }
   onPositionLeft_Event: (e: Event) => void
   onPositionRight_Event: (e: Event) => void
   onPositionTop_Event: (e: Event) => void
@@ -415,14 +465,157 @@ export default class BaseEvents {
   onDoubleClick_Event: (e: Event, target: any) => void
   onDragSelf_Event: (xmove: number, ymove: number) => void
   onMouseDragMove_Event: (e: Event, xmove: number, ymove: number) => void
-  onMouseMove_Event: (e: Event) => void
+  onMouseMove_Event(e: MouseEvent) {
+    this.mouseX = e.offsetX
+    this.mouseY = e.offsetY
+  }
   onMoudeDown_Event: (e: Event) => void
   onMoudeUp_Event: (e: Event) => void
   onBoxSelect_Event: (e: MouseEvent) => void
-  onDragEnd_Event: () => void
+  onDragEnd_Event() {
+    this._vueComp.clearHorRule()
+    this._vueComp.clearVerRule()
+  }
   onDragClone_Event: (el: Element) => void
   onDragOut_Event: (el: Element, targetContainer: Element) => boolean
   onDrag_Event: (el: Element, dragdata: DragItemData<any>) => void
-  onDrop_Event: (el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata?: DragItemData<any>) => Promise<boolean>
-  onDragMove_Event: (xChange: number, yChange: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>) => boolean
+  async onDrop_Event(el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata?: DragItemData<any>): Promise<boolean> {
+    if (!dragdata) {
+      return true
+    }
+
+    let compInfo = dragdata.dragData as any
+    if (!compInfo) {
+      return true
+    }
+    // window.console.log('listenOnDrop:', dragdata)
+    screenLeft = dragHelper.currentDragX
+    screenTop = dragHelper.currentDragY
+    let dropcomp: EngineLayout = null
+
+    switch (dragdata.type) {
+      case DragItemTypeEnum.drop_system_component:
+        {
+          let compVue = findSystemCompByCode(compInfo.compCode)
+          dropcomp = await this._vueComp.insertComponentLayout(compVue, compInfo, dragdata.type)
+        }
+        break
+      //暂时保留
+      case DragItemTypeEnum.drop_component_template:
+        {
+          // let compdata = this._vueComp.getCompTemplateData(compInfo.sourceId)
+          // let compVue = findSystemCompByCode(compInfo.compCode)
+          // dropcomp = await this._vueComp.insertComponentLayout(compVue, compInfo, dragdata.type, compdata)
+        }
+        break
+      default:
+        break
+    }
+    if (dropcomp) {
+      dropcomp.left = (screenLeft - $(this._vueComp.$el).offset().left) / this.currentScaleSize
+      dropcomp.top = (screenTop - $(this._vueComp.$el).offset().top) / this.currentScaleSize
+    }
+
+    return false
+  }
+  onDragMove_Event(xChange: number, yChange: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
+    if (!dragdata) {
+      return true
+    }
+    let compInfo = dragdata.dragData as any
+    if (!compInfo) {
+      return true
+    }
+    let dragComp = this._vueComp.findLayoutRecursion(compInfo.compId, this._vueComp.children) as EngineLayout
+    // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
+    if (!dragComp) {
+      return false
+    }
+
+    let parentPageCurrentScaleSize = (dragComp.topLayout as any as EngineContainer).currentScaleSize
+    // 在容器内拖拽组件位置
+    if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
+      window.console.log('dragmove_component_inpage:', (window.event as any).dataTransfer)
+      let currentOffsetByPage = $(this._vueComp.$el).offset()
+      let afterMovedLeft = left - currentOffsetByPage.left
+      let afterMovedTop = top - currentOffsetByPage.top
+
+      let newleft = afterMovedLeft / parentPageCurrentScaleSize
+      let newtop = afterMovedTop / parentPageCurrentScaleSize
+      /**范围控制(拖拽不能超出容器范围) */
+      if (newleft < 0) {
+        newleft = 0
+      } else if (newleft > this._vueComp.width) {
+        newleft = this._vueComp.width - 1
+      }
+
+      if (afterMovedTop < 0) {
+        newtop = 0
+      } else if (newtop > this._vueComp.height) {
+        newtop = this._vueComp.height - 1
+      }
+
+      dragComp.left = newleft
+      dragComp.top = newtop
+      return false
+    }
+    // 在容器内拖拽组件大小
+    else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
+      xChange = xChange / parentPageCurrentScaleSize
+      window.console.log(' DragItemTypeEnum.drag_component_size 1:', compInfo.position)
+      yChange = yChange / parentPageCurrentScaleSize
+      this.changeComponentSize(yChange, xChange, compInfo.compId, compInfo.position)
+      // window.console.log(compInfo.position)
+      return false
+    }
+    return true
+  }
+
+  private changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
+    let comps = this._vueComp.children.filter((o) => o.Id == compId)
+    switch (position) {
+      case 'you_xia':
+        comps.filter((comp) => {
+          comp.sizeChange_Down_Right(verchanged, horchanged)
+        })
+        break
+      case 'zuo_xia':
+        comps.filter((comp) => {
+          comp.sizeChange_Down_Left(verchanged, horchanged)
+        })
+        break
+      case 'you_shang':
+        comps.filter((comp) => {
+          comp.sizeChange_Up_Right(verchanged, horchanged)
+        })
+        break
+      case 'zuo_shang':
+        comps.filter((comp) => {
+          comp.sizeChange_Up_Left(verchanged, horchanged)
+        })
+        break
+      case 'shang':
+        comps.filter((comp) => {
+          comp.sizeChange_Up(verchanged)
+        })
+        break
+      case 'xia':
+        comps.filter((comp) => {
+          comp.sizeChange_Down(verchanged)
+        })
+        break
+      case 'zuo':
+        comps.filter((comp) => {
+          comp.sizeChange_Left(horchanged)
+        })
+        break
+      case 'you':
+        comps.filter((comp) => {
+          comp.sizeChange_Right(horchanged)
+        })
+        break
+      default:
+        break
+    }
+  }
 }
