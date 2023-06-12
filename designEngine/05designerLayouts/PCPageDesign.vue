@@ -10,11 +10,12 @@ import { Options, Vue } from 'vue-class-component'
 import { ref, h, render, onMounted } from 'vue'
 
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
-import { drawVueOnVirtualDom, BuildingFileUrlForShow } from '@common/utils'
+import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
+import { drawVueOnVirtualDom, BuildingFileUrlForShow, deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import dragHelper from '@designEngine/02common/dragHelper_new'
+import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
@@ -48,9 +49,10 @@ export default class PCPageDesign extends EnginePage {
   protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     // window.console.log('renderComponent:', compCon)
     let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
+
     // this._dragHelper.makeDomCanDrag(shell.$el)
-    this.allShells.push(vueComp)
-    let res = vueComp.addComponent(compCon)
+    this.allShells.push(vueComp as DesignShell)
+    let res = (vueComp as DesignShell).addComponent(compCon)
     //
     $(this.$el).append(virtualDom)
     return res
@@ -110,6 +112,8 @@ export default class PCPageDesign extends EnginePage {
     return false
   }
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
+    // window.console.log('listenOnDragMove:', dragdata)
+
     if (!dragdata) {
       return true
     }
@@ -180,38 +184,35 @@ export default class PCPageDesign extends EnginePage {
     }
   }
   private listenOnCut(e) {
-    if (this.isDesigning) {
-      if (this.selectedChildren && this.selectedChildren.length > 0) {
-        EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
-        // this.$message.success('组件已剪切', 2)
-        EngineContainer.isCut = true
-        e.stopPropagation()
-      }
+    if (this.selectedChildren && this.selectedChildren.length > 0) {
+      DesignEvents.copyComp = this.selectedChildren[0] as EngineLayout
+      // this.$message.success('组件已剪切', 2)
+      DesignEvents.isCut = true
+      e.stopPropagation()
     }
   }
   private listenOnCopy(e) {
     window.console.log('listenOnCopy:', e)
-    if (this.isDesigning) {
-      if (this.selectedChildren && this.selectedChildren.length > 0) {
-        EngineContainer.copyComp = this.selectedChildren[0] as EngineLayout
-        // this.$message.success('组件已复制', 2)
-        EngineContainer.isCut = false
-        e.stopPropagation()
-      }
+
+    if (this.selectedChildren && this.selectedChildren.length > 0) {
+      DesignEvents.copyComp = this.selectedChildren[0] as EngineLayout
+      // this.$message.success('组件已复制', 2)
+      DesignEvents.isCut = false
+      e.stopPropagation()
     }
   }
   private async listenOnPaste(e) {
-    if (!EngineContainer.copyComp) {
+    if (!DesignEvents.copyComp) {
       return
     }
     // window.console.log('onPaste_Event')
-    let compData = deepClone(await EngineContainer.copyComp.getSaveData())
+    let compData = deepClone(await DesignEvents.copyComp.getSaveData())
 
-    if (EngineContainer.isCut) {
+    if (DesignEvents.isCut) {
       //剪切--删除原有组件
-      let parentLayout = EngineContainer.copyComp.parentLayout as EngineContainer
-      if (parentLayout.deleteChildComponents(EngineContainer.copyComp.Id) == true) {
-        parentLayout.removeChildRecursion(EngineContainer.copyComp.Id)
+      let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
+      if (parentLayout.deleteChildComponents(DesignEvents.copyComp.Id) == true) {
+        parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
       }
     } else {
       //复制操作需要给组件新Id

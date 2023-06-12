@@ -67,18 +67,18 @@ export default class EnginePage extends EngineContainer {
     this.registerMethods('关闭页面-触发回调', '', () => {}, [], null)
     this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
     this.registerEvents('定时器触发事件', '定时器触发', [], null)
-    this.onChangedScale_Event = (sizeChange: number): boolean => {
-      this.scaleSize(sizeChange)
-      return false
-    }
-    this.onDragSelf_Event = (xmove: number, ymove: number) => {
-      this.left += xmove
-      this.top += ymove
-    }
-    this.onClick_Event = (e: Event, comp: ComponentBase) => {
-      this.chooseComps([])
-      e.stopPropagation()
-    }
+    // this.onChangedScale_Event = (sizeChange: number): boolean => {
+    //   this.scaleSize(sizeChange)
+    //   return false
+    // }
+    // this.onDragSelf_Event = (xmove: number, ymove: number) => {
+    //   this.left += xmove
+    //   this.top += ymove
+    // }
+    // this.onClick_Event = (e: Event, comp: ComponentBase) => {
+    //   this.chooseComps([])
+    //   e.stopPropagation()
+    // }
   }
 
   mounted() {}
@@ -219,6 +219,7 @@ export default class EnginePage extends EngineContainer {
     $(this.$el).css('-moz-transform-origin', '0% 0%')
     $(this.$el).css('-ms-transform-origin', '0% 0%')
     $(this.$el).css('-o-transform-origin', '0% 0%')
+    debugger
     this.currentScaleSize = size
     this.onScaleSized()
   }
@@ -269,7 +270,6 @@ export default class EnginePage extends EngineContainer {
       this.setPageInParams(params)
       this.scaleSize(1 - this.currentScaleSize)
       await this.$nextTick()
-      this.watchWindowSize_Scale()
       await this.triggeEvent('加载完成', [])
     } catch (error) {
       window.console.error(error)

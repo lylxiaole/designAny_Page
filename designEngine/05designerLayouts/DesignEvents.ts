@@ -3,6 +3,7 @@ import { Options, Vue } from 'vue-class-component'
 import EngineLayout, { SaveInfo, Point } from '@designEngine/03designerLayoutBase/EngineLayout'
 import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
 import EngineContainer from '@designEngine/03designerLayoutBase/EngineContainer'
+import EnginePage from '@designEngine/03designerLayoutBase/EnginePage'
 import { getUuid, deepClone, serialize } from '@common/utils'
 
 /**拖拽行为类型 */
@@ -41,22 +42,60 @@ export default class DesignEvents {
   private _vueComp: EngineContainer
   public static isDraging: boolean = false
   public currentScaleSize: number = 1
-  private static copyComp: EngineLayout
-  private static isCut: boolean = false
+  public static copyComp: EngineLayout
+  public static isCut: boolean = false
   private mouseX: number = 0
   private mouseY: number = 0
-  constructor(vueComp: EngineContainer) {
+
+  //是否正在设计
+  set canDrop(can: boolean) {
+    if (!this._dragHelper) {
+      return
+    }
+    if (can) {
+      // window.console.log('makeContainerCanDrop')
+      this._dragHelper.makeContainerCanDrop()
+    } else {
+      this._dragHelper.makeContainerCannotDrop()
+    }
+  }
+  get canDrop(): boolean {
+    if (!this._dragHelper) {
+      return false
+    }
+
+    return this._dragHelper.IsCanDrop()
+  }
+  set canDrag(can: boolean) {
+    if (!this._dragHelper) {
+      return
+    }
+    if (can) {
+      // window.console.log('makeDomCanDrag')
+      this._dragHelper.makeDomCanDrag(this._vueComp.$el)
+    } else {
+      this._dragHelper.makeDomCannotDrag(this._vueComp.$el)
+    }
+  }
+  get canDrag(): boolean {
+    if (!this._dragHelper) {
+      return false
+    }
+    return this._dragHelper.IsCanDrag(this._vueComp.$el)
+  }
+
+  constructor(vueComp: EnginePage) {
     this._vueComp = vueComp
     this.eventsOptions = new optionsClass()
     this._dragHelper = new dragHelper(vueComp.$el)
     //
-    if (this._vueComp.canDrop) {
+    if (this.canDrop) {
       this._dragHelper.makeContainerCanDrop()
     } else {
       this._dragHelper.makeContainerCannotDrop()
     }
     //
-    if (this._vueComp.canDrag) {
+    if (this.canDrag) {
       this._dragHelper.makeDomCanDrag(this._vueComp.$el)
     } else {
       this._dragHelper.makeDomCannotDrag(this._vueComp.$el)
@@ -113,7 +152,7 @@ export default class DesignEvents {
   }
 
   /********************Drag事件****************************************************** */
-  private _onDrag(el: Element, sourceContainer: Element) {
+  private _onDrag = (el: Element, sourceContainer: Element) => {
     if (sourceContainer != this._vueComp.$el) {
       return
     }
@@ -127,8 +166,10 @@ export default class DesignEvents {
     this._dragHelper.makeDragItemInfo(el, currentDragData)
     return true
   }
-  private async _onDrop(el: Element, targetContainer: Element): Promise<boolean> {
-    if (!this._vueComp.canDrop || !this.onDrop_Event) {
+  private _onDrop = async (el: Element, targetContainer: Element): Promise<boolean> => {
+    window.console.log('_onDrop:', this)
+
+    if (!this.canDrop || !this.onDrop_Event) {
       return true
     }
 
@@ -140,8 +181,8 @@ export default class DesignEvents {
     // return true
   }
 
-  private _onDragMove(el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean {
-    if (this._vueComp.canDrop == false || !this.onDragMove_Event) {
+  private _onDragMove = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean => {
+    if (this.canDrop == false || !this.onDragMove_Event) {
       return true
     }
     if (!el) {
@@ -153,7 +194,7 @@ export default class DesignEvents {
     // this.eventsOptions.startDragMovePoint_top = currentDragTop
     return iscontinue
   }
-  private _onDragEnd(el: Element) {
+  private _onDragEnd = (el: Element) => {
     this.clearCachePoint()
 
     if (!this.onDragEnd_Event) {
@@ -162,7 +203,7 @@ export default class DesignEvents {
     DesignEvents.isDraging = false
     this.onDragEnd_Event()
   }
-  private _onDragOut(el: Element, targetContainer: Element): boolean {
+  private _onDragOut = (el: Element, targetContainer: Element): boolean => {
     if (!this.onDragOut_Event) {
       return true
     }
@@ -176,14 +217,14 @@ export default class DesignEvents {
     //   this._dragHelper.dragEnd()
     // }
   }
-  private _onDragClone(clone: Element) {
+  private _onDragClone = (clone: Element) => {
     if (!this.onDragClone_Event) {
       return true
     }
     this.onDragClone_Event(clone)
   }
   /************************************************************************** */
-  private _onClick(e: Event) {
+  private _onClick = (e: Event) => {
     //window.console.log('最底层,_onClick')
     if (!this.onClick_Event) {
       return
@@ -197,7 +238,7 @@ export default class DesignEvents {
     //window.console.log('最底层,_onClick')
     this.onClick_Event(e, this)
   }
-  private _onDoubleClick(e: Event) {
+  private _onDoubleClick = (e: Event) => {
     if (!this.onDoubleClick_Event) {
       return
     }
@@ -205,7 +246,7 @@ export default class DesignEvents {
     // window.console.log('点击')
     this.onDoubleClick_Event(e, this)
   }
-  private _onKeyUp(e: any) {
+  private _onKeyUp = (e: any) => {
     var keyCode = e.keyCode || e.which || e.charCode
     if (keyCode == 46 && this.onDelete_Event) {
       //删除
@@ -213,7 +254,7 @@ export default class DesignEvents {
       this.onDelete_Event(e)
     }
   }
-  private _onKeyDown(e: any) {
+  private _onKeyDown = (e: any) => {
     var keyCode = e.keyCode || e.which || e.charCode
     var ctrlKey = e.ctrlKey || e.metaKey
     // window.console.log('_onKeyDown:', e.target)
@@ -275,7 +316,7 @@ export default class DesignEvents {
       this.onPaste_Event(e)
     }
   }
-  private _onMouseWheel(e: any) {
+  private _onMouseWheel = (e: any) => {
     var ctrlKey = e.ctrlKey || e.metaKey
     if (ctrlKey == true && this.onChangedScale_Event) {
       e.preventDefault()
@@ -289,7 +330,7 @@ export default class DesignEvents {
       this.onMouseWheelInLayout_Event(e)
     }
   }
-  private _mouseMove(e: any) {
+  private _mouseMove = (e: any) => {
     if (!this.onMouseMove_Event) {
       return true
     }
@@ -323,7 +364,7 @@ export default class DesignEvents {
       // this.startMouseDragPoint_top = currentDragTop
     }
   }
-  private _mouseUp(e: any) {
+  private _mouseUp = (e: any) => {
     this.clearCachePoint()
     if (!this.onMoudeUp_Event) {
       return true
@@ -347,7 +388,7 @@ export default class DesignEvents {
       e.stopPropagation()
     }
   }
-  private _mouseDown(e: any) {
+  private _mouseDown = (e: any) => {
     this.eventsOptions.clickTimer = window.setTimeout(() => {
       window.clearTimeout(this.eventsOptions.clickTimer)
       this.eventsOptions.clickTimer = null
@@ -362,12 +403,12 @@ export default class DesignEvents {
     this.eventsOptions.isMouseDown = true
     this.onMoudeDown_Event(e)
   }
-  private _onWindowUnload(e: any) {
+  private _onWindowUnload = (e: any) => {
     if (this.onWindowUnload_Event) {
       this.onWindowUnload_Event(e)
     }
   }
-  private _onWindowResize(e: any) {
+  private _onWindowResize = (e: any) => {
     if (!this.onWindowResize_Event) {
       return
     }

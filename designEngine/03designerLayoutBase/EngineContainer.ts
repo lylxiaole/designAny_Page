@@ -21,14 +21,14 @@ export default class EngineContainer extends EngineLayout {
   private mouseX: number = 0
   private mouseY: number = 0
   created() {
-    this.onDrop_Event = this.listenOnDrop
-    this.onDragMove_Event = this.listenOnDragMove
-    this.onDelete_Event = this.listenOnDeleteKey
-    this.onDragEnd_Event = this.listenOnDragEnd
-    this.onCut_Event = this.listenOnCut
-    this.onCopy_Event = this.listenOnCopy
-    this.onPaste_Event = this.listenOnPaste
-    this.onMouseMove_Event = this.listenOnMousemove
+    // this.onDrop_Event = this.listenOnDrop
+    // this.onDragMove_Event = this.listenOnDragMove
+    // this.onDelete_Event = this.listenOnDeleteKey
+    // this.onDragEnd_Event = this.listenOnDragEnd
+    // this.onCut_Event = this.listenOnCut
+    // this.onCopy_Event = this.listenOnCopy
+    // this.onPaste_Event = this.listenOnPaste
+    // this.onMouseMove_Event = this.listenOnMousemove
   }
 
   mounted() {}
@@ -202,7 +202,7 @@ export default class EngineContainer extends EngineLayout {
     e.stopPropagation()
   }
   /**********************************底层方法 ******************************/
-  private changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
+  protected changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
     let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
       case 'you_xia':
