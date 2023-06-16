@@ -75,6 +75,7 @@ export default class dragHelper {
     $(this._container).on('dragover', (e: any) => {
       //同时注册drop和dragover时, 调用e.preventDefault()才能让容器的drop事件得以触发
       e.preventDefault()
+      // console.log('++++++++++++++++++++++', e.originalEvent.layerX)
 
       if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
         dragHelper.currentDragX = e.originalEvent.pageX
@@ -83,7 +84,6 @@ export default class dragHelper {
       }
       let xchanged = e.originalEvent.pageX - dragHelper.currentDragX
       let ychanged = e.originalEvent.pageY - dragHelper.currentDragY
-      window.console.log('dragover 2:', xchanged)
       dragHelper.currentDragX = e.originalEvent.pageX
       dragHelper.currentDragY = e.originalEvent.pageY
       if (!this.onDragMoveEventCallback) {

@@ -126,32 +126,33 @@ export default class PCPageDesign extends EnginePage {
     if (!dragComp) {
       return false
     }
+    // console.log('-------------------------', left, $(this.$el).offset().left)
 
     let parentPageCurrentScaleSize = (dragComp.topLayout as any as EnginePage).currentScaleSize
     // 在容器内拖拽组件位置
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      window.console.log('dragmove_component_inpage:', (window.event as any).dataTransfer)
-      let currentOffsetByPage = $(this.$el).offset()
-      let afterMovedLeft = left - currentOffsetByPage.left
-      let afterMovedTop = top - currentOffsetByPage.top
+      // // window.console.log('dragmove_component_inpage:', (window.event as any).dataTransfer)
+      // let currentOffsetByPage = $(this.$el).offset()
+      // let afterMovedLeft = left - currentOffsetByPage.left
+      // let afterMovedTop = top - currentOffsetByPage.top
 
-      let newleft = afterMovedLeft / parentPageCurrentScaleSize
-      let newtop = afterMovedTop / parentPageCurrentScaleSize
-      /**范围控制(拖拽不能超出容器范围) */
-      if (newleft < 0) {
-        newleft = 0
-      } else if (newleft > this.width) {
-        newleft = this.width - 1
-      }
+      // let newleft = afterMovedLeft / parentPageCurrentScaleSize
+      // let newtop = afterMovedTop / parentPageCurrentScaleSize
+      // /**范围控制(拖拽不能超出容器范围) */
+      // if (newleft < 0) {
+      //   newleft = 0
+      // } else if (newleft > this.width) {
+      //   newleft = this.width - 1
+      // }
 
-      if (afterMovedTop < 0) {
-        newtop = 0
-      } else if (newtop > this.height) {
-        newtop = this.height - 1
-      }
+      // if (afterMovedTop < 0) {
+      //   newtop = 0
+      // } else if (newtop > this.height) {
+      //   newtop = this.height - 1
+      // }
 
-      dragComp.left = newleft
-      dragComp.top = newtop
+      dragComp.left += xchanged
+      dragComp.top += ychanged
       return false
     }
     // 在容器内拖拽组件大小

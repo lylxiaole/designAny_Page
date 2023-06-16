@@ -31,14 +31,15 @@
 </template>
 
 <script lang="ts" >
-import { Options } from 'vue-class-component'
+import { Options, Vue } from 'vue-class-component'
 import { ref, h, render, onMounted } from 'vue'
+import dragHelper from '@designEngine/02common/dragHelper_new'
 
-import { Emit, Watch, Prop, Vue } from 'vue-property-decorator'
+import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum } from '../03designerLayoutBase'
 import { deepClone } from '@common/utils'
 @Options({})
-export default class DesignShell extends BaseEvents {
+export default class DesignShell extends Vue {
   public get isDesigning(): boolean {
     return true
   }
@@ -97,17 +98,17 @@ export default class DesignShell extends BaseEvents {
   }
 
   mounted() {
-    this.captureEvent()
-    this.canDrop = false
-    this.canDrag = false
-
-    this.onDrag_Event = this.onStartDrag
-    this.onClick_Event = (e: Event, target: any) => {
-      // window.console.log('DesignShell onClick_Event')
-      ;(this.Component.parentLayout as any).chooseComps([this.Component])
-      $(this.$el).focus()
-      e.stopPropagation()
-    }
+    // this.captureEvent()
+    this._dragHelper = new dragHelper(this.$el)
+    this._dragHelper.makeContainerCannotDrop()
+    this._dragHelper.makeDomCannotDrag(this.$el)
+    // this.onDrag_Event = this.onStartDrag
+    // this.onClick_Event = (e: Event, target: any) => {
+    //   // window.console.log('DesignShell onClick_Event')
+    //   ;(this.Component.parentLayout as any).chooseComps([this.Component])
+    //   $(this.$el).focus()
+    //   e.stopPropagation()
+    // }
   }
 
   destroyed() {

@@ -436,7 +436,7 @@ export default class BaseEvents extends Vue {
   private clearCachePoint() {
     this.eventsOptions.startDragMovePoint_left = NaN
     this.eventsOptions.startDragMovePoint_top = NaN
-    window.console.log('clearCachePoint:', this.eventsOptions)
+    // window.console.log('clearCachePoint:', this.eventsOptions)
   }
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void

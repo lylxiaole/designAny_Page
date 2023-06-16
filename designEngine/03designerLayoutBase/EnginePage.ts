@@ -219,7 +219,7 @@ export default class EnginePage extends EngineContainer {
     $(this.$el).css('-moz-transform-origin', '0% 0%')
     $(this.$el).css('-ms-transform-origin', '0% 0%')
     $(this.$el).css('-o-transform-origin', '0% 0%')
-    debugger
+
     this.currentScaleSize = size
     this.onScaleSized()
   }

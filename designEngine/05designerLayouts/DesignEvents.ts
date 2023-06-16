@@ -167,7 +167,7 @@ export default class DesignEvents {
     return true
   }
   private _onDrop = async (el: Element, targetContainer: Element): Promise<boolean> => {
-    window.console.log('_onDrop:', this)
+    // window.console.log('_onDrop:', this)
 
     if (!this.canDrop || !this.onDrop_Event) {
       return true
@@ -419,7 +419,7 @@ export default class DesignEvents {
   private clearCachePoint() {
     this.eventsOptions.startDragMovePoint_left = NaN
     this.eventsOptions.startDragMovePoint_top = NaN
-    window.console.log('clearCachePoint:', this.eventsOptions)
+    // window.console.log('clearCachePoint:', this.eventsOptions)
   }
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void
