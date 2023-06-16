@@ -30,8 +30,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { Property, PropertyType, PropertyTypeEnum } from '@designEngine'
-import { EnginePage, EngineLayout } from '@designEngine'
+import { Property, PropertyType, PropertyTypeEnum } from '@designEngine/03designerLayoutBase'
+import { EnginePage, EngineLayout } from '@designEngine/03designerLayoutBase'
 import { deepClone, serialize, deserialize } from '@common/utils'
 import propertyCellBase, { cellControls } from './propertyGridCells/common'
 
@@ -82,7 +82,7 @@ function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase
 })
 export default class PropertyGrid extends Vue {
   private activeKey: string[] = []
-  private propertyDataCache: propertyInfo[] = []
+
   private propIsShow: boolean = false
   private selectGropName: string = ''
   private columns = [
@@ -98,6 +98,7 @@ export default class PropertyGrid extends Vue {
 
   private isWatchPropertiesChange: boolean = true
 
+  private propertyDataCache: propertyInfo[] = []
   private get propertyData(): propertyInfo[] {
     if (!this.allowedPropertys) {
       return this.propertyDataCache
@@ -121,10 +122,6 @@ export default class PropertyGrid extends Vue {
   /**当前需要设置的所有布局*/
   @Prop()
   private currentLayouts: EngineLayout[] | EngineLayout
-  /**当前所有布局的共有属性列表 */
-  private propertyGroups: PropertyGroupInfo[] = []
-  /**vue监视不到复杂类型的数据变化，需要用旧的做对比*/
-  private propertyGroups_oldClone: PropertyGroupInfo[] = []
   @Watch('currentLayouts') //监视设置的布局变化，并重新计算所有属性
   private watchCurrentLayoutsChanged(newlayouts: EngineLayout[] | EngineLayout) {
     window.console.log('当前布局变更', newlayouts)
@@ -158,7 +155,7 @@ export default class PropertyGrid extends Vue {
       })
     }
     // window.console.log('watchCurrentLayoutsChanged-2:', property_extra)
-    /**将所有共有属性进行分组 */
+    /**将所有共有属性进行分组，同时筛选出所有的属性信息 */
     property_extra.filter((o) => {
       if (o.propertyType) {
         var findgroup = this.propertyGroups.find((p) => p.groupName == o.groupName)
@@ -174,6 +171,7 @@ export default class PropertyGrid extends Vue {
         propertyinfox.secondGroup = o.secondGroup
         propertyinfox.property = deepClone(o)
         propertyinfox.comp = getCellControl(o.propertyType.type)
+
         findgroup.children.push(propertyinfox)
         if (o.groupName == this.selectGropName) {
           this.propertyDataCache.push(propertyinfox)
@@ -181,12 +179,12 @@ export default class PropertyGrid extends Vue {
       }
     })
 
-    this.propertyDataCache = this.propertyDataCache
-    //**初始化clone副本 */
-    this.propertyGroups_oldClone = deepClone(this.propertyGroups)
     /** */
     this.isWatchPropertiesChange = true
   }
+
+  /**当前所有布局的共有属性列表 */
+  private propertyGroups: PropertyGroupInfo[] = []
 
   @Watch('propertyGroups', { deep: true, immediate: true })
   //监视所有属性变化，并给当前选中的布局赋值
@@ -194,12 +192,6 @@ export default class PropertyGrid extends Vue {
     if (this.isWatchPropertiesChange == false) {
       return
     }
-    window.console.log('属性单元格变化了')
-    if (!newgroup) {
-      this.propertyGroups_oldClone = []
-      return
-    }
-    // newgroups.filter((newgroup) => {})
 
     for (var groupIndex = 0; groupIndex < newgroup.length; groupIndex++) {
       var group = newgroup[groupIndex]
@@ -222,6 +214,7 @@ export default class PropertyGrid extends Vue {
     }
     this.renderStyle()
   }
+
   /**为了应付多选组件，批量设置属性 */
   private changeLayoutProperty(propertyName: string, propertyGroupName: string, newval: any): boolean {
     var newlayouts_extra: EngineLayout[] = [] //临时变量
