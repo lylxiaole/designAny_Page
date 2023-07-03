@@ -193,25 +193,25 @@ export default class PropertyGrid extends Vue {
       return
     }
 
-    for (var groupIndex = 0; groupIndex < newgroup.length; groupIndex++) {
-      var group = newgroup[groupIndex]
-      var newProperties = group.children
-      var properties_old = this.propertyGroups_oldClone.filter((o) => o.groupName == group.groupName)[0].children
-      for (var j = 0; j < newProperties.length; j++) {
-        var newproperty = newProperties[j]
-        var filter_oldproperty = properties_old.filter((o) => o.property.id == newproperty.property.id)[0]
-        if (serialize(filter_oldproperty.property.value) != serialize(newproperty.property.value)) {
-          var isok = this.changeLayoutProperty(newproperty.property.propertyName, newproperty.property.groupName, newproperty.property.value)
-          if (isok == true) {
-            filter_oldproperty.property.value = deepClone(newproperty.property.value)
-          } else if (filter_oldproperty.property.value) {
-            newproperty.property.value = deepClone(filter_oldproperty.property.value)
-          } else {
-            newproperty.property.value = filter_oldproperty.property.value
-          }
-        }
-      }
-    }
+    // for (var groupIndex = 0; groupIndex < newgroup.length; groupIndex++) {
+    //   var group = newgroup[groupIndex]
+    //   var newProperties = group.children
+    //   var properties_old = this.propertyGroups_oldClone.filter((o) => o.groupName == group.groupName)[0].children
+    //   for (var j = 0; j < newProperties.length; j++) {
+    //     var newproperty = newProperties[j]
+    //     var filter_oldproperty = properties_old.filter((o) => o.property.id == newproperty.property.id)[0]
+    //     if (serialize(filter_oldproperty.property.value) != serialize(newproperty.property.value)) {
+    //       var isok = this.changeLayoutProperty(newproperty.property.propertyName, newproperty.property.groupName, newproperty.property.value)
+    //       if (isok == true) {
+    //         filter_oldproperty.property.value = deepClone(newproperty.property.value)
+    //       } else if (filter_oldproperty.property.value) {
+    //         newproperty.property.value = deepClone(filter_oldproperty.property.value)
+    //       } else {
+    //         newproperty.property.value = filter_oldproperty.property.value
+    //       }
+    //     }
+    //   }
+    // }
     this.renderStyle()
   }
 
@@ -259,16 +259,6 @@ export default class PropertyGrid extends Vue {
       return
     }
     var findCurrentGroup = this.propertyGroups.filter((o) => o.groupName == property.groupName)[0]
-    var findOldGroup = this.propertyGroups_oldClone.filter((o) => o.groupName == property.groupName)[0]
-
-    if (findOldGroup) {
-      var findOldProperty = findOldGroup.children.filter((o) => o.property.id == property.id)[0]
-      if (findOldProperty && serialize(findOldProperty.property) != serialize(property)) {
-        findOldProperty.property = deepClone(property)
-        findOldProperty.name = property.propertyName
-        findOldProperty.secondGroup = property.secondGroup
-      }
-    }
 
     if (findCurrentGroup) {
       var findCurrentProperty = findCurrentGroup.children.filter((o) => o.property.id == property.id)[0]
