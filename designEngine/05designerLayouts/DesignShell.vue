@@ -3,7 +3,8 @@
       'margin-left':Component==null?0:Component.margin_left+'px','margin-right':Component==null?0:Component.margin_right+'px','margin-top':Component==null?0:Component.margin_top+'px','margin-bottom':Component==null?0:Component.margin_bottom+'px',
       'padding-left':Component==null?0:Component.padding_left+'px','padding-right':Component==null?0:Component.padding_right+'px','padding-top':Component==null?0:Component.padding_top+'px','padding-bottom':Component==null?0:Component.padding_bottom+'px',
        'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':'block','tabindex':'1' }">
-    <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':Component==null?'':Component.fontFamily }">
+    <div :class="themeClass" @click="onCompClick" style="width:100%;height:100%;tab-index:1"
+      :style="{zIndex:0,'font-family':Component==null?'':Component.fontFamily }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="semove"
@@ -121,6 +122,12 @@ export default class DesignShell extends Vue {
     for (const key in this) {
       delete this[key]
     }
+  }
+
+  private onCompClick(e) {
+    e.stopPropagation()
+    ;(this.Component.parentLayout as any).chooseComps([this.Component])
+    $(this.$el).focus()
   }
 
   public addComponent(comp: EngineComponent) {
