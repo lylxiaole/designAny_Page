@@ -4,18 +4,18 @@
       <div ref="toobar"></div>
       <toolBar :currentPage="currentShowEngine" :height="60" @onSave="onSaveCurrentPage"></toolBar>
     </el-row>
-    <el-row style="height:calc(100% - 60px);width:100%;">
-      <el-col :span="4" style="width:250px;height:100%">
+    <el-row style="height:calc(100% - 60px);width:100%;display:blockl;position:relative;display:block">
+      <el-col style="width:250px;height:100%;float:left">
         <pagelist :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
       </el-col>
-      <el-col :span="16" class="pageList" style="width:calc(100% - 500px);height:100%">
+      <el-col class="pageList" style="width:calc(100% - 500px);height:100%;float:left">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width:100%;height:100%">
           <el-tab-pane v-for="page in openPages" :key="page.id" :label="page.name" :name="page.id">
             <div style="width:100%;height:100%;overflow:auto" :ref="page.id"></div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
-      <el-col :span="4" style="width:250px;height:100%">
+      <el-col style="width:250px;height:100%;float:left">
         <propertyGrid :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
       </el-col>
     </el-row>

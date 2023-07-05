@@ -28,7 +28,7 @@
       <!-- *************************************************************************** -->
       <div :style="{ width:  '120px' }" class="iconitem themeHover">
         <div class="flexHorilanLayout">
-          <el-input-number v-model="pageScale" controls-position="right" label="描述文字" size="mini" :min="0.01" :step="0.01" :max="1000"
+          <el-input-number v-model="pageScale" controls-position="right" label="描述文字" size="small" :min="0.01" :step="0.01" :max="1000"
             :precision="2" />
         </div>
         <div class="flexHorilanLayout verticalAlignCenter">缩放窗口</div>

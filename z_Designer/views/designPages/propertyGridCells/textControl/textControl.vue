@@ -5,13 +5,13 @@
  */
 <template>
   <div>
-    <el-input size="mini" v-model="currentValue" placeholder="请输入"></el-input>
+    <el-input size="small" v-model="currentValue" placeholder="请输入"></el-input>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import npColorPicker from '@common/components/commonComponents/npColorPicker.vue'
 

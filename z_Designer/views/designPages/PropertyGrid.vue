@@ -1,6 +1,6 @@
 <template>
   <div style="overflow:hidden">
-    <el-radio-group @change="changeActivekey" v-model="activeKey" size="mini"
+    <el-radio-group @change="changeActivekey" v-model="selectGropName" size="small"
       style="margin-left:30px;margin-top:10px;box-sizing:border-box;height:35px">
       <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :label="group.groupName"
         style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
@@ -9,14 +9,16 @@
     <!-- ******************************** -->
     <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;box-sizing:border-box"></el-row>
     <!-- ************************************* -->
-    <div v-show="propIsShow" style="width:100%;height:calc(100% - 56px);overflow-y:auto;box-sizing:border-box;margin-bottom:10px">
+    <div style="width:100%;height:calc(100% - 56px);overflow-y:auto;box-sizing:border-box;margin-bottom:10px">
       <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyData" v-show="propertyInfo.isShow"
         :key="propertyInfo.name" :disabled="propertyInfo.isEnable==false">
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
           {{propertyInfo.name}}</el-col>
         <el-col :span="10" style="margin-left:4px">
-          <component :is="propertyInfo.comp" :outerProperty.sync="propertyInfo.property" :outerPropertyValue.sync="propertyInfo.property.value"
+          <!-- <component :is="propertyInfo.comp" :outerProperty.sync="propertyInfo.property" :outerPropertyValue.sync="propertyInfo.property.value"
             :currentPage="currentPage" :currentLayouts="currentLayouts" @selectDict="selectDict">
+          </component> -->
+          <component :is="propertyInfo.comp" v-model:outerProperty="propertyInfo.property" v-model:outerPropertyValue="propertyInfo.property.value">
           </component>
         </el-col>
         <el-col :span="4">
@@ -81,9 +83,6 @@ function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase
   components: {}
 })
 export default class PropertyGrid extends Vue {
-  private activeKey: string[] = []
-
-  private propIsShow: boolean = false
   private selectGropName: string = ''
   private columns = [
     {
@@ -100,22 +99,9 @@ export default class PropertyGrid extends Vue {
 
   private propertyDataCache: propertyInfo[] = []
   private get propertyData(): propertyInfo[] {
-    if (!this.allowedPropertys) {
-      return this.propertyDataCache
-    } else {
-      return this.propertyDataCache.filter((p) => {
-        let findfilter = this.allowedPropertys.find((o) => o.groupName == p.property.groupName && o.propertyName == p.property.propertyName)
-        if (findfilter) {
-          return true
-        } else {
-          return false
-        }
-      })
-    }
+    return this.propertyDataCache
   }
 
-  @Prop()
-  private allowedPropertys: propertyFilterInfo[]
   /**当前的布局页面 */
   @Prop()
   public currentPage: EnginePage
@@ -193,26 +179,10 @@ export default class PropertyGrid extends Vue {
       return
     }
 
-    // for (var groupIndex = 0; groupIndex < newgroup.length; groupIndex++) {
-    //   var group = newgroup[groupIndex]
-    //   var newProperties = group.children
-    //   var properties_old = this.propertyGroups_oldClone.filter((o) => o.groupName == group.groupName)[0].children
-    //   for (var j = 0; j < newProperties.length; j++) {
-    //     var newproperty = newProperties[j]
-    //     var filter_oldproperty = properties_old.filter((o) => o.property.id == newproperty.property.id)[0]
-    //     if (serialize(filter_oldproperty.property.value) != serialize(newproperty.property.value)) {
-    //       var isok = this.changeLayoutProperty(newproperty.property.propertyName, newproperty.property.groupName, newproperty.property.value)
-    //       if (isok == true) {
-    //         filter_oldproperty.property.value = deepClone(newproperty.property.value)
-    //       } else if (filter_oldproperty.property.value) {
-    //         newproperty.property.value = deepClone(filter_oldproperty.property.value)
-    //       } else {
-    //         newproperty.property.value = filter_oldproperty.property.value
-    //       }
-    //     }
-    //   }
-    // }
-    this.renderStyle()
+    let firstGroup = newgroup[0]
+    if (firstGroup) {
+      this.changeActivekey(firstGroup.groupName)
+    }
   }
 
   /**为了应付多选组件，批量设置属性 */
@@ -280,17 +250,6 @@ export default class PropertyGrid extends Vue {
     let tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
 
     this.propertyDataCache = tempGrop.children
-    this.propIsShow = true
-  }
-
-  renderStyle() {
-    this.$nextTick(() => {
-      var arrow = $(this.$el).find('.ant-collapse-header').find('.arrow')
-      $(arrow).css('left', 'initial')
-      $(arrow).css('right', '16px')
-      var collapseHeader = $(this.$el).find('.ant-collapse-header')
-      $(collapseHeader).css('padding-left', '8px')
-    })
   }
 }
 </script>

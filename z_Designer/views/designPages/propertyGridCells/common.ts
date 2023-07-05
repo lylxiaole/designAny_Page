@@ -20,6 +20,7 @@ export default class propertyCellBase extends Vue {
   private outerProperty: Property
   @Prop()
   private outerPropertyValue: any
+
   @Emit('update:outerPropertyValue')
   private updateValue_Inner(val: any) {}
 
@@ -27,6 +28,9 @@ export default class propertyCellBase extends Vue {
 
   /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
   protected get currentPropertyType(): PropertyType {
+    if (!this.outerProperty) {
+      return
+    }
     return this.outerProperty.propertyType
   }
   /**获取当前属性值 */

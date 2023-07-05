@@ -4,22 +4,22 @@
     <el-row>
       <el-col>
         <span class="normaltext">width:</span>
-        <el-input size="mini" v-model="currentValue.width" placeholder="请输入" />
+        <el-input size="small" v-model="currentValue.width" placeholder="请输入" />
       </el-col>
       <el-col>
         <span class="normaltext">height:</span>
-        <el-input size="mini" v-model="currentValue.height" placeholder="请输入" />
+        <el-input size="small" v-model="currentValue.height" placeholder="请输入" />
       </el-col>
     </el-row>
     <!-- ************************************************************************** -->
     <el-row>
       <el-col>
         <span class="normaltext">left:</span>
-        <el-input size="mini" v-model="currentValue.x" placeholder="请输入" />
+        <el-input size="small" v-model="currentValue.x" placeholder="请输入" />
       </el-col>
       <el-col>
         <span class="normaltext">top:</span>
-        <el-input size="mini" v-model="currentValue.y" placeholder="请输入" />
+        <el-input size="small" v-model="currentValue.y" placeholder="请输入" />
       </el-col>
     </el-row>
   </div>

@@ -5,7 +5,7 @@
  */
 <template>
   <div>
-    <el-button type="primary" class="themeButton" :icon="pageicon"
+    <el-button type="primary" class="themeButton" 
       style="width:118px;height:34px;background:rgba(124,225,170,0.1);border-color:rgba(124,225,170,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
       @click="startEditTable" size="small"> 设置入参</el-button>
 
