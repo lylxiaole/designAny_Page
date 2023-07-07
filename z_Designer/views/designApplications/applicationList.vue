@@ -1,17 +1,16 @@
 <template>
   <div style="height:100%;width：100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
     <el-row style="height:3rem;" class="middleAlign">
-      <el-button style="height:25px" @click="addAppHandle" size="mini" type="primary">添加应用</el-button>
+      <el-button style="height:25px" @click="addAppHandle" size="small" type="primary">添加应用</el-button>
     </el-row>
     <el-row style="height:calc(100% - 3rem);overflow-y:auto;display:block">
-      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem" 
-        @click="selectAppliction(app)">
+      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem" @click="selectAppliction(app)">
         {{app.name}}
       </div>
     </el-row>
     <!-- ********************************************************** -->
     <el-dialog title="提示" v-model="dialogVisible" width="30%" center>
-      <el-form ref="currentFrom" :inline="true" :model="applicationForm"   class="demo-form-inline">
+      <el-form ref="currentFrom" :inline="true" :model="applicationForm" class="demo-form-inline">
         <el-form-item label="应用名称">
           <el-input v-model="applicationForm.name" placeholder="应用名称"></el-input>
         </el-form-item>
@@ -33,11 +32,11 @@
 
 <script lang="ts"  >
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit ,Ref} from 'vue-property-decorator'
- 
+import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
+
 import ComponentBase from '@common/views/ComponentBase'
 import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication } from '@common/apis/designApplication'
- 
+
 @Options({})
 export default class applicationList extends ComponentBase {
   private allApps: any = []
@@ -52,10 +51,10 @@ export default class applicationList extends ComponentBase {
   // ************添加应用***********************************************************
   private dialogVisible: boolean = false
   @Ref('applicationForm')
-  private applicationForm: any =  {
+  private applicationForm: any = {
     name: '',
     type: 0
-  } 
+  }
   private async addAppHandle() {
     this.dialogVisible = true
   }
@@ -97,9 +96,9 @@ export default class applicationList extends ComponentBase {
 .applicationItem {
   box-sizing: border-box;
   padding: 4px 8px;
-  width:100%;
-  height:36px;
-  line-height:36px;
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
   cursor: pointer;
 }
 

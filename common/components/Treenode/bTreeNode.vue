@@ -8,14 +8,14 @@
     <div style="width:calc(100% - 16px);height:100%;float:left;padding-left:3px;box-sizing:border-box">
       <span v-if="isEdit===false" class="gad-b-tree-node-span" style="display:flex;justify-content:center;align-items:Center;"> {{ currentValue }}
       </span>
-      <el-input v-else ref="currentInput" size="mini" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" />
+      <el-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone } from '@common/utils'
 @Options({})
 export default class bTreeNode extends Vue {
