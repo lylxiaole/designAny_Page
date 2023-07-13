@@ -3,8 +3,7 @@
       'margin-left':Component==null?0:Component.margin_left+'px','margin-right':Component==null?0:Component.margin_right+'px','margin-top':Component==null?0:Component.margin_top+'px','margin-bottom':Component==null?0:Component.margin_bottom+'px',
       'padding-left':Component==null?0:Component.padding_left+'px','padding-right':Component==null?0:Component.padding_right+'px','padding-top':Component==null?0:Component.padding_top+'px','padding-bottom':Component==null?0:Component.padding_bottom+'px',
        'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':'block','tabindex':'1' }">
-    <div :class="themeClass" @click="onCompClick" style="width:100%;height:100%;tab-index:1"
-      :style="{zIndex:0,'font-family':Component==null?'':Component.fontFamily }">
+    <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':Component==null?'':Component.fontFamily }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="semove"
@@ -23,7 +22,8 @@
       style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:2" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="emove"
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
-    <div v-show="Component" ref="dragmengb" class="dragmengb" type="drag"
+    <!-- *************************** -->
+    <div v-show="Component" @click="onCompClick" ref="dragmengb" class="dragmengb" type="drag"
       style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" :style="{zIndex:0 }"></div>
 
     <!-- <div ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"
@@ -103,6 +103,7 @@ export default class DesignShell extends Vue {
     this._dragHelper = new dragHelper(this.$el)
     this._dragHelper.makeContainerCannotDrop()
     this._dragHelper.makeDomCannotDrag(this.$el)
+
     // this.onDrag_Event = this.onStartDrag
     // this.onClick_Event = (e: Event, target: any) => {
     //   // window.console.log('DesignShell onClick_Event')

@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;height:100%">
-    <el-button class="themeButton" type="primary" size="mini"  
+    <el-button class="themeButton" type="primary" size="small"  
       style="width:118px;height:34px;background:rgba(241,182,90,0.1);border-color:rgba(241,182,90,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
       @click="startEditText">
       扩展js

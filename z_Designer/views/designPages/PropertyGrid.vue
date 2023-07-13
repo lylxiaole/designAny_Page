@@ -10,7 +10,7 @@
     <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;box-sizing:border-box"></el-row>
     <!-- ************************************* -->
     <div style="width:100%;height:calc(100% - 56px);overflow-y:auto;box-sizing:border-box;margin-bottom:10px">
-      <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyData" v-show="propertyInfo.isShow"
+      <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow"
         :key="propertyInfo.name" :disabled="propertyInfo.isEnable==false">
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
           {{propertyInfo.name}}</el-col>
@@ -18,7 +18,8 @@
           <!-- <component :is="propertyInfo.comp" :outerProperty.sync="propertyInfo.property" :outerPropertyValue.sync="propertyInfo.property.value"
             :currentPage="currentPage" :currentLayouts="currentLayouts" @selectDict="selectDict">
           </component> -->
-          <component :is="propertyInfo.comp" v-model:outerProperty="propertyInfo.property" v-model:outerPropertyValue="propertyInfo.property.value">
+          <component :is="propertyInfo.comp" :outerProperty="propertyInfo.property" v-model:outerPropertyValue="propertyInfo.property.value"
+            :currentPage="currentPage" :currentLayouts="currentLayouts" @selectDict="selectDict">
           </component>
         </el-col>
         <el-col :span="4">
@@ -98,14 +99,34 @@ export default class PropertyGrid extends Vue {
   private isWatchPropertiesChange: boolean = true
 
   private propertyDataCache: propertyInfo[] = []
-  private get propertyData(): propertyInfo[] {
-    return this.propertyDataCache
+
+  @Watch('propertyDataCache', { deep: true })
+  private watchPropertyDataCacheChanged(newproperties: propertyInfo[], oldproperties: propertyInfo[]) {
+    // for (let index = 0; index < newproperties.length; index++) {
+    //   const nproperty = newproperties[index]
+    //   this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
+    // }
   }
 
   /**当前的布局页面 */
   @Prop()
   public currentPage: EnginePage
   /**当前需要设置的所有布局*/
+
+  /**当前所有布局的共有属性列表 */
+  private propertyGroups: PropertyGroupInfo[] = []
+  @Watch('propertyGroups', { deep: true, immediate: true })
+  //监视所有属性变化，并给当前选中的布局赋值
+  private watchPropertyGroupsChanged(newgroup: PropertyGroupInfo[]) {
+    if (this.isWatchPropertiesChange == false) {
+      return
+    }
+
+    let firstGroup = newgroup[0]
+    if (firstGroup) {
+      this.changeActivekey(firstGroup.groupName)
+    }
+  }
   @Prop()
   private currentLayouts: EngineLayout[] | EngineLayout
   @Watch('currentLayouts') //监视设置的布局变化，并重新计算所有属性
@@ -118,14 +139,15 @@ export default class PropertyGrid extends Vue {
       this.propertyGroups = null
       return
     }
-    var property_extra: Property[] = [] //临时变量
+    //当前选中的Layouts
     var newlayouts_extra: EngineLayout[] = [] //临时变量
-
     if (newlayouts instanceof EngineLayout) {
       newlayouts_extra = [newlayouts as EngineLayout]
     } else {
       newlayouts_extra = newlayouts as EngineLayout[]
     }
+    //当前选中的Layouts的properties
+    var property_extra: Property[] = [] //临时变量
     /**用第一个布局的属性列表当作临时属性列表 */
     if (newlayouts_extra.length > 0) {
       property_extra = [...newlayouts_extra[0].properties]
@@ -169,20 +191,25 @@ export default class PropertyGrid extends Vue {
     this.isWatchPropertiesChange = true
   }
 
-  /**当前所有布局的共有属性列表 */
-  private propertyGroups: PropertyGroupInfo[] = []
+  mounted() {}
 
-  @Watch('propertyGroups', { deep: true, immediate: true })
-  //监视所有属性变化，并给当前选中的布局赋值
-  private watchPropertyGroupsChanged(newgroup: PropertyGroupInfo[]) {
-    if (this.isWatchPropertiesChange == false) {
-      return
-    }
+  @Emit('selectDict')
+  private selectDict() {
+    //window.console.info('进入右侧折叠面板')
+  }
+  @Emit('selectDicted')
+  public selectDicted(param) {
+    //window.console.info('currentLayouts----------', this.currentLayouts[0].properties)
+    var property = this.currentLayouts[0].properties.filter((o) => o.propertyName == '选择枚举')[0]
+    property.value = param
+    //window.console.info('aa-------------------aaaa', property)
+  }
 
-    let firstGroup = newgroup[0]
-    if (firstGroup) {
-      this.changeActivekey(firstGroup.groupName)
-    }
+  changeActivekey(groupname: string) {
+    let groupName = groupname
+    this.selectGropName = groupname
+    let tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
+    this.propertyDataCache = tempGrop.children
   }
 
   /**为了应付多选组件，批量设置属性 */
@@ -209,17 +236,8 @@ export default class PropertyGrid extends Vue {
     })
     return true
   }
-  @Emit('selectDict')
-  private selectDict() {
-    //window.console.info('进入右侧折叠面板')
-  }
-  @Emit('selectDicted')
-  public selectDicted(param) {
-    //window.console.info('currentLayouts----------', this.currentLayouts[0].properties)
-    var property = this.currentLayouts[0].properties.filter((o) => o.propertyName == '选择枚举')[0]
-    property.value = param
-    //window.console.info('aa-------------------aaaa', property)
-  }
+
+  //外部调用-刷新组件属性
   public refreshProperty(property: Property) {
     // window.console.log('refreshProperty')
     this.isWatchPropertiesChange = false
@@ -240,16 +258,6 @@ export default class PropertyGrid extends Vue {
     }
     /****************************************** */
     this.isWatchPropertiesChange = true
-  }
-
-  mounted() {}
-
-  changeActivekey(groupname: string) {
-    let groupName = groupname
-    this.selectGropName = groupname
-    let tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
-
-    this.propertyDataCache = tempGrop.children
   }
 }
 </script>

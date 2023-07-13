@@ -1,5 +1,5 @@
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
 import { EnginePage, SaveInfo, EngineContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
 import { LayoutType } from './commonClasses/componentInfos'
@@ -84,14 +84,12 @@ export default class EngineComponent extends EngineContainer {
     this.registerProperty(PropertyGroupName.normal, '内边距-右', numberproperty, 0, false, 'px')
     this.registerProperty(PropertyGroupName.normal, '内边距-上', numberproperty, 0, false, 'px')
     this.registerProperty(PropertyGroupName.normal, '内边距-下', numberproperty, 0, false, 'px')
-    this.canDrop = false
-    this.canDrag = false
+
     this.width = 200
     this.height = 200
     /**注册事件 */
     var inparams: param[] = []
     this.registerEvents('控件加载完成事件', '', inparams, null)
-    this.onDrag_Event = this.listenOnDrag
   }
 
   mounted() {
@@ -100,15 +98,10 @@ export default class EngineComponent extends EngineContainer {
     })
   }
   rendered(dom: Element) {}
-  // *******************************privates**************************************************************************************
-  protected listenOnDrag(el: Element, dragdata: DragItemData<any>) {
-    dragdata.type = DragItemTypeEnum.dragmove_component_inpage
-    //window.console.log('comp listenOnDrag')
-    dragdata.dragData = { compId: this.Id }
-  }
+
   // *******************************protecteds**************************************************************************************
   protected async triggeEvent(name: string, inparam: any) {
-    if (!this.parentPage || this.parentPage.isDesigning == true) {
+    if (!this.parentPage) {
       return
     }
     // window.console.log('触发事件:', name, this.$el)
