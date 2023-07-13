@@ -7,7 +7,6 @@
 
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
-import { ref, h, render, onMounted } from 'vue'
 
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
@@ -113,7 +112,6 @@ export default class PCPageDesign extends EnginePage {
   }
   protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
     // window.console.log('listenOnDragMove:', dragdata)
-
     if (!dragdata) {
       return true
     }
@@ -173,7 +171,6 @@ export default class PCPageDesign extends EnginePage {
   private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     // window.console.log('按了删除键', this.name)
-
     if (this.selectedChildren.length > 0) {
       e.stopPropagation()
     }
@@ -194,7 +191,6 @@ export default class PCPageDesign extends EnginePage {
   }
   private listenOnCopy(e) {
     window.console.log('listenOnCopy:', e)
-
     if (this.selectedChildren && this.selectedChildren.length > 0) {
       DesignEvents.copyComp = this.selectedChildren[0] as EngineLayout
       // this.$message.success('组件已复制', 2)

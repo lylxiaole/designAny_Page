@@ -18,8 +18,6 @@ export default class EngineContainer extends EngineLayout {
   //当前页面的缩放尺寸
   public currentScaleSize: number = 1
 
-  private mouseX: number = 0
-  private mouseY: number = 0
   created() {
     // this.onDrop_Event = this.listenOnDrop
     // this.onDragMove_Event = this.listenOnDragMove

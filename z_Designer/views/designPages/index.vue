@@ -149,7 +149,6 @@ export default class index extends PageBase {
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)
   }
-
   // **********顶部操作栏**********************************************************
   private async onSaveCurrentPage(pageId: string) {
     window.console.log('onSaveCurrentPage:', pageId)

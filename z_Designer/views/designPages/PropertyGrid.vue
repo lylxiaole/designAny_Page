@@ -97,15 +97,17 @@ export default class PropertyGrid extends Vue {
   ]
 
   private isWatchPropertiesChange: boolean = true
-
   private propertyDataCache: propertyInfo[] = []
 
   @Watch('propertyDataCache', { deep: true })
   private watchPropertyDataCacheChanged(newproperties: propertyInfo[], oldproperties: propertyInfo[]) {
-    // for (let index = 0; index < newproperties.length; index++) {
-    //   const nproperty = newproperties[index]
-    //   this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
-    // }
+    if (this.isWatchPropertiesChange == false) {
+      return
+    }
+    for (let index = 0; index < newproperties.length; index++) {
+      const nproperty = newproperties[index]
+      this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
+    }
   }
 
   /**当前的布局页面 */
