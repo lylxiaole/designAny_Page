@@ -52,6 +52,7 @@ export default class NPQrCode extends EngineComponent {
   beforeDestroy() {}
 
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
+    console.log('onPropertyChangedInner:', property)
     this.initQrCode()
   }
 
@@ -175,22 +176,22 @@ export default class NPQrCode extends EngineComponent {
   private initQrCode() {
     //window.console.log('initQrCode completed:***************')
     let options = {
-      errorCorrectionLevel: this.qrCodeErrorCorrectionLevel,
-      margin: this.qrCodeMargin,
-      scale: this.qrCodeScale,
+      errorCorrectionLevel: this.codeErrorCorrectionLevel,
+      margin: this.codeMargin,
+      scale: this.codeScale,
       color: {
-        dark: this.qrCodeDarkColor,
-        light: this.qrCodeLightColor
+        dark: this.codeDarkColor,
+        light: this.codeLightColor
       }
     }
-    if (this.qrCodeVersion) {
-      options['version'] = this.qrCodeVersion
+    if (this.codeVersion) {
+      options['version'] = this.codeVersion
     }
-    if (this.qrCodeWidth) {
-      options['width'] = this.qrCodeWidth
+    if (this.codeWidth) {
+      options['width'] = this.codeWidth
     }
-    if (this.qrCodeMaskPattern >= 0) {
-      options['maskPattern'] = this.qrCodeMaskPattern
+    if (this.codeMaskPattern >= 0) {
+      options['maskPattern'] = this.codeMaskPattern
     }
 
     // let canvasObj = document.getElementById(this.qrCodeId)

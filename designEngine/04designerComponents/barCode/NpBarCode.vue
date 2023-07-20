@@ -60,9 +60,9 @@ export default class NpBarCode extends EngineComponent {
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
-    if (property.groupName === PropertyGroupName.special) {
-      this.initBarCode()
-    }
+    console.log('onPropertyChangedInner:', property)
+
+    this.initBarCode()
   }
   private barCodeText: string = '123456789'
   get vlaue(): string {
@@ -212,14 +212,14 @@ export default class NpBarCode extends EngineComponent {
 
   private initBarCode() {
     let options = {
-      width: this.barCodeWidth,
-      height: this.barCodeHeight,
-      displayValue: this.barCodeDisplayValue,
-      format: this.barCodeFormat,
-      textAlign: this.barCodeTextAlign,
-      textPosition: this.barCodeTextPosition,
-      textMargin: this.barCodeTextMargin,
-      fontSize: this.barCodeFontSize
+      width: this.codeWidth,
+      height: this.codeHeight,
+      displayValue: this.codeDisplayValue,
+      format: this.codeFormat,
+      textAlign: this.codeTextAlign,
+      textPosition: this.codeTextPosition,
+      textMargin: this.codeTextMargin,
+      fontSize: this.codeFontSize
     }
     try {
       JsBarcode($(this.$refs.barcoderef)[0], this.barCodeText, options)

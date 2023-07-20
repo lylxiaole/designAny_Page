@@ -104,8 +104,11 @@ export default class PropertyGrid extends Vue {
     if (this.isWatchPropertiesChange == false) {
       return
     }
+
+    window.console.log('propertyDataCache changed:')
     for (let index = 0; index < newproperties.length; index++) {
       const nproperty = newproperties[index]
+
       this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
     }
   }
@@ -124,9 +127,19 @@ export default class PropertyGrid extends Vue {
       return
     }
 
-    let firstGroup = newgroup[0]
-    if (firstGroup) {
-      this.changeActivekey(firstGroup.groupName)
+    if (!this.selectGropName) {
+      let firstGroup = newgroup[0]
+      if (firstGroup) {
+        this.changeActivekey(firstGroup.groupName)
+      }
+    } else {
+      let find = newgroup.find((o) => o.groupName === this.selectGropName)
+      if (!find) {
+        let firstGroup = newgroup[0]
+        if (firstGroup) {
+          this.changeActivekey(firstGroup.groupName)
+        }
+      }
     }
   }
   @Prop()

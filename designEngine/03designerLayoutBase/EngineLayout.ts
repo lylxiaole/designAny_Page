@@ -65,17 +65,17 @@ export default class EngineLayout extends Vue {
     this.lyleventsOnce = {}
   }
   public $lylemit(event: string, ...args: any[]) {
-    super.$emit(event, args)
+    this.$emit(event, args)
     if (this.lylevents[event]) {
       for (let index = 0; index < this.lylevents[event].length; index++) {
         const callback = this.lylevents[event][index]
-        callback(args)
+        callback(...args)
       }
     }
     if (this.lyleventsOnce[event]) {
       for (let index = 0; index < this.lyleventsOnce[event].length; index++) {
         const callback = this.lyleventsOnce[event][index]
-        callback(args)
+        callback(...args)
       }
     }
   }
@@ -519,14 +519,15 @@ export default class EngineLayout extends Vue {
     }
   }
   private watch_properties(newval: Property[]) {
-    // window.console.log('布局属性变化了')
+    window.console.log('属性变化了', newval)
     for (var j = 0; j < newval.length; j++) {
       var newproperty = newval[j]
       var filter_oldproperty = this.properties_old.find((o) => o.id == newproperty.id)
       if (!filter_oldproperty) {
         //..新增了一个属性
         this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
-        this.onPropertyChanged(newproperty.id, newproperty, this)
+        this.$lylemit('onPropertyChanged', newproperty.id, newproperty, this)
+        // this.onPropertyChanged(newproperty.id, newproperty, this)
       } else if (serialize(filter_oldproperty) != serialize(newproperty)) {
         //..修改了一个属性的内容
         var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
@@ -535,7 +536,8 @@ export default class EngineLayout extends Vue {
         /**替换旧的属性 */
         var index = this.properties_old.indexOf(filter_oldproperty)
         this.properties_old.splice(index, 1, newpropertyClone)
-        this.onPropertyChanged(newproperty.id, newpropertyClone, this)
+        // this.onPropertyChanged(newproperty.id, newpropertyClone, this)
+        this.$lylemit('onPropertyChanged', newproperty.id, newpropertyClone, this)
       }
     }
   }
