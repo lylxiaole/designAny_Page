@@ -195,22 +195,19 @@ export default class EngineLayout extends Vue {
   /**生命周期 */
   mounted() {
     this.$nextTick(() => {
-      if (!this.onMounted) {
-        return
-      }
-      this.onMounted(this)
+      this.$lylemit('onMounted', this)
       this.properties_old = deepClone(this.properties)
       this.$watch('properties', this.watch_properties, { deep: true, immediate: false })
     })
   }
   /**生命周期 */
   updated() {
-    this.onUpdated(this)
+    this.$lylemit('onUpdated', this)
   }
   /**生命周期 */
   destroyed() {
     // window.console.log('销毁了页面组件:', this.Id)
-    this.onDestroyed(this)
+    this.$lylemit('onDestroyed', this)
     this.destorymethod()
   }
 
@@ -551,7 +548,7 @@ export default class EngineLayout extends Vue {
     }
     if (this.children.indexOf(child) < 0) {
       this.children.push(child)
-      this.onChildrenCountChange()
+      this.$lylemit('onChildrenCountChange')
     }
   }
   protected addChilds(childs: EngineLayout[]) {
@@ -572,7 +569,7 @@ export default class EngineLayout extends Vue {
     }
     this.removeLayout(child)
     this.children.splice(index, 1)
-    this.onChildrenCountChange()
+    this.$lylemit('onChildrenCountChange')
   }
   protected removeChilds(childs: EngineLayout[]) {
     if (childs && childs.length > 0) {

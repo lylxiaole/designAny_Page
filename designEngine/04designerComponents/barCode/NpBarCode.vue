@@ -64,25 +64,21 @@ export default class NpBarCode extends EngineComponent {
 
     this.initBarCode()
   }
-  private barCodeText: string = '123456789'
   get vlaue(): string {
     let prop = this.findPropertyByName(PropertyGroupName.special, '内容')
     if (prop && prop.value != undefined && prop.value != null) {
       let data = prop.value.toString()
-      this.barCodeText = data
       return data
     } else {
       return '123456789'
     }
   }
 
-  private barCodeFormat: string = 'CODE128'
   get codeFormat(): string {
     let prop = this.findPropertyByName(PropertyGroupName.special, '格式')
     let data = null
     if (prop && prop.value) {
       data = prop.value.toString()
-      this.barCodeFormat = data
     } else {
       data = 'CODE128'
     }
@@ -90,13 +86,11 @@ export default class NpBarCode extends EngineComponent {
     return data
   }
 
-  private barCodeWidth: number = 2
   get codeWidth(): number {
     let prop = this.findPropertyByName(PropertyGroupName.special, '码宽')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
-      this.barCodeWidth = data
     } else {
       data = 2
     }
@@ -104,13 +98,11 @@ export default class NpBarCode extends EngineComponent {
     return data
   }
 
-  private barCodeHeight: number = 100
   get codeHeight(): number {
     let prop = this.findPropertyByName(PropertyGroupName.special, '码高')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
-      this.barCodeHeight = data
     } else {
       data = 100
     }
@@ -118,20 +110,17 @@ export default class NpBarCode extends EngineComponent {
     return data
   }
 
-  private barCodeDisplayValue: boolean = true
   get codeDisplayValue(): boolean {
     let prop = this.findPropertyByName(PropertyGroupName.special, '显示字')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Boolean(prop.value)
-      this.barCodeDisplayValue = data
     } else {
       data = true
     }
     return data
   }
 
-  private barCodeTextAlign: string = 'center'
   get codeTextAlign(): string {
     let prop = this.findPropertyByName(PropertyGroupName.special, '字对齐方式')
     let data = null
@@ -151,14 +140,12 @@ export default class NpBarCode extends EngineComponent {
           data = 'center'
           break
       }
-      this.barCodeTextAlign = data
     } else {
       data = 'center'
     }
     return data
   }
 
-  private barCodeTextPosition: string = 'bottom'
   get codeTextPosition(): string {
     let prop = this.findPropertyByName(PropertyGroupName.special, '字位置')
     let data = null
@@ -175,20 +162,17 @@ export default class NpBarCode extends EngineComponent {
           data = 'bottom'
           break
       }
-      this.barCodeTextPosition = data
     } else {
       data = 'bottom'
     }
     return data
   }
 
-  private barCodeTextMargin: number = 2
   get codeTextMargin(): number {
     let prop = this.findPropertyByName(PropertyGroupName.special, '字边距')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
-      this.barCodeTextMargin = data
     } else {
       data = 2
     }
@@ -196,13 +180,11 @@ export default class NpBarCode extends EngineComponent {
     return data
   }
 
-  private barCodeFontSize: number = 20
   get codeFontSize(): number {
     let prop = this.findPropertyByName(PropertyGroupName.special, '字大小')
     let data = null
     if (prop && prop.value != undefined && prop.value != null) {
       data = Number(prop.value)
-      this.barCodeFontSize = data
     } else {
       data = 20
     }
@@ -222,7 +204,7 @@ export default class NpBarCode extends EngineComponent {
       fontSize: this.codeFontSize
     }
     try {
-      JsBarcode($(this.$refs.barcoderef)[0], this.barCodeText, options)
+      JsBarcode($(this.$refs.barcoderef)[0], this.vlaue, options)
     } catch (error) {
       window.console.error(error)
     }

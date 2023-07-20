@@ -56,12 +56,10 @@ export default class NPQrCode extends EngineComponent {
     this.initQrCode()
   }
 
-  private qrCodeValue: string = '123456789'
   get codeValue(): string {
     const prop = this.findPropertyByName(PropertyGroupName.special, '内容')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value.toString()
-      this.qrCodeValue = data
 
       return data
     } else {
@@ -69,25 +67,20 @@ export default class NPQrCode extends EngineComponent {
     }
   }
 
-  private qrCodeVersion: number = 0
   get codeVersion(): number {
     const prop = this.findPropertyByName(PropertyGroupName.special, '版本')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
-      this.qrCodeVersion = data
-
       return data
     } else {
       return 0
     }
   }
 
-  private qrCodeErrorCorrectionLevel: string = 'M'
   get codeErrorCorrectionLevel(): string {
     const prop = this.findPropertyByName(PropertyGroupName.special, '纠错等级')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value.toString()
-      this.qrCodeErrorCorrectionLevel = data
 
       return data
     } else {
@@ -95,12 +88,10 @@ export default class NPQrCode extends EngineComponent {
     }
   }
 
-  private qrCodeMaskPattern: number = -1
   get codeMaskPattern(): number {
     const prop = this.findPropertyByName(PropertyGroupName.special, '遮罩符号')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
-      this.qrCodeMaskPattern = data
 
       return data
     } else {
@@ -108,12 +99,10 @@ export default class NPQrCode extends EngineComponent {
     }
   }
 
-  private qrCodeMargin: number = 4
   get codeMargin(): number {
     const prop = this.findPropertyByName(PropertyGroupName.special, '二维码外边距')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
-      this.qrCodeMargin = data
 
       return data
     } else {
@@ -121,12 +110,10 @@ export default class NPQrCode extends EngineComponent {
     }
   }
 
-  private qrCodeWidth: number = 0
   get codeWidth(): number {
     const prop = this.findPropertyByName(PropertyGroupName.special, '二维码宽度')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
-      this.qrCodeWidth = data
 
       return data
     } else {
@@ -134,12 +121,10 @@ export default class NPQrCode extends EngineComponent {
     }
   }
 
-  private qrCodeScale: number = 0
   get codeScale(): number {
     const prop = this.findPropertyByName(PropertyGroupName.special, '比例因子')
     if (prop && prop.value != undefined && prop.value != null) {
       const data: number = Number(prop.value)
-      this.qrCodeScale = data
 
       return data
     } else {
@@ -147,12 +132,10 @@ export default class NPQrCode extends EngineComponent {
     }
   }
 
-  private qrCodeDarkColor: string = '#000000'
   get codeDarkColor(): string {
     const prop = this.findPropertyByName(PropertyGroupName.special, '内容颜色')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value.toString()
-      this.qrCodeDarkColor = data
 
       return data
     } else {
@@ -160,12 +143,10 @@ export default class NPQrCode extends EngineComponent {
     }
   }
 
-  private qrCodeLightColor: string = '#ffffff'
   get codeLightColor(): string {
     const prop = this.findPropertyByName(PropertyGroupName.special, '留白颜色')
     if (prop && prop.value != undefined && prop.value != null) {
       const data = prop.value as string
-      this.qrCodeLightColor = data
 
       return data
     } else {
@@ -195,7 +176,7 @@ export default class NPQrCode extends EngineComponent {
     }
 
     // let canvasObj = document.getElementById(this.qrCodeId)
-    QRCode.toCanvas($(this.$el).find('#' + this.qrCodeId)[0], this.qrCodeValue, options, function (error) {
+    QRCode.toCanvas($(this.$el).find('#' + this.qrCodeId)[0], this.codeValue, options, function (error) {
       if (error) {
         window.console.error(error)
       }
