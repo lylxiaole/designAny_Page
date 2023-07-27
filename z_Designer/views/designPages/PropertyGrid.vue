@@ -107,7 +107,6 @@ export default class PropertyGrid extends Vue {
     window.console.log('propertyDataCache changed:')
     for (let index = 0; index < newproperties.length; index++) {
       const nproperty = newproperties[index]
-
       this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
     }
   }
@@ -192,7 +191,7 @@ export default class PropertyGrid extends Vue {
         propertyinfox.name = o.propertyName
         propertyinfox.secondGroup = o.secondGroup
         propertyinfox.property = o
-        propertyinfox.property = deepClone(o)
+        // propertyinfox.property = deepClone(o)
         propertyinfox.comp = getCellControl(o.propertyType.type)
         findgroup.children.push(propertyinfox)
         if (o.groupName == this.selectGropName) {
