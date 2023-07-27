@@ -104,7 +104,6 @@ export default class PropertyGrid extends Vue {
     if (this.isWatchPropertiesChange == false) {
       return
     }
-
     window.console.log('propertyDataCache changed:')
     for (let index = 0; index < newproperties.length; index++) {
       const nproperty = newproperties[index]
@@ -192,9 +191,9 @@ export default class PropertyGrid extends Vue {
         var propertyinfox = new propertyInfo()
         propertyinfox.name = o.propertyName
         propertyinfox.secondGroup = o.secondGroup
+        propertyinfox.property = o
         propertyinfox.property = deepClone(o)
         propertyinfox.comp = getCellControl(o.propertyType.type)
-
         findgroup.children.push(propertyinfox)
         if (o.groupName == this.selectGropName) {
           this.propertyDataCache.push(propertyinfox)
@@ -250,29 +249,6 @@ export default class PropertyGrid extends Vue {
       layout.setPropertyVal(findproperty.id, newval)
     })
     return true
-  }
-
-  //外部调用-刷新组件属性
-  public refreshProperty(property: Property) {
-    // window.console.log('refreshProperty')
-    this.isWatchPropertiesChange = false
-    var propertyService
-    /************************************ */
-    if (!this.propertyGroups) {
-      return
-    }
-    var findCurrentGroup = this.propertyGroups.filter((o) => o.groupName == property.groupName)[0]
-
-    if (findCurrentGroup) {
-      var findCurrentProperty = findCurrentGroup.children.filter((o) => o.property.id == property.id)[0]
-      if (findCurrentProperty && serialize(findCurrentProperty.property) != serialize(property)) {
-        findCurrentProperty.property = deepClone(property)
-        findCurrentProperty.name = property.propertyName
-        findCurrentProperty.secondGroup = property.secondGroup
-      }
-    }
-    /****************************************** */
-    this.isWatchPropertiesChange = true
   }
 }
 </script>

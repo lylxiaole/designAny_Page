@@ -16,7 +16,7 @@
         </el-tabs>
       </el-col>
       <el-col style="width:250px;height:100%;float:left">
-        <propertyGrid :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
+        <propertyGrid ref="propertyGrid" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
       </el-col>
     </el-row>
   </el-row>
@@ -31,7 +31,20 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
-
+import {
+  Property,
+  PropertyType,
+  Text_Property,
+  Behavior_Property,
+  Number_Property,
+  PropertyGroupName,
+  Color_Property,
+  UploadFile_Property,
+  Boolean_Property,
+  EnumModal_Property,
+  Enum_Property,
+  CompPosition_Property
+} from '@designEngine/03designerLayoutBase/commonClasses/LayoutProperty'
 import { drawVueOnVirtualDom } from '@common/utils'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine'
 @Options({
@@ -95,8 +108,9 @@ export default class index extends PageBase {
     if (!findopen) {
       this.openPages.push(page)
     }
-    window.console.log('openPage:', page.id)
+    window.console.log('openPage:', pageengine)
     this.currentOpenPageId = page.id
+    // **********************
   }
   //关闭页面
   private closePage(pageId: string) {
@@ -154,6 +168,7 @@ export default class index extends PageBase {
     window.console.log('onSaveCurrentPage:', pageId)
     await this.currentShowEngine.save(this.applicationId)
   }
+  // ********************************************************************
 }
 </script>
 

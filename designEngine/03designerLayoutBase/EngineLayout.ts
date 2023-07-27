@@ -516,7 +516,7 @@ export default class EngineLayout extends Vue {
     }
   }
   private watch_properties(newval: Property[]) {
-    window.console.log('属性变化了', newval)
+    // window.console.log('属性变化了', newval)
     for (var j = 0; j < newval.length; j++) {
       var newproperty = newval[j]
       var filter_oldproperty = this.properties_old.find((o) => o.id == newproperty.id)
