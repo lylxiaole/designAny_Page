@@ -7,6 +7,7 @@
 
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
+import { SaveInfo, Point } from '../03designerLayoutBase/EngineLayout'
 
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
@@ -43,21 +44,24 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onCopy_Event = this.listenOnCopy
     this.designEvets.onPaste_Event = this.listenOnPaste
     this.designEvets.onMouseMove_Event = this.listenOnMousemove
+    this.designEvets.onClick_Event = this.listenOnClick
   }
 
-  protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    // window.console.log('renderComponent:', compCon)
+  protected async renderComponent(compCon: EngineComponent, data?: SaveInfo): Promise<EngineLayout> {
     let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
-
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as DesignShell)
     let res = (vueComp as DesignShell).addComponent(compCon)
-    //
+    if (data) {
+      res.loadData(data)
+    }
+
+    ;(vueComp as DesignShell).startListenItemDrag()
+
     $(this.$el).append(virtualDom)
     return res
   }
   /**********************************监听设计事件 ******************************/
-
   private mouseX: number = 0
   private mouseY: number = 0
   private listenOnMousemove(e: MouseEvent) {
@@ -232,6 +236,10 @@ export default class PCPageDesign extends EnginePage {
     }
     newcopyComp.loadData(compData)
     e.stopPropagation()
+  }
+  // ******************************************************
+  private listenOnClick(e: Event, target: any) {
+    this.chooseComps([])
   }
 }
 </script>

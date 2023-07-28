@@ -654,10 +654,11 @@ export default class EngineLayout extends Vue {
   public async getSaveData(): Promise<SaveInfo> {
     var saveinfo: SaveInfo = {
       id: this.Id,
-      meta: (this as any).$Meta,
+      meta: (this as any).prototype ? (this as any).prototype.$Meta : {},
       properties: this.properties,
       children: []
     }
+
     saveinfo.children = await this.getChildrenData()
     return saveinfo
   }

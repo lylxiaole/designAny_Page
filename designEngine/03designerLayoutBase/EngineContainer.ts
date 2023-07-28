@@ -324,12 +324,10 @@ export default class EngineContainer extends EngineLayout {
     // let dropcomp = new dropcompclass() as EngineLayout
     let dropcomp = h(dropcompclass) as any
 
-    if (data) {
-      await dropcomp.loadData(data)
-    }
-    dropcomp = await this.renderComponent(dropcomp)
+    dropcomp = await this.renderComponent(dropcomp, data)
 
     dropcomp.parentLayout = this
+    dropcomp.prototype = { $Meta: dropcompclass.prototype.$Meta }
     // window.console.error('绘制子组件失败,请不要保存!!!')
     // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
     this.addChild(dropcomp)
@@ -359,7 +357,7 @@ export default class EngineContainer extends EngineLayout {
     await comp.loadData(data)
   }
   /*************容器渲染子组件的虚方法**********************/
-  protected async renderComponent(compCon: EngineLayout): Promise<EngineLayout> {
+  protected async renderComponent(compCon: EngineLayout, data?: SaveInfo): Promise<EngineLayout> {
     return compCon
   }
   protected getCompTemplateData(tempId: string): any {

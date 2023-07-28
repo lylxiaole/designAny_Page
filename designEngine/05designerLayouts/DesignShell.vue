@@ -145,11 +145,11 @@ export default class DesignShell extends Vue {
       this.$destroy()
     })
 
-    this.startListenItemDrag()
+    // this.startListenItemDrag()
     return this.Component
   }
 
-  private startListenItemDrag() {
+  public startListenItemDrag() {
     window.console.log('startListenItemDrag:', this.$el)
     let dragdata: any = { type: DragItemTypeEnum.dragmove_component_inpage }
     dragdata.dragData = { compId: this.Component.Id }
@@ -202,7 +202,7 @@ export default class DesignShell extends Vue {
   }
 
   public onStartDrag(el: Element, dragdata: DragItemData<any>) {
-    // window.console.log('DesignShell onStartDrag:', el)
+    window.console.log('DesignShell onStartDrag:', el)
     if (el.className.indexOf('el-icon-rank') > -1 || el.className.indexOf('dragmengb') > -1) {
       dragdata.type = DragItemTypeEnum.dragmove_component_inpage
       dragdata.dragData = { compId: this.Component.Id }
