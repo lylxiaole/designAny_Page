@@ -168,7 +168,6 @@ export default class DesignEvents {
   }
   private _onDrop = async (el: Element, targetContainer: Element): Promise<boolean> => {
     // window.console.log('_onDrop:', this)
-
     if (!this.canDrop || !this.onDrop_Event) {
       return true
     }

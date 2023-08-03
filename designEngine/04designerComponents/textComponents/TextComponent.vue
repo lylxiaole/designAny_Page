@@ -32,8 +32,8 @@ export default class TextComponent extends EngineComponent {
   isShowInput: boolean = false
 
   mounted() {
-    this.width = 150
-    this.height = 40
+    this.width = '150px'
+    this.height = '40px'
     this.background = 'white'
     this.registerProperty(PropertyGroupName.special, '文本', new Text_Property(), '文本组件')
     //var textPropertyId = this.findPropertyByName(PropertyGroupName.special, '文本').id

@@ -34,8 +34,8 @@ export default class NPQrCode extends EngineComponent {
   }
 
   mounted() {
-    this.width = 300
-    this.height = 300
+      this.width = '300px'
+    this.height = '300px'
 
     this.registerProperty(PropertyGroupName.special, '内容', new Text_Property(), '123456789')
     this.registerProperty(PropertyGroupName.special, '版本', new Number_Property(0, 40, 1), 0)

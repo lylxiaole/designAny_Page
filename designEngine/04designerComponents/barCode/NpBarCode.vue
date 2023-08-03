@@ -23,8 +23,8 @@ export default class NpBarCode extends EngineComponent {
   beforeMount() {}
 
   mounted() {
-    this.width = 300
-    this.height = 300
+    this.width = '300px'
+    this.height = '300px'
     let codeFormats = [
       'CODE128',
       'CODE128A',

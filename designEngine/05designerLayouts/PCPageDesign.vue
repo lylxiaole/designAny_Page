@@ -1,6 +1,5 @@
 <template>
-  <div
-    :style="{position:'relative','width':width+'px','height':height+'px','left':left+'px','top':top+'px' ,'background':backgroundCute,'padding':'0px' }"
+  <div :style="{position:'relative','width':width,'height':height,'left':left,'top':top ,'background':backgroundCute,'padding':'0px' }"
     oncontextmenu="self.event.returnValue=false" style="border-radius:0px">
   </div>
 </template>
@@ -108,13 +107,24 @@ export default class PCPageDesign extends EnginePage {
         break
     }
     if (dropcomp) {
-      dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize
-      dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize
+      dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize + 'px'
+      dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize + 'px'
     }
 
     return false
   }
-  protected listenOnDragMove(xchanged: number, ychanged: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>): boolean {
+
+  private currentDragLeft: any = null
+  private currentDragTop: any = null
+
+  protected listenOnDragMove(
+    xchanged: number,
+    ychanged: number,
+    mouseleft: number,
+    mousetop: number,
+    el: Element,
+    dragdata?: DragItemData<any>
+  ): boolean {
     // window.console.log('listenOnDragMove:', dragdata)
     if (!dragdata) {
       return true
@@ -129,32 +139,14 @@ export default class PCPageDesign extends EnginePage {
       return false
     }
     // console.log('-------------------------', left, $(this.$el).offset().left)
-
     let parentPageCurrentScaleSize = (dragComp.topLayout as any as EnginePage).currentScaleSize
     // 在容器内拖拽组件位置
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      // // window.console.log('dragmove_component_inpage:', (window.event as any).dataTransfer)
-      // let currentOffsetByPage = $(this.$el).offset()
-      // let afterMovedLeft = left - currentOffsetByPage.left
-      // let afterMovedTop = top - currentOffsetByPage.top
+      // let x = $(dragComp.parentLayout).width
+      let dragCompOffset = $(el).offset()
+      dragComp.left = dragCompOffset.left + xchanged + 'px'
+      dragComp.top = dragCompOffset.top + ychanged + 'px'
 
-      // let newleft = afterMovedLeft / parentPageCurrentScaleSize
-      // let newtop = afterMovedTop / parentPageCurrentScaleSize
-      // /**范围控制(拖拽不能超出容器范围) */
-      // if (newleft < 0) {
-      //   newleft = 0
-      // } else if (newleft > this.width) {
-      //   newleft = this.width - 1
-      // }
-
-      // if (afterMovedTop < 0) {
-      //   newtop = 0
-      // } else if (newtop > this.height) {
-      //   newtop = this.height - 1
-      // }
-
-      dragComp.left += xchanged
-      dragComp.top += ychanged
       return false
     }
     // 在容器内拖拽组件大小
@@ -162,7 +154,7 @@ export default class PCPageDesign extends EnginePage {
       xchanged = xchanged / parentPageCurrentScaleSize
       window.console.log(' DragItemTypeEnum.drag_component_size 1:', compInfo.position)
       ychanged = ychanged / parentPageCurrentScaleSize
-      this.changeComponentSize(ychanged, xchanged, compInfo.compId, compInfo.position)
+      this.changeComponentSize(xchanged, ychanged, compInfo.compId, compInfo.position)
       // window.console.log(compInfo.position)
       return false
     }

@@ -166,12 +166,13 @@ export default class EngineLayout extends Vue {
   created() {
     this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false)
     this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
+
     this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
 
-    let initCompPosition = { width: '', heigh: '', x: '', y: '' }
+    let initCompPosition = { width: '1624px', heigh: '768px', x: 0, y: 0 }
     this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), initCompPosition, true, '')
 
     this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, 'px')
@@ -247,60 +248,64 @@ export default class EngineLayout extends Vue {
     this.setPropertyVal(pro.id, val)
   }
   get width(): any {
-    var pro = this.findPropertyByName('基础设置', '宽度')
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as any
+    return pro.value.width
   }
   set width(val: any) {
-    var pro = this.findPropertyByName('基础设置', '宽度')
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.width = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get height(): any {
-    var pro = this.findPropertyByName('基础设置', '高度')
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as any
+    return pro.value.height
   }
   set height(val: any) {
-    var pro = this.findPropertyByName('基础设置', '高度')
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.height = val
+    this.setPropertyVal(pro.id, pro.value)
   }
-  get left(): number {
-    var pro = this.findPropertyByName('基础设置', '左边位置')
+  get left(): any {
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.x
   }
-  set left(val: number) {
-    var pro = this.findPropertyByName('基础设置', '左边位置')
+  set left(val: any) {
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.x = val
+    this.setPropertyVal(pro.id, pro.value)
   }
-  get top(): number {
-    var pro = this.findPropertyByName('基础设置', '顶部位置')
+  get top(): any {
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.y
   }
-  set top(val: number) {
-    var pro = this.findPropertyByName('基础设置', '顶部位置')
+  set top(val: any) {
+    var pro = this.findPropertyByName('基础设置', '布局信息')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.y = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get margin_left(): number {
     var pro = this.findPropertyByName('基础设置', '外边距-左')
