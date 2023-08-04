@@ -15,6 +15,7 @@ import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import dragHelper from '@designEngine/02common/dragHelper_new'
 import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
+import { parseInt } from 'lodash-es'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
@@ -142,10 +143,9 @@ export default class PCPageDesign extends EnginePage {
     let parentPageCurrentScaleSize = (dragComp.topLayout as any as EnginePage).currentScaleSize
     // 在容器内拖拽组件位置
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      // let x = $(dragComp.parentLayout).width
-      let dragCompOffset = $(el).offset()
-      dragComp.left = dragCompOffset.left + xchanged + 'px'
-      dragComp.top = dragCompOffset.top + ychanged + 'px'
+      let selfPosition = $(el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
+      dragComp.left = (selfPosition.left + xchanged).toFixed(0) + 'px'
+      dragComp.top = (selfPosition.top + ychanged).toFixed(0) + 'px'
 
       return false
     }

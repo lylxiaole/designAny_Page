@@ -167,10 +167,10 @@ export default class EngineLayout extends Vue {
     this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false)
     this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
 
-    this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
 
     let initCompPosition = { width: '1624px', heigh: '768px', x: 0, y: 0 }
     this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), initCompPosition, true, '')
@@ -872,28 +872,39 @@ export default class EngineLayout extends Vue {
   }
   /**对外公布方法 尺寸向上变化*/
   public sizeChange_Up(changeVal: number) {
-    if (this.height - changeVal >= 20) {
-      this.top += changeVal
-      this.height -= changeVal
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(this.$el).offsetParent().height() - changeVal >= 20) {
+      // this.top += changeVal
+      // this.height -= changeVal
+
+      this.top = ($(this.$el).offsetParent().position().top + changeVal).toFixed(0) + 'px'
+      this.height = ($(this.$el).offsetParent().height() - changeVal).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向下变化*/
   public sizeChange_Down(changeVal: number) {
-    if (this.height + changeVal >= 20) {
-      this.height += changeVal
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(this.$el).offsetParent().height() + changeVal >= 20) {
+      this.height = ($(this.$el).offsetParent().height() + changeVal).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向左变化*/
   public sizeChange_Left(changeVal: number) {
-    if (this.width - changeVal >= 20) {
-      this.left += changeVal
-      this.width -= changeVal
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(this.$el).offsetParent().width() - changeVal >= 20) {
+      // this.left += changeVal
+      // this.width -= changeVal
+
+      this.left = ($(this.$el).offsetParent().position().left + changeVal).toFixed(0) + 'px'
+      this.width = ($(this.$el).offsetParent().width() - changeVal).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向右变化*/
   public sizeChange_Right(changeVal: number) {
-    if (this.width + changeVal >= 20) {
-      this.width += changeVal
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(this.$el).offsetParent().width() + changeVal >= 20) {
+      // this.width += changeVal
+      this.width = ($(this.$el).offsetParent().width() + changeVal).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸左上变化*/

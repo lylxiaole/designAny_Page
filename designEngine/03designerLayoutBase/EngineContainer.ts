@@ -200,7 +200,7 @@ export default class EngineContainer extends EngineLayout {
   //   e.stopPropagation()
   // }
   /**********************************底层方法 ******************************/
-  protected changeComponentSize(verchanged: number, horchanged: number, compId: string, position: string) {
+  protected changeComponentSize(horchanged: number, verchanged: number, compId: string, position: string) {
     let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
       case 'you_xia':
