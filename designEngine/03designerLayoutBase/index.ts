@@ -42,3 +42,5 @@ export { param, paramType, layoutEvent, layoutMethod } from './commonClasses/lay
 export { paramInfo } from './commonClasses/pageInParamInfo'
 export { factory } from './behavior'
 export { LayoutType, LayoutInfo, CompIndex, findSystemCompByCode, allComponents, layoutCompTypeAttr } from './commonClasses/componentInfos'
+
+export * from './behavior/index'
