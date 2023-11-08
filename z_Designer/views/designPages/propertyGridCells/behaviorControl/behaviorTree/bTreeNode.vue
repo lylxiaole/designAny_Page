@@ -1,31 +1,30 @@
 <template>
   <div style="height:100%;width:100%" @dblclick="onTreeNodeDoubleClick">
     <span v-if="isEdit===false" class="gad-b-tree-node-span"> {{ currentValue }} </span>
-    <a-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged"
-             @blur="onTreeNodeBlur"/>
+    <a-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" />
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator'
-import common from '../../../02common/commonMethod'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { deepClone, getUuid } from '@common/utils'
 
-@Component
+@Options()
 export default class bTreeNode extends Vue {
   @Prop() nodeKey: string
   @Prop() value: string
 
   @Emit('update:value')
-  private updateValue_Inner(val: any) {
-  }
+  private updateValue_Inner(val: any) {}
 
   private isEdit: boolean = false
   private currentValue: string = ''
   private oldValue: string = ''
 
   mounted() {
-    this.currentValue = common.clone(this.value)
-    this.oldValue = common.clone(this.value)
+    this.currentValue = deepClone(this.value)
+    this.oldValue = deepClone(this.value)
   }
 
   private onNodevalChanged(e: any) {
@@ -55,12 +54,10 @@ export default class bTreeNode extends Vue {
   }
 
   @Emit('onValueChanged')
-  private onValueChanged(nodeKey: string, val: string) {
-  }
+  private onValueChanged(nodeKey: string, val: string) {}
 
   @Emit('onSureNodeName')
-  private onSureNodeName(nodeKey: string, val: string) {
-  }
+  private onSureNodeName(nodeKey: string, val: string) {}
 }
 </script>
 

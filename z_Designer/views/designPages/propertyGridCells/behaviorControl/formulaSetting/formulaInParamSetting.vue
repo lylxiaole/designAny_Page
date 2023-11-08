@@ -20,11 +20,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../../02common/commonMethod'
-import PageBase from '../../../05designerLayouts/PageBase'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+
+import { deepClone, getUuid } from '@common/utils'
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
-import { param } from '../../../02common/commonClasses/layoutEvent'
+import { param } from '@designEngine/index'
 import { message } from 'ant-design-vue'
 import {
   layoutEventBehaviors,
@@ -37,13 +39,13 @@ import {
   object_Method,
   object_Method_InParam,
   factory,
-  resourceType,
-} from '../../../02common/behavior'
+  resourceType
+} from '@designEngine/index'
 
-@Component({
+@Options({
   components: {
-    bahaviorResourceSelectTree: bahaviorResourceTree,
-  },
+    bahaviorResourceSelectTree: bahaviorResourceTree
+  }
 })
 export default class formulaInParamSetting extends Vue {
   @Prop() currentObj: object_Method
@@ -84,7 +86,7 @@ export default class formulaInParamSetting extends Vue {
     // window.console.log('替换参数节点')
     var newObjClone = this.actionFactory.makeObject(newObj.resourceId, newObj.name, newObj.objType, newObj.resourceType)
     newObjClone.cloneFrom(newObj)
-    newObjClone.id = common.getUuid()
+    newObjClone.id = getUuid()
     //找到原有节点，并用新的节点替代
     var currentObjMethod = this.currentObj as object_Method
     var findInParam = currentObjMethod.inputParams.find((o) => o.obj == oldObj)
@@ -117,7 +119,7 @@ export default class formulaInParamSetting extends Vue {
       return
     }
 
-    var newobj = this.actionFactory.makeObject(common.getUuid(), this.newParamName, objectType.fixedVal, resourceType.fixedVal)
+    var newobj = this.actionFactory.makeObject(getUuid(), this.newParamName, objectType.fixedVal, resourceType.fixedVal)
     this.currentObj.inputParams.push({ name: this.newParamName, obj: newobj, isModel: false })
     this.newParanamVisible = false
   }

@@ -1,35 +1,36 @@
 <template>
   <div>
-    <a-button type="primary" class="themeButton"
+    <el-button type="primary" class="themeButton"
       style="width:118px;height:34px;background:rgba(0,103,138,0.1);border-color:rgba(0,103,138,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
-      @click="startEdit" size="small">
-      <a-icon style="font-size:20px" :component="behavioricon" />行为设置</a-button>
-    <a-modal ref="previewPopup" title="行为设置" style="height:80.37%" width="70.94%" centered :bodyStyle="modalBodyStyle" class="behavior-modal"
-      :visible="windowVisible" :maskClosable="false" destroyOnClose :footer="null" @cancel="onClose">
-      <a-layout style="height:100%;background:#FFF">
-        <component ref="comp" :prePage="prePage" :record="record" :currentData="currentData" :designerEvents="designerLayoutEvents"
-          :currentPageBehaviors="currentPageBehaviors" :currentPage="currentPage" :currentLayout="currentLayouts" :is="currentComp"
-          @onList="handleList" @onDetail="handleDetail">
-        </component>
-        <a-layout-footer class="behavior-footer">
-          <div class="steps-action">
-            <a-button @click="onCancel">
-              取消
-            </a-button>
-            <a-button :style="{'margin-left':' 8px'}" type="primary" @click="onConfirm">
-              确认
-            </a-button>
-          </div>
-        </a-layout-footer>
-      </a-layout>
-    </a-modal>
+      @click="startEdit" size="small" :icon="behavioricon">
+      <span>行为设置</span>
+
+      <el-dialog ref="previewPopup" title="行为设置" style="height:80.37%" width="70.94%" centered :bodyStyle="modalBodyStyle" class="behavior-modal"
+        :visible="windowVisible" :maskClosable="false" destroyOnClose :footer="null" @cancel="onClose">
+        <el-row style="height:100%;background:#FFF">
+          <component ref="comp" :prePage="prePage" :record="record" :currentData="currentData" :designerEvents="designerLayoutEvents"
+            :currentPageBehaviors="currentPageBehaviors" :currentPage="currentPage" :currentLayout="currentLayouts" :is="currentComp"
+            @onList="handleList" @onDetail="handleDetail">
+          </component>
+          <el-row class="behavior-footer">
+            <div class="steps-action">
+              <el-button @click="onCancel">
+                取消
+              </el-button>
+              <el-button :style="{'margin-left':' 8px'}" type="primary" @click="onConfirm">
+                确认
+              </el-button>
+            </div>
+          </el-row>
+        </el-row>
+      </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { deepClone } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 
 import propertyCellBase from '../common'
 

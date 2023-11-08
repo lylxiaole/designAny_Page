@@ -368,6 +368,6 @@ export function clearAllSearchCache() {
   allSearches.forEach((o) => o.clear())
 }
 
-export default function getSearchClass(resType: resourceSearchType): pageSearchBase {
+export function getSearchClass(resType: resourceSearchType): pageSearchBase {
   return allSearches.filter((o: any) => o.constructor.prototype.$Meta.resType == resType)[0]
 }

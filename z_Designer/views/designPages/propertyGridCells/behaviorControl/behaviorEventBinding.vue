@@ -1,39 +1,39 @@
 <template>
-  <a-layout style="height:100%">
-    <a-row style="height:100%;background:#FFF;">
-      <a-col style="height:100%;background:#FFF;" :span="6">
-        <a-layout style="height:100%;background:#FFF">
-          <a-row style="height:54px;padding:0px 0px 8px 8px;">
+  <el-row style="height:100%">
+    <el-row style="height:100%;background:#FFF;">
+      <el-col style="height:100%;background:#FFF;" :span="6">
+        <el-row style="height:100%;background:#FFF">
+          <el-row style="height:54px;padding:0px 0px 8px 8px;">
             <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6"
               class="flexHorilanLayout">
               <div style="background:#18aeb7;width:6px;height:46px;"></div>
               <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件列表</span>
             </div>
-          </a-row>
-          <a-row style="height: calc(100% - 58px);padding:0px 0px 8px 8px;">
-            <a-menu v-model="selectedEventNames" style="height:100%;overflow-y:auto;overflow-x:hidden;border:1px solid #ccc;padding:0px 2px"
+          </el-row>
+          <el-row style="height: calc(100% - 58px);padding:0px 0px 8px 8px;">
+            <el-menu v-model="selectedEventNames" style="height:100%;overflow-y:auto;overflow-x:hidden;border:1px solid #ccc;padding:0px 2px"
               mode="inline" size="small">
-              <a-menu-item v-for="event in designerEvents" :key="event.eventName">
+              <el-menu-item v-for="event in designerEvents" :key="event.eventName">
                 <span>{{event.eventName}}</span>
-              </a-menu-item>
-            </a-menu>
-          </a-row>
-        </a-layout>
-      </a-col>
-      <a-col style="height:100%;background:#FFF;" :span="18">
-        <a-layout style="height:100%;background:#FFF">
-          <a-row class="behavior-list-header">
+              </el-menu-item>
+            </el-menu>
+          </el-row>
+        </el-row>
+      </el-col>
+      <el-col style="height:100%;background:#FFF;" :span="18">
+        <el-row style="height:100%;background:#FFF">
+          <el-row class="behavior-list-header">
             <div style="width:100%;height:100%;justify-content:left;overflow:hidden;" class="flexHorilanLayout">
               <div style="background:#18aeb7;width:6px;height:46px;"></div>
               <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件行为列表</span>
-              <a-button class="behavior-list-header-button" style="width:104px;height:30px;background:rgba(245,166,35,1);color:rgba(255,255,255,1);"
+              <el-button class="behavior-list-header-button" style="width:104px;height:30px;background:rgba(245,166,35,1);color:rgba(255,255,255,1);"
                 @click="toBehaviorList">
                 <a-icon style="font-size:17px" :component="behaviorAddIcon" />添加行为
-              </a-button>
+              </el-button>
             </div>
-          </a-row>
-          <a-row class="behavior-list-content">
-            <a-table height="100%" rowKey="id" :columns="behaviorColumns" :dataSource="currentSelectedBehaviors" :pagination="false" bordered>
+          </el-row>
+          <el-row class="behavior-list-content">
+            <el-table height="100%" rowKey="id" :columns="behaviorColumns" :dataSource="currentSelectedBehaviors" :pagination="false" bordered>
               <span slot="serial" slot-scope="text,record, index">
                 {{ index + 1 }}
               </span>
@@ -71,25 +71,26 @@
                     <a-icon style="font-size:14px" :component="buttonDeleteIcon" />移除</a-button>
                 </a-tooltip>
               </span>
-            </a-table>
-          </a-row>
-        </a-layout>
-      </a-col>
-    </a-row>
-  </a-layout>
+              </a-table>
+          </el-row>
+        </el-row>
+      </el-col>
+    </el-row>
+  </el-row>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
-import { layoutEventBehaviors, behavior } from '../../02common/behavior'
-import PageBase from '../../05designerLayouts/PageBase'
-import { layoutEvent, layoutMethod, param, paramType } from '../../02common/commonClasses/layoutEvent'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { deepClone, getUuid } from '@common/utils'
+import { layoutEventBehaviors, behavior } from '@designEngine/03designerLayoutBase/index'
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
 import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
-import { moveUpIco, moveDownIco, buttonEditIco, buttonDeleteIco, buttonAddIco } from '../../assets/icons.js'
+import { moveUpIco, moveDownIco, buttonEditIco, buttonDeleteIco, buttonAddIco } from '@/assets/icons.js'
 
 //事件行为绑定组件
-@Component
+@Options({})
 export default class behaviorEventBinding extends Vue {
   @Prop() record: behaviorBindingInParam
   @Prop() designerEvents: layoutEvent[]
@@ -107,19 +108,19 @@ export default class behaviorEventBinding extends Vue {
     {
       title: '#',
       width: 50,
-      scopedSlots: { customRender: 'serial' },
+      scopedSlots: { customRender: 'serial' }
     },
     {
       title: '行为名称',
       dataIndex: 'name',
-      key: 'name',
+      key: 'name'
     },
     {
       title: '操作',
       key: 'action',
       width: 420,
-      scopedSlots: { customRender: 'action' },
-    },
+      scopedSlots: { customRender: 'action' }
+    }
   ]
 
   created() {
@@ -239,13 +240,13 @@ export default class behaviorEventBinding extends Vue {
     // window.console.log('toBehaviorList')
     let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
     if (event) {
-      back.eventBehavior = common.clone(event)
+      back.eventBehavior = deepClone(event)
     } else {
       let neweventbeh = new layoutEventBehaviors()
       neweventbeh.eventName = this.selectedEventName
       neweventbeh.behaviorIds = []
       this.currentData.push(neweventbeh)
-      back.eventBehavior = common.clone(neweventbeh)
+      back.eventBehavior = deepClone(neweventbeh)
     }
     // this.$emit('onList', back)
     this.onList(back)
@@ -258,7 +259,7 @@ export default class behaviorEventBinding extends Vue {
     back.selectedEventName = this.selectedEventName
     const behavior = this.currentPageBehaviors.find((o) => o.id == behaviorId)
     if (behavior) {
-      back.selectedBehavior = common.clone(behavior)
+      back.selectedBehavior = deepClone(behavior)
     }
     // this.$emit('onDetail', back)
     this.onDetail(back)

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>卡片备份 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="卡片备份-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="自定义-copy" transform="translate(10.000000, 30.000000)">
+            <path d="M140,35 L140,95 C140,97.7614237 137.761424,100 135,100 L5,100 C2.23857625,100 3.38176876e-16,97.7614237 0,95 L0,35 L140,35 Z M135,0 C137.761424,-5.07265313e-16 140,2.23857625 140,5 L140,25 L0,25 L0,5 C-3.38176876e-16,2.23857625 2.23857625,5.07265313e-16 5,0 L135,0 Z" id="形状结合" fill="#18AEB7"></path>
+            <path d="M55,70 L55,80 L15,80 L15,70 L55,70 Z M55,50 L55,60 L15,60 L15,50 L55,50 Z" id="形状结合" fill="#F6C444"></path>
+        </g>
+    </g>
+</svg>

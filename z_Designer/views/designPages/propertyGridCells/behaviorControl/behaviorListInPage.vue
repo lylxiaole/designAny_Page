@@ -61,13 +61,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
-import { layoutEventBehaviors, behavior } from '../../02common/behavior/behaviorTypes'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { deepClone, getUuid } from '@common/utils'
+import { layoutEventBehaviors, behavior } from '@designEngine/03designerLayoutBase/index'
 import EditableCell from '../../07commonComponents/EditableCell.vue'
 import { behaviorListInParam, behaviorPageType, behaviorDetailData } from './model'
 
-@Component({
+@Options({
   components: { EditableCell }
 })
 export default class behaviorListInPage extends Vue {
@@ -130,11 +131,11 @@ export default class behaviorListInPage extends Vue {
 
   created() {
     if (this.record && this.record.allBehaviors) {
-      this.allBehaviors = common.clone(this.record.allBehaviors)
+      this.allBehaviors = deepClone(this.record.allBehaviors)
     }
     if (this.record && this.record.eventBehavior && this.record.eventBehavior.behaviorIds) {
       const selected = this.allBehaviors.filter((x) => this.record.eventBehavior.behaviorIds.indexOf(x.id) >= 0)
-      this.currentSelectedBehaviors = common.clone(selected)
+      this.currentSelectedBehaviors = deepClone(selected)
     }
     const that = this
     // 1、数据首次加载完后 →设置表格其高度
@@ -196,7 +197,7 @@ export default class behaviorListInPage extends Vue {
 
   private bahaviorListAdd() {
     var newbehavior = new behavior()
-    newbehavior.id = common.getUuid()
+    newbehavior.id = getUuid()
     newbehavior.name = '新建行为'
     newbehavior.description = ''
     this.allBehaviors.unshift(newbehavior)
@@ -207,8 +208,8 @@ export default class behaviorListInPage extends Vue {
     let backData: behaviorDetailData = new behaviorDetailData()
     backData.prePage = behaviorPageType.list
     backData.selectedEventName = this.record.selectedEventName
-    backData.selectedBehavior = common.clone(thebehavior)
-    backData.listTempAllBehaviors = common.clone(this.allBehaviors)
+    backData.selectedBehavior = deepClone(thebehavior)
+    backData.listTempAllBehaviors = deepClone(this.allBehaviors)
 
     let eventbehaviors: layoutEventBehaviors = new layoutEventBehaviors()
     eventbehaviors.eventName = this.record.selectedEventName

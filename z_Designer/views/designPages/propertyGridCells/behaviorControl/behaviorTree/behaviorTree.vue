@@ -38,11 +38,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../../02common/commonMethod'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { deepClone, getUuid } from '@common/utils'
 import propertyCellBase from '../../propertyCellBase'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../../commonTypes'
-import { layoutEvent, layoutMethod, param, paramType } from '../../../02common/commonClasses/layoutEvent'
+import { propertyCellTypeAttr, PropertyTypeEnum } from '../../common'
+import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
 import {
   layoutEventBehaviors,
   behavior,
@@ -59,9 +60,8 @@ import {
   factory
 } from '../../../02common/behavior'
 import actionFilterSetting from './actionFilterSetting.vue'
-import PageBase from '../../../05designerLayouts/PageBase'
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import btreeNode from './bTreeNode.vue'
-import LayoutBase from '../../../03designerLayoutBase/LayoutBase'
 import Clipboard from 'clipboard'
 
 let VueContextMenu = require('vue-context-menu')
@@ -89,7 +89,7 @@ enum rightMenuEnum {
   delete = '删除'
 }
 
-@Component({
+@Options({
   components: {
     VueContextMenu: VueContextMenu,
     btreeNode: btreeNode,
@@ -154,9 +154,7 @@ export default class behaviorTree extends Vue {
   }
 
   private renderDom(dom: Element) {
-    $(this.$el)
-      .find('.ant-tree-switcher')
-      .css('z-index', 5)
+    $(this.$el).find('.ant-tree-switcher').css('z-index', 5)
   }
 
   private loadClipboardComp() {
@@ -239,7 +237,7 @@ export default class behaviorTree extends Vue {
   private addNewAction() {
     //window.console.log('添加动作')
     let newaction = new action()
-    newaction.id = common.getUuid()
+    newaction.id = getUuid()
     newaction.name = '新建动作'
     newaction.actionDetails = []
 
@@ -254,10 +252,10 @@ export default class behaviorTree extends Vue {
   private addNewActionDetail() {
     //window.console.log('添加动作细节')
     let newactionDetail = new actionDetail()
-    newactionDetail.id = common.getUuid()
+    newactionDetail.id = getUuid()
     newactionDetail.name = '新建动作细节'
     newactionDetail.objs = []
-    let first = this.actionFactory.makeObject(common.getUuid(), '新建变量', objectType.variable, resourceType.variables)
+    let first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
     newactionDetail.objs.push(first)
 
     let selectAct = this.getCurrentSelectedNearestAction(this.currentSettingBehavior.actions)
@@ -281,7 +279,7 @@ export default class behaviorTree extends Vue {
     if (!selectAct) {
       //window.console.error('只能在动作节点下，添加动作细节')
     } else if (this.nodeIsAction(selectAct) == true) {
-      actd.id = common.getUuid()
+      actd.id = getUuid()
       selectAct.actionDetails.push(actd)
     }
   }
@@ -290,14 +288,14 @@ export default class behaviorTree extends Vue {
     if (!act) {
       return
     }
-    act.id = common.getUuid()
+    act.id = getUuid()
 
     for (let index = 0; index < act.actionDetails.length; index++) {
       const element = act.actionDetails[index]
       if (this.nodeIsAction(element) == true) {
         this.redomActionIds(element as action)
       } else {
-        element.id = common.getUuid()
+        element.id = getUuid()
       }
     }
   }
@@ -493,11 +491,11 @@ export default class behaviorTree extends Vue {
 
     if (parentNode) {
       let index = parentNode.actionDetails.indexOf(targetNode) + indexadder
-      parentNode.actionDetails.splice(index, 0, common.clone(sourceNode))
+      parentNode.actionDetails.splice(index, 0, deepClone(sourceNode))
       this.deleteNode(sourceNode)
     } else if (this.nodeIsAction(sourceNode) == true) {
       let index = this.currentSettingBehavior.actions.indexOf(targetNode as action) + indexadder
-      this.currentSettingBehavior.actions.splice(index, 0, common.clone(sourceNode))
+      this.currentSettingBehavior.actions.splice(index, 0, deepClone(sourceNode))
       this.deleteNode(sourceNode)
     } else if (this.nodeIsAction(sourceNode) == false) {
       this.$message.warn('动作细节不能作为最顶级节点')
@@ -505,7 +503,7 @@ export default class behaviorTree extends Vue {
   }
 
   private dropChildrenNode(sourceNode: actionDetail | action, targetNode: action) {
-    targetNode.actionDetails.push(common.clone(sourceNode))
+    targetNode.actionDetails.push(deepClone(sourceNode))
     this.deleteNode(sourceNode)
   }
   // ************动作条件设计*******************************************************************************************************

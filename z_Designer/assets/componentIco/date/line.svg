@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>进度条备份 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="进度条备份-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="进度条组件" transform="translate(10.000000, 35.000000)">
+            <path d="M140,70 L140,95 L0,95 L0,70 L140,70 Z M115,0 L115,25 L0,25 L0,0 L115,0 Z" id="形状结合" fill="#18AEB7"></path>
+            <rect id="Rectangle-57-Copy" fill="#F6C444" x="0" y="35" width="55" height="25"></rect>
+        </g>
+    </g>
+</svg>

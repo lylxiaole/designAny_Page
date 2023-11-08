@@ -1,0 +1,111 @@
+@themeBackground: #18aeb7;
+@themeBackground_op6: rgba(24, 174, 183, 0.6);
+
+.themeBackground {
+  background-color: @themeBackground;
+}
+.themeForecolor {
+  color: @themeBackground;
+}
+
+.themeButton {
+  border-color: @themeBackground;
+  background-color: @themeBackground;
+  color: white;
+}
+
+.themeHover:hover {
+  background: @themeBackground_op6;
+  cursor: pointer;
+}
+
+.flexHorilanLayout {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+//省略号显示文字，需要设置最大长度
+.textEllipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-modal {
+  .ant-modal-content {
+    height: inherit;
+  }
+}
+
+.behavior-modal {
+  .ant-modal-content {
+    height: 100%;
+  }
+}
+/*表单验证提示*/
+.ant-form-explain {
+  position: absolute !important;
+}
+/**
+.ant-input-affix-wrapper {
+  padding: 0px !important;
+}
+**/
+.ant-input-disabled {
+  color: rgba(0, 0, 0);
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+body .popup-class {
+  max-height: 100%;
+  max-width: 100%;
+}
+body .popup-class .layui-layer-title {
+  background: @themeBackground;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+}
+
+body .popup-class .layui-layer-btn {
+  border-top: 1px solid #e9e7e7;
+}
+body .popup-class .layui-layer-btn a {
+  background: #333;
+}
+
+.layui-layer {
+  z-index: 100 !important;
+}
+.layui-layer-shade {
+  z-index: 100 !important;
+}
+
+body .popup-class .layui-layer-btn .layui-layer-btn1 {
+  background: #999;
+}
+.tableCotainer {
+  .vxe-tree--btn-wrapper {
+    background-color: #fff0 !important;
+  }
+  .vxe-table.vxe-editable .vxe-body--column {
+    height: 23px;
+  }
+  /**
+path {
+    fill: #369 !important;
+  }
+**/
+}
+.ant-message-warning {
+  svg {
+    fill: @themeBackground;
+  }
+}
+
+.hideCancleBtn_behav_confirm {
+  display: none;
+}

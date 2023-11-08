@@ -4,7 +4,7 @@
       <a-input-search v-if="canSearch" v-model="currentSearchStr" size="middle" style="margin-bottom: 8px" @search="onSearch" />
       <div :style="{height:canSearch?'460px':'500px',overflow:'auto'}" @scroll="onTreeScroll">
         <a-menu :style="{width:'100%',overflow:'auto',height:'100%'}" @select="onSelectItem">
-          <template v-for="item in currentItems" >
+          <template v-for="item in currentItems">
             <a-menu-item v-if="item.key" size="small" :tooltip="item.title" :key="item.key">
               <a-tooltip :title="item.title">
                 <a-icon type="folder" />{{item.title}}
@@ -25,11 +25,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { groupNode, objectBase, objectType, object_Variable, object_FixedVal, resourceType, resourceSearchType } from '../../../02common/behavior'
-import getSearchClass from '../../../02common/behavior/04_actionReaourceTree'
+import {getSearchClass} from  '@designEngine/index'
 
-@Component({ name: 'resouceChooseComp' })
+@Options({ name: 'resouceChooseComp' })
 export default class resouceChooseComp extends Vue {
   @Prop() parentGroup: groupNode
   @Prop() itemWidth: any
@@ -66,7 +67,7 @@ export default class resouceChooseComp extends Vue {
         resourceSearchType.pageRoute,
         resourceSearchType.externalLinks,
         resourceSearchType.modelMapper,
-        resourceSearchType.consoleSettings,
+        resourceSearchType.consoleSettings
       ]
 
       for (let index = 0; index < allReourceTypes.length; index++) {
@@ -161,9 +162,7 @@ export default class resouceChooseComp extends Vue {
   /**树下拉 */
   private async onTreeScroll(e: any) {
     var winH = $(e.target).height() //页面可视区域高度
-    var pageH = $(e.target)
-      .children()
-      .height() //当前文档总高度
+    var pageH = $(e.target).children().height() //当前文档总高度
     var scrollT = $(e.target).scrollTop() //滚动条top的值
     var bottomH = (pageH - winH - scrollT) / winH // 当前所滚动位置到底部距离
     if (bottomH > 0) {
@@ -222,8 +221,12 @@ export default class resouceChooseComp extends Vue {
   // align-items: center;
 }
 
-.ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover{
-  color:#000;
-} 
+.ant-menu-item:hover,
+.ant-menu-item-active,
+.ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+.ant-menu-submenu-active,
+.ant-menu-submenu-title:hover {
+  color: #000;
+}
 </style>
  

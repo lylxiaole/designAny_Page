@@ -19,18 +19,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../02common/commonMethod'
-import propertyCellBase from '../propertyCellBase'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../commonTypes'
-import { layoutEvent, layoutMethod, param, paramType } from '../../02common/commonClasses/layoutEvent'
-import { layoutEventBehaviors, behavior, action, actionDetail } from '../../02common/behavior/behaviorTypes'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { deepClone,getUuid } from '@common/utils'
+import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
+import { layoutEventBehaviors, behavior, action, actionDetail } from '@designEngine/03designerLayoutBase/index'
 
-import PageBase from '../../05designerLayouts/PageBase'
-import LayoutBase from '../../03designerLayoutBase/LayoutBase'
-import { pageSearchBase } from '../../02common/behavior/04_actionReaourceTree'
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
-@Component({
+import { pageSearchBase } from '@designEngine/index'
+
+@Options({
   components: {},
 })
 export default class behaviorListInPageModal extends Vue {
@@ -62,7 +62,7 @@ export default class behaviorListInPageModal extends Vue {
   mounted() {
     // window.console.log(1212121212121)
     if (pageSearchBase.currentPage) {
-      this.allBehaviors = common.clone(pageSearchBase.currentPage.behaviors)
+      this.allBehaviors = deepClone(pageSearchBase.currentPage.behaviors)
       this.currentSelectedBehaviors = this.allBehaviors.filter((b) => b.id === this.callboackbehaviorid)
     }
   }
@@ -73,7 +73,7 @@ export default class behaviorListInPageModal extends Vue {
     window.console.log('编辑行为明细')
     this.showDetailSetting = true
     var find = this.allBehaviors.find((o) => o.id == behaviorId)
-    this.currentSettingBehavior = common.clone(find)
+    this.currentSettingBehavior = deepClone(find)
   }
   /**为了让动作列表，具有完整的get set 和方法，需要崇训组织action列表 */
   deleteBehavior(behaviorId: string) {
@@ -82,7 +82,7 @@ export default class behaviorListInPageModal extends Vue {
   }
   bahaviorListAdd() {
     var newbehavior = new behavior()
-    newbehavior.id = common.getUuid()
+    newbehavior.id = getUuid()
     newbehavior.name = '新建行为'
     newbehavior.description = ''
     this.allBehaviors.push(newbehavior)
@@ -110,7 +110,7 @@ export default class behaviorListInPageModal extends Vue {
     if (!this.currentSettingBehavior) {
       return false
     } else {
-      data = common.clone(this.currentSettingBehavior) as behavior
+      data = deepClone(this.currentSettingBehavior) as behavior
     }
     var findIndex = this.allBehaviors.findIndex((o) => o.id == data.id)
     this.allBehaviors[findIndex] = data

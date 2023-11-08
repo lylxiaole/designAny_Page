@@ -1,15 +1,15 @@
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../../02common/commonMethod'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { VNode } from 'vue'
-import { groupNode, objectBase, objectType, object_Variable, object_FixedVal } from '../../../02common/behavior'
+import { groupNode, objectBase, objectType, object_Variable, object_FixedVal } from '@designEngine/index'
 
-@Component({ name: 'bahaviorResourceSelectTree' })
+@Options({})
 export default class bahaviorResourceSelectTree extends Vue {
   @Prop() currentObj: objectBase
   @Prop() resourceTypesNotAllow: string[]
   @Prop() canDeleteObj: boolean
 
-  // private myEventId: string = common.getUuid()
+  // private myEventId: string = getUuid()
   private renderContext: any = null
   private selectedKeys: string[] = []
   private normalResources: groupNode[] = []
@@ -21,6 +21,7 @@ export default class bahaviorResourceSelectTree extends Vue {
     }
     return this.resourceTypesNotAllow
   }
+  created() {}
 
   mounted() {
     this.onRefreshResource()
@@ -34,7 +35,7 @@ export default class bahaviorResourceSelectTree extends Vue {
     // this.signResources = actionResources.objectResources.filter((o) => o.title == '运算符')[0].childrenObjs
   }
   /*********绘制控件节点************************ */
-  public render(h: any) {
+  protected render(h: any) {
     this.renderContext = h
     if (!this.currentObj) {
       return <div></div>
@@ -45,21 +46,9 @@ export default class bahaviorResourceSelectTree extends Vue {
         <a-dropdown>
           <a-badge>
             {this.cuteDeleteIcon(h)}
-            <a-input
-              style="width:250px"
-              onClick={() => this.onFocus(this.currentObj)}
-              class="ant-dropdown-link"
-              v-model={(this.currentObj as object_FixedVal).val}
-              placeholder="请填写固定值"
-            />
+            <a-input style="width:250px" onClick={() => this.onFocus(this.currentObj)} class="ant-dropdown-link" v-model={(this.currentObj as object_FixedVal).val} placeholder="请填写固定值" />
           </a-badge>
-          <a-menu
-            style="height:300px;width:250px;overflow:auto"
-            slot="overlay"
-            onSelect={this.menuSelected.bind(this)}
-            v-model={this.selectedKeys}
-            selectable
-          >
+          <a-menu style="height:300px;width:250px;overflow:auto" slot="overlay" onSelect={this.menuSelected.bind(this)} v-model={this.selectedKeys} selectable>
             {this.cuteGroupOptions(this.renderContext, this.normalResources)}
           </a-menu>
         </a-dropdown>
@@ -69,21 +58,9 @@ export default class bahaviorResourceSelectTree extends Vue {
         <a-dropdown>
           <a-badge>
             {this.cuteDeleteIcon(h)}
-            <a-input
-              style="width:250px"
-              onClick={() => this.onFocus(this.currentObj)}
-              class="ant-dropdown-link"
-              v-model={(this.currentObj as object_Variable).name}
-              placeholder="请填写变量名称"
-            />
+            <a-input style="width:250px" onClick={() => this.onFocus(this.currentObj)} class="ant-dropdown-link" v-model={(this.currentObj as object_Variable).name} placeholder="请填写变量名称" />
           </a-badge>
-          <a-menu
-            style="height:300px;width:250px;overflow:auto"
-            slot="overlay"
-            onSelect={this.menuSelected.bind(this)}
-            v-model={this.selectedKeys}
-            selectable
-          >
+          <a-menu style="height:300px;width:250px;overflow:auto" slot="overlay" onSelect={this.menuSelected.bind(this)} v-model={this.selectedKeys} selectable>
             {this.cuteGroupOptions(this.renderContext, this.normalResources)}
           </a-menu>
         </a-dropdown>
@@ -98,13 +75,7 @@ export default class bahaviorResourceSelectTree extends Vue {
               <a-icon type="down" />
             </a-button>
           </a-badge>
-          <a-menu
-            style="height:300px;width:250px;overflow:auto"
-            slot="overlay"
-            onSelect={this.menuSelected.bind(this)}
-            v-model={this.selectedKeys}
-            selectable
-          >
+          <a-menu style="height:300px;width:250px;overflow:auto" slot="overlay" onSelect={this.menuSelected.bind(this)} v-model={this.selectedKeys} selectable>
             {this.cuteGroupOptions(this.renderContext, this.normalResources)}
           </a-menu>
         </a-dropdown>
@@ -119,13 +90,7 @@ export default class bahaviorResourceSelectTree extends Vue {
               <a-icon type="down" />
             </a-button>
           </a-badge>
-          <a-menu
-            style="height:300px;width:250px;overflow:auto"
-            slot="overlay"
-            onSelect={this.menuSelected.bind(this)}
-            v-model={this.selectedKeys}
-            selectable
-          >
+          <a-menu style="height:300px;width:250px;overflow:auto" slot="overlay" onSelect={this.menuSelected.bind(this)} v-model={this.selectedKeys} selectable>
             {this.cuteObjectOptions(this.renderContext, this.signResources)}
           </a-menu>
         </a-dropdown>

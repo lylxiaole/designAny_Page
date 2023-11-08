@@ -21,13 +21,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '../../../05designerLayouts/PageBase'
-import ComponentBase from '../../../04designerComponents/ComponentBase'
-import LayoutBase from '../../../03designerLayoutBase/LayoutBase'
-import common from '../../../02common/commonMethod'
-import { Option } from 'ant-design-vue/types/select/option'
-import { VNode } from 'vue'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { deepClone, getUuid } from '@common/utils'
+
 import {
   groupNode,
   action,
@@ -40,19 +39,19 @@ import {
   object_FixedVal,
   object_Method,
   formulaType,
-  resourceType,
-} from '../../../02common/behavior'
-import getSearchClass, { pageSearchBase } from '../../../02common/behavior/04_actionReaourceTree'
+  resourceType
+} from '@designEngine/index'
+import { getSearchClass, pageSearchBase } from '@designEngine/index'
 import formulaSetting from '../formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from '../formulaSetting/formulaInParamSetting.vue'
 import resouceChooseComp from '../behaviorResources/resouceChooseComp.vue'
 
-@Component({
+@Options({
   components: {
     resouceChooseComp: resouceChooseComp,
     formulaSetting: formulaSetting,
-    formulaInParamSetting: formulaInParamSetting,
-  },
+    formulaInParamSetting: formulaInParamSetting
+  }
 })
 export default class actionFilterSetting extends Vue {
   @Prop() currentLayout: LayoutBase
@@ -82,7 +81,7 @@ export default class actionFilterSetting extends Vue {
     }
     var newactdeatil = new actionDetail()
     newactdeatil.isActionDetail = true
-    newactdeatil.id = common.getUuid()
+    newactdeatil.id = getUuid()
     // newactdeatil.objs = this.dealOldJsonData(this.currentAction.judgingCondition)
     newactdeatil.objs = this.currentAction.judgingCondition
     this.currentActionDetail = newactdeatil
@@ -103,7 +102,7 @@ export default class actionFilterSetting extends Vue {
     // })
     //如果当前动作细节里面没有对象，添加一个
     if (newobjs.length < 1) {
-      var first = this.actionFactory.makeObject(common.getUuid(), '新建变量', objectType.variable, resourceType.variables)
+      var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
       newobjs.push(first)
     }
     return newobjs

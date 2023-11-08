@@ -64,13 +64,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '../../../05designerLayouts/PageBase'
-import ComponentBase from '../../../04designerComponents/ComponentBase'
-import LayoutBase from '../../../03designerLayoutBase/LayoutBase'
-import common from '../../../02common/commonMethod'
-import { Option } from 'ant-design-vue/types/select/option'
-import { VNode } from 'vue'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { deepClone, getUuid } from '@common/utils'
 import {
   groupNode,
   objectBase,
@@ -81,15 +78,15 @@ import {
   object_FixedVal,
   object_callback,
   popupCallback,
-  formulaType,
-} from '../../../02common/behavior'
+  formulaType
+} from '@designEngine/index'
+
+import { getSearchClass, pageSearchBase } from '@designEngine/index'
+import { layoutEventBehaviors, behavior, action, actionDetail } from '@designEngine/index'
+import callbackSetting from './callbackSetting/callbackSetting.vue'
+
 import resourceChooseWindow from './resoucesChooseWindow.vue'
 import behaviorListInPageModal from '../behaviorListInPageModal.vue'
-import getSearchClass from '../../../02common/behavior/04_actionReaourceTree'
-import { pageSearchBase } from '../../../02common/behavior/04_actionReaourceTree'
-import callbackSetting from './callbackSetting/callbackSetting.vue'
-import { layoutEventBehaviors, behavior, action, actionDetail } from '../../../02common/behavior/behaviorTypes'
-
 class treeNode {
   key: string
   title: string
@@ -97,12 +94,12 @@ class treeNode {
   children: treeNode[] = []
 }
 
-@Component({
+@Options({
   components: {
     resourceChooseWindow,
     behaviorListInPageModal,
-    callbackSetting,
-  },
+    callbackSetting
+  }
 })
 export default class behaviorResourcesSelect extends Vue {
   @Prop() currentObj: objectBase
@@ -171,22 +168,12 @@ export default class behaviorResourcesSelect extends Vue {
     this.chooseResouceVisible = true
   }
 
-  private onChooseObj(obj: objectBase) { 
+  private onChooseObj(obj: objectBase) {
     this.onSelectNodeChanged(obj, this.currentObj)
     this.chooseResouceVisible = false
   }
 
   private settingCallBack(obj: object_callback) {
-    /****************************************************** */
-    // var domid = common.getUuid()
-    // var div = ' <div id="' + domid + '"> </div> '
-    // $(this.$refs.renderdiv).append(div)
-    // var page = new Vue({
-    //   render: (h) => h('geno-layoutProfessional'),
-    // }).$mount('#' + domid).$children[0] as PageBase
-    // page.Load(obj.resourceId)
-    // page.width = 0
-    // page.height = 0
     /****************************************************** */
     if (obj.isChoosePageSource) {
       var page = new PageBase()

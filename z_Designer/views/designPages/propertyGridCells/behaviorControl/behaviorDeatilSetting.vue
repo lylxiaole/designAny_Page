@@ -1,58 +1,57 @@
 <template style="height:100%">
-  <a-layout style="height:100%;background:#FFF;">
-    <a-row style="height:100%;background:#FFF;">
-      <a-col style="height:100%;background:#FFF;" :span="6">
-        <a-layout style="height:100%;background:#FFF;">
-          <a-layout style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
+  <el-row style="height:100%;background:#FFF;">
+    <el-row style="height:100%;background:#FFF;">
+      <el-col style="height:100%;background:#FFF;" :span="6">
+        <el-row style="height:100%;background:#FFF;">
+          <el-row style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
             <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6"
               class="flexHorilanLayout">
               <div style="background:#18aeb7;width:6px;height:46px;"></div>
               <span style="margin-left:9px;float:left;fontSize:18px">动作</span>
             </div>
-          </a-layout>
-          <a-layout style="height:calc(100% - 54px);width:100%;background:#eeeeee;">
-            <a-layout-content style="height:100%;width:100%;background:#FFF;">
+          </el-row>
+          <el-row style="height:calc(100% - 54px);width:100%;background:#eeeeee;">
+            <el-row style="height:100%;width:100%;background:#FFF;">
               <behaviorTree style="height:100%;width:100%;background:#eeeeee;" :currentLayout="currentLayout" :currentPage="currentPage"
                 :currentSettingBehavior="currentSettingBehavior" :actionFactory="actionFactory" @currentActionChanged="currentActionChanged" />
-            </a-layout-content>
-          </a-layout>
-        </a-layout>
-      </a-col>
-      <a-col style="height:100%;" :span="18">
-        <a-layout style="height:100%;">
-          <a-layout style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
+            </el-row>
+          </el-row>
+        </el-row>
+      </el-col>
+      <el-col style="height:100%;" :span="18">
+        <el-row style="height:100%;">
+          <el-row style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
             <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6"
               class="flexHorilanLayout">
               <div style="background:#18aeb7;width:6px;height:46px;"></div>
               <span style="margin-left:9px;float:left;fontSize:18px">配置条件</span>
             </div>
-          </a-layout>
-          <a-layout style="height:40%;padding:8px;overflow-y:auto;background:#FFF;">
+          </el-row>
+          <el-row style="height:40%;padding:8px;overflow-y:auto;background:#FFF;">
             <formulaSetting :forType="forType" :currentActionDetail="currentActionDetail" :actionFactory="actionFactory"
               @onFocusFormula="onFocusFormula" />
-          </a-layout>
-          <a-layout style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
+          </el-row>
+          <el-row style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
             <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6"
               class="flexHorilanLayout">
               <div style="background:#18aeb7;width:6px;height:46px;"></div>
               <span style="margin-left:9px;float:left;fontSize:18px">参数</span>
-              <a-button type="primary" size="small" style="margin-left:24px;" icon="unordered-list" @click="showModelList">模型实例</a-button>
+              <el-button type="primary" size="small" style="margin-left:24px;" icon="unordered-list" @click="showModelList">模型实例</el-button>
             </div>
-          </a-layout>
-          <a-layout style="height:54%;padding:8px;overflow-y:auto;background:#FFF;">
+          </el-row>
+          <el-row style="height:54%;padding:8px;overflow-y:auto;background:#FFF;">
             <formulaInParamSetting :actionFactory="actionFactory" :currentObj="currentFocusObj" />
-          </a-layout>
-        </a-layout>
-      </a-col>
-    </a-row>
+          </el-row>
+        </el-row>
+      </el-col>
+    </el-row>
     <modelListPop :isShow="modelListVisible" :currentPage="currentPage" @close="closeModelList"></modelListPop>
-  </a-layout>
+  </el-row>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import {} from '../../02common/commonMethod'
-
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import {
   layoutEventBehaviors,
   behavior,
@@ -63,29 +62,30 @@ import {
   formulaType,
   objectBase,
   objectType,
-  object_Method,
-} from '../../02common/behavior'
-import PageBase from '../../05designerLayouts/PageBase'
-import LayoutBase from '../../03designerLayoutBase/LayoutBase'
+  object_Method
+} from '@designEngine/index'
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { deepClone, getUuid } from '@common/utils'
+
 import behaviorTree from './behaviorTree/behaviorTree.vue'
 import formulaSetting from './formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from './formulaSetting/formulaInParamSetting.vue'
-import { pageSearchBase } from '../../02common/behavior/04_actionReaourceTree'
+import { pageSearchBase } from '@designEngine/index'
 import { behaviorPageType, behaviorDetailInParam } from './model'
 import modelListPop from '../bindingModels/modelListPop.vue'
 
-@Component({
+@Options({
   components: {
     behaviorTree: behaviorTree,
     formulaSetting: formulaSetting,
     formulaInParamSetting: formulaInParamSetting,
-    modelListPop: modelListPop,
-  },
+    modelListPop: modelListPop
+  }
 })
 export default class behaviorDeatilSetting extends Vue {
   @Prop() prePage: behaviorPageType
-  @Prop() currentLayout: LayoutBase
-  @Prop() currentPage: PageBase
+  @Prop() currentLayout: EngineLayout
+  @Prop() currentPage: EnginePage
   @Prop() record: behaviorDetailInParam
 
   /**当前正在设置的行为 */
@@ -99,7 +99,7 @@ export default class behaviorDeatilSetting extends Vue {
 
   created() {
     if (this.record && this.record.selectedBehavior) {
-      this.currentSettingBehavior = common.clone(this.record.selectedBehavior)
+      this.currentSettingBehavior = deepClone(this.record.selectedBehavior)
     }
     this.actionFactory = new factory(this.currentLayout, this.currentPage, this.currentSettingBehavior)
     pageSearchBase.currentPage = this.currentPage

@@ -1,5 +1,5 @@
 <template>
-  <a-modal :maskClosable="false" title="事件回调" v-model="isVisible"  width="95%"  @ok="onOk" @cancel="handleCancel"
+  <a-modal :maskClosable="false" title="事件回调" v-model="isVisible" width="95%" @ok="onOk" @cancel="handleCancel"
     :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定">
     <div>
       <vxe-toolbar>
@@ -39,14 +39,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '../../../../05designerLayouts/PageBase'
-import ComponentBase from '../../../../04designerComponents/ComponentBase'
-import LayoutBase from '../../../../03designerLayoutBase/LayoutBase'
-import common from '../../../../02common/commonMethod'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+
+import { deepClone, getUuid } from '@common/utils'
 import behaviorListInPageModal from '../../behaviorListInPageModal.vue'
-import { Option } from 'ant-design-vue/types/select/option'
-import { VNode } from 'vue'
 import modelBingding, { bindingModelVal_InProperty, modelBingValue, modelDataTypeEnum } from '../../../../02common/commonClasses/modelBingding'
 import {
   groupNode,
@@ -57,14 +56,14 @@ import {
   resourceType,
   popupCallback,
   resourceSearchType,
-  behavior,
-} from '../../../../02common/behavior'
-import getSearchClass, { pageSearchBase } from '../../../../02common/behavior/04_actionReaourceTree'
+  behavior
+} from '@designEngine/index'
+import { getSearchClass, pageSearchBase } from '@designEngine/index'
 
-@Component({
+@Options({
   components: {
-    behaviorListInPageModal,
-  },
+    behaviorListInPageModal
+  }
 })
 export default class callbackSetting extends Vue {
   //
@@ -120,7 +119,7 @@ export default class callbackSetting extends Vue {
       this.allCallbacks = []
     }
     var newcb = new popupCallback()
-    newcb.id = common.getUuid()
+    newcb.id = getUuid()
     newcb.modelBindName_InPopupPage = ''
     newcb.behaviorId_InMainPage = ''
     this.allCallbacks.push(newcb)

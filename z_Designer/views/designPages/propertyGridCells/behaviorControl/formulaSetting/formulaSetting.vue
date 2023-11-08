@@ -19,9 +19,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import common from '../../../02common/commonMethod'
-import PageBase from '../../../05designerLayouts/PageBase'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+ import { deepClone,getUuid } from '@common/utils'
+
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import {
   layoutEventBehaviors,
   behavior,
@@ -36,11 +38,11 @@ import {
   object_Method,
   object_callback,
   factory,
-} from '../../../02common/behavior'
+} from  '@designEngine/index'
 import bahaviorResourceSelectTree from '../behaviorResources/bahaviorResourceSelectTree'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 
-@Component({
+@Options({
   components: {
     bahaviorResourceSelectTree: bahaviorResourceTree,
   },
@@ -66,7 +68,7 @@ export default class formulaSetting extends Vue {
 
   mounted() {
     // if (this.currentActionDetail.objs && this.currentActionDetail.objs.length < 1) {
-    //   var first = this.actionFactory.makeObject(common.getUuid(), '新建变量', objectType.variable, resourceType.variables)
+    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
     //   newobjs.push(first)
     // }
   }
@@ -98,7 +100,7 @@ export default class formulaSetting extends Vue {
     // window.console.log('重新选择了节点')
     var newObjClone = this.actionFactory.makeObject(newObj.resourceId, newObj.name, newObj.objType, newObj.resourceType)
     newObjClone.cloneFrom(newObj)
-    newObjClone.id = common.getUuid()
+    newObjClone.id = getUuid()
     var selectFormulaIndex = this.currentActionDetail.objs.indexOf(oldObj)
     //替换旧节点
     this.currentActionDetail.objs.splice(selectFormulaIndex, 1, newObjClone)
@@ -109,13 +111,13 @@ export default class formulaSetting extends Vue {
   private addObj() {
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
     if (!obj || obj.objType == objectType.signs) {
-      let newobj = this.actionFactory.makeObject(common.getUuid(), '', objectType.fixedVal, resourceType.fixedVal)
+      let newobj = this.actionFactory.makeObject(getUuid(), '', objectType.fixedVal, resourceType.fixedVal)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.cute) {
-      let newobj = this.actionFactory.makeObject(common.getUuid(), '等于', objectType.signs, resourceType.signs)
+      let newobj = this.actionFactory.makeObject(getUuid(), '等于', objectType.signs, resourceType.signs)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.filter) {
-      let newobj = this.actionFactory.makeObject(common.getUuid(), '相等于', objectType.signs, resourceType.filterSigns)
+      let newobj = this.actionFactory.makeObject(getUuid(), '相等于', objectType.signs, resourceType.filterSigns)
       this.currentActionDetail.objs.push(newobj)
     }
   }

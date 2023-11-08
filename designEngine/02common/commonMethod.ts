@@ -150,7 +150,7 @@
 //     if (common.asyncLoadingWindowInfo.length > 1) {
 //       return
 //     }
-//     let newKey = common.getUuid()
+//     let newKey = getUuid()
 //     common.asyncLoadingWindowInfo.push({ key: newKey, layerIndex: -1, isMain: isMain })
 //     window.setTimeout(() => {
 //       let findh = common.findLoadingInfo(newKey)

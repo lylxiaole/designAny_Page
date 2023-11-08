@@ -17,13 +17,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator'
-import PageBase from '../../../05designerLayouts/PageBase'
-import ComponentBase from '../../../04designerComponents/ComponentBase'
-import LayoutBase from '../../../03designerLayoutBase/LayoutBase'
-import common from '../../../02common/commonMethod'
-import { Option } from 'ant-design-vue/types/select/option'
-import { VNode } from 'vue'
+import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+
+import { deepClone, getUuid } from '@common/utils'
 import {
   groupNode,
   objectBase,
@@ -33,12 +31,12 @@ import {
   object_Method,
   object_callback,
   resourceType
-} from '../../../02common/behavior'
-import getSearchClass, { pageSearchBase } from '../../../02common/behavior/04_actionReaourceTree'
+} from '@designEngine/index'
 
+import { getSearchClass, pageSearchBase } from '@designEngine/index'
 import resouceChooseComp from './resouceChooseComp.vue'
 
-@Component({
+@Options({
   components: {
     resouceChooseComp
   }
@@ -62,7 +60,7 @@ export default class resoucesChooseWindow extends Vue {
   }
 
   private onSelectedObj(obj: objectBase) {
-    this.currentObj = common.clone(obj)
+    this.currentObj = deepClone(obj)
     //window.console.log('---------------------------this.currentObj',this.currentObj)
     this.$nextTick(() => {
       var resouContainer = this.$refs.resourceTree as any
