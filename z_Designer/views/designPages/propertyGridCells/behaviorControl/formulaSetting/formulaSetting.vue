@@ -13,7 +13,7 @@
       </div>
     </div>
     <div style="position:relative;width:100%;">
-      <a-button v-if="currentActionDetail" @click="addObj" style="margin-left:8px;float:right" type="primary" shape="circle" icon="plus" />
+      <el-button v-if="currentActionDetail" @click="addObj" style="margin-left:8px;float:right" type="primary" shape="circle" icon="plus" />
     </div>
   </div>
 </template>

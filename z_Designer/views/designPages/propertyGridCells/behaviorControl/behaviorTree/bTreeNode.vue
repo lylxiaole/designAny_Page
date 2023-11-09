@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width:100%" @dblclick="onTreeNodeDoubleClick">
     <span v-if="isEdit===false" class="gad-b-tree-node-span"> {{ currentValue }} </span>
-    <a-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" />
+    <el-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" />
   </div>
 </template>
 

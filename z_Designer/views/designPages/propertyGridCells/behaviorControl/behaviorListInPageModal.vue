@@ -1,5 +1,5 @@
  <template>
-  <a-modal :maskClosable="false" title="行为选择" v-model="isVisible" width="95%" @ok="onOk" @cancel="handleCancel"
+  <el-dialog :maskClosable="false" title="行为选择" v-model="isVisible" width="95%" @ok="onOk" @cancel="handleCancel"
     :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定" :zIndex="2000">
     <div>
       <div v-if="showDetailSetting==false">
@@ -15,7 +15,7 @@
       <geno-behaviorDeatilSetting style="width:100%;height:600px" v-if="showDetailSetting==true" :currentPage="currentPage"
         :currentLayout="currentLayout" :currentSettingBehavior.sync="currentSettingBehavior" />
     </div>
-  </a-modal>
+  </el-dialog>
 </template>
 
 <script lang="ts">

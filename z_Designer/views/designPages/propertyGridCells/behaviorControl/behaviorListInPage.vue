@@ -8,7 +8,7 @@
           <a-input style="margin-left:24px;width:300px" allowClear v-model="searchStr">
             <a-icon slot="addonBefore" type="search" />
           </a-input>
-          <a-button style="margin-left:24px;" icon="plus" @click="bahaviorListAdd"></a-button>
+          <el-button style="margin-left:24px;" icon="plus" @click="bahaviorListAdd"></el-button>
         </div>
       </a-col>
       <a-col :offset="0" :span="14" style="text-align: left;padding-top:8px;">
@@ -32,26 +32,26 @@
             <template slot="title">
               <span>编辑</span>
             </template>
-            <a-button icon="edit" @click="()=>{editBehavior(record)}" type="link">编辑</a-button>
+            <el-button icon="edit" @click="()=>{editBehavior(record)}" type="link">编辑</el-button>
           </a-tooltip>
           <a-divider type="vertical" />
           <a-tooltip placement="top">
             <template slot="title">
               <span>移除</span>
             </template>
-            <a-button icon="delete" @click="()=>{deleteBehavior(record.id)}" type="link">移除</a-button>
+            <el-button icon="delete" @click="()=>{deleteBehavior(record.id)}" type="link">移除</el-button>
           </a-tooltip>
           <a-tooltip placement="top">
             <template slot="title">
               <span>上移</span>
             </template>
-            <a-button icon="up" @click="()=>{moveUpBehavior(record.id)}" type="link">上移</a-button>
+            <el-button icon="up" @click="()=>{moveUpBehavior(record.id)}" type="link">上移</el-button>
           </a-tooltip>
           <a-tooltip placement="top">
             <template slot="title">
               <span>下移</span>
             </template>
-            <a-button icon="down" @click="()=>{moveDownBehavior(record.id)}" type="link">下移</a-button>
+            <el-button icon="down" @click="()=>{moveDownBehavior(record.id)}" type="link">下移</el-button>
           </a-tooltip>
         </span>
       </a-table>

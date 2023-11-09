@@ -58,7 +58,7 @@ import {
   object_Method,
   object_callback,
   factory
-} from '../../../02common/behavior'
+} from '@designEngine/index'
 import actionFilterSetting from './actionFilterSetting.vue'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import btreeNode from './bTreeNode.vue'
@@ -99,7 +99,7 @@ enum rightMenuEnum {
 export default class behaviorTree extends Vue {
   /**当前正在设置的行为 */
   @Prop() currentLayout: LayoutBase
-  @Prop() currentPage: PageBase
+  @Prop() currentPage: EnginePage
   @Prop() currentSettingBehavior: behavior
   @Prop() actionFactory: factory
 
@@ -522,8 +522,7 @@ export default class behaviorTree extends Vue {
 
 
 <style scoped lang="less">
-@import '../../../assets/globlaTheme.less';
-
+ 
 .ant-tree-switcher {
   z-index: 5 !important;
 }

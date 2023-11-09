@@ -54,8 +54,8 @@ import resouceChooseComp from '../behaviorResources/resouceChooseComp.vue'
   }
 })
 export default class actionFilterSetting extends Vue {
-  @Prop() currentLayout: LayoutBase
-  @Prop() currentPage: PageBase
+  @Prop() currentLayout: EngineLayout
+  @Prop() currentPage: EnginePage
   @Prop() currentSettingBehavior: behavior
 
   @Prop() isVisible: boolean

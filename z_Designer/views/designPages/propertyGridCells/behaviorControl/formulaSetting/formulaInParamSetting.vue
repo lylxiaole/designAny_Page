@@ -8,13 +8,13 @@
     </div>
 
     <div class="flexHorilanLayout" v-if="currentObj&&currentObj.dynamic">
-      <a-modal :maskClosable="false" title="入参名称" v-model="newParanamVisible" width="350px" :destroyOnClose="true" @cancel="onCancelNewParam"
+      <el-dialog :maskClosable="false" title="入参名称" v-model="newParanamVisible" width="350px" :destroyOnClose="true" @cancel="onCancelNewParam"
         @ok="onSureNewParam" :okButtonProps="{ props: {icon: 'check'}}" :cancelButtonProps="{ props: {icon: 'close'}}" cancelText="取消" okText="确定">
         <a-input v-model="newParamName" />
-      </a-modal>
-      <a-button type="primary" @click="addParam">
-        <a-icon type="plus" />添加参数
-      </a-button>
+      </el-dialog>
+      <el-button type="primary" @click="addParam" icon="plus">
+       添加参数
+      </el-button>
     </div>
   </div>
 </template>
@@ -129,5 +129,4 @@ export default class formulaInParamSetting extends Vue {
 
 
 <style scoped>
-@import '../../../assets/globlaTheme.less';
-</style>
+ </style>

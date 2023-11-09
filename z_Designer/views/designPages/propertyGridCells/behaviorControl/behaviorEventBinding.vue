@@ -43,32 +43,32 @@
                   <template slot="title">
                     <span>上移</span>
                   </template>
-                  <a-button @click="()=>{moveUpBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="moveUpIcon" />上移</a-button>
+                  <el-button @click="()=>{moveUpBehavior(record.id)}" type="link">
+                    <a-icon style="font-size:14px" :component="moveUpIcon" />上移</el-button>
                 </a-tooltip>
                 <a-divider type="vertical" />
                 <a-tooltip placement="top">
                   <template slot="title">
                     <span>下移</span>
                   </template>
-                  <a-button @click="()=>{moveDownBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="moveDownIcon" />下移</a-button>
+                  <el-button @click="()=>{moveDownBehavior(record.id)}" type="link">
+                    <a-icon style="font-size:14px" :component="moveDownIcon" />下移</el-button>
                 </a-tooltip>
                 <a-divider type="vertical" />
                 <a-tooltip placement="top">
                   <template slot="title">
                     <span>编辑</span>
                   </template>
-                  <a-button @click="()=>{editBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="buttonEditIcon" />编辑</a-button>
+                  <el-button @click="()=>{editBehavior(record.id)}" type="link">
+                    <a-icon style="font-size:14px" :component="buttonEditIcon" />编辑</el-button>
                 </a-tooltip>
                 <a-divider type="vertical" />
                 <a-tooltip placement="top">
                   <template slot="title">
                     <span>移除</span>
                   </template>
-                  <a-button @click="()=>{removeBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="buttonDeleteIcon" />移除</a-button>
+                  <el-button @click="()=>{removeBehavior(record.id)}" type="link">
+                    <a-icon style="font-size:14px" :component="buttonDeleteIcon" />移除</el-button>
                 </a-tooltip>
               </span>
               </a-table>

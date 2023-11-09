@@ -201,8 +201,7 @@ export default class behaviorResourcesSelect extends Vue {
 </script>
 
 <style lang="less" scoped>
-@import '../../../assets/globlaTheme.less';
-.caaa {
+ .caaa {
   display: none;
 }
 </style>

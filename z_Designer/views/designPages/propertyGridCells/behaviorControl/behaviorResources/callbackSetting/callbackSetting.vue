@@ -149,6 +149,5 @@ export default class callbackSetting extends Vue {
 </script>
 
 <style lang="less" scoped>
-@import '../../../../assets/globlaTheme.less';
-</style>
+ </style>
  

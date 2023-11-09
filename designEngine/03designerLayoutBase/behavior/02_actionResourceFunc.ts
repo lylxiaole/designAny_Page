@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import { getUuid } from '@common/utils'
-import { EngineComponent, EnginePage } from 'common/designEngine/03designerLayoutBase'
+import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import factory from './03_actionFactory'
-import EngineLayout from 'common/designEngine/03designerLayoutBase/EngineLayout'
+import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { Property } from '../commonClasses/LayoutProperty'
 import { behavior } from './behaviorTypes'
 
