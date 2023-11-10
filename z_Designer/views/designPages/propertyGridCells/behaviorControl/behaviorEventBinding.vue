@@ -28,50 +28,23 @@
               <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件行为列表</span>
               <el-button class="behavior-list-header-button" style="width:104px;height:30px;background:rgba(245,166,35,1);color:rgba(255,255,255,1);"
                 @click="toBehaviorList">
-                <a-icon style="font-size:17px" :component="behaviorAddIcon" />添加行为
+                <!-- <a-icon style="font-size:17px" :component="behaviorAddIcon" />添加行为 -->
               </el-button>
             </div>
           </el-row>
           <el-row class="behavior-list-content">
-            <el-table height="100%" rowKey="id" :columns="behaviorColumns" :dataSource="currentSelectedBehaviors" :pagination="false" bordered>
-              <span slot="serial" slot-scope="text,record, index">
-                {{ index + 1 }}
-              </span>
-              <a slot="name" slot-scope="text">{{text}}</a>
-              <span slot="action" slot-scope="text,record">
-                <a-tooltip placement="top">
-                  <template slot="title">
-                    <span>上移</span>
-                  </template>
-                  <el-button @click="()=>{moveUpBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="moveUpIcon" />上移</el-button>
-                </a-tooltip>
-                <a-divider type="vertical" />
-                <a-tooltip placement="top">
-                  <template slot="title">
-                    <span>下移</span>
-                  </template>
-                  <el-button @click="()=>{moveDownBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="moveDownIcon" />下移</el-button>
-                </a-tooltip>
-                <a-divider type="vertical" />
-                <a-tooltip placement="top">
-                  <template slot="title">
-                    <span>编辑</span>
-                  </template>
-                  <el-button @click="()=>{editBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="buttonEditIcon" />编辑</el-button>
-                </a-tooltip>
-                <a-divider type="vertical" />
-                <a-tooltip placement="top">
-                  <template slot="title">
-                    <span>移除</span>
-                  </template>
-                  <el-button @click="()=>{removeBehavior(record.id)}" type="link">
-                    <a-icon style="font-size:14px" :component="buttonDeleteIcon" />移除</el-button>
-                </a-tooltip>
-              </span>
-              </el-table>
+            <el-table height="100%" rowKey="id" :data="currentSelectedBehaviors" :pagination="false" bordered>
+              <el-table-column type="index" />
+              <el-table-column label="行为名称" prop="name" />
+              <el-table-column label="操作" prop="action" width="420px">
+                <template #default="record">
+                  <el-button @click="()=>{moveUpBehavior(record.id)}" type="link"> 上移</el-button>
+                  <el-button @click="()=>{moveDownBehavior(record.id)}" type="link"> 下移</el-button>
+                  <el-button @click="()=>{editBehavior(record.id)}" type="link"> 编辑</el-button>
+                  <el-button @click="()=>{removeBehavior(record.id)}" type="link"> 移除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-row>
         </el-row>
       </el-col>
@@ -84,7 +57,6 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { layoutEventBehaviors, behavior } from '@designEngine/03designerLayoutBase/index'
-import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
 import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
 import { moveUpIco, moveDownIco, buttonEditIco, buttonDeleteIco, buttonAddIco } from '@/assets/icons.js'
@@ -103,25 +75,6 @@ export default class behaviorEventBinding extends Vue {
   private buttonEditIcon: any = buttonEditIco
   private buttonDeleteIcon: any = buttonDeleteIco
   private behaviorAddIcon: any = buttonAddIco
-
-  private behaviorColumns: any[] = [
-    {
-      title: '#',
-      width: 50,
-      scopedSlots: { customRender: 'serial' }
-    },
-    {
-      title: '行为名称',
-      dataIndex: 'name',
-      key: 'name'
-    },
-    {
-      title: '操作',
-      key: 'action',
-      width: 420,
-      scopedSlots: { customRender: 'action' }
-    }
-  ]
 
   created() {
     if (this.record && this.record.selectedEventName) {

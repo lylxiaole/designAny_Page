@@ -367,7 +367,7 @@ export function getUuid() {
 
 //深度clone对象
 export function deepClone(item) {
-  if (item == undefined || item == null || item.constructor == String || item.constructor == Number || item.constructor == Boolean || (item.constructor == Object && Object.keys(item).length == 0) || (item.constructor == Array && item.length == 0)) {
+  if (item == undefined || item == null || item.constructor == String || item.constructor == Number || item.constructor == Boolean) {
     /**此处判断条件不能更改，要考虑NaN的情况 */
     return item
   }

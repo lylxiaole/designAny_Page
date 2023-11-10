@@ -6,36 +6,26 @@
       行为设置
     </el-button>
 
-    <el-dialog ref="previewPopup" title="行为设置" style="height:600px" width="800px" :visible.sync="windowVisible" append-to-body
-      :before-close="onClose">
+    <el-dialog ref="previewPopup" title="行为设置" style="height:600px" width="800px" v-model="windowVisible" append-to-body :before-close="onClose">
       <el-row style="height:100%;background:#FFF">
-
-<behaviorListInPage :prePage="prePage" :record="record" :currentData="currentData" :designerEvents="designerLayoutEvents"
-          :currentPageBehaviors="currentPageBehaviors" :currentPage="currentPage" :currentLayout="currentLayouts" @onList="handleList"
-          @onDetail="handleDetail" />
-<behaviorDeatilSetting :prePage="prePage" :record="record" :currentData="currentData" :designerEvents="designerLayoutEvents"
-          :currentPageBehaviors="currentPageBehaviors" :currentPage="currentPage" :currentLayout="currentLayouts" @onList="handleList"
-          @onDetail="handleDetail" />
-
-<behaviorEventBinding :prePage="prePage" :record="record" :currentData="currentData" :designerEvents="designerLayoutEvents"
-          :currentPageBehaviors="currentPageBehaviors" :currentPage="currentPage" :currentLayout="currentLayouts" @onList="handleList"
-          @onDetail="handleDetail" />  
-        <!-- <component ref="comp" :is="currentComp" :prePage="prePage" :record="record" :currentData="currentData" :designerEvents="designerLayoutEvents"
-          :currentPageBehaviors="currentPageBehaviors" :currentPage="currentPage" :currentLayout="currentLayouts" @onList="handleList"
-          @onDetail="handleDetail">
-        </component> -->
+        <behaviorListInPage v-if="currentComp==='behaviorListInPage'" :record="record" @onDetail="handleDetail" />
+        <behaviorDeatilSetting v-if="currentComp==='behaviorDeatilSetting'" :record="record" :prePage="prePage" :currentPage="currentPage"
+          :currentLayout="currentLayouts" />
+        <behaviorEventBinding v-if="currentComp==='behaviorEventBinding'" :record="record" :currentData="currentData"
+          :designerEvents="designerLayoutEvents" :currentPageBehaviors="currentPageBehaviors" @onList="handleList" />
       </el-row>
-
-      <el-row slot="footer" class="dialog-footer">
-        <div class="steps-action">
-          <el-button @click="onCancel">
-            取消
-          </el-button>
-          <el-button :style="{'margin-left':' 8px'}" type="primary" @click="onConfirm">
-            确认
-          </el-button>
-        </div>
-      </el-row>
+      <template #footer>
+        <el-row class="dialog-footer">
+          <div class="steps-action">
+            <el-button @click="onCancel">
+              取消
+            </el-button>
+            <el-button :style="{'margin-left':' 8px'}" type="primary" @click="onConfirm">
+              确认
+            </el-button>
+          </div>
+        </el-row>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -79,10 +69,8 @@ export default class behaviorControl extends propertyCellBase {
   private windowVisible: boolean = false
   private record: any = null
 
-  private prePageType: behaviorPageType = null
-  private prePage: Function = null
-  private currentCompType: behaviorPageType = null
-  private currentComp: Function = null
+  private prePage: behaviorPageType = null
+  private currentComp: behaviorPageType = null
 
   private selectedEventName: string = null
   private currentEventBehavior: layoutEventBehaviors = null
@@ -108,19 +96,20 @@ export default class behaviorControl extends propertyCellBase {
     }
 
     this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
-    this.designerLayoutEvents = deepClone(this.currentLayoutsGetter[0].DesignerEvents)
+    this.designerLayoutEvents = deepClone(this.currentLayoutsGetter[0].designerEvents)
     if (this.currentValue) {
       this.currentData = deepClone(this.currentValue) as layoutEventBehaviors[]
     } else {
       this.currentData = []
     }
 
-    this.currentCompType = behaviorPageType.binding
-    this.currentComp = this.getBehaviorComp(behaviorPageType.binding)
+    this.currentComp = behaviorPageType.binding
 
-    debugger
+    let x = this.record
+    let y = this.designerLayoutEvents
+    let z = this.currentData
+    let u = this.currentPageBehaviors
     this.windowVisible = true
-    this.$forceUpdate()
   }
 
   // 到行为列表页面
@@ -134,8 +123,7 @@ export default class behaviorControl extends propertyCellBase {
       eventBehavior: backData.eventBehavior
     }
 
-    this.currentCompType = behaviorPageType.list
-    this.currentComp = this.getBehaviorComp(behaviorPageType.list)
+    this.currentComp = behaviorPageType.list
   }
 
   // 到行为细节设置页面
@@ -151,8 +139,7 @@ export default class behaviorControl extends propertyCellBase {
     }
 
     this.record = { selectedBehavior: backData.selectedBehavior }
-    this.currentCompType = behaviorPageType.detail
-    this.currentComp = this.getBehaviorComp(behaviorPageType.detail)
+    this.currentComp = behaviorPageType.detail
   }
 
   // 关闭窗口
@@ -163,7 +150,7 @@ export default class behaviorControl extends propertyCellBase {
 
   // 取消操作
   private onCancel() {
-    switch (this.currentCompType) {
+    switch (this.currentComp) {
       case behaviorPageType.binding: {
         this.windowVisible = false
         this.initCompData()
@@ -174,31 +161,26 @@ export default class behaviorControl extends propertyCellBase {
         bindInData.selectedEventName = this.selectedEventName
         this.record = bindInData
 
-        this.currentCompType = behaviorPageType.binding
-        this.currentComp = this.getBehaviorComp(behaviorPageType.binding)
+        this.currentComp = behaviorPageType.binding
 
         this.prePage = null
         break
       }
       case behaviorPageType.detail: {
-        if (this.prePageType === behaviorPageType.list) {
+        if (this.prePage === behaviorPageType.list) {
           let listInData: behaviorListInParam = new behaviorListInParam()
           listInData.selectedEventName = this.selectedEventName
           listInData.eventBehavior = deepClone(this.listTempEventBehavior)
           listInData.allBehaviors = deepClone(this.listTempAllBehaviors)
           this.record = listInData
 
-          this.currentCompType = this.prePageType
-          this.currentComp = this.getBehaviorComp(this.prePageType)
-          this.prePageType = behaviorPageType.binding
-          this.prePage = this.getBehaviorComp(this.prePageType)
+          this.currentComp = this.prePage
+          this.prePage = behaviorPageType.binding
         } else {
           let bindInData: behaviorBindingInParam = new behaviorBindingInParam()
           bindInData.selectedEventName = this.selectedEventName
           this.record = bindInData
-          this.currentCompType = this.prePageType
-          this.currentComp = this.getBehaviorComp(this.prePageType)
-          this.prePageType = null
+          this.currentComp = this.prePage
           this.prePage = null
         }
 
@@ -211,7 +193,7 @@ export default class behaviorControl extends propertyCellBase {
 
   // 确认操作
   private onConfirm() {
-    switch (this.currentCompType) {
+    switch (this.currentComp) {
       case behaviorPageType.binding: {
         this.currentValue = deepClone(this.currentData)
         this.currentPage.behaviors = deepClone(this.currentPageBehaviors)
@@ -240,8 +222,7 @@ export default class behaviorControl extends propertyCellBase {
           }
         }
 
-        this.currentCompType = behaviorPageType.binding
-        this.currentComp = this.getBehaviorComp(behaviorPageType.binding)
+        this.currentComp = behaviorPageType.binding
         break
       }
       case behaviorPageType.detail: {
@@ -250,7 +231,7 @@ export default class behaviorControl extends propertyCellBase {
           theSettingBehavior = this.$refs.comp['currentSettingBehavior']
         }
 
-        if (this.prePageType === behaviorPageType.list) {
+        if (this.prePage === behaviorPageType.list) {
           if (this.listTempAllBehaviors) {
             let tempBehavior = this.listTempAllBehaviors.find((x) => x.id === theSettingBehavior.id)
             if (tempBehavior) {
@@ -267,10 +248,8 @@ export default class behaviorControl extends propertyCellBase {
           listInData.allBehaviors = deepClone(this.listTempAllBehaviors)
           this.record = listInData
 
-          this.currentCompType = this.prePageType
-          this.currentComp = this.getBehaviorComp(this.prePageType)
-          this.prePageType = behaviorPageType.binding
-          this.prePage = this.getBehaviorComp(this.prePageType)
+          this.currentComp = this.prePage
+          this.prePage = behaviorPageType.binding
         } else {
           if (this.currentPageBehaviors) {
             let pageBehavior = this.currentPageBehaviors.find((x) => x.id === theSettingBehavior.id)
@@ -284,9 +263,7 @@ export default class behaviorControl extends propertyCellBase {
           let bindInData: behaviorBindingInParam = new behaviorBindingInParam()
           bindInData.selectedEventName = this.selectedEventName
           this.record = bindInData
-          this.currentCompType = this.prePageType
-          this.currentComp = this.getBehaviorComp(this.prePageType)
-          this.prePageType = null
+          this.currentComp = this.prePage
           this.prePage = null
         }
 

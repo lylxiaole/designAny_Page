@@ -187,7 +187,7 @@ export default class EngineLayout extends Vue {
     this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
     this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'), [])
     this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Property(), 'white')
-    this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property())
+    this.registerProperty(PropertyGroupName.normal, '行为设置', new Behavior_Property(), [], true)
   }
   /**生命周期-用于注册属性/事件/方法 等------只有设计模式的时候，会触发
    * 触发与vue周期created之中

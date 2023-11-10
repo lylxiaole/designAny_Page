@@ -13,7 +13,7 @@
         </vxe-table>
       </div>
       <geno-behaviorDeatilSetting style="width:100%;height:600px" v-if="showDetailSetting==true" :currentPage="currentPage"
-        :currentLayout="currentLayout" :currentSettingBehavior.sync="currentSettingBehavior" />
+        :currentLayout="currentLayout" v-model:currentSettingBehavior="currentSettingBehavior" />
     </div>
   </el-dialog>
 </template>
@@ -21,7 +21,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { deepClone,getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
 import { layoutEventBehaviors, behavior, action, actionDetail } from '@designEngine/03designerLayoutBase/index'
@@ -31,7 +31,7 @@ import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import { pageSearchBase } from '@designEngine/index'
 
 @Options({
-  components: {},
+  components: {}
 })
 export default class behaviorListInPageModal extends Vue {
   @Prop() private isVisible: boolean
@@ -42,11 +42,11 @@ export default class behaviorListInPageModal extends Vue {
   private onIsVisibleChange(val: boolean) {}
 
   //当前页面
-  @Prop() currentPage: PageBase
+  @Prop() currentPage: EnginePage
   //当前正在设计的布局
-  @Prop() currentLayout: LayoutBase
+  @Prop() currentLayout: EngineLayout
   @Prop() private callboackbehaviorid: string
-  
+
   @Emit('update:currentSelectedBehaviors')
   private updateCurrentSelectedBehaviors_Inner(val: any) {}
 
