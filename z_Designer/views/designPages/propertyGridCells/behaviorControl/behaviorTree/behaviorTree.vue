@@ -537,11 +537,11 @@ export default class behaviorTree extends Vue {
 }
 
 .ant-tree-node-content-wrapper:hover .pageListItem {
-  background-color: @themeBackground;
+  background-color: #18aeb7;
 }
 
 .ant-tree-node-selected .pageListItem {
-  background-color: @themeBackground!important;
+  background-color: #18aeb7 !important;
 }
 
 .ant-tree-node-selected .pageFontHover {

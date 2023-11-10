@@ -45,7 +45,6 @@
         </el-row>
       </el-col>
     </el-row>
-    <modelListPop :isShow="modelListVisible" :currentPage="currentPage" @close="closeModelList"></modelListPop>
   </el-row>
 </template>
 
@@ -72,14 +71,12 @@ import formulaSetting from './formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from './formulaSetting/formulaInParamSetting.vue'
 import { pageSearchBase } from '@designEngine/index'
 import { behaviorPageType, behaviorDetailInParam } from './model'
-import modelListPop from '../bindingModels/modelListPop.vue'
 
 @Options({
   components: {
     behaviorTree: behaviorTree,
     formulaSetting: formulaSetting,
-    formulaInParamSetting: formulaInParamSetting,
-    modelListPop: modelListPop
+    formulaInParamSetting: formulaInParamSetting
   }
 })
 export default class behaviorDeatilSetting extends Vue {
@@ -95,7 +92,6 @@ export default class behaviorDeatilSetting extends Vue {
   private currentActionDetail: actionDetail = null
   private actionFactory: factory = null
   private forType: formulaType = formulaType.cute
-  private modelListVisible: boolean = false
 
   created() {
     if (this.record && this.record.selectedBehavior) {
@@ -154,15 +150,6 @@ export default class behaviorDeatilSetting extends Vue {
     if (this.currentFocusObj) {
       this.currentFocusObj.updateInparamsFunction()
     }
-  }
-
-  private showModelList(): void {
-    this.modelListVisible = true
-  }
-
-  private closeModelList(): void {
-    window.console.log('closeModelList')
-    this.modelListVisible = false
   }
 }
 </script>

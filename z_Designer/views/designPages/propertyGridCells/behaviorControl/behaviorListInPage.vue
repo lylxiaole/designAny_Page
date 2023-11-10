@@ -65,11 +65,10 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { layoutEventBehaviors, behavior } from '@designEngine/03designerLayoutBase/index'
-import EditableCell from '../../07commonComponents/EditableCell.vue'
-import { behaviorListInParam, behaviorPageType, behaviorDetailData } from './model'
+ import { behaviorListInParam, behaviorPageType, behaviorDetailData } from './model'
 
 @Options({
-  components: { EditableCell }
+  components: {   }
 })
 export default class behaviorListInPage extends Vue {
   @Prop() record: behaviorListInParam

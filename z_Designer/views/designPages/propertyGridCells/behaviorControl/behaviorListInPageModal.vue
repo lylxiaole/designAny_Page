@@ -46,6 +46,7 @@ export default class behaviorListInPageModal extends Vue {
   //当前正在设计的布局
   @Prop() currentLayout: LayoutBase
   @Prop() private callboackbehaviorid: string
+  
   @Emit('update:currentSelectedBehaviors')
   private updateCurrentSelectedBehaviors_Inner(val: any) {}
 

@@ -2,9 +2,11 @@
   <div>
     <el-button type="primary" class="themeButton"
       style="width:118px;height:34px;background:rgba(0,103,138,0.1);border-color:rgba(0,103,138,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
-      @click="startEdit" size="small" :icon="behavioricon">
-      <span>行为设置</span>
+      @click="startEdit" size="small"  >
+        行为设置
+      </el-button>
 
+      <!-- 
       <el-dialog ref="previewPopup" title="行为设置" style="height:80.37%" width="70.94%" centered :bodyStyle="modalBodyStyle" class="behavior-modal"
         :visible="windowVisible" :maskClosable="false" destroyOnClose :footer="null" @cancel="onClose">
         <el-row style="height:100%;background:#FFF">
@@ -23,7 +25,7 @@
             </div>
           </el-row>
         </el-row>
-      </el-dialog>
+      </el-dialog> -->
   </div>
 </template>
 
@@ -265,7 +267,7 @@ export default class behaviorControl extends propertyCellBase {
 </script>
 
 <style lang="less" scoped>
-@import '@designEngine/assets/globlaTheme.less';
+// @import '@designEngine/assets/globlaTheme.less';
 .footterBtns {
   text-align: right;
   height: 50px;

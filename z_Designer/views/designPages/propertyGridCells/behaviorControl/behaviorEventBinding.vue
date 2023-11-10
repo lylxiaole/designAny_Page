@@ -71,7 +71,7 @@
                     <a-icon style="font-size:14px" :component="buttonDeleteIcon" />移除</el-button>
                 </a-tooltip>
               </span>
-              </a-table>
+              </el-table>
           </el-row>
         </el-row>
       </el-col>
