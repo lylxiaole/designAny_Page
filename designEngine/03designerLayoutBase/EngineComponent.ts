@@ -1,7 +1,9 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
-import { EnginePage, SaveInfo, EngineContainer, DragItemData, DragItemTypeEnum, param, factory } from './index'
+import { EnginePage, SaveInfo, EngineContainer, DragItemData, DragItemTypeEnum, param } from './index'
+import { factory } from '@behaviorEngine/index'
+
 import { LayoutType } from './commonClasses/componentInfos'
 
 @Options({})

@@ -46,7 +46,6 @@ import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 import { deepClone, getUuid } from '@common/utils'
 import behaviorListInPageModal from '../../behaviorListInPageModal.vue'
-import modelBingding, { bindingModelVal_InProperty, modelBingValue, modelDataTypeEnum } from '../../../../02common/commonClasses/modelBingding'
 import {
   groupNode,
   objectBase,
@@ -56,9 +55,10 @@ import {
   resourceType,
   popupCallback,
   resourceSearchType,
-  behavior
-} from '@designEngine/index'
-import { getSearchClass, pageSearchBase } from '@designEngine/index'
+  behavior,
+  getSearchClass,
+  pageSearchBase
+} from '@behaviorEngine/index'
 
 @Options({
   components: {
@@ -98,7 +98,7 @@ export default class callbackSetting extends Vue {
     this.behaviorListVisible = true
   }
   //弹窗页面的所有模型实例
-  private get modelBindingsInPage(): modelBingding[] {
+  private get modelBindingsInPage(): any[] {
     return this.page.modelBindings
   }
   private getBehaviorName(id: string) {
@@ -149,5 +149,5 @@ export default class callbackSetting extends Vue {
 </script>
 
 <style lang="less" scoped>
- </style>
+</style>
  

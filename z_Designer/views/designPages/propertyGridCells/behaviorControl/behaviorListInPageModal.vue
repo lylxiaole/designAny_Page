@@ -24,11 +24,8 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
-import { layoutEventBehaviors, behavior, action, actionDetail } from '@designEngine/03designerLayoutBase/index'
-
+import { layoutEventBehaviors, behavior, action, actionDetail } from '@behaviorEngine/index'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
-
-import { pageSearchBase } from '@designEngine/index'
 
 @Options({
   components: {}

@@ -41,6 +41,8 @@ import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum
 import { deepClone } from '@common/utils'
 @Options({})
 export default class DesignShell extends Vue {
+  private _dragHelper: dragHelper = null
+
   public get isDesigning(): boolean {
     return true
   }

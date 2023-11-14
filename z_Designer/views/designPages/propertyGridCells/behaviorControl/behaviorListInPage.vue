@@ -64,11 +64,11 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
-import { layoutEventBehaviors, behavior } from '@designEngine/03designerLayoutBase/index'
- import { behaviorListInParam, behaviorPageType, behaviorDetailData } from './model'
+import { layoutEventBehaviors, behavior } from '@behaviorEngine/index'
+import { behaviorListInParam, behaviorPageType, behaviorDetailData } from './model'
 
 @Options({
-  components: {   }
+  components: {}
 })
 export default class behaviorListInPage extends Vue {
   @Prop() record: behaviorListInParam

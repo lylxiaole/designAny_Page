@@ -41,7 +41,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
-import propertyCellBase from '../../propertyCellBase'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../../common'
 import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
 import {
@@ -58,7 +57,7 @@ import {
   object_Method,
   object_callback,
   factory
-} from '@designEngine/index'
+} from '@behaviorEngine/index'
 import actionFilterSetting from './actionFilterSetting.vue'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import btreeNode from './bTreeNode.vue'
@@ -522,7 +521,6 @@ export default class behaviorTree extends Vue {
 
 
 <style scoped lang="less">
- 
 .ant-tree-switcher {
   z-index: 5 !important;
 }

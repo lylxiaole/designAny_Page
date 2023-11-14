@@ -13,7 +13,7 @@
         <a-input v-model="newParamName" />
       </el-dialog>
       <el-button type="primary" @click="addParam" icon="plus">
-       添加参数
+        添加参数
       </el-button>
     </div>
   </div>
@@ -27,7 +27,6 @@ import { deepClone, getUuid } from '@common/utils'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 import { param } from '@designEngine/index'
-import { message } from 'ant-design-vue'
 import {
   layoutEventBehaviors,
   behavior,
@@ -40,7 +39,7 @@ import {
   object_Method_InParam,
   factory,
   resourceType
-} from '@designEngine/index'
+} from '@behaviorEngine/index'
 
 @Options({
   components: {
@@ -129,4 +128,4 @@ export default class formulaInParamSetting extends Vue {
 
 
 <style scoped>
- </style>
+</style>

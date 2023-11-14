@@ -21,7 +21,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
- import { deepClone,getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import {
@@ -37,15 +37,15 @@ import {
   resourceType,
   object_Method,
   object_callback,
-  factory,
-} from  '@designEngine/index'
+  factory
+} from '@behaviorEngine/index'
 import bahaviorResourceSelectTree from '../behaviorResources/bahaviorResourceSelectTree'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 
 @Options({
   components: {
-    bahaviorResourceSelectTree: bahaviorResourceTree,
-  },
+    bahaviorResourceSelectTree: bahaviorResourceTree
+  }
 })
 export default class formulaSetting extends Vue {
   @Prop() behaviorResources: any

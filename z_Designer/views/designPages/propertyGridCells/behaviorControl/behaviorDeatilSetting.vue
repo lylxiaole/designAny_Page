@@ -61,15 +61,15 @@ import {
   formulaType,
   objectBase,
   objectType,
-  object_Method
-} from '@designEngine/index'
+  object_Method,
+  pageSearchBase
+} from '@behaviorEngine/index'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
 import behaviorTree from './behaviorTree/behaviorTree.vue'
 import formulaSetting from './formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from './formulaSetting/formulaInParamSetting.vue'
-import { pageSearchBase } from '@designEngine/index'
 import { behaviorPageType, behaviorDetailInParam } from './model'
 
 @Options({

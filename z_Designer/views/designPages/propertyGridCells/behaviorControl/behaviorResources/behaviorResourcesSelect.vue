@@ -79,10 +79,10 @@ import {
   object_callback,
   popupCallback,
   formulaType
-} from '@designEngine/index'
+} from '@behaviorEngine/index'
 
-import { getSearchClass, pageSearchBase } from '@designEngine/index'
-import { layoutEventBehaviors, behavior, action, actionDetail } from '@designEngine/index'
+import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
+import { layoutEventBehaviors, behavior, action, actionDetail } from '@behaviorEngine/index'
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 
 import resourceChooseWindow from './resoucesChooseWindow.vue'
@@ -201,7 +201,7 @@ export default class behaviorResourcesSelect extends Vue {
 </script>
 
 <style lang="less" scoped>
- .caaa {
+.caaa {
   display: none;
 }
 </style>

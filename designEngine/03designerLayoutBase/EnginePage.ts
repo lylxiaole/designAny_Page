@@ -6,7 +6,7 @@ import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoad
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
 import { paramInfo } from './commonClasses/pageInParamInfo'
-import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from './behavior'
+import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod, param, paramType } from './commonClasses/layoutEvent'
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'

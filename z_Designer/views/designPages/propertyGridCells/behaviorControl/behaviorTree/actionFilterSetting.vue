@@ -39,9 +39,10 @@ import {
   object_FixedVal,
   object_Method,
   formulaType,
-  resourceType
-} from '@designEngine/index'
-import { getSearchClass, pageSearchBase } from '@designEngine/index'
+  resourceType,
+  pageSearchBase,
+  getSearchClass
+} from '@behaviorEngine/index'
 import formulaSetting from '../formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from '../formulaSetting/formulaInParamSetting.vue'
 import resouceChooseComp from '../behaviorResources/resouceChooseComp.vue'

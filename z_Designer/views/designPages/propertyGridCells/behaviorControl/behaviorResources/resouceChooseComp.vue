@@ -27,9 +27,17 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
- 
-import { groupNode, objectBase, objectType, object_Variable, object_FixedVal, resourceType, resourceSearchType } from '@designEngine/03designerLayoutBase/index'
-import { getSearchClass } from '@designEngine/index'
+
+import {
+  getSearchClass,
+  groupNode,
+  objectBase,
+  objectType,
+  object_Variable,
+  object_FixedVal,
+  resourceType,
+  resourceSearchType
+} from '@behaviorEngine/index'
 
 @Options({ name: 'resouceChooseComp' })
 export default class resouceChooseComp extends Vue {
@@ -208,7 +216,6 @@ export default class resouceChooseComp extends Vue {
 </script>
 
 <style lang="less" scoped>
- 
 .ant-list-split .ant-list-item {
   border-bottom: none;
 }
