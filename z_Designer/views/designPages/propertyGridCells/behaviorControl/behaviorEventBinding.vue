@@ -57,7 +57,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { layoutEventBehaviors, behavior } from '@behaviorEngine/index'
-import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
+import { layoutEvent, layoutMethod } from '@designEngine/index'
+import { paramType, param } from '@behaviorEngine/index'
+
 import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
 import { moveUpIco, moveDownIco, buttonEditIco, buttonDeleteIco, buttonAddIco } from '@/assets/icons.js'
 

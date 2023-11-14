@@ -40,9 +40,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { deepClone, getUuid } from '@common/utils'
+import { deepClone, getUuid, serialize } from '@common/utils'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../../common'
-import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
 import {
   layoutEventBehaviors,
   behavior,
@@ -97,7 +96,7 @@ enum rightMenuEnum {
 })
 export default class behaviorTree extends Vue {
   /**当前正在设置的行为 */
-  @Prop() currentLayout: LayoutBase
+  @Prop() currentLayout: EngineLayout
   @Prop() currentPage: EnginePage
   @Prop() currentSettingBehavior: behavior
   @Prop() actionFactory: factory
@@ -160,7 +159,7 @@ export default class behaviorTree extends Vue {
     this.clipboard = new Clipboard(this.copyBtn, {
       text: () => {
         let selectAct = this.getCurrentSelectedNode(this.currentSettingBehavior.actions)
-        return common.serialize(selectAct)
+        return serialize(selectAct)
       }
     })
     this.clipboard.on('success', (e) => {

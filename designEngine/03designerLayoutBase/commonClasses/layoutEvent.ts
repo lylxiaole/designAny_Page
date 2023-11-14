@@ -1,15 +1,4 @@
-export enum paramType {
-  number = 'number',
-  string = 'string',
-  complexType = 'complexType', //复杂类型
-  boolean = 'boolean'
-}
-
-export class param {
-  name: string
-  type: paramType
-  val: any
-}
+import { paramType, param } from '@behaviorEngine/index'
 
 export class layoutEvent {
   eventName: string = ''

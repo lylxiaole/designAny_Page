@@ -1,4 +1,3 @@
-import { param } from '../commonClasses/layoutEvent'
 import { behavior } from './behaviorTypes'
 import { getUuid } from '@common/utils'
 class signNodeData {
@@ -6,6 +5,18 @@ class signNodeData {
   value: string
   title: string
 }
+export enum paramType {
+  number = 'number',
+  string = 'string',
+  complexType = 'complexType', //复杂类型
+  boolean = 'boolean'
+}
+export class param {
+  name: string
+  type: paramType
+  val: any
+}
+
 //计算符号
 export var allCuteSigns: signNodeData[] = [
   { value: '=', key: '=', title: '等于' },
