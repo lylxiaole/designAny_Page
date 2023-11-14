@@ -3,7 +3,7 @@ import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import factory from './03_actionFactory'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
-import { Property } from '../commonClasses/LayoutProperty'
+import { Property } from '@designEngine/index'
 import { behavior } from './behaviorTypes'
 
 import { resourceFuncAttr, resourceType, objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'

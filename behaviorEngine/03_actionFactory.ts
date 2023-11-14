@@ -1,16 +1,14 @@
-import { param } from '../commonClasses/layoutEvent'
 import { deepClone } from '@common/utils'
-import PageBase from '../EnginePage'
-import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
+import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType, resourceType } from './01_actionCommon'
 import allFuncs, { actResFuncBase, getResouceFunc } from './02_actionResourceFunc'
 export default class factory {
   public currentLayout: EngineLayout
-  public currentPage: PageBase
+  public currentPage: EnginePage
   public currentBehavior: behavior
-  constructor(_layout: EngineLayout, _page: PageBase, _behavior: behavior) {
+  constructor(_layout: EngineLayout, _page: EnginePage, _behavior: behavior) {
     this.currentLayout = _layout
     this.currentPage = _page
     this.currentBehavior = _behavior

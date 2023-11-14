@@ -1,4 +1,4 @@
-import PageBase from '../EnginePage'
+import { EnginePage, EngineLayout } from '@designEngine/index'
 import { getUuid } from '@common/utils'
 import { behavior, variable, action, actionDetail } from './behaviorTypes'
 import { objectBase, objectType, resourceType, resourceSearchType, object_Method, object_Variable, allCuteSigns, allFilterSigns, resourceSearchAttr } from './01_actionCommon'
@@ -24,7 +24,7 @@ function makeGroupNode(name: string, resType: resourceSearchType): groupNode {
 }
 
 export class pageSearchBase {
-  static currentPage: PageBase = null
+  static currentPage: EnginePage = null
   static actionFctory: factory = null
   static currentBehavior: behavior = null
   isNeedCache: boolean = false
