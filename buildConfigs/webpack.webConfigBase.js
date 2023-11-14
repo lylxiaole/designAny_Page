@@ -337,6 +337,7 @@ module.exports = function initConifg(distDir, projectDir, templateFile, devPort)
   baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
   baseconfig.resolve.alias['@common'] = path.resolve(currentDir, 'common')
   baseconfig.resolve.alias['@designEngine'] = path.resolve(currentDir, 'designEngine')
+  baseconfig.resolve.alias['@behaviorEngine'] = path.resolve(currentDir, 'behaviorEngine')
 
   return baseconfig
 }
