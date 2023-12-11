@@ -38,7 +38,7 @@ import propertyCellBase from '../common'
 
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 import { layoutEvent } from '@designEngine/03designerLayoutBase/index'
-import { layoutEventBehaviors, behavior } from '@designEngine/03designerLayoutBase/index'
+import { layoutEventBehaviors, behavior } from '@behaviorEngine/index'
 import behaviorListInPage from './behaviorListInPage.vue'
 import behaviorDeatilSetting from './behaviorDeatilSetting.vue'
 import behaviorEventBinding from './behaviorEventBinding.vue'

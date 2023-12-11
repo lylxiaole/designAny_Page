@@ -33,11 +33,12 @@
 
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
+import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { ref, h, render, onMounted } from 'vue'
 import dragHelper from '@designEngine/02common/dragHelper_new'
 
-import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, EngineComponent, BaseEvents, DragItemData, DragItemTypeEnum } from '../03designerLayoutBase'
+import { DragItemData, DragItemTypeEnum } from './DesignEvents'
+import { EngineComponent } from '../03designerLayoutBase'
 import { deepClone } from '@common/utils'
 @Options({})
 export default class DesignShell extends Vue {
@@ -101,18 +102,9 @@ export default class DesignShell extends Vue {
   }
 
   mounted() {
-    // this.captureEvent()
     this._dragHelper = new dragHelper(this.$el)
     this._dragHelper.makeContainerCannotDrop()
     this._dragHelper.makeDomCannotDrag(this.$el)
-
-    // this.onDrag_Event = this.onStartDrag
-    // this.onClick_Event = (e: Event, target: any) => {
-    //   // window.console.log('DesignShell onClick_Event')
-    //   ;(this.Component.parentLayout as any).chooseComps([this.Component])
-    //   $(this.$el).focus()
-    //   e.stopPropagation()
-    // }
   }
 
   destroyed() {

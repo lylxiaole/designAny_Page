@@ -28,6 +28,9 @@
       "@designEngine/*": [
         "designEngine/*"
       ],
+      "@behaviorEngine/*": [
+        "behaviorEngine/*"
+      ],
       "tslib": [
         "node_modules/tslib/tslib.d.ts"
       ]
