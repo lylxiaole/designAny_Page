@@ -6,9 +6,9 @@ import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoad
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
 import { paramInfo } from './commonClasses/pageInParamInfo'
-import { behavior, factory, action, actionDetail, resourceType, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
+import { factory, resourceType, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
-import { paramType, param } from '@behaviorEngine/index'
+import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
 
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
@@ -65,21 +65,10 @@ export default class EnginePage extends EngineContainer {
     this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
     this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, '秒')
     this.registerEvents('加载完成', '页面加载完成时触发', [], null)
+    this.registerEvents('定时器触发事件', '定时器触发', [], null)
+
     this.registerMethods('关闭页面-触发回调', '', () => {}, [], null)
     this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
-    this.registerEvents('定时器触发事件', '定时器触发', [], null)
-    // this.onChangedScale_Event = (sizeChange: number): boolean => {
-    //   this.scaleSize(sizeChange)
-    //   return false
-    // }
-    // this.onDragSelf_Event = (xmove: number, ymove: number) => {
-    //   this.left += xmove
-    //   this.top += ymove
-    // }
-    // this.onClick_Event = (e: Event, comp: ComponentBase) => {
-    //   this.chooseComps([])
-    //   e.stopPropagation()
-    // }
   }
 
   mounted() {}

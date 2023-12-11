@@ -96,6 +96,7 @@ export default class behaviorControl extends propertyCellBase {
     }
 
     this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
+    debugger
     this.designerLayoutEvents = deepClone(this.currentLayoutsGetter[0].designerEvents)
     if (this.currentValue) {
       this.currentData = deepClone(this.currentValue) as layoutEventBehaviors[]

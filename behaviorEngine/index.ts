@@ -1,7 +1,8 @@
 import factory from './03_actionFactory'
 export { factory }
+export * from './03_actionFactory'
 
-import { layoutEventBehaviors, variable, behavior, action, actionDetail } from './behaviorTypes'
+export * from './behaviorTypes'
 export * as actionFunc from './02_actionResourceFunc'
 export enum formulaType {
   cute = 'cute', //计算
