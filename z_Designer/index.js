@@ -2,6 +2,12 @@ import { createApp } from 'vue'
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig } from '@common/baseConfigs'
 import registerRouteHook from './utils/routerHook'
+
+// **************引用element Plus******************************
+require('@common/assets/iconfont1/iconfont.css')
+require('@common/assets/iconfont1/iconfont.js')
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 // ***********系统环境初始化*********************************
 let configs = window.__globalConfig
 import routes from './routes'
@@ -9,12 +15,6 @@ import appState from './appState'
 let system = initSystem(routes, configs, appState)
 system.store.commit('system/set_permission_routes', getRoutes())
 registerRouteHook(system.router, system.store)
-// **************创建应用******************************
-require('@common/assets/iconfont1/iconfont.css')
-require('@common/assets/iconfont1/iconfont.js')
-
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
 // *********************
 import App from './views/App.vue'
 // *********************

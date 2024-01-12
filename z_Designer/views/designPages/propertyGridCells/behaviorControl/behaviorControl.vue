@@ -6,8 +6,9 @@
       行为设置
     </el-button>
 
-    <el-dialog ref="previewPopup" title="行为设置" style="height:600px" width="800px" v-model="windowVisible" append-to-body :before-close="onClose">
-      <el-row style="height:100%;background:#FFF">
+    <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为设置" style="height:600px" width="800px" v-model="windowVisible" append-to-body
+      :before-close="onClose">
+      <el-row style="height:500px;background:#FFF">
         <behaviorListInPage v-if="currentComp==='behaviorListInPage'" :record="record" @onDetail="handleDetail" />
         <behaviorDeatilSetting v-if="currentComp==='behaviorDeatilSetting'" :record="record" :prePage="prePage" :currentPage="currentPage"
           :currentLayout="currentLayouts" />
@@ -96,7 +97,7 @@ export default class behaviorControl extends propertyCellBase {
     }
 
     this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
-    debugger
+
     this.designerLayoutEvents = deepClone(this.currentLayoutsGetter[0].designerEvents)
     if (this.currentValue) {
       this.currentData = deepClone(this.currentValue) as layoutEventBehaviors[]

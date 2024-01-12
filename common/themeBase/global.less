@@ -8,24 +8,6 @@
 @layout-header-color: #000000;
 @themeBackground_op1: #83c346;
 
-.ant-modal-close-x {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 100% !important;
-}
-
-.ant-modal-header {
-  padding: 8px 16px !important;
-}
-.ant-modal-footer {
-  padding: 8px 16px !important;
-}
-
-.ant-modal-close {
-  height: 40px !important;
-}
-
 html {
   height: 100%;
   width: 100%;
@@ -75,4 +57,9 @@ body {
 .themeHover:hover {
   background: @themeBackground_op1;
   cursor: pointer;
+}
+.el-overlay {
+  .el-dialog {
+    --el-dialog-padding-primary: 6px !important; //覆盖element PLUS
+  }
 }

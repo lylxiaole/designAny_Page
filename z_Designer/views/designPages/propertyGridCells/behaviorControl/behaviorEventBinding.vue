@@ -3,12 +3,9 @@
     <el-row style="height:100%;background:#FFF;">
       <el-col style="height:100%;background:#FFF;" :span="6">
         <el-row style="height:100%;background:#FFF">
-          <el-row style="height:54px;padding:0px 0px 8px 8px;">
-            <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6"
-              class="flexHorilanLayout">
-              <div style="background:#18aeb7;width:6px;height:46px;"></div>
-              <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件列表</span>
-            </div>
+          <el-row style="height:34px;padding:0px 0px 8px 8px;box-sizing: border-box;">
+            <div style="background:#18aeb7;width:6px;height:26px;"></div>
+            <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件列表</span>
           </el-row>
           <el-row style="height: calc(100% - 58px);padding:0px 0px 8px 8px;">
             <el-menu v-model="selectedEventNames" style="height:100%;overflow-y:auto;overflow-x:hidden;border:1px solid #ccc;padding:0px 2px"
@@ -24,11 +21,11 @@
         <el-row style="height:100%;background:#FFF">
           <el-row class="behavior-list-header">
             <div style="width:100%;height:100%;justify-content:left;overflow:hidden;" class="flexHorilanLayout">
-              <div style="background:#18aeb7;width:6px;height:46px;"></div>
+              <div style="background:#18aeb7;width:6px;height:26px;"></div>
               <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件行为列表</span>
               <el-button class="behavior-list-header-button" style="width:104px;height:30px;background:rgba(245,166,35,1);color:rgba(255,255,255,1);"
                 @click="toBehaviorList">
-                <!-- <a-icon style="font-size:17px" :component="behaviorAddIcon" />添加行为 -->
+                <a-icon style="font-size:17px" :component="behaviorAddIcon" />添加行为
               </el-button>
             </div>
           </el-row>
