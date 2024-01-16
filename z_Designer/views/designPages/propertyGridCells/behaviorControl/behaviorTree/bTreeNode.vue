@@ -10,7 +10,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
-@Options()
+@Options({})
 export default class bTreeNode extends Vue {
   @Prop() nodeKey: string
   @Prop() value: string

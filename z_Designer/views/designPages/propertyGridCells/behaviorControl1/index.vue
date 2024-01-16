@@ -33,7 +33,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
-import { layoutEvent } from '@designEngine/index'
+import { layoutEvent, layoutEventBehaviors } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
 
 @propertyCellTypeAttr(PropertyTypeEnum.behavior)
@@ -43,6 +43,7 @@ import { behavior } from '@behaviorEngine/index'
 export default class index extends propertyCellBase {
   private designerLayoutEvents: layoutEvent[] = []
   private currentPageBehaviors: behavior[] = []
+  private currentData: layoutEventBehaviors[] = []
 
   private windowVisible: boolean = false
   private startEdit() {
@@ -61,6 +62,12 @@ export default class index extends propertyCellBase {
     this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
     // 当前选中控件的事件列表
     this.designerLayoutEvents = deepClone(this.currentLayoutsGetter[0].designerEvents)
+    //当前选中控件的事件已绑定的行为
+    if (this.currentValue) {
+      this.currentData = deepClone(this.currentValue) as layoutEventBehaviors[]
+    } else {
+      this.currentData = []
+    }
   }
   // ********************************************************************
   private onClose(e: MouseEvent) {
