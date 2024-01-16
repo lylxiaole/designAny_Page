@@ -64,7 +64,11 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
-import { layoutEventBehaviors, behavior } from '@behaviorEngine/index'
+import { behavior } from '@behaviorEngine/index'
+import {  layoutEventBehaviors } from  '@designEngine/index'
+
+
+
 import { behaviorListInParam, behaviorPageType, behaviorDetailData } from './model'
 
 @Options({

@@ -1,12 +1,6 @@
 /******************************行为相关 **************************/
 import { objectBase, objectType } from './01_actionCommon'
 
-//布局的事件所包含的行为列表
-export class layoutEventBehaviors {
-  eventName: string //布局的事件名称
-  behaviorIds: string[] = [] //行为的Id
-}
-
 export class variable {
   name: string
   val: any

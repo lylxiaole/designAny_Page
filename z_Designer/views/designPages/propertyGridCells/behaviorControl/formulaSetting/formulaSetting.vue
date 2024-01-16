@@ -23,9 +23,8 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
-import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import {
-  layoutEventBehaviors,
   behavior,
   action,
   actionDetail,

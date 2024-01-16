@@ -1,4 +1,5 @@
-import { layoutEventBehaviors, behavior } from '@designEngine/03designerLayoutBase/index'
+import { layoutEventBehaviors } from '@designEngine/03designerLayoutBase/index'
+import { behavior } from '@behaviorEngine/index'
 
 export enum behaviorPageType {
   binding = 'behaviorEventBinding',

@@ -23,8 +23,8 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
-import { layoutEvent, layoutMethod, param, paramType } from '@designEngine/index'
-import { layoutEventBehaviors, behavior, action, actionDetail } from '@behaviorEngine/index'
+import { layoutEvent, layoutMethod, layoutEventBehaviors } from '@designEngine/index'
+import { behavior, action, actionDetail, pageSearchBase } from '@behaviorEngine/index'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 @Options({

@@ -20,8 +20,7 @@ import {
   //Component (provided by vue-class-component)
 } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
-import { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
-import { layoutEventBehaviors } from '@behaviorEngine/index'
+import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
 import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property, CompPosition_Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import { Event } from 'jquery'

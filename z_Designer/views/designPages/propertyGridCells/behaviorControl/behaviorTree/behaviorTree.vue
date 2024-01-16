@@ -43,7 +43,6 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid, serialize } from '@common/utils'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../../common'
 import {
-  layoutEventBehaviors,
   behavior,
   action,
   actionDetail,
@@ -58,7 +57,7 @@ import {
   factory
 } from '@behaviorEngine/index'
 import actionFilterSetting from './actionFilterSetting.vue'
-import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import btreeNode from './bTreeNode.vue'
 import Clipboard from 'clipboard'
 

@@ -33,7 +33,8 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
-import { layoutEvent } from '@behaviorEngine/index'
+import { layoutEvent } from '@designEngine/index'
+import { behavior } from '@behaviorEngine/index'
 
 @propertyCellTypeAttr(PropertyTypeEnum.behavior)
 @Options({

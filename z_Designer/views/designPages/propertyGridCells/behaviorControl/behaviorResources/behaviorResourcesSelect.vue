@@ -66,7 +66,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import {
   groupNode,
@@ -82,7 +82,7 @@ import {
 } from '@behaviorEngine/index'
 
 import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
-import { layoutEventBehaviors, behavior, action, actionDetail } from '@behaviorEngine/index'
+import { behavior, action, actionDetail } from '@behaviorEngine/index'
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 
 import resourceChooseWindow from './resoucesChooseWindow.vue'

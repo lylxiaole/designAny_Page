@@ -37,6 +37,6 @@ export {
   dropDown_Property
 } from './commonClasses/LayoutProperty'
 
-export { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
+export { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
 export { paramInfo } from './commonClasses/pageInParamInfo'
 export { LayoutType, LayoutInfo, CompIndex, findSystemCompByCode, allComponents, layoutCompTypeAttr } from './commonClasses/componentInfos'
