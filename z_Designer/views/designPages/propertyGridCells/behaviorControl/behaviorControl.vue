@@ -9,11 +9,12 @@
     <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为设置" style="height:600px" width="800px" v-model="windowVisible" append-to-body
       :before-close="onClose">
       <el-row style="height:500px;background:#FFF">
+        <behaviorEventBinding v-if="currentComp==='behaviorEventBinding'" :record="record" :currentData="currentData"
+          :designerEvents="designerLayoutEvents" :currentPageBehaviors="currentPageBehaviors" @onList="handleList" />
         <behaviorListInPage v-if="currentComp==='behaviorListInPage'" :record="record" @onDetail="handleDetail" />
         <behaviorDeatilSetting v-if="currentComp==='behaviorDeatilSetting'" :record="record" :prePage="prePage" :currentPage="currentPage"
           :currentLayout="currentLayouts" />
-        <behaviorEventBinding v-if="currentComp==='behaviorEventBinding'" :record="record" :currentData="currentData"
-          :designerEvents="designerLayoutEvents" :currentPageBehaviors="currentPageBehaviors" @onList="handleList" />
+
       </el-row>
       <template #footer>
         <el-row class="dialog-footer">
@@ -46,7 +47,7 @@ import behaviorEventBinding from './behaviorEventBinding.vue'
 import { behaviorPageType, behaviorListData, behaviorDetailData, behaviorBindingInParam, behaviorListInParam, behaviorDetailInParam } from './model'
 import { behaviorIco } from '@designEngine/assets/icons.js'
 
-@propertyCellTypeAttr(PropertyTypeEnum.behavior)
+// @propertyCellTypeAttr(PropertyTypeEnum.behavior)
 @Options({
   components: {
     behaviorListInPage: behaviorListInPage,
