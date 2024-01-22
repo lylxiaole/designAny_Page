@@ -86,7 +86,6 @@ import { behavior, action, actionDetail } from '@behaviorEngine/index'
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 
 import resourceChooseWindow from './resoucesChooseWindow.vue'
-import behaviorListInPageModal from '../behaviorListInPageModal.vue'
 class treeNode {
   key: string
   title: string
@@ -97,7 +96,6 @@ class treeNode {
 @Options({
   components: {
     resourceChooseWindow,
-    behaviorListInPageModal,
     callbackSetting
   }
 })
@@ -176,8 +174,8 @@ export default class behaviorResourcesSelect extends Vue {
   private settingCallBack(obj: object_callback) {
     /****************************************************** */
     if (obj.isChoosePageSource) {
-      var page = new PageBase()
-      page.Load(obj.resourceId)
+      var page = new EnginePage()
+      page.loadPageById(obj.resourceId)
       page.width = 0
       page.height = 0
       ;(this.$refs.callbackSetting as any).page = page

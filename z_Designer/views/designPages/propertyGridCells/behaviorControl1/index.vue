@@ -9,10 +9,10 @@
     <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为设置" style="height:600px" width="800px" v-model="windowVisible" append-to-body
       :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
       <el-row style="height:480px;width:100%;background:#FFF">
-        <behaviorEventBinding :designerLayoutEvents="designerLayoutEvents" :currentData="currentData" :currentPageBehaviors="currentPageBehaviors"
-          @onList="onOpenBehaviorList" />
-        <behaviorListInPage :currentPage="currentPage" @onDetail="onOpenBehaviorDetail" />
-        <behaviorDeatilSetting />
+        <behaviorEventBinding v-if="currentComp==='eventBinding'" :designerLayoutEvents="designerLayoutEvents" :currentData="currentData"
+          :currentPageBehaviors="currentPageBehaviors" @onList="onOpenBehaviorList" />
+        <behaviorListInPage v-if="currentComp==='allBehaviorList'" :currentPage="currentPage" @onDetail="onOpenBehaviorDetail" />
+        <behaviorDeatilSetting v-if="currentComp==='behaviorDetail'" />
       </el-row>
       <!-- ************************************************************ -->
       <template #footer>

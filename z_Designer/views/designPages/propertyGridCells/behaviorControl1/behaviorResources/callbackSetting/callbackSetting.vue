@@ -32,8 +32,8 @@
         </vxe-table-column>
       </vxe-table>
       <!-- ************************************************************* -->
-      <behaviorListInPageModal :callboackbehaviorid="callboackbehaviorid" :isVisible.sync="behaviorListVisible"
-        @onChooseBehavior="onChooseBehavior" />
+      <!-- <behaviorListInPageModal :callboackbehaviorid="callboackbehaviorid" :isVisible.sync="behaviorListVisible"
+        @onChooseBehavior="onChooseBehavior" /> -->
     </div>
   </a-modal>
 </template>
@@ -62,7 +62,7 @@ import {
 
 @Options({
   components: {
-    behaviorListInPageModal
+    // behaviorListInPageModal
   }
 })
 export default class callbackSetting extends Vue {
@@ -76,7 +76,7 @@ export default class callbackSetting extends Vue {
   private isChoosePageSource: boolean = true
 
   //弹窗页面
-  public page: PageBase
+  public page: EnginePage
   private callboackbehaviorid: string = ''
   //
   private behaviorListVisible: boolean = false
@@ -99,7 +99,7 @@ export default class callbackSetting extends Vue {
   }
   //弹窗页面的所有模型实例
   private get modelBindingsInPage(): any[] {
-    return this.page.modelBindings
+    return []
   }
   private getBehaviorName(id: string) {
     //window.console.log('获取行为名称')

@@ -41,9 +41,9 @@
       <actionFilterSetting :currentLayout="currentLayout" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior"
         v-model:isVisible="actionSettingVisible" v-model:currentAction="currentSettingAction" />
     </div>
-    <VueContextMenu id="context-menu" ref="ctxMenu">
+    <!-- <VueContextMenu id="context-menu" ref="ctxMenu">
       <li class="themeHover ppapaaaap" v-for="(menu,index) in rightMenus" :key="index" @click="onRightMenuChoose(menu)">&nbsp;&nbsp;{{menu}}</li>
-    </VueContextMenu>
+    </VueContextMenu> -->
 
     <button v-show="false" ref="copyBtn"></button>
   </div>
@@ -115,7 +115,7 @@ export default class behaviorTree extends Vue {
   private currentSelectedKeys: string[] = []
 
   private get dataTree(): behaviorTreeNodeData[] {
-    if (!this.currentSelectedKeys) {
+    if (!this.currentSelectedKeys || !this.currentSettingBehavior) {
       return []
     }
     if (!this.currentSettingBehavior.actions) {
