@@ -9,8 +9,8 @@ export class variable {
 export class behavior {
   id: string = ''
   name: string = ''
+  workRange: string = 'page' //page或者component
   description: string = ''
-  variableFormulas: any = {} //废弃
   inparam: any = {} //行为的入参
   variables: variable[] = [] //当前行文的上下文变量
   actions: action[] = []

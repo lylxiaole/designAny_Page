@@ -5,12 +5,16 @@
       @click="startEdit" size="small">
       行为设置
     </el-button>
-
+    <!-- ************************************************************ -->
     <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为设置" style="height:600px" width="800px" v-model="windowVisible" append-to-body
-      :before-close="onClose">
-      <el-row style="height:480px;background:#FFF">
-
+      :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+      <el-row style="height:480px;width:100%;background:#FFF">
+        <behaviorEventBinding :designerLayoutEvents="designerLayoutEvents" :currentData="currentData" :currentPageBehaviors="currentPageBehaviors"
+          @onList="onOpenBehaviorList" />
+        <behaviorListInPage :currentPage="currentPage" @onDetail="onOpenBehaviorDetail" />
+        <behaviorDeatilSetting />
       </el-row>
+      <!-- ************************************************************ -->
       <template #footer>
         <el-row class="dialog-footer">
           <div class="steps-action">
@@ -35,12 +39,18 @@ import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
 import { layoutEvent, layoutEventBehaviors } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
+import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
+import behaviorEventBinding from './behaviorEventBinding.vue'
+import behaviorListInPage from './behaviorListInPage.vue'
+import behaviorDeatilSetting from './behaviorDeatilSetting.vue'
 
 @propertyCellTypeAttr(PropertyTypeEnum.behavior)
 @Options({
-  components: {}
+  components: { behaviorEventBinding, behaviorListInPage, behaviorDeatilSetting }
 })
 export default class index extends propertyCellBase {
+  private currentComp: string = 'eventBinding' //eventBinding,allBehaviorList,behaviorDetail
+
   private designerLayoutEvents: layoutEvent[] = []
   private currentPageBehaviors: behavior[] = []
   private currentData: layoutEventBehaviors[] = []
@@ -55,9 +65,11 @@ export default class index extends propertyCellBase {
     }
 
     this.windowVisible = true
+    this.loadBaseData()
   }
-  // ***********************************************
-  private xxx() {
+
+  private loadBaseData() {
+    this.currentComp = 'eventBinding'
     // 当前选中控件已经绑定的行为列表
     this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
     // 当前选中控件的事件列表
@@ -69,7 +81,25 @@ export default class index extends propertyCellBase {
       this.currentData = []
     }
   }
+  // ************事件绑定行为控件********************************************************
+  // 打开行为列表页面
+  private onOpenBehaviorList(backData: behaviorListData) {
+    this.currentComp = 'allBehaviorList'
+    // this.selectedEventName = backData.selectedEventName
+    // this.currentEventBehavior = backData.eventBehavior
+    // this.record = {
+    //   allBehaviors: this.currentPageBehaviors,
+    //   selectedEventName: backData.selectedEventName,
+    //   eventBehavior: backData.eventBehavior
+    // }
+    // this.currentComp = behaviorPageType.list
+  }
   // ********************************************************************
+  private onOpenBehaviorDetail(bev: behavior) {
+    this.currentComp = 'behaviorDetail'
+  }
+  // ********************************************************************
+
   private onClose(e: MouseEvent) {
     this.windowVisible = false
   }
