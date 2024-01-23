@@ -191,7 +191,6 @@ export default class behaviorTree extends Vue {
     e.stopPropagation()
     e.preventDefault()
     let currentRightNode: behaviorTreeNodeData = null
-    debugger
     if (data) {
       currentRightNode = data as behaviorTreeNodeData
     }
