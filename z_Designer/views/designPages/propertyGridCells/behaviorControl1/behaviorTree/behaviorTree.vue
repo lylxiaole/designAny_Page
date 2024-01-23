@@ -5,12 +5,12 @@
       <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="true" :allow-drag="true" default-expand-all draggable
         @node-drop="onNodeDrop">
         <template #default="{ node, data }">
-          <span class="custom-tree-node">
+          <div style="width:100%;position: relative;">
             <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1" />
-            <span v-if="data.isAction">
+            <span style="width:20%;z-index:1" v-if="data.isAction">
               <a @click="settingAction(node)">设置</a>
             </span>
-          </span>
+          </div>
         </template>
       </el-tree>
 
@@ -41,9 +41,6 @@
       <actionFilterSetting :currentLayout="currentLayout" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior"
         v-model:isVisible="actionSettingVisible" v-model:currentAction="currentSettingAction" />
     </div>
-    <!-- <VueContextMenu id="context-menu" ref="ctxMenu">
-      <li class="themeHover ppapaaaap" v-for="(menu,index) in rightMenus" :key="index" @click="onRightMenuChoose(menu)">&nbsp;&nbsp;{{menu}}</li>
-    </VueContextMenu> -->
 
     <button v-show="false" ref="copyBtn"></button>
   </div>
@@ -73,8 +70,6 @@ import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from 
 import btreeNode from './bTreeNode.vue'
 import Clipboard from 'clipboard'
 
-let VueContextMenu = require('vue-context-menu')
-
 class behaviorTreeNodeData {
   key: string
   title: string
@@ -100,7 +95,6 @@ enum rightMenuEnum {
 
 @Options({
   components: {
-    VueContextMenu: VueContextMenu,
     btreeNode: btreeNode,
     actionFilterSetting: actionFilterSetting
   }

@@ -1,23 +1,33 @@
  <template>
-  <a-modal :maskClosable="false" title="配置条件" :destroyOnClose="true" v-model="isVisible" :width="900" @ok="onOk" @cancel="handleCancel"
-    :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定">
-    <a-layout style="height:500px">
-      <a-layout style="background:transparent;height:40%;padding:8px;overflow-y:auto">
+  <el-dialog v-model="isVisible" title="配置条件" append-to-body :close-on-click-modal="false" :close-on-press-escape="false">
+
+    <!-- <a-modal :maskClosable="false" title="配置条件" :destroyOnClose="true" v-model="isVisible" :width="900" @ok="onOk" @cancel="handleCancel"
+      :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定"> -->
+    <el-row style="height:500px">
+      <el-row style="background:transparent;height:40%;padding:8px;overflow-y:auto">
         如果:
         <formulaSetting :forType="forType" :currentActionDetail="currentActionDetail" :actionFactory="actionFactory"
           @onFocusFormula="onFocusFormula" />
-      </a-layout>
-      <a-layout style="background:transparent;height:10%;padding:8px;overflow-y:auto">
+      </el-row>
+      <el-row style="background:transparent;height:10%;padding:8px;overflow-y:auto">
         <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6" class="flexHorilanLayout">
           <div style="background:#18aeb7;width:6px;height:20px; "></div>
           <span style="margin-left:9px;float:left;fontSize:18px">参数</span>
         </div>
-      </a-layout>
-      <a-layout style="background:transparent;height:54%;padding:8px;overflow-y:auto">
+      </el-row>
+      <el-row style="background:transparent;height:54%;padding:8px;overflow-y:auto">
         <formulaInParamSetting :actionFactory="actionFactory" :currentObj="currentFocusObj" />
-      </a-layout>
-    </a-layout>
-  </a-modal>
+      </el-row>
+    </el-row>
+
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="handleCancel">Cancel</el-button>
+        <el-button type="primary" @click="onOk">Confirm</el-button>
+      </span>
+    </template>
+    <!-- </a-modal> -->
+  </el-dialog>
 </template>
 
 <script lang="ts">

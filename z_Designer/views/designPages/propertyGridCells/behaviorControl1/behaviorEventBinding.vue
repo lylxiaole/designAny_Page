@@ -14,7 +14,7 @@
         <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件行为列表</span>
         <el-button class="behavior-list-header-button" style="width:104px;height:30px;background:rgba(245,166,35,1);color:rgba(255,255,255,1);"
           @click="toBehaviorList">
-          添加行为
+          引用行为
         </el-button>
       </div>
       <el-table :data="currentSelectedBehaviors" style="width:100%" height="calc(100% - 30px)">
@@ -154,7 +154,6 @@ export default class behaviorEventBinding extends Vue {
     let back: behaviorListData = new behaviorListData()
     back.prePage = behaviorPageType.binding
     back.selectedEventName = this.selectedEventName
-    debugger
     // window.console.log('toBehaviorList')
     let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
     if (event) {

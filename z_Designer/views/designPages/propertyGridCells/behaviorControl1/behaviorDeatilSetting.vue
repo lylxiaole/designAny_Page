@@ -1,9 +1,9 @@
 <template style="height:100%">
   <el-row style="height:100%;background:#FFF;">
     <el-row style="height:100%;background:#FFF;">
-      <el-col style="height:100%;background:#FFF;" :span="6">
+      <el-col style="height:100%;background:#FFF;width:220px;max-width:220px">
         <el-row style="height:100%;background:#FFF;">
-          <el-row style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
+          <el-row style="height:54px;background:#FFF;">
             <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6"
               class="flexHorilanLayout">
               <div style="background:#18aeb7;width:6px;height:46px;"></div>
@@ -12,13 +12,14 @@
           </el-row>
           <el-row style="height:calc(100% - 54px);width:100%;background:#eeeeee;">
             <el-row style="height:100%;width:100%;background:#FFF;">
-              <behaviorTree style="height:100%;width:100%;background:#eeeeee;" :currentLayout="currentLayout" :currentPage="currentPage"
-                :currentSettingBehavior="currentSettingBehavior" :actionFactory="actionFactory" @currentActionChanged="currentActionChanged" />
+              <behaviorTree style="height:100%;width:100%;background:#eeeeee;" v-model:currentLayout="currentLayout" v-model:currentPage="currentPage"
+                v-model:currentSettingBehavior="currentSettingBehavior" v-model:actionFactory="actionFactory"
+                @currentActionChanged="currentActionChanged" />
             </el-row>
           </el-row>
         </el-row>
       </el-col>
-      <el-col style="height:100%;" :span="18">
+      <el-col style="height:100%;width:calc(100% - 220px);max-width:calc(100% - 220px)">
         <el-row style="height:100%;">
           <el-row style="height:54px;padding:0px 0px 8px 8px;background:#FFF;">
             <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6"
@@ -79,23 +80,23 @@ import { behaviorPageType, behaviorDetailInParam } from './model'
   }
 })
 export default class behaviorDeatilSetting extends Vue {
-  @Prop() prePage: behaviorPageType
-  @Prop() currentLayout: EngineLayout
-  @Prop() currentPage: EnginePage
-  @Prop() record: behaviorDetailInParam
-
+  currentLayout: EngineLayout = null
+  currentPage: EnginePage = null
   /**当前正在设置的行为 */
-  private currentSettingBehavior: behavior = null
+  currentSettingBehavior: behavior = null
+
   //行为明细中，当前被选中的对象
   private currentFocusObj: objectBase = null
   private currentActionDetail: actionDetail = null
   private actionFactory: factory = null
   private forType: formulaType = formulaType.cute
 
-  created() {
-    if (this.record && this.record.selectedBehavior) {
-      this.currentSettingBehavior = deepClone(this.record.selectedBehavior)
-    }
+  public init(behav: behavior, layout: EngineLayout, page: EnginePage) {
+    this.currentSettingBehavior = behav
+    this.currentLayout = layout
+    this.currentPage = page
+    debugger
+    // **************************************************
     this.actionFactory = new factory(this.currentLayout, this.currentPage, this.currentSettingBehavior)
     pageSearchBase.currentPage = this.currentPage
     pageSearchBase.actionFctory = this.actionFactory
@@ -112,6 +113,7 @@ export default class behaviorDeatilSetting extends Vue {
 
   private currentActionChanged(newval: actionDetail | action) {
     // window.console.log('选择的动作节点变化了')
+
     if (newval == null || (newval as any).actionDetails) {
       this.currentActionDetail = null
     } else {

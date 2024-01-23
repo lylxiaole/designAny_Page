@@ -12,7 +12,7 @@
         <behaviorEventBinding v-if="currentComp==='eventBinding'" :designerLayoutEvents="designerLayoutEvents" :currentData="currentData"
           :currentPageBehaviors="currentPageBehaviors" @onList="onOpenBehaviorList" />
         <behaviorListInPage v-if="currentComp==='allBehaviorList'" :currentPage="currentPage" @onDetail="onOpenBehaviorDetail" />
-        <behaviorDeatilSetting v-if="currentComp==='behaviorDetail'" />
+        <behaviorDeatilSetting ref="behaviorDeatilSetting" v-if="currentComp==='behaviorDetail'" />
       </el-row>
       <!-- ************************************************************ -->
       <template #footer>
@@ -95,15 +95,15 @@ export default class index extends propertyCellBase {
     // this.currentComp = behaviorPageType.list
   }
   // ********************************************************************
-  private onOpenBehaviorDetail(bev: behavior) {
+  private async onOpenBehaviorDetail(behv: behavior) {
     this.currentComp = 'behaviorDetail'
+    await this.$nextTick()
+    ;(this.$refs.behaviorDeatilSetting as behaviorDeatilSetting).init(behv, this.currentLayoutsGetter[0], this.currentPage)
   }
   // ********************************************************************
-
   private onClose(e: MouseEvent) {
     this.windowVisible = false
   }
-
   private onConfirm() {
     this.windowVisible = false
   }
