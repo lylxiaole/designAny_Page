@@ -3,11 +3,11 @@
     <el-button icon="plus" style="width:100%;height:32px;" type="dashed" size="small" @click="addNewAction">添加动作</el-button>
     <div style="height:94%;width:100%;overflow-y:auto;background:#fff" @contextmenu.prevent="onTreeNodeRightClick">
       <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="true" :allow-drag="true" default-expand-all draggable
-        @node-drop="onNodeDrop">
+        @node-drop="onNodeDrop" @node-contextmenu="onTreeNodeRightClick">
         <template #default="{ node, data }">
           <div style="width:100%;position: relative;">
-            <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1" />
-            <span style="width:20%;z-index:1" v-if="data.isAction">
+            <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1;float:left" />
+            <span style="width:20%;z-index:1;float:right" v-if="data.isAction">
               <a @click="settingAction(node)">设置</a>
             </span>
           </div>
@@ -40,6 +40,15 @@
         </a-tree> -->
       <actionFilterSetting :currentLayout="currentLayout" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior"
         v-model:isVisible="actionSettingVisible" v-model:currentAction="currentSettingAction" />
+
+      <v-contextmenu ref="ctxMenu">
+        <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
+          @click="onRightMenuChoose(menu)">
+          <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
+          <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
+        </v-contextmenu-item>
+      </v-contextmenu>
+
     </div>
 
     <button v-show="false" ref="copyBtn"></button>
@@ -178,15 +187,13 @@ export default class behaviorTree extends Vue {
   /*******右键列表************************** */
   private rightMenus: string[] = []
   /**右击 */
-  private onTreeNodeRightClick(e: any) {
-    if (e.node) {
-      ;(e.event as Event).stopPropagation()
-    } else {
-      ;(e as Event).stopPropagation()
-    }
+  private onTreeNodeRightClick(e: any, data: any) {
+    e.stopPropagation()
+    e.preventDefault()
     let currentRightNode: behaviorTreeNodeData = null
-    if (e.node) {
-      currentRightNode = e.node.dataRef as behaviorTreeNodeData
+    debugger
+    if (data) {
+      currentRightNode = data as behaviorTreeNodeData
     }
     if (currentRightNode) {
       this.currentSelectedKeys = [currentRightNode.key]
@@ -195,9 +202,10 @@ export default class behaviorTree extends Vue {
     }
 
     //window.console.log('右击了')
-    ;(this.$refs.ctxMenu as any).open()
+    ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
     this.makeRightMenus(currentRightNode)
   }
+
   private onRightMenuChoose(menuName: string) {
     //window.console.log(menuName)
     switch (menuName) {
@@ -234,6 +242,36 @@ export default class behaviorTree extends Vue {
   }
   private onNodeNameChanged(nodeKey: string, newname: string) {
     this.getNodeDataById(nodeKey, this.currentSettingBehavior.actions).name = newname
+  }
+  private getMenuIconByRightMenus(rm: rightMenuEnum): string {
+    let iconString
+    switch (rm) {
+      // case rightMenuEnum.addPage:
+      //   iconString = '&#xe625;'
+      //   break
+      // case rightMenuEnum.addGroup: {
+      //   iconString = '&#xe626;'
+      //   break
+      // }
+      // case rightMenuEnum.edit:
+      //   iconString = '&#xe628;'
+      //   break
+      // case rightMenuEnum.saveAs: {
+      //   iconString = '&#xe61a;'
+      //   break
+      // }
+      // case rightMenuEnum.rename: {
+      //   iconString = '&#xe628;'
+      //   break
+      // }
+      // case rightMenuEnum.delete: {
+      //   iconString = '&#xe62b;'
+      //   break
+      // }
+      default:
+        break
+    }
+    return iconString
   }
   /************行为列表维护*********************************************************************** */
   /**添加一个动作 */
