@@ -1,19 +1,27 @@
  <template>
-  <a-modal :maskClosable="false" title="选择资源" :bodyStyle="{padding:'0px 8px 8px 8px',background: '#FFF'}" width="95%" style="bottom:0;height:85%;"
-    v-model="isVisible" @ok="onOk" @cancel="handleCancel" :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}"
-    cancelText="取消" okText="确定">
-    <a-layout style="height:54px;padding:0px 0px 8px 0px;background:#FFF;">
+  <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" title="选择资源" width="95%" style="bottom:0;height:85%;" v-model="isVisible"
+    @ok="onOk" @cancel="handleCancel" append-to-body>
+    <el-row style="height:54px;padding:0px 0px 8px 0px;background:#FFF;">
       <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6" class="flexHorilanLayout">
         <div style="background:#18aeb7;width:6px;height:46px;"></div>
         <span style="margin-left:9px;float:left;fontSize:18px">资源库</span>
       </div>
-    </a-layout>
+    </el-row>
     <resouceChooseComp ref="resourceTree" style="height:100%;overflow-x:auto;overflow-y:hidden;border:1px solid #ccc"
       @onSelectedObj="onSelectedObj" />
-    <div ref="drawpage">
-      <div></div>
-    </div>
-  </a-modal>
+    <template #footer>
+      <el-row class="dialog-footer">
+        <div class="steps-action">
+          <el-button @click="onCancel">
+            取消
+          </el-button>
+          <el-button :style="{'margin-left':' 8px'}" type="primary" @click="onConfirm">
+            确认
+          </el-button>
+        </div>
+      </el-row>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -31,9 +39,9 @@ import {
   object_Method,
   object_callback,
   resourceType
-} from '@designEngine/index'
+} from '@behaviorEngine/index'
 
-import { getSearchClass, pageSearchBase } from '@designEngine/index'
+import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import resouceChooseComp from './resouceChooseComp.vue'
 
 @Options({

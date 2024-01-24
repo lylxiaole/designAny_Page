@@ -4,11 +4,11 @@
     <div style="height:94%;width:100%;overflow-y:auto;background:#fff" @contextmenu.prevent="onTreeNodeRightClick">
       <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="true" :allow-drag="true" default-expand-all draggable
         @node-drop="onNodeDrop" @node-contextmenu="onTreeNodeRightClick">
-        <template #default="{ node, data }">
+        <template #default="{data }">
           <div style="width:100%;position: relative;">
             <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1;float:left" />
             <span style="width:20%;z-index:1;float:right" v-if="data.isAction">
-              <a @click="settingAction(node)">设置</a>
+              <a @click="settingAction(data.key)">设置</a>
             </span>
           </div>
         </template>
@@ -38,8 +38,8 @@
           </a-tooltip>
         </div>
         </a-tree> -->
-      <actionFilterSetting :currentLayout="currentLayout" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior"
-        v-model:isVisible="actionSettingVisible" v-model:currentAction="currentSettingAction" />
+      <actionFilterSetting ref="actionFilterSetting" :currentLayout="currentLayout" :currentPage="currentPage"
+        :currentSettingBehavior="currentSettingBehavior" v-model:isVisible="actionSettingVisible" v-model:currentAction="currentSettingAction" />
 
       <v-contextmenu ref="ctxMenu">
         <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop, InjectReactive } from 'vue-property-decorator'
 import { deepClone, getUuid, serialize } from '@common/utils'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../../common'
 import {
@@ -129,11 +129,11 @@ export default class behaviorTree extends Vue {
 
   private onNodeSelect(keys: string[], e: any) {
     if (keys.length < 1) {
-      this.currentActionChanged(null)
+      this.currentSelectAction(null)
       return
     }
     let findnode = this.getNodeDataById(keys[0], this.currentSettingBehavior.actions)
-    this.currentActionChanged(findnode)
+    this.currentSelectAction(findnode)
   }
 
   private clipboard: any
@@ -141,8 +141,8 @@ export default class behaviorTree extends Vue {
     return this.$refs.copyBtn
   }
 
-  @Emit('currentActionChanged')
-  private currentActionChanged(newval: actionDetail | action) {}
+  @Emit('currentSelectAction')
+  private currentSelectAction(newval: actionDetail | action) {}
   /*********************************************** */
   /**重写组件的render行为 */
   private oldrender: Function = null
@@ -547,13 +547,11 @@ export default class behaviorTree extends Vue {
     this.deleteNode(sourceNode)
   }
   // ************动作条件设计*******************************************************************************************************
-  private actionSettingVisible: boolean = false
-  private currentSettingAction: action = null
+
   private settingAction(key: string) {
     let findAction = this.getNodeDataById(key, this.currentSettingBehavior.actions)
     window.console.log('开始编辑action条件', findAction)
-    this.currentSettingAction = findAction as action
-    this.actionSettingVisible = true
+    ;(this.$refs.actionFilterSetting as actionFilterSetting).show(findAction as action)
   }
 }
 </script>

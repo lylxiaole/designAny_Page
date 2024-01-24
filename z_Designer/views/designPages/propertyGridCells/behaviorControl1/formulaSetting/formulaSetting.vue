@@ -1,9 +1,4 @@
-
-/**
- * 行为设置
- * By LYL
- * 日期
- */
+ 
 <template>
   <div style="width:100%">
     <div style="padding:0px 10px;width:100%;position:relative">
@@ -13,14 +8,14 @@
       </div>
     </div>
     <div style="position:relative;width:100%;">
-      <el-button v-if="currentActionDetail" @click="addObj" style="margin-left:8px;float:right" type="primary" shape="circle" icon="plus" />
+      <el-button v-show="currentActionDetail" @click="addObj" style="margin-left:8px;float:right" type="primary" shape="circle">添加</el-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop, InjectReactive } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
@@ -38,7 +33,6 @@ import {
   object_callback,
   factory
 } from '@behaviorEngine/index'
-import bahaviorResourceSelectTree from '../behaviorResources/bahaviorResourceSelectTree'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 
 @Options({
@@ -48,7 +42,7 @@ import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.v
 })
 export default class formulaSetting extends Vue {
   @Prop() behaviorResources: any
-  @Prop() currentActionDetail: actionDetail
+  @Prop({ default: {} }) currentActionDetail: actionDetail
   @Prop() actionFactory: factory
   @Prop() forType: formulaType
 

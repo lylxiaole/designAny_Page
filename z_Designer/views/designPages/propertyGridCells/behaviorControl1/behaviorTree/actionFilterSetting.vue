@@ -69,11 +69,13 @@ export default class actionFilterSetting extends Vue {
   @Prop() currentPage: EnginePage
   @Prop() currentSettingBehavior: behavior
 
-  @Prop() isVisible: boolean
-  @Prop() currentAction: action
+  isVisible: boolean = false
+  currentAction: action
 
-  @Emit('update:isVisible')
-  private updateIsVisible_Inner(val: any) {}
+  public show(act: action) {
+    this.isVisible = true
+    this.currentAction = act
+  }
 
   @Watch('isVisible')
   onVisibleChanged(val: boolean) {
@@ -131,11 +133,12 @@ export default class actionFilterSetting extends Vue {
 
   private onOk() {
     // window.console.log('关闭弹窗')
-    this.updateIsVisible_Inner(false)
+    this.isVisible = false
+
     this.currentAction.judgingCondition = this.currentActionDetail.objs
   }
   private handleCancel() {
-    this.updateIsVisible_Inner(false)
+    this.isVisible = false
   }
 }
 </script>

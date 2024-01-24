@@ -1,5 +1,5 @@
 <template>
-  <a-modal :maskClosable="false" title="事件回调" v-model="isVisible" width="95%" @ok="onOk" @cancel="handleCancel"
+  <el-dialog :maskClosable="false" title="事件回调" v-model="isVisible" width="95%" @ok="onOk" @cancel="handleCancel"
     :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定">
     <div>
       <vxe-toolbar>
@@ -35,7 +35,7 @@
       <!-- <behaviorListInPageModal :callboackbehaviorid="callboackbehaviorid" :isVisible.sync="behaviorListVisible"
         @onChooseBehavior="onChooseBehavior" /> -->
     </div>
-  </a-modal>
+  </el-dialog>
 </template>
 
 <script lang="ts">

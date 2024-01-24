@@ -14,7 +14,7 @@
             <el-row style="height:100%;width:100%;background:#FFF;">
               <behaviorTree style="height:100%;width:100%;background:#eeeeee;" v-model:currentLayout="currentLayout" v-model:currentPage="currentPage"
                 v-model:currentSettingBehavior="currentSettingBehavior" v-model:actionFactory="actionFactory"
-                @currentActionChanged="currentActionChanged" />
+                @currentSelectAction="currentSelectAction" />
             </el-row>
           </el-row>
         </el-row>
@@ -95,7 +95,7 @@ export default class behaviorDeatilSetting extends Vue {
     this.currentSettingBehavior = behav
     this.currentLayout = layout
     this.currentPage = page
-    debugger
+
     // **************************************************
     this.actionFactory = new factory(this.currentLayout, this.currentPage, this.currentSettingBehavior)
     pageSearchBase.currentPage = this.currentPage
@@ -111,7 +111,7 @@ export default class behaviorDeatilSetting extends Vue {
     }
   }
 
-  private currentActionChanged(newval: actionDetail | action) {
+  private currentSelectAction(newval: actionDetail | action) {
     // window.console.log('选择的动作节点变化了')
 
     if (newval == null || (newval as any).actionDetails) {
