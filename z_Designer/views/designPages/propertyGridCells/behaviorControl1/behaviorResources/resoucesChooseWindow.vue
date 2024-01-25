@@ -50,21 +50,21 @@ import resouceChooseComp from './resouceChooseComp.vue'
   }
 })
 export default class resoucesChooseWindow extends Vue {
-  @Prop() private isVisible: boolean
-  @Emit('update:isVisible')
-  private updateIsVisible_Inner(val: any) {}
+  private isVisible: boolean = false
 
-  @Watch('isVisible')
-  private onIsVisibleChange(val: boolean) {}
+  show() {
+    this.isVisible = true
+    ;(this.$refs.resourceTree as resouceChooseComp).refreshCurrentItems()
+  }
 
   private currentObj: objectBase = null
 
   private onOk() {
     this.onChooseObj(this.currentObj)
-    this.updateIsVisible_Inner(false)
+    this.isVisible = false
   }
   private handleCancel() {
-    this.updateIsVisible_Inner(false)
+    this.isVisible = false
   }
 
   private onSelectedObj(obj: objectBase) {

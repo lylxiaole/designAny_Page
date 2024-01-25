@@ -24,7 +24,9 @@
       </a-dropdown> -->
 
       <el-dropdown @command="menuSelected">
-        <span class="el-dropdown-link"> {{currentTitle}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+        <span class="el-dropdown-link">
+          {{currentTitle}}
+          <el-icon class="el-icon--right"><arrow-down /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -75,17 +77,19 @@
           <!-- // -->
         </el-badge>
       </el-tooltip>
-      <resourceChooseWindow @onChooseObj="onChooseObj" v-model:isVisible="chooseResouceVisible"></resourceChooseWindow>
+      <resourceChooseWindow ref="resourceChooseWindow" @onChooseObj="onChooseObj"></resourceChooseWindow>
       <!-- // -->
-      <callbackSetting ref="callbackSetting" v-model:isVisible="callbackSettingVisible" @onCompleteSetting="onCompleteSetting" />
+      <callbackSetting ref="callbackSetting" @onCompleteSetting="onCompleteSetting" />
     </template>
     <div style="display:none" ref="renderdiv"></div>
   </div>
 </template>
 
 <script  >
+import { ref } from 'vue'
+
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import {
@@ -119,11 +123,9 @@ export default {
   },
   data() {
     return {
-      chooseResouceVisible: false,
-      callbackSettingVisible: false,
       allSigns: [],
       callboackbehaviorid: '',
-      currentSelectKey: null
+      currentSelectKey: undefined
     }
   },
   props: ['currentObj', 'resourceTypesNotAllow', 'canDeleteObj', 'forType'],
@@ -171,16 +173,14 @@ export default {
     menuSelected(key) {
       this.currentSelectKey = key
       var currentnode = this.allSigns.find((o) => o.resourceId == key)
-
       this.$emit('onSelectNodeChanged', currentnode, this.currentObj)
     },
     chooseResource() {
       // window.console.log('显示弹窗')
-      this.chooseResouceVisible = true
+      this.$refs.resourceChooseWindow.show()
     },
     onChooseObj(obj) {
       this.$emit('onSelectNodeChanged', obj, this.currentObj)
-      this.chooseResouceVisible = false
     },
     settingCallBack(obj) {
       /****************************************************** */
@@ -193,7 +193,7 @@ export default {
       }
       this.$refs.callbackSetting.isChoosePageSource = obj.isChoosePageSource
       this.$refs.callbackSetting.allCallbacks = obj.pCallbacks
-      this.callbackSettingVisible = true
+      this.$refs.callbackSetting.show()
     },
     onCompleteSetting(callbacks) {
       this.currentObj.pCallbacks = callbacks

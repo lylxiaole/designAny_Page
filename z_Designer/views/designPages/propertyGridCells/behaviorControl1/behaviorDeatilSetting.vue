@@ -37,7 +37,6 @@
               class="flexHorilanLayout">
               <div style="background:#18aeb7;width:6px;height:46px;"></div>
               <span style="margin-left:9px;float:left;fontSize:18px">参数</span>
-              <el-button type="primary" size="small" style="margin-left:24px;" icon="unordered-list" @click="showModelList">模型实例</el-button>
             </div>
           </el-row>
           <el-row style="height:54%;padding:8px;overflow-y:auto;background:#FFF;">

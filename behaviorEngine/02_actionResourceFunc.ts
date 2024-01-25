@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import factory from './03_actionFactory'
@@ -497,7 +496,12 @@ var allFuncs: any[] = [propertiesInPageFunc, behaviorInParamFunc, behaviorsFunc,
 function getResouceFunc(resType: resourceType): actResFuncBase {
   // window.console.log('行为代码2', resType)
   var res = allFuncs.filter((o: any) => o.prototype.$Meta.resType == resType)[0]
-  return new res()
+  try {
+    return new res()
+  } catch (error) {
+    debugger
+    return null
+  }
 }
 
 export default allFuncs

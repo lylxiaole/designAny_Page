@@ -8,6 +8,10 @@ require('@common/assets/iconfont1/iconfont.css')
 require('@common/assets/iconfont1/iconfont.js')
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+// *********************************************************
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 // ***********系统环境初始化*********************************
 let configs = window.__globalConfig
 import routes from './routes'
@@ -15,18 +19,22 @@ import appState from './appState'
 let system = initSystem(routes, configs, appState)
 system.store.commit('system/set_permission_routes', getRoutes())
 registerRouteHook(system.router, system.store)
-// *********************
+// *********************************************************
 import App from './views/App.vue'
-// *********************
+// *********************************************************
 import contextmenu from 'v-contextmenu'
 import 'v-contextmenu/dist/themes/default.css'
-// *********************
+// *********************************************************
 var currentApp = createApp(App)
 currentApp.use(ElementPlus)
+currentApp.use(VXETable)
 currentApp.use(contextmenu)
-
 currentApp.use(system.router)
 currentApp.use(system.store)
 currentApp.use(system.i18n)
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  currentApp.component(key, component)
+}
 
 currentApp.mount('#app')

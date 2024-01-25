@@ -1,6 +1,6 @@
 <template>
   <div style="padding:0px 10px;height:100%;width:100%;">
-    <a-button icon="plus" style="width:100%;height:32px;" type="dashed" size="small" @click="addNewAction">添加动作</a-button>
+    <a-button icon="plus" style="width:100%;height:32px;" size="small" @click="addNewAction">添加动作</a-button>
     <div style="height:94%;width:100%;overflow-y:auto;background:#fff" @contextmenu.prevent="onTreeNodeRightClick">
       <a-tree size="small" style="height:100%;width:inherit" :treeData="dataTree" @select="onNodeSelect" :selectedKeys.sync="currentSelectedKeys"
         draggable defaultExpandAll :multiple="false" @rightClick="onTreeNodeRightClick" @drop="onNodeDrop">

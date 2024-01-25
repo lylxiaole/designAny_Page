@@ -118,7 +118,7 @@
     "vue-template-compiler": "2.6.10",
     "vue2-ace-editor": "^0.0.15",
     "vuex": "^4.0.0-0",
-    "vxe-table": "^3.3.12",
+    "vxe-table": "^4.5.18",
     "wangeditor": "^4.7.4",
     "xe-utils": "^3.3.2",
     "xlsx": "^0.17.2"

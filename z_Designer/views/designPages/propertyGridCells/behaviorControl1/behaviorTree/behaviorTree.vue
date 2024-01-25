@@ -1,11 +1,11 @@
 <template>
   <div style="padding:0px 10px;height:100%;width:100%;">
-    <el-button icon="plus" style="width:100%;height:32px;" type="dashed" size="small" @click="addNewAction">添加动作</el-button>
+    <el-button icon="plus" style="width:100%;height:32px;" size="small" @click="addNewAction">添加动作</el-button>
     <div style="height:94%;width:100%;overflow-y:auto;background:#fff" @contextmenu.prevent="onTreeNodeRightClick">
-      <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="true" :allow-drag="true" default-expand-all draggable
-        @node-drop="onNodeDrop" @node-contextmenu="onTreeNodeRightClick">
+      <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="nodeAllowDrop" :allow-drag="nodeAllowDrag"
+        default-expand-all draggable @node-drop="onNodeDrop" @node-contextmenu="onTreeNodeRightClick">
         <template #default="{data }">
-          <div style="width:100%;position: relative;">
+          <div style="width:100%;position:relative;">
             <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1;float:left" />
             <span style="width:20%;z-index:1;float:right" v-if="data.isAction">
               <a @click="settingAction(data.key)">设置</a>
@@ -39,7 +39,7 @@
         </div>
         </a-tree> -->
       <actionFilterSetting ref="actionFilterSetting" :currentLayout="currentLayout" :currentPage="currentPage"
-        :currentSettingBehavior="currentSettingBehavior" v-model:isVisible="actionSettingVisible" v-model:currentAction="currentSettingAction" />
+        :currentSettingBehavior="currentSettingBehavior" />
 
       <v-contextmenu ref="ctxMenu">
         <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
@@ -496,7 +496,6 @@ export default class behaviorTree extends Vue {
 
     // window.console.log('pasteActions:', actionData)
   }
-
   // ************节点拖拽*******************************************************************************************************
   private dropTopOrBottom: string = null
   private cuteCurrentDragPosition(node: any) {
@@ -547,11 +546,17 @@ export default class behaviorTree extends Vue {
     this.deleteNode(sourceNode)
   }
   // ************动作条件设计*******************************************************************************************************
-
   private settingAction(key: string) {
     let findAction = this.getNodeDataById(key, this.currentSettingBehavior.actions)
     window.console.log('开始编辑action条件', findAction)
     ;(this.$refs.actionFilterSetting as actionFilterSetting).show(findAction as action)
+  }
+  // *********************************************************
+  private nodeAllowDrop(draggingNode, dropNode, type) {
+    return true
+  }
+  private nodeAllowDrag(node) {
+    return true
   }
 }
 </script>

@@ -3,7 +3,7 @@
   <div style="width:100%">
     <div style="padding:0px 10px;width:100%;position:relative">
       <div v-for="obj in currentObjs" :key="obj.id" class="flexHorilanLayout" style="float:left;margin: 4px;">
-        <bahaviorResourceSelectTree :forType="forType" :currentObj="obj" :canDeleteObj="true" @onSelectNodeChanged="onSelectNodeChanged"
+        <bahaviorResourceSelectTree :forType="forType" :currentObj="obj" :canDeleteObj="true" @onSelectNodeChanged="onResourceNodeChanged"
           @onFocus="onFocusFormula" @onDelete="onDeleteFormula" />
       </div>
     </div>
@@ -86,18 +86,13 @@ export default class formulaSetting extends Vue {
     }
   }
 
-  private onSelectNodeChanged(newObj: objectBase, oldObj: objectBase) {
-    if (!newObj) {
-      return
-    }
-    // window.console.log('重新选择了节点')
-    var newObjClone = this.actionFactory.makeObject(newObj.resourceId, newObj.name, newObj.objType, newObj.resourceType)
-    newObjClone.cloneFrom(newObj)
-    newObjClone.id = getUuid()
-    var selectFormulaIndex = this.currentActionDetail.objs.indexOf(oldObj)
-    //替换旧节点
-    this.currentActionDetail.objs.splice(selectFormulaIndex, 1, newObjClone)
-    this.onFocusFormula(newObjClone)
+  private onResourceNodeChanged(newObj: objectBase, oldObj: objectBase) {
+    oldObj.resourceId = newObj.resourceId
+    oldObj.name = newObj.name
+    oldObj.objType = newObj.objType
+    oldObj.resourceType = newObj.resourceType
+
+    this.onFocusFormula(oldObj)
   }
 
   //添加一个公式
