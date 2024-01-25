@@ -1,11 +1,11 @@
 import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
-import { behavior } from '../behaviorTypes'
-import actResFuncBase from '../actResFuncBase'
-import { resourceFuncAttr, resourceType, objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from '../01_actionCommon'
+import { behavior } from '../../behaviorTypes'
+import actResFuncBase, { resourceFuncAttr, resourceType, funcStack } from '../../actResFuncBase'
+import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from '../../01_actionCommon'
 
-@resourceFuncAttr(resourceType.fixedVal)
+@resourceFuncAttr(resourceType.fixedVal, funcStack.universal)
 export default class fixedValFunc implements actResFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
