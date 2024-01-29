@@ -1,7 +1,7 @@
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { getUuid } from '@common/utils'
 import { behavior, variable, action, actionDetail } from './behaviorTypes'
-import { objectBase, objectType, resourceType, resourceSearchType, object_Method, object_Variable, allCuteSigns, allFilterSigns, resourceSearchAttr } from './01_actionCommon'
+import { objectBase, objectType, object_Method, object_Variable, allCuteSigns, allFilterSigns, resourceSearchAttr } from './01_actionCommon'
 import factory from './03_actionFactory'
 import { object_callback, object_FixedVal } from '.'
 

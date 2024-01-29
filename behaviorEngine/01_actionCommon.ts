@@ -37,84 +37,84 @@ export var allFilterSigns: signNodeData[] = [
   { value: '||', key: '||', title: '或' }
 ]
 
-export enum resourceType {
-  propertiesInPage = 'propertiesInPage',
-  methodsInPage = 'methodsInPage',
-  behaviorInParam = 'behaviorInParam',
-  pageInParams = 'pageInParams',
-  pageContext = 'pageContext',
-  workflows = 'workflows',
-  workflowsAsync = 'workflowsAsync',
-  systemDict = 'systemDict', //系统枚举
-  fileTemplate = 'fileTemplate', //文件模板
-  localStorage = 'localStorage', //本地资源
-  customFunctions = 'customFunctions',
-  controlMethods = 'controlMethods',
-  controlProperties = 'controlProperties',
-  variables = 'variables',
-  fixedVal = 'fixedVal',
-  signs = 'signs',
-  filterSigns = 'filterSigns',
-  models = 'models',
-  modelsStructure = 'modelsStructure',
-  behaviors = 'behaviors',
-  modelsProperty = 'modelsProperty',
-  modelsFilter = 'modelsFilter',
-  modelsPropRule = 'modelsPropRule',
-  normalPopupWindow = 'normalPopupWindow',
-  confirmPopup = 'confirmPopup',
-  pagePopupWindow = 'pagePopupWindow',
-  pageRoute = 'pageRoute',
-  callback = 'callback',
-  modelMapper = 'modelMapper',
-  consoleSettings = 'consoleSettings',
-  externalLinks = 'externalLinks',
-  uploadFile = 'uploadFile', //上传excel文件,以供解析
-  uploadFile_all = 'uploadFile_all', //可自由定义类型的文件上传
-  serverTimeNow = 'serverTimeNow',
-  downloadFile = 'downloadFile',
-  breakBehavior = 'breakBehavior',
-  breakBehaviorAll = 'breakBehaviorAll',
-  controlLoadingWindow = 'controlLoadingWindow',
-  callLocalProgram = 'callLocalProgram',
-  designReportTemplate = 'designReportTemplate', //设计模板
-  reportPrintPreview = 'reportPrintPreview', //打印预览
-  reportPrint = 'reportPrint', //打印
-  openLocalExeToOpenFile = 'openLocalExeToOpenFile',
-  deleteReport = 'deleteReport',
-  pageSources = 'pageSources'
-}
+// export enum resourceType {
+//   propertiesInPage = 'propertiesInPage',
+//   methodsInPage = 'methodsInPage',
+//   behaviorInParam = 'behaviorInParam',
+//   pageInParams = 'pageInParams',
+//   pageContext = 'pageContext',
+//   workflows = 'workflows',
+//   workflowsAsync = 'workflowsAsync',
+//   systemDict = 'systemDict', //系统枚举
+//   fileTemplate = 'fileTemplate', //文件模板
+//   localStorage = 'localStorage', //本地资源
+//   customFunctions = 'customFunctions',
+//   controlMethods = 'controlMethods',
+//   controlProperties = 'controlProperties',
+//   variables = 'variables',
+//   fixedVal = 'fixedVal',
+//   signs = 'signs',
+//   filterSigns = 'filterSigns',
+//   models = 'models',
+//   modelsStructure = 'modelsStructure',
+//   behaviors = 'behaviors',
+//   modelsProperty = 'modelsProperty',
+//   modelsFilter = 'modelsFilter',
+//   modelsPropRule = 'modelsPropRule',
+//   normalPopupWindow = 'normalPopupWindow',
+//   confirmPopup = 'confirmPopup',
+//   pagePopupWindow = 'pagePopupWindow',
+//   pageRoute = 'pageRoute',
+//   callback = 'callback',
+//   modelMapper = 'modelMapper',
+//   consoleSettings = 'consoleSettings',
+//   externalLinks = 'externalLinks',
+//   uploadFile = 'uploadFile', //上传excel文件,以供解析
+//   uploadFile_all = 'uploadFile_all', //可自由定义类型的文件上传
+//   serverTimeNow = 'serverTimeNow',
+//   downloadFile = 'downloadFile',
+//   breakBehavior = 'breakBehavior',
+//   breakBehaviorAll = 'breakBehaviorAll',
+//   controlLoadingWindow = 'controlLoadingWindow',
+//   callLocalProgram = 'callLocalProgram',
+//   designReportTemplate = 'designReportTemplate', //设计模板
+//   reportPrintPreview = 'reportPrintPreview', //打印预览
+//   reportPrint = 'reportPrint', //打印
+//   openLocalExeToOpenFile = 'openLocalExeToOpenFile',
+//   deleteReport = 'deleteReport',
+//   pageSources = 'pageSources'
+// }
 
-export enum resourceSearchType {
-  controlsInPage = 'controlsInPage',
-  functions = 'functions',
-  behaviorInParam = 'behaviorInParam',
-  pageContext = 'pageContext',
-  workflows = 'workflows',
-  systemDict = 'systemDict', //系统枚举
-  fileTemplate = 'fileTemplate', //文件模板
-  localStorage = 'localStorage', //本地资源
-  customFunctions = 'customFunctions',
-  variables = 'variables',
-  fixedVal = 'fixedVal',
-  signs = 'signs',
-  filterSigns = 'filterSigns',
-  models = 'models',
-  normalPopupWindow = 'normalPopupWindow',
-  pagePopupWindow = 'pagePopupWindow',
-  pageRoute = 'pageRoute',
-  modelMapper = 'modelMapper',
-  consoleSettings = 'consoleSettings',
-  externalLinks = 'externalLinks',
-  pageSources = 'pageSources'
-}
+// export enum resourceSearchType {
+//   controlsInPage = 'controlsInPage',
+//   functions = 'functions',
+//   behaviorInParam = 'behaviorInParam',
+//   pageContext = 'pageContext',
+//   workflows = 'workflows',
+//   systemDict = 'systemDict', //系统枚举
+//   fileTemplate = 'fileTemplate', //文件模板
+//   localStorage = 'localStorage', //本地资源
+//   customFunctions = 'customFunctions',
+//   variables = 'variables',
+//   fixedVal = 'fixedVal',
+//   signs = 'signs',
+//   filterSigns = 'filterSigns',
+//   models = 'models',
+//   normalPopupWindow = 'normalPopupWindow',
+//   pagePopupWindow = 'pagePopupWindow',
+//   pageRoute = 'pageRoute',
+//   modelMapper = 'modelMapper',
+//   consoleSettings = 'consoleSettings',
+//   externalLinks = 'externalLinks',
+//   pageSources = 'pageSources'
+// }
 
-export function resourceFuncAttr(resType: resourceType) {
-  return function (target: Function) {
-    !target.prototype.$Meta && (target.prototype.$Meta = {})
-    target.prototype.$Meta.resType = resType
-  }
-}
+// export function resourceFuncAttr(resType: resourceType) {
+//   return function (target: Function) {
+//     !target.prototype.$Meta && (target.prototype.$Meta = {})
+//     target.prototype.$Meta.resType = resType
+//   }
+// }
 
 export function resourceSearchAttr(resType: resourceSearchType) {
   return function (target: Function) {

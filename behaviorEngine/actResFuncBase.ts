@@ -7,7 +7,17 @@ import { behavior } from './behaviorTypes'
 
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
 
+export enum resourceGroup {
+  fixedVal = 'fixedVal'
+}
+
 export enum resourceType {
+  fixedValBool = 'fixedValBool',
+  fixedValString = 'fixedValBool',
+  fixedValFloat = 'fixedValFloat',
+  fixedValNone = 'fixedValNone',
+  fixedValInt = 'fixedValInt',
+
   propertiesInPage = 'propertiesInPage',
   methodsInPage = 'methodsInPage',
   behaviorInParam = 'behaviorInParam',
@@ -22,7 +32,6 @@ export enum resourceType {
   controlMethods = 'controlMethods',
   controlProperties = 'controlProperties',
   variables = 'variables',
-  fixedVal = 'fixedVal',
   signs = 'signs',
   filterSigns = 'filterSigns',
   models = 'models',
@@ -62,13 +71,18 @@ export enum funcStack {
   universal = 'universal'
 }
 
-export function resourceFuncAttr(resType: resourceType, funcStack: funcStack) {
+var allActFunctions = []
+export function resourceFuncAttr(resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
     target.prototype.$Meta.resType = resType
     target.prototype.$Meta.funcStack = funcStack
+    target.prototype.$Meta.resGroup = resGroup
+
+    allActFunctions.push(target)
   }
 }
+export { allActFunctions }
 
 export default interface actResFuncBase {
   currentLayout: EngineLayout

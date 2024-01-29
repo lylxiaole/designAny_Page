@@ -104,7 +104,7 @@ export default class PropertyGrid extends Vue {
     if (this.isWatchPropertiesChange == false) {
       return
     }
-    
+
     window.console.log('propertyDataCache changed:')
     for (let index = 0; index < newproperties.length; index++) {
       const nproperty = newproperties[index]

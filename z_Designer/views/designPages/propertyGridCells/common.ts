@@ -3,7 +3,6 @@ import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { PropertyTypeEnum, Property, PropertyType, EnginePage, EngineLayout } from '@designEngine/index'
 
 var cellControls = []
-export { PropertyTypeEnum, cellControls }
 
 export function propertyCellTypeAttr(type: PropertyTypeEnum) {
   return function (target: Function) {
@@ -13,6 +12,8 @@ export function propertyCellTypeAttr(type: PropertyTypeEnum) {
     cellControls.push(target)
   }
 }
+
+export { PropertyTypeEnum, cellControls }
 
 @Options({})
 export default class propertyCellBase extends Vue {
