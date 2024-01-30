@@ -9,7 +9,7 @@
 
 
   
-         behavior--> action--->   objectBase（用于保存） 
+         behavior--> action--->   objectBase（用于设计和保存） 
 
                                                  |
                                                  |
