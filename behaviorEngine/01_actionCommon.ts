@@ -5,17 +5,6 @@ class signNodeData {
   value: string
   title: string
 }
-export enum paramType {
-  number = 'number',
-  string = 'string',
-  complexType = 'complexType', //复杂类型
-  boolean = 'boolean'
-}
-export class param {
-  name: string
-  type: paramType
-  val: any
-}
 
 //计算符号
 export var allCuteSigns: signNodeData[] = [
@@ -85,29 +74,29 @@ export var allFilterSigns: signNodeData[] = [
 //   pageSources = 'pageSources'
 // }
 
-// export enum resourceSearchType {
-//   controlsInPage = 'controlsInPage',
-//   functions = 'functions',
-//   behaviorInParam = 'behaviorInParam',
-//   pageContext = 'pageContext',
-//   workflows = 'workflows',
-//   systemDict = 'systemDict', //系统枚举
-//   fileTemplate = 'fileTemplate', //文件模板
-//   localStorage = 'localStorage', //本地资源
-//   customFunctions = 'customFunctions',
-//   variables = 'variables',
-//   fixedVal = 'fixedVal',
-//   signs = 'signs',
-//   filterSigns = 'filterSigns',
-//   models = 'models',
-//   normalPopupWindow = 'normalPopupWindow',
-//   pagePopupWindow = 'pagePopupWindow',
-//   pageRoute = 'pageRoute',
-//   modelMapper = 'modelMapper',
-//   consoleSettings = 'consoleSettings',
-//   externalLinks = 'externalLinks',
-//   pageSources = 'pageSources'
-// }
+export enum resourceSearchType {
+  controlsInPage = 'controlsInPage',
+  functions = 'functions',
+  behaviorInParam = 'behaviorInParam',
+  pageContext = 'pageContext',
+  workflows = 'workflows',
+  systemDict = 'systemDict', //系统枚举
+  fileTemplate = 'fileTemplate', //文件模板
+  localStorage = 'localStorage', //本地资源
+  customFunctions = 'customFunctions',
+  variables = 'variables',
+  fixedVal = 'fixedVal',
+  signs = 'signs',
+  filterSigns = 'filterSigns',
+  models = 'models',
+  normalPopupWindow = 'normalPopupWindow',
+  pagePopupWindow = 'pagePopupWindow',
+  pageRoute = 'pageRoute',
+  modelMapper = 'modelMapper',
+  consoleSettings = 'consoleSettings',
+  externalLinks = 'externalLinks',
+  pageSources = 'pageSources'
+}
 
 // export function resourceFuncAttr(resType: resourceType) {
 //   return function (target: Function) {
@@ -116,7 +105,7 @@ export var allFilterSigns: signNodeData[] = [
 //   }
 // }
 
-export function resourceSearchAttr(resType: resourceSearchType) {
+export function resourceSearchAttr(resType: any) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
     target.prototype.$Meta.resType = resType

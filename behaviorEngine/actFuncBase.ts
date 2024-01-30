@@ -6,17 +6,32 @@ import { Property } from '@designEngine/index'
 import { behavior } from './behaviorTypes'
 
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
-
+//动作资源分组
 export enum resourceGroup {
-  fixedVal = 'fixedVal'
+  fixedVal = 'fixedVal',
+  cuteSigns = 'cuteSigns',
+  filterSigns = 'filterSigns'
 }
-
+//动作类型
 export enum resourceType {
   fixedValBool = 'fixedValBool',
   fixedValString = 'fixedValBool',
   fixedValFloat = 'fixedValFloat',
   fixedValNone = 'fixedValNone',
   fixedValInt = 'fixedValInt',
+  signAdd = 'signAdd', //加
+  signReduce = 'signReduce', //减
+  signAssign = 'signAssign', //赋值
+  signMultiply = 'signReduce', //乘
+  signDivide = 'signReduce', //除
+  signEqual = 'signEqual', //相等于
+  signNotEqual = 'signNotEqual', //不等于
+  signGreaterThan = 'signGreaterThan', //大于
+  signLessThan = 'signLessThan', //小于
+  signGTOQ = 'signGTOQ', //大于等于
+  signLTOQ = 'signLTOQ', //小于等于
+  signAnd = 'signAnd', //且
+  signOr = 'signOr', //或
 
   propertiesInPage = 'propertiesInPage',
   methodsInPage = 'methodsInPage',
@@ -63,14 +78,14 @@ export enum resourceType {
   deleteReport = 'deleteReport',
   pageSources = 'pageSources'
 }
-
+//动作作用范围
 export enum funcStack {
   webpc = 'webpc',
   webapp = 'webapp',
   server = 'server',
   universal = 'universal'
 }
-
+//反射，所有动作的实体类
 var allActFunctions = []
 export function resourceFuncAttr(resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
   return function (target: Function) {
@@ -83,8 +98,8 @@ export function resourceFuncAttr(resGroup?: resourceGroup, resType?: resourceTyp
   }
 }
 export { allActFunctions }
-
-export default interface actResFuncBase {
+//动作的基础类型
+export interface actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior

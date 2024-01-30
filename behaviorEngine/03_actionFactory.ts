@@ -2,8 +2,11 @@ import { deepClone } from '@common/utils'
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
-import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType, resourceType } from './01_actionCommon'
-import allFuncs, { actResFuncBase, getResouceFunc } from './02_actionResourceFunc'
+import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './01_actionCommon'
+import allFuncs, { getResouceFunc } from './02_actionResourceFunc'
+
+import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup } from './actFuncBase'
+
 export default class factory {
   public currentLayout: EngineLayout
   public currentPage: EnginePage
@@ -40,7 +43,7 @@ export default class factory {
       return func.getDesc(obj)
     }
     obj.updateInparamsFunction = () => {
-      return func.updateInparam(obj)
+      return null
     }
   }
 

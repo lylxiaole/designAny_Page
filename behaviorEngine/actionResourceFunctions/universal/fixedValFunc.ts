@@ -2,11 +2,11 @@ import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
-import actResFuncBase, { resourceFuncAttr, resourceType, funcStack, resourceGroup } from '../../actResFuncBase'
+import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup } from '../../actFuncBase'
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from '../../01_actionCommon'
 
 @resourceFuncAttr(resourceGroup.fixedVal, resourceType.fixedValString, funcStack.universal)
-export class fixedValString implements actResFuncBase {
+export class fixedValString implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
@@ -41,7 +41,7 @@ export class fixedValString implements actResFuncBase {
   }
 }
 @resourceFuncAttr(resourceGroup.fixedVal, resourceType.fixedValBool, funcStack.universal)
-export class fixedValBool implements actResFuncBase {
+export class fixedValBool implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
@@ -73,7 +73,7 @@ export class fixedValBool implements actResFuncBase {
 }
 
 @resourceFuncAttr(resourceGroup.fixedVal, resourceType.fixedValInt, funcStack.universal)
-export class fixedValInt implements actResFuncBase {
+export class fixedValInt implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
@@ -103,7 +103,7 @@ export class fixedValInt implements actResFuncBase {
 }
 
 @resourceFuncAttr(resourceGroup.fixedVal, resourceType.fixedValFloat, funcStack.universal)
-export class fixedValFloat implements actResFuncBase {
+export class fixedValFloat implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
@@ -133,7 +133,7 @@ export class fixedValFloat implements actResFuncBase {
 }
 
 @resourceFuncAttr(resourceGroup.fixedVal, resourceType.fixedValNone, funcStack.universal)
-export class fixedValNone implements actResFuncBase {
+export class fixedValNone implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior

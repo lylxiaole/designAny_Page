@@ -1,6 +1,17 @@
 /******************************行为相关 **************************/
 import { objectBase, objectType } from './01_actionCommon'
 
+export enum paramType {
+  number = 'number',
+  string = 'string',
+  complexType = 'complexType', //复杂类型
+  boolean = 'boolean'
+}
+export class param {
+  name: string
+  type: paramType
+  val: any
+}
 export class variable {
   name: string
   val: any
