@@ -18,4 +18,4 @@ modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-export * from './actResFuncBase'
+export * from './actFuncBase'
