@@ -1,0 +1,28 @@
+
+
+  
+           
+
+
+
+
+
+
+  
+         behavior--> action--->   objectBase（用于保存） 
+
+                                                 |
+                                                 |
+                                                 |执行时用actionFactory，根据 resourceType创建 actFuncBase
+                                                 |
+                                                 |
+                                                 |
+ 
+                                               actFuncBase  
+                                        （filtersignEqual......）
+   
+     
+
+
+
+

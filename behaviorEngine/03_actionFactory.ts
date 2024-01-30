@@ -79,7 +79,6 @@ export default class factory {
       }
     }
     this.currentBehavior.inparam = {}
-    this.currentBehavior.variableFormulas = {}
     this.currentBehavior.variables = []
   }
 
@@ -140,24 +139,8 @@ export default class factory {
       }
 
       window.console.error('执行行为细节出错', error)
-      // if (error && error.message) {
-      //   if (error.stack) {
-      //     window.console.error(error.stack)
-      //   }
-      //   layerPopup.warning(error.message)
-      //   throw error.message
-      // } else if (error) {
-      //   if (error.stack) {
-      //     window.console.error(error.stack)
-      //   }
-      //   layerPopup.warning(common.serialize(error))
-      //   throw common.serialize(error)
-      // } else {
-      //   throw null
-      // }
     } finally {
       evalStr = null
-
       this.weakm.delete(this)
       this.weakm = new WeakMap()
       _runArea = null

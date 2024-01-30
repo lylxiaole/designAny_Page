@@ -6,13 +6,13 @@ import { Property } from '@designEngine/index'
 import { behavior } from './behaviorTypes'
 
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
-//动作资源分组
+//方法资源分组
 export enum resourceGroup {
   fixedVal = 'fixedVal',
   cuteSigns = 'cuteSigns',
   filterSigns = 'filterSigns'
 }
-//动作类型
+//方法类型
 export enum resourceType {
   fixedValBool = 'fixedValBool',
   fixedValString = 'fixedValBool',
@@ -78,14 +78,14 @@ export enum resourceType {
   deleteReport = 'deleteReport',
   pageSources = 'pageSources'
 }
-//动作作用范围
+//方法作用范围
 export enum funcStack {
   webpc = 'webpc',
   webapp = 'webapp',
   server = 'server',
   universal = 'universal'
 }
-//反射，所有动作的实体类
+//反射，所有方法的实体类
 var allActFunctions = []
 export function resourceFuncAttr(resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
   return function (target: Function) {
@@ -98,11 +98,14 @@ export function resourceFuncAttr(resGroup?: resourceGroup, resType?: resourceTyp
   }
 }
 export { allActFunctions }
-//动作的基础类型
+
+//方法的父类型
 export interface actFuncBase {
+  $meta: objectBase //动作的元数据，用于保存。描述了动作的类型，出入参数等关键信息
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
+
   getFunc(obj: objectBase): any
   setFunc(obj: objectBase, val: any): void
   /**获取组件的描述 */
