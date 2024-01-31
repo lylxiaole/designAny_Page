@@ -5,7 +5,9 @@ import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { Property } from '@designEngine/index'
 import { behavior } from './behaviorTypes'
 
-import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
+import { object_group, objectBase } from './actObject'
+
+import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable } from './actObject'
 //方法资源分组
 export enum resourceGroup {
   fixedVal = 'fixedVal',
@@ -87,21 +89,22 @@ export enum funcStack {
 }
 //反射，所有方法的实体类
 var allActFunctions = []
-export function resourceFuncAttr(resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
+export function resourceFuncAttr(name: string, desc: string, resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
     target.prototype.$Meta.resType = resType
     target.prototype.$Meta.funcStack = funcStack
     target.prototype.$Meta.resGroup = resGroup
-
+    target.prototype.$Meta.name = name
+    target.prototype.$Meta.desc = desc
     allActFunctions.push(target)
   }
 }
 export { allActFunctions }
 
 //方法的父类型
-export interface actFuncBase {
-  $meta: objectBase //动作的元数据，用于保存。描述了动作的类型，出入参数等关键信息
+export interface actFuncBase<T> {
+  $meta: T //动作的元数据，用于保存。描述了动作的类型，出入参数等关键信息
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
@@ -114,4 +117,55 @@ export interface actFuncBase {
   isExit(obj: objectBase): boolean
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
   getSettingDetail(obj: objectBase): objectBase
+}
+
+//根据方法的信息，把方法的元数据组织成树结构，提供给设计器使用
+export function getFuncObjsTree() {
+  let res = [] //object_group
+
+  for (let index = 0; index < allActFunctions.length; index++) {
+    const actFunc = allActFunctions[index]
+    let group = actFunc.resGroup
+    let findGroup = res.find((o) => o.key === group)
+    if (!findGroup) {
+      findGroup = new object_group()
+      findGroup.key = group
+      findGroup.title = group
+      findGroup.childrenGroups = []
+      findGroup.childrenObjs = []
+      res.push(findGroup)
+    }
+    let actObj = null
+    let functype = typeof actFunc
+    if (functype === typeof object_FixedVal) {
+      actObj = new object_FixedVal()
+    } else if (functype === typeof object_Method) {
+      actObj = new object_Method()
+    } else if (functype === typeof object_Signs) {
+      actObj = new object_Signs()
+    } else if (functype === typeof object_Variable) {
+      actObj = new object_Variable()
+    } else if (functype === typeof object_callback) {
+      actObj = new object_callback()
+    }
+    findGroup.childrenObjs.push(actObj)
+  }
+  return res
+}
+//获取指定类型的方法元数据
+export function getFuncObjByGroup(group: resourceGroup) {
+  let funcs = allActFunctions.filter((o) => o.resGroup === group)
+  debugger
+  return funcs
+}
+
+export function getFuncObjByType(resType: resourceType) {
+  // window.console.log('行为代码2', resType)
+  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resType == resType)
+  try {
+    return new res()
+  } catch (error) {
+    debugger
+    return null
+  }
 }

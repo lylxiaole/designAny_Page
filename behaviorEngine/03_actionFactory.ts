@@ -2,10 +2,9 @@ import { deepClone } from '@common/utils'
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
-import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './01_actionCommon'
-import allFuncs, { getResouceFunc } from './02_actionResourceFunc'
+import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './actObject'
 
-import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup } from './actFuncBase'
+import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup, getFuncObjByType } from './actFuncBase'
 
 export default class factory {
   public currentLayout: EngineLayout
@@ -23,7 +22,7 @@ export default class factory {
     return obj
   }
   public makeObjectFunc(obj: objectBase, objType: objectType, resType: resourceType) {
-    var func = getResouceFunc(resType)
+    var func = getFuncObjByType(resType)
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
@@ -41,9 +40,6 @@ export default class factory {
     }
     obj.getDescFunction = (obj: objectBase) => {
       return func.getDesc(obj)
-    }
-    obj.updateInparamsFunction = () => {
-      return null
     }
   }
 
@@ -109,26 +105,30 @@ export default class factory {
 
     for (let index = 0; index < objs.length; index++) {
       let obj = this.makeObjectFromOld(objs[index])
-      if (obj.objType == objectType.signs) {
-        evalStr += obj.ref
-      } else if (obj.resourceType == resourceType.pageSources) {
-        let pageId = obj.resourceId
-        let param = []
-        let inputParams = (obj as any).inputParams
-        for (var m = 0; m < inputParams.length; m++) {
-          param.push({
-            key: inputParams[m].key,
-            name: inputParams[m].name,
-            paramVal: inputParams[m].obj.objType == objectType.fixedVal ? inputParams[m].obj.ref : inputParams[m].obj.ref.data
-          })
-        }
-        let run_param = { pageId: pageId, param: param }
-        _runArea[index] = run_param
-        evalStr += '_runArea[' + index + ']'
-      } else {
-        _runArea[index] = obj
-        evalStr += '_runArea[' + index + '].ref'
-      }
+      _runArea[index] = obj
+
+      evalStr += '_runArea[' + index + '].ref'
+
+      // if (obj.objType == objectType.signs) {
+      //   evalStr += obj.ref
+      // } else if (obj.resourceType == resourceType.pageSources) {
+      //   let pageId = obj.resourceId
+      //   let param = []
+      //   let inputParams = (obj as any).inputParams
+      //   for (var m = 0; m < inputParams.length; m++) {
+      //     param.push({
+      //       key: inputParams[m].key,
+      //       name: inputParams[m].name,
+      //       paramVal: inputParams[m].obj.objType == objectType.fixedVal ? inputParams[m].obj.ref : inputParams[m].obj.ref.data
+      //     })
+      //   }
+      //   let run_param = { pageId: pageId, param: param }
+      //   _runArea[index] = run_param
+      //   evalStr += '_runArea[' + index + ']'
+      // } else {
+      //   _runArea[index] = obj
+      //   evalStr += '_runArea[' + index + '].ref'
+      // }
     }
 
     try {

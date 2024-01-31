@@ -96,7 +96,6 @@ import {
   groupNode,
   objectBase,
   objectType,
-  resourceType,
   resourceSearchType,
   object_Variable,
   object_FixedVal,
@@ -107,6 +106,8 @@ import {
 
 import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
+import { resourceType, getFuncObj, resourceGroup } from '@behaviorEngine/index'
+
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 import resourceChooseWindow from './resoucesChooseWindow.vue'
 
@@ -132,19 +133,13 @@ export default {
   emits: ['onSelectNodeChanged', 'onFocus', 'onDelete'],
   mounted() {
     if (this.forType == formulaType.cute) {
-      let scalss = getSearchClass(resourceSearchType.signs)
-      scalss.searchNext().then((res) => {
-        if (res) {
-          this.allSigns = res.childrenObjs
-        }
-      })
+      let scalss = getFuncObj(resourceGroup.cuteSigns)
+      debugger
+      //  this.allSigns = res.childrenObjs
     } else {
-      let scalss = getSearchClass(resourceSearchType.filterSigns)
-      scalss.searchNext().then((res) => {
-        if (res) {
-          this.allSigns = res.childrenObjs
-        }
-      })
+      let scalss = getFuncObj(resourceGroup.filterSigns)
+      debugger
+      //  this.allSigns = res.childrenObjs
     }
   },
   methods: {
