@@ -27,10 +27,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-
 import { object_group, objectBase, objectType, object_Variable, object_FixedVal, resourceType } from '@behaviorEngine/index'
-
-import { allActFunctions } from '@behaviorEngine/index'
+import { getFuncObjsTree } from '@behaviorEngine/index'
 
 @Options({ name: 'resouceChooseComp' })
 export default class resouceChooseComp extends Vue {
@@ -48,14 +46,11 @@ export default class resouceChooseComp extends Vue {
   private currentItems: (object_group | objectBase)[] = []
 
   public async refreshCurrentItems() {
-    let x = allActFunctions
-    debugger
-
-    this.currentItems = []
+    let x = getFuncObjsTree()
+    this.currentItems = x
   }
 
   private currentSelectKeys: string[] = []
-  private currentSearchStr: string = ''
 
   private isShowNextList: boolean = false
 
@@ -88,10 +83,6 @@ export default class resouceChooseComp extends Vue {
     /** */
     // var resourceTree = this.$refs['resourceTree'] as any
     // resourceTree.refreshCurrentItems()
-  }
-
-  private async onSearch(value: any) {
-    this.refreshCurrentItems()
   }
 
   @Emit('onSelectedObj')

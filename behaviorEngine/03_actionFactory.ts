@@ -17,20 +17,7 @@ export default class factory {
   }
   /********制造object*************************************************** */
   public makeObject(resourceId: string, name: string, objType: objectType, resType: resourceType): objectBase {
-    let obj: objectBase = null
-    if (objType === objectType.fixedVal) {
-      obj = new object_FixedVal()
-    } else if (objType === objectType.method) {
-      obj = new object_Method()
-    } else if (objType === objectType.signs) {
-      obj = new object_Signs()
-    } else if (objType === objectType.variable) {
-      obj = new object_Variable()
-    }
-
-    obj.id = resourceId
-    obj.name = name
-    obj.resourceType = resType
+    let obj: objectBase = getFuncObjByType(resType)
 
     this.makeFuncToObj(obj, resType)
     return obj
@@ -110,9 +97,7 @@ export default class factory {
     for (let index = 0; index < objs.length; index++) {
       let obj = objs[index]
       _runArea[index] = obj
-
       evalStr += '_runArea[' + index + '].ref'
-
       // if (obj.objType == objectType.signs) {
       //   evalStr += obj.ref
       // } else if (obj.resourceType == resourceType.pageSources) {

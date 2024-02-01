@@ -125,11 +125,25 @@ export interface actFuncBase<T> {
 type ExtractValueType<T> = T extends { value: infer V } ? V : never
 
 //actFunc转actObj
-export function funcToObj(actFunc: any) {
-  var t = actFunc.prototype.$Meta.constructor
-  var x = new actFunc()
-  debugger
-  return
+export function funcToObj(actFunc: any): objectBase {
+  var objType = actFunc.prototype.$Meta.objType
+  var obj = null
+  if (objType === objectType.fixedVal) {
+    obj = new object_FixedVal()
+  } else if (objType === objectType.method) {
+    obj = new object_Method()
+  } else if (objType === objectType.signs) {
+    obj = new object_Signs()
+  } else if (objType === objectType.variable) {
+    obj = new object_Variable()
+  }
+
+  obj.id = getUuid()
+  obj.name = actFunc.prototype.$Meta.name
+  obj.objType = objType
+  obj.resourceType = actFunc.prototype.$Meta.resType
+  obj.description = actFunc.prototype.$Meta.desc
+  return obj
 }
 
 //根据方法的信息，把方法的元数据组织成树结构，提供给设计器使用
@@ -138,7 +152,7 @@ export function getFuncObjsTree() {
 
   for (let index = 0; index < allActFunctions.length; index++) {
     const actFunc = allActFunctions[index]
-    let group = actFunc.resGroup
+    let group = actFunc.prototype.$Meta.resGroup
     let findGroup = res.find((o) => o.key === group)
     if (!findGroup) {
       findGroup = new object_group()
@@ -163,7 +177,7 @@ export function getFuncObjByGroup(group: resourceGroup) {
     objs.push(funcToObj(element))
   }
 
-  return funcs
+  return objs
 }
 
 export function getFuncByType(resType: resourceType) {
@@ -176,7 +190,7 @@ export function getFuncByType(resType: resourceType) {
   }
 }
 
-export function getFuncObjByType(resType: resourceType) {
+export function getFuncObjByType(resType: resourceType): objectBase {
   // window.console.log('行为代码2', resType)
   var res = allActFunctions.find((o: any) => o.prototype.$Meta.resType == resType)
   try {

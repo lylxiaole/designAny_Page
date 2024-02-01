@@ -30,8 +30,8 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceId" :command="sign.resourceId"
-              :value="sign.resourceId">{{sign.name}}</el-dropdown-item>
+            <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceType" :command="sign.resourceType"
+              :value="sign.resourceType">{{sign.name}}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -133,13 +133,9 @@ export default {
   emits: ['onSelectNodeChanged', 'onFocus', 'onDelete'],
   mounted() {
     if (this.forType == formulaType.cute) {
-      let scalss = getFuncObjByGroup(resourceGroup.cuteSigns)
-      debugger
-      //  this.allSigns = res.childrenObjs
+      this.allSigns = getFuncObjByGroup(resourceGroup.cuteSigns)
     } else {
-      let scalss = getFuncObjByGroup(resourceGroup.filterSigns)
-      debugger
-      //  this.allSigns = res.childrenObjs
+      this.allSigns = getFuncObjByGroup(resourceGroup.filterSigns)
     }
   },
   methods: {
@@ -199,7 +195,7 @@ export default {
       if (!this.currentSelectKey) {
         return '请选择'
       }
-      var currentnode = this.allSigns.find((o) => o.resourceId === this.currentSelectKey)
+      var currentnode = this.allSigns.find((o) => o.resourceType === this.currentSelectKey)
       return currentnode.name
     }
   }

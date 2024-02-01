@@ -1,5 +1,5 @@
 /******************************行为相关 **************************/
-import { objectBase, objectType } from './01_actionCommon'
+import { objectBase, objectType } from './actObject'
 
 export enum paramType {
   number = 'number',

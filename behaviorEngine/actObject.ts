@@ -23,7 +23,7 @@ export class objectBase {
   // pageId?: string //该资源当前所在page,部分页面资源有这个字段。
   name: string
   description: string
-  // objType: objectType
+  objType: objectType
   resourceType: resourceType
 
   get ref(): any {
