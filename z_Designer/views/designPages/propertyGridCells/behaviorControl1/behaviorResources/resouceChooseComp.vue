@@ -28,24 +28,24 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 
-import { getSearchClass, groupNode, objectBase, objectType, object_Variable, object_FixedVal, resourceType } from '@behaviorEngine/index'
+import { object_group, objectBase, objectType, object_Variable, object_FixedVal, resourceType } from '@behaviorEngine/index'
 
 import { allActFunctions } from '@behaviorEngine/index'
 
 @Options({ name: 'resouceChooseComp' })
 export default class resouceChooseComp extends Vue {
-  @Prop() parentGroup: groupNode
+  @Prop() parentGroup: object_group
   @Prop() itemWidth: any
 
   @Watch('parentGroup', { deep: true, immediate: true })
-  private watchParentGroupChanges(val: groupNode) {
+  private watchParentGroupChanges(val: object_group) {
     this.refreshCurrentItems()
   }
 
   @Prop() canSearch: boolean
   @Prop() canScrollPage: boolean
 
-  private currentItems: (groupNode | objectBase)[] = []
+  private currentItems: (object_group | objectBase)[] = []
 
   public async refreshCurrentItems() {
     let x = allActFunctions

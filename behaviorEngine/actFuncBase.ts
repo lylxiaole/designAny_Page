@@ -8,6 +8,9 @@ import { behavior } from './behaviorTypes'
 import { object_group, objectBase } from './actObject'
 
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable } from './actObject'
+import { interfaceExtends, tsInterfaceDeclaration } from '@babel/types'
+import { extend } from 'jquery'
+import { __extends } from 'tslib'
 //方法资源分组
 export enum resourceGroup {
   fixedVal = 'fixedVal',
@@ -89,10 +92,11 @@ export enum funcStack {
 }
 //反射，所有方法的实体类
 var allActFunctions = []
-export function resourceFuncAttr(name: string, desc: string, resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
+export function resourceFuncAttr(name: string, desc: string, objType: objectType, resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
     target.prototype.$Meta.resType = resType
+    target.prototype.$Meta.objType = objType
     target.prototype.$Meta.funcStack = funcStack
     target.prototype.$Meta.resGroup = resGroup
     target.prototype.$Meta.name = name
@@ -118,6 +122,15 @@ export interface actFuncBase<T> {
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
   getSettingDetail(obj: objectBase): objectBase
 }
+type ExtractValueType<T> = T extends { value: infer V } ? V : never
+
+//actFunc转actObj
+export function funcToObj(actFunc: any) {
+  var t = actFunc.prototype.$Meta.constructor
+  var x = new actFunc()
+  debugger
+  return
+}
 
 //根据方法的信息，把方法的元数据组织成树结构，提供给设计器使用
 export function getFuncObjsTree() {
@@ -135,37 +148,40 @@ export function getFuncObjsTree() {
       findGroup.childrenObjs = []
       res.push(findGroup)
     }
-    let actObj = null
-    let functype = typeof actFunc
-    if (functype === typeof object_FixedVal) {
-      actObj = new object_FixedVal()
-    } else if (functype === typeof object_Method) {
-      actObj = new object_Method()
-    } else if (functype === typeof object_Signs) {
-      actObj = new object_Signs()
-    } else if (functype === typeof object_Variable) {
-      actObj = new object_Variable()
-    } else if (functype === typeof object_callback) {
-      actObj = new object_callback()
-    }
+
+    let actObj = funcToObj(actFunc)
     findGroup.childrenObjs.push(actObj)
   }
   return res
 }
 //获取指定类型的方法元数据
 export function getFuncObjByGroup(group: resourceGroup) {
-  let funcs = allActFunctions.filter((o) => o.resGroup === group)
-  debugger
+  let funcs = allActFunctions.filter((o: any) => o.prototype.$Meta.resGroup == group)
+  let objs = []
+  for (let index = 0; index < funcs.length; index++) {
+    const element = funcs[index]
+    objs.push(funcToObj(element))
+  }
+
   return funcs
+}
+
+export function getFuncByType(resType: resourceType) {
+  // window.console.log('行为代码2', resType)
+  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resType == resType)
+  try {
+    return new res()
+  } catch (error) {
+    return null
+  }
 }
 
 export function getFuncObjByType(resType: resourceType) {
   // window.console.log('行为代码2', resType)
   var res = allActFunctions.find((o: any) => o.prototype.$Meta.resType == resType)
   try {
-    return new res()
+    return funcToObj(res)
   } catch (error) {
-    debugger
     return null
   }
 }

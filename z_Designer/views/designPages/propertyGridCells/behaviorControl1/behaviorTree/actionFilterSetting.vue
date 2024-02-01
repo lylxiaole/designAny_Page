@@ -38,7 +38,6 @@ import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
 import {
-  groupNode,
   action,
   behavior,
   factory,
@@ -49,9 +48,7 @@ import {
   object_FixedVal,
   object_Method,
   formulaType,
-  resourceType,
-  pageSearchBase,
-  getSearchClass
+  resourceType
 } from '@behaviorEngine/index'
 import formulaSetting from '../formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from '../formulaSetting/formulaInParamSetting.vue'
@@ -84,9 +81,7 @@ export default class actionFilterSetting extends Vue {
     }
 
     this.actionFactory = new factory(this.currentLayout, this.currentPage, this.currentSettingBehavior)
-    pageSearchBase.currentPage = this.currentPage
-    pageSearchBase.actionFctory = this.actionFactory
-    pageSearchBase.currentBehavior = this.currentSettingBehavior
+
     //
     //window.console.log('设置动作的判断条件')
     if (!this.currentAction.judgingCondition) {
@@ -106,7 +101,7 @@ export default class actionFilterSetting extends Vue {
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
       const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.resourceId, obj.name, obj.objType, obj.resourceType)
+      var newObjClone = this.actionFactory.makeObject('', obj.name, '' as any, obj.resourceType)
       newObjClone.cloneFrom(obj)
       newobjs.push(newObjClone)
     }

@@ -3,9 +3,9 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup } from '../../actFuncBase'
-import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from '../../01_actionCommon'
+import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase } from '../../actObject'
 
-@resourceFuncAttr('加', '', resourceGroup.cuteSigns, resourceType.signAdd, funcStack.universal)
+@resourceFuncAttr('加', '', objectType.signs, resourceGroup.cuteSigns, resourceType.signAdd, funcStack.universal)
 export class cuteSignsAdd implements actFuncBase<object_Signs> {
   $meta: object_Signs
   currentLayout: EngineLayout
@@ -30,7 +30,7 @@ export class cuteSignsAdd implements actFuncBase<object_Signs> {
   }
 }
 
-@resourceFuncAttr('减', '', resourceGroup.cuteSigns, resourceType.signReduce, funcStack.universal)
+@resourceFuncAttr('减', '', objectType.signs, resourceGroup.cuteSigns, resourceType.signReduce, funcStack.universal)
 export class cuteSignsReduce implements actFuncBase<object_Signs> {
   $meta: object_Signs
   currentLayout: EngineLayout
@@ -54,7 +54,7 @@ export class cuteSignsReduce implements actFuncBase<object_Signs> {
   }
 }
 
-@resourceFuncAttr('赋值', '', resourceGroup.cuteSigns, resourceType.signAssign, funcStack.universal)
+@resourceFuncAttr('赋值', '', objectType.signs, resourceGroup.cuteSigns, resourceType.signAssign, funcStack.universal)
 export class cutesignAssign implements actFuncBase<object_Signs> {
   $meta: object_Signs
   currentLayout: EngineLayout
@@ -78,7 +78,7 @@ export class cutesignAssign implements actFuncBase<object_Signs> {
   }
 }
 
-@resourceFuncAttr('相乘', '', resourceGroup.cuteSigns, resourceType.signMultiply, funcStack.universal)
+@resourceFuncAttr('相乘', '', objectType.signs, resourceGroup.cuteSigns, resourceType.signMultiply, funcStack.universal)
 export class cutesignMultiply implements actFuncBase<object_Signs> {
   $meta: object_Signs
   currentLayout: EngineLayout
@@ -102,7 +102,7 @@ export class cutesignMultiply implements actFuncBase<object_Signs> {
   }
 }
 
-@resourceFuncAttr('相除', '', resourceGroup.cuteSigns, resourceType.signDivide, funcStack.universal)
+@resourceFuncAttr('相除', '', objectType.signs, resourceGroup.cuteSigns, resourceType.signDivide, funcStack.universal)
 export class cutesignDivide implements actFuncBase<object_Signs> {
   $meta: object_Signs
   currentLayout: EngineLayout

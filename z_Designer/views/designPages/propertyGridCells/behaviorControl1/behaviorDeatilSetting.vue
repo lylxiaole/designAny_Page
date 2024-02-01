@@ -51,18 +51,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import {
-  behavior,
-  action,
-  actionDetail,
-  factory,
-  resourceType,
-  formulaType,
-  objectBase,
-  objectType,
-  object_Method,
-  pageSearchBase
-} from '@behaviorEngine/index'
+import { behavior, action, actionDetail, factory, resourceType, formulaType, objectBase, objectType, object_Method } from '@behaviorEngine/index'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
@@ -97,9 +86,6 @@ export default class behaviorDeatilSetting extends Vue {
 
     // **************************************************
     this.actionFactory = new factory(this.currentLayout, this.currentPage, this.currentSettingBehavior)
-    pageSearchBase.currentPage = this.currentPage
-    pageSearchBase.actionFctory = this.actionFactory
-    pageSearchBase.currentBehavior = this.currentSettingBehavior
   }
 
   @Watch('currentSettingBehavior', { deep: true, immediate: true })
@@ -130,9 +116,9 @@ export default class behaviorDeatilSetting extends Vue {
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
       const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.resourceId, obj.name, obj.objType, obj.resourceType)
-      newObjClone.cloneFrom(obj)
-      newobjs.push(newObjClone)
+      var newObjClone = this.actionFactory.makeObject('', obj.name, '' as any, obj.resourceType)
+      // newObjClone.cloneFrom(obj)
+      // newobjs.push(newObjClone)
     }
     return newobjs
   }
@@ -148,7 +134,6 @@ export default class behaviorDeatilSetting extends Vue {
   private onFocusFormula(obj: objectBase) {
     this.currentFocusObj = obj
     if (this.currentFocusObj) {
-      this.currentFocusObj.updateInparamsFunction()
     }
   }
 }

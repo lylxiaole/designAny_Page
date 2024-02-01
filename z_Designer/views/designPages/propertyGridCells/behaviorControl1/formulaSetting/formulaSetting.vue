@@ -23,9 +23,7 @@ import {
   behavior,
   action,
   actionDetail,
-  allCuteSigns,
   formulaType,
-  allFilterSigns,
   objectBase,
   objectType,
   resourceType,
@@ -55,7 +53,6 @@ export default class formulaSetting extends Vue {
       this.currentActionDetail.objs = []
     }
 
-    this.currentActionDetail.objs = this.dealOldJsonData(this.currentActionDetail.objs)
     return this.currentActionDetail.objs
   }
 
@@ -66,19 +63,6 @@ export default class formulaSetting extends Vue {
     // }
   }
 
-  //处理就数据
-  private dealOldJsonData(objJsonData: objectBase[]): objectBase[] {
-    var newobjs: objectBase[] = []
-    //将就数据重新实例化成类型
-    for (let index = 0; index < objJsonData.length; index++) {
-      const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.resourceId, obj.name, obj.objType, obj.resourceType)
-      newObjClone.cloneFrom(obj)
-      newobjs.push(newObjClone)
-    }
-    return newobjs
-  }
-
   @Watch('currentActionDetail')
   watchCurrentActionChanged(newval: actionDetail) {
     if (!newval) {
@@ -87,25 +71,27 @@ export default class formulaSetting extends Vue {
   }
 
   private onResourceNodeChanged(newObj: objectBase, oldObj: objectBase) {
-    oldObj.resourceId = newObj.resourceId
-    oldObj.name = newObj.name
-    oldObj.objType = newObj.objType
-    oldObj.resourceType = newObj.resourceType
+    // oldObj.resourceId = newObj.resourceId
+    // oldObj.name = newObj.name
+    // oldObj.objType = newObj.objType
+    // oldObj.resourceType = newObj.resourceType
 
     this.onFocusFormula(oldObj)
   }
 
   //添加一个公式
   private addObj() {
+    //当前公式的最后一个元素
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
+
     if (!obj || obj.objType == objectType.signs) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '', objectType.fixedVal, resourceType.fixedVal)
+      let newobj = this.actionFactory.makeObject(getUuid(), '', objectType.fixedVal, resourceType.fixedValString)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.cute) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '等于', objectType.signs, resourceType.signs)
+      let newobj = this.actionFactory.makeObject(getUuid(), '等于', objectType.signs, resourceType.signAssign)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.filter) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '相等于', objectType.signs, resourceType.filterSigns)
+      let newobj = this.actionFactory.makeObject(getUuid(), '相等于', objectType.signs, resourceType.signEqual)
       this.currentActionDetail.objs.push(newobj)
     }
   }

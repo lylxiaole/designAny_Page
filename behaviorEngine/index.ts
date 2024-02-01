@@ -9,11 +9,12 @@ export enum formulaType {
   filter = 'filter' //判断条件
 }
 
-const modulesFiles = require.context('./actionResourceFunctions', true, /\.(vue)$/)
+const modulesFiles = require.context('./actionResourceFunctions', true, /\.(ts|js)$/)
 modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath)
   return modules
 }, {})
 
-export * from './04_actionReaourceTree'
+// export * from './04_actionReaourceTree'
 export * from './actFuncBase'
+export * from './actObject'

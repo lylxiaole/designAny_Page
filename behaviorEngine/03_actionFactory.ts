@@ -4,7 +4,7 @@ import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './actObject'
 
-import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup, getFuncObjByType } from './actFuncBase'
+import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup, getFuncObjByType, getFuncByType } from './actFuncBase'
 
 export default class factory {
   public currentLayout: EngineLayout
@@ -16,16 +16,32 @@ export default class factory {
     this.currentBehavior = _behavior
   }
   /********制造object*************************************************** */
-  public makeObject(resourceId: string, name: string, objType: objectType, resType: resourceType, pageId?: string): objectBase {
-    var obj = objectBase.makeNewObject(resourceId, name, objType, resType, pageId)
-    this.makeObjectFunc(obj, objType, resType)
+  public makeObject(resourceId: string, name: string, objType: objectType, resType: resourceType): objectBase {
+    let obj: objectBase = null
+    if (objType === objectType.fixedVal) {
+      obj = new object_FixedVal()
+    } else if (objType === objectType.method) {
+      obj = new object_Method()
+    } else if (objType === objectType.signs) {
+      obj = new object_Signs()
+    } else if (objType === objectType.variable) {
+      obj = new object_Variable()
+    }
+
+    obj.id = resourceId
+    obj.name = name
+    obj.resourceType = resType
+
+    this.makeFuncToObj(obj, resType)
     return obj
   }
-  public makeObjectFunc(obj: objectBase, objType: objectType, resType: resourceType) {
-    var func = getFuncObjByType(resType)
+  public makeFuncToObj(obj: objectBase, resType: resourceType) {
+    var func = getFuncByType(resType)
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
+    func.$meta = obj
+
     obj.setValFunction = (obj: objectBase, val: any) => {
       func.setFunc(obj, val)
     }
@@ -43,18 +59,6 @@ export default class factory {
     }
   }
 
-  private makeObjectFromOld(obj_old: objectBase): objectBase {
-    var newobj = this.makeObject(obj_old.resourceId, obj_old.name, obj_old.objType, obj_old.resourceType)
-    newobj.cloneFrom(obj_old)
-
-    if (newobj.objType == objectType.method) {
-      var newobj_method = newobj as object_Method
-      newobj_method.inputParams.filter((inparam) => {
-        inparam.obj = this.makeObjectFromOld(inparam.obj)
-      })
-    }
-    return newobj
-  }
   /********执行行为*************************************************** */
   public exacteAction() {
     if (!this.currentBehavior) {
@@ -104,7 +108,7 @@ export default class factory {
     let evalStr = ''
 
     for (let index = 0; index < objs.length; index++) {
-      let obj = this.makeObjectFromOld(objs[index])
+      let obj = objs[index]
       _runArea[index] = obj
 
       evalStr += '_runArea[' + index + '].ref'

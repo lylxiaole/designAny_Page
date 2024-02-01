@@ -47,19 +47,7 @@ import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 import { deepClone, getUuid } from '@common/utils'
 import behaviorListInPageModal from '../../behaviorListInPageModal.vue'
-import {
-  groupNode,
-  objectBase,
-  objectType,
-  object_Variable,
-  object_FixedVal,
-  resourceType,
-  popupCallback,
-  resourceSearchType,
-  behavior,
-  getSearchClass,
-  pageSearchBase
-} from '@behaviorEngine/index'
+import { objectBase, objectType, object_Variable, object_FixedVal, resourceType, popupCallback, behavior } from '@behaviorEngine/index'
 
 @Options({
   components: {
@@ -104,9 +92,9 @@ export default class callbackSetting extends Vue {
   private getBehaviorName(id: string) {
     //window.console.log('获取行为名称')
     var behavi: behavior = null
-    if (pageSearchBase.currentPage) {
-      behavi = pageSearchBase.currentPage.behaviors.find((o) => o.id == id)
-    }
+    // if (pageSearchBase.currentPage) {
+    //   behavi = pageSearchBase.currentPage.behaviors.find((o) => o.id == id)
+    // }
 
     if (behavi) {
       return behavi.name
