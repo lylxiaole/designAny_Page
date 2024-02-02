@@ -44,8 +44,9 @@ import resouceChooseComp from './resouceChooseComp.vue'
 export default class resoucesChooseWindow extends Vue {
   private isVisible: boolean = false
 
-  show() {
+  async show() {
     this.isVisible = true
+    await this.$nextTick()
     ;(this.$refs.resourceTree as resouceChooseComp).refreshCurrentItems()
   }
 

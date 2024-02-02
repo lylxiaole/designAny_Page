@@ -171,6 +171,7 @@ export default {
       this.$refs.resourceChooseWindow.show()
     },
     onChooseObj(obj) {
+      this.$emit('update:currentObj', obj)
       this.$emit('onSelectNodeChanged', obj, this.currentObj)
     },
     settingCallBack(obj) {

@@ -2,9 +2,9 @@
 <template>
   <div style="width:100%">
     <div style="padding:0px 10px;width:100%;position:relative">
-      <div v-for="obj in currentObjs" :key="obj.id" class="flexHorilanLayout" style="float:left;margin: 4px;">
-        <bahaviorResourceSelectTree :forType="forType" :currentObj="obj" :canDeleteObj="true" @onSelectNodeChanged="onResourceNodeChanged"
-          @onFocus="onFocusFormula" @onDelete="onDeleteFormula" />
+      <div v-for="(obj,index) in currentObjs" :key="obj.id" class="flexHorilanLayout" style="float:left;margin: 4px;">
+        <bahaviorResourceSelectTree :forType="forType" v-model:currentObj="currentObjs[index]" :canDeleteObj="true"
+          @onSelectNodeChanged="onResourceNodeChanged" @onFocus="onFocusFormula" @onDelete="onDeleteFormula" />
       </div>
     </div>
     <div style="position:relative;width:100%;">
@@ -76,7 +76,7 @@ export default class formulaSetting extends Vue {
     // oldObj.objType = newObj.objType
     // oldObj.resourceType = newObj.resourceType
 
-    this.onFocusFormula(oldObj)
+    this.onFocusFormula(newObj)
   }
 
   //添加一个公式

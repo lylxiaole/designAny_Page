@@ -66,7 +66,6 @@ export default class resouceChooseComp extends Vue {
   /*************************************************************************** */
   /**选择树节点 */
   private onSelectItem(selecteditem: any) {
-    debugger
     this.currentSelectKeys = []
     // window.console.log('选择了节点')
     if (!selecteditem) {
