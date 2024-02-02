@@ -116,7 +116,7 @@ export default class behaviorDeatilSetting extends Vue {
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
       const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject('', obj.name, '' as any, obj.resourceType)
+      var newObjClone = this.actionFactory.makeObject(obj.resourceType)
       // newObjClone.cloneFrom(obj)
       // newobjs.push(newObjClone)
     }

@@ -71,7 +71,7 @@ export default class formulaInParamSetting extends Vue {
 
     for (let index = 0; index < objmeth.inputParams.length; index++) {
       var param = objmeth.inputParams[index]
-      var newobj = this.actionFactory.makeObject(param.obj.resourceId, param.obj.name, param.obj.objType, param.obj.resourceType)
+      var newobj = this.actionFactory.makeObject(param.obj.resourceType)
       newobj.cloneFrom(param.obj)
       param.obj = newobj
     }
@@ -83,7 +83,7 @@ export default class formulaInParamSetting extends Vue {
       return
     }
     // window.console.log('替换参数节点')
-    var newObjClone = this.actionFactory.makeObject(newObj.resourceId, newObj.name, newObj.objType, newObj.resourceType)
+    var newObjClone = this.actionFactory.makeObject(newObj.resourceType)
     newObjClone.cloneFrom(newObj)
     newObjClone.id = getUuid()
     //找到原有节点，并用新的节点替代
@@ -118,7 +118,7 @@ export default class formulaInParamSetting extends Vue {
       return
     }
 
-    var newobj = this.actionFactory.makeObject(getUuid(), this.newParamName, objectType.fixedVal, resourceType.fixedVal)
+    var newobj = this.actionFactory.makeObject(resourceType.fixedValString)
     this.currentObj.inputParams.push({ name: this.newParamName, obj: newobj, isModel: false })
     this.newParanamVisible = false
   }

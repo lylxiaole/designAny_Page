@@ -16,7 +16,7 @@ export default class factory {
     this.currentBehavior = _behavior
   }
   /********制造object*************************************************** */
-  public makeObject(resourceId: string, name: string, objType: objectType, resType: resourceType): objectBase {
+  public makeObject(resType: resourceType): objectBase {
     let obj: objectBase = getFuncObjByType(resType)
 
     this.makeFuncToObj(obj, resType)

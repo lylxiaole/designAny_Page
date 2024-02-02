@@ -94,7 +94,7 @@ export default class actionFilterSetting extends Vue {
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
       const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.resourceId, obj.name, obj.objType, obj.resourceType)
+      var newObjClone = this.actionFactory.makeObject(obj.resourceType)
       newObjClone.cloneFrom(obj)
       newobjs.push(newObjClone)
     }
@@ -103,7 +103,7 @@ export default class actionFilterSetting extends Vue {
     // })
     //如果当前动作细节里面没有对象，添加一个
     if (newobjs.length < 1) {
-      var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
+      var first = this.actionFactory.makeObject(resourceType.variables)
       newobjs.push(first)
     }
     return newobjs

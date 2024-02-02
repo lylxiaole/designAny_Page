@@ -85,13 +85,13 @@ export default class formulaSetting extends Vue {
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
 
     if (!obj || obj.objType == objectType.signs) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '', objectType.fixedVal, resourceType.fixedValString)
+      let newobj = this.actionFactory.makeObject(resourceType.fixedValString)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.cute) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '等于', objectType.signs, resourceType.signAssign)
+      let newobj = this.actionFactory.makeObject(resourceType.signAssign)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.filter) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '相等于', objectType.signs, resourceType.signEqual)
+      let newobj = this.actionFactory.makeObject(resourceType.signEqual)
       this.currentActionDetail.objs.push(newobj)
     }
   }

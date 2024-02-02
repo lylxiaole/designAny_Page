@@ -122,7 +122,6 @@ export interface actFuncBase<T> {
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
   getSettingDetail(obj: objectBase): objectBase
 }
-type ExtractValueType<T> = T extends { value: infer V } ? V : never
 
 //actFunc转actObj
 export function funcToObj(actFunc: any): objectBase {

@@ -65,12 +65,7 @@ export default class formulaSetting extends Vue {
     return this.currentActionDetail.objs
   }
 
-  mounted() {
-    // if (this.currentActionDetail.objs && this.currentActionDetail.objs.length < 1) {
-    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
-    //   newobjs.push(first)
-    // }
-  }
+  mounted() {}
 
   //处理就数据
   private dealOldJsonData(objJsonData: objectBase[]): objectBase[] {
@@ -78,7 +73,7 @@ export default class formulaSetting extends Vue {
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
       const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.resourceId, obj.name, obj.objType, obj.resourceType)
+      var newObjClone = this.actionFactory.makeObject(obj.resourceType)
       newObjClone.cloneFrom(obj)
       newobjs.push(newObjClone)
     }
@@ -110,13 +105,13 @@ export default class formulaSetting extends Vue {
   private addObj() {
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
     if (!obj || obj.objType == objectType.signs) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '', objectType.fixedVal, resourceType.fixedVal)
+      let newobj = this.actionFactory.makeObject(resourceType.fixedValString)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.cute) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '等于', objectType.signs, resourceType.signs)
+      let newobj = this.actionFactory.makeObject(resourceType.signAssign)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.filter) {
-      let newobj = this.actionFactory.makeObject(getUuid(), '相等于', objectType.signs, resourceType.filterSigns)
+      let newobj = this.actionFactory.makeObject(resourceType.signEqual)
       this.currentActionDetail.objs.push(newobj)
     }
   }
