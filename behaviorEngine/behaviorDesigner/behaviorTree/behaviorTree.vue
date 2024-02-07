@@ -38,8 +38,7 @@
           </a-tooltip>
         </div>
         </a-tree> -->
-      <actionFilterSetting ref="actionFilterSetting" :currentLayout="currentLayout" :currentPage="currentPage"
-        :currentSettingBehavior="currentSettingBehavior" />
+      <actionFilterSetting ref="actionFilterSetting" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior" />
 
       <v-contextmenu ref="ctxMenu">
         <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
@@ -71,7 +70,7 @@ import {
   factory
 } from '@behaviorEngine/index'
 import actionFilterSetting from './actionFilterSetting.vue'
-import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
+import { EnginePage, EngineComponent, layoutEventBehaviors } from '@designEngine/index'
 import btreeNode from './bTreeNode.vue'
 import Clipboard from 'clipboard'
 
@@ -106,7 +105,6 @@ enum rightMenuEnum {
 })
 export default class behaviorTree extends Vue {
   /**当前正在设置的行为 */
-  @Prop() currentLayout: EngineLayout
   @Prop() currentPage: EnginePage
   @Prop() currentSettingBehavior: behavior
   @Prop() actionFactory: factory

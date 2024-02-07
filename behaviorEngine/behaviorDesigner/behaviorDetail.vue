@@ -3,7 +3,7 @@
     :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-row style="height:100%;background:#FFF;">
       <el-col :span="6">
-        <behaviorTree style="height:100%;width:100%;background:#eeeeee;" v-model:currentLayout="currentLayout" v-model:currentPage="currentPage"
+        <behaviorTree style="height:100%;width:100%;background:#eeeeee;" v-model:currentPage="currentPage"
           v-model:currentSettingBehavior="currentSettingBehavior" v-model:actionFactory="actionFactory" @currentSelectAction="currentSelectAction" />
       </el-col>
       <el-col :span="12">
@@ -37,14 +37,14 @@ import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from 
 import { deepClone, getUuid } from '@common/utils'
 
 import behaviorTree from './behaviorTree/behaviorTree.vue'
-import formulaSetting from './formulaSetting/formulaSetting.vue'
-import formulaInParamSetting from './formulaSetting/formulaInParamSetting.vue'
+// import formulaSetting from './formulaSetting/formulaSetting.vue'
+// import formulaInParamSetting from './formulaSetting/formulaInParamSetting.vue'
 
 @Options({
   components: {
-    behaviorTree: behaviorTree,
-    formulaSetting: formulaSetting,
-    formulaInParamSetting: formulaInParamSetting
+    behaviorTree: behaviorTree
+    // formulaSetting: formulaSetting,
+    // formulaInParamSetting: formulaInParamSetting
   }
 })
 export default class behaviorDeatilSetting extends Vue {

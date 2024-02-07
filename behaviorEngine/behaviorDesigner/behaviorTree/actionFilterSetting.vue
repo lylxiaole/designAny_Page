@@ -62,7 +62,6 @@ import resouceChooseComp from '../behaviorResources/resouceChooseComp.vue'
   }
 })
 export default class actionFilterSetting extends Vue {
-  @Prop() currentLayout: EngineLayout
   @Prop() currentPage: EnginePage
   @Prop() currentSettingBehavior: behavior
 
@@ -80,7 +79,7 @@ export default class actionFilterSetting extends Vue {
       return
     }
 
-    this.actionFactory = new factory(this.currentLayout, this.currentPage, this.currentSettingBehavior)
+    this.actionFactory = new factory(null, this.currentPage, this.currentSettingBehavior)
 
     //
     //window.console.log('设置动作的判断条件')
