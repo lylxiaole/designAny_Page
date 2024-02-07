@@ -24,7 +24,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 
 import { deepClone, getUuid } from '@common/utils'
-import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
+// import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 import {
   behavior,
   action,
@@ -39,7 +39,7 @@ import {
 
 @Options({
   components: {
-    bahaviorResourceSelectTree: bahaviorResourceTree
+    // bahaviorResourceSelectTree: bahaviorResourceTree
   }
 })
 export default class formulaInParamSetting extends Vue {
