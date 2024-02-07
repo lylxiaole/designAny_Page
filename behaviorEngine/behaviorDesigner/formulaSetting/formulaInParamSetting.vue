@@ -10,7 +10,7 @@
     <div class="flexHorilanLayout" v-if="currentObj&&currentObj.dynamic">
       <el-dialog :maskClosable="false" title="入参名称" v-model="newParanamVisible" width="350px" :destroyOnClose="true" @cancel="onCancelNewParam"
         @ok="onSureNewParam" :okButtonProps="{ props: {icon: 'check'}}" :cancelButtonProps="{ props: {icon: 'close'}}" cancelText="取消" okText="确定">
-        <a-input v-model="newParamName" />
+        <el-input v-model="newParamName" />
       </el-dialog>
       <el-button type="primary" @click="addParam" icon="plus">
         添加参数
@@ -26,13 +26,10 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
-import { param } from '@designEngine/index'
 import {
-  layoutEventBehaviors,
   behavior,
   action,
   actionDetail,
-  groupNode,
   objectBase,
   objectType,
   object_Method,
@@ -114,7 +111,7 @@ export default class formulaInParamSetting extends Vue {
     }
     var findsamename = this.currentObj.inputParams.find((o) => o.name == this.newParamName)
     if (findsamename) {
-      this.$message.success('已经定义了相同名称的参数!', 3)
+      alert('已经定义了相同名称的参数!')
       return
     }
 

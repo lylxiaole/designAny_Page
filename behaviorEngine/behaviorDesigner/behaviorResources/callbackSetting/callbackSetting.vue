@@ -1,10 +1,10 @@
 <template>
-  <a-modal :maskClosable="false" title="事件回调" v-model="isVisible" width="95%" @ok="onOk" @cancel="handleCancel"
+  <el-dialog :maskClosable="false" title="事件回调" v-model="isVisible" width="95%" @ok="onOk" @cancel="handleCancel"
     :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定">
     <div>
       <vxe-toolbar>
         <template v-slot:buttons>
-          <a-button @click="addCallback" type="primary">新增</a-button>
+          <el-button @click="addCallback" type="primary">新增</el-button>
         </template>
       </vxe-toolbar>
       <vxe-table :data="allCallbacks" :stripe="true" :resizable="true" :keyboard-config="{isArrow: true}" :show-header="true" width="100%"
@@ -14,28 +14,29 @@
         <vxe-table-column type="index" width="60"></vxe-table-column>
         <vxe-table-column v-if="isChoosePageSource" field="modelBindName_InPopupPage" show-overflow title="弹窗模型实例">
           <template v-slot="{ row }">
-            <a-select style="width:90%" v-model="row.modelBindName_InPopupPage">
-              <a-select-option v-for="mb in modelBindingsInPage" :key="mb.modelBindingName" :value="mb.modelBindingName">{{mb.modelBindingName}}
-              </a-select-option>
-            </a-select>
+            <el-select v-model="row.modelBindName_InPopupPage" placeholder="Select" style="width:90%">
+              <el-option v-for="mb in modelBindingsInPage" :key="mb.modelBindingName" :value="mb.modelBindingName">
+                {{mb.modelBindingName}}
+              </el-option>
+            </el-select>
           </template>
         </vxe-table-column>
         <vxe-table-column field="behaviorId_InMainPage" title="回调行为">
           <template v-slot="{ row }">
-            <a-button @click="()=>{chooseBahavior(row.id)}" type="link">{{getBehaviorName(row.behaviorId_InMainPage)}}</a-button>
+            <el-button @click="()=>{chooseBahavior(row.id)}" type="link">{{getBehaviorName(row.behaviorId_InMainPage)}}</el-button>
           </template>
         </vxe-table-column>
         <vxe-table-column width="180px">
           <template v-slot="{ row }">
-            <a-button @click="()=>{deleteBehavior(row.id)}" type="link">删除</a-button>
+            <el-button @click="()=>{deleteBehavior(row.id)}" type="link">删除</el-button>
           </template>
         </vxe-table-column>
       </vxe-table>
       <!-- ************************************************************* -->
-      <behaviorListInPageModal :callboackbehaviorid="callboackbehaviorid" :isVisible.sync="behaviorListVisible"
-        @onChooseBehavior="onChooseBehavior" />
+      <!-- <behaviorListInPageModal :callboackbehaviorid="callboackbehaviorid" :isVisible.sync="behaviorListVisible"
+        @onChooseBehavior="onChooseBehavior" /> -->
     </div>
-  </a-modal>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -46,40 +47,27 @@ import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 import { deepClone, getUuid } from '@common/utils'
 import behaviorListInPageModal from '../../behaviorListInPageModal.vue'
-import {
-  groupNode,
-  objectBase,
-  objectType,
-  object_Variable,
-  object_FixedVal,
-  resourceType,
-  popupCallback,
-  resourceSearchType,
-  behavior,
-  getSearchClass,
-  pageSearchBase
-} from '@behaviorEngine/index'
+import { objectBase, objectType, object_Variable, object_FixedVal, resourceType, popupCallback, behavior } from '@behaviorEngine/index'
 
 @Options({
   components: {
-    behaviorListInPageModal
+    // behaviorListInPageModal
   }
 })
 export default class callbackSetting extends Vue {
-  //
-  @Prop()
   private isVisible: boolean = false
-
-  @Emit('update:isVisible')
-  private updateIsVisible_Inner(val: any) {}
 
   private isChoosePageSource: boolean = true
 
   //弹窗页面
-  public page: PageBase
+  public page: EnginePage
   private callboackbehaviorid: string = ''
   //
   private behaviorListVisible: boolean = false
+
+  public show() {
+    this.isVisible = true
+  }
   // ********************************************************************************
   get currentSelectedKeys(): string[] {
     if (this.allCallbacks) {
@@ -99,14 +87,14 @@ export default class callbackSetting extends Vue {
   }
   //弹窗页面的所有模型实例
   private get modelBindingsInPage(): any[] {
-    return this.page.modelBindings
+    return []
   }
   private getBehaviorName(id: string) {
     //window.console.log('获取行为名称')
     var behavi: behavior = null
-    if (pageSearchBase.currentPage) {
-      behavi = pageSearchBase.currentPage.behaviors.find((o) => o.id == id)
-    }
+    // if (pageSearchBase.currentPage) {
+    //   behavi = pageSearchBase.currentPage.behaviors.find((o) => o.id == id)
+    // }
 
     if (behavi) {
       return behavi.name
@@ -130,11 +118,11 @@ export default class callbackSetting extends Vue {
   }
   // ********************************************************************************
   private handleCancel() {
-    this.updateIsVisible_Inner(false)
+    this.isVisible = false
   }
   private onOk() {
     this.onCompleteSetting(this.allCallbacks)
-    this.updateIsVisible_Inner(false)
+    this.isVisible = false
   }
   private onChooseBehavior(behav: behavior) {
     if (this.currentCallback) {

@@ -16,7 +16,15 @@
         </el-tabs>
       </el-col>
       <el-col style="width:250px;height:100%;float:left">
-        <propertyGrid ref="propertyGrid" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
+        <el-tabs v-model="activeName" type="card" class="demo-tabs" @tab-click="handleClick">
+          <el-tab-pane label="属性" name="first">
+            <propertyGrid ref="propertyGrid" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
+          </el-tab-pane>
+          <el-tab-pane label="行为" name="second">
+            <behaviorList :currentPage="currentShowEngine" />
+          </el-tab-pane>
+        </el-tabs>
+
       </el-col>
     </el-row>
   </el-row>
@@ -46,7 +54,9 @@ import {
   CompPosition_Property
 } from '@designEngine/03designerLayoutBase/commonClasses/LayoutProperty'
 import { drawVueOnVirtualDom } from '@common/utils'
-import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine'
+import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine/index'
+import { behaviorList } from '@behaviorEngine/index'
+
 @Options({
   components: {
     pagelist: pagelist,
@@ -55,7 +65,8 @@ import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePr
     mobilePageDesign: MobilePageDesign,
     mobilePagePreview: MobilePagePreview,
     pCPageDesign: PCPageDesign,
-    pCPagePreview: PCPagePreview
+    pCPagePreview: PCPagePreview,
+    behaviorList: behaviorList
   }
 })
 export default class index extends PageBase {
@@ -168,7 +179,8 @@ export default class index extends PageBase {
     window.console.log('onSaveCurrentPage:', pageId)
     await this.currentShowEngine.save(this.applicationId)
   }
-  // ********************************************************************
+  // *************右侧属性窗*******************************************************
+  private activeName: string = 'second'
 }
 </script>
 

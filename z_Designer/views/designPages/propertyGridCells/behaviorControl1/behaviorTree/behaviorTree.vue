@@ -48,7 +48,6 @@
           <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
         </v-contextmenu-item>
       </v-contextmenu>
-
     </div>
 
     <button v-show="false" ref="copyBtn"></button>

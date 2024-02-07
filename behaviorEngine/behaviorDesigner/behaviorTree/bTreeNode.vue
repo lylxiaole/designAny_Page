@@ -35,7 +35,7 @@ export default class bTreeNode extends Vue {
 
   private onTreeNodeBlur(e: any) {
     if (!this.currentValue) {
-      this.$confirm({
+      alert({
         content: '不能为空'
       })
       this.currentValue = this.oldValue

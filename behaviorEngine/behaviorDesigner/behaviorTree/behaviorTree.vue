@@ -1,8 +1,20 @@
 <template>
   <div style="padding:0px 10px;height:100%;width:100%;">
-    <a-button icon="plus" style="width:100%;height:32px;" size="small" @click="addNewAction">添加动作</a-button>
+    <el-button icon="plus" style="width:100%;height:32px;" size="small" @click="addNewAction">添加动作</el-button>
     <div style="height:94%;width:100%;overflow-y:auto;background:#fff" @contextmenu.prevent="onTreeNodeRightClick">
-      <a-tree size="small" style="height:100%;width:inherit" :treeData="dataTree" @select="onNodeSelect" :selectedKeys.sync="currentSelectedKeys"
+      <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="nodeAllowDrop" :allow-drag="nodeAllowDrag"
+        default-expand-all draggable @node-drop="onNodeDrop" @node-contextmenu="onTreeNodeRightClick">
+        <template #default="{data }">
+          <div style="width:100%;position:relative;">
+            <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1;float:left" />
+            <span style="width:20%;z-index:1;float:right" v-if="data.isAction">
+              <a @click="settingAction(data.key)">设置</a>
+            </span>
+          </div>
+        </template>
+      </el-tree>
+
+      <!-- <el-tree size="small" style="height:100%;width:inherit" :treeData="dataTree" @select="onNodeSelect" :selectedKeys.sync="currentSelectedKeys"
         draggable defaultExpandAll :multiple="false" @rightClick="onTreeNodeRightClick" @drop="onNodeDrop">
         <div slot="action" slot-scope="{key,title}" style="position:relative; ">
           <a-tooltip placement="topLeft" :title="title" class="flexHorilanLayout pageFontHover">
@@ -25,13 +37,18 @@
             </div>
           </a-tooltip>
         </div>
-      </a-tree>
-      <actionFilterSetting :currentLayout="currentLayout" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior"
-        :isVisible.sync="actionSettingVisible" :currentAction.sync="currentSettingAction" />
+        </a-tree> -->
+      <actionFilterSetting ref="actionFilterSetting" :currentLayout="currentLayout" :currentPage="currentPage"
+        :currentSettingBehavior="currentSettingBehavior" />
+
+      <v-contextmenu ref="ctxMenu">
+        <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
+          @click="onRightMenuChoose(menu)">
+          <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
+          <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
+        </v-contextmenu-item>
+      </v-contextmenu>
     </div>
-    <VueContextMenu id="context-menu" ref="ctxMenu">
-      <li class="themeHover ppapaaaap" v-for="(menu,index) in rightMenus" :key="index" @click="onRightMenuChoose(menu)">&nbsp;&nbsp;{{menu}}</li>
-    </VueContextMenu>
 
     <button v-show="false" ref="copyBtn"></button>
   </div>
@@ -39,16 +56,13 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop, InjectReactive } from 'vue-property-decorator'
 import { deepClone, getUuid, serialize } from '@common/utils'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../../common'
 import {
   behavior,
   action,
   actionDetail,
-  allCuteSigns,
   formulaType,
-  allFilterSigns,
   objectBase,
   objectType,
   resourceType,
@@ -60,8 +74,6 @@ import actionFilterSetting from './actionFilterSetting.vue'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import btreeNode from './bTreeNode.vue'
 import Clipboard from 'clipboard'
-
-let VueContextMenu = require('vue-context-menu')
 
 class behaviorTreeNodeData {
   key: string
@@ -88,7 +100,6 @@ enum rightMenuEnum {
 
 @Options({
   components: {
-    VueContextMenu: VueContextMenu,
     btreeNode: btreeNode,
     actionFilterSetting: actionFilterSetting
   }
@@ -103,7 +114,7 @@ export default class behaviorTree extends Vue {
   private currentSelectedKeys: string[] = []
 
   private get dataTree(): behaviorTreeNodeData[] {
-    if (!this.currentSelectedKeys) {
+    if (!this.currentSelectedKeys || !this.currentSettingBehavior) {
       return []
     }
     if (!this.currentSettingBehavior.actions) {
@@ -114,11 +125,11 @@ export default class behaviorTree extends Vue {
 
   private onNodeSelect(keys: string[], e: any) {
     if (keys.length < 1) {
-      this.currentActionChanged(null)
+      this.currentSelectAction(null)
       return
     }
     let findnode = this.getNodeDataById(keys[0], this.currentSettingBehavior.actions)
-    this.currentActionChanged(findnode)
+    this.currentSelectAction(findnode)
   }
 
   private clipboard: any
@@ -126,8 +137,8 @@ export default class behaviorTree extends Vue {
     return this.$refs.copyBtn
   }
 
-  @Emit('currentActionChanged')
-  private currentActionChanged(newval: actionDetail | action) {}
+  @Emit('currentSelectAction')
+  private currentSelectAction(newval: actionDetail | action) {}
   /*********************************************** */
   /**重写组件的render行为 */
   private oldrender: Function = null
@@ -162,25 +173,22 @@ export default class behaviorTree extends Vue {
       }
     })
     this.clipboard.on('success', (e) => {
-      this.$message.success('复制行为成功', 2)
+      alert('复制行为成功')
     })
     this.clipboard.on('error', (e) => {
-      this.$message.success('复制行为失败', 2)
+      alert('复制行为失败')
     })
   }
 
   /*******右键列表************************** */
   private rightMenus: string[] = []
   /**右击 */
-  private onTreeNodeRightClick(e: any) {
-    if (e.node) {
-      ;(e.event as Event).stopPropagation()
-    } else {
-      ;(e as Event).stopPropagation()
-    }
+  private onTreeNodeRightClick(e: any, data: any) {
+    e.stopPropagation()
+    e.preventDefault()
     let currentRightNode: behaviorTreeNodeData = null
-    if (e.node) {
-      currentRightNode = e.node.dataRef as behaviorTreeNodeData
+    if (data) {
+      currentRightNode = data as behaviorTreeNodeData
     }
     if (currentRightNode) {
       this.currentSelectedKeys = [currentRightNode.key]
@@ -189,9 +197,10 @@ export default class behaviorTree extends Vue {
     }
 
     //window.console.log('右击了')
-    ;(this.$refs.ctxMenu as any).open()
+    ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
     this.makeRightMenus(currentRightNode)
   }
+
   private onRightMenuChoose(menuName: string) {
     //window.console.log(menuName)
     switch (menuName) {
@@ -228,6 +237,36 @@ export default class behaviorTree extends Vue {
   }
   private onNodeNameChanged(nodeKey: string, newname: string) {
     this.getNodeDataById(nodeKey, this.currentSettingBehavior.actions).name = newname
+  }
+  private getMenuIconByRightMenus(rm: rightMenuEnum): string {
+    let iconString
+    switch (rm) {
+      // case rightMenuEnum.addPage:
+      //   iconString = '&#xe625;'
+      //   break
+      // case rightMenuEnum.addGroup: {
+      //   iconString = '&#xe626;'
+      //   break
+      // }
+      // case rightMenuEnum.edit:
+      //   iconString = '&#xe628;'
+      //   break
+      // case rightMenuEnum.saveAs: {
+      //   iconString = '&#xe61a;'
+      //   break
+      // }
+      // case rightMenuEnum.rename: {
+      //   iconString = '&#xe628;'
+      //   break
+      // }
+      // case rightMenuEnum.delete: {
+      //   iconString = '&#xe62b;'
+      //   break
+      // }
+      default:
+        break
+    }
+    return iconString
   }
   /************行为列表维护*********************************************************************** */
   /**添加一个动作 */
@@ -446,14 +485,13 @@ export default class behaviorTree extends Vue {
       } else {
         this.addActionDetail(actionData)
       }
-      this.$message.success('粘贴行为成功', 2)
+      alert('粘贴行为成功')
     } catch (error) {
-      this.$message.success('粘贴行为失败', 2)
+      alert('粘贴行为失败')
     }
 
     // window.console.log('pasteActions:', actionData)
   }
-
   // ************节点拖拽*******************************************************************************************************
   private dropTopOrBottom: string = null
   private cuteCurrentDragPosition(node: any) {
@@ -495,7 +533,7 @@ export default class behaviorTree extends Vue {
       this.currentSettingBehavior.actions.splice(index, 0, deepClone(sourceNode))
       this.deleteNode(sourceNode)
     } else if (this.nodeIsAction(sourceNode) == false) {
-      this.$message.warn('动作细节不能作为最顶级节点')
+      alert('动作细节不能作为最顶级节点')
     }
   }
 
@@ -504,14 +542,17 @@ export default class behaviorTree extends Vue {
     this.deleteNode(sourceNode)
   }
   // ************动作条件设计*******************************************************************************************************
-
-  private actionSettingVisible: boolean = false
-  private currentSettingAction: action = null
   private settingAction(key: string) {
     let findAction = this.getNodeDataById(key, this.currentSettingBehavior.actions)
     window.console.log('开始编辑action条件', findAction)
-    this.currentSettingAction = findAction as action
-    this.actionSettingVisible = true
+    ;(this.$refs.actionFilterSetting as actionFilterSetting).show(findAction as action)
+  }
+  // *********************************************************
+  private nodeAllowDrop(draggingNode, dropNode, type) {
+    return true
+  }
+  private nodeAllowDrag(node) {
+    return true
   }
 }
 </script>

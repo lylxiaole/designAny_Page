@@ -6,7 +6,7 @@ import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variab
 
 import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup, getFuncObjByType, getFuncByType } from './actFuncBase'
 
-export default class factory {
+export class factory {
   public currentLayout: EngineLayout
   public currentPage: EnginePage
   public currentBehavior: behavior

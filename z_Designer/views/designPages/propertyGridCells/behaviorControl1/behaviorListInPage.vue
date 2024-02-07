@@ -3,7 +3,6 @@
     <div style="width:100%;height:30px;justify-content:left;overflow:hidden;" class="flexHorilanLayout">
       <div style="background:#18aeb7;width:6px;height:26px;"></div>
       <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">当前页面所有行为</span>
-
       <el-button class="behavior-list-header-button" style="width:104px;height:30px;background:rgba(245,166,35,1);color:rgba(255,255,255,1);"
         @click="addBehavior">
         添加行为
@@ -13,7 +12,6 @@
       <el-table-column fixed type="index" width="50" />
       <el-table-column type="selection" width="55" />
       <el-table-column prop="name" label="行为名称" />
-      <el-table-column prop="workRange" label="作用范围" />
       <el-table-column prop="description" label="描述" />
       <el-table-column label="操作" prop="action" width="420px">
         <template #default="record">
