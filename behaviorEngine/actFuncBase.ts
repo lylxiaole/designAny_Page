@@ -15,7 +15,8 @@ import { __extends } from 'tslib'
 export enum resourceGroup {
   fixedVal = 'fixedVal',
   cuteSigns = 'cuteSigns',
-  filterSigns = 'filterSigns'
+  filterSigns = 'filterSigns',
+  variables = 'variables'
 }
 //方法类型
 export enum resourceType {

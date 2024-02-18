@@ -14,30 +14,6 @@
         </template>
       </el-tree>
 
-      <!-- <el-tree size="small" style="height:100%;width:inherit" :treeData="dataTree" @select="onNodeSelect" :selectedKeys.sync="currentSelectedKeys"
-        draggable defaultExpandAll :multiple="false" @rightClick="onTreeNodeRightClick" @drop="onNodeDrop">
-        <div slot="action" slot-scope="{key,title}" style="position:relative; ">
-          <a-tooltip placement="topLeft" :title="title" class="flexHorilanLayout pageFontHover">
-            <div style="width:100%;height:26px;position:relative;justify-content:left;" tabindex="1" @keydown="onNodeKeyDown"
-              class="flexHorilanLayout pageFontHover  ">
-              <span class="pageListItem" style="height:26px;position:absolute;left:-300px;right:-300px"></span>
-              <btreeNode :value="title" :nodeKey="key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1" />
-              <a-icon style="margin-left:8px;z-index:1" type="edit" @click="settingAction(key)" />
-            </div>
-          </a-tooltip>
-        </div>
-
-        <div slot="actionDetail" slot-scope="{key,title}" style="position:relative;">
-          <a-tooltip placement="topLeft" :title="title" class="flexHorilanLayout pageFontHover">
-            <div style="width:100%;height:26px;position:relative;justify-content:left" tabindex="1" @keydown="onNodeKeyDown"
-              class="flexHorilanLayout pageFontHover ">
-              <span class="pageListItem" style="height:26px;position:absolute;left:-300px;right:-300px"></span>
-              <btreeNode :value="title" :nodeKey="key" @onValueChanged="onNodeNameChanged" style="margin-left:3px;z-index:1">
-              </btreeNode>
-            </div>
-          </a-tooltip>
-        </div>
-        </a-tree> -->
       <actionFilterSetting ref="actionFilterSetting" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior" />
 
       <v-contextmenu ref="ctxMenu">
@@ -289,6 +265,7 @@ export default class behaviorTree extends Vue {
     newactionDetail.id = getUuid()
     newactionDetail.name = '新建动作细节'
     newactionDetail.objs = []
+
     let first = this.actionFactory.makeObject(resourceType.variables)
     newactionDetail.objs.push(first)
 
