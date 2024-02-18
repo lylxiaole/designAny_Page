@@ -108,19 +108,13 @@ import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
 import { resourceType, resourceGroup, getFuncObjByGroup } from '@behaviorEngine/index'
 
-import callbackSetting from './callbackSetting/callbackSetting.vue'
+// import callbackSetting from './callbackSetting/callbackSetting.vue'
 import resourceChooseWindow from './resoucesChooseWindow.vue'
 
-// @Options({
-//   components: {
-//     resourceChooseWindow,
-//     callbackSetting
-//   }
-// })
 export default {
   components: {
-    resourceChooseWindow,
-    callbackSetting
+    resourceChooseWindow
+    // callbackSetting
   },
   data() {
     return {

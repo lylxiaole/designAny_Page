@@ -30,11 +30,11 @@ import {
   object_callback,
   factory
 } from '@behaviorEngine/index'
-// import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
+import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 
 @Options({
   components: {
-    // bahaviorResourceSelectTree: bahaviorResourceTree
+    bahaviorResourceSelectTree: bahaviorResourceTree
   }
 })
 export default class formulaSetting extends Vue {
