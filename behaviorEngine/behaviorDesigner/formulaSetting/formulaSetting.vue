@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop, InjectReactive } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop, InjectReactive, ProvideReactive } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
 import {
@@ -39,7 +39,7 @@ import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.v
 })
 export default class formulaSetting extends Vue {
   @Prop() behaviorResources: any
-  @Prop({ default: {} }) currentActionDetail: actionDetail
+  @Prop() currentActionDetail: actionDetail
   @Prop() actionFactory: factory
   @Prop() forType: formulaType
 
@@ -47,11 +47,9 @@ export default class formulaSetting extends Vue {
     if (!this.currentActionDetail) {
       return []
     }
-
     if (!this.currentActionDetail.objs) {
       this.currentActionDetail.objs = []
     }
-
     return this.currentActionDetail.objs
   }
 
@@ -62,11 +60,9 @@ export default class formulaSetting extends Vue {
     // }
   }
 
-  @Watch('currentActionDetail')
+  @Watch('currentActionDetail', { deep: true, immediate: true })
   watchCurrentActionChanged(newval: actionDetail) {
-    if (!newval) {
-      return
-    }
+    window.console.log('2动作节点变化了', newval)
   }
 
   private onResourceNodeChanged(newObj: objectBase, oldObj: objectBase) {

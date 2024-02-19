@@ -4,26 +4,17 @@
     <!-- <a-modal :maskClosable="false" title="配置条件" :destroyOnClose="true" v-model="isVisible" :width="900" @ok="onOk" @cancel="handleCancel"
       :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定"> -->
     <el-row style="height:500px">
-      <el-row style="background:transparent;height:40%;padding:8px;overflow-y:auto">
+      <el-row style="background:transparent;height:100%;padding:8px;overflow-y:auto;overflow-x:hidden">
         如果:
         <formulaSetting :forType="forType" :currentActionDetail="currentActionDetail" :actionFactory="actionFactory"
           @onFocusFormula="onFocusFormula" />
-      </el-row>
-      <el-row style="background:transparent;height:10%;padding:8px;overflow-y:auto">
-        <div style="width:100%;height:100%;justify-content:left;padding:6px 0px;overflow:hidden;background-color:#F6F6F6" class="flexHorilanLayout">
-          <div style="background:#18aeb7;width:6px;height:20px; "></div>
-          <span style="margin-left:9px;float:left;fontSize:18px">参数</span>
-        </div>
-      </el-row>
-      <el-row style="background:transparent;height:54%;padding:8px;overflow-y:auto">
-        <formulaInParamSetting :actionFactory="actionFactory" :currentObj="currentFocusObj" />
       </el-row>
     </el-row>
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="handleCancel">Cancel</el-button>
-        <el-button type="primary" @click="onOk">Confirm</el-button>
+        <el-button @click="handleCancel">取消</el-button>
+        <el-button type="primary" @click="onOk">确认</el-button>
       </span>
     </template>
     <!-- </a-modal> -->
@@ -51,14 +42,10 @@ import {
   resourceType
 } from '@behaviorEngine/index'
 import formulaSetting from '../formulaSetting/formulaSetting.vue'
-import formulaInParamSetting from '../formulaSetting/formulaInParamSetting.vue'
-import resouceChooseComp from '../behaviorResources/resouceChooseComp.vue'
 
 @Options({
   components: {
-    resouceChooseComp: resouceChooseComp,
-    formulaSetting: formulaSetting,
-    formulaInParamSetting: formulaInParamSetting
+    formulaSetting: formulaSetting
   }
 })
 export default class actionFilterSetting extends Vue {

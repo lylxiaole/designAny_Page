@@ -3,7 +3,7 @@
     <el-button icon="plus" style="width:100%;height:32px;" size="small" @click="addNewAction">添加动作</el-button>
     <div style="height:94%;width:100%;overflow-y:auto;background:#fff" @contextmenu.prevent="onTreeNodeRightClick">
       <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="nodeAllowDrop" :allow-drag="nodeAllowDrag"
-        default-expand-all draggable @node-drop="onNodeDrop" @node-contextmenu="onTreeNodeRightClick">
+        default-expand-all draggable @node-drop="onNodeDrop" @node-contextmenu="onTreeNodeRightClick" @node-click="onNodeSelect">
         <template #default="{data }">
           <div style="width:100%;position:relative;">
             <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1;float:left" />
@@ -97,12 +97,9 @@ export default class behaviorTree extends Vue {
     return this.cuteDataTree(this.currentSettingBehavior.actions)
   }
 
-  private onNodeSelect(keys: string[], e: any) {
-    if (keys.length < 1) {
-      this.currentSelectAction(null)
-      return
-    }
-    let findnode = this.getNodeDataById(keys[0], this.currentSettingBehavior.actions)
+  private onNodeSelect(node: any, data: any) {
+    let key = node.key
+    let findnode = this.getNodeDataById(key, this.currentSettingBehavior.actions)
     this.currentSelectAction(findnode)
   }
 

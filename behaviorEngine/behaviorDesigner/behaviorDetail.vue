@@ -31,19 +31,21 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { ref, toRaw } from '@vue/reactivity'
+
+import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { behavior, action, actionDetail, factory, resourceType, formulaType, objectBase, objectType, object_Method } from '@behaviorEngine/index'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
 import behaviorTree from './behaviorTree/behaviorTree.vue'
-// import formulaSetting from './formulaSetting/formulaSetting.vue'
+import formulaSetting from './formulaSetting/formulaSetting.vue'
 // import formulaInParamSetting from './formulaSetting/formulaInParamSetting.vue'
 
 @Options({
   components: {
-    behaviorTree: behaviorTree
-    // formulaSetting: formulaSetting,
+    behaviorTree: behaviorTree,
+    formulaSetting: formulaSetting
     // formulaInParamSetting: formulaInParamSetting
   }
 })
@@ -70,10 +72,9 @@ export default class behaviorDeatilSetting extends Vue {
   currentPage: EnginePage = null
   /**当前正在设置的行为 */
   currentSettingBehavior: behavior = null
-
   //行为明细中，当前被选中的对象
   private currentFocusObj: objectBase = null
-  private currentActionDetail: actionDetail = null
+  private currentActionDetail: actionDetail | action = null
   private actionFactory: factory = null
   private forType: formulaType = formulaType.cute
 
@@ -86,16 +87,8 @@ export default class behaviorDeatilSetting extends Vue {
   }
 
   private currentSelectAction(newval: actionDetail | action) {
-    // window.console.log('选择的动作节点变化了')
-
-    if (newval == null || (newval as any).actionDetails) {
-      this.currentActionDetail = null
-    } else {
-      if (!(newval as actionDetail).objs) {
-        this.currentActionDetail.objs = []
-      }
-      this.currentActionDetail = newval as actionDetail
-    }
+    window.console.log('1动作节点变化了', newval)
+    this.currentActionDetail = newval
     this.currentFocusObj = null
   }
   //处理就数据

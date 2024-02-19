@@ -6,23 +6,6 @@
 <template>
   <div>
     <template v-if="currentObj.objType=='signs'">
-      <!-- <a-dropdown>
-        <a-badge>
-          <a-icon v-if="canDeleteObj" slot="count" type="delete" @click="()=> this.onDelete(this.currentObj)" style="color: #f5222d;cursor:pointer" />
-          <el-button style="margin-top:4px" @click="()=> this.onFocus(this.currentObj)" class="ant-dropdown-link">
-            <span v-if="currentObj==null">请选择</span>
-            <span v-else>{{currentObj.name}}</span>
-            <a-icon type="down" />
-          </el-button>
-        </a-badge>
-        <a-menu slot="overlay" @select="menuSelected" selectable>
-          <a-menu-item v-for="sign in allSigns" :key="sign.resourceId" :value="sign.resourceId"
-            style="width:90px;overflow:hidden; white-space:nowrap; text-overflow:ellipsis">
-            {{sign.name}}
-          </a-menu-item>
-        </a-menu>
-      </a-dropdown> -->
-
       <el-dropdown @command="menuSelected">
         <span class="el-dropdown-link">
           {{currentTitle}}
@@ -35,22 +18,17 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-
     </template>
 
     <template v-else>
       <el-tooltip placement="top" effect="dark" :content="currentObj.desc">
         <el-badge>
-          <!-- <a-icon v-if="canDeleteObj" slot="count" type="delete" @click="()=>{this.$emit('onDelete',this.currentObj) }"
-            style="color: #f5222d;cursor:pointer" /> -->
-          <!-- // -->
           <el-input v-if="currentObj.objType=='fixedVal'" style="width:190px" v-model="currentObj.val"
             @click="() =>{this.$emit('onFocus',this.currentObj)}">
             <template #suffix>
               <span @click="chooseResource">重新选择</span>
             </template>
           </el-input>
-          <!-- // -->
           <el-input v-if="currentObj.objType=='variable'" style="width:190px" v-model="currentObj.name"
             @click="() =>{this.$emit('onFocus',this.currentObj)}">
             <template #suffix>

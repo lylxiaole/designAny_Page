@@ -10,7 +10,10 @@ export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 
 /**加载所有设计器组件 */
 const modulesFiles = require.context('./04designerComponents', true, /\.(vue)$/)
-modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles<any>(modulePath)
-  return modules
-}, {})
+
+export function init() {
+  modulesFiles.keys().reduce((modules, modulePath) => {
+    const value = modulesFiles<any>(modulePath)
+    return modules
+  }, {})
+}
