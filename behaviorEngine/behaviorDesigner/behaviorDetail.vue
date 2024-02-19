@@ -88,6 +88,11 @@ export default class behaviorDeatilSetting extends Vue {
 
   private currentSelectAction(newval: actionDetail | action) {
     window.console.log('1动作节点变化了', newval)
+    if ((newval as any).isActionDetail) {
+      this.forType = formulaType.cute
+    } else {
+      this.forType = formulaType.filter
+    }
     this.currentActionDetail = newval
     this.currentFocusObj = null
   }
