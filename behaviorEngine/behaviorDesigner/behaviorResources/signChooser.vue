@@ -2,7 +2,7 @@
 <template>
   <div style="width:100%">
     <el-dropdown ref="dropdown1" trigger="contextmenu" @command="menuSelected">
-      <el-button @click="showClick">{{signObj?signObj.sign:''}}</el-button>
+      <el-button @click="showClick">{{signObj?signObj.name:''}}</el-button>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceType" :command="sign.resourceType"
@@ -39,7 +39,6 @@ export default class signChooser extends Vue {
 
   private menuSelected(key) {
     var currentnode = this.allSigns.find((o) => o.resourceType == key)
-    debugger
     this.$emit('update:signObj', currentnode)
   }
 }

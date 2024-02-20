@@ -160,11 +160,10 @@ export default {
       return currentnode.name
     },
     signObj: {
-      get: () => {
+      get: function () {
         return this.currentObj
       },
-      set: (val) => {
-        debugger
+      set: function (val) {
         this.$emit('update:currentObj', val)
       }
     }
