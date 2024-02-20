@@ -3,8 +3,8 @@
   <div style="width:100%">
     <div style="padding:0px 10px;width:100%;position:relative">
       <div v-for="(obj,index) in currentObjs" :key="obj.id" class="flexHorilanLayout" style="float:left;margin: 4px;">
-        <bahaviorResourceSelectTree :forType="forType" v-model:currentObj="currentObjs[index]" :canDeleteObj="true"
-          @onSelectNodeChanged="onResourceNodeChanged" @onFocus="onFocusFormula" @onDelete="onDeleteFormula" />
+        <bahaviorResourceSelectTree v-model:currentObj="currentObjs[index]" :canDeleteObj="true" @onSelectNodeChanged="onResourceNodeChanged"
+          @onFocus="onFocusFormula" @onDelete="onDeleteFormula" />
       </div>
     </div>
     <div style="position:relative;width:100%;">
@@ -60,6 +60,15 @@ export default class formulaSetting extends Vue {
     // }
   }
 
+  get currentIsAction(): boolean {
+    if (!this.currentActionDetail) {
+      return true
+    } else if (this.currentActionDetail.isActionDetail) {
+      return false
+    } else {
+      return true
+    }
+  }
   @Watch('currentActionDetail', { deep: true, immediate: true })
   watchCurrentActionChanged(newval: actionDetail) {
     window.console.log('2动作节点变化了', newval)
@@ -78,17 +87,20 @@ export default class formulaSetting extends Vue {
   private addObj() {
     //当前公式的最后一个元素
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
-
-    if (!obj || obj.objType == objectType.signs) {
-      let newobj = this.actionFactory.makeObject(resourceType.fixedValString)
-      this.currentActionDetail.objs.push(newobj)
-    } else if (this.forType == formulaType.cute) {
-      let newobj = this.actionFactory.makeObject(resourceType.signAssign)
-      this.currentActionDetail.objs.push(newobj)
-    } else if (this.forType == formulaType.filter) {
-      let newobj = this.actionFactory.makeObject(resourceType.signEqual)
-      this.currentActionDetail.objs.push(newobj)
+    debugger
+    let newobj = null
+    if (obj && obj.objType === objectType.signs) {
+      newobj = this.actionFactory.makeObject(resourceType.fixedValString)
+    } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === false) {
+      newobj = this.actionFactory.makeObject(resourceType.signAssign)
+    } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === true) {
+      newobj = this.actionFactory.makeObject(resourceType.signEqual)
+    } else if (!obj && this.currentIsAction === false) {
+      newobj = this.actionFactory.makeObject(resourceType.variables)
+    } else if (!obj && this.currentIsAction === true) {
+      newobj = this.actionFactory.makeObject(resourceType.fixedValString)
     }
+    this.currentActionDetail.objs.push(newobj)
   }
 
   private onDeleteFormula(obj: objectBase) {

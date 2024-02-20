@@ -70,21 +70,10 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
-import {
-  groupNode,
-  objectBase,
-  objectType,
-  resourceSearchType,
-  object_Variable,
-  object_FixedVal,
-  object_callback,
-  popupCallback,
-  formulaType
-} from '@behaviorEngine/index'
 
 import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
-import { resourceType, resourceGroup, getFuncObjByGroup } from '@behaviorEngine/index'
+import { objectType, resourceType, resourceGroup, getFuncObjByObjType } from '@behaviorEngine/index'
 
 // import callbackSetting from './callbackSetting/callbackSetting.vue'
 import resourceChooseWindow from './resoucesChooseWindow.vue'
@@ -101,14 +90,10 @@ export default {
       currentSelectKey: undefined
     }
   },
-  props: ['currentObj', 'resourceTypesNotAllow', 'canDeleteObj', 'forType'],
+  props: ['currentObj', 'resourceTypesNotAllow', 'canDeleteObj'],
   emits: ['onSelectNodeChanged', 'onFocus', 'onDelete'],
   mounted() {
-    if (this.forType == formulaType.cute) {
-      this.allSigns = getFuncObjByGroup(resourceGroup.cuteSigns)
-    } else {
-      this.allSigns = getFuncObjByGroup(resourceGroup.filterSigns)
-    }
+    this.allSigns = getFuncObjByObjType(objectType.signs)
   },
   methods: {
     onRefreshResource() {

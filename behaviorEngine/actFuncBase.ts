@@ -180,6 +180,17 @@ export function getFuncObjByGroup(group: resourceGroup) {
   return objs
 }
 
+export function getFuncObjByObjType(objType: objectType) {
+  let funcs = allActFunctions.filter((o: any) => o.prototype.$Meta.objType == objType)
+  let objs = []
+  for (let index = 0; index < funcs.length; index++) {
+    const element = funcs[index]
+    objs.push(funcToObj(element))
+  }
+
+  return objs
+}
+
 export function getFuncByType(resType: resourceType) {
   // window.console.log('行为代码2', resType)
   var res = allActFunctions.find((o: any) => o.prototype.$Meta.resType == resType)

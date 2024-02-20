@@ -7,8 +7,7 @@
           v-model:currentSettingBehavior="currentSettingBehavior" v-model:actionFactory="actionFactory" @currentSelectAction="currentSelectAction" />
       </el-col>
       <el-col :span="12">
-        <formulaSetting :forType="forType" :currentActionDetail="currentActionDetail" :actionFactory="actionFactory"
-          @onFocusFormula="onFocusFormula" />
+        <formulaSetting :currentActionDetail="currentActionDetail" :actionFactory="actionFactory" @onFocusFormula="onFocusFormula" />
       </el-col>
       <el-col :span="6">
         <!-- <formulaInParamSetting :actionFactory="actionFactory" :currentObj="currentFocusObj" /> -->
@@ -76,7 +75,6 @@ export default class behaviorDeatilSetting extends Vue {
   private currentFocusObj: objectBase = null
   private currentActionDetail: actionDetail | action = null
   private actionFactory: factory = null
-  private forType: formulaType = formulaType.cute
 
   @Watch('currentSettingBehavior', { deep: true, immediate: true })
   private oncurrentSettingBehaviorChanged(newval: behavior, oldval: behavior) {
@@ -88,11 +86,7 @@ export default class behaviorDeatilSetting extends Vue {
 
   private currentSelectAction(newval: actionDetail | action) {
     window.console.log('1动作节点变化了', newval)
-    if ((newval as any).isActionDetail) {
-      this.forType = formulaType.cute
-    } else {
-      this.forType = formulaType.filter
-    }
+
     this.currentActionDetail = newval
     this.currentFocusObj = null
   }
