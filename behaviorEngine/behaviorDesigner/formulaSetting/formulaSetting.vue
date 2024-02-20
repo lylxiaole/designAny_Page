@@ -2,6 +2,7 @@
 <template>
   <div style="width:100%">
     <div style="padding:0px 10px;width:100%;position:relative">
+      <span v-if="currentIsAction" style="float:left;margin: 4px;">如果:</span>
       <div v-for="(obj,index) in currentObjs" :key="obj.id" class="flexHorilanLayout" style="float:left;margin: 4px;">
         <bahaviorResourceSelectTree v-model:currentObj="currentObjs[index]" :canDeleteObj="true" @onSelectNodeChanged="onResourceNodeChanged"
           @onFocus="onFocusFormula" @onDelete="onDeleteFormula" />

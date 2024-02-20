@@ -125,7 +125,7 @@ export class filtersignGTOQ implements actFuncBase<object_Signs> {
   }
 }
 
-@resourceFuncAttr('<=>', '', objectType.signs, resourceGroup.filterSigns, resourceType.signLTOQ, funcStack.universal)
+@resourceFuncAttr('<=', '', objectType.signs, resourceGroup.filterSigns, resourceType.signLTOQ, funcStack.universal)
 export class filtersignLTOQ implements actFuncBase<object_Signs> {
   $meta: object_Signs
   currentLayout: EngineLayout

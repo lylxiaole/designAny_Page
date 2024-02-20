@@ -6,24 +6,13 @@
 <template>
   <div>
     <template v-if="currentObj.objType=='signs'">
-      <!-- <el-dropdown @command="menuSelected">
-        <span class="el-dropdown-link">
-          {{currentTitle}}
-          <el-icon class="el-icon--right"><arrow-down /></el-icon>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu>
-
-            <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceType" :command="sign.resourceType"
-              :value="sign.resourceType">{{sign.name}}</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown> -->
-      <signChooser v-model:signObj="signObj" />
+      <signChooser v-model:signObj="objProxy" />
     </template>
 
     <template v-else>
-      <el-tooltip placement="top" effect="dark" :content="currentObj.desc">
+      <resourceChooser v-model:resourceObj="objProxy" />
+
+      <!-- <el-tooltip placement="top" effect="dark" :content="currentObj.desc">
         <el-badge>
           <el-input v-if="currentObj.objType=='fixedVal'" style="width:190px" v-model="currentObj.val"
             @click="() =>{this.$emit('onFocus',this.currentObj)}">
@@ -39,11 +28,9 @@
               </el-icon>
             </template>
           </el-input>
-          <!-- 弹窗关闭 点击展示行为设置弹窗 -->
           <el-button v-if="currentObj.objType=='callback'" type="primary" class="themeButton"
             @click="()=>{this.settingCallBack(this.currentObj)}">行为设置
           </el-button>
-          <!-- // -->
           <div v-if="currentObj.objType=='method'" style="margin-top:4px">
             <el-button class="textEllipsis" style="width:160px;" @click="()=> this.$emit('onFocus',this.currentObj)">
               <span>{{currentObj.name}}</span>
@@ -54,14 +41,13 @@
               </el-icon>
             </el-button>
           </div>
-          <!-- // -->
         </el-badge>
-      </el-tooltip>
+      </el-tooltip> -->
+
       <resourceChooseWindow ref="resourceChooseWindow" @onChooseObj="onChooseObj"></resourceChooseWindow>
       <!-- // -->
       <callbackSetting ref="callbackSetting" @onCompleteSetting="onCompleteSetting" />
     </template>
-    <div style="display:none" ref="renderdiv"></div>
   </div>
 </template>
 
@@ -77,13 +63,15 @@ import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
 import { objectType, resourceType, resourceGroup, getFuncObjByObjType } from '@behaviorEngine/index'
 
-// import callbackSetting from './callbackSetting/callbackSetting.vue'
-import resourceChooseWindow from './resoucesChooseWindow.vue'
+import callbackSetting from './callbackSetting/callbackSetting.vue'
 import signChooser from './signChooser.vue'
+import resourceChooser from './resourceChooser.vue'
+
 export default {
   components: {
     resourceChooseWindow,
-    signChooser
+    signChooser,
+    resourceChooser
     // callbackSetting
   },
   data() {
@@ -159,7 +147,7 @@ export default {
       var currentnode = this.allSigns.find((o) => o.resourceType === this.currentSelectKey)
       return currentnode.name
     },
-    signObj: {
+    objProxy: {
       get: function () {
         return this.currentObj
       },

@@ -1,6 +1,5 @@
  <template>
   <el-dialog v-model="isVisible" title="配置条件" append-to-body :close-on-click-modal="false" :close-on-press-escape="false">
-
     <!-- <a-modal :maskClosable="false" title="配置条件" :destroyOnClose="true" v-model="isVisible" :width="900" @ok="onOk" @cancel="handleCancel"
       :cancelButtonProps="{ props: {icon: 'close'}}" :okButtonProps="{ props: {icon: 'check'}}" cancelText="取消" okText="确定"> -->
     <el-row style="height:500px">
