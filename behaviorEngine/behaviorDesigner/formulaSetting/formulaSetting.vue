@@ -87,7 +87,7 @@ export default class formulaSetting extends Vue {
   private addObj() {
     //当前公式的最后一个元素
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
-    debugger
+
     let newobj = null
     if (obj && obj.objType === objectType.signs) {
       newobj = this.actionFactory.makeObject(resourceType.fixedValString)

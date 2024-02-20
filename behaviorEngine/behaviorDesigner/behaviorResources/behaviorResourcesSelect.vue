@@ -6,18 +6,20 @@
 <template>
   <div>
     <template v-if="currentObj.objType=='signs'">
-      <el-dropdown @command="menuSelected">
+      <!-- <el-dropdown @command="menuSelected">
         <span class="el-dropdown-link">
           {{currentTitle}}
           <el-icon class="el-icon--right"><arrow-down /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
+
             <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceType" :command="sign.resourceType"
               :value="sign.resourceType">{{sign.name}}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown>
+      </el-dropdown> -->
+      <signChooser v-model:signObj="signObj" />
     </template>
 
     <template v-else>
@@ -77,10 +79,11 @@ import { objectType, resourceType, resourceGroup, getFuncObjByObjType } from '@b
 
 // import callbackSetting from './callbackSetting/callbackSetting.vue'
 import resourceChooseWindow from './resoucesChooseWindow.vue'
-
+import signChooser from './signChooser.vue'
 export default {
   components: {
-    resourceChooseWindow
+    resourceChooseWindow,
+    signChooser
     // callbackSetting
   },
   data() {
@@ -155,6 +158,15 @@ export default {
       }
       var currentnode = this.allSigns.find((o) => o.resourceType === this.currentSelectKey)
       return currentnode.name
+    },
+    signObj: {
+      get: () => {
+        return this.currentObj
+      },
+      set: (val) => {
+        debugger
+        this.$emit('update:currentObj', val)
+      }
     }
   }
 }
