@@ -11,7 +11,6 @@
 
     <template v-else>
       <resourceChooser v-model:resourceObj="objProxy" />
-
       <!-- <el-tooltip placement="top" effect="dark" :content="currentObj.desc">
         <el-badge>
           <el-input v-if="currentObj.objType=='fixedVal'" style="width:190px" v-model="currentObj.val"
@@ -44,9 +43,9 @@
         </el-badge>
       </el-tooltip> -->
 
-      <resourceChooseWindow ref="resourceChooseWindow" @onChooseObj="onChooseObj"></resourceChooseWindow>
+      <!-- <resourceChooseWindow ref="resourceChooseWindow" @onChooseObj="onChooseObj"></resourceChooseWindow> -->
       <!-- // -->
-      <callbackSetting ref="callbackSetting" @onCompleteSetting="onCompleteSetting" />
+      <!-- <callbackSetting ref="callbackSetting" @onCompleteSetting="onCompleteSetting" /> -->
     </template>
   </div>
 </template>
@@ -69,7 +68,6 @@ import resourceChooser from './resourceChooser.vue'
 
 export default {
   components: {
-    resourceChooseWindow,
     signChooser,
     resourceChooser
     // callbackSetting
