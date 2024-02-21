@@ -1,12 +1,12 @@
 <template style="height:100%">
   <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为设置" style="height:600px" width="800px" v-model="windowVisible" append-to-body
     :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-row style="height:100%;background:#FFF;">
-      <el-col :span="6">
+    <el-row style="height:calc(100% - 130px);background:#FFF;">
+      <el-col :span="6" style="border-right:1px solid #cdcdcd">
         <behaviorTree style="height:100%;width:100%;background:#eeeeee;" v-model:currentPage="currentPage"
           v-model:currentSettingBehavior="currentSettingBehavior" v-model:actionFactory="actionFactory" @currentSelectAction="currentSelectAction" />
       </el-col>
-      <el-col :span="12">
+      <el-col :span="12" style="border-right:1px solid #cdcdcd">
         <formulaSetting :currentActionDetail="currentActionDetail" :actionFactory="actionFactory" @onFocusFormula="onFocusFormula" />
       </el-col>
       <el-col :span="6">
@@ -14,12 +14,12 @@
       </el-col>
     </el-row>
     <template #footer>
-      <el-row class="dialog-footer">
+      <el-row class="dialog-footer" style="height:50px">
         <div class="steps-action">
           <el-button @click="onCancel">
             取消
           </el-button>
-          <el-button :style="{'margin-left':' 8px'}" type="primary" @click="onConfirm">
+          <el-button :style="{'margin-left':'8px'}" type="primary" @click="onConfirm">
             确认
           </el-button>
         </div>

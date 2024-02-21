@@ -1,5 +1,5 @@
 <template>
-  <div style="padding:0px 10px;height:100%;width:100%;">
+  <div style="padding:0px 0px;height:100%;width:100%;">
     <el-button icon="plus" style="width:100%;height:32px;" size="small" @click="addNewAction">添加动作</el-button>
     <div style="height:94%;width:100%;overflow-y:auto;background:#fff" @contextmenu.prevent="onTreeNodeRightClick">
       <el-tree :data="dataTree" :props="{children: 'children',label: 'title'}" :allow-drop="nodeAllowDrop" :allow-drag="nodeAllowDrag"
