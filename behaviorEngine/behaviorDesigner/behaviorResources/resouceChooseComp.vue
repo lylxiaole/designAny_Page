@@ -34,7 +34,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { object_group, objectBase, objectType, object_Variable, object_FixedVal, resourceType } from '@behaviorEngine/index'
+import { object_group, objectBase, objectType, object_Variable, object_FixedVal, resourceType, resourceGroup } from '@behaviorEngine/index'
 import { getFuncObjsTree } from '@behaviorEngine/index'
 
 @Options({ name: 'resouceChooseComp' })
@@ -54,13 +54,12 @@ export default class resouceChooseComp extends Vue {
 
   public async refreshCurrentItems() {
     let x = getFuncObjsTree()
+    x = x.filter((o) => o.key !== resourceGroup.cuteSigns && o.key !== resourceGroup.filterSigns)
     this.currentItems = x
   }
 
   private currentSelectKeys: string[] = []
-
   private isShowNextList: boolean = false
-
   /*************************************************************************** */
   mounted() {}
   /*************************************************************************** */
