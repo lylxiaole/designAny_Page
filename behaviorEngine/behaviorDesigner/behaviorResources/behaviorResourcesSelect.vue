@@ -8,44 +8,8 @@
     <template v-if="currentObj.objType=='signs'">
       <signChooser v-model:signObj="objProxy" />
     </template>
-
     <template v-else>
       <resourceChooser v-model:resourceObj="objProxy" />
-      <!-- <el-tooltip placement="top" effect="dark" :content="currentObj.desc">
-        <el-badge>
-          <el-input v-if="currentObj.objType=='fixedVal'" style="width:190px" v-model="currentObj.val"
-            @click="() =>{this.$emit('onFocus',this.currentObj)}">
-            <template #suffix>
-              <span @click="chooseResource">重新选择</span>
-            </template>
-          </el-input>
-          <el-input v-if="currentObj.objType=='variable'" style="width:190px" v-model="currentObj.name"
-            @click="() =>{this.$emit('onFocus',this.currentObj)}">
-            <template #suffix>
-              <el-icon @click="chooseResource">
-                <Tools />
-              </el-icon>
-            </template>
-          </el-input>
-          <el-button v-if="currentObj.objType=='callback'" type="primary" class="themeButton"
-            @click="()=>{this.settingCallBack(this.currentObj)}">行为设置
-          </el-button>
-          <div v-if="currentObj.objType=='method'" style="margin-top:4px">
-            <el-button class="textEllipsis" style="width:160px;" @click="()=> this.$emit('onFocus',this.currentObj)">
-              <span>{{currentObj.name}}</span>
-            </el-button>
-            <el-button style="width:30px;margin-top:-20px" @click="chooseResource">
-              <el-icon>
-                <Tools />
-              </el-icon>
-            </el-button>
-          </div>
-        </el-badge>
-      </el-tooltip> -->
-
-      <!-- <resourceChooseWindow ref="resourceChooseWindow" @onChooseObj="onChooseObj"></resourceChooseWindow> -->
-      <!-- // -->
-      <!-- <callbackSetting ref="callbackSetting" @onCompleteSetting="onCompleteSetting" /> -->
     </template>
   </div>
 </template>
@@ -79,16 +43,12 @@ export default {
       currentSelectKey: undefined
     }
   },
-  props: ['currentObj', 'resourceTypesNotAllow', 'canDeleteObj'],
-  emits: ['onSelectNodeChanged', 'onFocus', 'onDelete'],
+  props: ['currentObj'],
+
   mounted() {
     this.allSigns = getFuncObjByObjType(objectType.signs)
   },
   methods: {
-    onRefreshResource() {
-      // this.normalResources = actionResources.objectResources.filter((o) => o.title != '运算符')
-      // this.signResources = actionResources.objectResources.filter((o) => o.title == '运算符')[0].childrenObjs
-    },
     getSelectedObj(id, groups) {
       for (let index = 0; index < groups.length; index++) {
         let group = groups[index]
@@ -106,35 +66,6 @@ export default {
         }
       }
       return null
-    },
-    menuSelected(key) {
-      this.currentSelectKey = key
-      var currentnode = this.allSigns.find((o) => o.resourceId == key)
-      this.$emit('onSelectNodeChanged', currentnode, this.currentObj)
-    },
-    chooseResource() {
-      // window.console.log('显示弹窗')
-      this.$refs.resourceChooseWindow.show()
-    },
-    onChooseObj(obj) {
-      this.$emit('update:currentObj', obj)
-      this.$emit('onSelectNodeChanged', obj, this.currentObj)
-    },
-    settingCallBack(obj) {
-      /****************************************************** */
-      if (obj.isChoosePageSource) {
-        var page = new EnginePage()
-        page.loadPageById(obj.resourceId)
-        page.width = 0
-        page.height = 0
-        this.$refs.callbackSetting.page = page
-      }
-      this.$refs.callbackSetting.isChoosePageSource = obj.isChoosePageSource
-      this.$refs.callbackSetting.allCallbacks = obj.pCallbacks
-      this.$refs.callbackSetting.show()
-    },
-    onCompleteSetting(callbacks) {
-      this.currentObj.pCallbacks = callbacks
     }
   },
   computed: {

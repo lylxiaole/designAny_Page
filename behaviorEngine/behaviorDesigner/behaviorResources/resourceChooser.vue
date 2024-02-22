@@ -1,7 +1,7 @@
  
 <template>
   <div style="width:100%">
-    <el-input v-if="resourceObj.objType=='fixedVal'" style="width:190px" v-model="resourceObj.val"
+    <el-input v-if="resourceObj.objType=='fixedVal'" size="small" style="width:120px" v-model="resourceObj.val"
       @click="() =>{this.$emit('onFocus',this.resourceObj)}">
       <template #suffix>
         <el-icon @click="chooseResource">
@@ -10,7 +10,7 @@
       </template>
     </el-input>
     <!-- ********************************************** -->
-    <el-input v-if="resourceObj.objType=='variable'" style="width:190px" v-model="resourceObj.name"
+    <el-input v-if="resourceObj.objType=='variable'" size="small" style="width:120px" v-model="resourceObj.name"
       @click="() =>{this.$emit('onFocus',this.resourceObj)}">
       <template #suffix>
         <el-icon @click="chooseResource">
@@ -19,11 +19,12 @@
       </template>
     </el-input>
     <!-- ********************************************** -->
-    <el-button v-if="resourceObj.objType=='callback'" type="primary" class="themeButton" @click="()=>{this.settingCallBack(this.resourceObj)}">
+    <el-button v-if="resourceObj.objType=='callback'" size="small" type="primary" class="themeButton"
+      @click="()=>{this.settingCallBack(this.resourceObj)}">
       行为设置
     </el-button>
     <!-- ********************************************** -->
-    <div v-if="resourceObj.objType=='method'" style="margin-top:4px">
+    <div v-if="resourceObj.objType=='method'" size="small" style="margin-top:4px">
       <el-button class="textEllipsis" style="width:160px;" @click="()=> this.$emit('onFocus',this.resourceObj)">
         <span>{{resourceObj.name}}</span>
       </el-button>
