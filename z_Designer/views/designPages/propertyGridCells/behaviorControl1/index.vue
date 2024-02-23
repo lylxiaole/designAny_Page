@@ -11,12 +11,11 @@
       <el-row style="height:480px;width:100%;background:#FFF">
         <behaviorEventBinding v-if="currentComp==='eventBinding'" :designerLayoutEvents="designerLayoutEvents" :currentData="currentData"
           :currentPageBehaviors="currentPageBehaviors" @onList="onOpenBehaviorList" />
-        <behaviorListInPage v-if="currentComp==='allBehaviorList'" :currentPage="currentPage" @onDetail="onOpenBehaviorDetail" />
-        <behaviorDeatilSetting ref="behaviorDeatilSetting" v-if="currentComp==='behaviorDetail'" />
+        <behaviorListInPage v-if="currentComp==='allBehaviorList'" ref="behaviorList" :currentPage="currentPage" />
       </el-row>
       <!-- ************************************************************ -->
       <template #footer>
-        <el-row class="dialog-footer">
+        <el-row v-if="currentComp==='eventBinding'" class="dialog-footer">
           <div class="steps-action">
             <el-button @click="onCancel">
               取消
@@ -26,6 +25,18 @@
             </el-button>
           </div>
         </el-row>
+        <!-- ************************************************************* -->
+        <el-row v-if="currentComp==='allBehaviorList'" class="dialog-footer">
+          <div class="steps-action">
+            <el-button @click="onBackUp">
+              取消
+            </el-button>
+            <el-button :style="{'margin-left':' 8px'}" type="primary" @click="onSureReference">
+              确认
+            </el-button>
+          </div>
+        </el-row>
+
       </template>
     </el-dialog>
   </div>
@@ -42,14 +53,14 @@ import { behavior } from '@behaviorEngine/index'
 import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
 import behaviorEventBinding from './behaviorEventBinding.vue'
 import behaviorListInPage from './behaviorListInPage.vue'
-import behaviorDeatilSetting from './behaviorDeatilSetting.vue'
+import { toRaw } from 'vue'
 
 @propertyCellTypeAttr(PropertyTypeEnum.behavior)
 @Options({
-  components: { behaviorEventBinding, behaviorListInPage, behaviorDeatilSetting }
+  components: { behaviorEventBinding, behaviorListInPage }
 })
 export default class index extends propertyCellBase {
-  private currentComp: string = 'eventBinding' //eventBinding,allBehaviorList,behaviorDetail
+  private currentComp: string = 'eventBinding' //eventBinding,allBehaviorList
 
   private designerLayoutEvents: layoutEvent[] = []
   private currentPageBehaviors: behavior[] = []
@@ -82,10 +93,11 @@ export default class index extends propertyCellBase {
     }
   }
   // ************事件绑定行为控件********************************************************
+  private selectedEventName: string = ''
   // 打开行为列表页面
   private onOpenBehaviorList(backData: behaviorListData) {
     this.currentComp = 'allBehaviorList'
-    // this.selectedEventName = backData.selectedEventName
+    this.selectedEventName = backData.selectedEventName
     // this.currentEventBehavior = backData.eventBehavior
     // this.record = {
     //   allBehaviors: this.currentPageBehaviors,
@@ -93,12 +105,6 @@ export default class index extends propertyCellBase {
     //   eventBehavior: backData.eventBehavior
     // }
     // this.currentComp = behaviorPageType.list
-  }
-  // ********************************************************************
-  private async onOpenBehaviorDetail(behv: behavior) {
-    this.currentComp = 'behaviorDetail'
-    await this.$nextTick()
-    ;(this.$refs.behaviorDeatilSetting as behaviorDeatilSetting).init(behv, this.currentLayoutsGetter[0], this.currentPage)
   }
   // ********************************************************************
   private onClose(e: MouseEvent) {
@@ -109,6 +115,26 @@ export default class index extends propertyCellBase {
   }
   private onCancel() {
     this.windowVisible = false
+  }
+  private onBackUp() {
+    this.currentComp = 'eventBinding'
+  }
+
+  private onSureReference() {
+    let res = (this.$refs.behaviorList as any).getSelectedBehaviors() as behavior[]
+    let bids: string[] = []
+    for (let index = 0; index < res.length; index++) {
+      const element = res[index]
+      bids.push(element.id)
+    }
+
+    let findeventbind = this.currentData.find((o) => o.eventName === this.selectedEventName)
+    if (!findeventbind) {
+      this.currentData.push({ eventName: this.selectedEventName, behaviorIds: [] })
+    }
+    findeventbind = this.currentData.find((o) => o.eventName === this.selectedEventName)
+    findeventbind.behaviorIds = bids
+    this.currentComp = 'eventBinding'
   }
 }
 </script>

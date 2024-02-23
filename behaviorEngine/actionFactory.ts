@@ -45,7 +45,6 @@ export class factory {
       return func.getDesc(obj)
     }
   }
-
   /********执行行为*************************************************** */
   public exacteAction() {
     if (!this.currentBehavior) {
@@ -68,7 +67,6 @@ export class factory {
     this.currentBehavior.inparam = {}
     this.currentBehavior.variables = []
   }
-
   private excuteActionDetail(act: action): boolean {
     if (act.judgingCondition && act.judgingCondition.length > 0) {
       var isThrough = this.excuteObjs(act.judgingCondition)

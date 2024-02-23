@@ -27,7 +27,6 @@
           <template #default="record">
             <el-button @click="()=>{moveUpBehavior(record.id)}" type="link"> 上移</el-button>
             <el-button @click="()=>{moveDownBehavior(record.id)}" type="link"> 下移</el-button>
-            <el-button @click="()=>{editBehavior(record.id)}" type="link"> 编辑</el-button>
             <el-button @click="()=>{removeBehavior(record.id)}" type="link"> 移除</el-button>
           </template>
         </el-table-column>
@@ -168,24 +167,8 @@ export default class behaviorEventBinding extends Vue {
     this.onList(back)
   }
 
-  //编辑，跳转到行为细节详情
-  private editBehavior(behaviorId: string) {
-    let back: behaviorDetailData = new behaviorDetailData()
-    back.prePage = behaviorPageType.binding
-    back.selectedEventName = this.selectedEventName
-    const behavior = this.currentPageBehaviors.find((o) => o.id == behaviorId)
-    if (behavior) {
-      back.selectedBehavior = deepClone(behavior)
-    }
-    // this.$emit('onDetail', back)
-    this.onDetail(back)
-  }
-
   @Emit('onList')
   protected onList(obj: behaviorListData) {}
-
-  @Emit('onDetail')
-  protected onDetail(obj: behaviorDetailData) {}
 }
 </script>
 
