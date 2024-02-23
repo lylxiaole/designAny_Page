@@ -1,6 +1,6 @@
 import { behavior } from './behaviorTypes'
 import { getUuid } from '@common/utils'
-import { resourceType } from './actFuncBase'
+import { resourceCode } from './actFuncBase'
 import { param } from './behaviorTypes'
 
 export class object_group {
@@ -24,7 +24,7 @@ export class objectBase {
   name: string
   description: string
   objType: objectType
-  resourceType: resourceType
+  resourceCode: resourceCode
 
   get ref(): any {
     return this.getValFunction(this)
@@ -48,39 +48,9 @@ export class objectBase {
     this.name = obj.name
     // this.pageId = obj.pageId
     // this.objType = obj.objType
-    this.resourceType = obj.resourceType
+    this.resourceCode = obj.resourceCode
     this.description = obj.description
   }
-
-  // public static makeNewObject(resourceId: string, name: string, objType: objectType, resType: resourceType, pageId?: string): objectBase {
-  //   var obj = null
-  //   switch (objType) {
-  //     case objectType.fixedVal:
-  //       obj = new object_FixedVal()
-  //       break
-  //     case objectType.variable:
-  //       obj = new object_Variable()
-  //       break
-  //     case objectType.method:
-  //       obj = new object_Method()
-  //       break
-  //     case objectType.signs:
-  //       obj = new object_Signs()
-  //       break
-  //     case objectType.callback:
-  //       obj = new object_callback()
-  //       break
-  //     default:
-  //       break
-  //   }
-  //   obj.resourceType = resType
-  //   obj.resourceId = resourceId
-  //   obj.name = name
-  //   obj.objType = objType
-  //   obj.id = getUuid()
-  //   obj.pageId = pageId
-  //   return obj
-  // }
 
   public destory() {
     for (const key in this) {

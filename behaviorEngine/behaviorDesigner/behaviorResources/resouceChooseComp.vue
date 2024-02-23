@@ -34,7 +34,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { object_group, objectBase, objectType, object_Variable, object_FixedVal, resourceType, resourceGroup } from '@behaviorEngine/index'
+import { object_group, objectBase, objectType, object_Variable, object_FixedVal, resourceGroup } from '@behaviorEngine/index'
 import { getFuncObjsTree } from '@behaviorEngine/index'
 
 @Options({ name: 'resouceChooseComp' })

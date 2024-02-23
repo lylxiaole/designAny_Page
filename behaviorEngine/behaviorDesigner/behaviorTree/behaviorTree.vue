@@ -7,14 +7,9 @@
         <template #default="{data }">
           <div style="width:100%;position:relative;">
             <btreeNode :value="data.title" :nodeKey="data.key" @onValueChanged="onNodeNameChanged" style="width:80%;z-index:1;float:left" />
-            <span style="width:20%;z-index:1;float:right" v-if="data.isAction">
-              <a @click="settingAction(data.key)">设置</a>
-            </span>
           </div>
         </template>
       </el-tree>
-
-      <actionFilterSetting ref="actionFilterSetting" :currentPage="currentPage" :currentSettingBehavior="currentSettingBehavior" />
 
       <v-contextmenu ref="ctxMenu">
         <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
@@ -40,12 +35,11 @@ import {
   formulaType,
   objectBase,
   objectType,
-  resourceType,
+  resourceCode,
   object_Method,
   object_callback,
   factory
 } from '@behaviorEngine/index'
-import actionFilterSetting from './actionFilterSetting.vue'
 import { EnginePage, EngineComponent, layoutEventBehaviors } from '@designEngine/index'
 import btreeNode from './bTreeNode.vue'
 import Clipboard from 'clipboard'
@@ -75,8 +69,7 @@ enum rightMenuEnum {
 
 @Options({
   components: {
-    btreeNode: btreeNode,
-    actionFilterSetting: actionFilterSetting
+    btreeNode: btreeNode
   }
 })
 export default class behaviorTree extends Vue {
@@ -263,7 +256,7 @@ export default class behaviorTree extends Vue {
     newactionDetail.name = '新建动作细节'
     newactionDetail.objs = []
 
-    let first = this.actionFactory.makeObject(resourceType.variables)
+    let first = this.actionFactory.makeObject(resourceCode.variables)
     newactionDetail.objs.push(first)
 
     let selectAct = this.getCurrentSelectedNearestAction(this.currentSettingBehavior.actions)
@@ -512,12 +505,6 @@ export default class behaviorTree extends Vue {
   private dropChildrenNode(sourceNode: actionDetail | action, targetNode: action) {
     targetNode.actionDetails.push(deepClone(sourceNode))
     this.deleteNode(sourceNode)
-  }
-  // ************动作条件设计*******************************************************************************************************
-  private settingAction(key: string) {
-    let findAction = this.getNodeDataById(key, this.currentSettingBehavior.actions)
-    window.console.log('开始编辑action条件', findAction)
-    ;(this.$refs.actionFilterSetting as actionFilterSetting).show(findAction as action)
   }
   // *********************************************************
   private nodeAllowDrop(draggingNode, dropNode, type) {

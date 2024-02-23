@@ -34,7 +34,7 @@ import {
   formulaType,
   objectBase,
   objectType,
-  resourceType,
+  resourceCode,
   object_Method,
   object_callback,
   factory
@@ -104,15 +104,15 @@ export default class formulaSetting extends Vue {
 
     let newobj = null
     if (obj && obj.objType === objectType.signs) {
-      newobj = this.actionFactory.makeObject(resourceType.fixedValString)
+      newobj = this.actionFactory.makeObject(resourceCode.fixedValString)
     } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === false) {
-      newobj = this.actionFactory.makeObject(resourceType.signAssign)
+      newobj = this.actionFactory.makeObject(resourceCode.signAssign)
     } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === true) {
-      newobj = this.actionFactory.makeObject(resourceType.signEqual)
+      newobj = this.actionFactory.makeObject(resourceCode.signEqual)
     } else if (!obj && this.currentIsAction === false) {
-      newobj = this.actionFactory.makeObject(resourceType.variables)
+      newobj = this.actionFactory.makeObject(resourceCode.variables)
     } else if (!obj && this.currentIsAction === true) {
-      newobj = this.actionFactory.makeObject(resourceType.fixedValString)
+      newobj = this.actionFactory.makeObject(resourceCode.fixedValString)
     }
     this.currentActionDetail.objs.push(newobj)
   }

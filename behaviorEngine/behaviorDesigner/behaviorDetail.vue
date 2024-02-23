@@ -33,7 +33,7 @@ import { Options, Vue } from 'vue-class-component'
 import { ref, toRaw } from '@vue/reactivity'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
-import { behavior, action, actionDetail, factory, resourceType, formulaType, objectBase, objectType, object_Method } from '@behaviorEngine/index'
+import { behavior, action, actionDetail, factory, formulaType, objectBase, objectType, object_Method } from '@behaviorEngine/index'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
@@ -97,7 +97,7 @@ export default class behaviorDeatilSetting extends Vue {
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
       const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.resourceType)
+      var newObjClone = this.actionFactory.makeObject(obj.resourceCode)
       // newObjClone.cloneFrom(obj)
       // newobjs.push(newObjClone)
     }

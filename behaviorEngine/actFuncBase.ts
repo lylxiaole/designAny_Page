@@ -18,8 +18,8 @@ export enum resourceGroup {
   filterSigns = 'filterSigns',
   variables = 'variables'
 }
-//方法类型
-export enum resourceType {
+//方法编码-需要保证唯一性
+export enum resourceCode {
   fixedValBool = 'fixedValBool',
   fixedValString = 'fixedValBool',
   fixedValFloat = 'fixedValFloat',
@@ -93,10 +93,10 @@ export enum funcStack {
 }
 //反射，所有方法的实体类
 var allActFunctions = []
-export function resourceFuncAttr(name: string, desc: string, objType: objectType, resGroup?: resourceGroup, resType?: resourceType, funcStack?: funcStack) {
+export function resourceFuncAttr(name: string, desc: string, objType: objectType, resGroup?: resourceGroup, resCode?: resourceCode, funcStack?: funcStack) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
-    target.prototype.$Meta.resType = resType
+    target.prototype.$Meta.resCode = resCode
     target.prototype.$Meta.objType = objType
     target.prototype.$Meta.funcStack = funcStack
     target.prototype.$Meta.resGroup = resGroup
@@ -141,7 +141,7 @@ export function funcToObj(actFunc: any): objectBase {
   obj.id = getUuid()
   obj.name = actFunc.prototype.$Meta.name
   obj.objType = objType
-  obj.resourceType = actFunc.prototype.$Meta.resType
+  obj.resourceCode = actFunc.prototype.$Meta.resCode
   obj.description = actFunc.prototype.$Meta.desc
   return obj
 }
@@ -191,9 +191,9 @@ export function getFuncObjByObjType(objType: objectType) {
   return objs
 }
 
-export function getFuncByType(resType: resourceType) {
-  // window.console.log('行为代码2', resType)
-  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resType == resType)
+export function getFuncByType(resCode: resourceCode) {
+  // window.console.log('行为代码2', resCode)
+  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resCode == resCode)
   try {
     return new res()
   } catch (error) {
@@ -201,9 +201,9 @@ export function getFuncByType(resType: resourceType) {
   }
 }
 
-export function getFuncObjByType(resType: resourceType): objectBase {
-  // window.console.log('行为代码2', resType)
-  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resType == resType)
+export function getFuncObjByType(resCode: resourceCode): objectBase {
+  // window.console.log('行为代码2', resCode)
+  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resCode == resCode)
   try {
     return funcToObj(res)
   } catch (error) {

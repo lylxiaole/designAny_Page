@@ -47,7 +47,7 @@ import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 import { deepClone, getUuid } from '@common/utils'
 import behaviorListInPageModal from '../../behaviorListInPageModal.vue'
-import { objectBase, objectType, object_Variable, object_FixedVal, resourceType, popupCallback, behavior } from '@behaviorEngine/index'
+import { objectBase, objectType, object_Variable, object_FixedVal, popupCallback, behavior } from '@behaviorEngine/index'
 
 @Options({
   components: {

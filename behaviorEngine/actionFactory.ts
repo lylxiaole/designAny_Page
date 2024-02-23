@@ -4,7 +4,7 @@ import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './actObject'
 
-import { actFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup, getFuncObjByType, getFuncByType } from './actFuncBase'
+import { actFuncBase, resourceFuncAttr, resourceCode, funcStack, resourceGroup, getFuncObjByType, getFuncByType } from './actFuncBase'
 
 export class factory {
   public currentLayout: EngineLayout
@@ -16,14 +16,14 @@ export class factory {
     this.currentBehavior = _behavior
   }
   /********制造object*************************************************** */
-  public makeObject(resType: resourceType): objectBase {
-    let obj: objectBase = getFuncObjByType(resType)
+  public makeObject(resCode: resourceCode): objectBase {
+    let obj: objectBase = getFuncObjByType(resCode)
 
-    this.makeFuncToObj(obj, resType)
+    this.makeFuncToObj(obj, resCode)
     return obj
   }
-  public makeFuncToObj(obj: objectBase, resType: resourceType) {
-    var func = getFuncByType(resType)
+  public makeFuncToObj(obj: objectBase, resCode: resourceCode) {
+    var func = getFuncByType(resCode)
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
@@ -100,7 +100,7 @@ export class factory {
       evalStr += '_runArea[' + index + '].ref'
       // if (obj.objType == objectType.signs) {
       //   evalStr += obj.ref
-      // } else if (obj.resourceType == resourceType.pageSources) {
+      // } else if (obj.resourceCode == resourceCode.pageSources) {
       //   let pageId = obj.resourceId
       //   let param = []
       //   let inputParams = (obj as any).inputParams
