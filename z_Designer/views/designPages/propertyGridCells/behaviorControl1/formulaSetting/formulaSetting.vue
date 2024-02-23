@@ -26,7 +26,7 @@ import {
   formulaType,
   objectBase,
   objectType,
-  resourceType,
+  resourceCode,
   object_Method,
   object_callback,
   factory
@@ -58,7 +58,7 @@ export default class formulaSetting extends Vue {
 
   mounted() {
     // if (this.currentActionDetail.objs && this.currentActionDetail.objs.length < 1) {
-    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
+    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceCode.variables)
     //   newobjs.push(first)
     // }
   }
@@ -74,7 +74,7 @@ export default class formulaSetting extends Vue {
     // oldObj.resourceId = newObj.resourceId
     // oldObj.name = newObj.name
     // oldObj.objType = newObj.objType
-    // oldObj.resourceType = newObj.resourceType
+    // oldObj.resourceCode = newObj.resourceCode
 
     this.onFocusFormula(newObj)
   }
@@ -85,13 +85,13 @@ export default class formulaSetting extends Vue {
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
 
     if (!obj || obj.objType == objectType.signs) {
-      let newobj = this.actionFactory.makeObject(resourceType.fixedValString)
+      let newobj = this.actionFactory.makeObject(resourceCode.fixedValString)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.cute) {
-      let newobj = this.actionFactory.makeObject(resourceType.signAssign)
+      let newobj = this.actionFactory.makeObject(resourceCode.signAssign)
       this.currentActionDetail.objs.push(newobj)
     } else if (this.forType == formulaType.filter) {
-      let newobj = this.actionFactory.makeObject(resourceType.signEqual)
+      let newobj = this.actionFactory.makeObject(resourceCode.signEqual)
       this.currentActionDetail.objs.push(newobj)
     }
   }

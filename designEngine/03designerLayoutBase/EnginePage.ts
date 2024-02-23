@@ -6,7 +6,7 @@ import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoad
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
 import { paramInfo } from './commonClasses/pageInParamInfo'
-import { factory, resourceType, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
+import { factory, resourceCode, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
 import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
 

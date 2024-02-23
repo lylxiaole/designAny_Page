@@ -26,7 +26,7 @@
 //   { value: '||', key: '||', title: '或' }
 // ]
 
-// // export enum resourceType {
+// // export enum resourceCode {
 // //   propertiesInPage = 'propertiesInPage',
 // //   methodsInPage = 'methodsInPage',
 // //   behaviorInParam = 'behaviorInParam',
@@ -98,7 +98,7 @@
 //   pageSources = 'pageSources'
 // }
 
-// // export function resourceFuncAttr(resType: resourceType) {
+// // export function resourceFuncAttr(resType: resourceCode) {
 // //   return function (target: Function) {
 // //     !target.prototype.$Meta && (target.prototype.$Meta = {})
 // //     target.prototype.$Meta.resType = resType
@@ -127,7 +127,7 @@
 //   name: string
 //   description: string
 //   objType: objectType
-//   resourceType: resourceType
+//   resourceCode: resourceCode
 //   get ref(): any {
 //     return this.getValFunction(this)
 //   }
@@ -153,11 +153,11 @@
 //     this.name = obj.name
 //     this.pageId = obj.pageId
 //     this.objType = obj.objType
-//     this.resourceType = obj.resourceType
+//     this.resourceCode = obj.resourceCode
 //     this.description = obj.description
 //   }
 
-//   public static makeNewObject(resourceId: string, name: string, objType: objectType, resType: resourceType, pageId?: string): objectBase {
+//   public static makeNewObject(resourceId: string, name: string, objType: objectType, resType: resourceCode, pageId?: string): objectBase {
 //     var obj = null
 //     switch (objType) {
 //       case objectType.fixedVal:
@@ -178,7 +178,7 @@
 //       default:
 //         break
 //     }
-//     obj.resourceType = resType
+//     obj.resourceCode = resType
 //     obj.resourceId = resourceId
 //     obj.name = name
 //     obj.objType = objType

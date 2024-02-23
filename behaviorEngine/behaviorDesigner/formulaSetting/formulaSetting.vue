@@ -68,7 +68,7 @@ export default class formulaSetting extends Vue {
 
   mounted() {
     // if (this.currentActionDetail.objs && this.currentActionDetail.objs.length < 1) {
-    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceType.variables)
+    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceCode.variables)
     //   newobjs.push(first)
     // }
   }
@@ -92,7 +92,7 @@ export default class formulaSetting extends Vue {
     // oldObj.resourceId = newObj.resourceId
     // oldObj.name = newObj.name
     // oldObj.objType = newObj.objType
-    // oldObj.resourceType = newObj.resourceType
+    // oldObj.resourceCode = newObj.resourceCode
 
     this.onFocusFormula(newObj)
   }

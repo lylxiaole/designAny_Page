@@ -66,7 +66,7 @@ import {
   formulaType,
   objectBase,
   objectType,
-  resourceType,
+  resourceCode,
   object_Method,
   object_callback,
   factory
@@ -292,7 +292,7 @@ export default class behaviorTree extends Vue {
     newactionDetail.id = getUuid()
     newactionDetail.name = '新建动作细节'
     newactionDetail.objs = []
-    let first = this.actionFactory.makeObject(resourceType.variables)
+    let first = this.actionFactory.makeObject(resourceCode.variables)
     newactionDetail.objs.push(first)
 
     let selectAct = this.getCurrentSelectedNearestAction(this.currentSettingBehavior.actions)

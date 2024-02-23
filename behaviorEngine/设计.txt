@@ -13,7 +13,7 @@
 
                                                  |
                                                  |
-                                                 |执行时用actionFactory，根据 resourceType创建 actFuncBase
+                                                 |执行时用actionFactory，根据 resourceCode创建 actFuncBase
                                                  |
                                                  |
                                                  |

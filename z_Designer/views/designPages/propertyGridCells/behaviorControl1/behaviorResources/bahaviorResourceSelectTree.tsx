@@ -127,7 +127,7 @@ export default class bahaviorResourceSelectTree extends Vue {
     }
     var domVNodes: VNode[] = []
     objs.filter((obj) => {
-      if (this.resourceTypeNotAllow.indexOf(obj.resourceType) < 0) {
+      if (this.resourceTypeNotAllow.indexOf(obj.resourceCode) < 0) {
         let newnode = (
           <a-menu-item style="width:250px;overflow:hideen; white-space:nowrap; text-overflow:ellipsis" value={obj.resourceId} key={obj.resourceId}>
             {obj.name}

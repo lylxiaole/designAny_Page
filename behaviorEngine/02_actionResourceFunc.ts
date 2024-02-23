@@ -4,11 +4,11 @@
 // import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 // import { Property } from '@designEngine/index'
 // import { behavior } from './behaviorTypes'
-// import { actResFuncBase, resourceFuncAttr, resourceType, funcStack, resourceGroup } from './actFuncBase'
+// import { actResFuncBase, resourceFuncAttr, resourceCode, funcStack, resourceGroup } from './actFuncBase'
 
 // import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase, allCuteSigns, allFilterSigns } from './01_actionCommon'
 
-// @resourceFuncAttr(resourceType.behaviorInParam)
+// @resourceFuncAttr(resourceCode.behaviorInParam)
 // class behaviorInParamFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -34,7 +34,7 @@
 //   updateInparam(obj: objectBase) {}
 // }
 
-// @resourceFuncAttr(resourceType.propertiesInPage)
+// @resourceFuncAttr(resourceCode.propertiesInPage)
 // class propertiesInPageFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -99,7 +99,7 @@
 //   }
 // }
 
-// @resourceFuncAttr(resourceType.controlMethods)
+// @resourceFuncAttr(resourceCode.controlMethods)
 // class controlMethodsFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -143,7 +143,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.behaviors)
+// @resourceFuncAttr(resourceCode.behaviors)
 // class behaviorsFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -179,7 +179,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.pageInParams)
+// @resourceFuncAttr(resourceCode.pageInParams)
 // class pageInParamsFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -212,7 +212,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.variables)
+// @resourceFuncAttr(resourceCode.variables)
 // class variablesFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -238,7 +238,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.fixedVal)
+// @resourceFuncAttr(resourceCode.fixedVal)
 // class fixedValFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -307,7 +307,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.signs)
+// @resourceFuncAttr(resourceCode.signs)
 // class signsFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -331,7 +331,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.filterSigns)
+// @resourceFuncAttr(resourceCode.filterSigns)
 // class filterSignsFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -355,7 +355,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.breakBehaviorAll)
+// @resourceFuncAttr(resourceCode.breakBehaviorAll)
 // class breakBehaviorAllFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -379,7 +379,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.callback)
+// @resourceFuncAttr(resourceCode.callback)
 // class callbackFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -406,7 +406,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.consoleSettings)
+// @resourceFuncAttr(resourceCode.consoleSettings)
 // class consoleSettingsFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -436,7 +436,7 @@
 //   updateInparam(obj: object_Method) {}
 // }
 
-// @resourceFuncAttr(resourceType.externalLinks)
+// @resourceFuncAttr(resourceCode.externalLinks)
 // class externalLinksFunc implements actResFuncBase {
 //   currentLayout: EngineLayout
 //   currentPage: EnginePage
@@ -478,7 +478,7 @@
 
 // var allFuncs: any[] = [propertiesInPageFunc, behaviorInParamFunc, behaviorsFunc, pageInParamsFunc, variablesFunc, fixedValFunc, signsFunc, filterSignsFunc, breakBehaviorAllFunc, controlMethodsFunc, callbackFunc, consoleSettingsFunc, externalLinksFunc]
 
-// function getResouceFunc(resType: resourceType): actResFuncBase {
+// function getResouceFunc(resType: resourceCode): actResFuncBase {
 //   // window.console.log('行为代码2', resType)
 //   var res = allFuncs.filter((o: any) => o.prototype.$Meta.resType == resType)[0]
 //   try {

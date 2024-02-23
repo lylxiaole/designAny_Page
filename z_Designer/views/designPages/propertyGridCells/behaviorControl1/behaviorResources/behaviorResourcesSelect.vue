@@ -30,8 +30,8 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceType" :command="sign.resourceType"
-              :value="sign.resourceType">{{sign.name}}</el-dropdown-item>
+            <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceCode" :command="sign.resourceCode"
+              :value="sign.resourceCode">{{sign.name}}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -106,7 +106,7 @@ import {
 
 import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
-import { resourceType, resourceGroup, getFuncObjByGroup } from '@behaviorEngine/index'
+import { resourceCode, resourceGroup, getFuncObjByGroup } from '@behaviorEngine/index'
 
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 import resourceChooseWindow from './resoucesChooseWindow.vue'
@@ -196,7 +196,7 @@ export default {
       if (!this.currentSelectKey) {
         return '请选择'
       }
-      var currentnode = this.allSigns.find((o) => o.resourceType === this.currentSelectKey)
+      var currentnode = this.allSigns.find((o) => o.resourceCode === this.currentSelectKey)
       return currentnode.name
     }
   }

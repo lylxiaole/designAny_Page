@@ -48,7 +48,7 @@ import {
   object_FixedVal,
   object_Method,
   formulaType,
-  resourceType
+  resourceCode
 } from '@behaviorEngine/index'
 import formulaSetting from '../formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from '../formulaSetting/formulaInParamSetting.vue'
@@ -101,16 +101,16 @@ export default class actionFilterSetting extends Vue {
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
       const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.resourceType)
+      var newObjClone = this.actionFactory.makeObject(obj.resourceCode)
       newObjClone.cloneFrom(obj)
       newobjs.push(newObjClone)
     }
     // objJsonData.filter((jsondata) => {
-    //   jsondata = this.actionFactory.makeObject(jsondata.resourceId, jsondata.name, jsondata.objType, jsondata.resourceType)
+    //   jsondata = this.actionFactory.makeObject(jsondata.resourceId, jsondata.name, jsondata.objType, jsondata.resourceCode)
     // })
     //如果当前动作细节里面没有对象，添加一个
     if (newobjs.length < 1) {
-      var first = this.actionFactory.makeObject(resourceType.variables)
+      var first = this.actionFactory.makeObject(resourceCode.variables)
       newobjs.push(first)
     }
     return newobjs
