@@ -141,6 +141,7 @@ export default class EngineLayout extends Vue {
     return this._designerEvents
   }
   public set designerEvents(val: layoutEvent[]) {
+    debugger
     var property = this.findPropertyByName(PropertyGroupName.normal, '行为设置')
     var newvals: layoutEventBehaviors[] = []
     for (let index = 0; index < val.length; index++) {

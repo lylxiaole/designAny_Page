@@ -15,6 +15,7 @@
       <el-table-column label="操作" prop="action" width="420px">
         <template #default="record">
           <el-button @click="()=>{editBehavior(record.row)}" type="link">编辑</el-button>
+          <el-button @click="()=>{deleteBehavior(record.row)}" type="link">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,6 +59,11 @@ export default class behaviorList extends Vue {
   //编辑，跳转到行为细节详情
   private editBehavior(record: behavior) {
     ;(this.$refs.behaviorDetail as any).show(record, this.currentPage)
+  }
+
+  private deleteBehavior(record: behavior) {
+    let index = this.currentPage.behaviors.findIndex((o) => o === record)
+    this.currentPage.behaviors.splice(index, 1)
   }
 }
 </script>

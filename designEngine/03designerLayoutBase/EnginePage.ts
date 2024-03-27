@@ -21,14 +21,14 @@ export default class EnginePage extends EngineContainer {
   /***************************** */
   /**行为列表*/
   public get behaviors(): behavior[] {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '行为设置')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
     if (!property.value) {
       property.value = []
     }
     return property.value as behavior[]
   }
   public set behaviors(val: behavior[]) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '行为设置')
+    var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
     if (!property.value) {
       property.value = []
       return
@@ -52,7 +52,7 @@ export default class EnginePage extends EngineContainer {
   }
   /**页面入参 */
   public get inParams(): paramInfo[] {
-    var property = this.findProperties(PropertyGroupName.normal, '页面入参')[0]
+    var property = this.findProperties(PropertyGroupName.normal, '行为列表')[0]
     if (!property.value) {
       property.value = []
     }
@@ -63,6 +63,8 @@ export default class EnginePage extends EngineContainer {
     this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Property())
     this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
     this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
+    this.registerProperty(PropertyGroupName.normal, '行为列表', null, false, false)
+
     this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, '秒')
     this.registerEvents('加载完成', '页面加载完成时触发', [], null)
     this.registerEvents('定时器触发事件', '定时器触发', [], null)
