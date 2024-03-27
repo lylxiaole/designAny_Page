@@ -1,4 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
+import { render } from 'vue'
+
 import {
   Component,
   Emit,
@@ -43,6 +45,8 @@ export class Point {
 
 @Options({})
 export default class EngineLayout extends Vue {
+  public renderContainer: any = {}
+
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}
@@ -77,7 +81,6 @@ export default class EngineLayout extends Vue {
       }
     }
   }
-
   // ********************************
   public isSelected: boolean = false
   /**属性 */
@@ -141,7 +144,6 @@ export default class EngineLayout extends Vue {
     return this._designerEvents
   }
   public set designerEvents(val: layoutEvent[]) {
-    debugger
     var property = this.findPropertyByName(PropertyGroupName.normal, '行为绑定')
     var newvals: layoutEventBehaviors[] = []
     for (let index = 0; index < val.length; index++) {
@@ -205,10 +207,9 @@ export default class EngineLayout extends Vue {
     this.$lylemit('onUpdated', this)
   }
   /**生命周期 */
-  destroyed() {
+  unmounted() {
     // window.console.log('销毁了页面组件:', this.Id)
     this.$lylemit('onDestroyed', this)
-    this.destorymethod()
   }
 
   // *************************基础属性****************************************************************************
@@ -484,9 +485,10 @@ export default class EngineLayout extends Vue {
     }
   }
   // *************************privates****************************************************************************
-  private async destorymethod() {
-    this.$off()
+  public async destorymethod() {
+    render(null, this.renderContainer)
 
+    this.$off()
     for (let index = 0; index < this.properties.length; index++) {
       const element = this.properties[index]
       element.destory()

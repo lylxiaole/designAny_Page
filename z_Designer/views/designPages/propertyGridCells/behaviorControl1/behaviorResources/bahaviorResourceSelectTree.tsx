@@ -27,7 +27,7 @@ export default class bahaviorResourceSelectTree extends Vue {
     this.onRefreshResource()
     // actionResources.onRefreshResource(this.myEventId, this.onRefreshResource)
   }
-  beforeDestroy() {
+  beforeUnmount() {
     // actionResources.removeOnRefreshResource(this.myEventId)
   }
   private onRefreshResource() {

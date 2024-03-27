@@ -78,7 +78,7 @@ export default class ComponentListControl extends Vue {
     this.cuteSystemComponents()
     this.renderStyle()
   }
-  beforeDestroy() {
+  beforeUnmount() {
     this.clearDrags()
   }
   @Watch('systemCompsActiveKey', { deep: true })

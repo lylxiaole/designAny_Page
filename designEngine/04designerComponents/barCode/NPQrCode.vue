@@ -34,7 +34,7 @@ export default class NPQrCode extends EngineComponent {
   }
 
   mounted() {
-      this.width = '300px'
+    this.width = '300px'
     this.height = '300px'
 
     this.registerProperty(PropertyGroupName.special, '内容', new Text_Property(), '123456789')
@@ -49,7 +49,7 @@ export default class NPQrCode extends EngineComponent {
     this.initQrCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
-  beforeDestroy() {}
+  beforeUnmount() {}
 
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
     console.log('onPropertyChangedInner:', property)

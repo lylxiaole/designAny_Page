@@ -94,7 +94,7 @@ export default class npColorPicker extends Vue {
     })
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this._colorPicker) {
       this._colorPicker.destroy()
     }

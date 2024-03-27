@@ -73,8 +73,13 @@ export default class EnginePage extends EngineContainer {
     this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
   }
 
-  mounted() {}
-  beforeDestroy() {
+  mounted() {
+    // window.setInterval(() => {
+    //   console.log('页面定时器测试.................')
+    // }, 1000)
+  }
+  beforeUnmount() {
+    debugger
     $(window).unbind('resize', this.onWindowResize_Scale as any)
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }

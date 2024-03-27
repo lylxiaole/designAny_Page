@@ -157,7 +157,7 @@ export default class behaviorTree extends Vue {
     window.addEventListener('paste', this.pasteActions)
   }
 
-  destoryed() {
+  unmounted() {
     this.clipboard.destroy()
     window.removeEventListener('paste', this.pasteActions)
   }

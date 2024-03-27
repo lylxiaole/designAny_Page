@@ -494,6 +494,9 @@ export function drawVueOnVirtualDom(vueComp) {
   // let divdom = window.document.createElement('div')
   // fragment.appendChild(divdom)
   let comp = h(vueComp)
+
   render(comp, fragment)
+  //记录显然的目标dom,销毁时需要用到 render(null,renderContainer)
+  comp.component.proxy.renderContainer = fragment
   return { virtualDom: fragment, vueComp: comp.component.proxy }
 }
