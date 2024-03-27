@@ -1,8 +1,4 @@
-/**
- * 行为设置
- * By LYL
- * 日期
- */
+ 
 <template>
   <div>
     <template v-if="currentObj.objType=='signs'">
@@ -61,7 +57,7 @@
           </el-input>
           <!-- 弹窗关闭 点击展示行为设置弹窗 -->
           <el-button v-if="currentObj.objType=='callback'" type="primary" class="themeButton"
-            @click="()=>{this.settingCallBack(this.currentObj)}">行为设置
+            @click="()=>{this.settingCallBack(this.currentObj)}">行为绑定
           </el-button>
           <!-- // -->
           <div v-if="currentObj.objType=='method'" style="margin-top:4px">

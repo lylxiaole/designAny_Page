@@ -21,7 +21,7 @@
     <!-- ********************************************** -->
     <el-button v-if="resourceObj.objType=='callback'" size="small" type="primary" class="themeButton"
       @click="()=>{this.settingCallBack(this.resourceObj)}">
-      行为设置
+      行为绑定
     </el-button>
     <!-- ********************************************** -->
     <div v-if="resourceObj.objType=='method'" size="small" style="margin-top:4px">

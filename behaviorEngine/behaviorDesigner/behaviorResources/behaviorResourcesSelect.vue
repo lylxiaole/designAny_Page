@@ -1,8 +1,4 @@
-/**
- * 行为设置
- * By LYL
- * 日期
- */
+ 
 <template>
   <div>
     <template v-if="currentObj.objType=='signs'">
