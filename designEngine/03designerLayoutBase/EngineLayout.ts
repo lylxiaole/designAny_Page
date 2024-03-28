@@ -167,15 +167,12 @@ export default class EngineLayout extends Vue {
   created() {
     this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false)
     this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
-
     // this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, 'px')
     // this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, 'px')
     // this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
     // this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
-
-    let initCompPosition = { width: '1624px', heigh: '768px', x: 0, y: 0 }
+    let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
     this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), initCompPosition, true, '')
-
     this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, 'px')
