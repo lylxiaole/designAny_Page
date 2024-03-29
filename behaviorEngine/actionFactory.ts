@@ -106,20 +106,8 @@ export class factory {
       }
     }
 
-    for (let index = 0; index < objs.length; index++) {
-      let obj = objs[index]
-      let newObj = this.makeObject(obj.resourceCode)
-      newObj.cloneFrom(obj)
-      if (obj.objType == objectType.signs) {
-        evalStr += newObj.ref
-      } else {
-        _runArea[index] = newObj
-        evalStr += '_runArea[' + index + '].ref'
-      }
-    }
-
     try {
-      return eval(evalStr)
+      return eval(evalStr.join(''))
     } catch (error) {
       if (error == '' || error == undefined) {
         throw error
