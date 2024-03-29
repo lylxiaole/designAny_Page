@@ -15,6 +15,7 @@ export class variables implements actFuncBase<object_Variable> {
     return this.currentBehavior.variables[obj.name]
   }
   setFunc(obj: object_Variable, val: any) {
+    debugger
     val = val === undefined ? null : val
     this.currentBehavior.variables[obj.name] = val
   }

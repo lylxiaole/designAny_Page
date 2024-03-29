@@ -54,7 +54,7 @@ export class cuteSignsReduce implements actFuncBase<object_Signs> {
   }
 }
 
-@resourceFuncAttr('==', '', objectType.signs, resourceGroup.cuteSigns, resourceCode.signAssign, funcStack.universal)
+@resourceFuncAttr('=', '', objectType.signs, resourceGroup.cuteSigns, resourceCode.signAssign, funcStack.universal)
 export class cutesignAssign implements actFuncBase<object_Signs> {
   $meta: object_Signs
   currentLayout: EngineLayout

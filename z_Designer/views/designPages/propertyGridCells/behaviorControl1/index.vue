@@ -91,9 +91,6 @@ export default class index extends propertyCellBase {
     } else {
       this.currentData = []
     }
-
-    let x = this.currentData
-    debugger
   }
   // ************事件绑定行为控件********************************************************
   private selectedEventName: string = ''
@@ -114,8 +111,6 @@ export default class index extends propertyCellBase {
     this.windowVisible = false
   }
   private onConfirm() {
-    let x = this.currentData
-    debugger
     this.currentValue = this.currentData
     this.windowVisible = false
   }
@@ -128,8 +123,7 @@ export default class index extends propertyCellBase {
 
   private onSureReference() {
     let res = (this.$refs.behaviorList as any).getSelectedBehaviors() as behavior[]
-    let x = this.currentData
-    debugger
+
     let bids: string[] = []
     for (let index = 0; index < res.length; index++) {
       const element = res[index]
@@ -138,13 +132,11 @@ export default class index extends propertyCellBase {
 
     let findeventbind = this.currentData.find((o) => o.eventName === this.selectedEventName)
     if (!findeventbind) {
-      debugger
       this.currentData.push({ eventName: this.selectedEventName, behaviorIds: [] })
     }
     findeventbind = this.currentData.find((o) => o.eventName === this.selectedEventName)
     findeventbind.behaviorIds = bids
     this.currentComp = 'eventBinding'
-    debugger
   }
 }
 </script>

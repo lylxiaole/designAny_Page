@@ -44,6 +44,7 @@ export class objectBase {
 
   public cloneFrom(obj: objectBase) {
     this.id = obj.id
+    this.objType = obj.objType
     // this.resourceId = obj.resourceId
     this.name = obj.name
     // this.pageId = obj.pageId

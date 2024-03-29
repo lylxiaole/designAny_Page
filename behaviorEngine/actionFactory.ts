@@ -18,11 +18,10 @@ export class factory {
   /********制造object*************************************************** */
   public makeObject(resCode: resourceCode): objectBase {
     let obj: objectBase = getFuncObjByType(resCode)
-
-    this.makeFuncToObj(obj, resCode)
+    this.fillFuncToObj(obj, resCode)
     return obj
   }
-  public makeFuncToObj(obj: objectBase, resCode: resourceCode) {
+  public fillFuncToObj(obj: objectBase, resCode: resourceCode) {
     var func = getFuncByType(resCode)
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
@@ -94,28 +93,14 @@ export class factory {
 
     for (let index = 0; index < objs.length; index++) {
       let obj = objs[index]
-      _runArea[index] = obj
-      evalStr += '_runArea[' + index + '].ref'
-      // if (obj.objType == objectType.signs) {
-      //   evalStr += obj.ref
-      // } else if (obj.resourceCode == resourceCode.pageSources) {
-      //   let pageId = obj.resourceId
-      //   let param = []
-      //   let inputParams = (obj as any).inputParams
-      //   for (var m = 0; m < inputParams.length; m++) {
-      //     param.push({
-      //       key: inputParams[m].key,
-      //       name: inputParams[m].name,
-      //       paramVal: inputParams[m].obj.objType == objectType.fixedVal ? inputParams[m].obj.ref : inputParams[m].obj.ref.data
-      //     })
-      //   }
-      //   let run_param = { pageId: pageId, param: param }
-      //   _runArea[index] = run_param
-      //   evalStr += '_runArea[' + index + ']'
-      // } else {
-      //   _runArea[index] = obj
-      //   evalStr += '_runArea[' + index + '].ref'
-      // }
+      let newObj = this.makeObject(obj.resourceCode)
+      newObj.cloneFrom(obj)
+      if (obj.objType == objectType.signs) {
+        evalStr += newObj.ref
+      } else {
+        _runArea[index] = newObj
+        evalStr += '_runArea[' + index + '].ref'
+      }
     }
 
     try {
