@@ -3,7 +3,6 @@ import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './actObject'
-
 import { actFuncBase, resourceFuncAttr, resourceCode, funcStack, resourceGroup, getFuncObjByType, getFuncByType } from './actFuncBase'
 
 export class factory {
@@ -89,7 +88,23 @@ export class factory {
   private excuteObjs(objs: objectBase[]): any {
     this.weakm.set(this, {})
     let _runArea = this.weakm.get(this)
-    let evalStr = ''
+    let evalStr: string[] = []
+
+    for (let index = 0; index < objs.length; index++) {
+      let obj = objs[index]
+      let newObj = this.makeObject(obj.resourceCode)
+      newObj.cloneFrom(obj)
+      _runArea[index] = newObj
+
+      if (obj.objType == objectType.signs) {
+        evalStr.push(newObj.ref)
+        if (obj.resourceCode === resourceCode.signAssign) {
+          evalStr[index - 1] = '_runArea[' + (index - 1) + '].ref'
+        }
+      } else {
+        evalStr.push('await _runArea[' + index + '].ref')
+      }
+    }
 
     for (let index = 0; index < objs.length; index++) {
       let obj = objs[index]
