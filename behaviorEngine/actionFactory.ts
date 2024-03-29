@@ -30,7 +30,7 @@ export class factory {
     obj.setValFunction = (obj: objectBase, val: any) => {
       func.setFunc(obj, val)
     }
-    obj.getValFunction = (obj: objectBase) => {
+    obj.getValFunction = async (obj: objectBase) => {
       var res = func.getFunc(obj)
       if (res) {
         obj = null
@@ -102,7 +102,7 @@ export class factory {
           evalStr[index - 1] = '_runArea[' + (index - 1) + '].ref'
         }
       } else {
-        evalStr.push('await _runArea[' + index + '].ref')
+        evalStr.push('await _runArea[' + index + '].getValFunction(_runArea[' + index + '])')
       }
     }
 
@@ -112,7 +112,6 @@ export class factory {
       if (error == '' || error == undefined) {
         throw error
       }
-
       window.console.error('执行行为细节出错', error)
     } finally {
       evalStr = null
