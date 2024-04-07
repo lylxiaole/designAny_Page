@@ -11,7 +11,7 @@ export class fixedValString implements actFuncBase<object_FixedVal> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     var newval = null
     if (obj && obj.val) {
       newval = obj.val.toString()
@@ -20,7 +20,7 @@ export class fixedValString implements actFuncBase<object_FixedVal> {
     }
     return newval
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     // window.console.log('固定值填写数据了', val)
     obj.val = val
   }
@@ -41,7 +41,7 @@ export class fixedValBool implements actFuncBase<object_FixedVal> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     var newval = null
     if (!obj.val) {
       newval = false
@@ -52,7 +52,7 @@ export class fixedValBool implements actFuncBase<object_FixedVal> {
     }
     return newval
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     // window.console.log('固定值填写数据了', val)
     obj.val = val
   }
@@ -74,7 +74,7 @@ export class fixedValInt implements actFuncBase<object_FixedVal> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     var newval = null
     try {
       newval = parseInt(obj.val)
@@ -83,7 +83,7 @@ export class fixedValInt implements actFuncBase<object_FixedVal> {
     }
     return newval
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     // window.console.log('固定值填写数据了', val)
     obj.val = val
   }
@@ -105,7 +105,7 @@ export class fixedValFloat implements actFuncBase<object_FixedVal> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     var newval = null
     try {
       newval = parseFloat(obj.val)
@@ -114,7 +114,7 @@ export class fixedValFloat implements actFuncBase<object_FixedVal> {
     }
     return newval
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     // window.console.log('固定值填写数据了', val)
     obj.val = val
   }
@@ -136,11 +136,11 @@ export class fixedValNone implements actFuncBase<object_FixedVal> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     var newval = null
     return newval
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     // window.console.log('固定值填写数据了', val)
     obj.val = val
   }

@@ -11,11 +11,10 @@ export class variables implements actFuncBase<object_Variable> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_Variable) {
+  async getFunc(obj: object_Variable) {
     return this.currentBehavior.variables[obj.name]
   }
-  setFunc(obj: object_Variable, val: any) {
-    debugger
+  async setFunc(obj: object_Variable, val: any) {
     val = val === undefined ? null : val
     this.currentBehavior.variables[obj.name] = val
   }

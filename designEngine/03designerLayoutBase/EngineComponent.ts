@@ -126,7 +126,7 @@ export default class EngineComponent extends EngineContainer {
       let actfac = new factory(this, this.parentPage, behavior)
       // console.info('behavior.inparam', behavior.inparam)
       try {
-        actfac.exacteAction()
+        await actfac.exacteAction()
       } catch (error) {
         break
       } finally {

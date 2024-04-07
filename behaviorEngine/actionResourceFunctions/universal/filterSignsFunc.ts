@@ -11,10 +11,10 @@ export class filtersignEqual implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '==='
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -35,10 +35,10 @@ export class filtersignNotEqual implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '!=='
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -59,10 +59,10 @@ export class filtersignGreaterThan implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '>'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -83,10 +83,10 @@ export class filtersignLessThan implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '<'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -107,10 +107,10 @@ export class filtersignGTOQ implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '>='
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -131,10 +131,10 @@ export class filtersignLTOQ implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '<='
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -155,10 +155,10 @@ export class filtersignAnd implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '&&'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -179,10 +179,10 @@ export class filtersignOr implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '||'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {

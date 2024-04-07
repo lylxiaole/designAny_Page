@@ -27,11 +27,11 @@ export class factory {
     func.currentPage = this.currentPage
     func.$meta = obj
 
-    obj.setValFunction = (obj: objectBase, val: any) => {
-      func.setFunc(obj, val)
+    obj.setValFunction = async (obj: objectBase, val: any) => {
+      await func.setFunc(obj, val)
     }
     obj.getValFunction = async (obj: objectBase) => {
-      var res = func.getFunc(obj)
+      var res = await func.getFunc(obj)
       if (res) {
         obj = null
         return deepClone(res)
@@ -44,7 +44,7 @@ export class factory {
     }
   }
   /********执行行为*************************************************** */
-  public exacteAction() {
+  public async exacteAction() {
     if (!this.currentBehavior) {
       return
     }
@@ -52,7 +52,7 @@ export class factory {
     try {
       for (let index = 0; index < this.currentBehavior.actions.length; index++) {
         let action = this.currentBehavior.actions[index]
-        this.excuteActionDetail(action)
+        await this.excuteActionDetail(action)
       }
     } catch (error) {
       if (error == undefined) {
@@ -65,9 +65,9 @@ export class factory {
     this.currentBehavior.inparam = {}
     this.currentBehavior.variables = []
   }
-  private excuteActionDetail(act: action): boolean {
+  private async excuteActionDetail(act: action): Promise<boolean> {
     if (act.judgingCondition && act.judgingCondition.length > 0) {
-      var isThrough = this.excuteObjs(act.judgingCondition)
+      var isThrough = await this.excuteObjs(act.judgingCondition)
       if (isThrough != true) {
         window.console.warn('*****************不执行动作:' + act.name + ',因为判断条件未通过***********************')
         return
@@ -78,31 +78,40 @@ export class factory {
       let actd = act.actionDetails[index]
       if ((actd as actionDetail).isActionDetail) {
         window.console.warn('*****************执行动作细节：' + actd.name + '***********************')
-        this.excuteObjs((actd as actionDetail).objs)
+        await this.excuteObjs((actd as actionDetail).objs)
       } else {
-        this.excuteActionDetail(actd as action)
+        await this.excuteActionDetail(actd as action)
       }
     }
   }
   private weakm = new WeakMap()
-  private excuteObjs(objs: objectBase[]): any {
+  private async excuteObjs(objs: objectBase[]): Promise<any> {
     this.weakm.set(this, {})
     let _runArea = this.weakm.get(this)
     let evalStr: string[] = []
 
-    for (let index = 0; index < objs.length; index++) {
-      let obj = objs[index]
-      let newObj = this.makeObject(obj.resourceCode)
-      newObj.cloneFrom(obj)
+    for (let index = 0; index < objs.length - 1; index++) {
+      //当前
+      let currentObj = objs[index]
+      let newObj = this.makeObject(currentObj.resourceCode)
+      newObj.cloneFrom(currentObj)
       _runArea[index] = newObj
-
-      if (obj.objType == objectType.signs) {
-        evalStr.push(newObj.ref)
-        if (obj.resourceCode === resourceCode.signAssign) {
-          evalStr[index - 1] = '_runArea[' + (index - 1) + '].ref'
-        }
+      //下一个
+      let nextObj = objs[index + 1]
+      //判断
+      if (nextObj.objType === objectType.signs && nextObj.resourceCode === resourceCode.signAssign) {
+        evalStr.push('_runArea[' + index + '].ref')
       } else {
-        evalStr.push('await _runArea[' + index + '].getValFunction(_runArea[' + index + '])')
+        let val = await newObj.ref
+        evalStr.push(val)
+      }
+      //最后一个元素
+      if (index === objs.length - 2) {
+        let lastObj = objs[index + 1]
+        newObj = this.makeObject(lastObj.resourceCode)
+        newObj.cloneFrom(lastObj)
+        let val = await newObj.ref
+        evalStr.push(val)
       }
     }
 

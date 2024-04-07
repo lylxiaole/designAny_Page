@@ -12,10 +12,10 @@ export class cuteSignsAdd implements actFuncBase<object_Signs> {
   currentPage: EnginePage
   currentBehavior: behavior
 
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '+'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -36,10 +36,10 @@ export class cuteSignsReduce implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '-'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -60,10 +60,10 @@ export class cutesignAssign implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '='
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -84,10 +84,10 @@ export class cutesignMultiply implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '*'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
@@ -108,10 +108,10 @@ export class cutesignDivide implements actFuncBase<object_Signs> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  getFunc(obj: object_FixedVal) {
+  async getFunc(obj: object_FixedVal) {
     return '/'
   }
-  setFunc(obj: object_FixedVal, val: any) {
+  async setFunc(obj: object_FixedVal, val: any) {
     throw '符号不能赋值'
   }
   getDesc(obj: objectBase): string {
