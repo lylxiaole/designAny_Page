@@ -97,17 +97,16 @@ export default class EngineComponent extends EngineContainer {
   rendered(dom: Element) {}
 
   // *******************************protecteds**************************************************************************************
-  protected async triggerEvent(name: string, inparam: any) {
+  protected override async triggerEvent(name: string, inparam: any) {
+    super.triggerEvent(name, inparam)
     if (!this.topParentPage) {
       return
     }
-
-    // window.console.log('触发事件:', name, this.$el)
-    var event = this.designerEvents.find((o) => o.eventName == name)
-    if (!event) {
-      window.console.error('事件调用失败,该事件不存在')
+    if (!this.isDesigning) {
       return
     }
+    // window.console.log('触发事件:', name, this.$el)
+    var event = this.designerEvents.find((o) => o.eventName == name)
 
     for (let index = 0; index < event.behaviorIds.length; index++) {
       const bid = event.behaviorIds[index]

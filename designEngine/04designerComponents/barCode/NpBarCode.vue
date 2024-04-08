@@ -54,14 +54,11 @@ export default class NpBarCode extends EngineComponent {
     this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Property(true, ['底部', '顶部']), '底部')
     this.registerProperty(PropertyGroupName.special, '字边距', new Number_Property(), 2)
     this.registerProperty(PropertyGroupName.special, '字大小', new Number_Property(), 20)
-
     this.initBarCode()
-
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
     console.log('onPropertyChangedInner:', property)
-
     this.initBarCode()
   }
   get vlaue(): string {

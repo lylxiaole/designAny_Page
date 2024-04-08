@@ -195,12 +195,12 @@ export default class EngineLayout extends Vue {
   mounted() {}
   /**生命周期 */
   updated() {
-    this.$lylemit('onUpdated', this)
+    this.$lylemit('onLYLUpdated', this)
   }
   /**生命周期 */
   unmounted() {
     // window.console.log('销毁了页面组件:', this.Id)
-    this.$lylemit('onDestroyed', this)
+    this.$lylemit('onLYLDestroyed', this)
   }
 
   // *************************基础属性****************************************************************************
@@ -521,7 +521,6 @@ export default class EngineLayout extends Vue {
         //..新增了一个属性
         this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
         this.$lylemit('onPropertyChanged', newproperty.id, newproperty, this)
-        // this.onPropertyChanged(newproperty.id, newproperty, this)
       } else if (serialize(filter_oldproperty) != serialize(newproperty)) {
         //..修改了一个属性的内容
         var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
@@ -530,7 +529,6 @@ export default class EngineLayout extends Vue {
         /**替换旧的属性 */
         var index = this.properties_old.indexOf(filter_oldproperty)
         this.properties_old.splice(index, 1, newpropertyClone)
-        // this.onPropertyChanged(newproperty.id, newpropertyClone, this)
         this.$lylemit('onPropertyChanged', newproperty.id, newpropertyClone, this)
       }
     }
@@ -538,7 +536,7 @@ export default class EngineLayout extends Vue {
   // *************************protect方法****************************************************************************
   protected renderChildFromData(data: SaveInfo) {}
   protected loadCompleted() {
-    this.$lylemit('onMounted', this)
+    this.$lylemit('onLYLMounted', this)
     this.properties_old = deepClone(this.properties)
     this.$watch('properties', this.watch_properties, { deep: true, immediate: false })
   }
@@ -614,23 +612,7 @@ export default class EngineLayout extends Vue {
     this.propertyValidators.push(newvaildate)
   }
   /**触发事件 */
-  protected async triggerEvent(name: string, inparams: any[]) {
-    let event: any = null
-    for (let index = 0; index < this.designerEvents.length; index++) {
-      const o = this.designerEvents[index]
-      if (o.eventName === name) {
-        event = o
-        break
-      }
-    }
-    if (!event) {
-      window.console.error('事件调用失败,该事件不存在')
-      return
-    }
-
-    //TODO 在事件设计的数据中找到事件,并调用事件
-    return
-  }
+  protected async triggerEvent(name: string, inparams: any[]) {}
   // *************************对外公布方法****************************************************************************
   public async loadData(data: SaveInfo) {
     this.children = []
@@ -930,14 +912,14 @@ export default class EngineLayout extends Vue {
   protected onPropertyChanged(propertyId: string, property: Property, layout: EngineLayout): void {}
   @Emit('onChildrenCountChange')
   protected onChildrenCountChange() {}
-  @Emit('onCreated')
-  protected onCreated(layout: EngineLayout) {}
-  @Emit('onMounted')
-  protected onMounted(layout: EngineLayout) {}
-  @Emit('onUpdated')
-  protected onUpdated(layout: EngineLayout) {}
-  @Emit('onSizeChanged')
-  protected onSizeChanged(e: any) {}
-  @Emit('onDestroyed')
-  protected onDestroyed(layout: EngineLayout): void {}
+  @Emit('onLYLCreated')
+  protected onLYLCreated(layout: EngineLayout) {}
+  @Emit('onLYLMounted')
+  protected onLYLMounted(layout: EngineLayout) {}
+  @Emit('onLYLUpdated')
+  protected onLYLUpdated(layout: EngineLayout) {}
+  @Emit('onLYLSizeChanged')
+  protected onLYLSizeChanged(e: any) {}
+  @Emit('onLYLDestroyed')
+  protected onLYLDestroyed(layout: EngineLayout): void {}
 }

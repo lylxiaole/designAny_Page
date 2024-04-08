@@ -82,7 +82,11 @@ export default class EnginePage extends EngineContainer {
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }
   // *******************************页面行为**************************************************************************************
-  protected async triggerEvent(name: string, inparam: any) {
+  protected override async triggerEvent(name: string, inparam: any) {
+    super.triggerEvent(name, inparam)
+    if (!this.isDesigning) {
+      return
+    }
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件[' + name + ']调用失败,该事件不存在')

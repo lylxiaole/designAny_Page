@@ -135,7 +135,7 @@ export default class DesignShell extends Vue {
     comp.component.proxy.isDesigning = true
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
-    this.Component.$once('onMounted', () => {
+    this.Component.$once('onLYLMounted', () => {
       debugger
       this.startListenItemDrag()
     })
