@@ -53,7 +53,7 @@ export default class PCPageDesign extends EnginePage {
     this.allShells.push(vueComp as DesignShell)
     let res = (vueComp as DesignShell).addComponent(compCon)
 
-    ;(vueComp as DesignShell).startListenItemDrag()
+    // ;(vueComp as DesignShell).startListenItemDrag()
 
     $(this.$el).append(virtualDom)
     return res

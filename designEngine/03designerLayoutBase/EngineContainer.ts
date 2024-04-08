@@ -183,8 +183,8 @@ export default class EngineContainer extends EngineLayout {
     this.isSelected = false
   }
   // *************************overrides**************************************
-  protected async renderChildFromData(data: SaveInfo) {
-    debugger
+  protected override async renderChildFromData(data: SaveInfo) {
+    super.renderChildFromData(data)
     let compVue = findSystemCompByCode(data.meta.compCode)
     let comp = await this.insertComponentLayout(compVue, data.meta, null, data)
     await comp.loadData(data)

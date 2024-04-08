@@ -192,13 +192,7 @@ export default class EngineLayout extends Vue {
    */
 
   /**生命周期 */
-  mounted() {
-    this.$nextTick(() => {
-      this.$lylemit('onMounted', this)
-      this.properties_old = deepClone(this.properties)
-      this.$watch('properties', this.watch_properties, { deep: true, immediate: false })
-    })
-  }
+  mounted() {}
   /**生命周期 */
   updated() {
     this.$lylemit('onUpdated', this)
@@ -543,7 +537,11 @@ export default class EngineLayout extends Vue {
   }
   // *************************protect方法****************************************************************************
   protected renderChildFromData(data: SaveInfo) {}
-  protected loadCompleted() {}
+  protected loadCompleted() {
+    this.$lylemit('onMounted', this)
+    this.properties_old = deepClone(this.properties)
+    this.$watch('properties', this.watch_properties, { deep: true, immediate: false })
+  }
   /**添加子级 */
   protected addChild(child: EngineLayout) {
     if (!this.children) {
@@ -616,7 +614,7 @@ export default class EngineLayout extends Vue {
     this.propertyValidators.push(newvaildate)
   }
   /**触发事件 */
-  protected async triggeEvent(name: string, inparams: any[]) {
+  protected async triggerEvent(name: string, inparams: any[]) {
     let event: any = null
     for (let index = 0; index < this.designerEvents.length; index++) {
       const o = this.designerEvents[index]

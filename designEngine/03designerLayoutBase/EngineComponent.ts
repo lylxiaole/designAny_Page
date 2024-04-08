@@ -97,11 +97,11 @@ export default class EngineComponent extends EngineContainer {
   rendered(dom: Element) {}
 
   // *******************************protecteds**************************************************************************************
-  protected async triggeEvent(name: string, inparam: any) {
+  protected async triggerEvent(name: string, inparam: any) {
     if (!this.topParentPage) {
       return
     }
-    debugger
+
     // window.console.log('触发事件:', name, this.$el)
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
@@ -134,9 +134,10 @@ export default class EngineComponent extends EngineContainer {
     return
   }
   // *******************************publics**************************************************************************************
-  protected loadCompleted(): void {
+  protected override loadCompleted(): void {
+    super.loadCompleted()
     this.$nextTick(() => {
-      this.triggeEvent('控件加载完成事件', null)
+      this.triggerEvent('控件加载完成事件', null)
     })
   }
   /**通用的验证方法，根据编码获取 */

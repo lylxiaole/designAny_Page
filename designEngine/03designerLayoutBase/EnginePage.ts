@@ -82,13 +82,13 @@ export default class EnginePage extends EngineContainer {
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }
   // *******************************页面行为**************************************************************************************
-  protected async triggeEvent(name: string, inparam: any) {
+  protected async triggerEvent(name: string, inparam: any) {
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件[' + name + ']调用失败,该事件不存在')
       return
     }
-    debugger
+
     //TODO 在事件设计的数据中找到事件,并调用事件
     for (let index = 0; index < event.behaviorIds.length; index++) {
       let bid = event.behaviorIds[index]
@@ -113,8 +113,8 @@ export default class EnginePage extends EngineContainer {
   }
   public async reLoadPageData(pageData: SaveInfo) {
     this.reLoadData(pageData)
-    if (this.triggeEvent) {
-      await this.triggeEvent('加载完成', [])
+    if (this.triggerEvent) {
+      await this.triggerEvent('加载完成', [])
     }
   }
   public setPageInParams(params?: paramInfo[]) {
@@ -265,7 +265,7 @@ export default class EnginePage extends EngineContainer {
       this.setPageInParams(params)
       this.scaleSize(1 - this.currentScaleSize)
       await this.$nextTick()
-      await this.triggeEvent('加载完成', [])
+      await this.triggerEvent('加载完成', [])
     } catch (error) {
       window.console.error(error)
     } finally {
