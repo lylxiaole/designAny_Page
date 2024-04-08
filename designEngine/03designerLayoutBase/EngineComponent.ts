@@ -5,17 +5,16 @@ import { EnginePage, SaveInfo, EngineContainer } from './index'
 import { factory, param } from '@behaviorEngine/index'
 
 import { LayoutType } from './commonClasses/componentInfos'
+import { EngineLayout } from '..'
 
 @Options({})
 export default class EngineComponent extends EngineContainer {
-  public parentPage: EnginePage
-
   public get topParentPage(): EnginePage {
-    let res: EnginePage = this.parentPage
-    while (res && res.parentPage) {
-      res = res.parentPage
+    let res: EngineLayout = this.parentLayout
+    while (res && res.parentLayout) {
+      res = res.parentLayout
     }
-    return res
+    return res as EnginePage
   }
   get foreground(): string {
     var property = this.findPropertyByName(PropertyGroupName.normal, '前景色')
@@ -94,18 +93,15 @@ export default class EngineComponent extends EngineContainer {
     this.registerEvents('控件加载完成事件', '', inparams, null)
   }
 
-  mounted() {
-    this.$nextTick(() => {
-      this.triggeEvent('控件加载完成事件', null)
-    })
-  }
+  mounted() {}
   rendered(dom: Element) {}
 
   // *******************************protecteds**************************************************************************************
   protected async triggeEvent(name: string, inparam: any) {
-    if (!this.parentPage) {
+    if (!this.topParentPage) {
       return
     }
+    debugger
     // window.console.log('触发事件:', name, this.$el)
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
@@ -115,7 +111,7 @@ export default class EngineComponent extends EngineContainer {
 
     for (let index = 0; index < event.behaviorIds.length; index++) {
       const bid = event.behaviorIds[index]
-      let behavior = this.parentPage.behaviors.find((o) => o.id == bid)
+      let behavior = this.topParentPage.behaviors.find((o) => o.id == bid)
       if (!behavior) {
         continue
       }
@@ -123,7 +119,7 @@ export default class EngineComponent extends EngineContainer {
       if (inparam) {
         behavior.inparam = inparam
       }
-      let actfac = new factory(this, this.parentPage, behavior)
+      let actfac = new factory(this, this.topParentPage, behavior)
       // console.info('behavior.inparam', behavior.inparam)
       try {
         await actfac.exacteAction()
@@ -138,7 +134,11 @@ export default class EngineComponent extends EngineContainer {
     return
   }
   // *******************************publics**************************************************************************************
-  protected loadCompleted(childrenData: SaveInfo[]): void {}
+  protected loadCompleted(): void {
+    this.$nextTick(() => {
+      this.triggeEvent('控件加载完成事件', null)
+    })
+  }
   /**通用的验证方法，根据编码获取 */
   public commonValid(validatorArr: any[], value: any, callback: any, message: any) {
     if (value === 0) {

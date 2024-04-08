@@ -46,7 +46,7 @@ export class Point {
 @Options({})
 export default class EngineLayout extends Vue {
   public renderContainer: any = {}
-
+  public isDesigning: boolean = false
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}
@@ -484,7 +484,7 @@ export default class EngineLayout extends Vue {
   // *************************privates****************************************************************************
   public async destorymethod() {
     render(null, this.renderContainer)
-    debugger
+
     this.$off()
     for (let index = 0; index < this.properties.length; index++) {
       const element = this.properties[index]
@@ -543,7 +543,7 @@ export default class EngineLayout extends Vue {
   }
   // *************************protect方法****************************************************************************
   protected renderChildFromData(data: SaveInfo) {}
-  protected loadCompleted(childrenData: SaveInfo[]) {}
+  protected loadCompleted() {}
   /**添加子级 */
   protected addChild(child: EngineLayout) {
     if (!this.children) {
@@ -644,6 +644,8 @@ export default class EngineLayout extends Vue {
     if (data.children) {
       this.loadChildrenData(data.children)
     }
+
+    this.loadCompleted()
   }
   public async reLoadData(data: SaveInfo) {
     for (let index = 0; index < this.children.length; index++) {

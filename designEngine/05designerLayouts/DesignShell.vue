@@ -46,8 +46,6 @@ export default class DesignShell extends Vue {
 
   private _dragHelper: dragHelper = null
 
-  public isDesigning: boolean = true
-
   private Component: EngineComponent = null
   public positionval: string = null
 
@@ -134,7 +132,7 @@ export default class DesignShell extends Vue {
     render(comp, this.$refs.compContent as any)
     this.Component = comp.component.proxy
     comp.component.proxy.renderContainer = this.$refs.compContent
-
+    comp.component.proxy.isDesigning = true
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
     // this.Component.$once('onDestroyed', () => {

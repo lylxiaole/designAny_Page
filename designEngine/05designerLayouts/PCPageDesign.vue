@@ -27,6 +27,7 @@ export default class PCPageDesign extends EnginePage {
     return 'url("' + BuildingFileUrlForShow(this.background_img.uid) + '")'
   }
   public allShells: DesignShell[] = []
+  public isDesigning: boolean = true
 
   private designEvets: DesignEvents = null
 
@@ -35,7 +36,6 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets = new DesignEvents(this)
     this.designEvets.canDrag = false
     this.designEvets.canDrop = true
-
     this.designEvets.onDrop_Event = this.listenOnDrop
     this.designEvets.onDragMove_Event = this.listenOnDragMove
     this.designEvets.onDelete_Event = this.listenOnDeleteKey
@@ -47,14 +47,11 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onClick_Event = this.listenOnClick
   }
 
-  protected async renderComponent(compCon: EngineComponent, data?: SaveInfo): Promise<EngineLayout> {
+  protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as DesignShell)
     let res = (vueComp as DesignShell).addComponent(compCon)
-    if (data) {
-      res.loadData(data)
-    }
 
     ;(vueComp as DesignShell).startListenItemDrag()
 
@@ -226,7 +223,6 @@ export default class PCPageDesign extends EnginePage {
     if (!newcopyComp) {
       newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
     }
-    newcopyComp.loadData(compData)
     e.stopPropagation()
   }
   // ******************************************************

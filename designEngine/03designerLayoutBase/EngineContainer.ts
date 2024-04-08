@@ -156,7 +156,7 @@ export default class EngineContainer extends EngineLayout {
     // let dropcomp = new dropcompclass() as EngineLayout
     let dropcomp = h(dropcompclass) as any
 
-    dropcomp = await this.renderComponent(dropcomp, data)
+    dropcomp = await this.renderComponent(dropcomp)
 
     dropcomp.parentLayout = this
     dropcomp.prototype = { $Meta: dropcompclass.prototype.$Meta }
@@ -184,12 +184,13 @@ export default class EngineContainer extends EngineLayout {
   }
   // *************************overrides**************************************
   protected async renderChildFromData(data: SaveInfo) {
+    debugger
     let compVue = findSystemCompByCode(data.meta.compCode)
     let comp = await this.insertComponentLayout(compVue, data.meta, null, data)
     await comp.loadData(data)
   }
   /*************容器渲染子组件的虚方法**********************/
-  protected async renderComponent(compCon: EngineLayout, data?: SaveInfo): Promise<EngineLayout> {
+  protected async renderComponent(compCon: EngineLayout): Promise<EngineLayout> {
     return compCon
   }
   protected getCompTemplateData(tempId: string): any {

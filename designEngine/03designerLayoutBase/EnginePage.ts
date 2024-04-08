@@ -16,7 +16,6 @@ import { BaseClass } from '@common/apis/apiDesignManager'
 
 @Options({})
 export default class EnginePage extends EngineContainer {
-  public parentPage: EnginePage
   public isNeedSave: boolean = false
   /***************************** */
   /**行为列表*/
@@ -89,7 +88,7 @@ export default class EnginePage extends EngineContainer {
       window.console.error('事件[' + name + ']调用失败,该事件不存在')
       return
     }
-
+    debugger
     //TODO 在事件设计的数据中找到事件,并调用事件
     for (let index = 0; index < event.behaviorIds.length; index++) {
       let bid = event.behaviorIds[index]
