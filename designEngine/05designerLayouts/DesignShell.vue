@@ -42,11 +42,12 @@ import { EngineComponent } from '../03designerLayoutBase'
 import { deepClone } from '@common/utils'
 @Options({})
 export default class DesignShell extends Vue {
+  public renderContainer: any = {}
+
   private _dragHelper: dragHelper = null
 
-  public get isDesigning(): boolean {
-    return true
-  }
+  public isDesigning: boolean = true
+
   private Component: EngineComponent = null
   public positionval: string = null
 
@@ -107,8 +108,8 @@ export default class DesignShell extends Vue {
     this._dragHelper.makeDomCannotDrag(this.$el)
   }
 
-  destroyed() {
-    this.$off()
+  destorymethod() {
+    render(null, this.renderContainer)
     $(this.$el).remove()
 
     for (const key in (this as any).prototype) {
@@ -125,21 +126,21 @@ export default class DesignShell extends Vue {
     $(this.$el).focus()
   }
 
-  public addComponent(comp: EngineComponent) {
+  public addComponent(comp: any) {
     if (this.Component != null) {
-      this.Component.$destroy()
+      this.Component.destorymethod()
     }
 
-    render(comp, this.$refs.compContent)
+    render(comp, this.$refs.compContent as any)
     this.Component = comp.component.proxy
+    comp.component.proxy.renderContainer = this.$refs.compContent
 
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
-    this.Component.$once('onDestroyed', () => {
-      this.$destroy()
-    })
+    // this.Component.$once('onDestroyed', () => {
+    //   this.destorymethod()
+    // })
 
-    // this.startListenItemDrag()
     return this.Component
   }
 

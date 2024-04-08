@@ -233,6 +233,14 @@ export default class PCPageDesign extends EnginePage {
   private listenOnClick(e: Event, target: any) {
     this.chooseComps([])
   }
+  // ******************************************************
+  public closeDesign() {
+    for (let index = 0; index < this.allShells.length; index++) {
+      const element = this.allShells[index]
+      element.destorymethod()
+    }
+    this.destorymethod()
+  }
 }
 </script>
  

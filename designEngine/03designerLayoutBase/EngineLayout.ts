@@ -484,7 +484,7 @@ export default class EngineLayout extends Vue {
   // *************************privates****************************************************************************
   public async destorymethod() {
     render(null, this.renderContainer)
-
+    debugger
     this.$off()
     for (let index = 0; index < this.properties.length; index++) {
       const element = this.properties[index]

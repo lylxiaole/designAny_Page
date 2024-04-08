@@ -128,7 +128,7 @@ export default class index extends PageBase {
     window.console.log('closePage:', pageId)
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
-      this.openPageEngines[engineIndex].destorymethod()
+      ;(this.openPageEngines[engineIndex] as PCPageDesign).closeDesign()
       this.openPageEngines.splice(engineIndex, 1)
     }
     let pagedataIndex = this.openPages.findIndex((o) => o.id === pageId)
@@ -166,9 +166,8 @@ export default class index extends PageBase {
     }
     /************************渲染页面 */
     let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
-
-    await vueComp.loadPageByData(pageId, res.designDetail)
-    this.openPage(res, vueComp)
+    await (vueComp as any).loadPageByData(pageId, res.designDetail)
+    this.openPage(res, vueComp as any)
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(virtualDom)
   }
