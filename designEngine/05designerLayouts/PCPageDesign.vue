@@ -51,7 +51,7 @@ export default class PCPageDesign extends EnginePage {
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as DesignShell)
     let res = (vueComp as DesignShell).addComponent(compCon)
-
+    debugger
     // ;(vueComp as DesignShell).startListenItemDrag()
 
     $(this.$el).append(virtualDom)
@@ -213,11 +213,12 @@ export default class PCPageDesign extends EnginePage {
     let newcopyComp: EngineLayout = null
     for (let index = 0; index < findchildren.length; index++) {
       const element = findchildren[index]
-      if (element.canDrop == true && (element as any).insertComponentLayout) {
+      if ((element as any).insertComponentLayout) {
         newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData.meta, null, compData)
         break
       }
     }
+
     // 如果没选中容器类的子组件, 就把当前组件复制到当前页面
     if (!newcopyComp) {
       newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
