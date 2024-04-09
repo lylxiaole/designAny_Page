@@ -28,7 +28,6 @@ export default class PCPageDesign extends EnginePage {
   }
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
-
   private designEvets: DesignEvents = null
 
   created() {}

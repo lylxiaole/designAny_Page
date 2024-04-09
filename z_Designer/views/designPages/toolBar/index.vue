@@ -13,7 +13,7 @@
     <!-- *************************************************************************** -->
     <optionBtn :style="{ height: height + 'px' }" :label="'保存'+(needSave?'*':'')" @click="savePage" />
     <!-- *************************************************************************** -->
-    <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" />
+    <!-- <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" /> -->
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
       <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparent"
@@ -23,7 +23,7 @@
             <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn :style="{ height: height + 'px' }" label="系统组件" />
+        <optionBtn :style="{ height: height + 'px' }" label="组件" />
       </el-tooltip>
       <!-- *************************************************************************** -->
       <div :style="{ width:  '120px' }" class="iconitem themeHover">
@@ -60,32 +60,12 @@ export default class quickActionBar extends Vue {
   /**当前的布局页面属性，外部通过绑定传递进来 */
   @Prop() public currentPage: EnginePage
 
-  private get needSave(): boolean {
-    if (!this.currentPage) {
+  @Prop({
+    default: () => {
       return false
     }
-    let res = this.recursiveNeedSave(this.currentPage)
-
-    return res
-  }
-
-  private recursiveNeedSave(layout: EngineLayout): boolean {
-    if (layout.isNeedSave) {
-      return true
-    }
-
-    for (let index = 0; index < layout.children.length; index++) {
-      const element = layout.children[index]
-      if (element.isNeedSave) {
-        return true
-      }
-      let res = this.recursiveNeedSave(element)
-      if (res) {
-        return res
-      }
-    }
-    return false
-  }
+  })
+  public needSave: boolean
 
   private get pageScale(): number {
     if (!this.currentPage) {

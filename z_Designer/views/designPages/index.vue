@@ -2,16 +2,17 @@
   <el-row style="height:100%;width:100%">
     <el-row style="height:60px;width:100%">
       <div ref="toobar"></div>
-      <toolBar :currentPage="currentShowEngine" :height="60" @onSave="onSaveCurrentPage"></toolBar>
+      <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine?currentShowEngine.Id:'')" :height="60"
+        @onSave="onSaveCurrentPage"></toolBar>
     </el-row>
-    <el-row style="height:calc(100% - 60px);width:100%;display:blockl;position:relative;display:block">
+    <el-row style="height:calc(100% - 60px);width:100%;display:block;position:relative;display:block">
       <el-col style="width:250px;height:100%;float:left">
         <pagelist :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
       </el-col>
       <el-col class="pageList" style="width:calc(100% - 500px);height:100%;float:left">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width:100%;height:100%">
-          <el-tab-pane v-for="page in openPages" :key="page.id" :label="page.name" :name="page.id">
-            <div style="width:100%;height:100%;overflow:auto" :ref="page.id"></div>
+          <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name+(needSave(page.Id)?'*':'')" :name="page.Id">
+            <div style="width:100%;height:100%;overflow:auto" :ref="page.Id"></div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -84,8 +85,7 @@ export default class index extends PageBase {
   private pageDataList: any[] = []
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
-  //所有打开的页面的数据
-  private openPages: DesignPageDC[] = []
+
   //所有打开的页面的引擎
   private openPageEngines: EnginePage[] = []
   //当前设计的页面引擎
@@ -93,6 +93,34 @@ export default class index extends PageBase {
     let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
     return findengine
   }
+  // **********是否需要保存*******************************
+  private needSave(pageId: string): boolean {
+    let page = this.openPageEngines.find((o) => o.Id === pageId)
+    if (!page) {
+      return false
+    }
+    let res = this.recursiveNeedSave(page)
+
+    return res
+  }
+  private recursiveNeedSave(layout: EngineLayout): boolean {
+    if (layout.isNeedSave) {
+      return true
+    }
+
+    for (let index = 0; index < layout.children.length; index++) {
+      const element = layout.children[index]
+      if (element.isNeedSave) {
+        return true
+      }
+      let res = this.recursiveNeedSave(element)
+      if (res) {
+        return res
+      }
+    }
+    return false
+  }
+  // *****************************************
   //当前选择的组件列表
   protected get selectedComps(): EngineLayout[] {
     if (this.currentShowEngine) {
@@ -115,10 +143,6 @@ export default class index extends PageBase {
       this.openPageEngines.push(pageengine)
     }
 
-    let findopen = this.openPages.find((o) => o.id === page.id)
-    if (!findopen) {
-      this.openPages.push(page)
-    }
     window.console.log('openPage:', pageengine)
     this.currentOpenPageId = page.id
     // **********************
@@ -131,13 +155,9 @@ export default class index extends PageBase {
       ;(this.openPageEngines[engineIndex] as PCPageDesign).closeDesign()
       this.openPageEngines.splice(engineIndex, 1)
     }
-    let pagedataIndex = this.openPages.findIndex((o) => o.id === pageId)
-    if (pagedataIndex > -1) {
-      this.openPages.splice(pagedataIndex, 1)
-    }
   }
   private isHaveOpened(pageId: string) {
-    let find = this.openPages.find((o) => o.id === pageId)
+    let find = this.openPageEngines.find((o) => o.Id === pageId)
     if (find) {
       return true
     } else {
@@ -167,6 +187,7 @@ export default class index extends PageBase {
     /************************渲染页面 */
     let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
     await (vueComp as any).loadPageByData(pageId, res.designDetail)
+    ;(vueComp as any).name = res.name
     this.openPage(res, vueComp as any)
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(virtualDom)

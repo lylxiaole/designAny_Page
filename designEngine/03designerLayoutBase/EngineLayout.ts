@@ -510,7 +510,7 @@ export default class EngineLayout extends Vue {
       await this.renderChildFromData(o)
     }
   }
-  private watch_properties(newval: Property[]) {
+  private watch_properties_onDesigning(newval: Property[]) {
     // window.console.log('属性变化了', newval)
     for (var j = 0; j < newval.length; j++) {
       var newproperty = newval[j]
@@ -519,7 +519,6 @@ export default class EngineLayout extends Vue {
         //..新增了一个属性
         this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
         this.isNeedSave = true
-
         this.$lylemit('onPropertyChanged', newproperty.id, newproperty, this)
       } else if (serialize(filter_oldproperty) != serialize(newproperty)) {
         //..修改了一个属性的内容
@@ -530,7 +529,6 @@ export default class EngineLayout extends Vue {
         var index = this.properties_old.indexOf(filter_oldproperty)
         this.properties_old.splice(index, 1, newpropertyClone)
         this.isNeedSave = true
-
         this.$lylemit('onPropertyChanged', newproperty.id, newpropertyClone, this)
       }
     }
@@ -539,8 +537,10 @@ export default class EngineLayout extends Vue {
   protected async renderChildFromData(data: SaveInfo) {}
   protected loadCompleted() {
     this.$lylemit('onLYLMounted', this)
-    this.properties_old = deepClone(this.properties)
-    this.$watch('properties', this.watch_properties, { deep: true, immediate: false })
+    if (this.isDesigning == true) {
+      this.properties_old = deepClone(this.properties)
+      this.$watch('properties', this.watch_properties_onDesigning, { deep: true, immediate: false })
+    }
   }
   /**添加子级 */
   protected addChild(child: EngineLayout) {

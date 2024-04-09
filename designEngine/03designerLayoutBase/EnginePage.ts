@@ -243,7 +243,7 @@ export default class EnginePage extends EngineContainer {
       this.recursiveChangeNeedSave(this)
       this.onPageSaveSuccess(saveinfo.id)
     } catch (error) {
-      this.$notify.error('保存页面错误:' + (error as any).message)
+      alert('保存页面错误:' + (error as any).message)
     }
   }
   private async recursiveChangeNeedSave(layout: EngineLayout) {
