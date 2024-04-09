@@ -16,7 +16,6 @@ import { BaseClass } from '@common/apis/apiDesignManager'
 
 @Options({})
 export default class EnginePage extends EngineContainer {
-  public isNeedSave: boolean = false
   /***************************** */
   /**行为列表*/
   public get behaviors(): behavior[] {
@@ -84,7 +83,7 @@ export default class EnginePage extends EngineContainer {
   // *******************************页面行为**************************************************************************************
   protected override async triggerEvent(name: string, inparam: any) {
     super.triggerEvent(name, inparam)
-    if (!this.isDesigning) {
+    if (this.isDesigning) {
       return
     }
     var event = this.designerEvents.find((o) => o.eventName == name)
@@ -241,18 +240,27 @@ export default class EnginePage extends EngineContainer {
     saveinfoStr = strZip(saveinfoStr)
     try {
       await SavePageDetail({ appId: appId, id: this.Id, designDetail: saveinfoStr } as any)
-      this.isNeedSave = false
+      this.recursiveChangeNeedSave(this)
       this.onPageSaveSuccess(saveinfo.id)
     } catch (error) {
       this.$notify.error('保存页面错误:' + (error as any).message)
     }
   }
+  private async recursiveChangeNeedSave(layout: EngineLayout) {
+    layout.isNeedSave = false
+
+    for (let index = 0; index < layout.children.length; index++) {
+      const element = layout.children[index]
+      element.isNeedSave = false
+      this.recursiveChangeNeedSave(element)
+    }
+  }
+
   public async loadPageById(pageId: string, params?: paramInfo[]): Promise<void> {
     let pageDC: DesignPageDC = await GetPageDetail(pageId)
     await this.loadPageByData(pageId, pageDC.designDetail, params)
   }
   public async loadPageByData(pageId: string, pageDataStr: string, params?: paramInfo[]) {
-    window.console.log('loadPageByData')
     let pageData: SaveInfo = null
     if (pageDataStr) {
       pageData = strUnZip(pageDataStr)
@@ -276,10 +284,8 @@ export default class EnginePage extends EngineContainer {
       closeLoading_Async(index, true)
     }
   }
-  // ***********************protecteds********************************** */
-  public loadComponentsData(data: any) {}
-  public getCompnentsData(): any {}
-  // *******************************对外公布事件**************************************************************************************
+
+  // *********************************************************************************************************************
   private onPageSaveSuccess(pageId: string): void {}
   private onScaleSized(): void {}
 }

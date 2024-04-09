@@ -11,7 +11,7 @@
       </div>
     </div>
     <!-- *************************************************************************** -->
-    <optionBtn :style="{ height: height + 'px' }" label="保存" @click="savePage" />
+    <optionBtn :style="{ height: height + 'px' }" :label="'保存'+(needSave?'*':'')" @click="savePage" />
     <!-- *************************************************************************** -->
     <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" />
     <!-- *************************************************************************** -->
@@ -59,6 +59,33 @@ export default class quickActionBar extends Vue {
   @Prop() private height: number
   /**当前的布局页面属性，外部通过绑定传递进来 */
   @Prop() public currentPage: EnginePage
+
+  private get needSave(): boolean {
+    if (!this.currentPage) {
+      return false
+    }
+    let res = this.recursiveNeedSave(this.currentPage)
+
+    return res
+  }
+
+  private recursiveNeedSave(layout: EngineLayout): boolean {
+    if (layout.isNeedSave) {
+      return true
+    }
+
+    for (let index = 0; index < layout.children.length; index++) {
+      const element = layout.children[index]
+      if (element.isNeedSave) {
+        return true
+      }
+      let res = this.recursiveNeedSave(element)
+      if (res) {
+        return res
+      }
+    }
+    return false
+  }
 
   private get pageScale(): number {
     if (!this.currentPage) {

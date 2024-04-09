@@ -102,7 +102,7 @@ export default class EngineComponent extends EngineContainer {
     if (!this.topParentPage) {
       return
     }
-    if (!this.isDesigning) {
+    if (this.isDesigning) {
       return
     }
     // window.console.log('触发事件:', name, this.$el)

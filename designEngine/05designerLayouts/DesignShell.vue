@@ -136,7 +136,6 @@ export default class DesignShell extends Vue {
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
     this.Component.$once('onLYLMounted', () => {
-      debugger
       this.startListenItemDrag()
     })
 

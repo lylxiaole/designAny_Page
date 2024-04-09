@@ -25,7 +25,7 @@ import { paramType, param } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
 import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property, CompPosition_Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
-import { Event } from 'jquery'
+import { Event, type } from 'jquery'
 
 type propertyValidatorHandle = (newval: any) => boolean
 class propertyValidatorType {
@@ -47,6 +47,8 @@ export class Point {
 export default class EngineLayout extends Vue {
   public renderContainer: any = {}
   public isDesigning: boolean = false
+  public isNeedSave: boolean = false
+
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}
@@ -167,10 +169,6 @@ export default class EngineLayout extends Vue {
   created() {
     this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false)
     this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
-    // this.registerProperty(PropertyGroupName.normal, '宽度', new Number_Property(), 1624, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '高度', new Number_Property(), 786, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '左边位置', new Number_Property(-100000), 0, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '顶部位置', new Number_Property(-100000), 0, true, 'px')
     let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
     this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), initCompPosition, true, '')
     this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, 'px')
@@ -506,10 +504,10 @@ export default class EngineLayout extends Vue {
     }
     return res
   }
-  private loadChildrenData(childrendatas: SaveInfo[]) {
+  private async loadChildrenData(childrendatas: SaveInfo[]) {
     for (let index = 0; index < childrendatas.length; index++) {
       const o = childrendatas[index]
-      this.renderChildFromData(o)
+      await this.renderChildFromData(o)
     }
   }
   private watch_properties(newval: Property[]) {
@@ -520,6 +518,8 @@ export default class EngineLayout extends Vue {
       if (!filter_oldproperty) {
         //..新增了一个属性
         this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
+        this.isNeedSave = true
+
         this.$lylemit('onPropertyChanged', newproperty.id, newproperty, this)
       } else if (serialize(filter_oldproperty) != serialize(newproperty)) {
         //..修改了一个属性的内容
@@ -529,12 +529,14 @@ export default class EngineLayout extends Vue {
         /**替换旧的属性 */
         var index = this.properties_old.indexOf(filter_oldproperty)
         this.properties_old.splice(index, 1, newpropertyClone)
+        this.isNeedSave = true
+
         this.$lylemit('onPropertyChanged', newproperty.id, newpropertyClone, this)
       }
     }
   }
   // *************************protect方法****************************************************************************
-  protected renderChildFromData(data: SaveInfo) {}
+  protected async renderChildFromData(data: SaveInfo) {}
   protected loadCompleted() {
     this.$lylemit('onLYLMounted', this)
     this.properties_old = deepClone(this.properties)
@@ -617,12 +619,12 @@ export default class EngineLayout extends Vue {
   public async loadData(data: SaveInfo) {
     this.children = []
     if (data.id) {
-      this.loadingProperties(data.properties)
+      await this.loadingProperties(data.properties)
       this.Id = data.id
     }
 
     if (data.children) {
-      this.loadChildrenData(data.children)
+      await this.loadChildrenData(data.children)
     }
 
     this.loadCompleted()
@@ -650,7 +652,7 @@ export default class EngineLayout extends Vue {
   public async removeLayout(layout: EngineLayout) {
     try {
       $(layout.$el).remove()
-      layout.$destroy()
+      layout.destorymethod()
     } catch (error) {
       window.console.error(error)
     }
@@ -763,7 +765,7 @@ export default class EngineLayout extends Vue {
     find.parentLayout.removeChild(toparent)
   }
   /**通过已有数据加载 */
-  public loadingProperties(layout_properties: Property[]) {
+  public async loadingProperties(layout_properties: Property[]) {
     if (!layout_properties) {
       return
     }
