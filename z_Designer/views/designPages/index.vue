@@ -188,6 +188,8 @@ export default class index extends PageBase {
     let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
     await (vueComp as any).loadPageByData(pageId, res.designDetail)
     ;(vueComp as any).name = res.name
+    ;(vueComp as any).left = 0
+    ;(vueComp as any).top = 0
     this.openPage(res, vueComp as any)
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(virtualDom)

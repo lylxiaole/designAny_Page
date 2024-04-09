@@ -618,12 +618,12 @@ export default class EngineLayout extends Vue {
   // *************************对外公布方法****************************************************************************
   public async loadData(data: SaveInfo) {
     this.children = []
-    if (data.id) {
+    if (data && data.id) {
       await this.loadingProperties(data.properties)
       this.Id = data.id
     }
 
-    if (data.children) {
+    if (data && data.children) {
       await this.loadChildrenData(data.children)
     }
 

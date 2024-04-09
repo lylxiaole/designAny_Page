@@ -116,9 +116,6 @@ export default class quickActionBar extends Vue {
   @Emit('onSave')
   private onSave(pageId: string) {}
 
-  @Emit('onSaveAs')
-  private onSaveAs() {}
-
   @Emit('onLeadIn')
   private onLeadIn() {}
 

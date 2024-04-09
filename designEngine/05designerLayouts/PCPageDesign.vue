@@ -44,6 +44,8 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onPaste_Event = this.listenOnPaste
     this.designEvets.onMouseMove_Event = this.listenOnMousemove
     this.designEvets.onClick_Event = this.listenOnClick
+    this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
+    this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
   }
 
   protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
@@ -51,7 +53,7 @@ export default class PCPageDesign extends EnginePage {
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as DesignShell)
     let res = (vueComp as DesignShell).addComponent(compCon)
-    debugger
+
     // ;(vueComp as DesignShell).startListenItemDrag()
 
     $(this.$el).append(virtualDom)
@@ -63,6 +65,18 @@ export default class PCPageDesign extends EnginePage {
   private listenOnMousemove(e: MouseEvent) {
     this.mouseX = e.offsetX
     this.mouseY = e.offsetY
+  }
+
+  private listenOnChangedScale_Event(changedScaleSize: number): boolean {
+    this.scaleSize(changedScaleSize)
+
+    return false
+  }
+
+  private listenOnDragSelf_Event(xmove: number, ymove: number) {
+    this.left += xmove
+    this.top += ymove
+    this.$forceUpdate()
   }
   private async listenOnDrop(
     el: Element,
