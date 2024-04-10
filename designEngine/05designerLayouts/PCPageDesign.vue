@@ -48,14 +48,12 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
   }
 
-  protected async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
+  protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as DesignShell)
     let res = (vueComp as DesignShell).addComponent(compCon)
-
     // ;(vueComp as DesignShell).startListenItemDrag()
-
     $(this.$el).append(virtualDom)
     return res
   }
@@ -124,9 +122,6 @@ export default class PCPageDesign extends EnginePage {
 
     return false
   }
-
-  private currentDragLeft: any = null
-  private currentDragTop: any = null
 
   protected listenOnDragMove(
     xchanged: number,
@@ -208,9 +203,10 @@ export default class PCPageDesign extends EnginePage {
     if (!DesignEvents.copyComp) {
       return
     }
+
     // window.console.log('onPaste_Event')
     let compData = deepClone(await DesignEvents.copyComp.getSaveData())
-
+ 
     if (DesignEvents.isCut) {
       //剪切--删除原有组件
       let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
@@ -222,21 +218,13 @@ export default class PCPageDesign extends EnginePage {
       compData.id = getUuid()
     }
     let compclass = findSystemCompByCode(compData.meta.compCode)
-    //如果选中了一些容器类的子组件,就把当前组件复制到其中
-    let findchildren = this.findSelectedLayoutsRecursion(this.children)
-    let newcopyComp: EngineLayout = null
-    for (let index = 0; index < findchildren.length; index++) {
-      const element = findchildren[index]
-      if ((element as any).insertComponentLayout) {
-        newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData.meta, null, compData)
-        break
-      }
-    }
-
-    // 如果没选中容器类的子组件, 就把当前组件复制到当前页面
-    if (!newcopyComp) {
-      newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
-    }
+    
+    let newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData) 
+    let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
+    newcopyComp.left = (selfPosition.left + 5).toFixed(0) + 'px'
+    newcopyComp.top = (selfPosition.top + 5).toFixed(0) + 'px' 
+      this.chooseComps([newcopyComp])
+ 
     e.stopPropagation()
   }
   // ******************************************************
