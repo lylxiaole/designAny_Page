@@ -103,7 +103,8 @@ export class factory {
         evalStr.push('_runArea[' + index + '].ref')
       } else {
         let val = await newObj.ref
-        evalStr.push(val)
+        _runArea[index] = val
+        evalStr.push('_runArea[' + index + ']')
       }
       //最后一个元素
       if (index === objs.length - 2) {
@@ -111,7 +112,8 @@ export class factory {
         newObj = this.makeObject(lastObj.resourceCode)
         newObj.cloneFrom(lastObj)
         let val = await newObj.ref
-        evalStr.push(val)
+        _runArea[index] = val
+        evalStr.push('_runArea[' + index + ']')
       }
     }
 
