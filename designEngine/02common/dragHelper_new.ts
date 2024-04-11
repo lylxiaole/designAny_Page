@@ -75,17 +75,24 @@ export default class dragHelper {
     $(this._container).on('dragover', (e: any) => {
       //同时注册drop和dragover时, 调用e.preventDefault()才能让容器的drop事件得以触发
       e.preventDefault()
-      // console.log('++++++++++++++++++++++', e.originalEvent.layerX)
-
-      if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
-        dragHelper.currentDragX = e.originalEvent.pageX
-        dragHelper.currentDragY = e.originalEvent.pageY
+      if (dragHelper.dragClone != e.target) {
         return
       }
-      let xchanged = e.originalEvent.pageX - dragHelper.currentDragX
-      let ychanged = e.originalEvent.pageY - dragHelper.currentDragY
-      dragHelper.currentDragX = e.originalEvent.pageX
-      dragHelper.currentDragY = e.originalEvent.pageY
+
+      let offsetX = e.clientX
+      let offsetY = e.clientY
+      console.log('dragover:', offsetX)
+      if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
+        dragHelper.currentDragX = offsetX
+        dragHelper.currentDragY = offsetY
+        return
+      }
+
+      let xchanged = offsetX - dragHelper.currentDragX
+      let ychanged = offsetY - dragHelper.currentDragY
+      dragHelper.currentDragX = offsetX
+      dragHelper.currentDragY = offsetY
+
       if (!this.onDragMoveEventCallback) {
         return
       }
@@ -123,7 +130,7 @@ export default class dragHelper {
     $(this._container).off('dragleave')
   }
   public makeDomContainer() {
-    $(this._container).attr('tabindex', -1)
+    $(this._container).attr('tabindex', 1)
     $(this._container).addClass('container')
   }
   public removeContainer() {
@@ -152,6 +159,8 @@ export default class dragHelper {
       if (this.onDragEndEventCallback) {
         this.onDragEndEventCallback(dragItem)
       }
+      console.log('dragend', dragHelper.dragClone)
+      dragHelper.dragClone = null
       dragHelper.currentDragX = NaN
       dragHelper.currentDragY = NaN
     })
@@ -165,6 +174,7 @@ export default class dragHelper {
       // window.console.log('dragstart:', e)
 
       dragHelper.dragClone = e.delegateTarget
+      console.log('dragstart', dragHelper.dragClone)
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)
       }

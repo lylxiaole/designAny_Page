@@ -3,6 +3,7 @@
       'margin-left':Component==null?0:Component.margin_left+'px','margin-right':Component==null?0:Component.margin_right+'px','margin-top':Component==null?0:Component.margin_top+'px','margin-bottom':Component==null?0:Component.margin_bottom+'px',
       'padding-left':Component==null?0:Component.padding_left+'px','padding-right':Component==null?0:Component.padding_right+'px','padding-top':Component==null?0:Component.padding_top+'px','padding-bottom':Component==null?0:Component.padding_bottom+'px',
        'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':'block','tabindex':'1' }">
+
     <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':Component==null?'':Component.fontFamily }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
@@ -24,7 +25,7 @@
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
     <!-- *************************** -->
     <div v-show="Component" type="drag" style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" @click="onCompClick"
-      ref="dragmengb" class="dragmengb" :style="{zIndex:0 }"></div>
+      ref="dragmengb" class="dragmengb" :style="{zIndex:3 }"></div>
 
     <!-- <div ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"
       style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4">拖拽</div> -->
@@ -109,7 +110,6 @@ export default class DesignShell extends Vue {
   destorymethod() {
     render(null, this.renderContainer)
     $(this.$el).remove()
-
     for (const key in (this as any).prototype) {
       delete (this as any).prototype[key]
     }

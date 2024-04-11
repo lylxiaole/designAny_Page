@@ -105,7 +105,6 @@ export default class PropertyGrid extends Vue {
       return
     }
 
-    window.console.log('propertyDataCache changed:')
     for (let index = 0; index < newproperties.length; index++) {
       const nproperty = newproperties[index]
       this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)

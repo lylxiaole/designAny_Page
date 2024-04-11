@@ -459,7 +459,7 @@ export default class DesignEvents {
     let newcopyComp: EngineLayout = null
     for (let index = 0; index < findchildren.length; index++) {
       const element = findchildren[index]
-      if (element.canDrop == true && (element as any).insertComponentLayout) {
+      if ((element as any).insertComponentLayout) {
         newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData.meta, null, compData)
         break
       }

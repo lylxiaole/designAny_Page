@@ -49,6 +49,16 @@ a {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
+  outline: 1px solid #ddd;
+}
+.container:focus {
+  outline: 1px solid #ddd;
+}
+.container:hover {
+  outline: 1px solid #ddd;
+}
+.container:focus-visible {
+  outline: 1px solid #ddd;
 }
 
 .crumbs {

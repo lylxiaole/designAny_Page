@@ -58,7 +58,7 @@ export default class PCPageDesign extends EnginePage {
     })
     resComp.$once('onLYLDestroyed', () => {
       let findIndex = this.allShells.findIndex((o) => o == vueComp)
-      this.children.splice(findIndex, 1)
+      this.allShells.splice(findIndex, 1)
       ;(vueComp as DesignShell).destorymethod()
     })
 
@@ -155,20 +155,18 @@ export default class PCPageDesign extends EnginePage {
     }
     // console.log('-------------------------', left, $(this.$el).offset().left)
     let parentPageCurrentScaleSize = (dragComp.topLayout as any as EnginePage).currentScaleSize
-    // 在容器内拖拽组件位置
+     
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      let selfPosition = $(el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
-      dragComp.left = (selfPosition.left + xchanged).toFixed(0) + 'px'
-      dragComp.top = (selfPosition.top + ychanged).toFixed(0) + 'px'
-
+      // 在容器内拖拽组件位置
+       
+      // let selfPosition = $(el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
+      dragComp.left = (mouseleft/parentPageCurrentScaleSize).toFixed(0) + 'px'
+      dragComp.top = (mousetop/parentPageCurrentScaleSize).toFixed(0) + 'px' 
       return false
     }
-    // 在容器内拖拽组件大小
     else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
-      xchanged = xchanged / parentPageCurrentScaleSize
-      window.console.log(' DragItemTypeEnum.drag_component_size 1:', compInfo.position)
-      ychanged = ychanged / parentPageCurrentScaleSize
-      this.changeComponentSize(xchanged, ychanged, compInfo.compId, compInfo.position)
+          // 在容器内拖拽组件大小  
+      this.changeComponentSize(xchanged/parentPageCurrentScaleSize, ychanged/parentPageCurrentScaleSize, compInfo.compId, compInfo.position)
       // window.console.log(compInfo.position)
       return false
     }
@@ -179,9 +177,7 @@ export default class PCPageDesign extends EnginePage {
     this.clearVerRule()
   }
   private listenOnDeleteKey(e: Event) {
-    e.preventDefault()
-    // window.console.log('按了删除键', this.name)
-
+    e.preventDefault() 
     if (this.selectedChildren.length > 0) {
       e.stopPropagation()
     }
@@ -242,20 +238,17 @@ export default class PCPageDesign extends EnginePage {
   }
   // ******************************************************
   public closeDesign() {
-    for (let index = 0; index < this.allShells.length; index++) {
-      const element = this.allShells[index]
-      element.destorymethod()
-    }
+    
     this.destorymethod()
   }
 }
 </script>
  
 <style lang="less" scoped>
-/deep/ .container {
-  padding: 0px;
-  background: transparent;
-  border: none;
-  border-radius: 0px;
-}
+// .container {
+//   padding: 0px;
+//   background: transparent;
+//   border: none;
+//   border-radius: 0px;
+// }
 </style>
