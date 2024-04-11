@@ -154,19 +154,17 @@ export default class PCPageDesign extends EnginePage {
       return false
     }
     // console.log('-------------------------', left, $(this.$el).offset().left)
-    let parentPageCurrentScaleSize = (dragComp.topLayout as any as EnginePage).currentScaleSize
-     
+    let scaleSize = (dragComp.topLayout as EnginePage).currentScaleSize 
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       // 在容器内拖拽组件位置
-       
-      // let selfPosition = $(el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
-      dragComp.left = (mouseleft/parentPageCurrentScaleSize).toFixed(0) + 'px'
-      dragComp.top = (mousetop/parentPageCurrentScaleSize).toFixed(0) + 'px' 
+      let selfPosition = $(el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
+      dragComp.left = (selfPosition.left + xchanged).toFixed(0) + 'px'
+      dragComp.top = (selfPosition.top + ychanged).toFixed(0) + 'px' 
       return false
     }
     else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
           // 在容器内拖拽组件大小  
-      this.changeComponentSize(xchanged/parentPageCurrentScaleSize, ychanged/parentPageCurrentScaleSize, compInfo.compId, compInfo.position)
+      this.changeComponentSize(xchanged/scaleSize, ychanged/scaleSize, compInfo.compId, compInfo.position)
       // window.console.log(compInfo.position)
       return false
     }
