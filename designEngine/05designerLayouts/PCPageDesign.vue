@@ -52,10 +52,19 @@ export default class PCPageDesign extends EnginePage {
     let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as DesignShell)
-    let res = (vueComp as DesignShell).addComponent(compCon)
+    let resComp = (vueComp as DesignShell).addComponent(compCon)
+    resComp.$once('onLYLMounted', () => {
+      ;(vueComp as DesignShell).startListenItemDrag()
+    })
+    resComp.$once('onLYLDestroyed', () => {
+      let findIndex = this.allShells.findIndex((o) => o == vueComp)
+      this.children.splice(findIndex, 1)
+      ;(vueComp as DesignShell).destorymethod()
+    })
+
     // ;(vueComp as DesignShell).startListenItemDrag()
     $(this.$el).append(virtualDom)
-    return res
+    return resComp
   }
   /**********************************监听设计事件 ******************************/
   private mouseX: number = 0
@@ -172,14 +181,16 @@ export default class PCPageDesign extends EnginePage {
   private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     // window.console.log('按了删除键', this.name)
+
     if (this.selectedChildren.length > 0) {
       e.stopPropagation()
     }
-    for (let index = 0; index < this.selectedChildren.length; index++) {
-      const comp = this.selectedChildren[index]
-      if (this.deleteChildComponents(comp.Id) == true) {
-        this.removeChildRecursion(comp.Id)
-      }
+
+    let selectedChildren = this.selectedChildren
+    this.chooseComps([])
+    for (let index = 0; index < selectedChildren.length; index++) {
+      const comp = selectedChildren[index]
+      this.removeChildRecursion(comp.Id)
     }
   }
   private listenOnCut(e) {
@@ -206,25 +217,23 @@ export default class PCPageDesign extends EnginePage {
 
     // window.console.log('onPaste_Event')
     let compData = deepClone(await DesignEvents.copyComp.getSaveData())
- 
+
     if (DesignEvents.isCut) {
       //剪切--删除原有组件
       let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
-      if (parentLayout.deleteChildComponents(DesignEvents.copyComp.Id) == true) {
-        parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
-      }
+      parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
     } else {
       //复制操作需要给组件新Id
       compData.id = getUuid()
     }
     let compclass = findSystemCompByCode(compData.meta.compCode)
-    
-    let newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData) 
+
+    let newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
     let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
     newcopyComp.left = (selfPosition.left + 5).toFixed(0) + 'px'
-    newcopyComp.top = (selfPosition.top + 5).toFixed(0) + 'px' 
-      this.chooseComps([newcopyComp])
- 
+    newcopyComp.top = (selfPosition.top + 5).toFixed(0) + 'px'
+    this.chooseComps([newcopyComp])
+
     e.stopPropagation()
   }
   // ******************************************************

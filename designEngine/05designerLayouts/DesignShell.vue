@@ -135,14 +135,11 @@ export default class DesignShell extends Vue {
     comp.component.proxy.isDesigning = true
     $(this.Component.$el).css('width', '100%')
     $(this.Component.$el).css('height', '100%')
-    this.Component.$once('onLYLMounted', () => {
-      this.startListenItemDrag()
-    })
 
     return this.Component
   }
 
-  private startListenItemDrag() {
+  public startListenItemDrag() {
     let dragdata: any = { type: DragItemTypeEnum.dragmove_component_inpage }
     dragdata.dragData = { compId: this.Component.Id }
     //

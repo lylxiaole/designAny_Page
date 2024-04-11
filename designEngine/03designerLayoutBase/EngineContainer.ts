@@ -198,8 +198,4 @@ export default class EngineContainer extends EngineLayout {
   protected getCompTemplateData(tempId: string): any {
     return null
   }
-  //删除子级组件
-  public deleteChildComponents(compId: string): boolean {
-    return false
-  }
 }

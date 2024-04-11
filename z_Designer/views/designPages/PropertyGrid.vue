@@ -237,6 +237,7 @@ export default class PropertyGrid extends Vue {
 
     for (var i = 0; i < newlayouts_extra.length; i++) {
       let layout = newlayouts_extra[0]
+
       var findproperty = layout.findProperties(propertyGroupName, propertyName)[0]
       var isok = layout.validatorPropertyValue(findproperty.id, newval)
       if (isok == false) {

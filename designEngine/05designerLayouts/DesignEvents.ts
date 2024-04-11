@@ -448,9 +448,7 @@ export default class DesignEvents {
     if (DesignEvents.isCut) {
       //剪切--删除原有组件
       let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
-      if (parentLayout.deleteChildComponents(DesignEvents.copyComp.Id) == true) {
-        parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
-      }
+      parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
     } else {
       //复制操作需要给组件新Id
       compData.id = getUuid()
@@ -482,9 +480,7 @@ export default class DesignEvents {
     }
     for (let index = 0; index < this._vueComp.selectedChildren.length; index++) {
       const comp = this._vueComp.selectedChildren[index]
-      if (this._vueComp.deleteChildComponents(comp.Id) == true) {
-        this._vueComp.removeChildRecursion(comp.Id)
-      }
+      this._vueComp.removeChildRecursion(comp.Id)
     }
   }
   onPositionLeft_Event: (e: Event) => void

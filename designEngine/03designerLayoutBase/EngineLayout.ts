@@ -568,7 +568,12 @@ export default class EngineLayout extends Vue {
     if (index < 0) {
       return
     }
-    this.removeLayout(child)
+    try {
+      $(child.$el).remove()
+      child.destorymethod()
+    } catch (error) {
+      window.console.error(error)
+    }
     this.children.splice(index, 1)
     this.$lylemit('onChildrenCountChange')
   }
@@ -649,14 +654,7 @@ export default class EngineLayout extends Vue {
     saveinfo.children = await this.getChildrenData()
     return saveinfo
   }
-  public async removeLayout(layout: EngineLayout) {
-    try {
-      $(layout.$el).remove()
-      layout.destorymethod()
-    } catch (error) {
-      window.console.error(error)
-    }
-  }
+
   public findSelectedLayoutsRecursion(comps: EngineLayout[]): EngineLayout[] {
     var res: EngineLayout[] = []
     for (let index = 0; index < comps.length; index++) {
@@ -751,18 +749,10 @@ export default class EngineLayout extends Vue {
     //TODO 图形化编程工具会在此处调用注册的方法
   }
   /**递归删除子组件 */
-  public async removeChildRecursion(childId: string) {
+  public removeChildRecursion(childId: string) {
     var find = this.findLayoutRecursion(childId, this.children)
-    let toparent: any = null
 
-    for (let index = 0; index < find.parentLayout.children.length; index++) {
-      const x = find.parentLayout.children[index]
-      if (x.Id === childId) {
-        toparent = x
-        break
-      }
-    }
-    find.parentLayout.removeChild(toparent)
+    find.parentLayout.removeChild(find)
   }
   /**通过已有数据加载 */
   public async loadingProperties(layout_properties: Property[]) {
