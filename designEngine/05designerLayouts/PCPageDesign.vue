@@ -102,6 +102,7 @@ export default class PCPageDesign extends EnginePage {
       return true
     }
     // window.console.log('listenOnDrop:', dragdata)
+
     screenLeft = dragHelper.currentDragX
     screenTop = dragHelper.currentDragY
     let dropcomp: EngineLayout = null
@@ -154,17 +155,16 @@ export default class PCPageDesign extends EnginePage {
       return false
     }
     // console.log('-------------------------', left, $(this.$el).offset().left)
-    let scaleSize = (dragComp.topLayout as EnginePage).currentScaleSize 
+    let scaleSize = (dragComp.topLayout as EnginePage).currentScaleSize
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       // 在容器内拖拽组件位置
       let selfPosition = $(el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
-      dragComp.left = (selfPosition.left + xchanged).toFixed(0) + 'px'
-      dragComp.top = (selfPosition.top + ychanged).toFixed(0) + 'px' 
+      dragComp.left = (mouseleft / scaleSize).toFixed(0) + 'px'
+      dragComp.top = (mousetop / scaleSize).toFixed(0) + 'px'
       return false
-    }
-    else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
-          // 在容器内拖拽组件大小  
-      this.changeComponentSize(xchanged/scaleSize, ychanged/scaleSize, compInfo.compId, compInfo.position)
+    } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
+      // 在容器内拖拽组件大小
+      this.changeComponentSize(xchanged / scaleSize, ychanged / scaleSize, compInfo.compId, compInfo.position)
       // window.console.log(compInfo.position)
       return false
     }
@@ -175,7 +175,7 @@ export default class PCPageDesign extends EnginePage {
     this.clearVerRule()
   }
   private listenOnDeleteKey(e: Event) {
-    e.preventDefault() 
+    e.preventDefault()
     if (this.selectedChildren.length > 0) {
       e.stopPropagation()
     }
@@ -236,7 +236,6 @@ export default class PCPageDesign extends EnginePage {
   }
   // ******************************************************
   public closeDesign() {
-    
     this.destorymethod()
   }
 }

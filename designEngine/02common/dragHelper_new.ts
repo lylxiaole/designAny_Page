@@ -9,7 +9,7 @@ export enum dragEnums {
 }
 
 type onDragEventType = (el: Element, sourceContainer: Element) => void
-type onDropEventType = (el: Element, targetContainer: Element) => Promise<boolean>
+type onDropEventType = (el: Element, targetContainer: Element, x: number, y: number) => Promise<boolean>
 type onDragOverEventType = (el: Element, targetContainer: Element) => boolean
 type onShadowEventType = (el: Element, targetContainer: Element) => void
 type onClonedEventType = (clone: Element) => void
@@ -44,13 +44,6 @@ export default class dragHelper {
     this._container = container
   }
 
-  public dragEnd() {
-    // dragulaExtand.drag_third.end()
-  }
-  public dragCancel() {
-    //不加true会触发drop
-    // dragulaExtand.drag_third.cancel(true)
-  }
   /*********container操作********************************************************* */
   public IsCanDrop(): boolean {
     var candrop = $(this._container).attr(dragEnums.canDrop)
@@ -66,33 +59,33 @@ export default class dragHelper {
       if (!this.onDropEventCallback) {
         return
       }
+
       window.console.log('drop:', e)
-      let res = await this.onDropEventCallback(dragHelper.dragClone, this._container)
+      let res = await this.onDropEventCallback(dragHelper.dragClone, this._container, dragHelper.currentDragX, dragHelper.currentDragY)
       if (res === false) {
         e.stopPropagation()
       }
+
+      dragHelper.currentDragX = NaN
+      dragHelper.currentDragY = NaN
+      dragHelper.dragClone = null
     })
     $(this._container).on('dragover', (e: any) => {
       //同时注册drop和dragover时, 调用e.preventDefault()才能让容器的drop事件得以触发
       e.preventDefault()
-      if (dragHelper.dragClone != e.target) {
-        return
-      }
 
       let offsetX = e.clientX
       let offsetY = e.clientY
-      console.log('dragover:', offsetX)
       if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
         dragHelper.currentDragX = offsetX
         dragHelper.currentDragY = offsetY
         return
       }
-
       let xchanged = offsetX - dragHelper.currentDragX
       let ychanged = offsetY - dragHelper.currentDragY
       dragHelper.currentDragX = offsetX
       dragHelper.currentDragY = offsetY
-
+      console.log('dragover dragHelper.currentDragX :', e.target, offsetX)
       if (!this.onDragMoveEventCallback) {
         return
       }
@@ -159,10 +152,11 @@ export default class dragHelper {
       if (this.onDragEndEventCallback) {
         this.onDragEndEventCallback(dragItem)
       }
+
       console.log('dragend', dragHelper.dragClone)
-      dragHelper.dragClone = null
       dragHelper.currentDragX = NaN
       dragHelper.currentDragY = NaN
+      dragHelper.dragClone = null
     })
     $(dragItem).on('dragstart', (e: any) => {
       // var data = e.originalEvent.dataTransfer

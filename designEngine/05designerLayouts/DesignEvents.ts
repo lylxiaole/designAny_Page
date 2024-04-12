@@ -27,8 +27,7 @@ export class DragItemData<T> {
 
 class optionsClass {
   public isCaptureEvent: boolean = false
-  public startDragMovePoint_left: number = NaN
-  public startDragMovePoint_top: number = NaN
+
   public isMouseDown: boolean = false
   public boxSelectBorder: any = null
   public mousedownPointX: number = null
@@ -166,7 +165,7 @@ export default class DesignEvents {
     this._dragHelper.makeDragItemInfo(el, currentDragData)
     return true
   }
-  private _onDrop = async (el: Element, targetContainer: Element): Promise<boolean> => {
+  private _onDrop = async (el: Element, targetContainer: Element, x: number, y: number): Promise<boolean> => {
     // window.console.log('_onDrop:', this)
     if (!this.canDrop || !this.onDrop_Event) {
       return true
@@ -174,7 +173,7 @@ export default class DesignEvents {
 
     // window.console.log('drop')
     var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
-    return await this.onDrop_Event(el, targetContainer, this.eventsOptions.startDragMovePoint_left, this.eventsOptions.startDragMovePoint_top, dragdata)
+    return await this.onDrop_Event(el, targetContainer, x, y, dragdata)
 
     // this._dragHelper.dragCancel()
     // return true
@@ -189,8 +188,7 @@ export default class DesignEvents {
     }
     var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
     let iscontinue = this.onDragMove_Event(xchanged, ychanged, currentDragLeft, currentDragTop, el, dragdata)
-    // this.eventsOptions.startDragMovePoint_left = currentDragLeft
-    // this.eventsOptions.startDragMovePoint_top = currentDragTop
+
     return iscontinue
   }
   private _onDragEnd = (el: Element) => {
@@ -416,8 +414,6 @@ export default class DesignEvents {
     }, 500)
   }
   private clearCachePoint() {
-    this.eventsOptions.startDragMovePoint_left = NaN
-    this.eventsOptions.startDragMovePoint_top = NaN
     // window.console.log('clearCachePoint:', this.eventsOptions)
   }
   /**********************对外公布的事件 **********************************/
