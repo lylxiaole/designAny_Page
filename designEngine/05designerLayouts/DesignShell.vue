@@ -24,7 +24,7 @@
     <div v-show="isSelectedArea===true" class="dragbutton" ref="emove"
       style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
     <!-- *************************** -->
-    <div v-show="Component" type="drag" style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1" @click="onCompClick"
+    <div v-show="Component" type="drag" style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1;z-index=3" @click="onCompClick"
       ref="dragmengb" class="dragmengb" :style="{zIndex:3 }"></div>
 
     <!-- <div ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"

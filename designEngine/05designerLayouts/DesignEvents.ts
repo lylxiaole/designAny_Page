@@ -40,11 +40,20 @@ export default class DesignEvents {
   protected eventsOptions: optionsClass
   private _vueComp: EngineContainer
   public static isDraging: boolean = false
-  public currentScaleSize: number = 1
+
+  private currentScaleSize: number = 1
+
+  public setCurrentScaleSize(sizechange: number) {
+    var newsize = this.currentScaleSize + sizechange
+    if (newsize < 0.01) {
+      return
+    }
+
+    this._dragHelper.currentScaleSize = newsize
+    this.currentScaleSize = newsize
+  }
   public static copyComp: EngineLayout
   public static isCut: boolean = false
-  private mouseX: number = 0
-  private mouseY: number = 0
 
   //是否正在设计
   set canDrop(can: boolean) {
@@ -352,7 +361,7 @@ export default class DesignEvents {
     } else if (e.which === 3 || e.which === 1) {
       //which 0: 无,1: 左键,2: 中间滚轮（如果有的话）,3: 右键
       if (e.which == 1 && this.onMouseDragMove_Event) {
-        // window.console.log('**********开始左键拖拽:', this.currentScaleSize)
+        // window.console.log('**********开始左键拖拽:' )
         this.onMouseDragMove_Event(e, e.movementX, e.movementY)
       } else if (e.which == 3 && this.onDragSelf_Event) {
         this.onDragSelf_Event(e.movementX, e.movementY)
@@ -497,10 +506,7 @@ export default class DesignEvents {
   onDoubleClick_Event: (e: Event, target: any) => void
   onDragSelf_Event: (xmove: number, ymove: number) => void
   onMouseDragMove_Event: (e: Event, xmove: number, ymove: number) => void
-  onMouseMove_Event(e: MouseEvent) {
-    this.mouseX = e.offsetX
-    this.mouseY = e.offsetY
-  }
+  onMouseMove_Event(e: MouseEvent) {}
   onMoudeDown_Event: (e: Event) => void
   onMoudeUp_Event: (e: Event) => void
   onBoxSelect_Event: (e: MouseEvent) => void

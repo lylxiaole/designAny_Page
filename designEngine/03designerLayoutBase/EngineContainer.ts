@@ -31,48 +31,98 @@ export default class EngineContainer extends EngineLayout {
 
   mounted() {}
 
-  /**********************************底层方法 ******************************/
+  /**********************************底层拖拽改变尺寸方法 ******************************/
+  /**对外公布方法 尺寸向上变化*/
+  public sizeChange_Up(comp: EngineLayout, changeVal: number) {
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(comp.$el).height() - changeVal >= 20) {
+      comp.top = ($(comp.$el).offset().top + changeVal).toFixed(0) + 'px'
+      comp.height = ($(comp.$el).height() - changeVal).toFixed(0) + 'px'
+    }
+  }
+  /**对外公布方法 尺寸向下变化*/
+  public sizeChange_Down(comp: EngineLayout, changeVal: number) {
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(comp.$el).offsetParent().height() + changeVal >= 20) {
+      comp.height = ($(comp.$el).offsetParent().height() + changeVal).toFixed(0) + 'px'
+    }
+  }
+  /**对外公布方法 尺寸向左变化*/
+  public sizeChange_Left(comp: EngineLayout, changeVal: number) {
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(comp.$el).offsetParent().width() - changeVal >= 20) {
+      comp.left = ($(comp.$el).offsetParent().position().left + changeVal).toFixed(0) + 'px'
+      comp.width = ($(comp.$el).offsetParent().width() - changeVal).toFixed(0) + 'px'
+    }
+  }
+  /**对外公布方法 尺寸向右变化*/
+  public sizeChange_Right(comp: EngineLayout, changeVal: number) {
+    //offsetParent是因为DesignShell中的蒙版
+    if ($(comp.$el).offsetParent().width() + changeVal >= 20) {
+      comp.width = ($(comp.$el).offsetParent().width() + changeVal).toFixed(0) + 'px'
+    }
+  }
+  /**对外公布方法 尺寸左上变化*/
+  public sizeChange_Up_Left(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Up(comp, changeVal_ver)
+    this.sizeChange_Left(comp, changeVal_hor)
+  }
+  /**对外公布方法 尺寸右上变化*/
+  public sizeChange_Up_Right(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Up(comp, changeVal_ver)
+    this.sizeChange_Right(comp, changeVal_hor)
+  }
+  /**对外公布方法 尺寸左下变化*/
+  public sizeChange_Down_Left(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Down(comp, changeVal_ver)
+    this.sizeChange_Left(comp, changeVal_hor)
+  }
+  /**对外公布方法 尺寸右下变化*/
+  public sizeChange_Down_Right(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
+    this.sizeChange_Down(comp, changeVal_ver)
+    this.sizeChange_Right(comp, changeVal_hor)
+  }
   protected changeComponentSize(horchanged: number, verchanged: number, compId: string, position: string) {
     let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
       case 'you_xia':
         comps.filter((comp) => {
-          comp.sizeChange_Down_Right(verchanged, horchanged)
+          this.sizeChange_Down_Right(comp, verchanged, horchanged)
         })
         break
       case 'zuo_xia':
         comps.filter((comp) => {
-          comp.sizeChange_Down_Left(verchanged, horchanged)
+          this.sizeChange_Down_Left(comp, verchanged, horchanged)
         })
         break
       case 'you_shang':
         comps.filter((comp) => {
-          comp.sizeChange_Up_Right(verchanged, horchanged)
+          this.sizeChange_Up_Right(comp, verchanged, horchanged)
         })
         break
       case 'zuo_shang':
         comps.filter((comp) => {
-          comp.sizeChange_Up_Left(verchanged, horchanged)
+          this.sizeChange_Up_Left(comp, verchanged, horchanged)
         })
         break
       case 'shang':
         comps.filter((comp) => {
-          comp.sizeChange_Up(verchanged)
+          this.sizeChange_Up(comp, verchanged)
         })
         break
       case 'xia':
         comps.filter((comp) => {
-          comp.sizeChange_Down(verchanged)
+          this.sizeChange_Down(comp, verchanged)
         })
         break
       case 'zuo':
         comps.filter((comp) => {
-          comp.sizeChange_Left(horchanged)
+          this.sizeChange_Left(comp, horchanged)
         })
         break
       case 'you':
         comps.filter((comp) => {
-          comp.sizeChange_Right(horchanged)
+          this.sizeChange_Right(comp, horchanged)
         })
         break
       default:

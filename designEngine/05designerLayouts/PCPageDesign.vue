@@ -67,16 +67,12 @@ export default class PCPageDesign extends EnginePage {
     return resComp
   }
   /**********************************监听设计事件 ******************************/
-  private mouseX: number = 0
-  private mouseY: number = 0
-  private listenOnMousemove(e: MouseEvent) {
-    this.mouseX = e.offsetX
-    this.mouseY = e.offsetY
-  }
 
-  private listenOnChangedScale_Event(changedScaleSize: number): boolean {
-    this.scaleSize(changedScaleSize)
+  private listenOnMousemove(e: MouseEvent) {}
 
+  private listenOnChangedScale_Event(sizechange: number): boolean {
+    this.scaleSize(sizechange)
+    this.designEvets.setCurrentScaleSize(sizechange)
     return false
   }
 
@@ -103,8 +99,6 @@ export default class PCPageDesign extends EnginePage {
     }
     // window.console.log('listenOnDrop:', dragdata)
 
-    screenLeft = dragHelper.currentDragX
-    screenTop = dragHelper.currentDragY
     let dropcomp: EngineLayout = null
 
     switch (dragdata.type) {
@@ -126,10 +120,9 @@ export default class PCPageDesign extends EnginePage {
         break
     }
     if (dropcomp) {
-      dropcomp.left = (screenLeft - $(this.$el).offset().left) / this.currentScaleSize + 'px'
-      dropcomp.top = (screenTop - $(this.$el).offset().top) / this.currentScaleSize + 'px'
+      dropcomp.left = screenLeft + 'px'
+      dropcomp.top = screenTop + 'px'
     }
-
     return false
   }
 
@@ -146,6 +139,7 @@ export default class PCPageDesign extends EnginePage {
       return true
     }
     let compInfo = dragdata.dragData as any
+
     if (!compInfo) {
       return true
     }
@@ -155,15 +149,14 @@ export default class PCPageDesign extends EnginePage {
       return false
     }
     // console.log('-------------------------', left, $(this.$el).offset().left)
-    let scaleSize = (dragComp.topLayout as EnginePage).currentScaleSize
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       // 在容器内拖拽组件位置
-      dragComp.left = (mouseleft / scaleSize).toFixed(0) + 'px'
-      dragComp.top = (mousetop / scaleSize).toFixed(0) + 'px'
+      dragComp.left = mouseleft.toFixed(0) + 'px'
+      dragComp.top = mousetop.toFixed(0) + 'px'
       return false
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
       // 在容器内拖拽组件大小
-      this.changeComponentSize(xchanged / scaleSize, ychanged / scaleSize, compInfo.compId, compInfo.position)
+      this.changeComponentSize(xchanged, ychanged, compInfo.compId, compInfo.position)
       // window.console.log(compInfo.position)
       return false
     }

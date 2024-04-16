@@ -840,63 +840,7 @@ export default class EngineLayout extends Vue {
     findproperty.value = convert_value
     return true
   }
-  /**对外公布方法 尺寸向上变化*/
-  public sizeChange_Up(changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(this.$el).offsetParent().height() - changeVal >= 20) {
-      // this.top += changeVal
-      // this.height -= changeVal
 
-      this.top = ($(this.$el).offsetParent().position().top + changeVal).toFixed(0) + 'px'
-      this.height = ($(this.$el).offsetParent().height() - changeVal).toFixed(0) + 'px'
-    }
-  }
-  /**对外公布方法 尺寸向下变化*/
-  public sizeChange_Down(changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(this.$el).offsetParent().height() + changeVal >= 20) {
-      this.height = ($(this.$el).offsetParent().height() + changeVal).toFixed(0) + 'px'
-    }
-  }
-  /**对外公布方法 尺寸向左变化*/
-  public sizeChange_Left(changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(this.$el).offsetParent().width() - changeVal >= 20) {
-      // this.left += changeVal
-      // this.width -= changeVal
-
-      this.left = ($(this.$el).offsetParent().position().left + changeVal).toFixed(0) + 'px'
-      this.width = ($(this.$el).offsetParent().width() - changeVal).toFixed(0) + 'px'
-    }
-  }
-  /**对外公布方法 尺寸向右变化*/
-  public sizeChange_Right(changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(this.$el).offsetParent().width() + changeVal >= 20) {
-      // this.width += changeVal
-      this.width = ($(this.$el).offsetParent().width() + changeVal).toFixed(0) + 'px'
-    }
-  }
-  /**对外公布方法 尺寸左上变化*/
-  public sizeChange_Up_Left(changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Up(changeVal_ver)
-    this.sizeChange_Left(changeVal_hor)
-  }
-  /**对外公布方法 尺寸右上变化*/
-  public sizeChange_Up_Right(changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Up(changeVal_ver)
-    this.sizeChange_Right(changeVal_hor)
-  }
-  /**对外公布方法 尺寸左下变化*/
-  public sizeChange_Down_Left(changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Down(changeVal_ver)
-    this.sizeChange_Left(changeVal_hor)
-  }
-  /**对外公布方法 尺寸右下变化*/
-  public sizeChange_Down_Right(changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Down(changeVal_ver)
-    this.sizeChange_Right(changeVal_hor)
-  }
   // *************************对外公布事件****************************************************************************
   @Emit('onPropertyChanged')
   protected onPropertyChanged(propertyId: string, property: Property, layout: EngineLayout): void {}

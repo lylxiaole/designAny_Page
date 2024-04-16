@@ -26,9 +26,10 @@ export default class dragHelper {
   private onDragMoveEventCallback: onDragMoveEventType
   private onDragOutEventCallback: onDragOutEventType
   private onDragEnterEventCallback: onDragEnterEventType
-
+  public currentScaleSize: number = 1
+  public static dragStartX: number = NaN
+  public static dragStartY: number = NaN
   public static dragClone: Element
-
   public static currentDragX: number = NaN
   public static currentDragY: number = NaN
 
@@ -42,6 +43,7 @@ export default class dragHelper {
   private _container: Element
   constructor(container: Element) {
     this._container = container
+    this.currentScaleSize = 1
   }
 
   /*********container操作********************************************************* */
@@ -74,23 +76,27 @@ export default class dragHelper {
       //同时注册drop和dragover时, 调用e.preventDefault()才能让容器的drop事件得以触发
       e.preventDefault()
 
-      let ooo = $(this._container).offset()
-      let offsetX = e.clientX - ooo.left
-      let offsetY = e.clientY - ooo.top
+      let containeroffset = $(this._container).offset()
+      let scalesize = this.currentScaleSize
+
+      let offsetX = (e.clientX - containeroffset.left) / scalesize - dragHelper.dragStartX
+      let offsetY = (e.clientY - containeroffset.top) / scalesize - dragHelper.dragStartY
 
       if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
         dragHelper.currentDragX = offsetX
         dragHelper.currentDragY = offsetY
-        return
       }
+
       let xchanged = offsetX - dragHelper.currentDragX
       let ychanged = offsetY - dragHelper.currentDragY
+
       dragHelper.currentDragX = offsetX
       dragHelper.currentDragY = offsetY
-      console.log('dragover dragHelper.currentDragX :', e.target, offsetX)
+
       if (!this.onDragMoveEventCallback) {
         return
       }
+
       // window.console.log('dragover:', e)
       let res = this.onDragMoveEventCallback(dragHelper.dragClone, this._container, xchanged, ychanged, dragHelper.currentDragX, dragHelper.currentDragY)
       if (res === false) {
@@ -168,8 +174,13 @@ export default class dragHelper {
       // e.originalEvent.dataTransfer.effectAllowed = 'all'
       // e.originalEvent.dataTransfer.dropEffect = 'copy'
       // window.console.log('dragstart:', e)
-
+      e.stopPropagation()
       dragHelper.dragClone = e.delegateTarget
+
+      let scalesize = this.currentScaleSize
+
+      dragHelper.dragStartX = e.offsetX * scalesize
+      dragHelper.dragStartY = e.offsetY * scalesize
       console.log('dragstart', dragHelper.dragClone)
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)
