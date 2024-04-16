@@ -74,8 +74,10 @@ export default class dragHelper {
       //同时注册drop和dragover时, 调用e.preventDefault()才能让容器的drop事件得以触发
       e.preventDefault()
 
-      let offsetX = e.clientX
-      let offsetY = e.clientY
+      let ooo = $(this._container).offset()
+      let offsetX = e.clientX - ooo.left
+      let offsetY = e.clientY - ooo.top
+
       if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
         dragHelper.currentDragX = offsetX
         dragHelper.currentDragY = offsetY

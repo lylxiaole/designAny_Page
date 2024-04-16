@@ -158,7 +158,6 @@ export default class PCPageDesign extends EnginePage {
     let scaleSize = (dragComp.topLayout as EnginePage).currentScaleSize
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
       // 在容器内拖拽组件位置
-      let selfPosition = $(el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
       dragComp.left = (mouseleft / scaleSize).toFixed(0) + 'px'
       dragComp.top = (mousetop / scaleSize).toFixed(0) + 'px'
       return false
