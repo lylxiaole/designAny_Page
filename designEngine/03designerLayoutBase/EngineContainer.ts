@@ -36,6 +36,7 @@ export default class EngineContainer extends EngineLayout {
   public sizeChange_Up(comp: EngineLayout, changeVal: number) {
     //offsetParent是因为DesignShell中的蒙版
     if ($(comp.$el).height() - changeVal >= 20) {
+      debugger
       comp.top = ($(comp.$el).offset().top + changeVal).toFixed(0) + 'px'
       comp.height = ($(comp.$el).height() - changeVal).toFixed(0) + 'px'
     }

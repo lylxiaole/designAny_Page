@@ -155,6 +155,9 @@ export default class PCPageDesign extends EnginePage {
       dragComp.top = mousetop.toFixed(0) + 'px'
       return false
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
+      let x = dragHelper.dragClone
+      debugger
+
       // 在容器内拖拽组件大小
       this.changeComponentSize(xchanged, ychanged, compInfo.compId, compInfo.position)
       // window.console.log(compInfo.position)
