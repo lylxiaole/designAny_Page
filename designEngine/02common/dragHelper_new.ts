@@ -62,8 +62,12 @@ export default class dragHelper {
         return
       }
 
-      window.console.log('drop:', e)
-      let res = await this.onDropEventCallback(dragHelper.dragClone, this._container, dragHelper.currentDragX, dragHelper.currentDragY)
+      let containeroffset = $(this._container).offset()
+      let scalesize = this.currentScaleSize
+      let offsetX = (e.clientX - containeroffset.left) / scalesize - dragHelper.dragStartX
+      let offsetY = (e.clientY - containeroffset.top) / scalesize - dragHelper.dragStartY
+
+      let res = await this.onDropEventCallback(dragHelper.dragClone, this._container, offsetX, offsetY)
       if (res === false) {
         e.stopPropagation()
       }
@@ -78,27 +82,25 @@ export default class dragHelper {
 
       let containeroffset = $(this._container).offset()
       let scalesize = this.currentScaleSize
-
       let offsetX = (e.clientX - containeroffset.left) / scalesize - dragHelper.dragStartX
       let offsetY = (e.clientY - containeroffset.top) / scalesize - dragHelper.dragStartY
 
       if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
-        dragHelper.currentDragX = offsetX
-        dragHelper.currentDragY = offsetY
+        dragHelper.currentDragX = e.clientX
+        dragHelper.currentDragY = e.clientY
       }
 
-      let xchanged = offsetX - dragHelper.currentDragX
-      let ychanged = offsetY - dragHelper.currentDragY
-
-      dragHelper.currentDragX = offsetX
-      dragHelper.currentDragY = offsetY
+      let xchanged = (e.clientX - dragHelper.currentDragX) / scalesize
+      let ychanged = (e.clientY - dragHelper.currentDragY) / scalesize
+      dragHelper.currentDragX = e.clientX
+      dragHelper.currentDragY = e.clientY
 
       if (!this.onDragMoveEventCallback) {
         return
       }
 
       // window.console.log('dragover:', e)
-      let res = this.onDragMoveEventCallback(dragHelper.dragClone, this._container, xchanged, ychanged, dragHelper.currentDragX, dragHelper.currentDragY)
+      let res = this.onDragMoveEventCallback(dragHelper.dragClone, this._container, xchanged, ychanged, offsetX, offsetY)
       if (res === false) {
         e.stopPropagation()
       }
@@ -161,7 +163,6 @@ export default class dragHelper {
         this.onDragEndEventCallback(dragItem)
       }
 
-      console.log('dragend', dragHelper.dragClone)
       dragHelper.currentDragX = NaN
       dragHelper.currentDragY = NaN
       dragHelper.dragClone = null
@@ -178,10 +179,8 @@ export default class dragHelper {
       dragHelper.dragClone = e.delegateTarget
 
       let scalesize = this.currentScaleSize
-
       dragHelper.dragStartX = e.offsetX * scalesize
       dragHelper.dragStartY = e.offsetY * scalesize
-      console.log('dragstart', dragHelper.dragClone)
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)
       }

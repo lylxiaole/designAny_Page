@@ -33,97 +33,94 @@ export default class EngineContainer extends EngineLayout {
 
   /**********************************底层拖拽改变尺寸方法 ******************************/
   /**对外公布方法 尺寸向上变化*/
-  public sizeChange_Up(comp: EngineLayout, changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(comp.$el).height() - changeVal >= 20) {
-      debugger
-      comp.top = ($(comp.$el).offset().top + changeVal).toFixed(0) + 'px'
-      comp.height = ($(comp.$el).height() - changeVal).toFixed(0) + 'px'
+  private childSizeChange_Up(comp: EngineLayout, compParentEle: Element, ychanged: number, mousetop: number) {
+    if ($(compParentEle).height() - ychanged >= 20) {
+      comp.top = mousetop.toFixed(0) + 'px'
+      comp.height = ($(compParentEle).height() - ychanged).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向下变化*/
-  public sizeChange_Down(comp: EngineLayout, changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(comp.$el).offsetParent().height() + changeVal >= 20) {
-      comp.height = ($(comp.$el).offsetParent().height() + changeVal).toFixed(0) + 'px'
+  private childSizeChange_Down(comp: EngineLayout, compParentEle: Element, ychanged: number) {
+    if ($(compParentEle).height() + ychanged >= 20) {
+      comp.height = ($(compParentEle).height() + ychanged).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向左变化*/
-  public sizeChange_Left(comp: EngineLayout, changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(comp.$el).offsetParent().width() - changeVal >= 20) {
-      comp.left = ($(comp.$el).offsetParent().position().left + changeVal).toFixed(0) + 'px'
-      comp.width = ($(comp.$el).offsetParent().width() - changeVal).toFixed(0) + 'px'
+  private childSizeChange_Left(comp: EngineLayout, compParentEle: Element, xchanged: number, mouseleft: number) {
+    if ($(compParentEle).width() - xchanged >= 20) {
+      comp.left = mouseleft.toFixed(0) + 'px'
+      comp.width = ($(compParentEle).width() - xchanged).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向右变化*/
-  public sizeChange_Right(comp: EngineLayout, changeVal: number) {
-    //offsetParent是因为DesignShell中的蒙版
-    if ($(comp.$el).offsetParent().width() + changeVal >= 20) {
-      comp.width = ($(comp.$el).offsetParent().width() + changeVal).toFixed(0) + 'px'
+  private childSizeChange_Right(comp: EngineLayout, compParentEle: Element, xchanged: number) {
+    let compLeft = $(compParentEle).position().left + $(compParentEle).width()
+
+    if ($(compParentEle).width() + xchanged >= 20) {
+      comp.width = ($(compParentEle).width() + xchanged).toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸左上变化*/
-  public sizeChange_Up_Left(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Up(comp, changeVal_ver)
-    this.sizeChange_Left(comp, changeVal_hor)
+  private sizeChange_Up_Left(comp: EngineLayout, compParentEle: Element, ychanged: number, xchanged: number, mousetop: number, mouseleft: number) {
+    this.childSizeChange_Up(comp, compParentEle, ychanged, mousetop)
+    this.childSizeChange_Left(comp, compParentEle, xchanged, mouseleft)
   }
   /**对外公布方法 尺寸右上变化*/
-  public sizeChange_Up_Right(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Up(comp, changeVal_ver)
-    this.sizeChange_Right(comp, changeVal_hor)
+  private sizeChange_Up_Right(comp: EngineLayout, compParentEle: Element, ychanged: number, xchanged: number, mousetop: number) {
+    this.childSizeChange_Up(comp, compParentEle, ychanged, mousetop)
+    this.childSizeChange_Right(comp, compParentEle, xchanged)
   }
   /**对外公布方法 尺寸左下变化*/
-  public sizeChange_Down_Left(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Down(comp, changeVal_ver)
-    this.sizeChange_Left(comp, changeVal_hor)
+  private sizeChange_Down_Left(comp: EngineLayout, compParentEle: Element, ychanged: number, xchanged: number, mouseleft: number) {
+    this.childSizeChange_Down(comp, compParentEle, ychanged)
+    this.childSizeChange_Left(comp, compParentEle, xchanged, mouseleft)
   }
   /**对外公布方法 尺寸右下变化*/
-  public sizeChange_Down_Right(comp: EngineLayout, changeVal_ver: number, changeVal_hor: number) {
-    this.sizeChange_Down(comp, changeVal_ver)
-    this.sizeChange_Right(comp, changeVal_hor)
+  private sizeChange_Down_Right(comp: EngineLayout, compParentEle: Element, ychanged: number, xchanged: number) {
+    this.childSizeChange_Down(comp, compParentEle, ychanged)
+    this.childSizeChange_Right(comp, compParentEle, xchanged)
   }
-  protected changeComponentSize(horchanged: number, verchanged: number, compId: string, position: string) {
+  protected changeComponentSize(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, compId: string, compParentEle: Element, position: string) {
     let comps = this.children.filter((o) => o.Id == compId)
     switch (position) {
       case 'you_xia':
         comps.filter((comp) => {
-          this.sizeChange_Down_Right(comp, verchanged, horchanged)
+          this.sizeChange_Down_Right(comp, compParentEle, ychanged, xchanged)
         })
         break
       case 'zuo_xia':
         comps.filter((comp) => {
-          this.sizeChange_Down_Left(comp, verchanged, horchanged)
+          this.sizeChange_Down_Left(comp, compParentEle, ychanged, xchanged, mouseleft)
         })
         break
       case 'you_shang':
         comps.filter((comp) => {
-          this.sizeChange_Up_Right(comp, verchanged, horchanged)
+          this.sizeChange_Up_Right(comp, compParentEle, ychanged, xchanged, mousetop)
         })
         break
       case 'zuo_shang':
         comps.filter((comp) => {
-          this.sizeChange_Up_Left(comp, verchanged, horchanged)
+          this.sizeChange_Up_Left(comp, compParentEle, ychanged, xchanged, mousetop, mouseleft)
         })
         break
       case 'shang':
         comps.filter((comp) => {
-          this.sizeChange_Up(comp, verchanged)
+          this.childSizeChange_Up(comp, compParentEle, ychanged, mousetop)
         })
         break
       case 'xia':
         comps.filter((comp) => {
-          this.sizeChange_Down(comp, verchanged)
+          this.childSizeChange_Down(comp, compParentEle, ychanged)
         })
         break
       case 'zuo':
         comps.filter((comp) => {
-          this.sizeChange_Left(comp, horchanged)
+          this.childSizeChange_Left(comp, compParentEle, xchanged, mouseleft)
         })
         break
       case 'you':
         comps.filter((comp) => {
-          this.sizeChange_Right(comp, horchanged)
+          this.childSizeChange_Right(comp, compParentEle, xchanged)
         })
         break
       default:

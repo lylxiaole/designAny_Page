@@ -1,30 +1,30 @@
 <template>
-  <div :class="hoverClass" :style="{'width':Component==null?0:Component.width ,'height':Component==null?0:Component.height,'z-index':Component==null?0:Component.zIndex,'left':Component==null?0:Component.left ,'top':Component==null?0:Component.top ,
-      'margin-left':Component==null?0:Component.margin_left+'px','margin-right':Component==null?0:Component.margin_right+'px','margin-top':Component==null?0:Component.margin_top+'px','margin-bottom':Component==null?0:Component.margin_bottom+'px',
-      'padding-left':Component==null?0:Component.padding_left+'px','padding-right':Component==null?0:Component.padding_right+'px','padding-top':Component==null?0:Component.padding_top+'px','padding-bottom':Component==null?0:Component.padding_bottom+'px',
+  <div :class="hoverClass" :style="{'width':component==null?0:component.width ,'height':component==null?0:component.height,'z-index':component==null?0:component.zIndex,'left':component==null?0:component.left ,'top':component==null?0:component.top ,
+      'margin-left':component==null?0:component.margin_left+'px','margin-right':component==null?0:component.margin_right+'px','margin-top':component==null?0:component.margin_top+'px','margin-bottom':component==null?0:component.margin_bottom+'px',
+      'padding-left':component==null?0:component.padding_left+'px','padding-right':component==null?0:component.padding_right+'px','padding-top':component==null?0:component.padding_top+'px','padding-bottom':component==null?0:component.padding_bottom+'px',
        'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':'block','tabindex':'1' }">
 
-    <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':Component==null?'':Component.fontFamily }">
+    <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':component==null?'':component.fontFamily }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="semove"
-      style="width:16px;height:16px;right:-16px; bottom:-16px;position:absolute;cursor: se-resize;;z-index:2" draggable="true"></div>
+      style="width:16px;height:16px;right:-16px; bottom:-16px;position:absolute;cursor: se-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="swmove"
-      style="width:16px;height:16px;left:-16px; bottom:-16px;position:absolute;cursor: sw-resize;;z-index:2" draggable="true"></div>
+      style="width:16px;height:16px;left:-16px; bottom:-16px;position:absolute;cursor: sw-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="nemove"
-      style="width:16px;height:16px;right:-16px; top:-16px;position:absolute;cursor: ne-resize;;z-index:2" draggable="true"></div>
+      style="width:16px;height:16px;right:-16px; top:-16px;position:absolute;cursor: ne-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="nwmove"
-      style="width:16px;height:16px;left:-16px; top:-16px;position:absolute;cursor: nw-resize;;z-index:2" draggable="true"></div>
+      style="width:16px;height:16px;left:-16px; top:-16px;position:absolute;cursor: nw-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="nmove"
-      style="width:96%;height:16px;left:2%; top:-16px;position:absolute;cursor:n-resize;;z-index:2" draggable="true"></div>
+      style="width:96%;height:16px;left:2%; top:-16px;position:absolute;cursor:n-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="smove"
-      style="width:96%;height:16px;left:2%; bottom:-16px;position:absolute;cursor:s-resize;;z-index:2" draggable="true"></div>
+      style="width:96%;height:16px;left:2%; bottom:-16px;position:absolute;cursor:s-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="wmove"
-      style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:2" draggable="true"></div>
+      style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="emove"
-      style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:2" draggable="true"></div>
+      style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:99" draggable="true"></div>
     <!-- *************************** -->
-    <div v-show="Component" type="drag" style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1;z-index=3" @click="onCompClick"
+    <div v-show="component" type="drag" style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1;z-index:99" @click="onCompClick"
       ref="dragmengb" class="dragmengb" :style="{zIndex:3 }"></div>
 
     <!-- <div ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"
@@ -47,34 +47,34 @@ export default class DesignShell extends Vue {
 
   private _dragHelper: dragHelper = null
 
-  private Component: EngineComponent = null
+  public component: EngineComponent = null
   public positionval: string = null
 
   get backGroundColor(): string {
-    if (!this.Component) {
+    if (!this.component) {
       return '#FFF'
     }
-    if (this.Component.findPropertyByName('基础设置', '背景色')) {
-      return this.Component.findPropertyByName('基础设置', '背景色').value as string
+    if (this.component.findPropertyByName('基础设置', '背景色')) {
+      return this.component.findPropertyByName('基础设置', '背景色').value as string
     } else {
       return '#FFF'
     }
   }
   get display(): boolean {
-    if (!this.Component) {
+    if (!this.component) {
       return true
     }
-    return this.Component.display
+    return this.component.display
   }
   /**是否是当前选中的区域 */
   get isSelectedArea(): boolean {
-    if (!this.Component) {
+    if (!this.component) {
       return false
     }
-    if (this.Component.isSelected) {
+    if (this.component.isSelected) {
       return true
     }
-    if (this.Component.findSelectedLayoutsRecursion && this.Component.findSelectedLayoutsRecursion(this.Component.children).length > 0) {
+    if (this.component.findSelectedLayoutsRecursion && this.component.findSelectedLayoutsRecursion(this.component.children).length > 0) {
       return true
     }
 
@@ -84,14 +84,14 @@ export default class DesignShell extends Vue {
     return 'gad-mengb'
   }
   get themeClass(): string {
-    if (!this.Component) {
+    if (!this.component) {
       return ''
     }
     return ''
   }
   /**当前组建壳子中的组件 */
   get InnerComponent() {
-    return this.Component
+    return this.component
   }
   get boarderStyle(): string {
     if (this.isSelectedArea == true) {
@@ -120,28 +120,28 @@ export default class DesignShell extends Vue {
 
   private onCompClick(e) {
     e.stopPropagation()
-    ;(this.Component.parentLayout as any).chooseComps([this.Component])
+    ;(this.component.parentLayout as any).chooseComps([this.component])
     $(this.$el).focus()
   }
 
   public addComponent(comp: any) {
-    if (this.Component != null) {
-      this.Component.destorymethod()
+    if (this.component != null) {
+      this.component.destorymethod()
     }
 
     render(comp, this.$refs.compContent as any)
-    this.Component = comp.component.proxy
+    this.component = comp.component.proxy
     comp.component.proxy.renderContainer = this.$refs.compContent
     comp.component.proxy.isDesigning = true
-    $(this.Component.$el).css('width', '100%')
-    $(this.Component.$el).css('height', '100%')
+    $(this.component.$el).css('width', '100%')
+    $(this.component.$el).css('height', '100%')
 
-    return this.Component
+    return this.component
   }
 
   public startListenItemDrag() {
     let dragdata: any = { type: DragItemTypeEnum.dragmove_component_inpage }
-    dragdata.dragData = { compId: this.Component.Id }
+    dragdata.dragData = { compId: this.component.Id }
     //
     let dragicon = this.$refs.dragmengb as Element
     this._dragHelper.makeDomCanDrag(dragicon)
@@ -158,35 +158,35 @@ export default class DesignShell extends Vue {
     dragdata = { type: DragItemTypeEnum.drag_component_size }
     //
     this._dragHelper.makeDomCanDrag(you_xia)
-    dragdata.dragData = { position: 'you_xia', compId: this.Component.Id }
+    dragdata.dragData = { position: 'you_xia', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(you_xia, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(zuo_xia)
-    dragdata.dragData = { position: 'zuo_xia', compId: this.Component.Id }
+    dragdata.dragData = { position: 'zuo_xia', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(zuo_xia, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(you_shang)
-    dragdata.dragData = { position: 'you_shang', compId: this.Component.Id }
+    dragdata.dragData = { position: 'you_shang', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(you_shang, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(zuo_shang)
-    dragdata.dragData = { position: 'zuo_shang', compId: this.Component.Id }
+    dragdata.dragData = { position: 'zuo_shang', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(zuo_shang, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(shang)
-    dragdata.dragData = { position: 'shang', compId: this.Component.Id }
+    dragdata.dragData = { position: 'shang', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(shang, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(xia)
-    dragdata.dragData = { position: 'xia', compId: this.Component.Id }
+    dragdata.dragData = { position: 'xia', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(xia, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(zuo)
-    dragdata.dragData = { position: 'zuo', compId: this.Component.Id }
+    dragdata.dragData = { position: 'zuo', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(zuo, deepClone(dragdata))
     //
     this._dragHelper.makeDomCanDrag(you)
-    dragdata.dragData = { position: 'you', compId: this.Component.Id }
+    dragdata.dragData = { position: 'you', compId: this.component.Id }
     this._dragHelper.makeDragItemInfo(you, deepClone(dragdata))
   }
 
@@ -194,7 +194,7 @@ export default class DesignShell extends Vue {
     window.console.log('DesignShell onStartDrag:', el)
     if (el.className.indexOf('el-icon-rank') > -1 || el.className.indexOf('dragmengb') > -1) {
       dragdata.type = DragItemTypeEnum.dragmove_component_inpage
-      dragdata.dragData = { compId: this.Component.Id }
+      dragdata.dragData = { compId: this.component.Id }
       return
     } else {
       dragdata.type = DragItemTypeEnum.drag_component_size
