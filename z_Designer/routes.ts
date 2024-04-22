@@ -48,6 +48,16 @@ const routes: IRouteClass[] = [
     component: () => import('./views/designPages/index.vue')
   },
   {
+    icon: 'icon-all-fill',
+    path: '/viewPages',
+    name: 'viewPages',
+    hidden: true,
+    meta: {
+      title: '我的页面'
+    },
+    component: () => import('./views/viewPages/index.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     hidden: true,

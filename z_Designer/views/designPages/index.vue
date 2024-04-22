@@ -85,7 +85,6 @@ export default class index extends PageBase {
   private pageDataList: any[] = []
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
-
   //所有打开的页面的引擎
   private openPageEngines: EnginePage[] = []
   //当前设计的页面引擎
@@ -138,11 +137,9 @@ export default class index extends PageBase {
   //打开新页面
   private openPage(page: DesignPageDC, pageengine: EnginePage) {
     let engine = this.openPageEngines.find((o) => o.Id === page.id)
-
     if (!engine) {
       this.openPageEngines.push(pageengine)
     }
-
     window.console.log('openPage:', pageengine)
     this.currentOpenPageId = page.id
     // **********************

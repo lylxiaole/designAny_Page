@@ -369,6 +369,7 @@ export default class index extends ComponentBase {
       case applicationType.webSystem:
         pType = pageType.pcPage
         break
+
       default:
         break
     }

@@ -34,8 +34,6 @@
         <div class="flexHorilanLayout verticalAlignCenter">缩放窗口</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px' }" label="打印" @click="onPrint" />
-      <!-- *************************************************************************** -->
       <optionBtn :style="{ height: height + 'px' }" label="预览" @click="onPreView" />
       <!-- *************************************************************************** -->
       <optionBtn :style="{ height: height + 'px' }" label="退出设计" @click="onQuit" />
@@ -124,9 +122,6 @@ export default class quickActionBar extends Vue {
 
   @Emit('onRevert')
   private onRevert() {}
-
-  @Emit('onPrint')
-  public onPrint() {}
 }
 </script>
 
