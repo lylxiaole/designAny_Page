@@ -91,7 +91,6 @@ export default class index extends PageBase {
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
     this.currentOpenEngin = vueComp as any
-    this.currentOpenEngin.renderContainer = this.$refs.renderArea
     await this.$nextTick()
     $(this.$refs.renderArea).append(virtualDom)
   }

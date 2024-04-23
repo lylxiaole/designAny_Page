@@ -13,8 +13,8 @@ export enum objectType {
   variable = 'variable', //变量
   fixedVal = 'fixedVal', //固定值
   method = 'method',
-  signs = 'signs', //+。-，*，/等运算符
-  callback = 'callback'
+  signs = 'signs' //+。-，*，/等运算符
+  // callback = 'callback'
 }
 
 export class objectBase {

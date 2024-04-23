@@ -482,6 +482,7 @@ export default class EngineLayout extends Vue {
     // }
     for (let index = 0; index < this.children.length; index++) {
       const o = this.children[index]
+
       o.destorymethod()
     }
     render(null, this.renderContainer)

@@ -16,7 +16,8 @@ export enum resourceGroup {
   fixedVal = 'fixedVal',
   cuteSigns = 'cuteSigns',
   filterSigns = 'filterSigns',
-  variables = 'variables'
+  variables = 'variables',
+  pageOption = 'pageOption'
 }
 //方法编码-需要保证唯一性
 export enum resourceCode {
@@ -38,6 +39,8 @@ export enum resourceCode {
   signLTOQ = 'signLTOQ', //小于等于
   signAnd = 'signAnd', //且
   signOr = 'signOr', //或
+
+  leadToPage = 'leadToPage',
 
   propertiesInPage = 'propertiesInPage',
   methodsInPage = 'methodsInPage',

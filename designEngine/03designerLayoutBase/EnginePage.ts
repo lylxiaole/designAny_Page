@@ -77,9 +77,6 @@ export default class EnginePage extends EngineContainer {
     // }, 1000)
   }
   unmounted() {
-    let x = this.renderContainer
-    debugger
-    super.unmounted()
     $(window).unbind('resize', this.onWindowResize_Scale as any)
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }
@@ -89,7 +86,7 @@ export default class EnginePage extends EngineContainer {
     if (this.isDesigning) {
       return
     }
-    debugger
+
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件[' + name + ']调用失败,该事件不存在')
