@@ -89,6 +89,7 @@ export default class EnginePage extends EngineContainer {
     if (this.isDesigning) {
       return
     }
+    debugger
     var event = this.designerEvents.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件[' + name + ']调用失败,该事件不存在')
