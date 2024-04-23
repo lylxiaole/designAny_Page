@@ -30,6 +30,7 @@ export default class index extends PageBase {
   private application: ApplicationDC = null
   private allPageSimples: any[] = []
   private openedPageData: any = []
+  private currentOpenEngin: EnginePage = null
 
   mounted() {}
   public async show(appId: string) {
@@ -83,29 +84,21 @@ export default class index extends PageBase {
       default:
         break
     }
-
     /************************渲染页面 */
     let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
     await (vueComp as any).loadPageByData(pageId, res.designDetail)
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
-    this.openPage2(res, vueComp as any)
+    this.currentOpenEngin = vueComp as any
+    this.currentOpenEngin.renderContainer = this.$refs.renderArea
     await this.$nextTick()
     $(this.$refs.renderArea).append(virtualDom)
   }
 
-  private openPage2(page: DesignPageDC, pageengine: EnginePage) {
-    // let engine = this.openPageEngines.find((o) => o.Id === page.id)
-    // if (!engine) {
-    //   this.openPageEngines.push(pageengine)
-    // }
-    // window.console.log('openPage:', pageengine)
-    // this.currentOpenPageId = page.id
-    // **********************
-  }
   // ************************************
   private onClose() {
+    this.currentOpenEngin.destorymethod()
     this.windowVisible = false
   }
 }

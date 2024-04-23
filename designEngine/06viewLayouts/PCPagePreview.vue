@@ -41,10 +41,6 @@ export default class PCPagePreview extends EnginePage {
     $(this.$el).append(virtualDom)
     return resComp
   }
-  // ******************************************************
-  public closeDesign() {
-    this.destorymethod()
-  }
 }
 </script>
  

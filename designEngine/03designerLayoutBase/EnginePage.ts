@@ -76,7 +76,10 @@ export default class EnginePage extends EngineContainer {
     //   console.log('页面定时器测试.................')
     // }, 1000)
   }
-  beforeUnmount() {
+  unmounted() {
+    let x = this.renderContainer
+    debugger
+    super.unmounted()
     $(window).unbind('resize', this.onWindowResize_Scale as any)
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }
