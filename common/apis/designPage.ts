@@ -29,6 +29,7 @@ export class TreeNodeDC {
   label: string
   type: string
   index: number
+  isDefault: boolean
   children: TreeNodeDC[] = []
 }
 
@@ -52,6 +53,14 @@ export async function SavePageDetail(page: DesignPageDC): Promise<boolean> {
   const resp = await ajaxPost(url, page)
   return resp.data
 }
+
+export async function SetDefaultPage(pageId: string): Promise<boolean> {
+  let url = apiAddr() + `api/designPage/setDefaultPage`
+  debugger
+  const resp = await ajaxPost(url, pageId)
+  return resp.data
+}
+
 // **********************************************************************
 export async function AddPage(page: DesignPageDC): Promise<DesignPageDC> {
   let url = apiAddr() + `api/designPage/addPage`

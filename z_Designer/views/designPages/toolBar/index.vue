@@ -96,16 +96,7 @@ export default class quickActionBar extends Vue {
   //************导入插件********************************************************
   private leadinPlugin() {}
   /****************预览功能************************************************************* */
-  private previewWindowVisible: boolean = false
-  private onPreviewOk() {
-    this.previewWindowVisible = false
-  }
-  private handleCancel() {
-    this.previewWindowVisible = false
-  }
-  private onPreView() {
-    this.previewWindowVisible = true
-  }
+
   /*************定制化控制项************************************************************************ */
   private async onQuit() {
     this.$router.back()
@@ -122,6 +113,9 @@ export default class quickActionBar extends Vue {
 
   @Emit('onRevert')
   private onRevert() {}
+
+  @Emit('onPreView')
+  private onPreView() {}
 }
 </script>
 

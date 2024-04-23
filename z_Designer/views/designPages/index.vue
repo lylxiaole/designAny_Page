@@ -3,7 +3,7 @@
     <el-row style="height:60px;width:100%">
       <div ref="toobar"></div>
       <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine?currentShowEngine.Id:'')" :height="60"
-        @onSave="onSaveCurrentPage"></toolBar>
+        @onSave="onSaveCurrentPage" @onPreView="onPreView"></toolBar>
     </el-row>
     <el-row style="height:calc(100% - 60px);width:100%;display:block;position:relative;display:block">
       <el-col style="width:250px;height:100%;float:left">
@@ -28,6 +28,8 @@
 
       </el-col>
     </el-row>
+
+    <previewPage ref="previewPage" />
   </el-row>
 </template>
 
@@ -57,6 +59,7 @@ import {
 import { drawVueOnVirtualDom } from '@common/utils'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
+import previewPage from '@/views/previewPages/index.vue'
 
 @Options({
   components: {
@@ -67,7 +70,8 @@ import { behaviorList } from '@behaviorEngine/index'
     mobilePagePreview: MobilePagePreview,
     pCPageDesign: PCPageDesign,
     pCPagePreview: PCPagePreview,
-    behaviorList: behaviorList
+    behaviorList: behaviorList,
+    previewPage: previewPage
   }
 })
 export default class index extends PageBase {
@@ -198,6 +202,10 @@ export default class index extends PageBase {
   private async onSaveCurrentPage(pageId: string) {
     window.console.log('onSaveCurrentPage:', pageId)
     await this.currentShowEngine.save(this.applicationId)
+  }
+
+  private async onPreView() {
+    ;(this.$refs.previewPage as any).show(this.applicationId)
   }
   // *************右侧属性窗*******************************************************
   private activeName: string = 'second'

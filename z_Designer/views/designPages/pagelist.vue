@@ -16,7 +16,10 @@
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
                 @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
                 <template #icon>
-                  <span class="icon iconfont">&#xe627;</span>
+                  <div>
+                    <span class="icon iconfont">&#xe627;</span>
+                    <span v-if="data.isDefault">【首页】</span>
+                  </div>
                 </template>
               </btreeNode>
             </div>
@@ -56,6 +59,7 @@ import {
   ChangePageGroup,
   AddPage,
   AddGroup,
+  SetDefaultPage,
   UpdatePageName,
   UpdateGroupName,
   UpdateNodesSort,
@@ -70,6 +74,7 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 
 enum rightMenus {
   addPage = '新建页面',
+  setDefault = '设置默认页',
   addGroup = '新建分组',
   saveAs = '另存为',
   rename = '重命名',
@@ -115,6 +120,20 @@ export default class index extends ComponentBase {
     }
     return null
   }
+  private setNodeDefault(id: string, parentNodes: TreeNodeDC[]) {
+    for (let index = 0; index < parentNodes.length; index++) {
+      const node = parentNodes[index]
+      if (node.id === id) {
+        node.isDefault = true
+      } else {
+        node.isDefault = false
+      }
+      if (node.children) {
+        this.setNodeDefault(id, node.children)
+      }
+    }
+  }
+
   private deleteNodeById(id: string, parentNodes: TreeNodeDC[]) {
     for (let index = 0; index < parentNodes.length; index++) {
       const node = parentNodes[index]
@@ -165,7 +184,6 @@ export default class index extends ComponentBase {
     }
     return data
   }
-  // ***********************************************************
   mounted() {}
   // ***************树********************************************
   private handleDragStart(node, ev) {
@@ -233,7 +251,6 @@ export default class index extends ComponentBase {
   }
   private allowDrag(draggingNode) {
     window.console.log('allowDrag', draggingNode)
-
     return true
   }
   /**当节点名称改变后 */
@@ -264,7 +281,7 @@ export default class index extends ComponentBase {
     this.currentRightClickNode = data
     this.rightMenus = []
     if (data.type === 'page') {
-      this.rightMenus = [rightMenus.edit, rightMenus.saveAs, rightMenus.delete]
+      this.rightMenus = [rightMenus.edit, rightMenus.setDefault, rightMenus.saveAs, rightMenus.delete]
     } else if (data.type === 'group') {
       this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
     }
@@ -305,6 +322,10 @@ export default class index extends ComponentBase {
         iconString = '&#xe62b;'
         break
       }
+      case rightMenus.setDefault: {
+        iconString = '&#xe62b;'
+        break
+      }
       default:
         break
     }
@@ -326,6 +347,9 @@ export default class index extends ComponentBase {
       case rightMenus.edit:
         this.onEditPage(this.currentRightClickNode.id)
         break
+      case rightMenus.setDefault:
+        this.setDefaultPage()
+        break
       default:
         break
     }
@@ -346,6 +370,7 @@ export default class index extends ComponentBase {
       parentGroupId: res.parentGroupId,
       label: res.name,
       type: 'group',
+      isDefault: false,
       index: res.index,
       children: []
     }
@@ -378,6 +403,7 @@ export default class index extends ComponentBase {
 
     let newnode: TreeNodeDC = {
       id: res.id,
+      isDefault: false,
       parentGroupId: res.parentGroupId,
       label: res.name,
       type: 'page',
@@ -387,6 +413,17 @@ export default class index extends ComponentBase {
 
     datadc.children.push(newnode)
   }
+  private async setDefaultPage() {
+    let pageId = this.currentRightClickNode.id
+    debugger
+    let res = await SetDefaultPage(pageId)
+    if (res) {
+      this.setNodeDefault(pageId, this.treeData)
+    } else {
+      alert('设置首页失败')
+    }
+  }
+
   private async deleteNode() {
     let nodeId = this.currentRightClickNode.id
     let nodeType = this.currentRightClickNode.type

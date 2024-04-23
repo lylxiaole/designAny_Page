@@ -55,7 +55,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '我的页面'
     },
-    component: () => import('./views/viewPages/index.vue')
+    component: () => import('./views/previewPages/index.vue')
   },
   {
     path: '/login',
