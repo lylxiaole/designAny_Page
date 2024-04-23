@@ -1,45 +1,24 @@
 <template>
-  <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为绑定" style="height:100%" width="100%" v-model="windowVisible" append-to-body
-    :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false"> <el-row
-      style="height:100%;width:100%;display:block;position:relative;display:block">
-      <div ref="renderArea" style="width:100%;height:100%;overflow:auto"></div>
+  <el-dialog ref="previewPopup" class="bhaviorDialog" style="height:100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose"
+    :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+    <el-row style="height:100%;width:100%;display:block;position:relative;display:block">
+      <div ref="renderArea" style="width:100%;height:100%;overflow:hidden"></div>
+      <el-button @click="onClose" style="background:red;position:absolute;left:0px;top:0px">退出预览</el-button>
     </el-row>
   </el-dialog>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
-import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
-import pagelist from './pagelist.vue'
-import PropertyGrid from './PropertyGrid.vue'
-import toolBar from './toolBar/index.vue'
+import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { drawVueOnVirtualDom } from '@common/utils'
-import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine/index'
+import { EnginePage, MobilePagePreview, PCPagePreview } from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
-import {
-  DesignPageGroupDC,
-  DesignPageDC,
-  TreeNodeDC,
-  GetApplicationPages,
-  ChangeGroupGroup,
-  ChangePageGroup,
-  AddPage,
-  AddGroup,
-  GetPageDetail,
-  UpdatePageName,
-  UpdateGroupName,
-  UpdateNodesSort,
-  DeletePage,
-  DeleteGroup,
-  pageType
-} from '@common/apis/designPage'
+import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
 @Options({
   components: {
-    mobilePageDesign: MobilePageDesign,
     mobilePagePreview: MobilePagePreview,
-    pCPageDesign: PCPageDesign,
     pCPagePreview: PCPagePreview,
     behaviorList: behaviorList
   }
@@ -53,7 +32,6 @@ export default class index extends PageBase {
   private openedPageData: any = []
 
   mounted() {}
-
   public async show(appId: string) {
     this.windowVisible = true
     await this.$nextTick()
@@ -68,7 +46,6 @@ export default class index extends PageBase {
     let pageTree = await GetApplicationPages(this.application.id)
     this.organizePages(pageTree)
     let defaultPage = this.allPageSimples.find((o) => o.isDefault === true)
-    debugger
     this.openPage(defaultPage.id)
   }
 
@@ -86,20 +63,27 @@ export default class index extends PageBase {
   }
   // ************************************
   private async openPage(pageId: string) {
-    let res = await GetPageDetail(pageId)
-
+    let cachePageData = this.openedPageData.find((o) => o.id === pageId)
+    let res = null
+    if (cachePageData) {
+      res = cachePageData
+    } else {
+      res = await GetPageDetail(pageId)
+      this.openedPageData.push(res)
+    }
     await this.$nextTick()
     let designLayout: any = typeof EnginePage
     switch (res.type) {
       case pageType.pcPage:
-        designLayout = PCPageDesign
+        designLayout = PCPagePreview
         break
       case pageType.mobilePage:
-        designLayout = MobilePageDesign
+        designLayout = MobilePagePreview
         break
       default:
         break
     }
+
     /************************渲染页面 */
     let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
     await (vueComp as any).loadPageByData(pageId, res.designDetail)
@@ -109,7 +93,6 @@ export default class index extends PageBase {
     this.openPage2(res, vueComp as any)
     await this.$nextTick()
     $(this.$refs.renderArea).append(virtualDom)
-    this.openedPageData.push(res)
   }
 
   private openPage2(page: DesignPageDC, pageengine: EnginePage) {
@@ -121,28 +104,19 @@ export default class index extends PageBase {
     // this.currentOpenPageId = page.id
     // **********************
   }
+  // ************************************
+  private onClose() {
+    this.windowVisible = false
+  }
 }
 </script>
 
 <style lang="less">
-.toolbarheader {
-  height: 42px;
-  padding: 0px;
-}
-.designcontainer {
-  height: calc(100% - 42px);
+.el-dialog__header {
+  display: none !important;
 }
 
-.pageList > .el-tabs--border-card {
-  box-sizing: border-box;
-}
-.pageList > .el-tabs--border-card > .el-tabs__header {
-  height: 39px;
-  box-sizing: border-box;
-}
-.pageList > .el-tabs--border-card > .el-tabs__content {
-  padding: 0px;
-  height: calc(100% - 39px);
-  box-sizing: border-box;
+.el-dialog__body {
+  padding: 0px !important;
 }
 </style>

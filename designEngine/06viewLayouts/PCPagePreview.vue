@@ -1,15 +1,51 @@
 <template>
-  <div style="width:100%;height:100%">
+  <div :style="{position:'relative','width':width,'height':height,'left':left,'top':top ,'background':backgroundCute,'padding':'0px' }"
+    oncontextmenu="self.event.returnValue=false" style="border-radius:0px">
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import { EnginePage } from '../03designerLayoutBase'
+import { SaveInfo, Point } from '../03designerLayoutBase/EngineLayout'
+
+import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
+import { drawVueOnVirtualDom, BuildingFileUrlForShow, deepClone, getUuid } from '@common/utils'
+import ViewShell from './ViewShell.vue'
 
 @Options({})
-export default class PCPagePreview extends EnginePage {}
+export default class PCPagePreview extends EnginePage {
+  private get backgroundCute(): string {
+    // window.console.log('backgroundCute:', this.background_img)
+    if (!this.background_img || !this.background_img.uid) {
+      return this.background
+    }
+    return 'url("' + BuildingFileUrlForShow(this.background_img.uid) + '")'
+  }
+  public allShells: ViewShell[] = []
+
+  created() {}
+  mounted() {}
+
+  protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
+    let { virtualDom, vueComp } = drawVueOnVirtualDom(ViewShell)
+    // this._dragHelper.makeDomCanDrag(shell.$el)
+    this.allShells.push(vueComp as ViewShell)
+    let resComp = (vueComp as ViewShell).addComponent(compCon)
+    resComp.$once('onLYLDestroyed', () => {
+      let findIndex = this.allShells.findIndex((o) => o == vueComp)
+      this.allShells.splice(findIndex, 1)
+      ;(vueComp as ViewShell).destorymethod()
+    })
+
+    // ;(vueComp as ViewShell).startListenItemDrag()
+    $(this.$el).append(virtualDom)
+    return resComp
+  }
+  // ******************************************************
+  public closeDesign() {
+    this.destorymethod()
+  }
+}
 </script>
  
 <style lang="less" scoped>

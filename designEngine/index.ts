@@ -3,9 +3,10 @@ export * from './03designerLayoutBase'
 export * from './05designerLayouts/DesignEvents'
 
 import MobilePageDesign from './05designerLayouts/PCPageDesign.vue'
-import MobilePagePreview from './05designerLayouts/PCPageDesign.vue'
+import MobilePagePreview from './06viewLayouts/MobilePagePreview.vue'
+
 import PCPageDesign from './05designerLayouts/PCPageDesign.vue'
-import PCPagePreview from './05designerLayouts/PCPageDesign.vue'
+import PCPagePreview from './06viewLayouts/PCPagePreview.vue'
 export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 
 /**加载所有设计器组件 */

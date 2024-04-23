@@ -415,7 +415,7 @@ export default class index extends ComponentBase {
   }
   private async setDefaultPage() {
     let pageId = this.currentRightClickNode.id
-    debugger
+
     let res = await SetDefaultPage(pageId)
     if (res) {
       this.setNodeDefault(pageId, this.treeData)
