@@ -5,45 +5,54 @@
       <img v-if="imageUrl" v-lazy="imageUrl" :width="15+'px'" :height="15+'px'" />
       <span>上传文件</span>
     </el-button>
-    <el-dialog :maskClosable="false" title="选择文件" :visible.sync="windowVisible" width="60%" :destroyOnClose="true">
+    <el-dialog :maskClosable="false" title="选择文件" v-model:visible="windowVisible" width="60%" :destroyOnClose="true">
       <div style="min-height:7em">
         <el-upload :action="uploadServerAddr" :headers="headers" :file-list="currentFileList" :before-upload="beforeUpload"
           :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
           <!-- ****上传文件的按钮************************************ -->
-          <div v-if="currentFileList.length<maxFileLength" slot="default" style="height:100%;width:100%"
-            class="flexHorilanLayout verticalAlignCenter">
-            <i class="el-icon-plus"></i>
-          </div>
-          <div v-else slot="default" style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
-            上传数量已经到达最大
-          </div>
+
+          <template v-if="currentFileList.length<maxFileLength" #default>
+            <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
+              <i class="el-icon-plus"></i>
+            </div>
+          </template>
+          <template v-else #default>
+            <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
+              上传数量已经到达最大
+            </div>
+          </template>
           <!-- ****已上传文件************************************ -->
-          <div slot="file" slot-scope="{file}">
-            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-            <span class="el-upload-list__item-actions">
-              <span class="el-upload-list__item-preview" @click="handlePreview(file)">
-                <i class="el-icon-zoom-in"></i>
+          <template #file="{file}">
+            <div>
+              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+              <span class="el-upload-list__item-actions">
+                <span class="el-upload-list__item-preview" @click="handlePreview(file)">
+                  <i class="el-icon-zoom-in"></i>
+                </span>
+                <span class="el-upload-list__item-delete" @click="handleRemove(file)">
+                  <i class="el-icon-delete"></i>
+                </span>
               </span>
-              <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                <i class="el-icon-delete"></i>
-              </span>
-            </span>
-          </div>
+            </div>
+          </template>
         </el-upload>
         <!-- ****预览窗口************************************ -->
-        <el-dialog :visible.sync="previewVisible">
+        <el-dialog v-model:visible="previewVisible">
           <img alt="example" style="width: 100%" :src="previewImage" cancelText="取消" okText="确定" />
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="handlePreviewClose">取 消</el-button>
-            <el-button type="primary" @click="handlePreviewClose">确 定</el-button>
-          </div>
+          <template #footer>
+            <div class="dialog-footer">
+              <el-button @click="handlePreviewClose">取 消</el-button>
+              <el-button type="primary" @click="handlePreviewClose">确 定</el-button>
+            </div>
+          </template>
         </el-dialog>
       </div>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="handleWindowClose">取 消</el-button>
-        <el-button type="primary" @click="handleWindowOK">确 定</el-button>
-      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="handleWindowClose">取 消</el-button>
+          <el-button type="primary" @click="handleWindowOK">确 定</el-button>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -54,8 +63,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 // import { CurrentApis, CurrentContext } from '../01designerContext'
 // import { fileInfo } from '../01designerContext'
 import { getUuid, deepClone, BuildingFileUrlForShow } from '@common/utils'
-import fileUpload from './fileUpload'
-import { getConfigByName } from '@common/baseConfigs'
+ import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 export class fileInfo {
   uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
@@ -150,7 +158,7 @@ export default class uploadFile extends Vue {
     // window.console.log('beforeUpload:', file)
     const isUpLoadSize = file.size / 1024 / 1024 < this.upLoadSize
     if (!isUpLoadSize) {
-      this.$notify.error('file must smaller than ' + this.upLoadSize + 'MB!')
+      alert('file must smaller than ' + this.upLoadSize + 'MB!')
       return false
     }
     return true

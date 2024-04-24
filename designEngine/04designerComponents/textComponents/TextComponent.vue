@@ -22,8 +22,9 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { Property, Text_Property, Behavior_Property, Enum_Property, PropertyGroupName } from '@designEngine'
-import { EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine'
+import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
+import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@designEngine/03designerLayoutBase'
+import { getUuid, deepClone } from '@common/utils'
 
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '文本组件', 'TextComponent', null)
 @Options({})
