@@ -2,11 +2,6 @@ import { createApp } from 'vue'
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig } from '@common/baseConfigs'
 import registerRouteHook from './utils/routerHook'
-// ****************************************************
-import { init as designEngineInit } from '@designEngine/index'
-import { init as behaviorEngineInit } from '@behaviorEngine/index'
-designEngineInit()
-behaviorEngineInit()
 // **************引用element Plus******************************
 require('@common/assets/iconfont1/iconfont.css')
 require('@common/assets/iconfont1/iconfont.js')
@@ -23,6 +18,14 @@ import appState from './appState'
 let system = initSystem(routes, configs, appState)
 system.store.commit('system/set_permission_routes', getRoutes())
 registerRouteHook(system.router, system.store)
+// ****************************************************
+import { getConfigByName } from '@common/baseConfigs'
+const apiAddr = () => getConfigByName('apiAddr')
+// ****************************************************
+import { init as designEngineInit } from '@designEngine/index'
+import { init as behaviorEngineInit } from '@behaviorEngine/index'
+designEngineInit(apiAddr())
+behaviorEngineInit(apiAddr())
 // *********************************************************
 import App from './views/App.vue'
 // *********************************************************

@@ -6,16 +6,12 @@
 
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
-import { SaveInfo, Point } from '../03designerLayoutBase/EngineLayout'
-
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
-import { drawVueOnVirtualDom, BuildingFileUrlForShow, deepClone, getUuid } from '@common/utils'
+import { drawVueOnVirtualDom, deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
-import dragHelper from '@designEngine/02common/dragHelper_new'
 import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
-import { parseInt } from 'lodash-es'
+import designerContext from '@designEngine/01designerContext/context'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
@@ -24,7 +20,7 @@ export default class PCPageDesign extends EnginePage {
     if (!this.background_img || !this.background_img.uid) {
       return this.background
     }
-    return 'url("' + BuildingFileUrlForShow(this.background_img.uid) + '")'
+    return 'url("' + designerContext.getFileApiAddr(this.background_img.uid) + '")'
   }
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
@@ -50,7 +46,6 @@ export default class PCPageDesign extends EnginePage {
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
-    // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as DesignShell)
     let resComp = (vueComp as DesignShell).addComponent(compCon)
     resComp.$once('onLYLMounted', () => {
