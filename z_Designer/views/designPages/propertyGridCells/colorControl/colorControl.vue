@@ -15,7 +15,8 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr } from '../common'
+import { PropertyTypeEnum, Color_Setting } from '@designEngine/index'
 
 import bcolorPicker from '@common/components/colorPickr/colorPicker.vue'
 
@@ -25,7 +26,7 @@ import bcolorPicker from '@common/components/colorPickr/colorPicker.vue'
     bcolorPicker
   }
 })
-export default class colorPicker extends propertyCellBase {
+export default class colorPicker extends propertyCellBase<Color_Setting> {
   mounted() {
     window.console.log('图片组件加载')
   }

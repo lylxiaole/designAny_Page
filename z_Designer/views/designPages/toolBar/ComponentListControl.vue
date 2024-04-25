@@ -32,7 +32,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import dragHelper from '@designEngine/02common/dragHelper_new'
 // 所有系统组件
-import * as engin from '@designEngine'
+import * as engin from '@designEngine/index'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {

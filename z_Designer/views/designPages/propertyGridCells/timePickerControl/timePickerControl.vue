@@ -5,7 +5,7 @@
  */
 <template>
   <div>
-    <DatePicker :value.sync="currentValue" :dateType="currentPropertySetting.dateType" :showTime="currentPropertySetting.showTime"
+    <DatePicker v-model="currentValue" :dateType="currentPropertySetting.dateType" :showTime="currentPropertySetting.showTime"
       :format="currentPropertySetting.format" />
   </div>
 </template>
@@ -15,9 +15,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import npDatePicker from '@common/components/commonComponents/npDatePicker.vue'
-
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr } from '../common'
+import { PropertyTypeEnum, TimePickerFile_Setting } from '@designEngine/index'
 
 @propertyCellSettingAttr(PropertyTypeEnum.timePicker)
 @Options({
@@ -25,7 +25,7 @@ import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
     DatePicker: npDatePicker
   }
 })
-export default class timePickerControl extends propertyCellBase {
+export default class timePickerControl extends propertyCellBase<TimePickerFile_Setting> {
   mounted() {}
 }
 </script>

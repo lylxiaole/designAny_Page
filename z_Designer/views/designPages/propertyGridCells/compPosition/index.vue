@@ -29,13 +29,14 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr } from '../common'
+import { PropertyTypeEnum, CompPosition_Setting } from '@designEngine/index'
 
 @propertyCellSettingAttr(PropertyTypeEnum.compPosition)
 @Options({
   components: {}
 })
-export default class index extends propertyCellBase {
+export default class index extends propertyCellBase<CompPosition_Setting> {
   mounted() {}
 }
 </script>

@@ -13,10 +13,10 @@ export function propertyCellSettingAttr(type: PropertyTypeEnum) {
   }
 }
 
-export { PropertyTypeEnum, cellControls }
+export { cellControls }
 
 @Options({})
-export default class propertyCellBase extends Vue {
+export default class propertyCellBase<T> extends Vue {
   @Prop()
   private property: Property
   @Prop()
@@ -28,11 +28,11 @@ export default class propertyCellBase extends Vue {
   /**************当前页面中的所有上下文****************************** */
 
   /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
-  protected get currentPropertySetting(): PropertySetting {
+  protected get currentPropertySetting(): T {
     if (!this.property) {
       return
     }
-    return this.property.propertySetting
+    return this.property.propertySetting as any as T
   }
   /**获取当前属性值 */
   protected get currentValue(): any {

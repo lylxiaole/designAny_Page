@@ -9,24 +9,26 @@
       style="width:118px;height:34px;background:rgba(124,225,170,0.1);border-color:rgba(124,225,170,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
       @click="startEditTable" size="small"> 设置入参</el-button>
 
-    <el-dialog :maskClosable="false" title="编辑" :visible.sync="windowVisible" :destroyOnClose="true" width="900px">
-      <el-table size="small" :data="data" :pagination="false" style="height:450px;" width="100%">
+    <el-dialog :maskClosable="false" title="编辑" v-model="windowVisible" :destroyOnClose="true" width="900px">
+      <el-table size="small" :localData="localData" :pagination="false" style="height:450px;" width="100%">
         <el-table-column prop="paramName" label="入参名称" width="300">
         </el-table-column>
         <el-table-column prop="paramType" label="入参类型" width="300">
         </el-table-column>
         <el-table-column fixed="right" label="操作">
-          <template slot-scope="scope">
+          <template #default={scope}>
             <a @click="() => rowdelete(scope.row.key)">删除</a>
           </template>
         </el-table-column>
       </el-table>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button style="float:left" type="primary" @click="newParam" size="small">新增</el-button>
+          <el-button @click="modalCancel" size="small">取消</el-button>
+          <el-button type="primary" @click="modalSure" size="small">确定</el-button>
+        </div>
+      </template>
 
-      <div slot="footer" class="dialog-footer">
-        <el-button style="float:left" type="primary" @click="newParam" size="small">新增</el-button>
-        <el-button @click="modalCancel" size="small">取消</el-button>
-        <el-button type="primary" @click="modalSure" size="small">确定</el-button>
-      </div>
     </el-dialog>
   </div>
 </template>
@@ -35,18 +37,19 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
-import { paramInfo } from '@designEngine'
+import { paramInfo } from '@designEngine/index'
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { PropertyTypeEnum, PageInParams_Setting } from '@designEngine/index'
+import { propertyCellSettingAttr } from '../common'
 import { pageInParamsIco } from '@designEngine/assets/icons.js'
 
 @propertyCellSettingAttr(PropertyTypeEnum.pageInParams)
 @Options({})
-export default class pageInParams extends propertyCellBase {
+export default class pageInParams extends propertyCellBase<PageInParams_Setting> {
   public windowVisible: boolean = false
   private pageicon: any
 
-  private data: paramInfo[] = []
+  private localData: paramInfo[] = []
 
   created() {
     this.pageicon = pageInParamsIco
@@ -54,12 +57,12 @@ export default class pageInParams extends propertyCellBase {
   mounted() {}
 
   private rowdelete(key: string) {
-    const newData = [...this.data]
+    const newData = [...this.localData]
     const target = newData.filter((item) => key === item.key)[0]
     if (target) {
       const index = newData.indexOf(target)
       newData.splice(index, 1)
-      this.data = newData
+      this.localData = newData
     }
   }
 
@@ -69,14 +72,14 @@ export default class pageInParams extends propertyCellBase {
     newRow.paramName = ''
     newRow.paramType = 1
 
-    this.data.push(newRow)
+    this.localData.push(newRow)
   }
 
   private onSelectParamClassChange() {}
 
   private startEditTable() {
     this.windowVisible = true
-    this.data = []
+    this.localData = []
     if (!this.currentValue) {
       return
     }
@@ -86,24 +89,24 @@ export default class pageInParams extends propertyCellBase {
       newparaminfo.key = o.key
       newparaminfo.paramName = o.paramName
       newparaminfo.paramType = o.paramType
-      this.data.push(newparaminfo)
+      this.localData.push(newparaminfo)
     })
   }
   private modalSure() {
     //window.console.log('确认提交')
     this.windowVisible = false
-    this.currentValue = deepClone(this.data)
-    this.data = []
+    this.currentValue = deepClone(this.localData)
+    this.localData = []
   }
   private modalCancel() {
     this.windowVisible = false
   }
   private handleChange(value: any, key: string, column: string) {
-    const newData = [...this.data]
+    const newData = [...this.localData]
     const target = newData.filter((item) => key === item.key)[0]
     if (target) {
       ;(target as any)[column] = value
-      this.data = newData
+      this.localData = newData
     }
   }
 }

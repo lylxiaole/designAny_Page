@@ -5,7 +5,7 @@
  */
 <template>
   <div>
-    <AceEditor :currentCode.sync="currentValue"></AceEditor>
+    <AceEditor v-model:currentCode="currentValue"></AceEditor>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ import { getUuid, deepClone } from '@common/utils'
 import npAceEditor from '@common/components/commonComponents/npAceEditor.vue'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr } from '../common'
+import { PropertyTypeEnum, JavaScriptCode_Setting } from '@designEngine/index'
 
 @propertyCellSettingAttr(PropertyTypeEnum.javaScriptCode)
 @Options({
@@ -24,7 +25,7 @@ import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
     AceEditor: npAceEditor
   }
 })
-export default class jsCodeControl extends propertyCellBase {
+export default class jsCodeControl extends propertyCellBase<JavaScriptCode_Setting> {
   mounted() {}
 }
 </script>

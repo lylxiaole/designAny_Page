@@ -17,7 +17,9 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr } from '../common'
+import { PropertyTypeEnum, UploadFile_Setting } from '@designEngine/03designerLayoutBase'
+
 import uploadFile from './uploadFile.vue'
 
 @propertyCellSettingAttr(PropertyTypeEnum.uploadFile)
@@ -26,7 +28,7 @@ import uploadFile from './uploadFile.vue'
     uploadFile
   }
 })
-export default class upLoadFileControl extends propertyCellBase {
+export default class upLoadFileControl extends propertyCellBase<UploadFile_Setting> {
   mounted() {}
 }
 </script>

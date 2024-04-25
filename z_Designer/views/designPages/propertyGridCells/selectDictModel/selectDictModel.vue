@@ -8,12 +8,14 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr } from '../common'
+import { PropertyTypeEnum, selectDict_Setting } from '@designEngine/index'
 
 @propertyCellSettingAttr(PropertyTypeEnum.selectDictModel)
 @Options({})
-export default class selectDictModel extends propertyCellBase {
+export default class selectDictModel extends propertyCellBase<selectDict_Setting> {
   mounted() {}
+
   @Emit('selectDict')
   private selectDict() {
     //window.console.info('事件触发')

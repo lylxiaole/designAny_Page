@@ -211,9 +211,9 @@ export class Color_Setting extends PropertySetting {
 }
 export class UploadFile_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.uploadFile
-  private maxFileLength: number = 1
-  private fileType: string
-  private fileSize: number = 10485760
+  public maxFileLength: number = 1
+  public fileType: string
+  public fileSize: number = 10485760
   /**filetype:'image','file','vedio' */
   constructor(maxFileCount: number, filetype: string) {
     super()

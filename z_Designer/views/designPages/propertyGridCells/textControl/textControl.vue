@@ -16,11 +16,13 @@ import { getUuid, deepClone } from '@common/utils'
 import npColorPicker from '@common/components/commonComponents/npColorPicker.vue'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
+import { PropertyTypeEnum, Text_Setting } from '@designEngine/index'
+
+import { propertyCellSettingAttr } from '../common'
 
 @propertyCellSettingAttr(PropertyTypeEnum.text)
 @Options({})
-export default class textControl extends propertyCellBase {
+export default class textControl extends propertyCellBase<Text_Setting> {
   mounted() {}
 }
 </script>
