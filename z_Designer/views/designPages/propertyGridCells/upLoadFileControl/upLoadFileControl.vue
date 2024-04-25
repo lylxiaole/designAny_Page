@@ -5,8 +5,8 @@
  */
 <template>
   <div>
-    <!-- <uploadFile :fileList.sync="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertyType.maxFileLength"
-      :fileType="currentPropertyType.fileType" :upLoadSize="currentPropertyType.fileSize" /> -->
+    <uploadFile v-mode:fileList="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertyType.maxFileLength"
+      :fileType="currentPropertyType.fileType" :upLoadSize="currentPropertyType.fileSize" />
     <!-- <UploadFile :fileList.sync="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertyType.maxFileLength"
       :fileType="currentPropertyType.fileType" :upLoadSize="currentPropertyType.fileSize">
     </UploadFile> -->
@@ -18,7 +18,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
-import uploadFile from '@common/components/Upload/uploadFile.vue'
+import uploadFile from './uploadFile.vue'
 
 @propertyCellTypeAttr(PropertyTypeEnum.uploadFile)
 @Options({

@@ -10,7 +10,6 @@
         <el-upload :action="uploadServerAddr" :headers="headers" :file-list="currentFileList" :before-upload="beforeUpload"
           :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
           <!-- ****上传文件的按钮************************************ -->
-
           <template v-if="currentFileList.length<maxFileLength" #default>
             <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
               <i class="el-icon-plus"></i>
@@ -63,7 +62,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 // import { CurrentApis, CurrentContext } from '../01designerContext'
 // import { fileInfo } from '../01designerContext'
 import { getUuid, deepClone, BuildingFileUrlForShow } from '@common/utils'
- import { getConfigByName } from '@common/baseConfigs'
+import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 export class fileInfo {
   uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
@@ -131,7 +130,6 @@ export default class uploadFile extends Vue {
   mounted() {}
 
   showUploadModal() {
-    window.console.log('this.$store.state.system.token:', this.$store.state.system.token)
     this.windowVisible = true
   }
 

@@ -42,20 +42,6 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
-import {
-  Property,
-  PropertyType,
-  Text_Property,
-  Behavior_Property,
-  Number_Property,
-  PropertyGroupName,
-  Color_Property,
-  UploadFile_Property,
-  Boolean_Property,
-  EnumModal_Property,
-  Enum_Property,
-  CompPosition_Property
-} from '@designEngine/03designerLayoutBase/commonClasses/LayoutProperty'
 import { drawVueOnVirtualDom } from '@common/utils'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
