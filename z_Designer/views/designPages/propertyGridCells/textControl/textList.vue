@@ -27,9 +27,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
 
-@propertyCellTypeAttr(PropertyTypeEnum.textList)
+@propertyCellSettingAttr(PropertyTypeEnum.textList)
 @Options({})
 export default class textList extends propertyCellBase {
   public addVisible: boolean = true

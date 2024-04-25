@@ -4,7 +4,7 @@ import { PropertyTypeEnum, Property, PropertySetting, EnginePage, EngineLayout }
 
 var cellControls = []
 
-export function propertyCellTypeAttr(type: PropertyTypeEnum) {
+export function propertyCellSettingAttr(type: PropertyTypeEnum) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
     target.prototype.$Meta.celltype = type

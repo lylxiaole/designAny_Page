@@ -17,9 +17,9 @@ import { getUuid, deepClone } from '@common/utils'
 import npDatePicker from '@common/components/commonComponents/npDatePicker.vue'
 
 import propertyCellBase from '../common'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
 
-@propertyCellTypeAttr(PropertyTypeEnum.timePicker)
+@propertyCellSettingAttr(PropertyTypeEnum.timePicker)
 @Options({
   components: {
     DatePicker: npDatePicker

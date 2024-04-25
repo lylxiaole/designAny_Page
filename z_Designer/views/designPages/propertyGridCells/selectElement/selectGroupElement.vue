@@ -39,8 +39,8 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
 import propertyCellBase from '../common'
 import { getUuid, deepClone } from '@common/utils'
 class groupInfo {
@@ -60,7 +60,7 @@ class selectElementInfo {
   selectGroupEleInfo: groupInfo[]
 }
 
-@propertyCellTypeAttr(PropertyTypeEnum.selectGroupElement)
+@propertyCellSettingAttr(PropertyTypeEnum.selectGroupElement)
 @Options({})
 export default class selectGroupElement extends propertyCellBase {
   public windowVisible: boolean = false

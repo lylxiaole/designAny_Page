@@ -23,9 +23,9 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
 
-@propertyCellTypeAttr(PropertyTypeEnum.numberList)
+@propertyCellSettingAttr(PropertyTypeEnum.numberList)
 @Options({})
 export default class numberList extends propertyCellBase {
   public addVisible: boolean = true

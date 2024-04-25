@@ -11,14 +11,14 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import npAceEditor from '@common/components/commonComponents/npAceEditor.vue'
 
 import propertyCellBase from '../common'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
 
-@propertyCellTypeAttr(PropertyTypeEnum.javaScriptCode)
+@propertyCellSettingAttr(PropertyTypeEnum.javaScriptCode)
 @Options({
   components: {
     AceEditor: npAceEditor

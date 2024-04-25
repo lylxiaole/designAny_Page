@@ -11,15 +11,15 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
 
 import bcolorPicker from '@common/components/colorPickr/colorPicker.vue'
 
-@propertyCellTypeAttr(PropertyTypeEnum.color)
+@propertyCellSettingAttr(PropertyTypeEnum.color)
 @Options({
   components: {
     bcolorPicker

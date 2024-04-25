@@ -47,7 +47,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import propertyCellBase from '../common'
-import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
+import { propertyCellSettingAttr, PropertyTypeEnum } from '../common'
 import { layoutEvent, layoutEventBehaviors } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
 import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
@@ -55,7 +55,7 @@ import behaviorEventBinding from './behaviorEventBinding.vue'
 import behaviorListInPage from './behaviorListInPage.vue'
 import { toRaw } from 'vue'
 
-@propertyCellTypeAttr(PropertyTypeEnum.behavior)
+@propertyCellSettingAttr(PropertyTypeEnum.behavior)
 @Options({
   components: { behaviorEventBinding, behaviorListInPage }
 })
