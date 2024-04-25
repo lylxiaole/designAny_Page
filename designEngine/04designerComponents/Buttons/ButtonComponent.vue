@@ -3,7 +3,7 @@
     <div class="gad-btn-div">
       <a-popconfirm v-if="isSo===true" :title="confirmTitle" okText="确认" style="width:100%;height:100%" cancelText="取消" :visible="btnOptions.visible"
         @confirm="confirm" @visibleChange="handleVisibleChange">
-        <a-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle" @mouseover="onMouseOver" @mouseout="onMouseOut" @click="onClick"
+        <el-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle" @mouseover="onMouseOver" @mouseout="onMouseOut" @click="onClick"
           @mousedown="onmousedown" @mouseup="onmouseup">
           <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
           <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
@@ -11,38 +11,39 @@
           <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
             style="margin-right:8px;margin-top:-3px;" />
           {{  }}
-        </a-button>
+        </el-button>
       </a-popconfirm>
-      <a-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled" @click="onClick" @mouseover="onMouseOver"
+      <el-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled" @click="onClick" @mouseover="onMouseOver"
         @mouseout="onMouseOut" @mousedown="onmousedown" @mouseup="onmouseup">
         <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
         <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
           v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon" />
         <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
           style="margin-right:8px;margin-top:-3px;" />{{ buttonText }}
-      </a-button>
+      </el-button>
     </div>
   </a-tooltip>
   <div class="gad-btn-div" v-else>
     <a-popconfirm v-if="isSo===true" :title="confirmTitle" okText="确认" style="width:100%;height:100%" cancelText="取消" :visible="btnOptions.visible"
       @confirm="confirm" @visibleChange="handleVisibleChange">
-      <a-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle" @click="onClick" @mouseover="onMouseOver" @mouseout="onMouseOut"
+      <el-button :type="buttonType" :disabled="buttonDisabled" :style="npBtnStyle" @click="onClick" @mouseover="onMouseOver" @mouseout="onMouseOut"
         @mousedown="onmousedown" @mouseup="onmouseup">
         <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
         <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
           v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon" />
         <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
           style="margin-right:8px;margin-top:-3px;" />{{ buttonText }}
-      </a-button>
+      </el-button>
     </a-popconfirm>
-    <a-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled" @click="onClick" @mouseover="onMouseOver"
+    <el-button v-else :type="buttonType" :style="npBtnStyle" :disabled="buttonDisabled" @click="onClick" @mouseover="onMouseOver"
       @mouseout="onMouseOut" @mousedown="onmousedown" @mouseup="onmouseup">
       <a-icon v-if="btnOptions.iconFlag" :type="btnOptions.varIcon" ghost></a-icon>
       <v-icon :width="svgSize" :height="svgSize" :class="buttonText.length>0?'iconCss':''"
         v-else-if="btnOptions.iconCustom&& btnOptions.iconFlag===undefined" viewBox="0 0 100 100" :name="btnOptions.varIcon" />
       <img referrer="no-referrer|origin|unsafe-url" v-else v-lazy="btnOptions.imageUrl" alt="image" :width="svgSize+'px'" :height="svgSize+'px'"
-        style="margin-right:8px;margin-top:-3px;" />{{ buttonText }}
-    </a-button>
+        style="margin-right:8px;margin-top:-3px;" />
+      {{ buttonText }}
+    </el-button>
   </div>
 </template>
 
@@ -61,7 +62,15 @@ import {
 } from '@designEngine/03designerLayoutBase'
 import { getUuid, deepClone } from '@common/utils'
 import { paramType, param } from '@behaviorEngine/index'
+import designerContext from '@designEngine/01designerContext/context'
 
+class fileInfo {
+  uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+  name: string
+  get url(): string {
+    return designerContext.getFileApiAddr(this.uid)
+  }
+}
 class buttonIcons {
   name: string
   value: string
@@ -140,10 +149,7 @@ export default class ButtonComponent extends EngineComponent {
         this.btnOptions.iconFlag = false
         this.btnOptions.varIcon = ''
         if (buttonAttributeInfo.buttonIconImages && buttonAttributeInfo.buttonIconImages.length > 0) {
-          this.btnOptions.imageUrl = common.BuildingFileUrlForShow(
-            CurrentContext.FileServerAddress,
-            buttonAttributeInfo.buttonIconImages[0].url.split('?')[0]
-          )
+          this.btnOptions.imageUrl = designerContext.getFileApiAddr(buttonAttributeInfo.buttonIconImages[0].url.split('?')[0])
         }
       }
     }
@@ -164,8 +170,6 @@ export default class ButtonComponent extends EngineComponent {
       this.setButtonAttribute(this.btnOptions.infoNormal)
     }
   }
-
-  rendered(dom: Element) {}
 
   @Watch('infoNormal')
   watchInfoNormal() {

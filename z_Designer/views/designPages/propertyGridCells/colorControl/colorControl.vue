@@ -5,7 +5,7 @@
  */
 <template>
   <div>
-    <bcolorPicker :color.sync="currentValue" style="height:25px"></bcolorPicker>
+    <bcolorPicker v-model:color="currentValue" style="height:25px"></bcolorPicker>
   </div>
 </template>
 
