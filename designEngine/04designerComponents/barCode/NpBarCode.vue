@@ -54,6 +54,10 @@ export default class NpBarCode extends EngineComponent {
     this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Setting(true, ['底部', '顶部']), '底部')
     this.registerProperty(PropertyGroupName.special, '字边距', new Number_Setting(), 2)
     this.registerProperty(PropertyGroupName.special, '字大小', new Number_Setting(), 20)
+
+    this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
+
     this.initBarCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }

@@ -46,6 +46,8 @@ export default class NPQrCode extends EngineComponent {
     this.registerProperty(PropertyGroupName.special, '比例因子', new Number_Setting(), 4)
     this.registerProperty(PropertyGroupName.special, '内容颜色', new Color_Setting(), '#000000')
     this.registerProperty(PropertyGroupName.special, '留白颜色', new Color_Setting(), '#ffffff')
+    this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
     this.initQrCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }

@@ -6,8 +6,11 @@
       <span>上传文件</span>
     </el-button>
 
-    <el-dialog ref="previewPopup" title="上传文件" class="bhaviorDialog" style="height:400px;width:600px" v-model="windowVisible" :before-close="onClose"
+    <el-dialog ref="previewPopup" title="上传文件" class="bhaviorDialog" style="height:400px;width:600px" v-model="windowVisible"
       :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+
+      <!-- :before-close="onClose" -->
+
       <div style="height:calc(100% - 70px)">
         <el-upload :action="uploadServerAddr" v-model:file-list="currentFileList" :headers="httpHeaders" :before-upload="beforeUpload"
           :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
@@ -44,15 +47,11 @@
           </template>
         </el-upload>
         <!-- ****预览窗口************************************ -->
-        <el-dialog v-model:visible="previewVisible">
-          <img alt="example" style="width: 100%" :src="previewImage" cancelText="取消" okText="确定" />
-          <template #footer>
-            <div class="dialog-footer">
-              <el-button @click="handlePreviewClose">取 消</el-button>
-              <el-button type="primary" @click="handlePreviewClose">确 定</el-button>
-            </div>
-          </template>
+
+        <el-dialog v-model="previewVisible">
+          <img w-full :src="previewImage" alt="Preview Image" />
         </el-dialog>
+
       </div>
       <template #footer>
         <div class="dialog-footer" style="height:50px">
@@ -159,7 +158,6 @@ export default class uploadFile extends Vue {
       uid: uploadfileId,
       name: file.name
     }
-    let x = this.fileList
     var filesclone = [...this.fileList]
     filesclone.push(newfileinfo)
     this.UpdateFileList_Inner(filesclone)
