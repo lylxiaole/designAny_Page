@@ -5,7 +5,7 @@
  */
 <template>
   <div>
-    <uploadFile v-mode:fileList="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertySetting.maxFileLength"
+    <uploadFile v-model:fileList="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertySetting.maxFileLength"
       :fileType="currentPropertySetting.fileType" :upLoadSize="currentPropertySetting.fileSize" />
     <!-- <UploadFile :fileList.sync="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertySetting.maxFileLength"
       :fileType="currentPropertySetting.fileType" :upLoadSize="currentPropertySetting.fileSize">

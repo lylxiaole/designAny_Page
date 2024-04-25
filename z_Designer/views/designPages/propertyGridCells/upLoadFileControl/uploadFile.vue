@@ -5,14 +5,18 @@
       <img v-if="imageUrl" v-lazy="imageUrl" :width="15+'px'" :height="15+'px'" />
       <span>上传文件</span>
     </el-button>
-    <el-dialog :maskClosable="false" title="选择文件" v-model:visible="windowVisible" width="60%" :destroyOnClose="true">
-      <div style="min-height:7em">
-        <el-upload :action="uploadServerAddr" :headers="headers" :file-list="currentFileList" :before-upload="beforeUpload"
+
+    <el-dialog ref="previewPopup" title="上传文件" class="bhaviorDialog" style="height:400px;width:600px" v-model="windowVisible" :before-close="onClose"
+      :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+      <div style="height:calc(100% - 70px)">
+        <el-upload :action="uploadServerAddr" v-model:file-list="currentFileList" :headers="httpHeaders" :before-upload="beforeUpload"
           :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
           <!-- ****上传文件的按钮************************************ -->
           <template v-if="currentFileList.length<maxFileLength" #default>
             <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
-              <i class="el-icon-plus"></i>
+              <el-icon class="avatar-uploader-icon">
+                <Plus />
+              </el-icon>
             </div>
           </template>
           <template v-else #default>
@@ -26,10 +30,14 @@
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview" @click="handlePreview(file)">
-                  <i class="el-icon-zoom-in"></i>
+                  <el-icon class="avatar-uploader-icon">
+                    <ZoomIn />
+                  </el-icon>
                 </span>
                 <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                  <i class="el-icon-delete"></i>
+                  <el-icon class="avatar-uploader-icon">
+                    <Delete />
+                  </el-icon>
                 </span>
               </span>
             </div>
@@ -47,7 +55,7 @@
         </el-dialog>
       </div>
       <template #footer>
-        <div class="dialog-footer">
+        <div class="dialog-footer" style="height:50px">
           <el-button @click="handleWindowClose">取 消</el-button>
           <el-button type="primary" @click="handleWindowOK">确 定</el-button>
         </div>
@@ -62,6 +70,8 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 // import { CurrentApis, CurrentContext } from '../01designerContext'
 // import { fileInfo } from '../01designerContext'
 import { getUuid, deepClone, BuildingFileUrlForShow } from '@common/utils'
+import { Delete, Plus, ZoomIn } from '@element-plus/icons-vue'
+
 import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 export class fileInfo {
@@ -71,7 +81,13 @@ export class fileInfo {
     return BuildingFileUrlForShow(this.uid)
   }
 }
-@Options({})
+@Options({
+  components: {
+    Plus,
+    Delete,
+    ZoomIn
+  }
+})
 export default class uploadFile extends Vue {
   @Prop() private fileList: fileInfo[]
   @Prop() private maxFileLength: number
@@ -80,6 +96,9 @@ export default class uploadFile extends Vue {
   @Prop() private imageUrl: string
 
   private uploadServerAddr = apiAddr() + 'api/file/UploadFile'
+  private get httpHeaders(): any {
+    return { token: this.$store.state.system.token }
+  }
 
   @Emit('update:fileList')
   UpdateFileList_Inner(flist: fileInfo[]) {}
@@ -140,6 +159,7 @@ export default class uploadFile extends Vue {
       uid: uploadfileId,
       name: file.name
     }
+    let x = this.fileList
     var filesclone = [...this.fileList]
     filesclone.push(newfileinfo)
     this.UpdateFileList_Inner(filesclone)
@@ -194,5 +214,13 @@ export default class uploadFile extends Vue {
 <style lang="less" scoped>
 .hideClass {
   display: none;
+}
+
+.el-dialog__header {
+  display: none !important;
+}
+
+.el-dialog__body {
+  padding: 0px !important;
 }
 </style>
