@@ -23,7 +23,7 @@ import {
 } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
-import { Property, PropertyType, Text_Property, Behavior_Property, Number_Property, PropertyGroupName, Color_Property, UploadFile_Property, Boolean_Property, EnumModal_Property, Enum_Property, CompPosition_Property } from './commonClasses/LayoutProperty'
+import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, EnumModal_Setting, Enum_Setting, CompPosition_Setting } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import { Event, type } from 'jquery'
 
@@ -167,23 +167,23 @@ export default class EngineLayout extends Vue {
   }
   /**生命周期 */
   created() {
-    this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Property(), getUuid(), false)
-    this.registerProperty(PropertyGroupName.normal, '名称', new Text_Property())
+    this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Setting(), getUuid(), false)
+    this.registerProperty(PropertyGroupName.normal, '名称', new Text_Setting())
     let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
-    this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Property(), initCompPosition, true, '')
-    this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Property(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '字体', new Number_Property(), 14, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Property(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
-    this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Property(1, 'image'), [])
-    this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Property(), 'white')
-    this.registerProperty(PropertyGroupName.normal, '行为绑定', new Behavior_Property(), [], true)
+    this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Setting(), initCompPosition, true, '')
+    this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Setting(-100000), 0, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '字体', new Number_Setting(), 14, true, 'px')
+    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Setting(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
+    this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Setting(1, 'image'), [])
+    this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Setting(), 'white')
+    this.registerProperty(PropertyGroupName.normal, '行为绑定', new Behavior_Setting(), [], true)
   }
   /**生命周期-用于注册属性/事件/方法 等------只有设计模式的时候，会触发
    * 触发与vue周期created之中
@@ -701,18 +701,18 @@ export default class EngineLayout extends Vue {
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */
-  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertyType: PropertyType, defaultVal?: any, canSetting: boolean = true, unit?: string, secondGroup?: string) {
+  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertySetting: PropertySetting, defaultVal?: any, canSetting: boolean = true, unit?: string, secondGroup?: string) {
     let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
       return
     }
 
-    var newperperty = new Property(name, groupName, propertyType, defaultVal)
+    var newperperty = new Property(name, groupName, propertySetting, defaultVal)
     newperperty.canSetting = canSetting
     newperperty.secondGroup = secondGroup
     if (unit) {
-      newperperty.propertyType.unit = unit
+      newperperty.propertySetting.unit = unit
     }
     this.properties.push(newperperty)
   }
@@ -767,7 +767,7 @@ export default class EngineLayout extends Vue {
         find.id = item.id
         this.setPropertyVal(item.id, item.value, true)
       } else {
-        var newperperty = new Property(item.propertyName, item.groupName, item.propertyType)
+        var newperperty = new Property(item.propertyName, item.groupName, item.propertySetting)
         newperperty.canSetting = item.canSetting
         newperperty.id = item.id
         this.addProperty(newperperty)

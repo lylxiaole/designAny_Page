@@ -4,8 +4,8 @@
       <li v-for="(col, i) in currentValue" :key="i">
         <a-row :gutter="5">
           <a-col :span="20">
-            <a-input-number style="margin-bottom:5px;" size="small" v-model="col.value" :min="currentPropertyType.min" :max="currentPropertyType.max"
-              :defaultValue="currentPropertyType.min" />
+            <a-input-number style="margin-bottom:5px;" size="small" v-model="col.value" :min="currentPropertySetting.min"
+              :max="currentPropertySetting.max" :defaultValue="currentPropertySetting.min" />
           </a-col>
           <a-col :span="4">
             <a-icon size="small" type="minus-circle" @click="removeComp(i,col)" v-if="removeVisible" />
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
@@ -31,8 +31,8 @@ export default class numberList extends propertyCellBase {
   public addVisible: boolean = true
   public removeVisible: boolean = true
   mounted() {
-    let minCount: number = this.currentPropertyType['minCount']
-    let maxCount: number = this.currentPropertyType['maxCount']
+    let minCount: number = this.currentPropertySetting['minCount']
+    let maxCount: number = this.currentPropertySetting['maxCount']
     let currentLen: number = this.currentValue.length
     if (currentLen <= minCount) {
       this.removeVisible = false
@@ -42,8 +42,8 @@ export default class numberList extends propertyCellBase {
     }
   }
   private removeComp(index: number, obj: object) {
-    let minCount: number = this.currentPropertyType['minCount']
-    let maxCount: number = this.currentPropertyType['maxCount']
+    let minCount: number = this.currentPropertySetting['minCount']
+    let maxCount: number = this.currentPropertySetting['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (currentLen <= minCount) {
@@ -61,8 +61,8 @@ export default class numberList extends propertyCellBase {
     }
   }
   private addComp() {
-    let minCount: number = this.currentPropertyType['minCount']
-    let maxCount: number = this.currentPropertyType['maxCount']
+    let minCount: number = this.currentPropertySetting['minCount']
+    let maxCount: number = this.currentPropertySetting['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (maxCount <= currentLen) {

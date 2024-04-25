@@ -1,4 +1,4 @@
-import { Property, Authority_Property, JavaScriptCode_Property, PageInParams_Property, Behavior_Property, PropertyGroupName, Number_Property, Boolean_Property } from './commonClasses/LayoutProperty'
+import { Property, Authority_Setting, JavaScriptCode_Setting, PageInParams_Setting, Behavior_Setting, PropertyGroupName, Number_Setting, Boolean_Setting } from './commonClasses/LayoutProperty'
 import ComponentBase from './EngineComponent'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
@@ -57,13 +57,13 @@ export default class EnginePage extends EngineContainer {
     return property.value as paramInfo[]
   }
   created() {
-    this.registerProperty(PropertyGroupName.normal, '拓展js', new JavaScriptCode_Property(), false, false)
-    this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Property())
-    this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
+    this.registerProperty(PropertyGroupName.normal, '拓展js', new JavaScriptCode_Setting(), false, false)
+    this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Setting())
+    this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Setting())
     this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
     this.registerProperty(PropertyGroupName.normal, '行为列表', null, false, false)
 
-    this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Property(1, 999999999, 1), 10, true, '秒')
+    this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Setting(1, 999999999, 1), 10, true, '秒')
     this.registerEvents('加载完成', '页面加载完成时触发', [], null)
     this.registerEvents('定时器触发事件', '定时器触发', [], null)
 

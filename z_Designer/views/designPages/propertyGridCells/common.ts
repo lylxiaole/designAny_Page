@@ -1,6 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { PropertyTypeEnum, Property, PropertyType, EnginePage, EngineLayout } from '@designEngine/index'
+import { PropertyTypeEnum, Property, PropertySetting, EnginePage, EngineLayout } from '@designEngine/index'
 
 var cellControls = []
 
@@ -18,25 +18,25 @@ export { PropertyTypeEnum, cellControls }
 @Options({})
 export default class propertyCellBase extends Vue {
   @Prop()
-  private outerProperty: Property
+  private property: Property
   @Prop()
-  private outerPropertyValue: any
+  private propertyValue: any
 
-  @Emit('update:outerPropertyValue')
+  @Emit('update:propertyValue')
   private updateValue_Inner(val: any) {}
 
   /**************当前页面中的所有上下文****************************** */
 
   /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
-  protected get currentPropertyType(): PropertyType {
-    if (!this.outerProperty) {
+  protected get currentPropertySetting(): PropertySetting {
+    if (!this.property) {
       return
     }
-    return this.outerProperty.propertyType
+    return this.property.propertySetting
   }
   /**获取当前属性值 */
   protected get currentValue(): any {
-    return this.outerPropertyValue
+    return this.propertyValue
   }
   /**设置当前属性值 */
   protected set currentValue(val: any) {

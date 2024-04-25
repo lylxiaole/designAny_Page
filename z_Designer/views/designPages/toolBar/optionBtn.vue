@@ -22,7 +22,7 @@ export default class optionBtn extends Vue {
   private icon
 
   private onclick(e) {
-    this.$emit(event)
+    this.$emit('click', e)
   }
 }
 </script>

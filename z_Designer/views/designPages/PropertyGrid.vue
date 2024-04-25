@@ -15,12 +15,12 @@
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
           {{propertyInfo.name}}</el-col>
         <el-col :span="10" style="margin-left:4px">
-          <component :is="propertyInfo.comp" :outerProperty="propertyInfo.property" v-model:outerPropertyValue="propertyInfo.property.value"
+          <component :is="propertyInfo.comp" :property="propertyInfo.property" v-model:propertyValue="propertyInfo.property.value"
             :currentPage="currentPage" :currentLayouts="currentLayouts" @selectDict="selectDict">
           </component>
         </el-col>
         <el-col :span="4">
-          <span>{{propertyInfo.property.propertyType.unit}}</span>
+          <span>{{propertyInfo.property.propertySetting.unit}}</span>
         </el-col>
       </el-row>
     </div>
@@ -30,7 +30,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { Property, PropertyType, PropertyTypeEnum } from '@designEngine/03designerLayoutBase'
+import { Property, PropertySetting, PropertyTypeEnum } from '@designEngine/03designerLayoutBase'
 import { EnginePage, EngineLayout } from '@designEngine/03designerLayoutBase'
 import { deepClone, serialize, deserialize } from '@common/utils'
 import propertyCellBase, { cellControls } from './propertyGridCells/common'
@@ -71,8 +71,8 @@ modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-function getCellControl(propertyType: PropertyTypeEnum): typeof propertyCellBase {
-  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertyType)[0] as typeof propertyCellBase
+function getCellControl(propertySetting: PropertyTypeEnum): typeof propertyCellBase {
+  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertySetting)[0] as typeof propertyCellBase
 }
 // *****************************************
 
@@ -175,7 +175,7 @@ export default class PropertyGrid extends Vue {
     // window.console.log('watchCurrentLayoutsChanged-2:', property_extra)
     /**将所有共有属性进行分组，同时筛选出所有的属性信息 */
     property_extra.filter((o) => {
-      if (o.propertyType) {
+      if (o.propertySetting) {
         var findgroup = this.propertyGroups.find((p) => p.groupName == o.groupName)
         if (!findgroup) {
           findgroup = new PropertyGroupInfo()
@@ -189,7 +189,7 @@ export default class PropertyGrid extends Vue {
         propertyinfox.secondGroup = o.secondGroup
         propertyinfox.property = o
         // propertyinfox.property = deepClone(o)
-        propertyinfox.comp = getCellControl(o.propertyType.type)
+        propertyinfox.comp = getCellControl(o.propertySetting.type)
         findgroup.children.push(propertyinfox)
         if (o.groupName == this.selectGropName) {
           this.propertyDataCache.push(propertyinfox)

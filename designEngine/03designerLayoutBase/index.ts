@@ -6,35 +6,35 @@ import EnginePage from './EnginePage'
 
 export { EngineLayout, EngineContainer, EngineComponent, EnginePage }
 export { SaveInfo }
-export { Property, PropertyType, PropertyTypeEnum } from './commonClasses/LayoutProperty'
+export { Property, PropertySetting, PropertyTypeEnum } from './commonClasses/LayoutProperty'
 export {
   PropertyGroupName,
-  Boolean_Property,
-  Text_Property,
-  Number_Property,
-  NumberList_Property,
-  TextList_Property,
-  Enum_Property,
-  Color_Property,
-  UploadFile_Property,
-  JavaScriptCode_Property,
-  TimePickerFile_Property,
-  Behavior_Property,
-  Authority_Property,
-  BindingModels_Property,
-  PageInParams_Property,
-  Button_Property,
-  EnumModal_Property,
-  FileTemplateModal_Property,
-  TableStyleSetting_Property,
-  TableExportSetting_Property,
-  PageTemplateSetting_Property,
-  calendarEvents_Property,
-  Breadcrum_Property,
-  Select_Property,
-  SelectGroup_Property,
-  selectDict_Property,
-  dropDown_Property
+  Boolean_Setting,
+  Text_Setting,
+  Number_Setting,
+  NumberList_Setting,
+  TextList_Setting,
+  Enum_Setting,
+  Color_Setting,
+  UploadFile_Setting,
+  JavaScriptCode_Setting,
+  TimePickerFile_Setting,
+  Behavior_Setting,
+  Authority_Setting,
+  BindingModels_Setting,
+  PageInParams_Setting,
+  Button_Setting,
+  EnumModal_Setting,
+  FileTemplateModal_Setting,
+  TableStyleSetting_Setting,
+  TableExportSetting_Setting,
+  PageTemplateSetting_Setting,
+  CalendarEvents_Setting,
+  Breadcrum_Setting,
+  Select_Setting,
+  SelectGroup_Setting,
+  selectDict_Setting,
+  dropDown_Setting
 } from './commonClasses/LayoutProperty'
 
 export { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'

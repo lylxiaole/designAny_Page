@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
 import { propertyCellTypeAttr, PropertyTypeEnum } from '../common'
@@ -35,8 +35,8 @@ export default class textList extends propertyCellBase {
   public addVisible: boolean = true
   public removeVisible: boolean = true
   mounted() {
-    let minCount: number = this.currentPropertyType['minCount']
-    let maxCount: number = this.currentPropertyType['maxCount']
+    let minCount: number = this.currentPropertySetting['minCount']
+    let maxCount: number = this.currentPropertySetting['maxCount']
     let currentLen: number = this.currentValue.length
     if (currentLen <= minCount) {
       this.removeVisible = false
@@ -47,8 +47,8 @@ export default class textList extends propertyCellBase {
   }
 
   private removeComp(index: number, obj: object) {
-    let minCount: number = this.currentPropertyType['minCount']
-    let maxCount: number = this.currentPropertyType['maxCount']
+    let minCount: number = this.currentPropertySetting['minCount']
+    let maxCount: number = this.currentPropertySetting['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (currentLen <= minCount) {
@@ -79,8 +79,8 @@ export default class textList extends propertyCellBase {
   }
 
   private addComp() {
-    let minCount: number = this.currentPropertyType['minCount']
-    let maxCount: number = this.currentPropertyType['maxCount']
+    let minCount: number = this.currentPropertySetting['minCount']
+    let maxCount: number = this.currentPropertySetting['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (maxCount <= currentLen) {

@@ -15,11 +15,11 @@ import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@
 import {
   Property,
   PropertyGroupName,
-  Number_Property,
-  Text_Property,
-  Boolean_Property,
-  Enum_Property,
-  Color_Property
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting,
+  Color_Setting
 } from '@designEngine/03designerLayoutBase'
 
 import { getUuid, deepClone } from '@common/utils'
@@ -37,15 +37,15 @@ export default class NPQrCode extends EngineComponent {
     this.width = '300px'
     this.height = '300px'
 
-    this.registerProperty(PropertyGroupName.special, '内容', new Text_Property(), '123456789')
-    this.registerProperty(PropertyGroupName.special, '版本', new Number_Property(0, 40, 1), 0)
-    this.registerProperty(PropertyGroupName.special, '纠错等级', new Enum_Property(true, ['L', 'M', 'Q', 'H']), 'M')
-    this.registerProperty(PropertyGroupName.special, '遮罩符号', new Number_Property(-1, 7, 1), -1)
-    this.registerProperty(PropertyGroupName.special, '二维码外边距', new Number_Property(), 4)
-    this.registerProperty(PropertyGroupName.special, '二维码宽度', new Number_Property(), 0)
-    this.registerProperty(PropertyGroupName.special, '比例因子', new Number_Property(), 4)
-    this.registerProperty(PropertyGroupName.special, '内容颜色', new Color_Property(), '#000000')
-    this.registerProperty(PropertyGroupName.special, '留白颜色', new Color_Property(), '#ffffff')
+    this.registerProperty(PropertyGroupName.special, '内容', new Text_Setting(), '123456789')
+    this.registerProperty(PropertyGroupName.special, '版本', new Number_Setting(0, 40, 1), 0)
+    this.registerProperty(PropertyGroupName.special, '纠错等级', new Enum_Setting(true, ['L', 'M', 'Q', 'H']), 'M')
+    this.registerProperty(PropertyGroupName.special, '遮罩符号', new Number_Setting(-1, 7, 1), -1)
+    this.registerProperty(PropertyGroupName.special, '二维码外边距', new Number_Setting(), 4)
+    this.registerProperty(PropertyGroupName.special, '二维码宽度', new Number_Setting(), 0)
+    this.registerProperty(PropertyGroupName.special, '比例因子', new Number_Setting(), 4)
+    this.registerProperty(PropertyGroupName.special, '内容颜色', new Color_Setting(), '#000000')
+    this.registerProperty(PropertyGroupName.special, '留白颜色', new Color_Setting(), '#ffffff')
     this.initQrCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }

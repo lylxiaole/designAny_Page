@@ -12,7 +12,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
-import { Property, PropertyGroupName, Number_Property, Text_Property, Boolean_Property, Enum_Property } from '@designEngine/03designerLayoutBase'
+import { Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@common/utils'
 import { npGridIco } from '@designEngine/assets/icons.js'
@@ -45,15 +45,15 @@ export default class NpBarCode extends EngineComponent {
       'pharmacode',
       'codabar'
     ]
-    this.registerProperty(PropertyGroupName.special, '格式', new Enum_Property(true, codeFormats), 'CODE128')
-    this.registerProperty(PropertyGroupName.special, '码高', new Number_Property(), 100)
-    this.registerProperty(PropertyGroupName.special, '码宽', new Number_Property(), 2)
-    this.registerProperty(PropertyGroupName.special, '内容', new Text_Property(), '123456789')
-    this.registerProperty(PropertyGroupName.special, '显示字', new Boolean_Property(), true)
-    this.registerProperty(PropertyGroupName.special, '字对齐方式', new Enum_Property(true, ['左', '中', '右']), '中')
-    this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Property(true, ['底部', '顶部']), '底部')
-    this.registerProperty(PropertyGroupName.special, '字边距', new Number_Property(), 2)
-    this.registerProperty(PropertyGroupName.special, '字大小', new Number_Property(), 20)
+    this.registerProperty(PropertyGroupName.special, '格式', new Enum_Setting(true, codeFormats), 'CODE128')
+    this.registerProperty(PropertyGroupName.special, '码高', new Number_Setting(), 100)
+    this.registerProperty(PropertyGroupName.special, '码宽', new Number_Setting(), 2)
+    this.registerProperty(PropertyGroupName.special, '内容', new Text_Setting(), '123456789')
+    this.registerProperty(PropertyGroupName.special, '显示字', new Boolean_Setting(), true)
+    this.registerProperty(PropertyGroupName.special, '字对齐方式', new Enum_Setting(true, ['左', '中', '右']), '中')
+    this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Setting(true, ['底部', '顶部']), '底部')
+    this.registerProperty(PropertyGroupName.special, '字边距', new Number_Setting(), 2)
+    this.registerProperty(PropertyGroupName.special, '字大小', new Number_Setting(), 20)
     this.initBarCode()
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }

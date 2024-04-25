@@ -53,11 +53,11 @@ import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@
 import {
   Property,
   PropertyGroupName,
-  Number_Property,
-  Text_Property,
-  Boolean_Property,
-  Enum_Property,
-  Button_Property
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting,
+  Button_Setting
 } from '@designEngine/03designerLayoutBase'
 import { getUuid, deepClone } from '@common/utils'
 import { paramType, param } from '@behaviorEngine/index'
@@ -260,21 +260,21 @@ export default class ButtonComponent extends EngineComponent {
       this.width = 80
       this.height = 34
       //注册特有属性
-      this.registerProperty(PropertyGroupName.special, '提示文字', new Text_Property(), '')
-      this.registerProperty(PropertyGroupName.special, '气泡提示信息', new Text_Property(), '确认要删除吗？')
-      this.registerProperty(PropertyGroupName.special, '是否展示气泡', new Boolean_Property(), false)
-      this.registerProperty(PropertyGroupName.special, '按钮文本', new Text_Property(), '新增')
-      this.registerProperty(PropertyGroupName.special, '图标大小', new Number_Property(), 20)
+      this.registerProperty(PropertyGroupName.special, '提示文字', new Text_Setting(), '')
+      this.registerProperty(PropertyGroupName.special, '气泡提示信息', new Text_Setting(), '确认要删除吗？')
+      this.registerProperty(PropertyGroupName.special, '是否展示气泡', new Boolean_Setting(), false)
+      this.registerProperty(PropertyGroupName.special, '按钮文本', new Text_Setting(), '新增')
+      this.registerProperty(PropertyGroupName.special, '图标大小', new Number_Setting(), 20)
       this.registerProperty(
         PropertyGroupName.special,
         '按钮类型',
 
-        new Enum_Property(true, ['主按钮', '次按钮', '虚线按钮', '危险按钮', '链接按钮']),
+        new Enum_Setting(true, ['主按钮', '次按钮', '虚线按钮', '危险按钮', '链接按钮']),
         '主按钮'
       )
-      this.registerProperty(PropertyGroupName.special, '按钮设置', new Button_Property())
+      this.registerProperty(PropertyGroupName.special, '按钮设置', new Button_Setting())
       //新增点击时间间隔属性
-      this.registerProperty(PropertyGroupName.special, '点击时间间隔', new Number_Property(), 1000)
+      this.registerProperty(PropertyGroupName.special, '点击时间间隔', new Number_Setting(), 1000)
       this.findPropertyByName(PropertyGroupName.normal, '前景色').canSetting = false
       this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
       this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false

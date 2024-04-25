@@ -1,6 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { Property, Authority_Property, Color_Property, BindingModels_Property, Boolean_Property, PropertyGroupName, Number_Property } from '.'
+import { Property, Authority_Setting, Color_Setting, BindingModels_Setting, Boolean_Setting, PropertyGroupName, Number_Setting } from '.'
 import { EnginePage, SaveInfo, EngineContainer } from './index'
 import { factory, param } from '@behaviorEngine/index'
 
@@ -69,13 +69,13 @@ export default class EngineComponent extends EngineContainer {
     return null
   }
   created() {
-    this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Property(), '#000000')
-    this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Property())
-    this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Property(), [], true)
-    this.registerProperty(PropertyGroupName.normal, '是否禁用', new Boolean_Property(), false)
-    this.registerProperty(PropertyGroupName.normal, '是否显示', new Boolean_Property(), true, true)
-    this.registerProperty(PropertyGroupName.normal, '层级设置', new Number_Property(), 1)
-    var numberproperty = new Number_Property()
+    this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Setting(), '#000000')
+    this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Setting())
+    this.registerProperty(PropertyGroupName.normal, '绑定模型', new BindingModels_Setting(), [], true)
+    this.registerProperty(PropertyGroupName.normal, '是否禁用', new Boolean_Setting(), false)
+    this.registerProperty(PropertyGroupName.normal, '是否显示', new Boolean_Setting(), true, true)
+    this.registerProperty(PropertyGroupName.normal, '层级设置', new Number_Setting(), 1)
+    var numberproperty = new Number_Setting()
     numberproperty.min = -99999
     this.registerProperty(PropertyGroupName.normal, '外边距-左', numberproperty, 0, false, 'px')
     this.registerProperty(PropertyGroupName.normal, '外边距-右', numberproperty, 0, false, 'px')

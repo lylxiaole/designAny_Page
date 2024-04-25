@@ -5,14 +5,14 @@
  */
 <template>
   <div>
-    <DatePicker :value.sync="currentValue" :dateType="currentPropertyType.dateType" :showTime="currentPropertyType.showTime"
-      :format="currentPropertyType.format" />
+    <DatePicker :value.sync="currentValue" :dateType="currentPropertySetting.dateType" :showTime="currentPropertySetting.showTime"
+      :format="currentPropertySetting.format" />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import npDatePicker from '@common/components/commonComponents/npDatePicker.vue'
 
