@@ -4,9 +4,12 @@ import { isBoolean, isString, isNumber } from 'xe-utils'
 export enum PropertyTypeEnum {
   boolean = 'boolean',
   compPosition = 'compPosition',
+  margin = 'margin',
+  padding = 'padding',
   text = 'text',
   textList = 'textList',
   number = 'number',
+
   numberList = 'numberList',
   enum = 'enum',
   color = 'color',
@@ -124,6 +127,14 @@ export class Property {
 export class CompPosition_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.compPosition
 }
+export class Margin_Setting extends PropertySetting {
+  public type: PropertyTypeEnum = PropertyTypeEnum.margin
+}
+
+export class Padding_Setting extends PropertySetting {
+  public type: PropertyTypeEnum = PropertyTypeEnum.padding
+}
+
 //添加布尔类型属性
 export class Boolean_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.boolean

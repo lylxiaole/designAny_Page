@@ -1,29 +1,10 @@
 import { Options, Vue } from 'vue-class-component'
 import { render } from 'vue'
 
-import {
-  Component,
-  Emit,
-  Watch,
-  Prop,
-  Ref
-  //Prop
-  //PropSync
-  //Model
-  //ModelSync
-  //Watch
-  //Provide
-  //Inject
-  //ProvideReactive
-  //InjectReactive
-  //Emit
-  //Ref
-  //VModel
-  //Component (provided by vue-class-component)
-} from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
-import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, EnumModal_Setting, Enum_Setting, CompPosition_Setting } from './commonClasses/LayoutProperty'
+import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, EnumModal_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import { Event, type } from 'jquery'
 
@@ -171,14 +152,20 @@ export default class EngineLayout extends Vue {
     this.registerProperty(PropertyGroupName.normal, '名称', new Text_Setting())
     let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
     this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Setting(), initCompPosition, true, '')
-    this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Setting(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Setting(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Setting(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Setting(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Setting(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Setting(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Setting(-100000), 0, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Setting(-100000), 0, true, 'px')
+
+    // this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Setting(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Setting(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Setting(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Setting(-100000), 0, true, 'px')
+    let bianju = { left: 0, right: 0, top: 0, bottom: 0 }
+    this.registerProperty(PropertyGroupName.normal, '外边距', new Margin_Setting(), bianju, true, '')
+    this.registerProperty(PropertyGroupName.normal, '内边距', new Padding_Setting(), bianju, true, '')
+
+    // this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Setting(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Setting(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Setting(-100000), 0, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Setting(-100000), 0, true, 'px')
+
     this.registerProperty(PropertyGroupName.normal, '字体', new Number_Setting(), 14, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Setting(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
     this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Setting(1, 'image'), [])
@@ -297,116 +284,125 @@ export default class EngineLayout extends Vue {
     this.setPropertyVal(pro.id, pro.value)
   }
   get margin_left(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距-左')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.left as number
   }
   set margin_left(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距-左')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.left = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get margin_right(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距-右')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.right as number
   }
   set margin_right(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距-右')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.right = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get margin_top(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距-上')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.top
   }
   set margin_top(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距-上')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.top = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get margin_bottom(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距-下')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.bottom
   }
   set margin_bottom(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距-下')
+    var pro = this.findPropertyByName('基础设置', '外边距')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.bottom = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get padding_left(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距-左')
+    var pro = this.findPropertyByName('基础设置', '内边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.left
   }
   set padding_left(val: number) {
     var pro = this.findPropertyByName('基础设置', '内边距-左')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.left = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get padding_right(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距-右')
+    var pro = this.findPropertyByName('基础设置', '内边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.right
   }
   set padding_right(val: number) {
-    var pro = this.findPropertyByName('基础设置', '内边距-右')
+    var pro = this.findPropertyByName('基础设置', '内边距')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.right = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get padding_top(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距-上')
+    var pro = this.findPropertyByName('基础设置', '内边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+
+    return pro.value.top
   }
   set padding_top(val: number) {
-    var pro = this.findPropertyByName('基础设置', '内边距-上')
+    var pro = this.findPropertyByName('基础设置', '内边距')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.top = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get padding_bottom(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距-下')
+    var pro = this.findPropertyByName('基础设置', '内边距')
     if (!pro) {
       return 0
     }
-    return parseInt(pro.value) as number
+    return pro.value.bottom
   }
   set padding_bottom(val: number) {
-    var pro = this.findPropertyByName('基础设置', '内边距-下')
+    var pro = this.findPropertyByName('基础设置', '内边距')
     if (!pro) {
       return
     }
-    this.setPropertyVal(pro.id, parseInt(val.toString()))
+    pro.value.bottom = val
+    this.setPropertyVal(pro.id, pro.value)
   }
   get fontFamily(): string {
     // '宋体', '楷体', '黑体', '隶书'
