@@ -4,9 +4,9 @@
       'padding-left':component==null?0:component.padding_left+'px','padding-right':component==null?0:component.padding_right+'px','padding-top':component==null?0:component.padding_top+'px','padding-bottom':component==null?0:component.padding_bottom+'px',
        'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':'block','tabindex':'1' }">
 
-    <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':component==null?'':component.fontFamily }">
-      <div style="tab-index:1" ref="compContent"></div>
-    </div>
+    <div ref="compContent" :class="themeClass" style="width:100%;height:100%;tab-index:1"
+      :style="{zIndex:0,'font-family':component==null?'':component.fontFamily }"> </div>
+
     <div v-show="isSelectedArea===true" class="dragbutton" ref="semove"
       style="width:16px;height:16px;right:-16px; bottom:-16px;position:absolute;cursor: se-resize;;z-index:99" draggable="true"></div>
     <div v-show="isSelectedArea===true" class="dragbutton" ref="swmove"

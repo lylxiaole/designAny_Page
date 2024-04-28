@@ -75,16 +75,16 @@ export default class EngineComponent extends EngineContainer {
     this.registerProperty(PropertyGroupName.normal, '是否禁用', new Boolean_Setting(), false)
     this.registerProperty(PropertyGroupName.normal, '是否显示', new Boolean_Setting(), true, true)
     this.registerProperty(PropertyGroupName.normal, '层级设置', new Number_Setting(), 1)
-    var numberproperty = new Number_Setting()
-    numberproperty.min = -99999
-    this.registerProperty(PropertyGroupName.normal, '外边距-左', numberproperty, 0, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-右', numberproperty, 0, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-上', numberproperty, 0, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '外边距-下', numberproperty, 0, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-左', numberproperty, 0, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-右', numberproperty, 0, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-上', numberproperty, 0, false, 'px')
-    this.registerProperty(PropertyGroupName.normal, '内边距-下', numberproperty, 0, false, 'px')
+    // var numberproperty = new Number_Setting()
+    // numberproperty.min = -99999
+    // this.registerProperty(PropertyGroupName.normal, '外边距-左', numberproperty, 0, false, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '外边距-右', numberproperty, 0, false, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '外边距-上', numberproperty, 0, false, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '外边距-下', numberproperty, 0, false, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '内边距-左', numberproperty, 0, false, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '内边距-右', numberproperty, 0, false, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '内边距-上', numberproperty, 0, false, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '内边距-下', numberproperty, 0, false, 'px')
 
     this.width = 200
     this.height = 200

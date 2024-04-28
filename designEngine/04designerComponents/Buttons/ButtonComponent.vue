@@ -1,10 +1,8 @@
 <template>
-  <el-button @click="onClick">
-    <el-icon class="el-icon--right">
-      <Upload />
-    </el-icon>
-    Upload
-
+  <el-button @click="onClick" :style="{'background-color':background,'color':foreground}" style="width:100%;height:100%;display:block">
+    <div class="verticalAlignCenter flexHorilanLayout" style="width:100%;height:100%">
+      {{btnText}}
+    </div>
   </el-button>
 </template>
 
@@ -25,26 +23,28 @@ import designerContext from '@designEngine/01designerContext/context'
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
 @Options({})
 export default class ButtonComponent extends EngineComponent {
-  created() {}
+  get btnText(): string {
+    var pro = this.findPropertyByName(PropertyGroupName.special, '按钮文本')
+    if (!pro) {
+      return ''
+    }
+    return pro.value
+  }
+  set btnText(val: string) {
+    var pro = this.findPropertyByName(PropertyGroupName.special, '按钮文本')
+    if (!pro) {
+      return
+    }
+    pro.value = val
+    this.setPropertyVal(pro.id, pro.value)
+  }
 
   mounted() {
     this.width = 80
     this.height = 34
     //注册特有属性
-    this.registerProperty(PropertyGroupName.special, '按钮文本', new Text_Setting(), '新增')
-    this.registerProperty(PropertyGroupName.special, '图标大小', new Number_Setting(), 20)
-    this.registerProperty(
-      PropertyGroupName.special,
-      '按钮类型',
-      new Enum_Setting(true, ['主按钮', '次按钮', '虚线按钮', '危险按钮', '链接按钮']),
-      '主按钮'
-    )
-    this.registerProperty(PropertyGroupName.special, '按钮设置', new Button_Setting())
-    //新增点击时间间隔属性
-    this.registerProperty(PropertyGroupName.special, '点击时间间隔', new Number_Setting(), 1000)
-    this.findPropertyByName(PropertyGroupName.normal, '前景色').canSetting = false
+    this.registerProperty(PropertyGroupName.special, '按钮文本', new Text_Setting(), '新增按钮')
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
-    this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
   }
 
   private onClick(e) {}
