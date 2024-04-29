@@ -14,6 +14,4 @@ export class layoutEvent {
   behaviorIds: string[] = [] //行为的Id
 }
 
-export class layoutMethod extends layoutEvent {
-  callback: Function
-}
+export class layoutMethod extends layoutEvent {}

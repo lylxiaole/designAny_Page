@@ -693,7 +693,6 @@ export default class EngineLayout extends Vue {
     newmethod.description = description
     newmethod.inParams = inParams
     newmethod.outParam = outParam
-    newmethod.callback = callback
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */

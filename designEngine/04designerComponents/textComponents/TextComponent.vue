@@ -38,7 +38,6 @@ export default class TextComponent extends EngineComponent {
     this.background = 'white'
     this.registerProperty(PropertyGroupName.special, '文本', new Text_Setting(), '文本组件')
     //var textPropertyId = this.findPropertyByName(PropertyGroupName.special, '文本').id
-
     this.registerProperty(PropertyGroupName.special, '水平对齐', new Enum_Setting(true, ['居左', '居中', '居右']), '居中')
     this.registerProperty(PropertyGroupName.special, '垂直对齐', new Enum_Setting(true, ['居上', '居中', '居下']), '居中')
     // this.registerProperty('垂直对齐', PropertyGroupName.special, new Enum_Setting(true, ['上', '中', '下']), '上')
@@ -48,13 +47,6 @@ export default class TextComponent extends EngineComponent {
     this.registerProperty(PropertyGroupName.special, '是否倾斜', new Enum_Setting(true, ['是', '否']), '否')
     this.registerProperty(PropertyGroupName.special, '是否可点击开启编辑', new Enum_Setting(true, ['是', '否']), '否')
     this.registerProperty(PropertyGroupName.special, '是否显示边框', new Enum_Setting(true, ['是', '否']), '否')
-    // this.CaptureEvent()
-    // this.canDrag = true
-    // this.canDrop = true
-    //let showinput = this.isShowInput
-    // $('span').bind('dblclick', function() {
-
-    // })
   }
 
   get contentEditable(): boolean {

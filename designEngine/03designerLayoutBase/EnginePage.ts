@@ -62,13 +62,13 @@ export default class EnginePage extends EngineContainer {
     this.registerProperty(PropertyGroupName.normal, '权限设置', new Authority_Setting())
     this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
     this.registerProperty(PropertyGroupName.normal, '行为列表', null, false, false)
-
     this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Setting(1, 999999999, 1), 10, true, '秒')
-    this.registerEvents('加载完成', '页面加载完成时触发', [], null)
-    this.registerEvents('定时器触发事件', '定时器触发', [], null)
 
-    this.registerMethods('关闭页面-触发回调', '', () => {}, [], null)
-    this.registerMethods('关闭页面-不触发回调', '', () => {}, [], null)
+    this.registerEvents('加载完成', '', [], null)
+    this.registerEvents('定时器触发事件', '', [], null)
+
+    this.registerMethods('关闭页面-触发回调', '', [], null)
+    this.registerMethods('关闭页面-不触发回调', '', [], null)
   }
 
   mounted() {
