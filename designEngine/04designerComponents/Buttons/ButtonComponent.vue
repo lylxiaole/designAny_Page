@@ -45,9 +45,12 @@ export default class ButtonComponent extends EngineComponent {
     //注册特有属性
     this.registerProperty(PropertyGroupName.special, '按钮文本', new Text_Setting(), '新增按钮')
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+    this.registerEvents('点击', '', [], null)
   }
 
-  private onClick(e) {}
+  private onClick(e) {
+    this.triggerEvent('点击', null)
+  }
 }
 </script>
 

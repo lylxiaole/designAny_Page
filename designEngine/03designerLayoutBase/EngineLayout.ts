@@ -682,7 +682,7 @@ export default class EngineLayout extends Vue {
     return null
   }
   /**注册方法 */
-  public async registerMethods(name: string, description: string, callback: Function, inParams: param[], outParam: param) {
+  public async registerMethods(name: string, description: string, inParams: param[], outParam: param) {
     var event = this.designerMethods.find((o) => o.eventName == name)
     if (event) {
       window.console.error('注册失败,已经有相同名称的事件存在')
