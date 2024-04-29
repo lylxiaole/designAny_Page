@@ -14,12 +14,12 @@
         :key="propertyInfo.name" :disabled="propertyInfo.isEnable==false">
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
           {{propertyInfo.name}}</el-col>
-        <el-col :span="10" style="margin-left:4px">
+        <el-col :span="12" style="margin-left:4px">
           <component :is="propertyInfo.comp" :property="propertyInfo.property" v-model:propertyValue="propertyInfo.property.value"
             :currentPage="currentPage" :currentLayouts="currentLayouts" @selectDict="selectDict">
           </component>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="2">
           <span>{{propertyInfo.property.propertySetting.unit}}</span>
         </el-col>
       </el-row>

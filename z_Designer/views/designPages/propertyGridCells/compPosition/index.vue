@@ -1,26 +1,22 @@
  
 <template>
   <div>
-    <el-row>
-      <el-col>
-        <span class="normaltext">width:</span>
-        <el-input size="small" v-model="currentValue.width" placeholder="请输入" />
-      </el-col>
-      <el-col>
-        <span class="normaltext">height:</span>
-        <el-input size="small" v-model="currentValue.height" placeholder="请输入" />
-      </el-col>
+    <el-row style="position:relative">
+      <span class="normaltext" style="float:left;width:32px">宽:</span>
+      <el-input size="small" style="float:left;width:90px" v-model="currentValue.width" placeholder="请输入" />
+    </el-row>
+    <el-row style="position:relative;margin-top:2px">
+      <span class="normaltext" style="float:left;width:32px">高:</span>
+      <el-input size="small" style="float:left;width:90px" v-model="currentValue.height" placeholder="请输入" />
     </el-row>
     <!-- ************************************************************************** -->
-    <el-row>
-      <el-col>
-        <span class="normaltext">left:</span>
-        <el-input size="small" v-model="currentValue.x" placeholder="请输入" />
-      </el-col>
-      <el-col>
-        <span class="normaltext">top:</span>
-        <el-input size="small" v-model="currentValue.y" placeholder="请输入" />
-      </el-col>
+    <el-row style="position:relative;margin-top:2px">
+      <span class="normaltext" style="float:left;width:32px">左边:</span>
+      <el-input size="small" style="float:left;width:90px" v-model="currentValue.x" placeholder="请输入" />
+    </el-row>
+    <el-row style="position:relative;margin-top:2px">
+      <span class="normaltext" style="float:left;width:32px">顶部:</span>
+      <el-input size="small" style="float:left;width:90px" v-model="currentValue.y" placeholder="请输入" />
     </el-row>
   </div>
 </template>
