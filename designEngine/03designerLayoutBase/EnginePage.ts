@@ -64,6 +64,9 @@ export default class EnginePage extends EngineContainer {
     this.registerProperty(PropertyGroupName.normal, '行为列表', null, false, false)
     this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Setting(1, 999999999, 1), 10, true, '秒')
 
+    this.findPropertyByName(PropertyGroupName.normal, '外边距').canSetting = false
+    this.findPropertyByName(PropertyGroupName.normal, '内边距').canSetting = false
+
     this.registerEvents('加载完成', '', [], null)
     this.registerEvents('定时器触发事件', '', [], null)
 
