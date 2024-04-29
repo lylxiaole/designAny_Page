@@ -62,7 +62,6 @@ export default class NpBarCode extends EngineComponent {
     this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
-    // if(property.secondGroup==='布局信息')
     this.initBarCode()
   }
   get vlaue(): string {

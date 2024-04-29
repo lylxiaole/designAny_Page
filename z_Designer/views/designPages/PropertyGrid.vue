@@ -41,7 +41,6 @@ class PropertyGroupInfo {
 }
 class propertyInfo {
   name: string
-  secondGroup: string
 
   get isShow(): boolean {
     if (this.property.canSetting == false) {
@@ -186,7 +185,6 @@ export default class PropertyGrid extends Vue {
         }
         var propertyinfox = new propertyInfo()
         propertyinfox.name = o.propertyName
-        propertyinfox.secondGroup = o.secondGroup
         propertyinfox.property = o
         // propertyinfox.property = deepClone(o)
         propertyinfox.comp = getCellControl(o.propertySetting.type)

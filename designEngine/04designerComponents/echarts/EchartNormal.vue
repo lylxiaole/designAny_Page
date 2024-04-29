@@ -16,20 +16,9 @@ import { getUuid, deepClone } from '@common/utils'
 @Options({})
 export default class EchartNormal extends EngineComponent {
   mounted() {
-    this.width = '150px'
-    this.height = '40px'
-    this.background = 'white'
-    this.registerProperty(PropertyGroupName.special, '文本', new Text_Setting(), '文本组件')
-    //var textPropertyId = this.findPropertyByName(PropertyGroupName.special, '文本').id
-    this.registerProperty(PropertyGroupName.special, '水平对齐', new Enum_Setting(true, ['居左', '居中', '居右']), '居中')
-    this.registerProperty(PropertyGroupName.special, '垂直对齐', new Enum_Setting(true, ['居上', '居中', '居下']), '居中')
-    // this.registerProperty('垂直对齐', PropertyGroupName.special, new Enum_Setting(true, ['上', '中', '下']), '上')
-    this.registerProperty(PropertyGroupName.special, '提示文字', new Text_Setting(), '')
-    this.registerProperty(PropertyGroupName.special, '是否换行', new Enum_Setting(true, ['是', '否']), '是')
-    this.registerProperty(PropertyGroupName.special, '粗细', new Enum_Setting(true, ['normal', 'bold', 'bolder', 'lighter']), 'normal')
-    this.registerProperty(PropertyGroupName.special, '是否倾斜', new Enum_Setting(true, ['是', '否']), '否')
-    this.registerProperty(PropertyGroupName.special, '是否可点击开启编辑', new Enum_Setting(true, ['是', '否']), '否')
-    this.registerProperty(PropertyGroupName.special, '是否显示边框', new Enum_Setting(true, ['是', '否']), '否')
+    this.width = '500px'
+    this.height = '500px'
+    this.registerProperty(PropertyGroupName.special, 'Option设置', new Text_Setting())
   }
 }
 </script>

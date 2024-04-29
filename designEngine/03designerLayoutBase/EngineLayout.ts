@@ -696,7 +696,7 @@ export default class EngineLayout extends Vue {
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */
-  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertySetting: PropertySetting, defaultVal?: any, canSetting: boolean = true, unit?: string, secondGroup?: string) {
+  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertySetting: PropertySetting, defaultVal?: any, canSetting: boolean = true, unit?: string) {
     let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
@@ -705,7 +705,6 @@ export default class EngineLayout extends Vue {
 
     var newperperty = new Property(name, groupName, propertySetting, defaultVal)
     newperperty.canSetting = canSetting
-    newperperty.secondGroup = secondGroup
     if (unit) {
       newperperty.propertySetting.unit = unit
     }
