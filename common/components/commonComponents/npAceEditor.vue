@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;height:100%">
-    <el-button class="themeButton" type="primary" size="small"  
+    <el-button class="themeButton" type="primary" size="small"
       style="width:118px;height:34px;background:rgba(241,182,90,0.1);border-color:rgba(241,182,90,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;"
       @click="startEditText">
       扩展js
@@ -17,14 +17,9 @@
 </template>
 
 <script lang="ts">
-
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator' // import ace from 'ace-builds'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator' // import ace from 'ace-builds'
 import aceEditor from 'vue2-ace-editor'
-// import 'ace-builds/webpack-resolver' // 在 webpack 环境中使用必须要导入
-// import 'ace-builds/src-noconflict/theme-monokai' // 默认设置的主题
-// import 'ace-builds/src-noconflict/mode-javascript' // 默认设置的语言模式
-// import 'ace-builds/src-noconflict/ext-language_tools'
 import { npAceEditorIco } from '@designEngine/assets/icons.js'
 
 @Options({

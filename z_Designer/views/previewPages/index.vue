@@ -56,7 +56,6 @@ export default class index extends PageBase {
       if (treenode.type === 'page') {
         this.allPageSimples.push(treenode)
       }
-
       if (treenode.children) {
         this.organizePages(treenode.children)
       }
@@ -65,16 +64,13 @@ export default class index extends PageBase {
   // ************************************
   private async openPage(pageId: string) {
     let cachePageData = this.openedPageData.find((o) => o.id === pageId)
-    let res = null
-    if (cachePageData) {
-      res = cachePageData
-    } else {
-      res = await GetPageDetail(pageId)
-      this.openedPageData.push(res)
+    if (!cachePageData) {
+      cachePageData = await GetPageDetail(pageId)
+      this.openedPageData.push(cachePageData)
     }
     await this.$nextTick()
     let designLayout: any = typeof EnginePage
-    switch (res.type) {
+    switch (cachePageData.type) {
       case pageType.pcPage:
         designLayout = PCPagePreview
         break
@@ -86,8 +82,8 @@ export default class index extends PageBase {
     }
     /************************渲染页面 */
     let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
-    await (vueComp as any).loadPageByData(pageId, res.designDetail)
-    ;(vueComp as any).name = res.name
+    await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail)
+    ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
     this.currentOpenEngin = vueComp as any
@@ -97,6 +93,7 @@ export default class index extends PageBase {
 
   // ************************************
   private onClose() {
+    this.openedPageData = []
     this.currentOpenEngin.destorymethod()
     this.windowVisible = false
   }
