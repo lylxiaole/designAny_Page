@@ -7,7 +7,7 @@
     </el-row>
     <el-row style="height:calc(100% - 60px);width:100%;display:block;position:relative;display:block">
       <el-col style="width:250px;height:100%;float:left">
-        <pagelist :currentApplication="application" :pageGroups="pageDataList" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
+        <pagelist :currentApplication="application" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
       </el-col>
       <el-col class="pageList" style="width:calc(100% - 500px);height:100%;float:left">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width:100%;height:100%">
@@ -71,8 +71,7 @@ export default class index extends PageBase {
     })
   }
   // **********当前应用的页面**********************************************************
-  //当前的页面列表
-  private pageDataList: any[] = []
+
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
   //所有打开的页面的引擎

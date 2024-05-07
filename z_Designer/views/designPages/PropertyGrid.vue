@@ -41,7 +41,6 @@ class PropertyGroupInfo {
 }
 class propertyInfo {
   name: string
-
   get isShow(): boolean {
     if (this.property.canSetting == false) {
       return false
@@ -74,7 +73,6 @@ function getCellControl(propertySetting: PropertyTypeEnum): typeof propertyCellB
   return cellControls.filter((o) => o.prototype.$Meta.celltype == propertySetting)[0] as typeof propertyCellBase
 }
 // *****************************************
-
 @Options({
   name: 'propertyGrid',
   components: {}
@@ -247,9 +245,7 @@ export default class PropertyGrid extends Vue {
   }
 }
 </script>
-
-
-
+ 
 <style scoped>
 .propertyGridRow {
   margin: 5px 0px;

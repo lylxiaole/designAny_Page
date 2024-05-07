@@ -100,7 +100,6 @@ export default class index extends ComponentBase {
     } else {
       this.treeData = []
     }
-    // window.console.log('onPageGroupsChanged:', this.treeData)
   }
   // *********pageGroups管理**************************************************
   private searchNodeById(id: string, parentNodes: TreeNodeDC[]): TreeNodeDC {
