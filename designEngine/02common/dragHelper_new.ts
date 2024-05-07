@@ -11,8 +11,6 @@ export enum dragEnums {
 type onDragEventType = (el: Element, sourceContainer: Element) => void
 type onDropEventType = (el: Element, targetContainer: Element, x: number, y: number) => Promise<boolean>
 type onDragOverEventType = (el: Element, targetContainer: Element) => boolean
-type onShadowEventType = (el: Element, targetContainer: Element) => void
-type onClonedEventType = (clone: Element) => void
 type onDragEndEventType = (el: Element) => void
 type onDragMoveEventType = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop) => boolean
 type onDragOutEventType = (el: Element, targetContainer: Element) => boolean
@@ -168,13 +166,6 @@ export default class dragHelper {
       dragHelper.dragClone = null
     })
     $(dragItem).on('dragstart', (e: any) => {
-      // var data = e.originalEvent.dataTransfer
-      // data.setData('text/plain', $(this).attr('id'))
-      // var img = new Image()
-      // e.originalEvent.dataTransfer.setDragImage(img, 0, 0)
-      // e.originalEvent.dataTransfer.effectAllowed = 'all'
-      // e.originalEvent.dataTransfer.dropEffect = 'copy'
-      // window.console.log('dragstart:', e)
       e.stopPropagation()
       dragHelper.dragClone = e.delegateTarget
 
@@ -195,7 +186,6 @@ export default class dragHelper {
   // *****************定义dragItem的附加内容*****************************************
   public makeDragItemInfo(dragItem: Element, Info: any): void {
     var infostr = common.serialize(Info)
-    // ////window.console.log('infostr',infostr)
     $(dragItem).attr(dragEnums.dragItem_Info, infostr)
   }
   public getDragItemInfo(dragItem: Element): any {
