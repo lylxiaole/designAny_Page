@@ -59,7 +59,6 @@ export default class EchartNormal extends EngineComponent {
     //*********************** */
     this.resizeListener = elementResizeDetectorMaker()
     this.resizeListener.listenTo(this.$refs.topdiv, async () => {
-      window.console.log('resize')
       this.myChart.resize()
     })
   }
