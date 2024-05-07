@@ -9,7 +9,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
-import { Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
+import { Property, PropertyGroupName, JsonContent_Setting } from '@designEngine/03designerLayoutBase'
 import { getUuid, deepClone } from '@common/utils'
 import * as echarts from 'echarts'
 import { shallowRef } from 'vue'
@@ -52,7 +52,7 @@ export default class EchartNormal extends EngineComponent {
   mounted() {
     this.width = '500px'
     this.height = '500px'
-    this.registerProperty(PropertyGroupName.special, 'Option设置', new Text_Setting())
+    this.registerProperty(PropertyGroupName.special, 'Option设置', new JsonContent_Setting())
     //*********************** */
     this.myChart = echarts.init(this.$refs.echartsArea as any)
     this.myChart.setOption(this.option, { notMerge: true })

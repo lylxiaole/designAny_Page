@@ -6,8 +6,8 @@
       扩展js
     </el-button>
     <el-dialog :maskClosable="false" title="编辑" v-model="windowVisible" width="900px" :destroyOnClose="true">
-      <editor ref="editor" lang="javascript" @init="editorInit" v-model="currentCode" width="850" height="500" :options="options">
-      </editor>
+      <!-- <editor ref="editor" lang="javascript" @init="editorInit" v-model="currentCode" width="850" height="500" :options="options"> -->
+      <!-- </editor> -->
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleCancel">取 消</el-button>
         <el-button type="primary" @click="onSure">确 定</el-button>
@@ -19,20 +19,17 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator' // import ace from 'ace-builds'
-import aceEditor from 'vue2-ace-editor'
 import { npAceEditorIco } from '@designEngine/assets/icons.js'
 
 @Options({
-  components: {
-    editor: aceEditor
-  }
+  components: {}
 })
 export default class npAceEditor extends Vue {
   @Prop() currentCode: string
   @Emit('update:currentCode')
   UpdateCode_Inner(code: string) {}
 
-  private currentEditor: aceEditor
+  private currentEditor: any
   private themePath: string = 'ace/theme/monokai' // 不导入 webpack-resolver，该模块路径会报错
   private modePath: string = 'ace/mode/javascript' // 同上
   private windowVisible: boolean = false
@@ -93,13 +90,6 @@ export default class npAceEditor extends Vue {
   }
 
   //Ace编辑器
-  editorInit(editor) {
-    require('brace/ext/language_tools') //language extension prerequsite...
-    require('brace/mode/html')
-    require('brace/mode/javascript') //language
-    require('brace/mode/less')
-    require('brace/theme/chrome')
-    require('brace/snippets/javascript') //snippet
-  }
+  editorInit(editor) {}
 }
 </script>

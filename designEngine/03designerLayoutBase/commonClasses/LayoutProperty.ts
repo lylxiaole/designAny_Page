@@ -15,6 +15,8 @@ export enum PropertyTypeEnum {
   color = 'color',
   uploadFile = 'uploadFile',
   javaScriptCode = 'javaScriptCode',
+  jsonContent = 'jsonContent',
+
   timePicker = 'timePicker',
   behavior = 'behavior',
   authority = 'authority',
@@ -234,6 +236,10 @@ export class UploadFile_Setting extends PropertySetting {
 export class JavaScriptCode_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.javaScriptCode
 }
+export class JsonContent_Setting extends PropertySetting {
+  public type: PropertyTypeEnum = PropertyTypeEnum.jsonContent
+}
+
 export class TimePickerFile_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.timePicker
 
