@@ -4,7 +4,7 @@ import { render } from 'vue'
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
-import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, EnumModal_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/LayoutProperty'
+import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import { Event, type } from 'jquery'
 
