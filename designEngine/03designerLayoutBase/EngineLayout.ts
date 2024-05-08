@@ -153,19 +153,9 @@ export default class EngineLayout extends Vue {
     let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
     this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Setting(), initCompPosition, true, '')
 
-    // this.registerProperty(PropertyGroupName.normal, '外边距-左', new Number_Setting(-100000), 0, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '外边距-右', new Number_Setting(-100000), 0, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '外边距-上', new Number_Setting(-100000), 0, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '外边距-下', new Number_Setting(-100000), 0, true, 'px')
     let bianju = { left: 0, right: 0, top: 0, bottom: 0 }
     this.registerProperty(PropertyGroupName.normal, '外边距', new Margin_Setting(), bianju, true, '')
     this.registerProperty(PropertyGroupName.normal, '内边距', new Padding_Setting(), bianju, true, '')
-
-    // this.registerProperty(PropertyGroupName.normal, '内边距-左', new Number_Setting(-100000), 0, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '内边距-右', new Number_Setting(-100000), 0, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '内边距-上', new Number_Setting(-100000), 0, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '内边距-下', new Number_Setting(-100000), 0, true, 'px')
-
     this.registerProperty(PropertyGroupName.normal, '字体', new Number_Setting(), 14, true, 'px')
     this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Setting(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
     this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Setting(1, 'image'), [])
