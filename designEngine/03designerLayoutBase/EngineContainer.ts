@@ -18,16 +18,7 @@ export default class EngineContainer extends EngineLayout {
   //当前页面的缩放尺寸
   public currentScaleSize: number = 1
 
-  created() {
-    // this.onDrop_Event = this.listenOnDrop
-    // this.onDragMove_Event = this.listenOnDragMove
-    // this.onDelete_Event = this.listenOnDeleteKey
-    // this.onDragEnd_Event = this.listenOnDragEnd
-    // this.onCut_Event = this.listenOnCut
-    // this.onCopy_Event = this.listenOnCopy
-    // this.onPaste_Event = this.listenOnPaste
-    // this.onMouseMove_Event = this.listenOnMousemove
-  }
+  created() {}
 
   mounted() {}
 
