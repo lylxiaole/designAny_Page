@@ -23,8 +23,8 @@ export default class EchartNormal extends EngineComponent {
   private resizeListener: any = null
   private get option() {
     var property = this.findPropertyByName(PropertyGroupName.special, 'Option设置')
-    if (!property.value) {
-      property.value = {
+    if (!property || !property.value) {
+      return {
         grid: {
           width: '100%',
           height: '100%'
@@ -58,11 +58,15 @@ export default class EchartNormal extends EngineComponent {
     this.myChart.setOption(this.option, { notMerge: true })
     //*********************** */
     this.resizeListener = elementResizeDetectorMaker()
-    this.resizeListener.listenTo(this.$refs.topdiv, async () => {
+    this.resizeListener.listenTo(this.$refs.topdiv, () => {
       this.myChart.resize()
     })
+    //*********************** */
+    this.$watch('option', this.onOptionChanged, { deep: true })
   }
-
+  private onOptionChanged(val) {
+    this.myChart.setOption(val, { notMerge: true })
+  }
   unmounted() {
     this.resizeListener.uninstall(this.$refs.topdiv)
   }

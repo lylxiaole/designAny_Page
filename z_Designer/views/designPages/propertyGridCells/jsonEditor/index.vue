@@ -57,7 +57,6 @@ export default class index extends propertyCellBase<JsonContent_Setting> {
 
   private onConfirm() {
     this.currentValue = (this.$refs.jsonEditor as jsonEditorCommon).getJsonData()
-    debugger
     this.windowVisible = false
   }
   private onCancel() {
