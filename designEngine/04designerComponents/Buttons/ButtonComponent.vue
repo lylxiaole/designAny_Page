@@ -10,8 +10,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
 import { Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
-import designerContext from '@designEngine/01designerContext/context'
-
+ 
 @layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
 @Options({})
 export default class ButtonComponent extends EngineComponent {

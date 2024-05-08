@@ -6,7 +6,7 @@ import { paramType, param } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
 import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
-import { Event, type } from 'jquery'
+import designerContext from '../01designerContext/context'
 
 type propertyValidatorHandle = (newval: any) => boolean
 class propertyValidatorType {
@@ -29,7 +29,7 @@ export default class EngineLayout extends Vue {
   public renderContainer: any = {}
   public isDesigning: boolean = false
   public isNeedSave: boolean = false
-
+  public designerContext: any = designerContext
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}

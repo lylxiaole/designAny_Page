@@ -11,7 +11,6 @@ import { drawVueOnVirtualDom, deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
-import designerContext from '@designEngine/01designerContext/context'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
@@ -20,7 +19,7 @@ export default class PCPageDesign extends EnginePage {
     if (!this.background_img || !this.background_img.uid) {
       return this.background
     }
-    return 'url("' + designerContext.getFileApiAddr(this.background_img.uid) + '")'
+    return 'url("' + this.designerContext.getFileApiAddr(this.background_img.uid) + '")'
   }
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
