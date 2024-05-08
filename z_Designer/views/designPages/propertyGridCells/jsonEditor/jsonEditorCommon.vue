@@ -1,57 +1,51 @@
  
 <template>
   <div>
-    <v-ace-editor v-model:value="jsonData" lang="json" theme="chrome" :onChange="handleChange" :options="{
-      enableBasicAutocompletion: true,
-      enableSnippets: true,
-      enableLiveAutocompletion: true
-    }" style="height:100%" class="ace-editor" />
+    <JsonEditor ref="editor" height="100%" mode="text" :askToFormat="false" :mainMenuBar="true" :navigationBar="false"
+      :queryLanguagesIds="queryLanguages" v-model:json="jsonData" @error="onError" @focus="onFocus" @blur="onBlur" @change="onChange" />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { ref, watch } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
-import { VAceEditor } from 'vue3-ace-editor'
-// 加了这个【import "ace-builds/webpack-resolver";】可能会报错
-//（若报错 则需要安装node.js的一个包 就是主题）
-// 命令：npm install --save-dev file-loader
-import 'ace-builds/webpack-resolver'
-import 'ace-builds/src-noconflict/mode-json'
-import 'ace-builds/src-noconflict/theme-chrome'
-import 'ace-builds/src-noconflict/ext-language_tools'
-import { debug } from 'webpack'
+import { isString } from 'xe-utils'
+import JsonEditor from 'vue3-ts-jsoneditor'
 
 @Options({
   components: {
-    VAceEditor: VAceEditor
+    JsonEditor: JsonEditor
   }
 })
 export default class jsonEditorCommon extends Vue {
-  private jsonData: any = ref('{}')
-
-  private handleChange(newValue, event) {}
-
+  private jsonData: any = reactive({})
+  private queryLanguages = reactive(['javascript', 'lodash', 'jmespath'])
   // ******************************************
   public setJsonData(val) {
-    this.jsonData = val
-  }
-  public getJsonData() {
-    return JSON.parse(this.jsonData)
-  }
-  // ******************************************
-  private jsonError = (e) => {
-    console.log(`JSON字符串错误：${e.message}`)
-  }
-  private jsonFormat = () => {
-    try {
-      this.jsonData = JSON.stringify(JSON.parse(this.jsonData), null, 2)
-    } catch (e) {
-      this.jsonError(e)
+    if (isString(val)) {
+      this.jsonData = JSON.parse(val)
+    } else {
+      this.jsonData = val
     }
   }
+  public getJsonData() {
+    let x = (this.$refs.editor as any).$get().text
+    debugger
+    return x
+  }
+  // ******************************************
+  private onError = (error) => {}
+
+  private onFocus = () => {}
+
+  private onBlur = () => {}
+
+  private onChange = () => {
+    ;(this.$refs.editor as any).value.$validate()
+  }
+
   // ******************************************
   mounted() {}
 }
@@ -59,5 +53,39 @@ export default class jsonEditorCommon extends Vue {
 
 
 
-<style scoped>
+<style lang="less" scoped>
+/deep/.jse-button.jse-group-button.jse-first.jse-selected.svelte-7deygj {
+  display: none !important;
+}
+/deep/.jse-button.jse-group-button.svelte-7deygj {
+  display: none !important;
+}
+/deep/.jse-button.jse-group-button.svelte-7deygj {
+  display: none !important;
+}
+
+/deep/.jse-button.jse-group-button.jse-last.svelte-7deygj {
+  display: none !important;
+}
+
+/deep/.jse-separator.svelte-7deygj {
+  display: none !important;
+}
+
+/deep/.jse-button.jse-undo.svelte-7deygj {
+  margin-left: 20px !important;
+}
+
+/deep/.jse-button.jse-sort.svelte-7deygj {
+  display: none !important;
+}
+/deep/.jse-button.jse-transform.svelte-7deygj {
+  display: none !important;
+}
+/deep/.jse-button.jse-search.svelte-7deygj {
+  display: none !important;
+}
+/deep/.jse-button.jse-compact.svelte-7deygj {
+  display: none !important;
+}
 </style>

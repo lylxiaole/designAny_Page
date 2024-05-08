@@ -117,11 +117,10 @@
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^4.0.0-0",
     "vue-template-compiler": "2.6.10",
-    "vue3-ace-editor": "^2.2.4",
+    "vue3-ts-jsoneditor": "^2.11.2",
     "vuex": "^4.0.0-0",
     "vxe-table": "^4.5.18",
     "wangeditor": "^4.7.4",
-    "xe-utils": "^3.3.2",
-    "xlsx": "^0.17.2"
+    "xe-utils": "^3.3.2"
   }
 }
