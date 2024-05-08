@@ -19,9 +19,7 @@ export default class EngineContainer extends EngineLayout {
   public currentScaleSize: number = 1
 
   created() {}
-
   mounted() {}
-
   /**********************************底层拖拽改变尺寸方法 ******************************/
   /**对外公布方法 尺寸向上变化*/
   private childSizeChange_Up(comp: EngineLayout, compParentEle: Element, ychanged: number, mousetop: number) {

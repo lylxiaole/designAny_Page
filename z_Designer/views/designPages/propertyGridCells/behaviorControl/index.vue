@@ -98,13 +98,6 @@ export default class index extends propertyCellBase<Behavior_Setting> {
   private onOpenBehaviorList(backData: behaviorListData) {
     this.currentComp = 'allBehaviorList'
     this.selectedEventName = backData.selectedEventName
-    // this.currentEventBehavior = backData.eventBehavior
-    // this.record = {
-    //   allBehaviors: this.currentPageBehaviors,
-    //   selectedEventName: backData.selectedEventName,
-    //   eventBehavior: backData.eventBehavior
-    // }
-    // this.currentComp = behaviorPageType.list
   }
   // ********************************************************************
   private onClose(e: MouseEvent) {

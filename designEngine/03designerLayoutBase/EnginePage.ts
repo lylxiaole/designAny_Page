@@ -1,4 +1,4 @@
-import { Property, PageInParams_Setting, Behavior_Setting, PropertyGroupName, Number_Setting, Boolean_Setting } from './commonClasses/LayoutProperty'
+import { Property, PageInParams_Setting, PropertyGroupName, Number_Setting, Enum_Setting } from './commonClasses/LayoutProperty'
 import ComponentBase from './EngineComponent'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
@@ -12,7 +12,6 @@ import { action, actionDetail, behavior, paramType, param } from '@behaviorEngin
 
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
-import { BaseClass } from '@common/apis/apiDesignManager'
 
 @Options({})
 export default class EnginePage extends EngineContainer {
@@ -57,11 +56,11 @@ export default class EnginePage extends EngineContainer {
     return property.value as paramInfo[]
   }
   created() {
+    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Setting(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
     this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Setting())
     this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
     this.registerProperty(PropertyGroupName.normal, '行为列表', null, false, false)
     this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Setting(1, 999999999, 1), 10, true, '秒')
-
     this.findPropertyByName(PropertyGroupName.normal, '外边距').canSetting = false
     this.findPropertyByName(PropertyGroupName.normal, '内边距').canSetting = false
 

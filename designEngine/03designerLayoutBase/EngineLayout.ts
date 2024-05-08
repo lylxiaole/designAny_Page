@@ -157,7 +157,6 @@ export default class EngineLayout extends Vue {
     this.registerProperty(PropertyGroupName.normal, '外边距', new Margin_Setting(), bianju, true, '')
     this.registerProperty(PropertyGroupName.normal, '内边距', new Padding_Setting(), bianju, true, '')
     this.registerProperty(PropertyGroupName.normal, '字体', new Number_Setting(), 14, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Setting(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
     this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Setting(1, 'image'), [])
     this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Setting(), 'white')
     this.registerProperty(PropertyGroupName.normal, '行为绑定', new Behavior_Setting(), [], true)
