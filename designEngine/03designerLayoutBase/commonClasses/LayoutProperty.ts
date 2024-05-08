@@ -14,26 +14,11 @@ export enum PropertyTypeEnum {
   enum = 'enum',
   color = 'color',
   uploadFile = 'uploadFile',
-  javaScriptCode = 'javaScriptCode',
   jsonContent = 'jsonContent',
 
   timePicker = 'timePicker',
   behavior = 'behavior',
-  authority = 'authority',
-  bindingModels = 'bindingModels',
-  pageInParams = 'pageInParams',
-  buttonAttribute = 'buttonAttribute',
-  calendarEvents = 'calendarEvents',
-  tableStyleSetting = 'tableStyleSetting',
-  breadcrumAttribute = 'breadcrumAttribute',
-  selectElement = 'selectElement',
-  selectGroupElement = 'selectGroupElement',
-  selectDictModel = 'selectDictModel',
-  dropDown = 'dropDown',
-  enumModal = 'enumModal',
-  fileTemplateModal = 'fileTemplateModal',
-  pageTemplateSetting = 'pageTemplateSetting',
-  tableExportSetting = 'tableExportSetting'
+  pageInParams = 'pageInParams'
 }
 
 export enum PropertyGroupName {
@@ -233,9 +218,7 @@ export class UploadFile_Setting extends PropertySetting {
     this.fileType = filetype
   }
 }
-export class JavaScriptCode_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.javaScriptCode
-}
+
 export class JsonContent_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.jsonContent
 }
@@ -260,93 +243,9 @@ export class Behavior_Setting extends PropertySetting {
     super()
   }
 }
-export class Authority_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.authority
-  constructor() {
-    super()
-  }
-}
-export class BindingModels_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.bindingModels
-  constructor() {
-    super()
-  }
-}
+
 export class PageInParams_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.pageInParams
-  constructor() {
-    super()
-  }
-}
-export class Button_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.buttonAttribute
-  constructor() {
-    super()
-  }
-}
-export class EnumModal_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.enumModal
-  constructor() {
-    super()
-  }
-}
-export class FileTemplateModal_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.fileTemplateModal
-  constructor() {
-    super()
-  }
-}
-export class TableStyleSetting_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.tableStyleSetting
-  constructor() {
-    super()
-  }
-}
-/**表格导出设置 */
-export class TableExportSetting_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.tableExportSetting
-  constructor() {
-    super()
-  }
-}
-export class PageTemplateSetting_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.pageTemplateSetting
-  constructor() {
-    super()
-  }
-}
-export class CalendarEvents_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.calendarEvents
-  constructor() {
-    super()
-  }
-}
-export class Breadcrum_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.breadcrumAttribute
-  constructor() {
-    super()
-  }
-}
-export class Select_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.selectElement
-  constructor() {
-    super()
-  }
-}
-export class SelectGroup_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.selectGroupElement
-  constructor() {
-    super()
-  }
-}
-export class selectDict_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.selectDictModel
-  constructor() {
-    super()
-  }
-}
-export class dropDown_Setting extends PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.dropDown
   constructor() {
     super()
   }
