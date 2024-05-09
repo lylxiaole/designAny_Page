@@ -54,7 +54,7 @@ class propertyInfo {
     }
     return true
   }
-  property: Property
+  property: PropertySetting
 
   comp: typeof propertyCellBase
 }
@@ -154,7 +154,7 @@ export default class PropertyGrid extends Vue {
       newlayouts_extra = newlayouts as EngineLayout[]
     }
     //当前选中的Layouts的properties
-    var property_extra: Property[] = [] //临时变量
+    var property_extra: PropertySetting[] = [] //临时变量
     /**用第一个布局的属性列表当作临时属性列表 */
     if (newlayouts_extra.length > 0) {
       property_extra = [...newlayouts_extra[0].properties]
@@ -172,24 +172,22 @@ export default class PropertyGrid extends Vue {
     // window.console.log('watchCurrentLayoutsChanged-2:', property_extra)
     /**将所有共有属性进行分组，同时筛选出所有的属性信息 */
     property_extra.filter((o) => {
-      if (o.propertySetting) {
-        var findgroup = this.propertyGroups.find((p) => p.groupName == o.groupName)
-        if (!findgroup) {
-          findgroup = new PropertyGroupInfo()
-          if (o.groupName !== '主题') {
-            findgroup.groupName = o.groupName
-            this.propertyGroups.push(findgroup)
-          }
+      var findgroup = this.propertyGroups.find((p) => p.groupName == o.groupName)
+      if (!findgroup) {
+        findgroup = new PropertyGroupInfo()
+        if (o.groupName !== '主题') {
+          findgroup.groupName = o.groupName
+          this.propertyGroups.push(findgroup)
         }
-        var propertyinfox = new propertyInfo()
-        propertyinfox.name = o.propertyName
-        propertyinfox.property = o
-        // propertyinfox.property = deepClone(o)
-        propertyinfox.comp = getCellControl(o.propertySetting.type)
-        findgroup.children.push(propertyinfox)
-        if (o.groupName == this.selectGropName) {
-          this.propertyDataCache.push(propertyinfox)
-        }
+      }
+      var propertyinfox = new propertyInfo()
+      propertyinfox.name = o.propertyName
+      propertyinfox.property = o
+      // propertyinfox.property = deepClone(o)
+      propertyinfox.comp = getCellControl(o.type)
+      findgroup.children.push(propertyinfox)
+      if (o.groupName == this.selectGropName) {
+        this.propertyDataCache.push(propertyinfox)
       }
     })
 

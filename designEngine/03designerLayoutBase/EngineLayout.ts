@@ -102,7 +102,7 @@ export default class EngineLayout extends Vue {
   /***属性的值验证 */
   public propertyValidators: propertyValidatorType[] = []
   /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
-  private _designerEvents: layoutEvent[] = []
+  // private _designerEvents: layoutEvent[] = []
   // public get designerEvents(): layoutEvent[] {
   //   if (!this._designerEvents) {
   //     this._designerEvents = []
@@ -150,23 +150,7 @@ export default class EngineLayout extends Vue {
     return this._designerMethods
   }
   /**生命周期 */
-  created() {
-    // this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Setting(), getUuid(), false)
-    // this.registerProperty(PropertyGroupName.normal, '名称', new Text_Setting())
-    // let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
-    // this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Setting(), initCompPosition, true, '')
-    // let bianju = { left: 0, right: 0, top: 0, bottom: 0 }
-    // this.registerProperty(PropertyGroupName.normal, '外边距', new Margin_Setting(), bianju, true, '')
-    // this.registerProperty(PropertyGroupName.normal, '内边距', new Padding_Setting(), bianju, true, '')
-    // this.registerProperty(PropertyGroupName.normal, '字体', new Number_Setting(), 14, true, 'px')
-    // this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Setting(1, 'image'), [])
-    // this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Setting(), 'white')
-    // this.registerProperty(PropertyGroupName.normal, '行为绑定', new Behavior_Setting(), [], true)
-  }
-  /**生命周期-用于注册属性/事件/方法 等------只有设计模式的时候，会触发
-   * 触发与vue周期created之中
-   */
-
+  created() {}
   /**生命周期 */
   mounted() {}
   /**生命周期 */
@@ -178,7 +162,6 @@ export default class EngineLayout extends Vue {
     // window.console.log('销毁了页面组件:', this.Id)
     this.$lylemit('onLYLDestroyed', this)
   }
-
   // *************************基础属性****************************************************************************
   @DPropAttr(new Text_Setting('唯一ID', PropertyGroupName.normal, false))
   public Id: string
@@ -556,18 +539,15 @@ export default class EngineLayout extends Vue {
       return
     }
 
-    /**旧版本的：比较赋值 */
-    // for (let index = 0; index < layout_properties.length; index++) {
-    //   const item = layout_properties[index]
-    //   let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
-    //   if (find) {
-    //     find.id = item.id
-    //     this.setPropertyVal(item.id, item.value, true)
-    //   } else {
-    //     this.addProperty(item)
-    //     this.setPropertyVal(item.id, item.value, true)
-    //   }
-    // }
+    for (let index = 0; index < layout_properties.length; index++) {
+      const item = layout_properties[index]
+      let find = this.properties.find((o) => o.field == item.field)
+      if (find) {
+        find.id = item.id
+        find.value = item.value
+        this[item.field] = item.value
+      }
+    }
   }
   public findProperties(groupName: string, name: string): PropertySetting[] {
     let res: any[] = []

@@ -52,7 +52,6 @@ import { layoutEvent, layoutEventBehaviors, PropertyTypeEnum, Behavior_Setting }
 import { behavior } from '@behaviorEngine/index'
 import behaviorEventBinding, { behaviorListData } from './behaviorEventBinding.vue'
 import behaviorListInPage from './behaviorListInPage.vue'
-import { toRaw } from 'vue'
 
 @CellSettingAttr(PropertyTypeEnum.behavior)
 @Options({

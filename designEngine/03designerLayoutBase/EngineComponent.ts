@@ -5,7 +5,7 @@ import { factory, param } from '@behaviorEngine/index'
 
 import { EngineLayout } from '..'
 import { DPropAttr } from './commonClasses/PropertyInfo'
-import { PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
+import { Number_Setting, PropertyGroupName, Color_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 
 @Options({})
 export default class EngineComponent extends EngineContainer {
@@ -30,8 +30,7 @@ export default class EngineComponent extends EngineContainer {
     this.width = 200
     this.height = 200
     /**注册事件 */
-    var inparams: param[] = []
-    this.registerEvents('控件加载完成事件', '', inparams, null)
+    this.registerEvents('控件加载完成事件', '', [], null)
   }
 
   mounted() {}
