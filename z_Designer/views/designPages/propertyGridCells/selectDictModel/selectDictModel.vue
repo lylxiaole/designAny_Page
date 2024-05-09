@@ -8,12 +8,12 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
-import { PropertyTypeEnum, selectDict_Setting } from '@designEngine/index'
+import { CellSettingAttr } from '../common'
+import { PropertyTypeEnum, JsonContent_Setting } from '@designEngine/index'
 
-@propertyCellSettingAttr(PropertyTypeEnum.selectDictModel)
+@CellSettingAttr(PropertyTypeEnum.jsonContent)
 @Options({})
-export default class selectDictModel extends propertyCellBase<selectDict_Setting> {
+export default class selectDictModel extends propertyCellBase<JsonContent_Setting> {
   mounted() {}
 
   @Emit('selectDict')

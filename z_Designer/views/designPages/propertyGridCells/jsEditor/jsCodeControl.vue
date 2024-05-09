@@ -16,16 +16,16 @@ import { getUuid, deepClone } from '@common/utils'
 import npAceEditor from '@common/components/commonComponents/npAceEditor.vue'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
-import { PropertyTypeEnum, JavaScriptCode_Setting } from '@designEngine/index'
+import { CellSettingAttr } from '../common'
+import { PropertyTypeEnum, JsonContent_Setting } from '@designEngine/index'
 
-@propertyCellSettingAttr(PropertyTypeEnum.javaScriptCode)
+// @CellSettingAttr(PropertyTypeEnum.jsonContent)
 @Options({
   components: {
     AceEditor: npAceEditor
   }
 })
-export default class jsCodeControl extends propertyCellBase<JavaScriptCode_Setting> {
+export default class jsCodeControl extends propertyCellBase<JsonContent_Setting> {
   mounted() {}
 }
 </script>

@@ -58,7 +58,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, InjectReactive } from 'vue-property-decorator'
 import { deepClone, getUuid, serialize } from '@common/utils'
-import { propertyCellSettingAttr, PropertyTypeEnum } from '../../common'
+import { CellSettingAttr, PropertyTypeEnum } from '../../common'
 import {
   behavior,
   action,
