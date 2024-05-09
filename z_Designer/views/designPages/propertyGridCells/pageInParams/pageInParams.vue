@@ -11,9 +11,9 @@
 
     <el-dialog :maskClosable="false" title="编辑" v-model="windowVisible" :destroyOnClose="true" width="900px">
       <el-table size="small" :localData="localData" :pagination="false" style="height:450px;" width="100%">
-        <el-table-column prop="paramName" label="入参名称" width="300">
+        <el-table-column prop="name" label="入参名称" width="300">
         </el-table-column>
-        <el-table-column prop="paramType" label="入参类型" width="300">
+        <el-table-column prop="type" label="入参类型" width="300">
         </el-table-column>
         <el-table-column fixed="right" label="操作">
           <template #default={scope}>
@@ -37,11 +37,11 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
-import { paramInfo } from '@designEngine/index'
 import propertyCellBase from '../common'
 import { PropertyTypeEnum, PageInParams_Setting } from '@designEngine/index'
 import { CellSettingAttr } from '../common'
 import { pageInParamsIco } from '@designEngine/assets/icons.js'
+import { param, paramType } from '@behaviorEngine/index'
 
 @CellSettingAttr(PropertyTypeEnum.pageInParams)
 @Options({})
@@ -49,7 +49,7 @@ export default class pageInParams extends propertyCellBase<PageInParams_Setting>
   public windowVisible: boolean = false
   private pageicon: any
 
-  private localData: paramInfo[] = []
+  private localData: param[] = []
 
   created() {
     this.pageicon = pageInParamsIco
@@ -67,11 +67,10 @@ export default class pageInParams extends propertyCellBase<PageInParams_Setting>
   }
 
   private async newParam() {
-    var newRow = new paramInfo()
+    var newRow = new param()
     newRow.key = getUuid()
-    newRow.paramName = ''
-    newRow.paramType = 1
-
+    newRow.name = ''
+    newRow.type = paramType.string
     this.localData.push(newRow)
   }
 
@@ -84,11 +83,11 @@ export default class pageInParams extends propertyCellBase<PageInParams_Setting>
       return
     }
 
-    ;(this.currentValue as paramInfo[]).filter((o) => {
-      var newparaminfo = new paramInfo()
+    ;(this.currentValue as param[]).filter((o) => {
+      var newparaminfo = new param()
       newparaminfo.key = o.key
-      newparaminfo.paramName = o.paramName
-      newparaminfo.paramType = o.paramType
+      newparaminfo.name = o.name
+      newparaminfo.type = o.type
       this.localData.push(newparaminfo)
     })
   }

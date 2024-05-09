@@ -5,7 +5,6 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoading_Async, showLoading_Async } from '@common/utils'
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
-import { paramInfo } from './commonClasses/pageInParamInfo'
 import { factory, resourceCode, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
 import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
@@ -47,12 +46,12 @@ export default class EnginePage extends EngineContainer {
     this.setPropertyVal(property.id, val)
   }
   /**页面入参 */
-  public get inParams(): paramInfo[] {
+  public get inParams(): param[] {
     var property = this.findProperties(PropertyGroupName.normal, '行为列表')[0]
     if (!property.value) {
       property.value = []
     }
-    return property.value as paramInfo[]
+    return property.value as param[]
   }
   created() {
     this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Setting(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
@@ -120,7 +119,7 @@ export default class EnginePage extends EngineContainer {
       await this.triggerEvent('加载完成', [])
     }
   }
-  public setPageInParams(params?: paramInfo[]) {
+  public setPageInParams(params?: param[]) {
     if (!params) {
       return
     }
@@ -130,7 +129,7 @@ export default class EnginePage extends EngineContainer {
       if (!inparamInPage) {
         continue
       }
-      inparamInPage.paramVal = param.paramVal
+      inparamInPage.val = param.val
     }
   }
   public getPropertyInPageById(propertyId: string): Property {
@@ -256,11 +255,11 @@ export default class EnginePage extends EngineContainer {
     }
   }
 
-  public async loadPageById(pageId: string, params?: paramInfo[]): Promise<void> {
+  public async loadPageById(pageId: string, params?: param[]): Promise<void> {
     let pageDC: DesignPageDC = await GetPageDetail(pageId)
     await this.loadPageByData(pageId, pageDC.designDetail, params)
   }
-  public async loadPageByData(pageId: string, pageDataStr: string, params?: paramInfo[]) {
+  public async loadPageByData(pageId: string, pageDataStr: string, params?: param[]) {
     let pageData: SaveInfo = null
     if (pageDataStr) {
       pageData = strUnZip(pageDataStr)
