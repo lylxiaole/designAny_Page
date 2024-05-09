@@ -9,4 +9,4 @@ export { SaveInfo }
 export * from './commonClasses/LayoutProperty'
 
 export { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
-export { DCompType, DCompInfo, CompIndex, findSystemCompByCode, allComponents, DCompnentAttr } from './commonClasses/componentInfos'
+export { DCompType, DCompInfo, CompIndex, findSystemCompByCode, allComponents, DCompnentAttr } from './commonClasses/ComponentInfo'

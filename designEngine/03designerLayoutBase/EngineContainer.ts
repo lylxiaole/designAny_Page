@@ -5,7 +5,7 @@ import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 
 import { Property } from './commonClasses/LayoutProperty'
 import { getUuid, deepClone, serialize } from '@common/utils'
-import { findSystemCompByCode } from './commonClasses/componentInfos'
+import { findSystemCompByCode } from './commonClasses/ComponentInfo'
 import { EnginePage } from '.'
 import dragHelper from '@designEngine/02common/dragHelper_new'
 

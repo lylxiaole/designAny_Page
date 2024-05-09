@@ -1,7 +1,7 @@
 import dragHelper from '@designEngine/02common/dragHelper_new'
 import { Options, Vue } from 'vue-class-component'
 import EngineLayout, { SaveInfo } from '@designEngine/03designerLayoutBase/EngineLayout'
-import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
+import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/ComponentInfo'
 import EngineContainer from '@designEngine/03designerLayoutBase/EngineContainer'
 import EnginePage from '@designEngine/03designerLayoutBase/EnginePage'
 import { getUuid, deepClone, serialize } from '@common/utils'

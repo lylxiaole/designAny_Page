@@ -10,7 +10,7 @@ import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../0
 import { drawVueOnVirtualDom, deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
-import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
+import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/ComponentInfo'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
@@ -237,4 +237,4 @@ export default class PCPageDesign extends EnginePage {
 //   border: none;
 //   border-radius: 0px;
 // }
-</style>
+</style>@designEngine/03designerLayoutBase/commonClasses/ComponentInfo
