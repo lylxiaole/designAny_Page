@@ -2,26 +2,55 @@ import { deepClone, getUuid } from '@common/utils'
 import { EngineLayout } from '@designEngine/index'
 import { isBoolean, isString, isNumber } from 'xe-utils'
 
+export class DPropCache {
+  layoutFunc: Function
+  properties: PropertySetting[]
+}
+
+export const allDPropCache: DPropCache[] = []
+
 export function DPropAttr(prop: PropertySetting) {
   return function (target: EngineLayout, key: string) {
-    if (!target.properties) {
-      target.properties = []
-    }
-
-    console.log('DPropAttr:', target, key)
     prop.field = key
-    let find = target.properties.find((o) => o.field === key)
-    if (!find) {
-      var newperperty = deepClone(prop)
-      target.properties.push(newperperty)
-    }
 
-    Reflect.defineProperty(target, key, {
-      enumerable: false,
-      value: prop.value,
-      writable: false,
-      configurable: true
-    })
+    let targetCons = target.constructor
+    let findCache = allDPropCache.find((o) => o.layoutFunc === targetCons)
+    if (!findCache) {
+      allDPropCache.push({ layoutFunc: targetCons, properties: [] })
+      findCache = allDPropCache.find((o) => o.layoutFunc === targetCons)
+    }
+    // **************************************
+    let findProp = findCache.properties.find((o) => o.field === key)
+    if (!findProp) {
+      var newperperty = deepClone(prop)
+      findCache.properties.push(newperperty)
+    }
+    // **************************************
+    target.getDefaultProperties = () => {
+      let findx = allDPropCache.find((o) => o.layoutFunc === target.constructor)
+      if (!findx) {
+        return []
+      }
+
+      let resProps = findx.properties
+      for (let index = 0; index < allDPropCache.length; index++) {
+        const oneDPropCache = allDPropCache[index]
+
+        if (target instanceof oneDPropCache.layoutFunc) {
+          resProps = resProps.concat(oneDPropCache.properties)
+        }
+      }
+
+      return resProps
+    }
+    // **************************************
+    // prop.field = key
+    // !(target as any).constructor.prototype.$DProperties && ((target as any).constructor.prototype.$DProperties = [])
+    // let find = (target as any).constructor.prototype.$DProperties.find((o) => o.field === key)
+    // if (!find) {
+    //   var newperperty = deepClone(prop)
+    //   ;(target as any).constructor.prototype.$DProperties.push(newperperty)
+    // }
   }
 }
 

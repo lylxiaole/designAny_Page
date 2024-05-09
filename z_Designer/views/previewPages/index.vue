@@ -12,8 +12,7 @@
 import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
 import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
-import { drawVueOnVirtualDom } from '@common/utils'
-import { EnginePage, MobilePagePreview, PCPagePreview } from '@designEngine/index'
+import { EnginePage, MobilePagePreview, PCPagePreview, drawEngineLayoutVirtual } from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
 @Options({
@@ -81,7 +80,7 @@ export default class index extends PageBase {
         break
     }
     /************************渲染页面 */
-    let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
+    let { virtualDom, vueComp } = drawEngineLayoutVirtual(designLayout)
     await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail)
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0

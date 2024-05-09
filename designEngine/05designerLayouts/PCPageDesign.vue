@@ -7,16 +7,21 @@
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
-import { drawVueOnVirtualDom, deepClone, getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
-import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
- 
+import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents' 
+import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo' 
+import {drawEngineLayoutVirtual} from '../02common/layoutDrawer'
 
-import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo'
-import { DPropAttr,Text_Setting,PropertyGroupName } from '../03designerLayoutBase/commonClasses/PropertyInfo'
+import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutBase'
 
 @Options({})
-export default class PCPageDesign extends EnginePage {
+export default class PCPageDesign extends EnginePage { 
+
+  @DPropAttr(new Text_Setting('PCPageDesign文本', PropertyGroupName.special, true))
+  private PCPageDesignText: any = ''
+
+
   private get backgroundCute(): string {
     // window.console.log('backgroundCute:', this.background_img)
     if (!this.background_img || !this.background_img.uid) {
@@ -46,7 +51,7 @@ export default class PCPageDesign extends EnginePage {
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
+    let { virtualDom, vueComp } = drawEngineLayoutVirtual(DesignShell)
     this.allShells.push(vueComp as DesignShell)
     let resComp = (vueComp as DesignShell).addComponent(compCon)
     resComp.$once('onLYLMounted', () => {
@@ -239,4 +244,4 @@ export default class PCPageDesign extends EnginePage {
 //   border: none;
 //   border-radius: 0px;
 // }
-</style>@designEngine/03designerLayoutBase/commonClasses/ComponentInfo
+</style> 

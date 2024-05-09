@@ -42,8 +42,15 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
-import { drawVueOnVirtualDom } from '@common/utils'
-import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine/index'
+import {
+  drawEngineLayoutVirtual,
+  EnginePage,
+  MobilePageDesign,
+  MobilePagePreview,
+  PCPageDesign,
+  PCPagePreview,
+  EngineLayout
+} from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
 
@@ -160,6 +167,7 @@ export default class index extends PageBase {
     let res = await GetPageDetail(pageId)
     await this.$nextTick()
     let designLayout: any = null
+
     switch (res.type) {
       case pageType.pcPage:
         designLayout = PCPageDesign
@@ -171,10 +179,9 @@ export default class index extends PageBase {
         break
     }
 
-    debugger
     /************************渲染页面 */
-    let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
-    await (vueComp as any).loadPageByData(pageId, res.designDetail)
+    let { virtualDom, vueComp } = drawEngineLayoutVirtual(designLayout)
+    await (vueComp as PCPageDesign).loadPageByData(pageId, res.designDetail)
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0

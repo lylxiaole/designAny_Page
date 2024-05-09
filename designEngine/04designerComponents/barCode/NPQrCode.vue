@@ -37,15 +37,15 @@ export default class NPQrCode extends EngineComponent {
     this.width = '300px'
     this.height = '300px'
 
-    this.registerProperty(PropertyGroupName.special, '内容', new Text_Setting(), '123456789')
-    this.registerProperty(PropertyGroupName.special, '版本', new Number_Setting(0, 40, 1), 0)
-    this.registerProperty(PropertyGroupName.special, '纠错等级', new Enum_Setting(true, ['L', 'M', 'Q', 'H']), 'M')
-    this.registerProperty(PropertyGroupName.special, '遮罩符号', new Number_Setting(-1, 7, 1), -1)
-    this.registerProperty(PropertyGroupName.special, '二维码外边距', new Number_Setting(), 4)
-    this.registerProperty(PropertyGroupName.special, '二维码宽度', new Number_Setting(), 0)
-    this.registerProperty(PropertyGroupName.special, '比例因子', new Number_Setting(), 4)
-    this.registerProperty(PropertyGroupName.special, '内容颜色', new Color_Setting(), '#000000')
-    this.registerProperty(PropertyGroupName.special, '留白颜色', new Color_Setting(), '#ffffff')
+    // this.registerProperty(PropertyGroupName.special, '内容', new Text_Setting(), '123456789')
+    // this.registerProperty(PropertyGroupName.special, '版本', new Number_Setting(0, 40, 1), 0)
+    // this.registerProperty(PropertyGroupName.special, '纠错等级', new Enum_Setting(true, ['L', 'M', 'Q', 'H']), 'M')
+    // this.registerProperty(PropertyGroupName.special, '遮罩符号', new Number_Setting(-1, 7, 1), -1)
+    // this.registerProperty(PropertyGroupName.special, '二维码外边距', new Number_Setting(), 4)
+    // this.registerProperty(PropertyGroupName.special, '二维码宽度', new Number_Setting(), 0)
+    // this.registerProperty(PropertyGroupName.special, '比例因子', new Number_Setting(), 4)
+    // this.registerProperty(PropertyGroupName.special, '内容颜色', new Color_Setting(), '#000000')
+    // this.registerProperty(PropertyGroupName.special, '留白颜色', new Color_Setting(), '#ffffff')
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
     this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
     this.initQrCode()

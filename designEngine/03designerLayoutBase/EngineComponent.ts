@@ -20,7 +20,7 @@ export default class EngineComponent extends EngineContainer {
   @DPropAttr(new Color_Setting('前景色', PropertyGroupName.normal, true, '#000000'))
   public foreground: string
   @DPropAttr(new Boolean_Setting('是否显示', PropertyGroupName.normal, true, true))
-  public display: string
+  public display: boolean
   @DPropAttr(new Boolean_Setting('是否禁用', PropertyGroupName.normal, true, false))
   public disabled: string
   @DPropAttr(new Number_Setting('层级设置', PropertyGroupName.normal, true, 1))

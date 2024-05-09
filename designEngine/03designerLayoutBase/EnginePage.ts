@@ -242,6 +242,7 @@ export default class EnginePage extends EngineContainer {
     await this.loadPageByData(pageId, pageDC.designDetail, params)
   }
   public async loadPageByData(pageId: string, pageDataStr: string, params?: param[]) {
+    debugger
     let pageData: SaveInfo = null
     if (pageDataStr) {
       pageData = strUnZip(pageDataStr)

@@ -45,15 +45,15 @@ export default class NpBarCode extends EngineComponent {
       'pharmacode',
       'codabar'
     ]
-    this.registerProperty(PropertyGroupName.special, '格式', new Enum_Setting(true, codeFormats), 'CODE128')
-    this.registerProperty(PropertyGroupName.special, '码高', new Number_Setting(), 100)
-    this.registerProperty(PropertyGroupName.special, '码宽', new Number_Setting(), 2)
-    this.registerProperty(PropertyGroupName.special, '内容', new Text_Setting(), '123456789')
-    this.registerProperty(PropertyGroupName.special, '显示字', new Boolean_Setting(), true)
-    this.registerProperty(PropertyGroupName.special, '字对齐方式', new Enum_Setting(true, ['左', '中', '右']), '中')
-    this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Setting(true, ['底部', '顶部']), '底部')
-    this.registerProperty(PropertyGroupName.special, '字边距', new Number_Setting(), 2)
-    this.registerProperty(PropertyGroupName.special, '字大小', new Number_Setting(), 20)
+    // this.registerProperty(PropertyGroupName.special, '格式', new Enum_Setting(true, codeFormats), 'CODE128')
+    // this.registerProperty(PropertyGroupName.special, '码高', new Number_Setting(), 100)
+    // this.registerProperty(PropertyGroupName.special, '码宽', new Number_Setting(), 2)
+    // this.registerProperty(PropertyGroupName.special, '内容', new Text_Setting(), '123456789')
+    // this.registerProperty(PropertyGroupName.special, '显示字', new Boolean_Setting(), true)
+    // this.registerProperty(PropertyGroupName.special, '字对齐方式', new Enum_Setting(true, ['左', '中', '右']), '中')
+    // this.registerProperty(PropertyGroupName.special, '字位置', new Enum_Setting(true, ['底部', '顶部']), '底部')
+    // this.registerProperty(PropertyGroupName.special, '字边距', new Number_Setting(), 2)
+    // this.registerProperty(PropertyGroupName.special, '字大小', new Number_Setting(), 20)
 
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
     this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false

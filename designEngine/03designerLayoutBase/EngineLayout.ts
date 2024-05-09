@@ -70,6 +70,8 @@ export default class EngineLayout extends Vue {
   /**属性 */
   private properties_old: any[] = []
   public properties: PropertySetting[] = []
+
+  public getDefaultProperties: () => PropertySetting[]
   /**父级布局 */
   public parentLayout: EngineLayout
   public get topLayout(): EngineLayout {
