@@ -41,7 +41,16 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { layoutEvent, layoutEventBehaviors } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
 import { deepClone, getUuid } from '@common/utils'
-import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
+
+export enum behaviorPageType {
+  binding = 'behaviorEventBinding'
+}
+
+export class behaviorListData {
+  prePage: behaviorPageType
+  selectedEventName: string
+  eventBehavior: layoutEventBehaviors
+}
 
 //事件行为绑定组件
 @Options({})

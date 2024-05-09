@@ -19,7 +19,6 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { layoutEvent, layoutEventBehaviors, EnginePage } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
 import { deepClone, getUuid } from '@common/utils'
-import { behaviorBindingInParam, behaviorPageType, behaviorListData, behaviorDetailData } from './model'
 
 //事件行为绑定组件
 @Options({})
