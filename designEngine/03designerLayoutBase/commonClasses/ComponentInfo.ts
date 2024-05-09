@@ -43,6 +43,7 @@ export function DCompnentAttr(paltform: string, dCompType: DCompType, groupName:
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
 
+    debugger
     window.console.log('DCompnentAttr', target.prototype.$Meta, compCode)
     target.prototype.$Meta.dCompType = dCompType
     target.prototype.$Meta.groupName = groupName

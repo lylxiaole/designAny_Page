@@ -1,25 +1,83 @@
-import { getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
+import { EngineLayout } from '@designEngine/index'
 import { isBoolean, isString, isNumber } from 'xe-utils'
 
-export class Property {
-  constructor(name: string, groupname: string, type: PropertySetting, defaultVal?: any) {
-    this.propertyName = name
-    this.groupName = groupname
-    this.propertySetting = type
-    this.id = getUuid()
-    this.value = defaultVal
-  }
+export function DPropAttr(prop: PropertySetting) {
+  return function (target: EngineLayout, key: string) {
+    if (!target.properties) {
+      target.properties = []
+    }
 
+    prop.field = key
+
+    let find = target.properties.find((o) => o.field === key)
+    if (!find) {
+      var newperperty = deepClone(prop)
+      target.properties.push(newperperty)
+    }
+
+    Reflect.defineProperty(target, key, {
+      enumerable: false,
+      value: prop.value,
+      writable: false,
+      configurable: true
+    })
+  }
+}
+
+export class Property {
   public id: string = '' //属性的唯一ID,自动生成
+  public field: string = '' //属性在类型中的字段名称
   public value: any = '' //属性的值
-  public propertySetting: PropertySetting //属性的类型
+}
+
+export enum PropertyTypeEnum {
+  boolean = 'boolean',
+  compPosition = 'compPosition',
+  margin = 'margin',
+  padding = 'padding',
+  text = 'text',
+  textList = 'textList',
+  number = 'number',
+
+  numberList = 'numberList',
+  enum = 'enum',
+  color = 'color',
+  uploadFile = 'uploadFile',
+  jsonContent = 'jsonContent',
+
+  timePicker = 'timePicker',
+  behavior = 'behavior',
+  pageInParams = 'pageInParams'
+}
+export enum PropertyGroupName {
+  normal = '基础设置',
+  special = '特有属性'
+  //theme = '主题',
+}
+export class PropertySetting {
+  public id: string = '' //属性的唯一ID,自动生成
+  public field?: string = '' //属性在类型中的字段名称
+  public value: any = '' //属性的值
+
+  public type: PropertyTypeEnum
+  public unit: string = '' //属性单位
   public groupName: string = '' //属性分组名称
   public propertyName: string = '' //属性名称
   public canSetting: boolean = true //控制属性窗中按钮是否可见
 
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string) {
+    this.propertyName = name
+    this.groupName = groupname
+    this.canSetting = canSetting
+    this.unit = unit
+    this.id = getUuid()
+    this.value = defaultVal
+  }
+
   public convert(val: any): any {
     try {
-      switch (this.propertySetting.type) {
+      switch (this.type) {
         case PropertyTypeEnum.boolean:
           return this.objectToBool(val)
         case PropertyTypeEnum.number:
@@ -78,34 +136,6 @@ export class Property {
     }
   }
 }
-export enum PropertyTypeEnum {
-  boolean = 'boolean',
-  compPosition = 'compPosition',
-  margin = 'margin',
-  padding = 'padding',
-  text = 'text',
-  textList = 'textList',
-  number = 'number',
-
-  numberList = 'numberList',
-  enum = 'enum',
-  color = 'color',
-  uploadFile = 'uploadFile',
-  jsonContent = 'jsonContent',
-
-  timePicker = 'timePicker',
-  behavior = 'behavior',
-  pageInParams = 'pageInParams'
-}
-export enum PropertyGroupName {
-  normal = '基础设置',
-  special = '特有属性'
-  //theme = '主题',
-}
-export abstract class PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.text
-  public unit: string = '' //属性单位
-}
 
 export class CompPosition_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.compPosition
@@ -121,13 +151,18 @@ export class Boolean_Setting extends PropertySetting {
 }
 export class Text_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.text
+
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string) {
+    super(name, groupname, canSetting, defaultVal, unit)
+  }
 }
 export class Number_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.number
 
-  constructor(_min?: number, _max?: number, _step?: number) {
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _min?: number, _max?: number, _step?: number) {
     //小数点后几位
-    super()
+    super(name, groupname, canSetting, defaultVal, unit)
+
     if (_min) {
       this.min = _min
     }
@@ -150,8 +185,8 @@ export class NumberList_Setting extends PropertySetting {
   public minCount: number = 0
   public maxCount: number = 999999999999
 
-  constructor(_min?: number, _max?: number, _min_count?: number, max_count?: number) {
-    super()
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _min?: number, _max?: number, _min_count?: number, max_count?: number) {
+    super(name, groupname, canSetting, defaultVal, unit)
     if (_min) {
       this.min = _min
     }
@@ -171,8 +206,8 @@ export class TextList_Setting extends PropertySetting {
   public minCount: number = 0
   public maxCount: number = 99
 
-  constructor(_min_count?: number, max_count?: number) {
-    super()
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _min_count?: number, max_count?: number) {
+    super(name, groupname, canSetting, defaultVal, unit)
     if (_min_count) {
       this.minCount = _min_count
     }
@@ -183,9 +218,9 @@ export class TextList_Setting extends PropertySetting {
 }
 export class Enum_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.enum
-  constructor(_isSingleChoose?: boolean, _enums?: string[]) {
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _isSingleChoose?: boolean, _enums?: string[]) {
     //小数点后几位
-    super()
+    super(name, groupname, canSetting, defaultVal, unit)
     if (_isSingleChoose) {
       this.isSingleChoose = _isSingleChoose
     }
@@ -206,8 +241,8 @@ export class UploadFile_Setting extends PropertySetting {
   public fileType: string
   public fileSize: number = 10485760
   /**filetype:'image','file','vedio' */
-  constructor(maxFileCount: number, filetype: string) {
-    super()
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, maxFileCount?: number, filetype?: string) {
+    super(name, groupname, canSetting, defaultVal, unit)
     this.maxFileLength = maxFileCount
     this.fileType = filetype
   }
@@ -221,8 +256,8 @@ export class TimePickerFile_Setting extends PropertySetting {
   public dateType: string = 'date'
   public showTime: boolean | any = false
   /**_dateType：month,week,date,time */
-  constructor(_dateType: string, _showTime?: boolean | any) {
-    super()
+  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _dateType?: string, _showTime?: boolean) {
+    super(name, groupname, canSetting, defaultVal, unit)
     this.dateType = _dateType
     if (_showTime) {
       this.showTime = _showTime
@@ -231,13 +266,7 @@ export class TimePickerFile_Setting extends PropertySetting {
 }
 export class Behavior_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.behavior
-  constructor() {
-    super()
-  }
 }
 export class PageInParams_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.pageInParams
-  constructor() {
-    super()
-  }
 }

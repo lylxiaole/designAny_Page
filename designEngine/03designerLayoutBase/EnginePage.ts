@@ -10,58 +10,42 @@ import { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
 import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
+import { DPropAttr } from './commonClasses/PropertyInfo'
+import { PropertySetting, Text_Setting, Behavior_Setting } from './commonClasses/PropertyInfo'
 
 @Options({})
 export default class EnginePage extends EngineContainer {
   /***************************** */
-  /**行为列表*/
-  public get behaviors(): behavior[] {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
-    if (!property.value) {
-      property.value = []
-    }
-    return property.value as behavior[]
-  }
-  public set behaviors(val: behavior[]) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
-    if (!property.value) {
-      property.value = []
-      return
-    }
-    property.value = val
-  }
-  /**页面定时器 */
-  public get tickTime(): number {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '定时器周期')
-    if (!property || !property.value) {
-      return 0
-    }
-    return property.value
-  }
-  public set tickTime(val: number) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '定时器周期')
-    if (!property) {
-      return
-    }
-    this.setPropertyVal(property.id, val)
-  }
-  /**页面入参 */
-  public get inParams(): param[] {
-    var property = this.findProperties(PropertyGroupName.normal, '行为列表')[0]
-    if (!property.value) {
-      property.value = []
-    }
-    return property.value as param[]
-  }
-  created() {
-    this.registerProperty(PropertyGroupName.normal, '字体样式', new Enum_Setting(true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']), '微软雅黑', true)
-    this.registerProperty(PropertyGroupName.normal, '页面入参', new PageInParams_Setting())
-    this.registerProperty(PropertyGroupName.normal, '模型实例', null, false, false)
-    this.registerProperty(PropertyGroupName.normal, '行为列表', null, false, false)
-    this.registerProperty(PropertyGroupName.normal, '定时器周期', new Number_Setting(1, 999999999, 1), 10, true, '秒')
-    this.findPropertyByName(PropertyGroupName.normal, '外边距').canSetting = false
-    this.findPropertyByName(PropertyGroupName.normal, '内边距').canSetting = false
+  @DPropAttr(new Behavior_Setting('行为列表', PropertyGroupName.normal, false, []))
+  public behaviors: behavior[]
 
+  @DPropAttr(new Number_Setting('定时器周期', PropertyGroupName.normal, true, 0, '秒', 1, 999999999, 1))
+  public tickTime: number
+
+  @DPropAttr(new PageInParams_Setting('页面入参', PropertyGroupName.normal, true, []))
+  public inParams: param[]
+
+  @DPropAttr(new Enum_Setting('字体样式', PropertyGroupName.normal, true, '微软雅黑', null, true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']))
+  public fontFamily: number
+
+  /**行为列表*/
+  // public get behaviors(): behavior[] {
+  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
+  //   if (!property.value) {
+  //     property.value = []
+  //   }
+  //   return property.value as behavior[]
+  // }
+  // public set behaviors(val: behavior[]) {
+  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
+  //   if (!property.value) {
+  //     property.value = []
+  //     return
+  //   }
+  //   property.value = val
+  // }
+
+  created() {
     this.registerEvents('加载完成', '', [], null)
     this.registerEvents('定时器触发事件', '', [], null)
 
@@ -132,7 +116,7 @@ export default class EnginePage extends EngineContainer {
       inparamInPage.val = param.val
     }
   }
-  public getPropertyInPageById(propertyId: string): Property {
+  public getPropertyInPageById(propertyId: string): PropertySetting {
     for (let compindex = 0; compindex < this.children.length; compindex++) {
       let comp = this.children[compindex]
       var property = comp.findPropertyById(propertyId)

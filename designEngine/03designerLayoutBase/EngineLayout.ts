@@ -1,5 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { render } from 'vue'
+import { DPropAttr } from './commonClasses/PropertyInfo'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
@@ -7,6 +8,7 @@ import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses
 import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import designerContext from '../01designerContext/context'
+import { property } from 'xe-utils'
 
 type propertyValidatorHandle = (newval: any) => boolean
 class propertyValidatorType {
@@ -68,7 +70,7 @@ export default class EngineLayout extends Vue {
   public isSelected: boolean = false
   /**属性 */
   private properties_old: any[] = []
-  public properties: Property[] = []
+  public properties: PropertySetting[] = []
   /**父级布局 */
   public parentLayout: EngineLayout
   public get topLayout(): EngineLayout {
@@ -101,43 +103,44 @@ export default class EngineLayout extends Vue {
   public propertyValidators: propertyValidatorType[] = []
   /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
   private _designerEvents: layoutEvent[] = []
-  public get designerEvents(): layoutEvent[] {
-    if (!this._designerEvents) {
-      this._designerEvents = []
-    }
-    var property = this.findPropertyByName(PropertyGroupName.normal, '行为绑定')
-    if (property && !property.value) {
-      property.value = []
-    }
-    /**布局中的所有事件和行为的对应关系 */
-    var eventBehaviors = property.value as layoutEventBehaviors[]
+  // public get designerEvents(): layoutEvent[] {
+  //   if (!this._designerEvents) {
+  //     this._designerEvents = []
+  //   }
+  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为绑定')
+  //   if (property && !property.value) {
+  //     property.value = []
+  //   }
+  //   /**布局中的所有事件和行为的对应关系 */
+  //   var eventBehaviors = property.value as layoutEventBehaviors[]
 
-    for (let index = 0; index < this._designerEvents.length; index++) {
-      const event = this._designerEvents[index]
-      let behaviorIds: any[] = []
-      for (let index = 0; index < eventBehaviors.length; index++) {
-        const o = eventBehaviors[index]
-        if (o.eventName === event.eventName) {
-          behaviorIds = o.behaviorIds
-          break
-        }
-      }
-      event.behaviorIds = behaviorIds
-    }
-    return this._designerEvents
-  }
-  public set designerEvents(val: layoutEvent[]) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '行为绑定')
-    var newvals: layoutEventBehaviors[] = []
-    for (let index = 0; index < val.length; index++) {
-      const element = val[index]
-      var nval = new layoutEventBehaviors()
-      nval.eventName = element.eventName
-      nval.behaviorIds = element.behaviorIds
-      newvals.push(nval)
-    }
-    property.value = newvals
-  }
+  //   for (let index = 0; index < this._designerEvents.length; index++) {
+  //     const event = this._designerEvents[index]
+  //     let behaviorIds: any[] = []
+  //     for (let index = 0; index < eventBehaviors.length; index++) {
+  //       const o = eventBehaviors[index]
+  //       if (o.eventName === event.eventName) {
+  //         behaviorIds = o.behaviorIds
+  //         break
+  //       }
+  //     }
+  //     event.behaviorIds = behaviorIds
+  //   }
+  //   return this._designerEvents
+  // }
+  // public set designerEvents(val: layoutEvent[]) {
+  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为绑定')
+  //   var newvals: layoutEventBehaviors[] = []
+  //   for (let index = 0; index < val.length; index++) {
+  //     const element = val[index]
+  //     var nval = new layoutEventBehaviors()
+  //     nval.eventName = element.eventName
+  //     nval.behaviorIds = element.behaviorIds
+  //     newvals.push(nval)
+  //   }
+  //   property.value = newvals
+  // }
+
   /** 自定义方法,图形化编程会库触发这个方法*/
   private _designerMethods: layoutMethod[] = []
   public get designerMethods(): layoutMethod[] {
@@ -148,18 +151,17 @@ export default class EngineLayout extends Vue {
   }
   /**生命周期 */
   created() {
-    this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Setting(), getUuid(), false)
-    this.registerProperty(PropertyGroupName.normal, '名称', new Text_Setting())
-    let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
-    this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Setting(), initCompPosition, true, '')
-
-    let bianju = { left: 0, right: 0, top: 0, bottom: 0 }
-    this.registerProperty(PropertyGroupName.normal, '外边距', new Margin_Setting(), bianju, true, '')
-    this.registerProperty(PropertyGroupName.normal, '内边距', new Padding_Setting(), bianju, true, '')
-    this.registerProperty(PropertyGroupName.normal, '字体', new Number_Setting(), 14, true, 'px')
-    this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Setting(1, 'image'), [])
-    this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Setting(), 'white')
-    this.registerProperty(PropertyGroupName.normal, '行为绑定', new Behavior_Setting(), [], true)
+    // this.registerProperty(PropertyGroupName.normal, '唯一Id', new Text_Setting(), getUuid(), false)
+    // this.registerProperty(PropertyGroupName.normal, '名称', new Text_Setting())
+    // let initCompPosition = { width: '100%', height: '100%', x: 0, y: 0 }
+    // this.registerProperty(PropertyGroupName.normal, '布局信息', new CompPosition_Setting(), initCompPosition, true, '')
+    // let bianju = { left: 0, right: 0, top: 0, bottom: 0 }
+    // this.registerProperty(PropertyGroupName.normal, '外边距', new Margin_Setting(), bianju, true, '')
+    // this.registerProperty(PropertyGroupName.normal, '内边距', new Padding_Setting(), bianju, true, '')
+    // this.registerProperty(PropertyGroupName.normal, '字体', new Number_Setting(), 14, true, 'px')
+    // this.registerProperty(PropertyGroupName.normal, '背景图片', new UploadFile_Setting(1, 'image'), [])
+    // this.registerProperty(PropertyGroupName.normal, '背景色', new Color_Setting(), 'white')
+    // this.registerProperty(PropertyGroupName.normal, '行为绑定', new Behavior_Setting(), [], true)
   }
   /**生命周期-用于注册属性/事件/方法 等------只有设计模式的时候，会触发
    * 触发与vue周期created之中
@@ -178,293 +180,101 @@ export default class EngineLayout extends Vue {
   }
 
   // *************************基础属性****************************************************************************
-  get Id(): string {
-    if (!this.findPropertyByName) {
-      return ''
-    }
-    var pro = this.findPropertyByName('基础设置', '唯一Id')
-    if (!pro) {
-      return ''
-    }
-    return pro.value
-  }
-  set Id(val: string) {
-    if (!this.findPropertyByName) {
-      return
-    }
-    var pro = this.findPropertyByName('基础设置', '唯一Id')
-    if (!pro) {
-      return
-    }
-    this.setPropertyVal(pro.id, val)
-  }
-  get name(): string {
-    var pro = this.findPropertyByName('基础设置', '名称')
-    if (!pro) {
-      return ''
-    }
-    return pro.value
-  }
-  set name(val: string) {
-    var pro = this.findPropertyByName('基础设置', '名称')
-    if (!pro) {
-      return
-    }
-    this.setPropertyVal(pro.id, val)
-  }
-  get width(): any {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.width
-  }
-  set width(val: any) {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return
-    }
-    pro.value.width = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get height(): any {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.height
-  }
-  set height(val: any) {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return
-    }
-    pro.value.height = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get left(): any {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.x
-  }
-  set left(val: any) {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return
-    }
-    pro.value.x = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get top(): any {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.y
-  }
-  set top(val: any) {
-    var pro = this.findPropertyByName('基础设置', '布局信息')
-    if (!pro) {
-      return
-    }
-    pro.value.y = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get margin_left(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.left as number
-  }
-  set margin_left(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return
-    }
-    pro.value.left = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get margin_right(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.right as number
-  }
-  set margin_right(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return
-    }
-    pro.value.right = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get margin_top(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.top
-  }
-  set margin_top(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return
-    }
-    pro.value.top = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get margin_bottom(): number {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.bottom
-  }
-  set margin_bottom(val: number) {
-    var pro = this.findPropertyByName('基础设置', '外边距')
-    if (!pro) {
-      return
-    }
-    pro.value.bottom = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get padding_left(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.left
-  }
-  set padding_left(val: number) {
-    var pro = this.findPropertyByName('基础设置', '内边距-左')
-    if (!pro) {
-      return
-    }
-    pro.value.left = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get padding_right(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.right
-  }
-  set padding_right(val: number) {
-    var pro = this.findPropertyByName('基础设置', '内边距')
-    if (!pro) {
-      return
-    }
-    pro.value.right = val
-    this.setPropertyVal(pro.id, pro.value)
-  }
-  get padding_top(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距')
-    if (!pro) {
-      return 0
-    }
+  @DPropAttr(new Text_Setting('唯一ID', PropertyGroupName.normal, false))
+  public Id: string
+  @DPropAttr(new Text_Setting('名称', PropertyGroupName.normal, true))
+  public name: string
+  @DPropAttr(new CompPosition_Setting('布局信息', PropertyGroupName.normal, true, { width: '100%', height: '100%', x: 0, y: 0 }))
+  public positionInfo: any
+  @DPropAttr(new Margin_Setting('外边距', PropertyGroupName.normal, true, { left: 0, right: 0, top: 0, bottom: 0 }))
+  public marginInfo: any
+  @DPropAttr(new Margin_Setting('内边距', PropertyGroupName.normal, true, { left: 0, right: 0, top: 0, bottom: 0 }))
+  public paddingInfo: any
+  @DPropAttr(new Number_Setting('字体大小', PropertyGroupName.normal, true, 14, 'px'))
+  public fontSize: number
+  @DPropAttr(new Color_Setting('背景色', PropertyGroupName.normal, true, '#FFFFFF'))
+  public background: string
+  @DPropAttr(new UploadFile_Setting('背景图片', PropertyGroupName.normal, true, [], null, 1, 'image'))
+  public background_img: any
+  @DPropAttr(new Behavior_Setting('行为绑定', PropertyGroupName.normal, true, []))
+  public designerEvents: any
 
-    return pro.value.top
+  public get width(): any {
+    return this.positionInfo.width
   }
-  set padding_top(val: number) {
-    var pro = this.findPropertyByName('基础设置', '内边距')
-    if (!pro) {
-      return
-    }
-    pro.value.top = val
-    this.setPropertyVal(pro.id, pro.value)
+  public set width(val: any) {
+    this.positionInfo.width = val
   }
-  get padding_bottom(): number {
-    var pro = this.findPropertyByName('基础设置', '内边距')
-    if (!pro) {
-      return 0
-    }
-    return pro.value.bottom
+  public get height(): any {
+    return this.positionInfo.height
   }
-  set padding_bottom(val: number) {
-    var pro = this.findPropertyByName('基础设置', '内边距')
-    if (!pro) {
-      return
-    }
-    pro.value.bottom = val
-    this.setPropertyVal(pro.id, pro.value)
+  public set height(val: any) {
+    this.positionInfo.height = val
   }
-  get fontFamily(): string {
-    // '宋体', '楷体', '黑体', '隶书'
-    var property = this.findPropertyByName(PropertyGroupName.normal, '字体样式')
-    if (!property) {
-      return ''
-    }
-    switch (property.value) {
-      case '微软雅黑':
-        return 'Microsoft YaHei'
-        break
-      case 'times new roman':
-        return 'Times New Roman'
-        break
-      case '宋体':
-        return 'SimSun'
-        break
-      case '楷体':
-        return 'KaiTi'
-        break
-      case '黑体':
-        return 'SimHei'
-        break
-      case '隶书':
-        return 'LiSu'
-        break
-      default:
-        break
-    }
-    return ''
+  public get left(): any {
+    return this.positionInfo.x
   }
-  get background(): string {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '背景色')
-    if (property) {
-      return property.value
-    } else {
-      return '#ffffff'
-    }
+  public set left(val: any) {
+    this.positionInfo.x = val
   }
-  set background(val: string) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '背景色')
-    if (!property) {
-      return
-    }
-    this.setPropertyVal(property.id, val)
+  public get top(): any {
+    return this.positionInfo.y
   }
-  get background_img(): any {
-    // window.console.log('获取背景图片')
-    var property = this.findPropertyByName(PropertyGroupName.normal, '背景图片')
-    if (property && property.value && property.value.length > 0) {
-      return property.value[0]
-    } else {
-      return null
-    }
+  public set top(val: any) {
+    this.positionInfo.y = val
   }
-  set background_img(val: any) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '背景图片')
-    if (!property) {
-      return
-    }
-    if (val) {
-      this.setPropertyVal(property.id, [val])
-    } else {
-      this.setPropertyVal(property.id, [])
-    }
+  public get margin_left(): number {
+    return this.marginInfo.left as number
   }
+  public set margin_left(val: number) {
+    this.marginInfo.left = val
+  }
+  public get margin_right(): number {
+    return this.marginInfo.right as number
+  }
+  public set margin_right(val: number) {
+    this.marginInfo.right = val
+  }
+  public get margin_top(): number {
+    return this.marginInfo.top
+  }
+  public set margin_top(val: number) {
+    this.marginInfo.top = val
+  }
+  public get margin_bottom(): number {
+    return this.marginInfo.bottom
+  }
+  public set margin_bottom(val: number) {
+    this.marginInfo.bottom = val
+  }
+  public get padding_left(): number {
+    return this.paddingInfo.left
+  }
+  public set padding_left(val: number) {
+    this.paddingInfo.left = val
+  }
+  public get padding_right(): number {
+    return this.paddingInfo.right
+  }
+  public set padding_right(val: number) {
+    this.paddingInfo.right = val
+  }
+  public get padding_top(): number {
+    return this.paddingInfo.top
+  }
+  public set padding_top(val: number) {
+    this.paddingInfo.top = val
+  }
+  public get padding_bottom(): number {
+    return this.paddingInfo.bottom
+  }
+  public set padding_bottom(val: number) {
+    this.paddingInfo.bottom = val
+  }
+
   // *************************privates****************************************************************************
   public async destorymethod() {
     this.$off()
-    // for (let index = 0; index < this.properties.length; index++) {
-    //   const element = this.properties[index]
-    //   element.destory()
-    // }
     for (let index = 0; index < this.children.length; index++) {
       const o = this.children[index]
 
@@ -578,9 +388,8 @@ export default class EngineLayout extends Vue {
       return
     }
   }
-  protected addProperty(proper: Property) {
+  protected addProperty(proper: PropertySetting) {
     let find: any = null
-
     for (let index = 0; index < this.properties.length; index++) {
       const o = this.properties[index]
       if (o.propertyName === proper.propertyName && o.groupName === proper.groupName) {
@@ -631,8 +440,13 @@ export default class EngineLayout extends Vue {
     var saveinfo: SaveInfo = {
       id: this.Id,
       meta: (this as any).prototype ? (this as any).prototype.$Meta : {},
-      properties: this.properties,
+      properties: [],
       children: []
+    }
+
+    for (let index = 0; index < this.properties.length; index++) {
+      const element = this.properties[index]
+      saveinfo.properties.push({ id: element.id, field: element.field, value: element.value })
     }
 
     saveinfo.children = await this.getChildrenData()
@@ -692,10 +506,10 @@ export default class EngineLayout extends Vue {
       return
     }
 
-    var newperperty = new Property(name, groupName, propertySetting, defaultVal)
+    var newperperty = new PropertySetting(name, groupName, true, defaultVal)
     newperperty.canSetting = canSetting
     if (unit) {
-      newperperty.propertySetting.unit = unit
+      newperperty.unit = unit
     }
     this.properties.push(newperperty)
   }
@@ -743,22 +557,19 @@ export default class EngineLayout extends Vue {
     }
 
     /**旧版本的：比较赋值 */
-    for (let index = 0; index < layout_properties.length; index++) {
-      const item = layout_properties[index]
-      let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
-      if (find) {
-        find.id = item.id
-        this.setPropertyVal(item.id, item.value, true)
-      } else {
-        var newperperty = new Property(item.propertyName, item.groupName, item.propertySetting)
-        newperperty.canSetting = item.canSetting
-        newperperty.id = item.id
-        this.addProperty(newperperty)
-        this.setPropertyVal(item.id, item.value, true)
-      }
-    }
+    // for (let index = 0; index < layout_properties.length; index++) {
+    //   const item = layout_properties[index]
+    //   let find = this.properties.find((o) => o.groupName == item.groupName && o.propertyName == item.propertyName)
+    //   if (find) {
+    //     find.id = item.id
+    //     this.setPropertyVal(item.id, item.value, true)
+    //   } else {
+    //     this.addProperty(item)
+    //     this.setPropertyVal(item.id, item.value, true)
+    //   }
+    // }
   }
-  public findProperties(groupName: string, name: string): Property[] {
+  public findProperties(groupName: string, name: string): PropertySetting[] {
     let res: any[] = []
     for (let index = 0; index < this.properties.length; index++) {
       const o = this.properties[index]
@@ -768,7 +579,7 @@ export default class EngineLayout extends Vue {
     }
     return res
   }
-  public findPropertyByName(groupName: string, name: string): Property {
+  public findPropertyByName(groupName: string, name: string): PropertySetting {
     for (let index = 0; index < this.properties.length; index++) {
       const o = this.properties[index]
       if (o.groupName === groupName && o.propertyName === name) {
@@ -776,7 +587,7 @@ export default class EngineLayout extends Vue {
       }
     }
   }
-  public findPropertyById(Id: string): Property {
+  public findPropertyById(Id: string): PropertySetting {
     for (let index = 0; index < this.properties.length; index++) {
       const o = this.properties[index]
       if (o.id == Id) {

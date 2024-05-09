@@ -1,10 +1,11 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { Property, Color_Setting, Boolean_Setting, PropertyGroupName, Number_Setting } from '.'
 import { EnginePage, SaveInfo, EngineContainer } from './index'
 import { factory, param } from '@behaviorEngine/index'
 
 import { EngineLayout } from '..'
+import { DPropAttr } from './commonClasses/PropertyInfo'
+import { PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 
 @Options({})
 export default class EngineComponent extends EngineContainer {
@@ -15,64 +16,17 @@ export default class EngineComponent extends EngineContainer {
     }
     return res as EnginePage
   }
-  get foreground(): string {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '前景色')
-    if (property) {
-      return property.value
-    } else {
-      return '#000000'
-    }
-  }
-  get display(): boolean {
-    // window.console.log('是否显示')
-    var property = this.findPropertyByName(PropertyGroupName.normal, '是否显示')
-    if (property) {
-      return property.value as boolean
-    }
-    return false
-  }
-  set display(val: boolean) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '是否显示')
-    if (property) {
-      property.value = val
-    }
-  }
-  get disabled(): boolean {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
-    if (property) {
-      return property.value as boolean
-    }
-    return false
-  }
-  set disabled(val: boolean) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '是否禁用')
-    if (property) {
-      property.value = val
-    }
-  }
-  get zIndex(): number {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '层级设置')
-    if (property) {
-      return property.value
-    } else {
-      return null
-    }
-  }
-  set zIndex(val: number) {
-    var property = this.findPropertyByName(PropertyGroupName.normal, '层级设置')
-    if (property) {
-      property.value = val
-    }
-  }
-  get tooltipText(): string {
-    return null
-  }
-  created() {
-    this.registerProperty(PropertyGroupName.normal, '前景色', new Color_Setting(), '#000000')
-    this.registerProperty(PropertyGroupName.normal, '是否禁用', new Boolean_Setting(), false)
-    this.registerProperty(PropertyGroupName.normal, '是否显示', new Boolean_Setting(), true, true)
-    this.registerProperty(PropertyGroupName.normal, '层级设置', new Number_Setting(), 1)
 
+  @DPropAttr(new Color_Setting('前景色', PropertyGroupName.normal, true, '#000000'))
+  public foreground: string
+  @DPropAttr(new Boolean_Setting('是否显示', PropertyGroupName.normal, true, true))
+  public display: string
+  @DPropAttr(new Boolean_Setting('是否禁用', PropertyGroupName.normal, true, false))
+  public disabled: string
+  @DPropAttr(new Number_Setting('层级设置', PropertyGroupName.normal, true, 1))
+  public zIndex: string
+
+  created() {
     this.width = 200
     this.height = 200
     /**注册事件 */
