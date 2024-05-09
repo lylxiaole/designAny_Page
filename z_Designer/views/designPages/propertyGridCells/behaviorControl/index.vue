@@ -50,9 +50,9 @@ import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
 import { layoutEvent, layoutEventBehaviors, PropertyTypeEnum, Behavior_Setting } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
-import { behaviorListData } from './model'
-import behaviorEventBinding from './behaviorEventBinding.vue'
+import behaviorEventBinding, { behaviorListData } from './behaviorEventBinding.vue'
 import behaviorListInPage from './behaviorListInPage.vue'
+import { toRaw } from 'vue'
 
 @CellSettingAttr(PropertyTypeEnum.behavior)
 @Options({
