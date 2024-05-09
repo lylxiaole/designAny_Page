@@ -17,10 +17,10 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
+import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, Number_Setting } from '@designEngine/index'
 
-@propertyCellSettingAttr(PropertyTypeEnum.number)
+@CellSettingAttr(PropertyTypeEnum.number)
 @Options({})
 export default class numberControl extends propertyCellBase<Number_Setting> {
   mounted() {}

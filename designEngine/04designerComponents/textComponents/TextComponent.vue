@@ -22,11 +22,11 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
+import { EngineLayout, EngineComponent, LayoutType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
 import { Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
 import { getUuid, deepClone } from '@common/utils'
 
-@layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '文本组件', 'TextComponent', null)
+@DCompnentAttr('pc', LayoutType.system_component, '系统组件', '文本组件', 'TextComponent', null)
 @Options({})
 export default class TextComponent extends EngineComponent {
   isShowIndex: boolean = false

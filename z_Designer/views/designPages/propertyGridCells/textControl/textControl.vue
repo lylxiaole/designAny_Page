@@ -18,9 +18,9 @@ import npColorPicker from '@common/components/commonComponents/npColorPicker.vue
 import propertyCellBase from '../common'
 import { PropertyTypeEnum, Text_Setting } from '@designEngine/index'
 
-import { propertyCellSettingAttr } from '../common'
+import { CellSettingAttr } from '../common'
 
-@propertyCellSettingAttr(PropertyTypeEnum.text)
+@CellSettingAttr(PropertyTypeEnum.text)
 @Options({})
 export default class textControl extends propertyCellBase<Text_Setting> {
   mounted() {}

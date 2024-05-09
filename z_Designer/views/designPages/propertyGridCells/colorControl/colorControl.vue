@@ -15,12 +15,12 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
+import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, Color_Setting } from '@designEngine/index'
 
 import bcolorPicker from '@common/components/colorPickr/colorPicker.vue'
 
-@propertyCellSettingAttr(PropertyTypeEnum.color)
+@CellSettingAttr(PropertyTypeEnum.color)
 @Options({
   components: {
     bcolorPicker

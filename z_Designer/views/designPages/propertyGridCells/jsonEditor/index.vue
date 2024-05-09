@@ -33,10 +33,10 @@ import { getUuid, deepClone } from '@common/utils'
 import jsonEditorCommon from './jsonEditorCommon.vue'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
+import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, JsonContent_Setting } from '@designEngine/index'
 
-@propertyCellSettingAttr(PropertyTypeEnum.jsonContent)
+@CellSettingAttr(PropertyTypeEnum.jsonContent)
 @Options({
   components: {
     jsonEditorCommon: jsonEditorCommon

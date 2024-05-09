@@ -25,10 +25,10 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
+import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, CompPosition_Setting } from '@designEngine/index'
 
-@propertyCellSettingAttr(PropertyTypeEnum.compPosition)
+@CellSettingAttr(PropertyTypeEnum.compPosition)
 @Options({
   components: {}
 })

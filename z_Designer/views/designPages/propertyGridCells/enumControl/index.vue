@@ -13,10 +13,10 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
+import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, Enum_Setting } from '@designEngine/index'
 
-@propertyCellSettingAttr(PropertyTypeEnum.enum)
+@CellSettingAttr(PropertyTypeEnum.enum)
 @Options({
   components: {}
 })

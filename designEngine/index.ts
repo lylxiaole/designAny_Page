@@ -15,8 +15,9 @@ const modulesFiles = require.context('./04designerComponents', true, /\.(vue)$/)
 
 export function init(apiAddr) {
   designerContext.designerServerApiAddr = apiAddr
-  modulesFiles.keys().reduce((modules, modulePath) => {
+  let x = modulesFiles.keys().reduce((modules, modulePath) => {
     const value = modulesFiles<any>(modulePath)
     return modules
   }, {})
+  debugger
 }

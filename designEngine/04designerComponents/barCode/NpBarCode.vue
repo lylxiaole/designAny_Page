@@ -11,13 +11,13 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EngineLayout, EngineComponent, LayoutType, layoutCompTypeAttr } from '@designEngine/03designerLayoutBase'
+import { EngineLayout, EngineComponent, LayoutType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
 import { Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@common/utils'
 import { npGridIco } from '@designEngine/assets/icons.js'
 
-@layoutCompTypeAttr('pc', LayoutType.system_component, '系统组件', '一维码组件', 'NpBarCode', npGridIco)
+@DCompnentAttr('pc', LayoutType.system_component, '系统组件', '一维码组件', 'NpBarCode', npGridIco)
 @Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}

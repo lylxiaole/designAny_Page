@@ -1,5 +1,4 @@
 // *******************组件相关*******************************************************
-
 export enum LayoutType {
   /**系统组件 */
   system_component = 'system_component',
@@ -31,7 +30,6 @@ export class CompIndex {
   static indexs = {}
 }
 /**设计器的组件 以数组形式保存 */
-
 export const allComponents: LayoutInfo[] = []
 
 /** */
@@ -41,18 +39,18 @@ export function findSystemCompByCode(code: string): any {
   return comp
 }
 
-export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, groupName: string, name: string, compCode: string, icon: any) {
+export function DCompnentAttr(paltform: string, layoutType: LayoutType, groupName: string, name: string, compCode: string, icon: any) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
 
-    window.console.log('layoutCompTypeAttr', target.prototype.$Meta, compCode)
+    window.console.log('DCompnentAttr', target.prototype.$Meta, compCode)
     target.prototype.$Meta.layoutType = layoutType
     target.prototype.$Meta.groupName = groupName
     target.prototype.$Meta.name = name
     target.prototype.$Meta.compCode = compCode
     target.prototype.$Meta.icon = icon
     target.prototype.$Meta.paltform = paltform
-
+    debugger
     let layoutInfo = new LayoutInfo(layoutType, groupName, name, target, icon, paltform, compCode)
     allComponents.push(layoutInfo)
 
@@ -62,5 +60,3 @@ export function layoutCompTypeAttr(paltform: string, layoutType: LayoutType, gro
     // window.console.log('类型访问器:', target)
   }
 }
-
-// *******************组件相关*******************************************************

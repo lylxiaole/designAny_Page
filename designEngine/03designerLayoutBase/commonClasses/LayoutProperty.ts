@@ -1,37 +1,6 @@
 import { getUuid } from '@common/utils'
 import { isBoolean, isString, isNumber } from 'xe-utils'
 
-export enum PropertyTypeEnum {
-  boolean = 'boolean',
-  compPosition = 'compPosition',
-  margin = 'margin',
-  padding = 'padding',
-  text = 'text',
-  textList = 'textList',
-  number = 'number',
-
-  numberList = 'numberList',
-  enum = 'enum',
-  color = 'color',
-  uploadFile = 'uploadFile',
-  jsonContent = 'jsonContent',
-
-  timePicker = 'timePicker',
-  behavior = 'behavior',
-  pageInParams = 'pageInParams'
-}
-
-export enum PropertyGroupName {
-  normal = '基础设置',
-  special = '特有属性'
-  //theme = '主题',
-}
-
-export abstract class PropertySetting {
-  public type: PropertyTypeEnum = PropertyTypeEnum.text
-  public unit: string = '' //属性单位
-}
-
 export class Property {
   constructor(name: string, groupname: string, type: PropertySetting, defaultVal?: any) {
     this.propertyName = name
@@ -109,6 +78,34 @@ export class Property {
     }
   }
 }
+export enum PropertyTypeEnum {
+  boolean = 'boolean',
+  compPosition = 'compPosition',
+  margin = 'margin',
+  padding = 'padding',
+  text = 'text',
+  textList = 'textList',
+  number = 'number',
+
+  numberList = 'numberList',
+  enum = 'enum',
+  color = 'color',
+  uploadFile = 'uploadFile',
+  jsonContent = 'jsonContent',
+
+  timePicker = 'timePicker',
+  behavior = 'behavior',
+  pageInParams = 'pageInParams'
+}
+export enum PropertyGroupName {
+  normal = '基础设置',
+  special = '特有属性'
+  //theme = '主题',
+}
+export abstract class PropertySetting {
+  public type: PropertyTypeEnum = PropertyTypeEnum.text
+  public unit: string = '' //属性单位
+}
 
 export class CompPosition_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.compPosition
@@ -116,12 +113,9 @@ export class CompPosition_Setting extends PropertySetting {
 export class Margin_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.margin
 }
-
 export class Padding_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.padding
 }
-
-//添加布尔类型属性
 export class Boolean_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.boolean
 }
@@ -218,11 +212,9 @@ export class UploadFile_Setting extends PropertySetting {
     this.fileType = filetype
   }
 }
-
 export class JsonContent_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.jsonContent
 }
-
 export class TimePickerFile_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.timePicker
 
@@ -243,7 +235,6 @@ export class Behavior_Setting extends PropertySetting {
     super()
   }
 }
-
 export class PageInParams_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.pageInParams
   constructor() {

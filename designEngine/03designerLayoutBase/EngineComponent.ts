@@ -82,7 +82,6 @@ export default class EngineComponent extends EngineContainer {
   }
 
   mounted() {}
-  rendered(dom: Element) {}
 
   // *******************************protecteds**************************************************************************************
   protected override async triggerEvent(name: string, inparam: any) {

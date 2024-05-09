@@ -9,7 +9,6 @@ import { paramInfo } from './commonClasses/pageInParamInfo'
 import { factory, resourceCode, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
 import { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
 import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
-
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
 
@@ -80,7 +79,7 @@ export default class EnginePage extends EngineContainer {
     $(window).unbind('resize', this.onWindowResize_Scale as any)
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }
-  // *******************************页面行为**************************************************************************************
+  // *******************************页面行为******************************************
   protected override async triggerEvent(name: string, inparam: any) {
     super.triggerEvent(name, inparam)
     if (this.isDesigning) {
@@ -162,7 +161,7 @@ export default class EnginePage extends EngineContainer {
     }
     return null
   }
-  // *******************************页面缩放 **************************************************************************************
+  // *******************************页面缩放 *******************************************
   //让页面按照指定尺寸进行缩放
   public adaptSize(newwidth, newheight) {
     newwidth = parseInt(newwidth)

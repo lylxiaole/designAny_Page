@@ -17,12 +17,12 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
-import { propertyCellSettingAttr } from '../common'
+import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, UploadFile_Setting } from '@designEngine/03designerLayoutBase'
 
 import uploadFile from './uploadFile.vue'
 
-@propertyCellSettingAttr(PropertyTypeEnum.uploadFile)
+@CellSettingAttr(PropertyTypeEnum.uploadFile)
 @Options({
   components: {
     uploadFile
