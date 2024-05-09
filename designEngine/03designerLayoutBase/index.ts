@@ -6,7 +6,7 @@ import EnginePage from './EnginePage'
 
 export { EngineLayout, EngineContainer, EngineComponent, EnginePage }
 export { SaveInfo }
-export * from './commonClasses/LayoutProperty'
+export * from './commonClasses/PropertyInfo'
 
 export { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
 export { DCompType, DCompInfo, CompIndex, findSystemCompByCode, allComponents, DCompnentAttr } from './commonClasses/ComponentInfo'

@@ -3,7 +3,7 @@ import { ref, h, render, onMounted } from 'vue'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 
-import { Property } from './commonClasses/LayoutProperty'
+import { Property } from './commonClasses/PropertyInfo'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import { findSystemCompByCode } from './commonClasses/ComponentInfo'
 import { EnginePage } from '.'

@@ -1,4 +1,4 @@
-import { Property, PageInParams_Setting, PropertyGroupName, Number_Setting, Enum_Setting } from './commonClasses/LayoutProperty'
+import { Property, PageInParams_Setting, PropertyGroupName, Number_Setting, Enum_Setting } from './commonClasses/PropertyInfo'
 import ComponentBase from './EngineComponent'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
