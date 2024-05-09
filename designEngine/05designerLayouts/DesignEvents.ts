@@ -1,6 +1,6 @@
 import dragHelper from '@designEngine/02common/dragHelper_new'
 import { Options, Vue } from 'vue-class-component'
-import EngineLayout, { SaveInfo, Point } from '@designEngine/03designerLayoutBase/EngineLayout'
+import EngineLayout, { SaveInfo } from '@designEngine/03designerLayoutBase/EngineLayout'
 import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/componentInfos'
 import EngineContainer from '@designEngine/03designerLayoutBase/EngineContainer'
 import EnginePage from '@designEngine/03designerLayoutBase/EnginePage'

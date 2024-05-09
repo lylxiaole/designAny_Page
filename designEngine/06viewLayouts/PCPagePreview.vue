@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { SaveInfo, Point } from '../03designerLayoutBase/EngineLayout'
 
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
 import { drawVueOnVirtualDom, BuildingFileUrlForShow, deepClone, getUuid } from '@common/utils'
