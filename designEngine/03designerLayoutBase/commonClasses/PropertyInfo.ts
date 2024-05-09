@@ -8,8 +8,8 @@ export function DPropAttr(prop: PropertySetting) {
       target.properties = []
     }
 
+    console.log('DPropAttr:', target, key)
     prop.field = key
-
     let find = target.properties.find((o) => o.field === key)
     if (!find) {
       var newperperty = deepClone(prop)

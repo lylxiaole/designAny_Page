@@ -8,7 +8,6 @@ import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses
 import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import designerContext from '../01designerContext/context'
-import { property } from 'xe-utils'
 
 type propertyValidatorHandle = (newval: any) => boolean
 class propertyValidatorType {
@@ -168,11 +167,11 @@ export default class EngineLayout extends Vue {
   @DPropAttr(new Text_Setting('名称', PropertyGroupName.normal, true))
   public name: string
   @DPropAttr(new CompPosition_Setting('布局信息', PropertyGroupName.normal, true, { width: '100%', height: '100%', x: 0, y: 0 }))
-  public positionInfo: any
+  public positionInfo: any = { width: '100%', height: '100%', x: 0, y: 0 }
   @DPropAttr(new Margin_Setting('外边距', PropertyGroupName.normal, true, { left: 0, right: 0, top: 0, bottom: 0 }))
-  public marginInfo: any
+  public marginInfo: any = { left: 0, right: 0, top: 0, bottom: 0 }
   @DPropAttr(new Margin_Setting('内边距', PropertyGroupName.normal, true, { left: 0, right: 0, top: 0, bottom: 0 }))
-  public paddingInfo: any
+  public paddingInfo: any = { left: 0, right: 0, top: 0, bottom: 0 }
   @DPropAttr(new Number_Setting('字体大小', PropertyGroupName.normal, true, 14, 'px'))
   public fontSize: number
   @DPropAttr(new Color_Setting('背景色', PropertyGroupName.normal, true, '#FFFFFF'))
@@ -180,7 +179,7 @@ export default class EngineLayout extends Vue {
   @DPropAttr(new UploadFile_Setting('背景图片', PropertyGroupName.normal, true, [], null, 1, 'image'))
   public background_img: any
   @DPropAttr(new Behavior_Setting('行为绑定', PropertyGroupName.normal, true, []))
-  public designerEvents: any
+  public designerEvents: any = []
 
   public get width(): any {
     return this.positionInfo.width

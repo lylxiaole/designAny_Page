@@ -159,17 +159,19 @@ export default class index extends PageBase {
 
     let res = await GetPageDetail(pageId)
     await this.$nextTick()
-    let designLayout: any = typeof EnginePage
+    let designLayout: any = null
     switch (res.type) {
       case pageType.pcPage:
         designLayout = PCPageDesign
         break
       case pageType.mobilePage:
-        designLayout = MobilePageDesign
+        designLayout = PCPageDesign
         break
       default:
         break
     }
+
+    debugger
     /************************渲染页面 */
     let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
     await (vueComp as any).loadPageByData(pageId, res.designDetail)
@@ -185,10 +187,8 @@ export default class index extends PageBase {
   }
   // **********顶部操作栏**********************************************************
   private async onSaveCurrentPage(pageId: string) {
-    window.console.log('onSaveCurrentPage:', pageId)
     await this.currentShowEngine.save(this.applicationId)
   }
-
   private async onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }

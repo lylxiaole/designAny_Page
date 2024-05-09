@@ -10,7 +10,10 @@ import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../0
 import { drawVueOnVirtualDom, deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
-import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/ComponentInfo'
+ 
+
+import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo'
+import { DPropAttr,Text_Setting,PropertyGroupName } from '../03designerLayoutBase/commonClasses/PropertyInfo'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
@@ -24,8 +27,7 @@ export default class PCPageDesign extends EnginePage {
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
   private designEvets: DesignEvents = null
-
-  created() {}
+    
   mounted() {
     this.designEvets = new DesignEvents(this)
     this.designEvets.canDrag = false
