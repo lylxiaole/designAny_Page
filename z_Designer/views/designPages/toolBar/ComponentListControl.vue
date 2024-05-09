@@ -40,7 +40,7 @@ class ComponentGroupInfo {
   }
   groupId: string
   groupName: string
-  components: engin.LayoutInfo[] = []
+  components: engin.DCompInfo[] = []
 }
 
 @Options({})
@@ -70,7 +70,7 @@ export default class ComponentListControl extends Vue {
   ///////////////////////
   private dragHelpers: dragHelper[] = []
   private dragType: engin.DragItemTypeEnum = engin.DragItemTypeEnum.drop_system_component
-  private dataSource: engin.LayoutInfo[] = []
+  private dataSource: engin.DCompInfo[] = []
   private compGroupName: string = ''
   private defaultSelectedKeys: any[] = []
 
@@ -133,13 +133,13 @@ export default class ComponentListControl extends Vue {
   /**包含组件的分组名，和组件的名字。不包含组件的类型信息 */
   private organizeDragData(el: Element): engin.DragItemData<any> {
     let dragType = $(el).attr('dragType') as engin.DragItemTypeEnum
-    let type = $(el).attr('compType') as engin.LayoutType
+    let type = $(el).attr('compType') as engin.DCompType
     let compName = $(el).attr('compName')
     let compGroupName = $(el).attr('compGroupName')
     let compCode = $(el).attr('compCode')
     let platform = $(el).attr('platform')
 
-    let compInfo = new engin.LayoutInfo(type, compGroupName, compName, null, '', platform, compCode)
+    let compInfo = new engin.DCompInfo(type, compGroupName, compName, null, '', platform, compCode)
     //window.console.log('---------------------------------------------------compInfocompInfocompInfocompInfocompInfo', compInfo)
     let dragd = new engin.DragItemData<any>()
     dragd.type = dragType
@@ -155,7 +155,7 @@ export default class ComponentListControl extends Vue {
   /**计算系统自带组件的分组 */
   private cuteSystemComponents() {
     engin.allComponents
-      .filter((o) => o.type == engin.LayoutType.system_component)
+      .filter((o) => o.type == engin.DCompType.system_component)
       .filter((element) => {
         let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
         if (findgroup.length < 1) {

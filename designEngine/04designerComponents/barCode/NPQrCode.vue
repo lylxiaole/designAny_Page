@@ -11,7 +11,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import QRCode from 'qrcode'
-import { EngineLayout, EngineComponent, LayoutType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
+import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
 import {
   Property,
   PropertyGroupName,
@@ -24,7 +24,7 @@ import {
 
 import { getUuid, deepClone } from '@common/utils'
 
-@DCompnentAttr('pc', LayoutType.system_component, '系统组件', '二维码组件', 'NPQrCode', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '二维码组件', 'NPQrCode', null)
 @Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'

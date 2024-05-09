@@ -4,7 +4,6 @@ import { Property, Color_Setting, Boolean_Setting, PropertyGroupName, Number_Set
 import { EnginePage, SaveInfo, EngineContainer } from './index'
 import { factory, param } from '@behaviorEngine/index'
 
-import { LayoutType } from './commonClasses/componentInfos'
 import { EngineLayout } from '..'
 
 @Options({})

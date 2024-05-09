@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EngineLayout, EngineComponent, LayoutType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
+import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
 import { Property, PropertyGroupName, JsonContent_Setting } from '@designEngine/03designerLayoutBase'
 import { getUuid, deepClone } from '@common/utils'
 import * as echarts from 'echarts'
@@ -16,7 +16,7 @@ import { shallowRef } from 'vue'
 
 import elementResizeDetectorMaker from 'element-resize-detector'
 
-@DCompnentAttr('pc', LayoutType.system_component, '系统组件', '普通EChart', 'EchartNormal', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通EChart', 'EchartNormal', null)
 @Options({})
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})

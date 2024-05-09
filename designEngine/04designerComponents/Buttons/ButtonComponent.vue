@@ -8,10 +8,10 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { EngineLayout, EngineComponent, LayoutType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
+import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
 import { Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
 
-@DCompnentAttr('pc', LayoutType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
 @Options({})
 export default class ButtonComponent extends EngineComponent {
   get btnText(): string {
