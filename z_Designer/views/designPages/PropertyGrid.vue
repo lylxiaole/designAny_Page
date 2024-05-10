@@ -9,7 +9,7 @@
     <!-- ******************************** -->
     <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;box-sizing:border-box"></el-row>
     <!-- ************************************* -->
-    <div style="width:100%;height:calc(100% - 56px);overflow-y:auto;box-sizing:border-box;margin-bottom:10px">
+    <div style="width:100%;height:calc(100% - 120px);overflow-y:auto; ">
       <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow"
         :key="propertyInfo.name" :disabled="propertyInfo.isEnable==false">
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">

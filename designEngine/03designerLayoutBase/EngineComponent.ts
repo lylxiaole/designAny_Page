@@ -9,14 +9,6 @@ import { Number_Setting, PropertyGroupName, Color_Setting, Boolean_Setting, Enum
 
 @Options({})
 export default class EngineComponent extends EngineContainer {
-  public get topParentPage(): EnginePage {
-    let res: EngineLayout = this.parentLayout
-    while (res && res.parentLayout) {
-      res = res.parentLayout
-    }
-    return res as EnginePage
-  }
-
   @DPropAttr(new Color_Setting('前景色', PropertyGroupName.normal, true))
   public foreground: string = '#000000'
   @DPropAttr(new Boolean_Setting('是否显示', PropertyGroupName.normal, true))
@@ -25,6 +17,14 @@ export default class EngineComponent extends EngineContainer {
   public disabled: boolean = false
   @DPropAttr(new Number_Setting('层级设置', PropertyGroupName.normal, true))
   public zIndex: number = 1
+
+  public get topParentPage(): EnginePage {
+    let res: EngineLayout = this.parentLayout
+    while (res && res.parentLayout) {
+      res = res.parentLayout
+    }
+    return res as EnginePage
+  }
 
   created() {
     this.width = 200
