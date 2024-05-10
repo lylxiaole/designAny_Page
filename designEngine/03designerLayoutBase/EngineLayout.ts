@@ -287,37 +287,13 @@ export default class EngineLayout extends Vue {
       await this.renderChildFromData(o)
     }
   }
-  private watch_properties_onDesigning(newval: Property[]) {
-    // window.console.log('属性变化了', newval)
-    for (var j = 0; j < newval.length; j++) {
-      var newproperty = newval[j]
-      var filter_oldproperty = this.properties_old.find((o) => o.id == newproperty.id)
-      if (!filter_oldproperty) {
-        //..新增了一个属性
-        this.properties_old.push(JSON.parse(JSON.stringify(newproperty)))
-        this.isNeedSave = true
-        this.$lylemit('onPropertyChanged', newproperty.id, newproperty, this)
-      } else if (serialize(filter_oldproperty) != serialize(newproperty)) {
-        //..修改了一个属性的内容
-        var newpropertyClone = JSON.parse(JSON.stringify(newproperty)) as Property
-        //var newpropertyClone = deepClone(newproperty) as Property
-        // window.console.log('检测到数据变化:', newproperty)
-        /**替换旧的属性 */
-        var index = this.properties_old.indexOf(filter_oldproperty)
-        this.properties_old.splice(index, 1, newpropertyClone)
-        this.isNeedSave = true
-        this.$lylemit('onPropertyChanged', newproperty.id, newpropertyClone, this)
-      }
-    }
+  private watch_properties_onDesigning(field: string, newval: any) {
+    this.isNeedSave = true
   }
   // *************************protect方法****************************************************************************
   protected async renderChildFromData(data: SaveInfo) {}
   protected loadCompleted() {
     this.$lylemit('onLYLMounted', this)
-    if (this.isDesigning == true) {
-      this.properties_old = deepClone(this.properties)
-      this.$watch('properties', this.watch_properties_onDesigning, { deep: true, immediate: false })
-    }
   }
   /**添加子级 */
   protected addChild(child: EngineLayout) {
@@ -427,9 +403,12 @@ export default class EngineLayout extends Vue {
       children: []
     }
 
-    for (let index = 0; index < this.properties().length; index++) {
-      const element = this.properties[index]
-      saveinfo.properties.push({ id: element.id, field: element.field, value: element.value })
+    let initProperties = this.properties()
+
+    for (let index = 0; index < initProperties.length; index++) {
+      const element = initProperties[index]
+      let field = element.field
+      saveinfo.properties.push({ field: element.field, value: this[field] })
     }
 
     saveinfo.children = await this.getChildrenData()
@@ -544,8 +523,16 @@ export default class EngineLayout extends Vue {
       const item = layout_properties[index]
       let find = initProperties.find((o) => o.field == item.field)
       if (find) {
-        find.id = item.id
         this[item.field] = item.value
+        if (this.isDesigning == true) {
+          this.$watch(
+            item.field,
+            (newval) => {
+              this.watch_properties_onDesigning(item.field, newval)
+            },
+            { deep: true, immediate: true }
+          )
+        }
       }
     }
   }
@@ -609,8 +596,7 @@ export default class EngineLayout extends Vue {
   }
 
   // *************************对外公布事件****************************************************************************
-  @Emit('onPropertyChanged')
-  protected onPropertyChanged(propertyId: string, property: Property, layout: EngineLayout): void {}
+
   @Emit('onChildrenCountChange')
   protected onChildrenCountChange() {}
   @Emit('onLYLCreated')

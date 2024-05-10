@@ -49,7 +49,6 @@ export default class NPQrCode extends EngineComponent {
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
     this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
     this.initQrCode()
-    this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
   beforeUnmount() {}
 

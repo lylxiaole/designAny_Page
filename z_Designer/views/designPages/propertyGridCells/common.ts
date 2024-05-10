@@ -42,7 +42,10 @@ export default class propertyCellBase<T> extends Vue {
   /**设置当前属性值 */
   protected set currentValue(val: any) {
     let field = this.property.field
-    this.currentLayoutsGetter[0][field] = val
+    for (let index = 0; index < this.currentLayoutsGetter.length; index++) {
+      const element = this.currentLayoutsGetter[index]
+      element[field] = val
+    }
   }
 
   protected get currentLayoutsGetter(): EngineLayout[] {

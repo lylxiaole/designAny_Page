@@ -59,7 +59,6 @@ export default class NpBarCode extends EngineComponent {
     this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
 
     this.initBarCode()
-    this.$on('onPropertyChanged', this.onPropertyChangedInner)
   }
   protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
     this.initBarCode()
