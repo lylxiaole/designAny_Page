@@ -21,38 +21,13 @@ import elementResizeDetectorMaker from 'element-resize-detector'
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})
   private resizeListener: any = null
-  private get option() {
-    var property = this.findPropertyByName(PropertyGroupName.special, 'Option设置')
-    if (!property || !property.value) {
-      return {
-        grid: {
-          width: '100%',
-          height: '100%'
-        },
-        title: {
-          text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
-        series: [
-          {
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-          }
-        ]
-      }
-    }
-    return property.value
-  }
+
+  @DPropAttr(new JsonContent_Setting('Option设置', PropertyGroupName.special, true))
+  private option: any = {}
 
   mounted() {
     this.width = '500px'
     this.height = '500px'
-    // this.registerProperty(PropertyGroupName.special, 'Option设置', new JsonContent_Setting())
     //*********************** */
     this.myChart = echarts.init(this.$refs.echartsArea as any)
     this.myChart.setOption(this.option, { notMerge: true })

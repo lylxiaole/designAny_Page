@@ -15,14 +15,12 @@ import { PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_
 @Options({})
 export default class ButtonComponent extends EngineComponent {
   @DPropAttr(new Text_Setting('按钮文本', PropertyGroupName.special, true))
-  private btnText: any
+  private btnText: any = '新增按钮'
 
   mounted() {
     this.width = 80
     this.height = 34
-    //注册特有属性
-    // this.registerProperty(PropertyGroupName.special, '按钮文本', new Text_Setting(), '新增按钮')
-    // this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
     this.registerEvents('点击', '', [], null)
   }
 

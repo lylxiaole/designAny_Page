@@ -9,11 +9,6 @@ import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setti
 import { getUuid, deepClone, serialize } from '@common/utils'
 import designerContext from '../01designerContext/context'
 
-type propertyValidatorHandle = (newval: any) => boolean
-class propertyValidatorType {
-  propertyId: string
-  handle: propertyValidatorHandle
-}
 export class SaveInfo {
   id: string
   meta: any
@@ -31,7 +26,6 @@ export default class EngineLayout extends Vue {
   public isDesigning: boolean = false
   public isNeedSave: boolean = false
   public designerContext: any = designerContext
-
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}
@@ -68,12 +62,11 @@ export default class EngineLayout extends Vue {
   }
   // ********************************
   public isSelected: boolean = false
-  /**属性 */
-  private properties_old: any[] = []
   public properties: () => PropertySetting[]
-
   /**父级布局 */
   public parentLayout: EngineLayout
+  /**子级布局 */
+  public children: EngineLayout[] = []
   public get topLayout(): EngineLayout {
     if (!this.parentLayout) {
       return null
@@ -86,8 +79,6 @@ export default class EngineLayout extends Vue {
     }
     return top
   }
-  /**子级布局 */
-  public children: EngineLayout[] = []
   /**当前选中的直接子级布局 */
   public get selectedChildren(): EngineLayout[] {
     let res: any[] = []
@@ -100,8 +91,7 @@ export default class EngineLayout extends Vue {
 
     return res
   }
-  /***属性的值验证 */
-  public propertyValidators: propertyValidatorType[] = []
+
   /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
   // private _designerEvents: layoutEvent[] = []
   // public get designerEvents(): layoutEvent[] {
@@ -290,6 +280,8 @@ export default class EngineLayout extends Vue {
   }
   private watch_properties_onDesigning(field: string, newval: any) {
     this.isNeedSave = true
+
+    this.onDPropertyChange(this, field, newval)
   }
   // *************************protect方法****************************************************************************
   protected async renderChildFromData(data: SaveInfo) {}
@@ -364,13 +356,7 @@ export default class EngineLayout extends Vue {
     }
     // this.properties().push(proper)
   }
-  /**添加属性值验证，当属性值变化前进行验证，如果验证不通过则不设置值 */
-  protected addPropertyValidator(propertyId: string, validatorHandle: propertyValidatorHandle) {
-    var newvaildate = new propertyValidatorType()
-    newvaildate.propertyId = propertyId
-    newvaildate.handle = validatorHandle
-    this.propertyValidators.push(newvaildate)
-  }
+
   /**触发事件 */
   protected async triggerEvent(name: string, inparams: any[]) {}
   // *************************对外公布方法****************************************************************************
@@ -384,7 +370,22 @@ export default class EngineLayout extends Vue {
     if (data && data.children) {
       await this.loadChildrenData(data.children)
     }
+    ///监听属性变化
+    if (this.isDesigning == true) {
+      await this.$nextTick()
+      let initProperties = this.properties()
+      for (let index = 0; index < initProperties.length; index++) {
+        const prop = initProperties[index]
 
+        this.$watch(
+          prop.field,
+          (newval) => {
+            this.watch_properties_onDesigning(prop.field, newval)
+          },
+          { deep: true }
+        )
+      }
+    }
     this.loadCompleted()
   }
   public async reLoadData(data: SaveInfo) {
@@ -525,15 +526,6 @@ export default class EngineLayout extends Vue {
       let find = initProperties.find((o) => o.field == item.field)
       if (find) {
         this[item.field] = item.value
-        if (this.isDesigning == true) {
-          this.$watch(
-            item.field,
-            (newval) => {
-              this.watch_properties_onDesigning(item.field, newval)
-            },
-            { deep: true, immediate: true }
-          )
-        }
       }
     }
   }
@@ -567,24 +559,7 @@ export default class EngineLayout extends Vue {
       }
     }
   }
-  public validatorPropertyValue(propertyId: string, val: any): boolean {
-    let valodators: any[] = []
-    for (let index = 0; index < this.propertyValidators.length; index++) {
-      const o = this.propertyValidators[index]
-      if (o.propertyId === propertyId) {
-        valodators.push(o)
-      }
-    }
 
-    for (var i = 0; i < valodators.length; i++) {
-      var o = valodators[i]
-      if (o.handle(val) == false) {
-        window.console.error('设置属性值失败，不符合验证要求')
-        return false
-      }
-    }
-    return true
-  }
   public setPropertyVal(property: PropertySetting, val: any, isForce: boolean = false): boolean {
     let convert_value = property.convert(val)
     let field = property.field
@@ -597,6 +572,8 @@ export default class EngineLayout extends Vue {
   }
 
   // *************************对外公布事件****************************************************************************
+  @Emit('onDPropertyChange')
+  protected onDPropertyChange(layout: EngineLayout, field: string, val: any) {}
 
   @Emit('onChildrenCountChange')
   protected onChildrenCountChange() {}

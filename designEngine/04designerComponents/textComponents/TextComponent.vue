@@ -23,7 +23,15 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
-import { Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
+import {
+  DPropAttr,
+  Property,
+  PropertyGroupName,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting
+} from '@designEngine/03designerLayoutBase'
 import { getUuid, deepClone } from '@common/utils'
 
 @DCompnentAttr('pc', DCompType.system_component, '系统组件', '文本组件', 'TextComponent', null)
@@ -48,97 +56,28 @@ export default class TextComponent extends EngineComponent {
     // this.registerProperty(PropertyGroupName.special, '是否可点击开启编辑', new Enum_Setting(true, ['是', '否']), '否')
     // this.registerProperty(PropertyGroupName.special, '是否显示边框', new Enum_Setting(true, ['是', '否']), '否')
   }
+  @DPropAttr(new Boolean_Setting('是否可点击开启编辑', PropertyGroupName.special, true))
+  private contentEditabl: boolean = false
 
-  get contentEditable(): boolean {
-    let prop = this.findPropertyByName(PropertyGroupName.special, '是否可点击开启编辑')
-    if (prop && prop.value == '是') {
-      return true
-    } else {
-      return false
-    }
-  }
+  @DPropAttr(new Enum_Setting('粗细', PropertyGroupName.special, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
+  private fontWeight: string = 'normal'
+  @DPropAttr(new Enum_Setting('倾斜', PropertyGroupName.special, true, null, true, ['oblique', 'normal']))
+  private fontStyle: string = 'normal'
 
-  get fontWeight(): string {
-    if (this.findPropertyByName(PropertyGroupName.special, '粗细')) {
-      return this.findProperties(PropertyGroupName.special, '粗细')[0].value as string
-    } else {
-      return 'normal'
-    }
-  }
-  get fontStyle(): string {
-    if (this.findProperties(PropertyGroupName.special, '是否倾斜')[0]) {
-      return this.findProperties(PropertyGroupName.special, '是否倾斜')[0].value === '是' ? 'oblique' : 'normal'
-    } else {
-      return 'normal'
-    }
-  }
+  @DPropAttr(new Enum_Setting('垂直对齐', PropertyGroupName.special, true, null, true, ['top', 'middle', 'bottom']))
+  private verticalAlign: string = 'top'
 
-  get verticalAlign(): string {
-    if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐')) {
-      if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居上') {
-        return 'top'
-      } else if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居中') {
-        return 'middle'
-      } else if (this.findPropertyByName(PropertyGroupName.special, '垂直对齐').value === '居下') {
-        return 'bottom'
-      }
-    }
-    return 'top'
-  }
-  get CurrentText(): string {
-    if (this.findProperties(PropertyGroupName.special, '文本')[0]) {
-      if (this.contentEditable) {
-        //window.console.log('-----------文本输入框文字', this.findProperties(PropertyGroupName.special, '文本')[0].value as string)
-      }
-      return this.findProperties(PropertyGroupName.special, '文本')[0].value as string
-    } else {
-      return '暂无数据'
-    }
-  }
-  get space(): string {
-    if (this.findProperties(PropertyGroupName.special, '是否换行')[0]) {
-      return this.findProperties(PropertyGroupName.special, '是否换行')[0].value === '否' ? 'nowrap' : null
-    } else {
-      return null
-    }
-  }
+  @DPropAttr(new Text_Setting('文本', PropertyGroupName.special, true))
+  private CurrentText: string = '暂无数据'
 
-  /**获取属性值 */
-  get Horienten(): string {
-    if (this.findPropertyByName(PropertyGroupName.special, '水平对齐')) {
-      if (this.findPropertyByName(PropertyGroupName.special, '水平对齐').value === '居左') {
-        return 'left'
-      } else if (this.findPropertyByName(PropertyGroupName.special, '水平对齐').value === '居右') {
-        return 'right'
-      } else if (this.findPropertyByName(PropertyGroupName.special, '水平对齐').value === '居中') {
-        return 'center'
-      }
-    }
-    return 'center'
-  }
+  @DPropAttr(new Enum_Setting('自动换行', PropertyGroupName.special, true, null, true, ['nowrap', 'wrap']))
+  private space: string = 'wrap'
 
-  get TooltipTitle(): string {
-    var tmp = this.findPropertyByName(PropertyGroupName.special, '提示文字')
-    if (tmp && (tmp.value as string) != '') {
-      return tmp.value as string
-    } else {
-      // if (this.findPropertyByName(PropertyGroupName.special, '文本')) {
-      //   return this.findPropertyByName(PropertyGroupName.special, '文本').value as string
-      // } else {
-      //   return ''
-      // }
-      return ''
-    }
-  }
+  @DPropAttr(new Enum_Setting('水平对齐', PropertyGroupName.special, true, null, true, ['left', 'center', 'right']))
+  private Horienten: string = 'center'
 
-  get isShowBorder(): boolean {
-    let prop = this.findPropertyByName(PropertyGroupName.special, '是否显示边框')
-    if (prop && prop.value == '是') {
-      return true
-    } else {
-      return false
-    }
-  }
+  @DPropAttr(new Boolean_Setting('是否显示边框', PropertyGroupName.special, true))
+  private isShowBorder: boolean = false
 }
 </script>
 

@@ -13,6 +13,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import QRCode from 'qrcode'
 import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
 import {
+  DPropAttr,
   Property,
   PropertyGroupName,
   Number_Setting,
@@ -37,122 +38,41 @@ export default class NPQrCode extends EngineComponent {
     this.width = '300px'
     this.height = '300px'
 
-    // this.registerProperty(PropertyGroupName.special, '内容', new Text_Setting(), '123456789')
-    // this.registerProperty(PropertyGroupName.special, '版本', new Number_Setting(0, 40, 1), 0)
-    // this.registerProperty(PropertyGroupName.special, '纠错等级', new Enum_Setting(true, ['L', 'M', 'Q', 'H']), 'M')
-    // this.registerProperty(PropertyGroupName.special, '遮罩符号', new Number_Setting(-1, 7, 1), -1)
-    // this.registerProperty(PropertyGroupName.special, '二维码外边距', new Number_Setting(), 4)
-    // this.registerProperty(PropertyGroupName.special, '二维码宽度', new Number_Setting(), 0)
-    // this.registerProperty(PropertyGroupName.special, '比例因子', new Number_Setting(), 4)
-    // this.registerProperty(PropertyGroupName.special, '内容颜色', new Color_Setting(), '#000000')
-    // this.registerProperty(PropertyGroupName.special, '留白颜色', new Color_Setting(), '#ffffff')
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
     this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
     this.initQrCode()
   }
   beforeUnmount() {}
 
-  protected onPropertyChangedInner(propertyId: string, property: Property, layout: EngineComponent): void {
+  protected onDPropertyChange(layout: EngineLayout, field: string, val: any) {
     this.initQrCode()
   }
 
-  get codeValue(): string {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '内容')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data = prop.value.toString()
+  @DPropAttr(new Text_Setting('内容', PropertyGroupName.special, true))
+  private codeValue: string = '123456789'
 
-      return data
-    } else {
-      return '123456789'
-    }
-  }
+  @DPropAttr(new Number_Setting('版本', PropertyGroupName.special, true, null))
+  private codeVersion: number = 0
 
-  get codeVersion(): number {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '版本')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data: number = Number(prop.value)
-      return data
-    } else {
-      return 0
-    }
-  }
+  @DPropAttr(new Text_Setting('纠错等级', PropertyGroupName.special, true))
+  private codeErrorCorrectionLevel: string = 'M'
 
-  get codeErrorCorrectionLevel(): string {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '纠错等级')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data = prop.value.toString()
+  @DPropAttr(new Number_Setting('遮罩符号', PropertyGroupName.special, true, null))
+  private codeMaskPattern: number = -1
 
-      return data
-    } else {
-      return 'M'
-    }
-  }
+  @DPropAttr(new Number_Setting('二维码外边距', PropertyGroupName.special, true, null))
+  private codeMargin: number = 4
 
-  get codeMaskPattern(): number {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '遮罩符号')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data: number = Number(prop.value)
+  @DPropAttr(new Number_Setting('二维码宽度', PropertyGroupName.special, true, null))
+  private codeWidth: number = 0
+  @DPropAttr(new Number_Setting('比例因子', PropertyGroupName.special, true, null))
+  private codeScale: number = 0
 
-      return data
-    } else {
-      return -1
-    }
-  }
+  @DPropAttr(new Color_Setting('内容颜色', PropertyGroupName.special, true, null))
+  private codeDarkColor: string = '#000000'
 
-  get codeMargin(): number {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '二维码外边距')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data: number = Number(prop.value)
-
-      return data
-    } else {
-      return 4
-    }
-  }
-
-  get codeWidth(): number {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '二维码宽度')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data: number = Number(prop.value)
-
-      return data
-    } else {
-      return 0
-    }
-  }
-
-  get codeScale(): number {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '比例因子')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data: number = Number(prop.value)
-
-      return data
-    } else {
-      return 0
-    }
-  }
-
-  get codeDarkColor(): string {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '内容颜色')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data = prop.value.toString()
-
-      return data
-    } else {
-      return '#000000'
-    }
-  }
-
-  get codeLightColor(): string {
-    const prop = this.findPropertyByName(PropertyGroupName.special, '留白颜色')
-    if (prop && prop.value != undefined && prop.value != null) {
-      const data = prop.value as string
-
-      return data
-    } else {
-      return '#ffffff'
-    }
-  }
+  @DPropAttr(new Color_Setting('留白颜色', PropertyGroupName.special, true, null))
+  private codeLightColor: string = '#ffffff'
 
   private initQrCode() {
     //window.console.log('initQrCode completed:***************')
