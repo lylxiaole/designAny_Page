@@ -80,7 +80,7 @@ export default class index extends propertyCellBase<Behavior_Setting> {
   private loadBaseData() {
     this.currentComp = 'eventBinding'
     // 当前选中控件已经绑定的行为列表
-    this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
+    this.currentPageBehaviors = deepClone(this.page.behaviors)
     // 当前选中控件的事件列表
     this.designerLayoutEvents = deepClone(this.currentLayouts[0].designerEvents)
     //当前选中控件的事件已绑定的行为

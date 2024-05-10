@@ -2,13 +2,12 @@ import { deepClone, getUuid } from '@common/utils'
 import { EngineLayout } from '@designEngine/index'
 import { isBoolean, isString, isNumber } from 'xe-utils'
 
-export class DPropCache {
+class DPropCache {
   layoutFunc: Function
   properties: PropertySetting[]
 }
 
 export const allDPropCache: DPropCache[] = []
-
 export function DPropAttr(prop: PropertySetting) {
   return function (target: EngineLayout, key: string) {
     prop.field = key
@@ -35,24 +34,54 @@ export function DPropAttr(prop: PropertySetting) {
       let resProps = findx.properties
       for (let index = 0; index < allDPropCache.length; index++) {
         const oneDPropCache = allDPropCache[index]
-
         if (target instanceof oneDPropCache.layoutFunc) {
-          resProps = resProps.concat(oneDPropCache.properties)
+          resProps = oneDPropCache.properties.concat(resProps)
         }
       }
 
       return resProps
     }
-    // **************************************
-    // prop.field = key
-    // !(target as any).constructor.prototype.$DProperties && ((target as any).constructor.prototype.$DProperties = [])
-    // let find = (target as any).constructor.prototype.$DProperties.find((o) => o.field === key)
-    // if (!find) {
-    //   var newperperty = deepClone(prop)
-    //   ;(target as any).constructor.prototype.$DProperties.push(newperperty)
-    // }
   }
 }
+
+// export const allDPropCache: DPropCache[] = []
+
+// export function DPropAttr(prop: PropertySetting) {
+//   return function (target: EngineLayout, key: string) {
+//     prop.field = key
+
+//     let targetCons = target.constructor
+//     let findCache = allDPropCache.find((o) => o.layoutFunc === targetCons)
+//     if (!findCache) {
+//       allDPropCache.push({ layoutFunc: targetCons, properties: [] })
+//       findCache = allDPropCache.find((o) => o.layoutFunc === targetCons)
+//     }
+//     // **************************************
+//     let findProp = findCache.properties.find((o) => o.field === key)
+//     if (!findProp) {
+//       var newperperty = deepClone(prop)
+//       findCache.properties.push(newperperty)
+//     }
+//     // **************************************
+//     target.properties = () => {
+//       let findx = allDPropCache.find((o) => o.layoutFunc === target.constructor)
+//       if (!findx) {
+//         return []
+//       }
+
+//       let resProps = findx.properties
+//       for (let index = 0; index < allDPropCache.length; index++) {
+//         const oneDPropCache = allDPropCache[index]
+
+//         if (target instanceof oneDPropCache.layoutFunc) {
+//           resProps = resProps.concat(oneDPropCache.properties)
+//         }
+//       }
+
+//       return resProps
+//     }
+//   }
+// }
 
 export class Property {
   public field: string = '' //属性在类型中的字段名称

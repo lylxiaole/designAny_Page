@@ -31,6 +31,7 @@ export default class EngineLayout extends Vue {
   public isDesigning: boolean = false
   public isNeedSave: boolean = false
   public designerContext: any = designerContext
+
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}

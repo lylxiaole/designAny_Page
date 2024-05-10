@@ -13,7 +13,9 @@ export function CellSettingAttr(type: PropertyTypeEnum) {
   }
 }
 
-export { cellControls }
+export function getCellControl(propertySettingType: PropertyTypeEnum): typeof propertyCellBase {
+  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertySettingType)[0] as typeof propertyCellBase
+}
 
 @Options({})
 export default class propertyCellBase<T> extends Vue {
@@ -22,10 +24,10 @@ export default class propertyCellBase<T> extends Vue {
 
   /**当前的布局页面 */
   @Prop()
-  protected currentPage: EnginePage
+  protected page: EnginePage
   /**当前需要设置的布局类 */
   @Prop()
-  protected currentLayouts: EngineLayout[] | EngineLayout
+  protected layouts: EngineLayout[] | EngineLayout
 
   /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
   protected get currentProperty(): T {
@@ -49,14 +51,14 @@ export default class propertyCellBase<T> extends Vue {
   }
 
   protected get currentLayouts(): EngineLayout[] {
-    if (!this.currentLayouts) {
+    if (!this.layouts) {
       return null
     }
     var newlayouts_extra: EngineLayout[] = []
-    if (this.currentLayouts instanceof EngineLayout) {
-      newlayouts_extra = [this.currentLayouts as EngineLayout]
+    if (this.layouts instanceof EngineLayout) {
+      newlayouts_extra = [this.layouts as EngineLayout]
     } else {
-      newlayouts_extra = this.currentLayouts as EngineLayout[]
+      newlayouts_extra = this.layouts as EngineLayout[]
     }
     return newlayouts_extra
   }

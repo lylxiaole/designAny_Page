@@ -15,7 +15,7 @@
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
           {{propertyInfo.name}}</el-col>
         <el-col :span="12" style="margin-left:4px">
-          <component :is="propertyInfo.comp" :property="propertyInfo.property" :currentPage="currentPage" :currentLayouts="currentLayouts">
+          <component :is="propertyInfo.comp" :property="propertyInfo.property" :page="currentPage" :layouts="currentLayouts">
           </component>
         </el-col>
         <el-col :span="2">
@@ -32,7 +32,7 @@ import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { Property, PropertySetting, PropertyTypeEnum } from '@designEngine/03designerLayoutBase'
 import { EnginePage, EngineLayout } from '@designEngine/03designerLayoutBase'
 import { deepClone, serialize, deserialize } from '@common/utils'
-import propertyCellBase, { cellControls } from './propertyGridCells/common'
+import propertyCellBase, { getCellControl } from './propertyGridCells/common'
 
 class PropertyGroupInfo {
   groupName: string
@@ -68,16 +68,18 @@ modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-function getCellControl(propertySettingType: PropertyTypeEnum): typeof propertyCellBase {
-  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertySettingType)[0] as typeof propertyCellBase
-}
 // *****************************************
 @Options({
   name: 'propertyGrid',
   components: {}
 })
 export default class PropertyGrid extends Vue {
-  private selectGropName: string = ''
+  /**当前的布局页面 */
+  @Prop()
+  public currentPage: EnginePage
+  @Prop()
+  private currentLayouts: EngineLayout[] | EngineLayout
+
   private columns = [
     {
       title: '属性名',
@@ -89,35 +91,21 @@ export default class PropertyGrid extends Vue {
     }
   ]
 
-  private isWatchPropertiesChange: boolean = true
-  private propertyDataCache: propertyInfo[] = []
-
-  @Watch('propertyDataCache', { deep: true })
-  private watchPropertyDataCacheChanged(newproperties: propertyInfo[], oldproperties: propertyInfo[]) {
-    if (this.isWatchPropertiesChange == false) {
-      return
-    }
-
-    for (let index = 0; index < newproperties.length; index++) {
-      const nproperty = newproperties[index]
-      // this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
+  private selectGropName: string = ''
+  /**当前所有布局的共有属性列表 */
+  private propertyGroups: PropertyGroupInfo[] = []
+  private get propertyDataCache(): propertyInfo[] {
+    let findgroup = this.propertyGroups.find((o) => o.groupName === this.selectGropName)
+    if (!findgroup) {
+      return []
+    } else {
+      return findgroup.children
     }
   }
 
-  /**当前的布局页面 */
-  @Prop()
-  public currentPage: EnginePage
-  /**当前需要设置的所有布局*/
-
-  /**当前所有布局的共有属性列表 */
-  private propertyGroups: PropertyGroupInfo[] = []
-  @Watch('propertyGroups', { deep: true, immediate: true })
   //监视所有属性变化，并给当前选中的布局赋值
+  @Watch('propertyGroups')
   private watchPropertyGroupsChanged(newgroup: PropertyGroupInfo[]) {
-    if (this.isWatchPropertiesChange == false) {
-      return
-    }
-
     if (!this.selectGropName) {
       let firstGroup = newgroup[0]
       if (firstGroup) {
@@ -133,13 +121,9 @@ export default class PropertyGrid extends Vue {
       }
     }
   }
-  @Prop()
-  private currentLayouts: EngineLayout[] | EngineLayout
+
   @Watch('currentLayouts') //监视设置的布局变化，并重新计算所有属性
   private watchCurrentLayoutsChanged(newlayouts: EngineLayout[] | EngineLayout) {
-    this.isWatchPropertiesChange = false
-    this.propertyGroups = []
-    this.propertyDataCache = []
     if (!newlayouts || (newlayouts as any[]).length < 1) {
       this.propertyGroups = null
       return
@@ -167,16 +151,16 @@ export default class PropertyGrid extends Vue {
         }
       })
     }
-
-    // window.console.log('watchCurrentLayoutsChanged-2:', property_extra)
     /**将所有共有属性进行分组，同时筛选出所有的属性信息 */
+    let propertyGroups = []
+
     property_extra.filter((o) => {
-      var findgroup = this.propertyGroups.find((p) => p.groupName == o.groupName)
+      var findgroup = propertyGroups.find((p) => p.groupName == o.groupName)
       if (!findgroup) {
         findgroup = new PropertyGroupInfo()
         if (o.groupName !== '主题') {
           findgroup.groupName = o.groupName
-          this.propertyGroups.push(findgroup)
+          propertyGroups.push(findgroup)
         }
       }
       var propertyinfox = new propertyInfo()
@@ -185,13 +169,9 @@ export default class PropertyGrid extends Vue {
       // propertyinfox.property = deepClone(o)
       propertyinfox.comp = getCellControl(o.type)
       findgroup.children.push(propertyinfox)
-      if (o.groupName == this.selectGropName) {
-        this.propertyDataCache.push(propertyinfox)
-      }
     })
 
-    /** */
-    this.isWatchPropertiesChange = true
+    this.propertyGroups = propertyGroups
   }
 
   mounted() {}
@@ -200,32 +180,6 @@ export default class PropertyGrid extends Vue {
     let groupName = groupname
     this.selectGropName = groupname
     let tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
-    this.propertyDataCache = tempGrop.children
-  }
-
-  /**为了应付多选组件，批量设置属性 */
-  private changeLayoutProperty(propertyName: string, propertyGroupName: string, newval: any): boolean {
-    var newlayouts_extra: EngineLayout[] = [] //临时变量
-    if (this.currentLayouts instanceof EngineLayout) {
-      newlayouts_extra = [this.currentLayouts as EngineLayout]
-    } else {
-      newlayouts_extra = this.currentLayouts as EngineLayout[]
-    }
-
-    for (var i = 0; i < newlayouts_extra.length; i++) {
-      let layout = newlayouts_extra[0]
-      var findproperty = layout.findProperties(propertyGroupName, propertyName)[0]
-      var isok = layout.validatorPropertyValue(findproperty.id, newval)
-      if (isok == false) {
-        return false
-      }
-    }
-
-    newlayouts_extra.filter((layout) => {
-      var findproperty = layout.findProperties(propertyGroupName, propertyName)[0]
-      layout.setPropertyVal(findproperty, newval)
-    })
-    return true
   }
 }
 </script>

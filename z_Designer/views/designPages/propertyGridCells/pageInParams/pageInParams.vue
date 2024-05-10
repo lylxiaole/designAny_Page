@@ -40,20 +40,16 @@ import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
 import { PropertyTypeEnum, PageInParams_Setting } from '@designEngine/index'
 import { CellSettingAttr } from '../common'
-import { pageInParamsIco } from '@designEngine/assets/icons.js'
 import { param, paramType } from '@behaviorEngine/index'
 
 @CellSettingAttr(PropertyTypeEnum.pageInParams)
 @Options({})
 export default class pageInParams extends propertyCellBase<PageInParams_Setting> {
   public windowVisible: boolean = false
-  private pageicon: any
 
   private localData: param[] = []
 
-  created() {
-    this.pageicon = pageInParamsIco
-  }
+  created() {}
   mounted() {}
 
   private rowdelete(key: string) {

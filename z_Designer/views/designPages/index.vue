@@ -194,7 +194,7 @@ export default class index extends PageBase {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }
   // *************右侧属性窗*******************************************************
-  private activeName: string = 'second'
+  private activeName: string = 'first'
 }
 </script>
 
