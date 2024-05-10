@@ -4,8 +4,8 @@
       <li v-for="(col, i) in currentValue" :key="i">
         <a-row :gutter="5">
           <a-col :span="20">
-            <a-input-number style="margin-bottom:5px;" size="small" v-model="col.value" :min="currentPropertySetting.min"
-              :max="currentPropertySetting.max" :defaultValue="currentPropertySetting.min" />
+            <a-input-number style="margin-bottom:5px;" size="small" v-model="col.value" :min="currentProperty.min" :max="currentProperty.max"
+              :defaultValue="currentProperty.min" />
           </a-col>
           <a-col :span="4">
             <a-icon size="small" type="minus-circle" @click="removeComp(i,col)" v-if="removeVisible" />
@@ -32,8 +32,8 @@ export default class numberList extends propertyCellBase<NumberList_Setting> {
   public addVisible: boolean = true
   public removeVisible: boolean = true
   mounted() {
-    let minCount: number = this.currentPropertySetting['minCount']
-    let maxCount: number = this.currentPropertySetting['maxCount']
+    let minCount: number = this.currentProperty['minCount']
+    let maxCount: number = this.currentProperty['maxCount']
     let currentLen: number = this.currentValue.length
     if (currentLen <= minCount) {
       this.removeVisible = false
@@ -43,8 +43,8 @@ export default class numberList extends propertyCellBase<NumberList_Setting> {
     }
   }
   private removeComp(index: number, obj: object) {
-    let minCount: number = this.currentPropertySetting['minCount']
-    let maxCount: number = this.currentPropertySetting['maxCount']
+    let minCount: number = this.currentProperty['minCount']
+    let maxCount: number = this.currentProperty['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (currentLen <= minCount) {
@@ -62,8 +62,8 @@ export default class numberList extends propertyCellBase<NumberList_Setting> {
     }
   }
   private addComp() {
-    let minCount: number = this.currentPropertySetting['minCount']
-    let maxCount: number = this.currentPropertySetting['maxCount']
+    let minCount: number = this.currentProperty['minCount']
+    let maxCount: number = this.currentProperty['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (maxCount <= currentLen) {

@@ -5,8 +5,8 @@
  */
 <template>
   <div>
-    <el-input-number size="small" controls-position="right" :step="currentPropertySetting.step" v-model="currentValue"
-      :min="currentPropertySetting.min" :max="currentPropertySetting.max">
+    <el-input-number size="small" controls-position="right" :step="currentProperty.step" v-model="currentValue" :min="currentProperty.min"
+      :max="currentProperty.max">
     </el-input-number>
   </div>
 </template>

@@ -36,8 +36,8 @@ export default class textList extends propertyCellBase<TextList_Setting> {
   public addVisible: boolean = true
   public removeVisible: boolean = true
   mounted() {
-    let minCount: number = this.currentPropertySetting['minCount']
-    let maxCount: number = this.currentPropertySetting['maxCount']
+    let minCount: number = this.currentProperty['minCount']
+    let maxCount: number = this.currentProperty['maxCount']
     let currentLen: number = this.currentValue.length
     if (currentLen <= minCount) {
       this.removeVisible = false
@@ -48,8 +48,8 @@ export default class textList extends propertyCellBase<TextList_Setting> {
   }
 
   private removeComp(index: number, obj: object) {
-    let minCount: number = this.currentPropertySetting['minCount']
-    let maxCount: number = this.currentPropertySetting['maxCount']
+    let minCount: number = this.currentProperty['minCount']
+    let maxCount: number = this.currentProperty['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (currentLen <= minCount) {
@@ -80,8 +80,8 @@ export default class textList extends propertyCellBase<TextList_Setting> {
   }
 
   private addComp() {
-    let minCount: number = this.currentPropertySetting['minCount']
-    let maxCount: number = this.currentPropertySetting['maxCount']
+    let minCount: number = this.currentProperty['minCount']
+    let maxCount: number = this.currentProperty['maxCount']
     let currentLen: number = this.currentValue.length
 
     if (maxCount <= currentLen) {

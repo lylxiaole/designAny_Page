@@ -66,10 +66,10 @@ export default class index extends propertyCellBase<Behavior_Setting> {
 
   private windowVisible: boolean = false
   private startEdit() {
-    if (!this.currentLayoutsGetter) {
+    if (!this.currentLayouts) {
       return
     }
-    if (this.currentLayoutsGetter.length > 1) {
+    if (this.currentLayouts.length > 1) {
       alert('请不要选择多个目标！')
     }
 
@@ -82,7 +82,7 @@ export default class index extends propertyCellBase<Behavior_Setting> {
     // 当前选中控件已经绑定的行为列表
     this.currentPageBehaviors = deepClone(this.currentPage.behaviors)
     // 当前选中控件的事件列表
-    this.designerLayoutEvents = deepClone(this.currentLayoutsGetter[0].designerEvents)
+    this.designerLayoutEvents = deepClone(this.currentLayouts[0].designerEvents)
     //当前选中控件的事件已绑定的行为
     if (this.currentValue) {
       this.currentData = deepClone(this.currentValue) as layoutEventBehaviors[]

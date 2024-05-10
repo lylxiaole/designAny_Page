@@ -5,8 +5,7 @@
  */
 <template>
   <div>
-    <DatePicker v-model="currentValue" :dateType="currentPropertySetting.dateType" :showTime="currentPropertySetting.showTime"
-      :format="currentPropertySetting.format" />
+    <DatePicker v-model="currentValue" :dateType="currentProperty.dateType" :showTime="currentProperty.showTime" :format="currentProperty.format" />
   </div>
 </template>
 

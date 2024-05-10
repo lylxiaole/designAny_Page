@@ -28,7 +28,7 @@ export default class propertyCellBase<T> extends Vue {
   protected currentLayouts: EngineLayout[] | EngineLayout
 
   /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
-  protected get currentPropertySetting(): T {
+  protected get currentProperty(): T {
     if (!this.property) {
       return
     }
@@ -37,18 +37,18 @@ export default class propertyCellBase<T> extends Vue {
   /**获取当前属性值 */
   protected get currentValue(): any {
     let field = this.property.field
-    return this.currentLayoutsGetter[0][field]
+    return this.currentLayouts[0][field]
   }
   /**设置当前属性值 */
   protected set currentValue(val: any) {
     let field = this.property.field
-    for (let index = 0; index < this.currentLayoutsGetter.length; index++) {
-      const element = this.currentLayoutsGetter[index]
+    for (let index = 0; index < this.currentLayouts.length; index++) {
+      const element = this.currentLayouts[index]
       element[field] = val
     }
   }
 
-  protected get currentLayoutsGetter(): EngineLayout[] {
+  protected get currentLayouts(): EngineLayout[] {
     if (!this.currentLayouts) {
       return null
     }

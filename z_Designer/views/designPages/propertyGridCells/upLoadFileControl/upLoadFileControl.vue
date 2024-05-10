@@ -5,10 +5,10 @@
  */
 <template>
   <div>
-    <uploadFile v-model:fileList="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertySetting.maxFileLength"
-      :fileType="currentPropertySetting.fileType" :upLoadSize="currentPropertySetting.fileSize" />
-    <!-- <UploadFile :fileList.sync="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentPropertySetting.maxFileLength"
-      :fileType="currentPropertySetting.fileType" :upLoadSize="currentPropertySetting.fileSize">
+    <uploadFile v-model:fileList="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentProperty.maxFileLength"
+      :fileType="currentProperty.fileType" :upLoadSize="currentProperty.fileSize" />
+    <!-- <UploadFile :fileList.sync="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentProperty.maxFileLength"
+      :fileType="currentProperty.fileType" :upLoadSize="currentProperty.fileSize">
     </UploadFile> -->
   </div>
 </template>

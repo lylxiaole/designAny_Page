@@ -22,7 +22,7 @@ import { PropertyTypeEnum, Enum_Setting } from '@designEngine/index'
 })
 export default class index extends propertyCellBase<Enum_Setting> {
   private get allOptions(): any[] {
-    return this.currentPropertySetting.enums
+    return this.currentProperty.enums
   }
 }
 </script>
