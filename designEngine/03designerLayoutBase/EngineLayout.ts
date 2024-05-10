@@ -69,9 +69,8 @@ export default class EngineLayout extends Vue {
   public isSelected: boolean = false
   /**属性 */
   private properties_old: any[] = []
-  public properties: PropertySetting[] = []
+  public properties: () => PropertySetting[]
 
-  public getDefaultProperties: () => PropertySetting[]
   /**父级布局 */
   public parentLayout: EngineLayout
   public get topLayout(): EngineLayout {
@@ -386,7 +385,7 @@ export default class EngineLayout extends Vue {
       window.console.warn('已经存在相同分组相同名称的属性')
       return
     }
-    this.properties.push(proper)
+    // this.properties().push(proper)
   }
   /**添加属性值验证，当属性值变化前进行验证，如果验证不通过则不设置值 */
   protected addPropertyValidator(propertyId: string, validatorHandle: propertyValidatorHandle) {
@@ -484,7 +483,7 @@ export default class EngineLayout extends Vue {
   }
   /**注册属性 */
   public async registerProperty(groupName: PropertyGroupName | string, name: string, propertySetting: PropertySetting, defaultVal?: any, canSetting: boolean = true, unit?: string) {
-    let find = this.properties.find((o) => o.propertyName == name && o.groupName == groupName)
+    let find = this.properties().find((o) => o.propertyName == name && o.groupName == groupName)
     if (find) {
       //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
       return
@@ -495,7 +494,7 @@ export default class EngineLayout extends Vue {
     if (unit) {
       newperperty.unit = unit
     }
-    this.properties.push(newperperty)
+    // this.properties.push(newperperty)
   }
   /**注册事件 */
   public async registerEvents(name: string, description: string, inParams: param[], outParam: param) {
@@ -542,7 +541,7 @@ export default class EngineLayout extends Vue {
 
     for (let index = 0; index < layout_properties.length; index++) {
       const item = layout_properties[index]
-      let find = this.properties.find((o) => o.field == item.field)
+      let find = this.properties().find((o) => o.field == item.field)
       if (find) {
         find.id = item.id
         find.value = item.value

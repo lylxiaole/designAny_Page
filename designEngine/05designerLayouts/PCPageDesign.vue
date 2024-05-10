@@ -7,20 +7,18 @@
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
-import { deepClone, getUuid } from '@common/utils'
+import { deepClone, getUuid, drawVueOnVirtualDom } from '@common/utils'
 import DesignShell from './DesignShell.vue'
-import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents' 
-import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo' 
-import {drawEngineLayoutVirtual} from '../02common/layoutDrawer'
+import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
+import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo'
+import { drawEngineLayoutVirtual } from '../02common/layoutDrawer'
 
 import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutBase'
 
 @Options({})
-export default class PCPageDesign extends EnginePage { 
-
+export default class PCPageDesign extends EnginePage {
   @DPropAttr(new Text_Setting('PCPageDesign文本', PropertyGroupName.special, true))
   private PCPageDesignText: any = ''
-
 
   private get backgroundCute(): string {
     // window.console.log('backgroundCute:', this.background_img)
@@ -32,7 +30,7 @@ export default class PCPageDesign extends EnginePage {
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
   private designEvets: DesignEvents = null
-    
+
   mounted() {
     this.designEvets = new DesignEvents(this)
     this.designEvets.canDrag = false
@@ -51,8 +49,9 @@ export default class PCPageDesign extends EnginePage {
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    let { virtualDom, vueComp } = drawEngineLayoutVirtual(DesignShell)
+    let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
     this.allShells.push(vueComp as DesignShell)
+
     let resComp = (vueComp as DesignShell).addComponent(compCon)
     resComp.$once('onLYLMounted', () => {
       ;(vueComp as DesignShell).startListenItemDrag()
@@ -68,7 +67,6 @@ export default class PCPageDesign extends EnginePage {
     return resComp
   }
   /**********************************监听设计事件 ******************************/
-
   private listenOnMousemove(e: MouseEvent) {}
 
   private listenOnChangedScale_Event(sizechange: number): boolean {
@@ -126,7 +124,6 @@ export default class PCPageDesign extends EnginePage {
     }
     return false
   }
-
   protected listenOnDragMove(
     xchanged: number,
     ychanged: number,
@@ -163,9 +160,7 @@ export default class PCPageDesign extends EnginePage {
     }
     return true
   }
-
   // **************************************************************************
-
   private listenOnDragEnd() {
     this.clearHorRule()
     this.clearVerRule()

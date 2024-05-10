@@ -130,12 +130,11 @@ export default class DesignShell extends Vue {
     }
 
     render(comp, this.$refs.compContent as any)
-    this.component = comp.component.proxy
-    comp.component.proxy.renderContainer = this.$refs.compContent
-    comp.component.proxy.isDesigning = true
+    this.component = comp.component.ctx
+    comp.component.ctx.renderContainer = this.$refs.compContent
+    comp.component.ctx.isDesigning = true
     $(this.component.$el).css('width', '100%')
     $(this.component.$el).css('height', '100%')
-
     return this.component
   }
 

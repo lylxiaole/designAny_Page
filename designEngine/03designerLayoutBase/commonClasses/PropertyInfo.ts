@@ -26,7 +26,7 @@ export function DPropAttr(prop: PropertySetting) {
       findCache.properties.push(newperperty)
     }
     // **************************************
-    target.getDefaultProperties = () => {
+    target.properties = () => {
       let findx = allDPropCache.find((o) => o.layoutFunc === target.constructor)
       if (!findx) {
         return []

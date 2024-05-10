@@ -188,13 +188,8 @@ export default class EngineContainer extends EngineLayout {
   // **********************************************************************
   /**添加一个组件 */
   public async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: any, data?: SaveInfo): Promise<EngineLayout> {
-    // window.console.log('绘制组件')
-    // compInfo.compCode = dropcompclass.compCode
-    // let dropcomp = new dropcompclass() as EngineLayout
     let dropcomp = h(dropcompclass) as any
-
     dropcomp = await this.renderComponent(dropcomp)
-
     dropcomp.parentLayout = this
     dropcomp.prototype = { $Meta: dropcompclass.prototype.$Meta }
     // window.console.error('绘制子组件失败,请不要保存!!!')
