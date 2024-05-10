@@ -32,7 +32,9 @@ export default class jsonEditorCommon extends Vue {
   }
   public getJsonData() {
     let x = (this.$refs.editor as any).$get().text
-
+    if (!x) {
+      x = JSON.stringify(this.jsonData)
+    }
     return JSON.parse(x)
   }
   // ******************************************

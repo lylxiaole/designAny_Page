@@ -5,7 +5,7 @@
       style="width:118px;height:34px;background:rgba(0,103,138,0.1);border-color:rgba(0,103,138,0.1);border-radius:4px;font-size:14px;font-weight:400;color:rgba(0,0,0,1);line-height:12px;">
       编辑
     </el-button>
-    <el-dialog title="编辑" style="height:600px" width="800px" v-model="windowVisible" append-to-body :close-on-click-modal="false"
+    <el-dialog title="编辑" style="height:600px" width="800px" v-model="windowVisible" destroy-on-close append-to-body :close-on-click-modal="false"
       :close-on-press-escape="false">
       <el-row style="height:480px;width:100%;background:#FFF">
         <jsonEditorCommon ref="jsonEditor" style="width:100%;height:100%"></jsonEditorCommon>
