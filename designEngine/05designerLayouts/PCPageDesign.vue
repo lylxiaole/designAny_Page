@@ -11,7 +11,6 @@ import { deepClone, getUuid, drawVueOnVirtualDom } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo'
-import { drawEngineLayoutVirtual } from '../02common/layoutDrawer'
 
 import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutBase'
 

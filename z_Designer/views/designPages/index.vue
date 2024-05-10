@@ -37,20 +37,14 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
+import { drawVueOnVirtualDom } from '@common/utils'
+
 import { pageType, DesignPageDC, GetPageDetail } from '@common/apis/designPage'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
-import {
-  drawEngineLayoutVirtual,
-  EnginePage,
-  MobilePageDesign,
-  MobilePagePreview,
-  PCPageDesign,
-  PCPagePreview,
-  EngineLayout
-} from '@designEngine/index'
+import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout } from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
 
@@ -180,7 +174,7 @@ export default class index extends PageBase {
     }
 
     /************************渲染页面 */
-    let { virtualDom, vueComp } = drawEngineLayoutVirtual(designLayout)
+    let { virtualDom, vueComp } = drawVueOnVirtualDom(designLayout)
     await (vueComp as PCPageDesign).loadPageByData(pageId, res.designDetail)
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0

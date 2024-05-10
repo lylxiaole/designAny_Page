@@ -373,7 +373,7 @@ export default class EngineLayout extends Vue {
   }
   protected addProperty(proper: PropertySetting) {
     let find: any = null
-    for (let index = 0; index < this.properties.length; index++) {
+    for (let index = 0; index < this.properties().length; index++) {
       const o = this.properties[index]
       if (o.propertyName === proper.propertyName && o.groupName === proper.groupName) {
         find = o
@@ -427,7 +427,7 @@ export default class EngineLayout extends Vue {
       children: []
     }
 
-    for (let index = 0; index < this.properties.length; index++) {
+    for (let index = 0; index < this.properties().length; index++) {
       const element = this.properties[index]
       saveinfo.properties.push({ id: element.id, field: element.field, value: element.value })
     }
@@ -494,7 +494,7 @@ export default class EngineLayout extends Vue {
     if (unit) {
       newperperty.unit = unit
     }
-    // this.properties.push(newperperty)
+    // this.properties().push(newperperty)
   }
   /**注册事件 */
   public async registerEvents(name: string, description: string, inParams: param[], outParam: param) {
@@ -551,8 +551,8 @@ export default class EngineLayout extends Vue {
   }
   public findProperties(groupName: string, name: string): PropertySetting[] {
     let res: any[] = []
-    for (let index = 0; index < this.properties.length; index++) {
-      const o = this.properties[index]
+    for (let index = 0; index < this.properties().length; index++) {
+      const o = this.properties()[index]
       if (o.groupName === groupName && o.propertyName === name) {
         res.push(o)
       }
@@ -560,7 +560,7 @@ export default class EngineLayout extends Vue {
     return res
   }
   public findPropertyByName(groupName: string, name: string): PropertySetting {
-    for (let index = 0; index < this.properties.length; index++) {
+    for (let index = 0; index < this.properties().length; index++) {
       const o = this.properties[index]
       if (o.groupName === groupName && o.propertyName === name) {
         return o
@@ -568,7 +568,7 @@ export default class EngineLayout extends Vue {
     }
   }
   public findPropertyById(Id: string): PropertySetting {
-    for (let index = 0; index < this.properties.length; index++) {
+    for (let index = 0; index < this.properties().length; index++) {
       const o = this.properties[index]
       if (o.id == Id) {
         return o
@@ -595,7 +595,7 @@ export default class EngineLayout extends Vue {
   }
   public setPropertyVal(propertyId: string, val: any, isForce: boolean = false): boolean {
     let findproperty: any = null
-    for (let index = 0; index < this.properties.length; index++) {
+    for (let index = 0; index < this.properties().length; index++) {
       const o = this.properties[index]
       if (o.id == propertyId) {
         findproperty = o

@@ -10,7 +10,6 @@ export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 import designerContext from './01designerContext/context'
 export { designerContext }
 
-export { drawEngineLayoutVirtual } from './02common/layoutDrawer'
 /**加载所有设计器组件 */
 const modulesFiles = require.context('./', true, /\.(vue|ts)$/)
 
