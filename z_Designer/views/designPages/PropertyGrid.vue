@@ -15,12 +15,11 @@
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
           {{propertyInfo.name}}</el-col>
         <el-col :span="12" style="margin-left:4px">
-          <component :is="propertyInfo.comp" :property="propertyInfo.property" v-model:propertyValue="propertyInfo.property.value"
-            :currentPage="currentPage" :currentLayouts="currentLayouts">
+          <component :is="propertyInfo.comp" :property="propertyInfo.property" :currentPage="currentPage" :currentLayouts="currentLayouts">
           </component>
         </el-col>
         <el-col :span="2">
-          <span>{{propertyInfo.property.propertySetting.unit}}</span>
+          <span>{{propertyInfo.property.unit}}</span>
         </el-col>
       </el-row>
     </div>
@@ -69,8 +68,8 @@ modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-function getCellControl(propertySetting: PropertyTypeEnum): typeof propertyCellBase {
-  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertySetting)[0] as typeof propertyCellBase
+function getCellControl(propertySettingType: PropertyTypeEnum): typeof propertyCellBase {
+  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertySettingType)[0] as typeof propertyCellBase
 }
 // *****************************************
 @Options({
@@ -101,7 +100,7 @@ export default class PropertyGrid extends Vue {
 
     for (let index = 0; index < newproperties.length; index++) {
       const nproperty = newproperties[index]
-      this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
+      // this.changeLayoutProperty(nproperty.property.propertyName, nproperty.property.groupName, nproperty.property.value)
     }
   }
 
@@ -169,12 +168,6 @@ export default class PropertyGrid extends Vue {
       })
     }
 
-    /**用第一个布局的值，给属性赋值 */
-    for (let index = 0; index < property_extra.length; index++) {
-      const element = property_extra[index]
-      let field = element.field
-      element.value = newlayouts_extra[0][field]
-    }
     // window.console.log('watchCurrentLayoutsChanged-2:', property_extra)
     /**将所有共有属性进行分组，同时筛选出所有的属性信息 */
     property_extra.filter((o) => {

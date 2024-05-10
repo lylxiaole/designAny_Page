@@ -18,30 +18,7 @@ export { cellControls }
 @Options({})
 export default class propertyCellBase<T> extends Vue {
   @Prop()
-  private property: Property
-  @Prop()
-  private propertyValue: any
-
-  @Emit('update:propertyValue')
-  private updateValue_Inner(val: any) {}
-
-  /**************当前页面中的所有上下文****************************** */
-
-  /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
-  protected get currentPropertySetting(): T {
-    if (!this.property) {
-      return
-    }
-    return this.property.propertySetting as any as T
-  }
-  /**获取当前属性值 */
-  protected get currentValue(): any {
-    return this.propertyValue
-  }
-  /**设置当前属性值 */
-  protected set currentValue(val: any) {
-    this.updateValue_Inner(val)
-  }
+  private property: PropertySetting
 
   /**当前的布局页面 */
   @Prop()
@@ -49,6 +26,24 @@ export default class propertyCellBase<T> extends Vue {
   /**当前需要设置的布局类 */
   @Prop()
   protected currentLayouts: EngineLayout[] | EngineLayout
+
+  /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
+  protected get currentPropertySetting(): T {
+    if (!this.property) {
+      return
+    }
+    return this.property as any as T
+  }
+  /**获取当前属性值 */
+  protected get currentValue(): any {
+    let field = this.property.field
+    return this.currentLayoutsGetter[0][field]
+  }
+  /**设置当前属性值 */
+  protected set currentValue(val: any) {
+    let field = this.property.field
+    this.currentLayoutsGetter[0][field] = val
+  }
 
   protected get currentLayoutsGetter(): EngineLayout[] {
     if (!this.currentLayouts) {

@@ -23,7 +23,7 @@ export default class EngineComponent extends EngineContainer {
   public display: boolean = true
   @DPropAttr(new Boolean_Setting('是否禁用', PropertyGroupName.normal, true))
   public disabled: boolean = false
-  @DPropAttr(new Number_Setting('层级设置', PropertyGroupName.normal, true, 1))
+  @DPropAttr(new Number_Setting('层级设置', PropertyGroupName.normal, true))
   public zIndex: number = 1
 
   created() {

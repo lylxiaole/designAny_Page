@@ -183,7 +183,6 @@ export default class EngineLayout extends Vue {
   public designerEvents: any = []
 
   public get width(): any {
-    debugger
     return this.positionInfo.width
   }
   public set width(val: any) {
@@ -401,7 +400,6 @@ export default class EngineLayout extends Vue {
   public async loadData(data: SaveInfo) {
     this.children = []
     if (data && data.id) {
-      debugger
       await this.loadingProperties(data.properties)
       this.Id = data.id
     }
@@ -547,7 +545,6 @@ export default class EngineLayout extends Vue {
       let find = initProperties.find((o) => o.field == item.field)
       if (find) {
         find.id = item.id
-        find.value = item.value
         this[item.field] = item.value
       }
     }
