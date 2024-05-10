@@ -16,17 +16,17 @@ import { PropertySetting, Text_Setting, Behavior_Setting } from './commonClasses
 @Options({})
 export default class EnginePage extends EngineContainer {
   /***************************** */
-  @DPropAttr(new Behavior_Setting('行为列表', PropertyGroupName.normal, false, []))
-  public behaviors: behavior[]
+  @DPropAttr(new Behavior_Setting('行为列表', PropertyGroupName.normal, false))
+  public behaviors: behavior[] = []
 
-  @DPropAttr(new Number_Setting('定时器周期', PropertyGroupName.normal, true, 0, '秒', 1, 999999999, 1))
-  public tickTime: number
+  @DPropAttr(new Number_Setting('定时器周期', PropertyGroupName.normal, true, '秒', 1, 999999999, 1))
+  public tickTime: number = 0
 
-  @DPropAttr(new PageInParams_Setting('页面入参', PropertyGroupName.normal, true, []))
-  public inParams: param[]
+  @DPropAttr(new PageInParams_Setting('页面入参', PropertyGroupName.normal, true))
+  public inParams: param[] = []
 
-  @DPropAttr(new Enum_Setting('字体样式', PropertyGroupName.normal, true, '微软雅黑', null, true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']))
-  public fontFamily: number
+  @DPropAttr(new Enum_Setting('字体样式', PropertyGroupName.normal, true, null, true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']))
+  public fontFamily: string = '微软雅黑'
 
   /**行为列表*/
   // public get behaviors(): behavior[] {
@@ -242,7 +242,6 @@ export default class EnginePage extends EngineContainer {
     await this.loadPageByData(pageId, pageDC.designDetail, params)
   }
   public async loadPageByData(pageId: string, pageDataStr: string, params?: param[]) {
-    debugger
     let pageData: SaveInfo = null
     if (pageDataStr) {
       pageData = strUnZip(pageDataStr)

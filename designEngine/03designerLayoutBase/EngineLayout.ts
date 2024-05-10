@@ -167,22 +167,23 @@ export default class EngineLayout extends Vue {
   public Id: string
   @DPropAttr(new Text_Setting('名称', PropertyGroupName.normal, true))
   public name: string
-  @DPropAttr(new CompPosition_Setting('布局信息', PropertyGroupName.normal, true, { width: '100%', height: '100%', x: 0, y: 0 }))
+  @DPropAttr(new CompPosition_Setting('布局信息', PropertyGroupName.normal, true))
   public positionInfo: any = { width: '100%', height: '100%', x: 0, y: 0 }
-  @DPropAttr(new Margin_Setting('外边距', PropertyGroupName.normal, true, { left: 0, right: 0, top: 0, bottom: 0 }))
+  @DPropAttr(new Margin_Setting('外边距', PropertyGroupName.normal, true))
   public marginInfo: any = { left: 0, right: 0, top: 0, bottom: 0 }
-  @DPropAttr(new Margin_Setting('内边距', PropertyGroupName.normal, true, { left: 0, right: 0, top: 0, bottom: 0 }))
+  @DPropAttr(new Margin_Setting('内边距', PropertyGroupName.normal, true))
   public paddingInfo: any = { left: 0, right: 0, top: 0, bottom: 0 }
-  @DPropAttr(new Number_Setting('字体大小', PropertyGroupName.normal, true, 14, 'px'))
-  public fontSize: number
-  @DPropAttr(new Color_Setting('背景色', PropertyGroupName.normal, true, '#FFFFFF'))
-  public background: string
-  @DPropAttr(new UploadFile_Setting('背景图片', PropertyGroupName.normal, true, [], null, 1, 'image'))
-  public background_img: any
-  @DPropAttr(new Behavior_Setting('行为绑定', PropertyGroupName.normal, true, []))
+  @DPropAttr(new Number_Setting('字体大小', PropertyGroupName.normal, true, 'px'))
+  public fontSize: number = 14
+  @DPropAttr(new Color_Setting('背景色', PropertyGroupName.normal, true))
+  public background: string = '#FFFFFF'
+  @DPropAttr(new UploadFile_Setting('背景图片', PropertyGroupName.normal, true, null, 1, 'image'))
+  public background_img: any = []
+  @DPropAttr(new Behavior_Setting('行为绑定', PropertyGroupName.normal, true))
   public designerEvents: any = []
 
   public get width(): any {
+    debugger
     return this.positionInfo.width
   }
   public set width(val: any) {
@@ -400,6 +401,7 @@ export default class EngineLayout extends Vue {
   public async loadData(data: SaveInfo) {
     this.children = []
     if (data && data.id) {
+      debugger
       await this.loadingProperties(data.properties)
       this.Id = data.id
     }
@@ -539,9 +541,10 @@ export default class EngineLayout extends Vue {
       return
     }
 
+    let initProperties = this.properties()
     for (let index = 0; index < layout_properties.length; index++) {
       const item = layout_properties[index]
-      let find = this.properties().find((o) => o.field == item.field)
+      let find = initProperties.find((o) => o.field == item.field)
       if (find) {
         find.id = item.id
         find.value = item.value
@@ -551,8 +554,10 @@ export default class EngineLayout extends Vue {
   }
   public findProperties(groupName: string, name: string): PropertySetting[] {
     let res: any[] = []
-    for (let index = 0; index < this.properties().length; index++) {
-      const o = this.properties()[index]
+    let initProperties = this.properties()
+
+    for (let index = 0; index < initProperties.length; index++) {
+      const o = initProperties[index]
       if (o.groupName === groupName && o.propertyName === name) {
         res.push(o)
       }
@@ -560,16 +565,18 @@ export default class EngineLayout extends Vue {
     return res
   }
   public findPropertyByName(groupName: string, name: string): PropertySetting {
-    for (let index = 0; index < this.properties().length; index++) {
-      const o = this.properties[index]
+    let initProperties = this.properties()
+    for (let index = 0; index < initProperties.length; index++) {
+      const o = initProperties[index]
       if (o.groupName === groupName && o.propertyName === name) {
         return o
       }
     }
   }
   public findPropertyById(Id: string): PropertySetting {
-    for (let index = 0; index < this.properties().length; index++) {
-      const o = this.properties[index]
+    let initProperties = this.properties()
+    for (let index = 0; index < initProperties.length; index++) {
+      const o = initProperties[index]
       if (o.id == Id) {
         return o
       }
@@ -593,26 +600,14 @@ export default class EngineLayout extends Vue {
     }
     return true
   }
-  public setPropertyVal(propertyId: string, val: any, isForce: boolean = false): boolean {
-    let findproperty: any = null
-    for (let index = 0; index < this.properties().length; index++) {
-      const o = this.properties[index]
-      if (o.id == propertyId) {
-        findproperty = o
-      }
-    }
-
-    if (!findproperty) {
-      // window.console.error('设置属性值失败，没有找到对应的属性')
+  public setPropertyVal(property: PropertySetting, val: any, isForce: boolean = false): boolean {
+    let convert_value = property.convert(val)
+    let field = property.field
+    if (isForce == false && serialize(this[field]) == serialize(convert_value)) {
       return false
     }
 
-    let convert_value = findproperty.convert(val)
-    if (isForce == false && serialize(findproperty.value) == serialize(convert_value)) {
-      return false
-    }
-
-    findproperty.value = convert_value
+    this[field] = convert_value
     return true
   }
 

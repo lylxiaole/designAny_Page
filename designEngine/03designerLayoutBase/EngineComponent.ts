@@ -17,14 +17,14 @@ export default class EngineComponent extends EngineContainer {
     return res as EnginePage
   }
 
-  @DPropAttr(new Color_Setting('前景色', PropertyGroupName.normal, true, '#000000'))
-  public foreground: string
-  @DPropAttr(new Boolean_Setting('是否显示', PropertyGroupName.normal, true, true))
-  public display: boolean
-  @DPropAttr(new Boolean_Setting('是否禁用', PropertyGroupName.normal, true, false))
-  public disabled: string
+  @DPropAttr(new Color_Setting('前景色', PropertyGroupName.normal, true))
+  public foreground: string = '#000000'
+  @DPropAttr(new Boolean_Setting('是否显示', PropertyGroupName.normal, true))
+  public display: boolean = true
+  @DPropAttr(new Boolean_Setting('是否禁用', PropertyGroupName.normal, true))
+  public disabled: boolean = false
   @DPropAttr(new Number_Setting('层级设置', PropertyGroupName.normal, true, 1))
-  public zIndex: string
+  public zIndex: number = 1
 
   created() {
     this.width = 200

@@ -87,7 +87,7 @@ export enum PropertyGroupName {
 export class PropertySetting {
   public id: string = '' //属性的唯一ID,自动生成
   public field?: string = '' //属性在类型中的字段名称
-  public value: any = '' //属性的值
+  // public value: any = '' //属性的值
 
   public type: PropertyTypeEnum
   public unit: string = '' //属性单位
@@ -95,13 +95,13 @@ export class PropertySetting {
   public propertyName: string = '' //属性名称
   public canSetting: boolean = true //控制属性窗中按钮是否可见
 
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string) {
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string) {
     this.propertyName = name
     this.groupName = groupname
     this.canSetting = canSetting
     this.unit = unit
     this.id = getUuid()
-    this.value = defaultVal
+    // this.value = defaultVal
   }
 
   public convert(val: any): any {
@@ -181,16 +181,16 @@ export class Boolean_Setting extends PropertySetting {
 export class Text_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.text
 
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string) {
-    super(name, groupname, canSetting, defaultVal, unit)
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string) {
+    super(name, groupname, canSetting, unit)
   }
 }
 export class Number_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.number
 
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _min?: number, _max?: number, _step?: number) {
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string, _min?: number, _max?: number, _step?: number) {
     //小数点后几位
-    super(name, groupname, canSetting, defaultVal, unit)
+    super(name, groupname, canSetting, unit)
 
     if (_min) {
       this.min = _min
@@ -214,8 +214,8 @@ export class NumberList_Setting extends PropertySetting {
   public minCount: number = 0
   public maxCount: number = 999999999999
 
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _min?: number, _max?: number, _min_count?: number, max_count?: number) {
-    super(name, groupname, canSetting, defaultVal, unit)
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string, _min?: number, _max?: number, _min_count?: number, max_count?: number) {
+    super(name, groupname, canSetting, unit)
     if (_min) {
       this.min = _min
     }
@@ -235,8 +235,8 @@ export class TextList_Setting extends PropertySetting {
   public minCount: number = 0
   public maxCount: number = 99
 
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _min_count?: number, max_count?: number) {
-    super(name, groupname, canSetting, defaultVal, unit)
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string, _min_count?: number, max_count?: number) {
+    super(name, groupname, canSetting, unit)
     if (_min_count) {
       this.minCount = _min_count
     }
@@ -247,9 +247,9 @@ export class TextList_Setting extends PropertySetting {
 }
 export class Enum_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.enum
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _isSingleChoose?: boolean, _enums?: string[]) {
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string, _isSingleChoose?: boolean, _enums?: string[]) {
     //小数点后几位
-    super(name, groupname, canSetting, defaultVal, unit)
+    super(name, groupname, canSetting, unit)
     if (_isSingleChoose) {
       this.isSingleChoose = _isSingleChoose
     }
@@ -270,8 +270,8 @@ export class UploadFile_Setting extends PropertySetting {
   public fileType: string
   public fileSize: number = 10485760
   /**filetype:'image','file','vedio' */
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, maxFileCount?: number, filetype?: string) {
-    super(name, groupname, canSetting, defaultVal, unit)
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string, maxFileCount?: number, filetype?: string) {
+    super(name, groupname, canSetting, unit)
     this.maxFileLength = maxFileCount
     this.fileType = filetype
   }
@@ -285,8 +285,8 @@ export class TimePickerFile_Setting extends PropertySetting {
   public dateType: string = 'date'
   public showTime: boolean | any = false
   /**_dateType：month,week,date,time */
-  constructor(name: string, groupname: string, canSetting: boolean, defaultVal?: any, unit?: string, _dateType?: string, _showTime?: boolean) {
-    super(name, groupname, canSetting, defaultVal, unit)
+  constructor(name: string, groupname: string, canSetting: boolean, unit?: string, _dateType?: string, _showTime?: boolean) {
+    super(name, groupname, canSetting, unit)
     this.dateType = _dateType
     if (_showTime) {
       this.showTime = _showTime

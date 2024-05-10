@@ -16,9 +16,6 @@ import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutB
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
-  @DPropAttr(new Text_Setting('PCPageDesign文本', PropertyGroupName.special, true))
-  private PCPageDesignText: any = ''
-
   private get backgroundCute(): string {
     // window.console.log('backgroundCute:', this.background_img)
     if (!this.background_img || !this.background_img.uid) {

@@ -16,7 +16,7 @@
           {{propertyInfo.name}}</el-col>
         <el-col :span="12" style="margin-left:4px">
           <component :is="propertyInfo.comp" :property="propertyInfo.property" v-model:propertyValue="propertyInfo.property.value"
-            :currentPage="currentPage" :currentLayouts="currentLayouts" @selectDict="selectDict">
+            :currentPage="currentPage" :currentLayouts="currentLayouts">
           </component>
         </el-col>
         <el-col :span="2">
@@ -138,7 +138,6 @@ export default class PropertyGrid extends Vue {
   private currentLayouts: EngineLayout[] | EngineLayout
   @Watch('currentLayouts') //监视设置的布局变化，并重新计算所有属性
   private watchCurrentLayoutsChanged(newlayouts: EngineLayout[] | EngineLayout) {
-    window.console.log('当前布局变更', newlayouts)
     this.isWatchPropertiesChange = false
     this.propertyGroups = []
     this.propertyDataCache = []
@@ -169,6 +168,13 @@ export default class PropertyGrid extends Vue {
         }
       })
     }
+
+    /**用第一个布局的值，给属性赋值 */
+    for (let index = 0; index < property_extra.length; index++) {
+      const element = property_extra[index]
+      let field = element.field
+      element.value = newlayouts_extra[0][field]
+    }
     // window.console.log('watchCurrentLayoutsChanged-2:', property_extra)
     /**将所有共有属性进行分组，同时筛选出所有的属性信息 */
     property_extra.filter((o) => {
@@ -197,18 +203,6 @@ export default class PropertyGrid extends Vue {
 
   mounted() {}
 
-  @Emit('selectDict')
-  private selectDict() {
-    //window.console.info('进入右侧折叠面板')
-  }
-  @Emit('selectDicted')
-  public selectDicted(param) {
-    //window.console.info('currentLayouts----------', this.currentLayouts[0].properties)
-    var property = this.currentLayouts[0].properties.filter((o) => o.propertyName == '选择枚举')[0]
-    property.value = param
-    //window.console.info('aa-------------------aaaa', property)
-  }
-
   changeActivekey(groupname: string) {
     let groupName = groupname
     this.selectGropName = groupname
@@ -227,7 +221,6 @@ export default class PropertyGrid extends Vue {
 
     for (var i = 0; i < newlayouts_extra.length; i++) {
       let layout = newlayouts_extra[0]
-
       var findproperty = layout.findProperties(propertyGroupName, propertyName)[0]
       var isok = layout.validatorPropertyValue(findproperty.id, newval)
       if (isok == false) {
@@ -237,7 +230,7 @@ export default class PropertyGrid extends Vue {
 
     newlayouts_extra.filter((layout) => {
       var findproperty = layout.findProperties(propertyGroupName, propertyName)[0]
-      layout.setPropertyVal(findproperty.id, newval)
+      layout.setPropertyVal(findproperty, newval)
     })
     return true
   }
