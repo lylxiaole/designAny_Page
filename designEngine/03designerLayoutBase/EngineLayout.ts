@@ -155,7 +155,7 @@ export default class EngineLayout extends Vue {
   }
   // *************************基础属性****************************************************************************
   @DPropAttr(new Text_Setting('唯一ID', PropertyGroupName.normal, false))
-  public Id: string
+  public Id: string = getUuid()
   @DPropAttr(new Text_Setting('名称', PropertyGroupName.normal, true))
   public name: string
   @DPropAttr(new CompPosition_Setting('布局信息', PropertyGroupName.normal, true))

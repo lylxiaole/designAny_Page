@@ -59,7 +59,6 @@ export default class NpBarCode extends EngineComponent {
   }
 
   protected onDPropertyChange(layout: EngineLayout, field: string, val: any) {
-    debugger
     this.initBarCode()
   }
 
