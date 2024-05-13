@@ -1,6 +1,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { render } from 'vue'
 import { DPropAttr } from './commonClasses/PropertyInfo'
+import { DMethodAttr } from './commonClasses/MethodInfo'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
@@ -100,6 +101,7 @@ export default class EngineLayout extends Vue {
     }
     return this._designerMethods
   }
+
   /**生命周期 */
   created() {}
   /**生命周期 */
@@ -204,6 +206,11 @@ export default class EngineLayout extends Vue {
   }
   public set padding_bottom(val: number) {
     this.paddingInfo.bottom = val
+  }
+  // *************************基础方法****************************************************************************
+  @DMethodAttr({})
+  private testMethod(name: string) {
+    console.log('EnginLayout testMethod:', name)
   }
 
   // *************************privates****************************************************************************

@@ -8,6 +8,7 @@ import { debug } from 'webpack'
 export { EngineLayout, EngineContainer, EngineComponent, EnginePage }
 export { SaveInfo }
 export * from './commonClasses/PropertyInfo'
+export * from './commonClasses/MethodInfo'
 
 export { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
 export * from './commonClasses/ComponentInfo'
