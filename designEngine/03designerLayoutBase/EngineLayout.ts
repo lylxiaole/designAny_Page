@@ -92,46 +92,6 @@ export default class EngineLayout extends Vue {
     return res
   }
 
-  /**自定义事件,图形化编程就是定义自定义事件要做的事情*/
-  // private _designerEvents: layoutEvent[] = []
-  // public get designerEvents(): layoutEvent[] {
-  //   if (!this._designerEvents) {
-  //     this._designerEvents = []
-  //   }
-  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为绑定')
-  //   if (property && !property.value) {
-  //     property.value = []
-  //   }
-  //   /**布局中的所有事件和行为的对应关系 */
-  //   var eventBehaviors = property.value as layoutEventBehaviors[]
-
-  //   for (let index = 0; index < this._designerEvents.length; index++) {
-  //     const event = this._designerEvents[index]
-  //     let behaviorIds: any[] = []
-  //     for (let index = 0; index < eventBehaviors.length; index++) {
-  //       const o = eventBehaviors[index]
-  //       if (o.eventName === event.eventName) {
-  //         behaviorIds = o.behaviorIds
-  //         break
-  //       }
-  //     }
-  //     event.behaviorIds = behaviorIds
-  //   }
-  //   return this._designerEvents
-  // }
-  // public set designerEvents(val: layoutEvent[]) {
-  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为绑定')
-  //   var newvals: layoutEventBehaviors[] = []
-  //   for (let index = 0; index < val.length; index++) {
-  //     const element = val[index]
-  //     var nval = new layoutEventBehaviors()
-  //     nval.eventName = element.eventName
-  //     nval.behaviorIds = element.behaviorIds
-  //     newvals.push(nval)
-  //   }
-  //   property.value = newvals
-  // }
-
   /** 自定义方法,图形化编程会库触发这个方法*/
   private _designerMethods: layoutMethod[] = []
   public get designerMethods(): layoutMethod[] {
@@ -171,7 +131,7 @@ export default class EngineLayout extends Vue {
   @DPropAttr(new UploadFile_Setting('背景图片', PropertyGroupName.normal, true, null, 1, 'image'))
   public background_img: any = []
   @DPropAttr(new Behavior_Setting('行为绑定', PropertyGroupName.normal, true))
-  public designerEvents: any = []
+  public designerEvents: layoutEventBehaviors[] = []
 
   public get width(): any {
     return this.positionInfo.width
