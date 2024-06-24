@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig } from '@common/baseConfigs'
 import registerRouteHook from './utils/routerHook'
-
 // **************引用element Plus******************************
 require('@common/assets/iconfont1/iconfont.css')
 require('@common/assets/iconfont1/iconfont.js')

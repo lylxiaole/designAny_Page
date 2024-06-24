@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;width:100%" @click="onClickWhiteArea">
+  <div style="height:100%;width:100%" @click="onClickBlankArea">
     <el-row style="height: 50px; width: 100%;border-bottom: 1px solid rgb(223, 223, 223);">
       <el-row style="margin: 3px 15px">
         <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="请输入内容"></el-input>
@@ -10,7 +10,6 @@
         <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
           @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
           @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
-
           <template #default="{node,data}">
             <div v-if="data.type==='page'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
@@ -132,7 +131,6 @@ export default class index extends ComponentBase {
       }
     }
   }
-
   private deleteNodeById(id: string, parentNodes: TreeNodeDC[]) {
     for (let index = 0; index < parentNodes.length; index++) {
       const node = parentNodes[index]
@@ -353,7 +351,6 @@ export default class index extends ComponentBase {
         break
     }
   }
-
   private async addGroup() {
     let parentGroupId = this.currentRightClickNode ? this.currentRightClickNode.id : null
     let index = 0
@@ -422,7 +419,6 @@ export default class index extends ComponentBase {
       alert('设置首页失败')
     }
   }
-
   private async deleteNode() {
     let nodeId = this.currentRightClickNode.id
     let nodeType = this.currentRightClickNode.type
@@ -437,7 +433,7 @@ export default class index extends ComponentBase {
     }
     this.deleteNodeById(nodeId, this.treeData)
   }
-  private onClickWhiteArea() {
+  private onClickBlankArea() {
     ;(this.$refs.ctxMenu as any).hide()
   }
   // **************对外事件*****************************************************

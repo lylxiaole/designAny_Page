@@ -184,7 +184,6 @@ let baseconfig = {
       filename: '[name].css',
       chunkFilename: `[name]_[contenthash:8].[ext]`
     }),
-
     // 所有页面都会用到的公共代码提取到 common 代码块中
     new webpack.optimize.SplitChunksPlugin({
       chunks: 'all', // initial、async和all
@@ -224,7 +223,6 @@ let baseconfig = {
         }
       }
     }),
-
     new VueLoaderPlugin()
     // new webpack.DefinePlugin({
     //   'process.env': JSON.stringify(process.env)
@@ -247,7 +245,6 @@ let baseconfig = {
     alias: {
       '@common': path.resolve(currentDir, 'common'), //引入模块时，自动寻找
       '@designEngine': path.resolve(currentDir, 'designEngine'), //引入模块时，自动寻找
-      // '@': path.resolve(currentDir, 'z_Report')
       path: false, // require.resolve('path-browserify'),
       stream: false, //require.resolve("stream-browserify"),
       http: false, //require.resolve("stream-http"),
@@ -332,12 +329,10 @@ module.exports = function initConifg(distDir, projectDir, templateFile, devPort)
   baseconfig.devServer.port = devPort
   baseconfig.output.path = path.resolve(currentDir, `dists/${distDir}`)
   baseconfig.resolve.modules.push(path.resolve(currentDir, projectDir))
-  // baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
   console.log('baseconfig.resolve.alias', path.resolve(currentDir, projectDir))
   baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
   baseconfig.resolve.alias['@common'] = path.resolve(currentDir, 'common')
   baseconfig.resolve.alias['@designEngine'] = path.resolve(currentDir, 'designEngine')
   baseconfig.resolve.alias['@behaviorEngine'] = path.resolve(currentDir, 'behaviorEngine')
-
   return baseconfig
 }
