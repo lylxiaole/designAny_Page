@@ -55,7 +55,7 @@ export function DCompnentAttr(paltform: string, dCompType: DCompType, groupName:
     allComponents.push(layoutInfo)
 
     if (!CompIndex.indexs[compCode]) {
-      CompIndex.indexs[compCode] = target.prototype.constructor
+      CompIndex.indexs[compCode] = target
     }
   }
 }
