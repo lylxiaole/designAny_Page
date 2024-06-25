@@ -196,9 +196,7 @@ export default class EngineContainer extends EngineLayout {
     // window.console.error('绘制子组件失败,请不要保存!!!')
     // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
     this.addChild(dropcomp)
-
     await dropcomp.loadData(data)
-
     return dropcomp as EngineLayout
   }
   //选中子组件

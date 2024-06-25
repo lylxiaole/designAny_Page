@@ -18,8 +18,15 @@ import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr } from '@designEngine/03designerLayoutBase'
 import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
 
+import * as elemenpComps from 'element-plus'
+console.log('xxxxx:', elemenpComps)
+
 @DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
-@Options({})
+@Options({
+  components: {
+    ...(elemenpComps as any)
+  }
+})
 export default class ButtonComponent extends EngineComponent {
   @DPropAttr(new Text_Setting('按钮文本', PropertyGroupName.special, true))
   private btnText: any = '新增按钮'

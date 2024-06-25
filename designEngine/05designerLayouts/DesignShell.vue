@@ -35,7 +35,7 @@
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { ref, h, render, onMounted } from 'vue'
+import { ref, h, render, onMounted, createVNode, createBlock } from 'vue'
 import dragHelper from '@designEngine/02common/dragHelper_new'
 
 import { DragItemData, DragItemTypeEnum } from './DesignEvents'
@@ -124,9 +124,8 @@ export default class DesignShell extends Vue {
     if (this.component != null) {
       this.component.destorymethod()
     }
-
     comp = h(comp)
-    // comp = createBlock(comp)
+
     render(comp, this.$refs.compContent as any)
     this.component = comp.component.proxy
     comp.component.proxy.renderContainer = this.$refs.compContent
