@@ -124,7 +124,9 @@ export default class DesignShell extends Vue {
     if (this.component != null) {
       this.component.destorymethod()
     }
+
     comp = h(comp)
+    // comp = createBlock(comp)
     render(comp, this.$refs.compContent as any)
     this.component = comp.component.proxy
     comp.component.proxy.renderContainer = this.$refs.compContent
