@@ -1,6 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
-import { render } from 'vue'
-import { DPropAttr } from './commonClasses/PropertyInfo'
+import { render, toRaw } from 'vue'
+import { DPropAttr, allDPropCache } from './commonClasses/PropertyInfo'
 import { DMethodAttr } from './commonClasses/MethodInfo'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
@@ -27,6 +27,9 @@ export default class EngineLayout extends Vue {
   public isDesigning: boolean = false
   public isNeedSave: boolean = false
   public designerContext: any = designerContext
+  // *********组件初始化时的属性列表副本************************************
+  public lyl_propertyties: PropertySetting[] = []
+  private lyl_initSettingProps: (vuecomp) => PropertySetting[]
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}
@@ -63,7 +66,10 @@ export default class EngineLayout extends Vue {
   }
   // ********************************
   public isSelected: boolean = false
-  public properties: () => PropertySetting[]
+
+  public properties(): PropertySetting[] {
+    return this.lyl_initSettingProps(this)
+  }
   /**父级布局 */
   public parentLayout: EngineLayout
   /**子级布局 */

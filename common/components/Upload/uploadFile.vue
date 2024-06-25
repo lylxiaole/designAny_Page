@@ -143,7 +143,10 @@ export default class uploadFile extends Vue {
       uid: uploadfileId,
       name: file.name
     }
-    var filesclone = [...this.fileList]
+    var filesclone = []
+    if (this.fileList) {
+      filesclone = filesclone.concat([...this.fileList])
+    }
     filesclone.push(newfileinfo)
     this.UpdateFileList_Inner(filesclone)
     window.console.log('handleUploadSuccess:', response)

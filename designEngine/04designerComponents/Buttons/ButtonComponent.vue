@@ -1,21 +1,38 @@
 <template>
-  <el-button @click="onClick" :style="{'background-color':background,'color':foreground}" style="width:100%;height:100%;display:block">
-    <div class="verticalAlignCenter flexHorilanLayout" style="width:100%;height:100%">
-      {{btnText}}
-    </div>
+  <el-button @click="onClick" type="primary" :style="{'background-color':background,'color':foreground}" style="width:100%;height:100%;display:block">
+    <el-row>
+      <el-col :style="{'width':height,'height':'100%'}">
+        <img v-if="btnIconUrl" style="height:100%;" :src="btnIconUrl" />
+      </el-col>
+      <el-col :style="{'width':'calc(100% - '+height+')'}">
+        <span class="verticalAlignCenter flexHorilanLayout" style="width:100%;height:100%">
+          {{btnText}}
+        </span>
+      </el-col>
+    </el-row>
   </el-button>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr } from '@designEngine/03designerLayoutBase'
-import { PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@designEngine/03designerLayoutBase'
+import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
 
 @DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
 @Options({})
 export default class ButtonComponent extends EngineComponent {
   @DPropAttr(new Text_Setting('按钮文本', PropertyGroupName.special, true))
   private btnText: any = '新增按钮'
+
+  @DPropAttr(new UploadFile_Setting('按钮图标', PropertyGroupName.special, true, null, 1, 'image'))
+  private btnIcon: any[] = []
+  private get btnIconUrl() {
+    if (!this.btnIcon || this.btnIcon.length < 1) {
+      return ''
+    }
+
+    return this.designerContext.getFileApiAddr(this.btnIcon[0].uid)
+  }
 
   mounted() {
     this.width = 80
@@ -31,16 +48,5 @@ export default class ButtonComponent extends EngineComponent {
 </script>
 
 <style scoped>
-.icon {
-  width: 2em;
-  height: 2em;
-}
-.iconCss {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: auto;
-}
 </style>
 

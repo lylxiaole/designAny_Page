@@ -141,6 +141,7 @@ export default class PropertyGrid extends Vue {
     if (newlayouts_extra.length > 0) {
       property_extra = [...newlayouts_extra[0].properties()]
     }
+
     /**找出所有布局容器中公有的属性 */
     for (var i = 0; i < newlayouts_extra.length; i++) {
       let findlayout = newlayouts_extra[i]
@@ -159,10 +160,8 @@ export default class PropertyGrid extends Vue {
       var findgroup = propertyGroups.find((p) => p.groupName == o.groupName)
       if (!findgroup) {
         findgroup = new PropertyGroupInfo()
-        if (o.groupName !== '主题') {
-          findgroup.groupName = o.groupName
-          propertyGroups.push(findgroup)
-        }
+        findgroup.groupName = o.groupName
+        propertyGroups.push(findgroup)
       }
       var propertyinfox = new propertyInfo()
       propertyinfox.name = o.propertyName
@@ -173,6 +172,7 @@ export default class PropertyGrid extends Vue {
     })
 
     this.propertyGroups = propertyGroups
+    console.log('propertyGroups:', propertyGroups)
   }
 
   mounted() {}

@@ -56,7 +56,7 @@ export async function SavePageDetail(page: DesignPageDC): Promise<boolean> {
 
 export async function SetDefaultPage(pageId: string): Promise<boolean> {
   let url = apiAddr() + `api/designPage/setDefaultPage`
-  debugger
+
   const resp = await ajaxPost(url, pageId)
   return resp.data
 }

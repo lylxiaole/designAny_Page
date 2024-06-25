@@ -24,8 +24,12 @@ export function DPropAttr(prop: PropertySetting) {
       var newperperty = deepClone(prop)
       findCache.properties.push(newperperty)
     }
-    // **************************************
-    target.properties = () => {
+    // ********* 每个通过调用这个方法,获取自己的初始化属性列表的副本,并保存在组件内部。在属性配置时使用*****************************
+    ;(target as any).lyl_initSettingProps = (enginLayout) => {
+      if (enginLayout.lyl_propertyties && enginLayout.lyl_propertyties.length > 0) {
+        return enginLayout.lyl_propertyties
+      }
+
       let findx = allDPropCache.find((o) => o.layoutFunc === target.constructor)
       if (!findx) {
         return []
@@ -38,8 +42,8 @@ export function DPropAttr(prop: PropertySetting) {
           resProps = oneDPropCache.properties.concat(resProps)
         }
       }
-
-      return resProps
+      enginLayout.lyl_propertyties = deepClone(resProps)
+      return enginLayout.lyl_propertyties
     }
   }
 }

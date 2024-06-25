@@ -18,10 +18,11 @@ import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutB
 export default class PCPageDesign extends EnginePage {
   private get backgroundCute(): string {
     // window.console.log('backgroundCute:', this.background_img)
-    if (!this.background_img || !this.background_img.uid) {
+
+    if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
-    return 'url("' + this.designerContext.getFileApiAddr(this.background_img.uid) + '")'
+    return 'url("' + this.designerContext.getFileApiAddr(this.background_img[0].uid) + '")'
   }
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
