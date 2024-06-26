@@ -1,10 +1,8 @@
 <template>
   <div style="width:100%;height:100%;">
     <VxeTable :data="tableData">
-      <VxeColumn type="seq" width="60"></VxeColumn>
-      <VxeColumn field="name" title="Name"></VxeColumn>
-      <VxeColumn field="sex" title="Sex"></VxeColumn>
-      <VxeColumn field="age" title="Age"></VxeColumn>
+      <VxeColumn v-for="columnconfig in tableColumns" :key="columnconfig.key" :type="columnconfig.type" :title="columnconfig.title"
+        :field="columnconfig.field"></VxeColumn>
     </VxeTable>
   </div>
 </template>
@@ -12,7 +10,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr } from '@designEngine/03designerLayoutBase'
-import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
+import { PropertyGroupName, TableColumn_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
 
 import { VxeUI, VxeIcon, VxeLoading, VxeButton } from 'vxe-pc-ui'
 import { VxeTable, VxeColumn } from 'vxe-table'
@@ -36,13 +34,17 @@ VxeUI.component(VxeColumn)
   }
 })
 export default class Index extends EngineComponent {
+  @DPropAttr(new Text_Setting('数据', PropertyGroupName.special, false, null))
+  private tableData: any[] = []
+
+  @DPropAttr(new TableColumn_Setting('列设置', PropertyGroupName.special, true, null))
+  private tableColumns: any[] = []
+
   mounted() {
-    this.width = 80
-    this.height = 34
+    this.width = 500
+    this.height = 300
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
   }
-
-  private onClick(e) {}
 }
 </script>
 

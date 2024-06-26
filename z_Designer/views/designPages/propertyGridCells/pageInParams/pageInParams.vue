@@ -10,13 +10,13 @@
       @click="startEditTable" size="small"> 设置入参</el-button>
 
     <el-dialog :maskClosable="false" title="编辑" v-model="windowVisible" :destroyOnClose="true" width="900px">
-      <el-table size="small" :localData="localData" :pagination="false" style="height:450px;" width="100%">
+      <el-table size="small" :data="localData" :pagination="false" style="height:450px;" width="100%">
         <el-table-column prop="name" label="入参名称" width="300">
         </el-table-column>
         <el-table-column prop="type" label="入参类型" width="300">
         </el-table-column>
         <el-table-column fixed="right" label="操作">
-          <template #default={scope}>
+          <template #default="scope">
             <a @click="() => rowdelete(scope.row.key)">删除</a>
           </template>
         </el-table-column>

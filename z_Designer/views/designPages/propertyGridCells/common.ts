@@ -36,19 +36,6 @@ export default class propertyCellBase<T> extends Vue {
     }
     return this.property as any as T
   }
-  /**获取当前属性值 */
-  protected get currentValue(): any {
-    let field = this.property.field
-    return this.currentLayouts[0][field]
-  }
-  /**设置当前属性值 */
-  protected set currentValue(val: any) {
-    let field = this.property.field
-    for (let index = 0; index < this.currentLayouts.length; index++) {
-      const element = this.currentLayouts[index]
-      element[field] = val
-    }
-  }
 
   protected get currentLayouts(): EngineLayout[] {
     if (!this.layouts) {
@@ -61,5 +48,19 @@ export default class propertyCellBase<T> extends Vue {
       newlayouts_extra = this.layouts as EngineLayout[]
     }
     return newlayouts_extra
+  }
+
+  /**获取当前属性值 */
+  protected get currentValue(): any {
+    let field = this.property.field
+    return this.currentLayouts[0][field]
+  }
+  /**设置当前属性值 */
+  protected set currentValue(val: any) {
+    let field = this.property.field
+    for (let index = 0; index < this.currentLayouts.length; index++) {
+      const element = this.currentLayouts[index]
+      element[field] = val
+    }
   }
 }
