@@ -119,7 +119,7 @@
     "vue-template-compiler": "2.6.10",
     "vue3-ts-jsoneditor": "^2.11.2",
     "vuex": "^4.0.0-0",
-    "vxe-table": "^4.5.18",
+    "vxe-table": "^4.7.35",
     "wangeditor": "^4.7.4",
     "xe-utils": "^3.3.2"
   }
