@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;width:100%;position:relative" @dblclick="onTreeNodeDoubleClick">
+  <div style="height:100%;width:100%;position:relative;overflow-x:auto:overflow-y:hidden;display:flex" @dblclick="onTreeNodeDoubleClick">
     <div style="height:100%;float:left;display:flex;justify-content:center;align-items:Center;">
       <slot name="icon">
         <span class="icon iconfont">&#xe627;</span>
@@ -8,7 +8,7 @@
     <div style="height:100%;float:left;padding-left:3px;box-sizing:border-box">
       <span v-if="isEdit===false" class="gad-b-tree-node-span" style="display:flex;justify-content:center;align-items:Center;"> {{ currentValue }}
       </span>
-      <el-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" />
+      <el-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" style="width:auto" />
     </div>
   </div>
 </template>

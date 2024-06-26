@@ -1,15 +1,12 @@
 <template>
-  <el-button @click="onClick" type="primary" :style="{'background-color':background,'color':foreground}" style="width:100%;height:100%;display:block">
-    <el-row>
-      <el-col :style="{'width':height,'height':'100%'}">
-        <img v-if="btnIconUrl" style="height:100%;" :src="btnIconUrl" />
-      </el-col>
-      <el-col :style="{'width':'calc(100% - '+height+')'}">
-        <span class="verticalAlignCenter flexHorilanLayout" style="width:100%;height:100%">
-          {{btnText}}
-        </span>
-      </el-col>
-    </el-row>
+  <el-button @click="onClick" type="primary" :style="{'background-color':background,'color':foreground}" style="width:100%;height:100%;"
+    class="verticalAlignCenter ">
+    <template #icon>
+      <img v-if="btnIconUrl" style="height:100%;" :src="btnIconUrl" />
+    </template>
+    <div class="verticalAlignCenter flexHorilanLayout" :style="{'height':'calc('+height+' - 12px)'}">
+      {{btnText}}
+    </div>
   </el-button>
 </template>
 
@@ -54,6 +51,13 @@ export default class ButtonComponent extends EngineComponent {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.el-button {
+  padding: 6px;
+  /deep/.el-icon {
+    height: 100% !important;
+    width: auto !important;
+  }
+}
 </style>
 
