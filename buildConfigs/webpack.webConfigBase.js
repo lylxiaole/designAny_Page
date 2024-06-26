@@ -182,7 +182,7 @@ let baseconfig = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      chunkFilename: `[name]_[contenthash:8].[ext]`
+      chunkFilename: `[name]_[contenthash:8].css`
     }),
     // 所有页面都会用到的公共代码提取到 common 代码块中
     new webpack.optimize.SplitChunksPlugin({

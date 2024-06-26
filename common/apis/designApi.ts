@@ -1,6 +1,6 @@
 // ****************************************
-import { ajaxGet, ajaxPost } from 'common/utils/axiosEnhancer'
-import { getConfigByName } from 'common/baseConfigs'
+import { ajaxGet, ajaxPost } from '@common/utils/axiosEnhancer'
+import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 
 export class BaseClass {
