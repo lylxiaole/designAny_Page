@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width:100%;position:relative">
     <tableList ref="tableList" @onCurrentTableChanged="onCurrentTableChanged" style="width:250px;height:100%;float:left" />
-    <tableDeatil :currentTable="currentTable" style="width:calc(100% - 250px);height:100%;float:left" />
+    <tableDeatil v-show="currentTable" :currentTable="currentTable" style="width:calc(100% - 250px);height:100%;float:left" />
     <!-- <applicationDetail :currentApplication="currentApplication" style="width:calc(100% - 250px);height:100%;float:left"></applicationDetail> -->
   </div>
 </template>
