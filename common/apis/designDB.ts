@@ -189,7 +189,7 @@ export async function DeleteDatabase(database: DataBaseDC): Promise<boolean> {
 }
 // *****************Table**********************************
 export async function GetTables(databaseId: string): Promise<TableDC[]> {
-  let url = apiAddr() + 'api/designDb/GetTables?databaseId = ' + databaseId
+  let url = apiAddr() + 'api/designDb/GetTables?databaseId=' + databaseId
   const resp = await ajaxGet(url)
   return resp.data
 }
