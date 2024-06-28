@@ -23,10 +23,12 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="onCancelHandle">取 消</el-button>
-        <el-button type="primary" @click="onSureHandle">确定</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="onCancelHandle">取 消</el-button>
+          <el-button type="primary" @click="onSureHandle">确定</el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
