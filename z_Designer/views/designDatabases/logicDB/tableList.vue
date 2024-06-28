@@ -6,6 +6,7 @@
     <el-row style="height:calc(100% - 3rem);overflow-y:auto;display:block">
       <div v-for="table in allTables" :key="table.tableId" :style="dbItemStyle(table)" class="applicationItem" @click="selectTable(table)">
         {{table.tableName}}
+        <el-button size="small" style="margin-left:35px" @click="() => deleteTable(table)">删除</el-button>
       </div>
     </el-row>
     <!-- ********************************************************** -->
@@ -32,7 +33,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { GetTables, AddTable } from '@common/apis/designDB'
+import { GetTables, AddTable, DeleteTable } from '@common/apis/designDB'
 
 @Options({})
 export default class tableList extends ComponentBase {
@@ -89,6 +90,13 @@ export default class tableList extends ComponentBase {
     this.currentTable = table
     this.onCurrentTableChanged(table)
   }
+  // ***********************************************************************
+  private async deleteTable(table) {
+    await DeleteTable(table)
+    this.currentTable = null
+    await this.refreshList()
+  }
+  // ***********************************************************************
   @Emit('onCurrentTableChanged')
   private onCurrentTableChanged(db: any) {}
 }

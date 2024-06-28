@@ -220,6 +220,7 @@ export async function UpdateTable(table: TableDC): Promise<boolean> {
 }
 export async function DeleteTable(table: TableDC): Promise<boolean> {
   let url = apiAddr() + 'api/designDb/DeleteTable'
+
   const resp = await ajaxPost(url, table)
   return resp.data
 }

@@ -1,8 +1,8 @@
 <template>
   <div style="height:100%;width:100%;position:relative">
     <el-row style="height:100%;display:block">
-      <el-row style="height:60px">
-        <el-button style="height:25px" @click="addColumnHandle" size="small" type="primary">新增字段</el-button>
+      <el-row style="height:60px;position:relative;display:block">
+        <el-button style="height:25px;right:15px;position:absolute;top:15px" @click="addColumnHandle" size="small" type="primary">新增字段</el-button>
       </el-row>
       <el-row style="height:calc(100% - 60px)">
         <el-table size="small" :data="allColumns" :pagination="false" style="height:100%;" width="100%">
