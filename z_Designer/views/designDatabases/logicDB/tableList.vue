@@ -6,7 +6,7 @@
     <el-row style="height:calc(100% - 3rem);overflow-y:auto;display:block">
       <div v-for="table in allTables" :key="table.tableId" :style="dbItemStyle(table)" class="applicationItem" @click="selectTable(table)">
         {{table.tableName}}
-        <el-button size="small" style="margin-left:35px" @click="() => deleteTable(table)">删除</el-button>
+        <el-button size="small" style="margin-left:35px" @click="(e) => deleteTable(e,table)">删除</el-button>
       </div>
     </el-row>
     <!-- ********************************************************** -->
@@ -91,9 +91,11 @@ export default class tableList extends ComponentBase {
     this.onCurrentTableChanged(table)
   }
   // ***********************************************************************
-  private async deleteTable(table) {
+  private async deleteTable(e, table) {
+    e.stopPropagation()
     await DeleteTable(table)
     this.currentTable = null
+    this.onCurrentTableChanged(null)
     await this.refreshList()
   }
   // ***********************************************************************
