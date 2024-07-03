@@ -4,24 +4,26 @@ import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 
 export class BaseClass {
-  public Id: string
-  public ModifiedTime: string
-  public IsDeleted: boolean
+  public id: string
+  public modifiedTime: string
+  public isDeleted: boolean
 }
 export class ApiContentDC extends BaseClass {
-  public ApiId: string
-  public Content: string
+  public apiId: string
+  public content: string
 }
 export class DesignedAPIDC extends BaseClass {
-  public GroupId: string
-  public APIName: string
-  public Desc: string
+  public groupId: string
+  public apiName: string
+  public desc: string
+  public index: number
 }
 export class DesignedAPIGroupDC extends BaseClass {
-  public ParentGroupId: string
-  public GroupName: string
-  public ChildrenGroups: DesignedAPIGroupDC[]
-  public ChildrenAPIs: DesignedAPIDC[]
+  public parentGroupId: string
+  public groupName: string
+  public index: number
+  public childrenGroups: DesignedAPIGroupDC[]
+  public childrenAPIs: DesignedAPIDC[]
 }
 
 export async function AddApiGroup(dc: DesignedAPIGroupDC): Promise<boolean> {
