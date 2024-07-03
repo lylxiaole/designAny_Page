@@ -154,19 +154,7 @@ export default class apiList extends ComponentBase {
     }
     return null
   }
-  private setNodeDefault(id: string, parentNodes: TreeNodeDC[]) {
-    for (let index = 0; index < parentNodes.length; index++) {
-      const node = parentNodes[index]
-      if (node.id === id) {
-        node.isDefault = true
-      } else {
-        node.isDefault = false
-      }
-      if (node.children) {
-        this.setNodeDefault(id, node.children)
-      }
-    }
-  }
+
   private deleteNodeById(id: string, parentNodes: TreeNodeDC[]) {
     for (let index = 0; index < parentNodes.length; index++) {
       const node = parentNodes[index]
