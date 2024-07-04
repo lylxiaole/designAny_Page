@@ -315,7 +315,7 @@ export default class apiList extends ComponentBase {
     this.currentRightClickNode = data
     this.rightMenus = []
     if (data.type === 'api') {
-      this.rightMenus = [rightMenus.edit, rightMenus.saveAs, rightMenus.delete]
+      this.rightMenus = [rightMenus.saveAs, rightMenus.delete]
     } else if (data.type === 'group') {
       this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
     }
