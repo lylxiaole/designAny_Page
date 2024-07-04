@@ -26,53 +26,65 @@ export class DesignedAPIGroupDC extends BaseClass {
   public childrenAPIs: DesignedAPIDC[]
 }
 
-export async function AddApiGroup(dc: DesignedAPIGroupDC): Promise<boolean> {
-  let url = apiAddr() + 'api/LYLDesigner/AddApiGroup'
+export async function UpdateNodesSort(nodes: any[]): Promise<boolean> {
+  let url = apiAddr() + `api/designApi/updateNodesSort`
+  const resp = await ajaxPost(url, nodes)
+  return resp.data
+}
+
+export async function AddApiGroup(dc: DesignedAPIGroupDC): Promise<DesignedAPIGroupDC> {
+  let url = apiAddr() + 'api/designApi/AddApiGroup'
   const resp = await ajaxPost(url, dc)
   return resp.data
 }
 export async function DeleteApiGroup(groupId: string): Promise<boolean> {
-  let url = apiAddr() + 'api/LYLDesigner/DeleteApiGroup'
+  let url = apiAddr() + 'api/designApi/DeleteApiGroup'
   const resp = await ajaxPost(url, groupId)
   return resp.data
 }
 export async function UpdateApiGroup(dc: DesignedAPIGroupDC): Promise<boolean> {
-  let url = apiAddr() + 'api/LYLDesigner/UpdateApiGroup'
+  let url = apiAddr() + 'api/designApi/UpdateApiGroup'
   const resp = await ajaxPost(url, dc)
   return resp.data
 }
 export async function GetGroupApisAll(): Promise<DesignedAPIGroupDC[]> {
-  let url = apiAddr() + 'api/LYLDesigner/GetGroupApisAll'
+  let url = apiAddr() + 'api/designApi/GetGroupApisAll'
   const resp = await ajaxGet(url)
   return resp.data
 }
 
-export async function AddAPI(api: DesignedAPIDC): Promise<boolean> {
-  let url = apiAddr() + 'api/LYLDesigner/AddAPI'
+export async function AddAPI(api: DesignedAPIDC): Promise<DesignedAPIDC> {
+  let url = apiAddr() + 'api/designApi/AddAPI'
   const resp = await ajaxPost(url, api)
   return resp.data
 }
 
 export async function DeleteAPI(apiId: string): Promise<boolean> {
-  let url = apiAddr() + 'api/LYLDesigner/DeleteAPI'
+  let url = apiAddr() + 'api/designApi/DeleteAPI'
   const resp = await ajaxPost(url, apiId)
   return resp.data
 }
 
 export async function UpdateAPI(api: DesignedAPIDC): Promise<boolean> {
-  let url = apiAddr() + 'api/LYLDesigner/UpdateAPI'
+  let url = apiAddr() + 'api/designApi/UpdateAPI'
   const resp = await ajaxPost(url, api)
   return resp.data
 }
 
 export async function UpdateSertAPIContent(api: ApiContentDC): Promise<boolean> {
-  let url = apiAddr() + 'api/LYLDesigner/UpdateSertAPIContent'
+  let url = apiAddr() + 'api/designApi/UpdateSertAPIContent'
   const resp = await ajaxPost(url, api)
   return resp.data
 }
 
+export async function GetApiContent(apiId: string): Promise<ApiContentDC> {
+  let url = apiAddr() + 'api/designApi/GetApiContent?apiId=' + apiId
+  const resp = await ajaxGet(url)
+  return resp.data
+}
+
 export async function GetApiSimpleInfo(apiId: string): Promise<DesignedAPIDC> {
-  let url = apiAddr() + 'api/LYLDesigner/GetApiSimpleInfo?apiId=' + apiId
+  let url = apiAddr() + 'api/designApi/GetApiSimpleInfo?apiId=' + apiId
   const resp = await ajaxGet(url)
   return resp.data
 }

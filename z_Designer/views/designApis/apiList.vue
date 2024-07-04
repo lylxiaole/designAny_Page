@@ -9,9 +9,10 @@
       <div style="overflow: auto; width: 100%; height: 100%; " @contextmenu.prevent="onTreeRightClick">
         <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
           @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
-          @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
-          <template #default="{node,data}">
-            <div v-if="data.type==='page'">
+          @node-drop="handleDrop" @current-change="onCurrentNodeChange" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false"
+          draggable highlight-current>
+          <template #default="{ data}">
+            <div v-if="data.type==='api'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
                 @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
                 <template #icon>
@@ -58,6 +59,7 @@ import {
   AddAPI,
   DeleteAPI,
   UpdateAPI,
+  UpdateNodesSort,
   UpdateSertAPIContent,
   GetApiSimpleInfo
 } from '@common/apis/designApi'
@@ -69,6 +71,7 @@ class TreeNodeDC {
   label: string
   type: string
   index: number
+  desc: string
   children: TreeNodeDC[] = []
 }
 
@@ -106,6 +109,7 @@ export default class apiList extends ComponentBase {
         parentGroupId: group.parentGroupId,
         label: group.groupName,
         index: group.index,
+        desc: '',
         type: 'group',
         children: []
       }
@@ -127,6 +131,7 @@ export default class apiList extends ComponentBase {
         parentGroupId: apidata.groupId,
         label: apidata.apiName,
         index: apidata.index,
+        desc: apidata.desc,
         type: 'api',
         children: []
       }
@@ -135,7 +140,9 @@ export default class apiList extends ComponentBase {
     return tree
   }
 
-  mounted() {}
+  mounted() {
+    this.loadData()
+  }
   // *********pageGroups管理**************************************************
   private searchNodeById(id: string, parentNodes: TreeNodeDC[]): TreeNodeDC {
     for (let index = 0; index < parentNodes.length; index++) {
@@ -185,27 +192,33 @@ export default class apiList extends ComponentBase {
     }
     return index
   }
-  private makeDesignPageDCByNode(node: TreeNodeDC): DesignPageDC {
+  private makeDesignApiDCByNode(node: TreeNodeDC): DesignedAPIDC {
     let data: any = {
       id: node.id,
-      name: node.label,
-      appId: this.currentApplication.id,
+      groupId: node.parentGroupId,
+      apiName: node.label,
       index: node.index,
-      parentGroupId: node.parentGroupId
+      desc: node.desc
     }
     return data
   }
-  private makeDesignPageGroupDCByNode(node: TreeNodeDC): DesignPageGroupDC {
+  private makeDesignApiGroupDCByNode(node: TreeNodeDC): DesignedAPIGroupDC {
     let data: any = {
       id: node.id,
-      name: node.label,
-      appId: this.currentApplication.id,
+      groupName: node.label,
       index: node.index,
       parentGroupId: node.parentGroupId
     }
     return data
   }
 
+  private onCurrentNodeChange(nodedata, node) {
+    if (nodedata && nodedata.type === 'api') {
+      this.onChooseApi(nodedata.id)
+    } else {
+      this.onChooseApi(null)
+    }
+  }
   // ***************树********************************************
   private handleDragStart(node, ev) {
     // console.log('drag start', node)
@@ -234,12 +247,12 @@ export default class apiList extends ComponentBase {
     }
     let dragingNodeData = this.searchNodeById(draggingNode.data.id, this.treeData)
     dragingNodeData.parentGroupId = parentGroupId
-    if (dragingNodeData.type === 'page') {
-      let data = this.makeDesignPageDCByNode(dragingNodeData)
-      await ChangePageGroup(data)
+    if (dragingNodeData.type === 'api') {
+      let data = this.makeDesignApiDCByNode(dragingNodeData)
+      await UpdateAPI(data)
     } else if (dragingNodeData.type === 'group') {
-      let data = this.makeDesignPageGroupDCByNode(dragingNodeData)
-      await ChangeGroupGroup(data)
+      let data = this.makeDesignApiGroupDCByNode(dragingNodeData)
+      await UpdateApiGroup(data)
     }
     // ****************************************
     let needOrderNodes = []
@@ -257,7 +270,7 @@ export default class apiList extends ComponentBase {
   }
   private allowDrop(draggingNode, dropNode, type) {
     // window.console.log('allowDrop 1:', dropNode.data.type)
-    if (dropNode.data.type === 'page') {
+    if (dropNode.data.type === 'api') {
       if (type === 'inner') {
         return false
       }
@@ -277,7 +290,7 @@ export default class apiList extends ComponentBase {
   /**当节点名称改变后 */
   private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {
     let find = this.searchNodeById(id, this.treeData)
-    if (nodedata.type === 'page') {
+    if (nodedata.type === 'api') {
     } else {
     }
   }
@@ -285,12 +298,12 @@ export default class apiList extends ComponentBase {
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
     let find = this.searchNodeById(id, this.treeData)
     find.label = newtitle
-    if (nodedata.type === 'page') {
-      let data = this.makeDesignPageDCByNode(find)
-      await UpdatePageName(data)
+    if (nodedata.type === 'api') {
+      let data = this.makeDesignApiDCByNode(find)
+      await UpdateAPI(data)
     } else {
-      let data = this.makeDesignPageGroupDCByNode(find)
-      await UpdateGroupName(data)
+      let data = this.makeDesignApiGroupDCByNode(find)
+      await UpdateApiGroup(data)
     }
   }
   // ***************右键弹窗**************************************
@@ -301,7 +314,7 @@ export default class apiList extends ComponentBase {
     e.preventDefault()
     this.currentRightClickNode = data
     this.rightMenus = []
-    if (data.type === 'page') {
+    if (data.type === 'api') {
       this.rightMenus = [rightMenus.edit, rightMenus.saveAs, rightMenus.delete]
     } else if (data.type === 'group') {
       this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
@@ -359,12 +372,7 @@ export default class apiList extends ComponentBase {
         break
       case rightMenus.delete:
         this.deleteNode()
-        this.onDeletePage(this.currentRightClickNode.id)
-        break
-      case rightMenus.edit:
-        this.onEditPage(this.currentRightClickNode.id)
-        break
-
+        this.onChooseApi(null)
         break
       default:
         break
@@ -379,13 +387,13 @@ export default class apiList extends ComponentBase {
     } else {
       index = this.cuteGroupMaxIndex(this.treeData) + 1
     }
-    let res = await AddGroup({ name: '新建分组', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index } as any)
+    let res = await AddApiGroup({ groupName: '新建分组', parentGroupId: parentGroupId, index: index } as any)
     let newnode: TreeNodeDC = {
       id: res.id,
+      desc: '',
       parentGroupId: res.parentGroupId,
-      label: res.name,
+      label: res.groupName,
       type: 'group',
-      isDefault: false,
       index: res.index,
       children: []
     }
@@ -402,44 +410,32 @@ export default class apiList extends ComponentBase {
     let parentGroupId = this.currentRightClickNode.id
     let datadc = this.searchNodeById(parentGroupId, this.treeData)
     let index = this.cuteChildrenMaxIndex(datadc) + 1
-    let pType = pageType.pcPage
-    switch (this.currentApplication.type) {
-      case applicationType.dashBoard:
-      case applicationType.report:
-      case applicationType.webSystem:
-        pType = pageType.pcPage
-        break
 
-      default:
-        break
-    }
-
-    let res = await AddPage({ name: '新建页面', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index, type: pType } as any)
+    let res = await AddAPI({ apiName: '新建接口', groupId: parentGroupId, index: index, desc: '' } as any)
 
     let newnode: TreeNodeDC = {
       id: res.id,
-      isDefault: false,
-      parentGroupId: res.parentGroupId,
-      label: res.name,
-      type: 'page',
+      parentGroupId: res.groupId,
+      label: res.apiName,
+      type: 'api',
       index: res.index,
-      children: []
+      desc: '',
+      children: null
     }
 
     datadc.children.push(newnode)
   }
-
   private async deleteNode() {
     let nodeId = this.currentRightClickNode.id
     let nodeType = this.currentRightClickNode.type
     let nodedata = this.searchNodeById(nodeId, this.treeData)
 
-    if (nodeType === 'page') {
-      let data = this.makeDesignPageDCByNode(nodedata)
-      await DeletePage(data)
+    if (nodeType === 'api') {
+      let data = this.makeDesignApiDCByNode(nodedata)
+      await DeleteAPI(data.id)
     } else if (nodeType === 'group') {
-      let data = this.makeDesignPageGroupDCByNode(nodedata)
-      await DeleteGroup(data)
+      let data = this.makeDesignApiGroupDCByNode(nodedata)
+      await DeleteApiGroup(data.id)
     }
     this.deleteNodeById(nodeId, this.treeData)
   }
@@ -447,10 +443,8 @@ export default class apiList extends ComponentBase {
     ;(this.$refs.ctxMenu as any).hide()
   }
   // **************对外事件*****************************************************
-  @Emit('onEditPage')
-  private async onEditPage(pageId: string) {}
-  @Emit('onDeletePage')
-  private async onDeletePage(pageId: string) {}
+  @Emit('onChooseApi')
+  private async onChooseApi(apiId: string) {}
 }
 </script>
 
