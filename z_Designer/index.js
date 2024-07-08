@@ -11,6 +11,9 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // *********************************************************
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/style.css'
+// *********引用vue flow**********************************************
+import '@vue-flow/core/dist/style.css'
+import '@vue-flow/core/dist/theme-default.css'
 // ***********系统环境初始化*********************************
 let configs = window.__globalConfig
 import routes from './routes'
