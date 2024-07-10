@@ -2,15 +2,11 @@ import Vue from 'vue'
 import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
-import { Property } from '@designEngine/index'
 import { behavior } from './behaviorTypes'
 
 import { object_group, objectBase } from './actObject'
-
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable } from './actObject'
-import { interfaceExtends, tsInterfaceDeclaration } from '@babel/types'
-import { extend } from 'jquery'
-import { __extends } from 'tslib'
+
 //方法资源分组
 export enum resourceGroup {
   fixedVal = 'fixedVal',

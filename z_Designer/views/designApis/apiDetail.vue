@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
-      <VueFlow :nodes="nodes" :edges="edges">
+      <VueFlow v-model="nodes" v-model:edges="edges">
       </VueFlow>
     </div>
   </div>
