@@ -27,10 +27,10 @@ export class factory {
     func.currentPage = this.currentPage
     func.$meta = obj
 
-    obj.setValFunction = async (obj: objectBase, val: any) => {
+    obj.setFunc = async (obj: objectBase, val: any) => {
       await func.setFunc(obj, val)
     }
-    obj.getValFunction = async (obj: objectBase) => {
+    obj.getFunc = async (obj: objectBase) => {
       var res = await func.getFunc(obj)
       if (res) {
         obj = null
@@ -39,7 +39,7 @@ export class factory {
         return res
       }
     }
-    obj.getDescFunction = (obj: objectBase) => {
+    obj.getDesc = (obj: objectBase) => {
       return func.getDesc(obj)
     }
   }

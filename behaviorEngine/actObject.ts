@@ -27,19 +27,19 @@ export class objectBase {
   resourceCode: resourceCode
 
   get ref(): any {
-    return this.getValFunction(this)
+    return this.getFunc(this)
   }
   set ref(val: any) {
-    this.setValFunction(this, val)
+    this.setFunc(this, val)
   }
 
   get desc(): string {
-    return this.getDescFunction(this)
+    return this.getDesc(this)
   }
 
-  public setValFunction: (obj: objectBase, val: any) => void = null
-  public getValFunction: (obj: objectBase) => any = null
-  public getDescFunction: (obj: objectBase) => string = null
+  public setFunc: (obj: objectBase, val: any) => void = null
+  public getFunc: (obj: objectBase) => any = null
+  public getDesc: (obj: objectBase) => string = null
   // public updateInparamsFunction: () => void = null
 
   public cloneFrom(obj: objectBase) {
