@@ -1,16 +1,14 @@
 <template style="height:100%">
   <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为绑定" style="height:600px" width="800px" v-model="windowVisible" append-to-body
     :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-row style="height:calc(100% - 130px);background:#FFF;">
+    <el-row style="height:calc(100% - 50px);background:#FFF;">
       <el-col :span="6" style="border-right:1px solid #cdcdcd">
-        <behaviorTree style="height:100%;width:100%;background:#eeeeee;" v-model:currentPage="currentPage"
-          v-model:currentSettingBehavior="currentSettingBehavior" v-model:actionFactory="actionFactory" @currentSelectAction="currentSelectAction" />
+        <!-- //资源列表 -->
+        <resource-tree />
       </el-col>
-      <el-col :span="12" style="border-right:1px solid #cdcdcd">
-        <formulaSetting :currentActionDetail="currentActionDetail" :actionFactory="actionFactory" @onFocusFormula="onFocusFormula" />
-      </el-col>
-      <el-col :span="6">
-        <!-- <formulaInParamSetting :actionFactory="actionFactory" :currentObj="currentFocusObj" /> -->
+      <el-col :span="18" style="border-right:1px solid #cdcdcd">
+        <!-- 流程图 -->
+        <flow-detail />
       </el-col>
     </el-row>
     <template #footer>
@@ -37,16 +35,11 @@ import { behavior, action, actionDetail, factory, objectBase, objectType, object
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
-import behaviorTree from './behaviorTree/behaviorTree.vue'
-import formulaSetting from './formulaSetting/formulaSetting.vue'
-// import formulaInParamSetting from './formulaSetting/formulaInParamSetting.vue'
+import flowDetail from './flowDetail/index.vue'
+import resourceTree from './resourceTree/index.vue'
 
 @Options({
-  components: {
-    behaviorTree: behaviorTree,
-    formulaSetting: formulaSetting
-    // formulaInParamSetting: formulaInParamSetting
-  }
+  components: { flowDetail, resourceTree }
 })
 export default class behaviorDeatilSetting extends Vue {
   // ************************************************************
@@ -102,20 +95,6 @@ export default class behaviorDeatilSetting extends Vue {
       // newobjs.push(newObjClone)
     }
     return newobjs
-  }
-  /**判断节点是否是动作 */
-  private nodeIsAction(node: actionDetail | action): boolean {
-    if ((node as action).actionDetails) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  private onFocusFormula(obj: objectBase) {
-    this.currentFocusObj = obj
-    if (this.currentFocusObj) {
-    }
   }
 }
 </script>

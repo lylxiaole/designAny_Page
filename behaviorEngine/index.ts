@@ -4,6 +4,7 @@ export { behaviorContext }
 export * from './actFuncBase'
 export * from './actObject'
 export * from './actionFactory'
+export * from './actResource'
 export * from './behaviorTypes'
 
 import behaviorList from './behaviorDesigner/behaviorList.vue'
