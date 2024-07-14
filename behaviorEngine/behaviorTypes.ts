@@ -1,6 +1,10 @@
 /******************************行为相关 **************************/
-import { objectBase, objectType } from './actObject'
+import { objectBase } from './actObject'
 
+export enum formulaType {
+  cute = 'cute', //计算
+  filter = 'filter' //判断条件
+}
 export enum paramType {
   number = 'number',
   string = 'string',
@@ -13,6 +17,7 @@ export class param {
   type: paramType
   val: any
 }
+
 export class variable {
   name: string
   val: any

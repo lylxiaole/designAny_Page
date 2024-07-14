@@ -37,19 +37,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
-import {
-  action,
-  behavior,
-  factory,
-  actionDetail,
-  objectBase,
-  objectType,
-  object_Variable,
-  object_FixedVal,
-  object_Method,
-  formulaType,
-  funcCode
-} from '@behaviorEngine/index'
+import { action, behavior, factory, actionDetail, objectBase, formulaType, funcCode } from '@behaviorEngine/index'
 import formulaSetting from '../formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from '../formulaSetting/formulaInParamSetting.vue'
 import resouceChooseComp from '../behaviorResources/resouceChooseComp.vue'

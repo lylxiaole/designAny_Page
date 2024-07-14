@@ -1,7 +1,3 @@
-export enum formulaType {
-  cute = 'cute', //计算
-  filter = 'filter' //判断条件
-}
 import behaviorContext from './01designerContext/context'
 export { behaviorContext }
 // export * from './04_actionReaourceTree'

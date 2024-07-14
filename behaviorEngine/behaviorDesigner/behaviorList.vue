@@ -27,7 +27,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { behavior, action, actionDetail, factory, formulaType, objectBase, objectType, object_Method } from '@behaviorEngine/index'
+import { behavior } from '@behaviorEngine/index'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorDetail from './behaviorDetail.vue'

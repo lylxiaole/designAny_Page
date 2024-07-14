@@ -27,18 +27,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, InjectReactive, ProvideReactive } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
-import {
-  behavior,
-  action,
-  actionDetail,
-  formulaType,
-  objectBase,
-  objectType,
-  funcCode,
-  object_Method,
-  object_callback,
-  factory
-} from '@behaviorEngine/index'
+import { actionDetail, formulaType, objectBase, objectType, funcCode, factory } from '@behaviorEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 import signChooser from '../behaviorResources/signChooser.vue'
 import resourceChooser from '../behaviorResources/resourceChooser.vue'

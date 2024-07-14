@@ -88,17 +88,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
-import {
-  groupNode,
-  objectBase,
-  objectType,
-  resourceSearchType,
-  object_Variable,
-  object_FixedVal,
-  object_callback,
-  popupCallback,
-  formulaType
-} from '@behaviorEngine/index'
+import { formulaType } from '@behaviorEngine/index'
 
 import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
