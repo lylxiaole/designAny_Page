@@ -4,7 +4,7 @@
     <el-row style="height:calc(100% - 50px);background:#FFF;">
       <el-col :span="6" style="border-right:1px solid #cdcdcd">
         <!-- //资源列表 -->
-        <resource-tree />
+        <resource-tree :currentPage="currentPage" />
       </el-col>
       <el-col :span="18" style="border-right:1px solid #cdcdcd">
         <!-- 流程图 -->

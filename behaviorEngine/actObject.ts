@@ -57,13 +57,12 @@ export class objectBase {
 export class object_Method_InParam {
   key?: string
   name: string
-  isModel: boolean = false //是否是模型
   obj: objectBase
   // callbackbehavior: behavior
 }
 
 export class object_Method extends objectBase {
-  inputParams: object_Method_InParam[] = []
+  inputParams: param[] = []
   outParam: param = null
   dynamic: boolean = false
 

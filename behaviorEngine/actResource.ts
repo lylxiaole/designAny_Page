@@ -41,7 +41,7 @@ export function getFuncObjsTree() {
     let findGroup = res.find((o) => o.key === group)
     if (!findGroup) {
       findGroup = new object_group()
-      findGroup.key = group
+      findGroup.key = getUuid()
       findGroup.title = group
       findGroup.childrenGroups = []
       findGroup.childrenObjs = []
