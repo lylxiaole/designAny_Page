@@ -4,11 +4,11 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from './behaviorTypes'
 
-import { object_group, objectBase } from './actObject'
+import { objectBase } from './actObject'
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable } from './actObject'
 
 //方法资源分组
-export enum resourceGroup {
+export enum funcGroup {
   fixedVal = 'fixedVal',
   cuteSigns = 'cuteSigns',
   filterSigns = 'filterSigns',
@@ -16,7 +16,7 @@ export enum resourceGroup {
   pageOption = 'pageOption'
 }
 //方法编码-需要保证唯一性
-export enum resourceCode {
+export enum funcCode {
   fixedValBool = 'fixedValBool',
   fixedValString = 'fixedValBool',
   fixedValFloat = 'fixedValFloat',
@@ -92,13 +92,13 @@ export enum funcStack {
 }
 //反射，所有方法的实体类
 var allActFunctions = []
-export function resourceFuncAttr(name: string, desc: string, objType: objectType, resGroup?: resourceGroup, resCode?: resourceCode, funcStack?: funcStack) {
+export function resourceFuncAttr(name: string, desc: string, objType: objectType, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack) {
   return function (target: Function) {
     !target.prototype.$Meta && (target.prototype.$Meta = {})
-    target.prototype.$Meta.resCode = resCode
+    target.prototype.$Meta.funcCode = funcCode
     target.prototype.$Meta.objType = objType
     target.prototype.$Meta.funcStack = funcStack
-    target.prototype.$Meta.resGroup = resGroup
+    target.prototype.$Meta.funcGroup = funcGroup
     target.prototype.$Meta.name = name
     target.prototype.$Meta.desc = desc
     allActFunctions.push(target)
@@ -121,91 +121,4 @@ export interface actFuncBase<T> {
   isExit(obj: objectBase): boolean
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
   getSettingDetail(obj: objectBase): objectBase
-}
-
-//actFunc转actObj
-export function funcToObj(actFunc: any): objectBase {
-  var objType = actFunc.prototype.$Meta.objType
-  var obj = null
-  if (objType === objectType.fixedVal) {
-    obj = new object_FixedVal()
-  } else if (objType === objectType.method) {
-    obj = new object_Method()
-  } else if (objType === objectType.signs) {
-    obj = new object_Signs()
-  } else if (objType === objectType.variable) {
-    obj = new object_Variable()
-  }
-
-  obj.id = getUuid()
-  obj.name = actFunc.prototype.$Meta.name
-  obj.objType = objType
-  obj.resourceCode = actFunc.prototype.$Meta.resCode
-  obj.description = actFunc.prototype.$Meta.desc
-  return obj
-}
-
-//根据方法的信息，把方法的元数据组织成树结构，提供给设计器使用
-export function getFuncObjsTree() {
-  let res = [] //object_group
-
-  for (let index = 0; index < allActFunctions.length; index++) {
-    const actFunc = allActFunctions[index]
-    let group = actFunc.prototype.$Meta.resGroup
-    let findGroup = res.find((o) => o.key === group)
-    if (!findGroup) {
-      findGroup = new object_group()
-      findGroup.key = group
-      findGroup.title = group
-      findGroup.childrenGroups = []
-      findGroup.childrenObjs = []
-      res.push(findGroup)
-    }
-
-    let actObj = funcToObj(actFunc)
-    findGroup.childrenObjs.push(actObj)
-  }
-  return res
-}
-//获取指定类型的方法元数据
-export function getFuncObjByGroup(group: resourceGroup) {
-  let funcs = allActFunctions.filter((o: any) => o.prototype.$Meta.resGroup == group)
-  let objs = []
-  for (let index = 0; index < funcs.length; index++) {
-    const element = funcs[index]
-    objs.push(funcToObj(element))
-  }
-
-  return objs
-}
-
-export function getFuncObjByObjType(objType: objectType) {
-  let funcs = allActFunctions.filter((o: any) => o.prototype.$Meta.objType == objType)
-  let objs = []
-  for (let index = 0; index < funcs.length; index++) {
-    const element = funcs[index]
-    objs.push(funcToObj(element))
-  }
-
-  return objs
-}
-
-export function getFuncByType(resCode: resourceCode) {
-  // window.console.log('行为代码2', resCode)
-  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resCode == resCode)
-  try {
-    return new res()
-  } catch (error) {
-    return null
-  }
-}
-
-export function getFuncObjByType(resCode: resourceCode): objectBase {
-  // window.console.log('行为代码2', resCode)
-  var res = allActFunctions.find((o: any) => o.prototype.$Meta.resCode == resCode)
-  try {
-    return funcToObj(res)
-  } catch (error) {
-    return null
-  }
 }

@@ -3,7 +3,8 @@ import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './actObject'
-import { actFuncBase, resourceFuncAttr, resourceCode, funcStack, resourceGroup, getFuncObjByType, getFuncByType } from './actFuncBase'
+import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from './actFuncBase'
+import { getFuncObjByType, getFuncByType } from './actResource'
 
 export class factory {
   public currentLayout: EngineLayout
@@ -15,13 +16,13 @@ export class factory {
     this.currentBehavior = _behavior
   }
   /********制造object*************************************************** */
-  public makeObject(resCode: resourceCode): objectBase {
-    let obj: objectBase = getFuncObjByType(resCode)
-    this.fillFuncToObj(obj, resCode)
+  public makeObject(funcCode: funcCode): objectBase {
+    let obj: objectBase = getFuncObjByType(funcCode)
+    this.fillFuncToObj(obj, funcCode)
     return obj
   }
-  public fillFuncToObj(obj: objectBase, resCode: resourceCode) {
-    var func = getFuncByType(resCode)
+  public fillFuncToObj(obj: objectBase, funcCode: funcCode) {
+    var func = getFuncByType(funcCode)
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
@@ -93,13 +94,13 @@ export class factory {
     for (let index = 0; index < objs.length - 1; index++) {
       //当前
       let currentObj = objs[index]
-      let newObj = this.makeObject(currentObj.resourceCode)
+      let newObj = this.makeObject(currentObj.funcCode)
       newObj.cloneFrom(currentObj)
       _runArea[index] = newObj
       //下一个
       let nextObj = objs[index + 1]
       //判断
-      if (nextObj.objType === objectType.signs && nextObj.resourceCode === resourceCode.signAssign) {
+      if (nextObj.objType === objectType.signs && nextObj.funcCode === funcCode.signAssign) {
         evalStr.push('_runArea[' + index + '].ref')
       } else {
         let val = await newObj.ref
@@ -109,7 +110,7 @@ export class factory {
       //最后一个元素
       if (index === objs.length - 2) {
         let lastObj = objs[index + 1]
-        newObj = this.makeObject(lastObj.resourceCode)
+        newObj = this.makeObject(lastObj.funcCode)
         newObj.cloneFrom(lastObj)
         let val = await newObj.ref
         _runArea[index] = val

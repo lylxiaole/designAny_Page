@@ -26,8 +26,8 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceCode" :command="sign.resourceCode"
-              :value="sign.resourceCode">{{sign.name}}</el-dropdown-item>
+            <el-dropdown-item v-for="sign in allSigns" :key="sign.funcCode" :command="sign.funcCode"
+              :value="sign.funcCode">{{sign.name}}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -102,7 +102,7 @@ import {
 
 import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
-import { resourceCode, resourceGroup, getFuncObjByGroup } from '@behaviorEngine/index'
+import { funcCode, funcGroup, getFuncObjByGroup } from '@behaviorEngine/index'
 
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 import resourceChooseWindow from './resoucesChooseWindow.vue'
@@ -129,9 +129,9 @@ export default {
   emits: ['onSelectNodeChanged', 'onFocus', 'onDelete'],
   mounted() {
     if (this.forType == formulaType.cute) {
-      this.allSigns = getFuncObjByGroup(resourceGroup.cuteSigns)
+      this.allSigns = getFuncObjByGroup(funcGroup.cuteSigns)
     } else {
-      this.allSigns = getFuncObjByGroup(resourceGroup.filterSigns)
+      this.allSigns = getFuncObjByGroup(funcGroup.filterSigns)
     }
   },
   methods: {
@@ -192,7 +192,7 @@ export default {
       if (!this.currentSelectKey) {
         return '请选择'
       }
-      var currentnode = this.allSigns.find((o) => o.resourceCode === this.currentSelectKey)
+      var currentnode = this.allSigns.find((o) => o.funcCode === this.currentSelectKey)
       return currentnode.name
     }
   }

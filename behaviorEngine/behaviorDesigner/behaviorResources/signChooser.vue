@@ -5,8 +5,8 @@
       <el-button size="small" @click="showClick">{{signObj?signObj.name:''}}</el-button>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item v-for="sign in allSigns" :key="sign.resourceCode" :command="sign.resourceCode"
-            :value="sign.resourceCode">{{sign.name}}</el-dropdown-item>
+          <el-dropdown-item v-for="sign in allSigns" :key="sign.funcCode" :command="sign.funcCode"
+            :value="sign.funcCode">{{sign.name}}</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -19,7 +19,7 @@ import { Component, Emit, Watch, Prop, InjectReactive, ProvideReactive } from 'v
 import { deepClone, getUuid } from '@common/utils'
 
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
-import { object_Signs, objectType, resourceGroup, getFuncObjByObjType } from '@behaviorEngine/index'
+import { object_Signs, objectType, funcGroup, getFuncObjByObjType } from '@behaviorEngine/index'
 
 @Options({
   components: {}
@@ -38,7 +38,7 @@ export default class signChooser extends Vue {
   }
 
   private menuSelected(key) {
-    var currentnode = this.allSigns.find((o) => o.resourceCode == key)
+    var currentnode = this.allSigns.find((o) => o.funcCode == key)
     this.$emit('update:signObj', currentnode)
   }
 }

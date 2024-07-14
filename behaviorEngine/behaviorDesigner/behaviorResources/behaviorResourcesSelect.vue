@@ -20,7 +20,7 @@ import { deepClone, getUuid } from '@common/utils'
 
 import { getSearchClass, pageSearchBase } from '@behaviorEngine/index'
 import { behavior, action, actionDetail } from '@behaviorEngine/index'
-import { objectType, resourceGroup, getFuncObjByObjType } from '@behaviorEngine/index'
+import { objectType, funcGroup, getFuncObjByObjType } from '@behaviorEngine/index'
 
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 import signChooser from './signChooser.vue'
@@ -69,7 +69,7 @@ export default {
       if (!this.currentSelectKey) {
         return '请选择'
       }
-      var currentnode = this.allSigns.find((o) => o.resourceCode === this.currentSelectKey)
+      var currentnode = this.allSigns.find((o) => o.funcCode === this.currentSelectKey)
       return currentnode.name
     },
     objProxy: {

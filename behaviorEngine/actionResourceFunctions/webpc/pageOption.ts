@@ -2,10 +2,10 @@ import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
-import { actFuncBase, resourceFuncAttr, resourceCode, funcStack, resourceGroup } from '../../actFuncBase'
+import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase } from '../../actObject'
 
-@resourceFuncAttr('跳转页面', '', objectType.method, resourceGroup.pageOption, resourceCode.leadToPage, funcStack.webpc)
+@resourceFuncAttr('跳转页面', '', objectType.method, funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
 export class variables implements actFuncBase<object_Method> {
   $meta: object_Method
   currentLayout: EngineLayout

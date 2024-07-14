@@ -1,14 +1,8 @@
 import { behavior } from './behaviorTypes'
 import { getUuid } from '@common/utils'
-import { resourceCode } from './actFuncBase'
+import { funcCode } from './actFuncBase'
 import { param } from './behaviorTypes'
 
-export class object_group {
-  key: string //node节点的key
-  title: string //node节点的标题
-  childrenObjs: objectBase[] = [] //node节点的子级,有可能是
-  childrenGroups: object_group[] = []
-}
 export enum objectType {
   variable = 'variable', //变量
   fixedVal = 'fixedVal', //固定值
@@ -24,7 +18,7 @@ export class objectBase {
   name: string
   description: string
   objType: objectType
-  resourceCode: resourceCode
+  funcCode: funcCode
 
   get ref(): any {
     return this.getFunc(this)
@@ -49,7 +43,7 @@ export class objectBase {
     this.name = obj.name
     // this.pageId = obj.pageId
     // this.objType = obj.objType
-    this.resourceCode = obj.resourceCode
+    this.funcCode = obj.funcCode
     this.description = obj.description
   }
 

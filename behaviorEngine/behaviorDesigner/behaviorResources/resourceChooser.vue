@@ -49,7 +49,7 @@ import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.v
 import {
   object_Signs,
   objectType,
-  resourceGroup,
+  funcGroup,
   getFuncObjByObjType,
   object_Method,
   object_callback,

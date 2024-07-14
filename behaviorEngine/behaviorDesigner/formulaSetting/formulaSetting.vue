@@ -34,7 +34,7 @@ import {
   formulaType,
   objectBase,
   objectType,
-  resourceCode,
+  funcCode,
   object_Method,
   object_callback,
   factory
@@ -68,7 +68,7 @@ export default class formulaSetting extends Vue {
 
   mounted() {
     // if (this.currentActionDetail.objs && this.currentActionDetail.objs.length < 1) {
-    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, resourceCode.variables)
+    //   var first = this.actionFactory.makeObject(getUuid(), '新建变量', objectType.variable, funcCode.variables)
     //   newobjs.push(first)
     // }
   }
@@ -92,7 +92,7 @@ export default class formulaSetting extends Vue {
     // oldObj.resourceId = newObj.resourceId
     // oldObj.name = newObj.name
     // oldObj.objType = newObj.objType
-    // oldObj.resourceCode = newObj.resourceCode
+    // oldObj.funcCode = newObj.funcCode
 
     this.onFocusFormula(newObj)
   }
@@ -104,15 +104,15 @@ export default class formulaSetting extends Vue {
 
     let newobj = null
     if (obj && obj.objType === objectType.signs) {
-      newobj = this.actionFactory.makeObject(resourceCode.fixedValString)
+      newobj = this.actionFactory.makeObject(funcCode.fixedValString)
     } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === false) {
-      newobj = this.actionFactory.makeObject(resourceCode.signAssign)
+      newobj = this.actionFactory.makeObject(funcCode.signAssign)
     } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === true) {
-      newobj = this.actionFactory.makeObject(resourceCode.signEqual)
+      newobj = this.actionFactory.makeObject(funcCode.signEqual)
     } else if (!obj && this.currentIsAction === false) {
-      newobj = this.actionFactory.makeObject(resourceCode.variables)
+      newobj = this.actionFactory.makeObject(funcCode.variables)
     } else if (!obj && this.currentIsAction === true) {
-      newobj = this.actionFactory.makeObject(resourceCode.fixedValString)
+      newobj = this.actionFactory.makeObject(funcCode.fixedValString)
     }
     this.currentActionDetail.objs.push(newobj)
   }

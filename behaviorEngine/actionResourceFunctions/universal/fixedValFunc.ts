@@ -2,10 +2,10 @@ import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
-import { actFuncBase, resourceFuncAttr, resourceCode, funcStack, resourceGroup } from '../../actFuncBase'
+import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
 import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable, objectBase } from '../../actObject'
 
-@resourceFuncAttr('字符串', '', objectType.fixedVal, resourceGroup.fixedVal, resourceCode.fixedValString, funcStack.universal)
+@resourceFuncAttr('字符串', '', objectType.fixedVal, funcGroup.fixedVal, funcCode.fixedValString, funcStack.universal)
 export class fixedValString implements actFuncBase<object_FixedVal> {
   $meta: object_FixedVal
   currentLayout: EngineLayout
@@ -35,7 +35,7 @@ export class fixedValString implements actFuncBase<object_FixedVal> {
     return null
   }
 }
-@resourceFuncAttr('布尔', '', objectType.fixedVal, resourceGroup.fixedVal, resourceCode.fixedValBool, funcStack.universal)
+@resourceFuncAttr('布尔', '', objectType.fixedVal, funcGroup.fixedVal, funcCode.fixedValBool, funcStack.universal)
 export class fixedValBool implements actFuncBase<object_FixedVal> {
   $meta: object_FixedVal
   currentLayout: EngineLayout
@@ -68,7 +68,7 @@ export class fixedValBool implements actFuncBase<object_FixedVal> {
   }
 }
 
-@resourceFuncAttr('整数', '', objectType.fixedVal, resourceGroup.fixedVal, resourceCode.fixedValInt, funcStack.universal)
+@resourceFuncAttr('整数', '', objectType.fixedVal, funcGroup.fixedVal, funcCode.fixedValInt, funcStack.universal)
 export class fixedValInt implements actFuncBase<object_FixedVal> {
   $meta: object_FixedVal
   currentLayout: EngineLayout
@@ -99,7 +99,7 @@ export class fixedValInt implements actFuncBase<object_FixedVal> {
   }
 }
 
-@resourceFuncAttr('浮点数', '', objectType.fixedVal, resourceGroup.fixedVal, resourceCode.fixedValFloat, funcStack.universal)
+@resourceFuncAttr('浮点数', '', objectType.fixedVal, funcGroup.fixedVal, funcCode.fixedValFloat, funcStack.universal)
 export class fixedValFloat implements actFuncBase<object_FixedVal> {
   $meta: object_FixedVal
   currentLayout: EngineLayout
@@ -130,7 +130,7 @@ export class fixedValFloat implements actFuncBase<object_FixedVal> {
   }
 }
 
-@resourceFuncAttr('空值', '', objectType.fixedVal, resourceGroup.fixedVal, resourceCode.fixedValNone, funcStack.universal)
+@resourceFuncAttr('空值', '', objectType.fixedVal, funcGroup.fixedVal, funcCode.fixedValNone, funcStack.universal)
 export class fixedValNone implements actFuncBase<object_FixedVal> {
   $meta: object_FixedVal
   currentLayout: EngineLayout
