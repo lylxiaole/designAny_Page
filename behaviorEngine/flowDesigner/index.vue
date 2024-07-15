@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
-      <VueFlow ref="flow" v-model="nodes" v-model:edges="edges" @connect="handleConnectLine">
-      </VueFlow>
-    </div>
+  <div @drop="onDrop" style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
+    <VueFlow ref="flow" v-model="nodes" v-model:edges="edges" @connect="handleConnectLine" @dragover="onDragOver" @dragleave="onDragLeave">
+    </VueFlow>
   </div>
 </template>
 
@@ -12,6 +10,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { VueFlow, VueFlowError } from '@vue-flow/core'
+import { getUuid } from '@common/utils'
 
 @Options({
   components: {
@@ -99,6 +98,85 @@ export default class index extends ComponentBase {
   // ****************连线******************************
   private handleConnectLine(params) {
     ;(this.$refs.flow as any).addEdges([params])
+  }
+  // ****************拖拽******************************
+  private draggedType: string = 'output'
+  private isDragOver: boolean = false
+  private isDragging: boolean = false
+
+  private onDragStart(event, type) {
+    if (event.dataTransfer) {
+      event.dataTransfer.setData('application/vueflow', type)
+      event.dataTransfer.effectAllowed = 'move'
+    }
+
+    this.draggedType = type
+    this.isDragging = true
+
+    document.addEventListener('drop', this.onDragEnd)
+  }
+
+  /**
+   * Handles the drag over event.
+   *
+   * @param {DragEvent} event
+   */
+  private onDragOver(event) {
+    event.preventDefault()
+
+    if (this.draggedType) {
+      this.isDragOver = true
+
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = 'move'
+      }
+    }
+  }
+
+  private onDragLeave() {
+    this.isDragOver = false
+  }
+
+  private onDragEnd() {
+    this.isDragging = false
+    this.isDragOver = false
+    this.draggedType = null
+    document.removeEventListener('drop', this.onDragEnd)
+  }
+
+  /**
+   * Handles the drop event.
+   *
+   * @param {DragEvent} event
+   */
+  private onDrop(event) {
+    const position = (this.$refs.flow as any).screenToFlowCoordinate({
+      x: event.clientX,
+      y: event.clientY
+    })
+
+    const nodeId = getUuid()
+
+    const newNode = {
+      id: nodeId,
+      type: this.draggedType,
+      position,
+      data: { label: nodeId }
+    }
+
+    /**
+     * Align node position after drop, so it's centered to the mouse
+     *
+     * We can hook into events even in a callback, and we can remove the event listener after it's been called.
+     */
+    const { off } = (this.$refs.flow as any).onNodesInitialized(() => {
+      ;(this.$refs.flow as any).updateNode(nodeId, (node) => ({
+        position: { x: node.position.x - node.dimensions.width / 2, y: node.position.y - node.dimensions.height / 2 }
+      }))
+      off()
+    })
+
+    ;(this.$refs.flow as any).addNodes(newNode)
   }
 }
 </script>
