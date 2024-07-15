@@ -125,7 +125,7 @@ export default class EngineLayout extends Vue {
   @DPropAttr(new Text_Setting('唯一ID', PropertyGroupName.normal, false))
   public Id: string = getUuid()
   @DPropAttr(new Text_Setting('名称', PropertyGroupName.normal, true))
-  public name: string
+  public name: string = ''
   @DPropAttr(new CompPosition_Setting('布局信息', PropertyGroupName.normal, true))
   public positionInfo: any = { width: '100%', height: '100%', x: 0, y: 0 }
   @DPropAttr(new Margin_Setting('外边距', PropertyGroupName.normal, true))
@@ -354,7 +354,7 @@ export default class EngineLayout extends Vue {
           (newval) => {
             this.watch_properties_onDesigning(prop.field, newval)
           },
-          { deep: true }
+          { deep: true, immediate: true }
         )
       }
     }
