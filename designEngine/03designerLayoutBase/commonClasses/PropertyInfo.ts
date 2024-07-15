@@ -82,8 +82,6 @@ export enum PropertyGroupName {
 export class PropertySetting {
   public id: string = '' //属性的唯一ID,自动生成
   public field?: string = '' //属性在类型中的字段名称
-  // public value: any = '' //属性的值
-
   public type: PropertyTypeEnum
   public unit: string = '' //属性单位
   public groupName: string = '' //属性分组名称

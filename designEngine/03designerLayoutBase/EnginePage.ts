@@ -48,9 +48,7 @@ export default class EnginePage extends EngineContainer {
   mounted() {
     this.registerEvents('加载完成', '', [], null)
     this.registerEvents('定时器触发事件', '', [], null)
-
-    this.registerMethods('关闭页面-触发回调', '', [], null)
-    this.registerMethods('关闭页面-不触发回调', '', [], null)
+    this.registerMethods('关闭页面', '', [], null)
 
     // window.setInterval(() => {
     //   console.log('页面定时器测试.................')

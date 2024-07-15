@@ -49,7 +49,7 @@ export default class index extends ComponentBase {
     for (let index = 0; index < currentPage.designerMethods.length; index++) {
       const dmethod = currentPage.designerMethods[index]
       let actObj = getFuncObjByType(funcCode.methodsInPage) as object_Method
-      actObj.name = '页面方法:' + dmethod.eventName
+      actObj.name = '方法:' + dmethod.eventName
       //入参
       for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
         const inparam = dmethod.inParams[jndex]
@@ -71,8 +71,12 @@ export default class index extends ComponentBase {
     //页面属性
     for (let index = 0; index < currentPage.properties().length; index++) {
       const pageProp = currentPage.properties()[index]
+      if (pageProp.canSetting === false) {
+        continue
+      }
+
       let actObj = getFuncObjByType(funcCode.propertiesInPage) as object_Method
-      actObj.name = '页面属性:' + pageProp.propertyName
+      actObj.name = '属性:' + pageProp.propertyName
       targetGroup.childrenObjs.push(actObj)
     }
     //页面子组件
@@ -80,7 +84,7 @@ export default class index extends ComponentBase {
       for (let index = 0; index < currentPage.children.length; index++) {
         let child = currentPage.children[index]
         let childrenGroup = new object_group()
-        childrenGroup.title = '页面子组件:' + child.name
+        childrenGroup.title = '子组件:' + child.name
         childrenGroup.key = child.Id
         this.makeCurrentPageGroup(childrenGroup, child as EngineContainer)
         //子组件的分组信息添加到页面的分组中
