@@ -104,8 +104,11 @@ export default class PropertyGrid extends Vue {
   }
 
   //监视所有属性变化，并给当前选中的布局赋值
-  @Watch('propertyGroups')
+  @Watch('propertyGroups', { deep: true, immediate: true })
   private watchPropertyGroupsChanged(newgroup: PropertyGroupInfo[]) {
+    if (!newgroup) {
+      return
+    }
     if (!this.selectGropName) {
       let firstGroup = newgroup[0]
       if (firstGroup) {
