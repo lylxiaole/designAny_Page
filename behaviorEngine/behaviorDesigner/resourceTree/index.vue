@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
-
-    </div>
+  <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
+    <resourceTree :objGroup="objGroup" />
   </div>
 </template>
 
@@ -10,32 +8,34 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-
+import { reactive } from 'vue'
+//
 import { object_group, getFuncObjByType } from '@behaviorEngine/actResource'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { object_Method } from '@behaviorEngine/actObject'
-
+//
 import { EnginePage, EngineContainer } from '@designEngine/index'
 import { getUuid } from '@common/utils'
-
+//
+import resourceTree from './resourceTree.vue'
 @Options({
-  components: {}
+  components: { resourceTree }
 })
 export default class index extends ComponentBase {
   @Prop()
   currentPage: EnginePage
 
-  private objGroup: object_group[] = []
-  mounted() {}
+  private objGroup: object_group[] = reactive([])
 
-  // ************************************************************************
-  @Watch('currentPage')
+  mounted() {}
+  // **********计算页面资源树**************************************************************
+  @Watch('currentPage', { deep: true, immediate: true })
   private onCurrentPageChanged(page: EnginePage) {
     let findObjGroupIndex = this.objGroup.findIndex((o) => o.key == page.Id)
     if (findObjGroupIndex > -1) {
       this.objGroup.splice(findObjGroupIndex, 1)
     }
-
+    //
     let findObjGroup = new object_group()
     findObjGroup.key = page.Id
     findObjGroup.title = '当前页面:' + page.name
@@ -51,18 +51,21 @@ export default class index extends ComponentBase {
       let actObj = getFuncObjByType(funcCode.methodsInPage) as object_Method
       actObj.name = '页面方法:' + dmethod.eventName
       //入参
-      for (let index = 0; index < dmethod.inParams.length; index++) {
-        const inparam = dmethod.inParams[index]
+      for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
+        const inparam = dmethod.inParams[jndex]
         actObj.inputParams.push({
           key: getUuid(),
           name: inparam.name
         } as any)
       }
       //出参
-      actObj.outParam = {
-        key: getUuid(),
-        name: dmethod.outParam.name
-      } as any
+      if (dmethod.outParam) {
+        actObj.outParam = {
+          key: getUuid(),
+          name: dmethod.outParam.name
+        } as any
+      }
+
       targetGroup.childrenObjs.push(actObj)
     }
     //页面属性

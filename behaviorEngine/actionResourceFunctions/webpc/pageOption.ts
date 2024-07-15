@@ -28,7 +28,29 @@ export class variables implements actFuncBase<object_Method> {
 }
 
 @resourceFuncAttr('页面方法', '', objectType.method, funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
-export class pageMethod implements actFuncBase<object_Method> {
+export class methodsInPageMethod implements actFuncBase<object_Method> {
+  $meta: object_Method
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async getFunc(obj: object_Method) {}
+  async setFunc(obj: object_Method, val: any) {}
+  getDesc(obj: objectBase): string {
+    // window.console.log('显示变量的description')
+    return '页面方法'
+  }
+  isExit(obj: objectBase): boolean {
+    return true
+  }
+  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
+  getSettingDetail(obj: objectBase): objectBase {
+    return null
+  }
+  updateInparam(obj: object_Method) {}
+}
+
+@resourceFuncAttr('页面方法', '', objectType.method, funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
+export class propertiesInPageMethod implements actFuncBase<object_Method> {
   $meta: object_Method
   currentLayout: EngineLayout
   currentPage: EnginePage
