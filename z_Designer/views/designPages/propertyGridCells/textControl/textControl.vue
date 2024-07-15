@@ -5,15 +5,12 @@
  */
 <template>
   <div>
-    <el-input size="small" v-model="currentValue" placeholder="请输入"></el-input>
+    <el-input size="small" v-model="currentValue" @change="onValueChanged" placeholder="请输入" />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { getUuid, deepClone } from '@common/utils'
-import npColorPicker from '@common/components/commonComponents/npColorPicker.vue'
 
 import propertyCellBase from '../common'
 import { PropertyTypeEnum, Text_Setting } from '@designEngine/index'
@@ -24,6 +21,8 @@ import { CellSettingAttr } from '../common'
 @Options({})
 export default class textControl extends propertyCellBase<Text_Setting> {
   mounted() {}
+
+  private onValueChanged(val) {}
 }
 </script>
 

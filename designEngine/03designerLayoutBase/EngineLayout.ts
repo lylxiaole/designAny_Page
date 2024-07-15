@@ -100,12 +100,12 @@ export default class EngineLayout extends Vue {
   }
 
   /** 自定义方法,图形化编程会库触发这个方法*/
-  private _designerMethods: layoutMethod[] = []
+  private pri_designerMethods: layoutMethod[] = []
   public get designerMethods(): layoutMethod[] {
-    if (!this._designerMethods) {
-      this._designerMethods = []
+    if (!this.pri_designerMethods) {
+      this.pri_designerMethods = []
     }
-    return this._designerMethods
+    return this.pri_designerMethods
   }
 
   /**生命周期 */
@@ -252,8 +252,8 @@ export default class EngineLayout extends Vue {
     }
   }
   private watch_properties_onDesigning(field: string, newval: any) {
+    console.log('***************watch_properties_onDesigning:', field, newval)
     this.isNeedSave = true
-
     this.onDPropertyChange(this, field, newval)
   }
   // *************************protect方法****************************************************************************
@@ -349,7 +349,6 @@ export default class EngineLayout extends Vue {
       let initProperties = this.properties()
       for (let index = 0; index < initProperties.length; index++) {
         const prop = initProperties[index]
-
         this.$watch(
           prop.field,
           (newval) => {

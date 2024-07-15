@@ -21,7 +21,6 @@ export function getCellControl(propertySettingType: PropertyTypeEnum): typeof pr
 export default class propertyCellBase<T> extends Vue {
   @Prop()
   private property: PropertySetting
-
   /**当前的布局页面 */
   @Prop()
   protected page: EnginePage
@@ -49,10 +48,14 @@ export default class propertyCellBase<T> extends Vue {
     }
     return newlayouts_extra
   }
-
   /**获取当前属性值 */
   protected get currentValue(): any {
     let field = this.property.field
+    for (let index = 0; index < this.currentLayouts.length; index++) {
+      const element = this.currentLayouts[index]
+      console.log('get currentValue:', element, field, element[field])
+    }
+
     return this.currentLayouts[0][field]
   }
   /**设置当前属性值 */
@@ -60,6 +63,7 @@ export default class propertyCellBase<T> extends Vue {
     let field = this.property.field
     for (let index = 0; index < this.currentLayouts.length; index++) {
       const element = this.currentLayouts[index]
+      console.log('set currentValue:', element, field, val)
       element[field] = val
     }
   }
