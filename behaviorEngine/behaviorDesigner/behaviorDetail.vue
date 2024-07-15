@@ -35,7 +35,7 @@ import { behavior, action, actionDetail, factory, objectBase, objectType, object
 import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
-import flowDetail from './flowDetail/index.vue'
+import flowDetail from '../flowDesigner/index.vue'
 import resourceTree from './resourceTree/index.vue'
 
 @Options({
