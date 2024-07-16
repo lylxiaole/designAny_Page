@@ -1,5 +1,5 @@
 <template>
-  <div @drop="onDrop" style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
+  <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
     <div ref="flowarea"></div>
   </div>
 </template>
@@ -11,8 +11,8 @@ import ComponentBase from '@common/views/ComponentBase'
 import { getUuid } from '@common/utils'
 import methodInPageNode from './flowNodes/methodInPageNode'
 
-import '@logicflow/core/dist/style/index.css'
 import LogicFlow from '@logicflow/core'
+import '@logicflow/core/dist/style/index.css'
 
 @Options({
   components: {}
@@ -31,7 +31,7 @@ export default class index extends ComponentBase {
       {
         id: '2',
         type: 'circle',
-        x: 300,
+        x: 150,
         y: 100,
         text: '节点2'
       }
@@ -62,9 +62,12 @@ export default class index extends ComponentBase {
   }
 
   mounted() {
-    this.drawFlow()
+    window.setTimeout(() => {
+      this.drawFlow()
+    }, 3000)
   }
-  private drawFlow() {
+  private async drawFlow() {
+    await this.$nextTick()
     this.currentFlow = new LogicFlow({
       container: this.$refs.flowarea as HTMLElement,
       grid: true,

@@ -50,7 +50,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     const style = super.getOutlineStyle()
     style.stroke = '#000000'
     style.strokeWidth = 2
-    style.strokeDasharray = '3 3'
     return style
   }
   //锚点数据

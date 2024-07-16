@@ -1,5 +1,5 @@
 <template>
-  <div style="border:1px solid #cdcdcd;width:100%;height:100%">
+  <div style="border:1px solid #cdcdcd;">
     你好
   </div>
 </template>
