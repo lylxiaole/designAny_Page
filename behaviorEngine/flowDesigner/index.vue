@@ -1,7 +1,6 @@
 <template>
-  <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
+  <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd" class="sql">
     <div ref="flowarea"></div>
-    <TeleportContainer />
   </div>
 </template>
 
@@ -11,79 +10,72 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { getUuid } from '@common/utils'
 
-import { Graph } from '@antv/x6'
+import LogicFlow from '@logicflow/core'
+import '@logicflow/core/dist/style/index.css'
 
-import methodInPageNode from './flowNodes/methodInPageNode.vue'
-import { register, getTeleport } from '@antv/x6-vue-shape'
-
-register({
-  shape: 'methodInPageNode',
-  width: 100,
-  height: 100,
-  component: methodInPageNode
-})
-const TeleportContainer = getTeleport()
+import methodInPageNode from './flowNodes/methodInPageNode'
 
 @Options({
-  components: { TeleportContainer }
+  components: {}
 })
 export default class index extends ComponentBase {
-  private currentFlow: Graph
+  private currentFlow: LogicFlow
   private flowdata: any = {
     nodes: [
       {
-        id: 'node1',
-        shape: 'methodInPageNode',
-        x: 40,
-        y: 40,
-        width: 100,
-        height: 40,
-        label: 'hello',
-        attrs: {
-          // body 是选择器名称，选中的是 rect 元素
-          body: {
-            stroke: '#8f8f8f',
-            strokeWidth: 1,
-            fill: '#fff',
-            rx: 6,
-            ry: 6
-          }
+        id: '1',
+        type: 'methodInPageNode',
+        x: 100,
+        y: 100,
+        text: '节点1',
+        properties: {
+          tableName: 'Users',
+          fields: [
+            {
+              key: 'id',
+              type: 'string'
+            },
+            {
+              key: 'name',
+              type: 'string'
+            },
+            {
+              key: 'age',
+              type: 'integer'
+            }
+          ]
         }
       },
       {
-        id: 'node2',
-        shape: 'rect',
-        x: 160,
-        y: 180,
-        width: 100,
-        height: 40,
-        label: 'world',
-        attrs: {
-          body: {
-            stroke: '#8f8f8f',
-            strokeWidth: 1,
-            fill: '#fff',
-            rx: 6,
-            ry: 6
-          }
-        }
+        id: '2',
+        type: 'circle',
+        x: 300,
+        y: 100,
+        text: '节点2'
       }
     ],
     edges: [
       {
-        shape: 'edge',
-        source: 'node1',
-        target: 'node2',
-        label: 'x6',
-        attrs: {
-          // line 是选择器名称，选中的边的 path 元素
-          line: {
-            stroke: '#8f8f8f',
-            strokeWidth: 1
-          }
+        sourceNodeId: '1',
+        targetNodeId: '2',
+        type: 'polyline',
+        text: '连线',
+        startPoint: {
+          x: 140,
+          y: 100
+        },
+        endPoint: {
+          x: 250,
+          y: 100
         }
       }
     ]
+  }
+  private silentConfig = {
+    stopScrollGraph: true,
+    stopMoveGraph: false,
+    stopZoomGraph: false,
+    hideAnchors: false
   }
 
   mounted() {
@@ -91,24 +83,21 @@ export default class index extends ComponentBase {
   }
   private async drawFlow() {
     await this.$nextTick()
-    this.currentFlow = new Graph({
+    this.currentFlow = new LogicFlow({
       container: this.$refs.flowarea as any,
-      width: 800,
-      height: 600,
-      background: {
-        color: '#F2F7FA'
-      },
-      autoResize: true,
-      panning: true,
-      mousewheel: true
+      grid: true,
+
+      ...this.silentConfig
     })
-    this.currentFlow.fromJSON(this.flowdata)
-    this.currentFlow.centerContent()
+    this.currentFlow.register(methodInPageNode)
+    this.currentFlow.render(this.flowdata)
+    this.currentFlow.translateCenter()
   }
 
   // ****************连线******************************
 }
 </script>
 
-<style lang="less"  >
+<style lang="less"   >
+@import './flowDesigner.less';
 </style>

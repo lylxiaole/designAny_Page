@@ -1,5 +1,5 @@
 <template>
-  <div style="border:1px solid #cdcdcd;">
+  <div style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff">
     你好
   </div>
 </template>
@@ -16,10 +16,7 @@ import { deepClone, getUuid } from '@common/utils'
 export default class methodInPageNode extends Vue {
   private getNode: Function = inject('getNode')
 
-  mounted() {
-    var x = this.getNode()
-    debugger
-  }
+  mounted() {}
 }
 </script>
 
