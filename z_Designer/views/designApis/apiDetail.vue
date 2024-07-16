@@ -1,8 +1,7 @@
 <template>
   <div>
     <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
-      <VueFlow v-model="nodes" v-model:edges="edges">
-      </VueFlow>
+
     </div>
   </div>
 </template>
@@ -12,12 +11,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { ApiContentDC, UpdateSertAPIContent } from '@common/apis/designApi'
-import { VueFlow } from '@vue-flow/core'
 
 @Options({
-  components: {
-    VueFlow: VueFlow
-  }
+  components: {}
 })
 export default class apiDetail extends ComponentBase {
   @Prop({ default: null })
