@@ -1,6 +1,7 @@
 <template>
   <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
     <div ref="flowarea"></div>
+    <TeleportContainer />
   </div>
 </template>
 
@@ -9,74 +10,100 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { getUuid } from '@common/utils'
-import methodInPageNode from './flowNodes/methodInPageNode'
 
-import LogicFlow from '@logicflow/core'
-import '@logicflow/core/dist/style/index.css'
+import { Graph } from '@antv/x6'
+
+import methodInPageNode from './flowNodes/methodInPageNode.vue'
+import { register, getTeleport } from '@antv/x6-vue-shape'
+
+register({
+  shape: 'methodInPageNode',
+  width: 100,
+  height: 100,
+  component: methodInPageNode
+})
+const TeleportContainer = getTeleport()
 
 @Options({
-  components: {}
+  components: { TeleportContainer }
 })
 export default class index extends ComponentBase {
-  private currentFlow: LogicFlow
+  private currentFlow: Graph
   private flowdata: any = {
     nodes: [
       {
-        id: '1',
-        type: 'methodInPageNode',
-        x: 100,
-        y: 100,
-        text: '节点1'
+        id: 'node1',
+        shape: 'methodInPageNode',
+        x: 40,
+        y: 40,
+        width: 100,
+        height: 40,
+        label: 'hello',
+        attrs: {
+          // body 是选择器名称，选中的是 rect 元素
+          body: {
+            stroke: '#8f8f8f',
+            strokeWidth: 1,
+            fill: '#fff',
+            rx: 6,
+            ry: 6
+          }
+        }
       },
       {
-        id: '2',
-        type: 'circle',
-        x: 150,
-        y: 100,
-        text: '节点2'
+        id: 'node2',
+        shape: 'rect',
+        x: 160,
+        y: 180,
+        width: 100,
+        height: 40,
+        label: 'world',
+        attrs: {
+          body: {
+            stroke: '#8f8f8f',
+            strokeWidth: 1,
+            fill: '#fff',
+            rx: 6,
+            ry: 6
+          }
+        }
       }
     ],
     edges: [
       {
-        sourceNodeId: '1',
-        targetNodeId: '2',
-        type: 'polyline',
-        text: '连线',
-        startPoint: {
-          x: 140,
-          y: 100
-        },
-        endPoint: {
-          x: 250,
-          y: 100
+        shape: 'edge',
+        source: 'node1',
+        target: 'node2',
+        label: 'x6',
+        attrs: {
+          // line 是选择器名称，选中的边的 path 元素
+          line: {
+            stroke: '#8f8f8f',
+            strokeWidth: 1
+          }
         }
       }
     ]
   }
-  private silentConfig = {
-    isSilentMode: true,
-    stopScrollGraph: true,
-    stopMoveGraph: true,
-    stopZoomGraph: true,
-    adjustNodePosition: true
-  }
 
   mounted() {
-    window.setTimeout(() => {
-      this.drawFlow()
-    }, 3000)
+    this.drawFlow()
   }
   private async drawFlow() {
     await this.$nextTick()
-    this.currentFlow = new LogicFlow({
-      container: this.$refs.flowarea as HTMLElement,
-      grid: true,
-      ...this.silentConfig
+    this.currentFlow = new Graph({
+      container: this.$refs.flowarea as any,
+      width: 800,
+      height: 600,
+      background: {
+        color: '#F2F7FA'
+      },
+      autoResize: true,
+      panning: true,
+      mousewheel: true
     })
-
-    this.currentFlow.register(methodInPageNode)
-    this.currentFlow.render(this.flowdata)
-    this.currentFlow.translateCenter()
+    this.currentFlow.fromJSON(this.flowdata)
+    this.currentFlow.centerContent()
   }
 
   // ****************连线******************************

@@ -5,13 +5,22 @@
 </template>
 
 <script lang="ts">
+import { inject } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
+
 @Options({
   components: {}
 })
-export default class methodInPageNode extends Vue {}
+export default class methodInPageNode extends Vue {
+  private getNode: Function = inject('getNode')
+
+  mounted() {
+    var x = this.getNode()
+    debugger
+  }
+}
 </script>
 
 
