@@ -40,6 +40,8 @@ import dragHelper from '@designEngine/02common/dragHelper_new'
 
 import { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { EngineComponent } from '../03designerLayoutBase'
+import { designDrawDomReal } from '../02common/drawVueDom'
+
 import { deepClone } from '@common/utils'
 @Options({})
 export default class DesignShell extends Vue {
@@ -124,12 +126,11 @@ export default class DesignShell extends Vue {
     if (this.component != null) {
       this.component.destorymethod()
     }
-    comp = h(comp)
 
-    render(comp, this.$refs.compContent as any)
-    this.component = comp.component.proxy
-    comp.component.proxy.renderContainer = this.$refs.compContent
-    comp.component.proxy.isDesigning = true
+    let vueComp = designDrawDomReal(this.$refs.compContent, comp)
+    this.component = vueComp as any
+    this.component.isDesigning = false
+
     $(this.component.$el).css('width', '100%')
     $(this.component.$el).css('height', '100%')
     return this.component

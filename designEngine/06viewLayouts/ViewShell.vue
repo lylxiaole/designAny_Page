@@ -15,6 +15,8 @@ import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { ref, h, render, onMounted } from 'vue'
 import { EngineComponent } from '../03designerLayoutBase'
 import { deepClone } from '@common/utils'
+import { designDrawDomReal } from '../02common/drawVueDom'
+
 @Options({})
 export default class ViewShell extends Vue {
   public renderContainer: any = {}
@@ -45,11 +47,9 @@ export default class ViewShell extends Vue {
     if (this.component != null) {
       this.component.destorymethod()
     }
-    comp = h(comp)
-    render(comp, this.$refs.compContent as any)
-    this.component = comp.component.proxy
-    comp.component.proxy.renderContainer = this.$refs.compContent
-    comp.component.proxy.isDesigning = true
+    let vueComp = designDrawDomReal(this.$refs.compContent, comp)
+    this.component = vueComp as any
+    this.component.isDesigning = false
     $(this.component.$el).css('width', '100%')
     $(this.component.$el).css('height', '100%')
 

@@ -7,9 +7,10 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 
-import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
-import { drawVueOnVirtualDom, BuildingFileUrlForShow, deepClone, getUuid } from '@common/utils'
+import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
+import { BuildingFileUrlForShow } from '@common/utils'
 import ViewShell from './ViewShell.vue'
+import { designDrawDomVirtual } from '../02common/drawVueDom'
 
 @Options({})
 export default class PCPagePreview extends EnginePage {
@@ -26,7 +27,7 @@ export default class PCPagePreview extends EnginePage {
   mounted() {}
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    let { virtualDom, vueComp } = drawVueOnVirtualDom(ViewShell)
+    let { virtualDom, vueComp } = designDrawDomVirtual(ViewShell)
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as ViewShell)
     let resComp = (vueComp as ViewShell).addComponent(compCon)

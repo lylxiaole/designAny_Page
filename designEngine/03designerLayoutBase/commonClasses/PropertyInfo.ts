@@ -10,13 +10,8 @@ class DPropCache {
 export const allDPropCache: DPropCache[] = []
 export function DPropAttr(prop: PropertySetting) {
   return function (target: EngineLayout, key: string) {
-    if (!(target.constructor.prototype as any).$lyl_props) {
-      target.constructor.prototype.$lyl_props = []
-    }
-
     //
     prop.field = key
-    target.constructor.prototype.$lyl_props.push(prop)
 
     let targetCons = target.constructor
     let findCache = allDPropCache.find((o) => o.layoutFunc === targetCons)
@@ -52,6 +47,26 @@ export function DPropAttr(prop: PropertySetting) {
       return enginLayout.lyl_propertyties
     }
   }
+}
+
+export function findOrginProps(enginLayout) {
+  debugger
+  if (enginLayout.lyl_propertyties && enginLayout.lyl_propertyties.length > 0) {
+    return enginLayout.lyl_propertyties
+  }
+  let findx = allDPropCache.find((o) => o.layoutFunc === enginLayout)
+  if (!findx) {
+    return []
+  }
+  let resProps = findx.properties
+  for (let index = 0; index < allDPropCache.length; index++) {
+    const oneDPropCache = allDPropCache[index]
+    if (enginLayout.prototype instanceof oneDPropCache.layoutFunc || enginLayout.prototype == oneDPropCache.layoutFunc) {
+      resProps = oneDPropCache.properties.concat(resProps)
+    }
+  }
+  enginLayout.lyl_propertyties = deepClone(resProps)
+  return enginLayout.lyl_propertyties
 }
 
 export class Property {

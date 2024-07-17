@@ -3,7 +3,7 @@ import { ref, h, render, onMounted } from 'vue'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import EngineLayout, { SaveInfo, Point } from './EngineLayout'
 
-import { Property } from './commonClasses/PropertyInfo'
+import { Property, findOrginProps } from './commonClasses/PropertyInfo'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import { findSystemCompByCode } from './commonClasses/ComponentInfo'
 import { EnginePage } from '.'
@@ -221,6 +221,9 @@ export default class EngineContainer extends EngineLayout {
   protected override async renderChildFromData(data: SaveInfo) {
     await super.renderChildFromData(data)
     let compVue = findSystemCompByCode(data.meta.compCode)
+
+    let x = findOrginProps(compVue)
+
     debugger
     await this.insertComponentLayout(compVue, data.meta, null, data)
   }

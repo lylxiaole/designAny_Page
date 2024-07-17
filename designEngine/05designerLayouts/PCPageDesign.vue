@@ -7,12 +7,13 @@
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
-import { deepClone, getUuid, drawVueOnVirtualDom } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo'
 
 import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutBase'
+import { designDrawDomVirtual } from '../02common/drawVueDom'
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
@@ -52,7 +53,7 @@ export default class PCPageDesign extends EnginePage {
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    let { virtualDom, vueComp } = drawVueOnVirtualDom(DesignShell)
+    let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell)
     this.allShells.push(vueComp as DesignShell)
 
     let resComp = (vueComp as DesignShell).addComponent(compCon)
