@@ -9,12 +9,21 @@ export * from './behaviorTypes'
 
 import behaviorList from './behaviorDesigner/behaviorList.vue'
 export { behaviorList }
+//加载所有action 方法
+const actFuncModulesFiles = require.context('./actionResourceFunctions', true, /\.(ts|js)$/)
 
-const modulesFiles = require.context('./actionResourceFunctions', true, /\.(ts|js)$/)
+//加载所有流程节点
+const flowNodeModulesFiles = require.context('./actionFlowNodes', true, /\.(vue)$/)
+
 export function init(apiAddr) {
   behaviorContext.designerServerApiAddr = apiAddr
-  modulesFiles.keys().reduce((modules, modulePath) => {
-    const value = modulesFiles(modulePath)
+  actFuncModulesFiles.keys().reduce((modules, modulePath) => {
+    const value = actFuncModulesFiles(modulePath)
+    return modules
+  }, {})
+
+  flowNodeModulesFiles.keys().reduce((modules, modulePath) => {
+    const value = flowNodeModulesFiles(modulePath)
     return modules
   }, {})
 }

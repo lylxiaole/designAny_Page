@@ -8,8 +8,12 @@ export function flowDesignNode(funcCode: funcCode) {
 
     // window.console.log('DCompnentAttr', target.prototype.$Meta, compCode)
     target.prototype.$Meta.funcCode = funcCode
-    allFlowNodes.push(funcCode)
+    allFlowNodes.push(target)
   }
+}
+
+export function findFlowNode(funcCode: funcCode) {
+  return allFlowNodes.find((o) => o.prototype.$Meta.funcCode === funcCode)
 }
 
 export { allFlowNodes }

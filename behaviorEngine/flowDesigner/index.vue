@@ -14,8 +14,7 @@ import { object_Method, objectBase } from '@behaviorEngine/actObject'
 
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-
-import methodInPageNode from './flowNodes/methodInPageNode'
+import funcNormalNode from './funcNormalNode'
 
 @Options({
   components: {}
@@ -43,7 +42,7 @@ export default class index extends ComponentBase {
       grid: true,
       ...this.silentConfig
     })
-    this.currentFlow.register(methodInPageNode)
+    this.currentFlow.register(funcNormalNode)
     this.currentFlow.render(this.flowdata)
     this.currentFlow.translateCenter()
   }
@@ -86,4 +85,4 @@ export default class index extends ComponentBase {
 
 <style lang="less"   >
 @import './flowDesigner.less';
-</style>
+</style>./methodInPageNode

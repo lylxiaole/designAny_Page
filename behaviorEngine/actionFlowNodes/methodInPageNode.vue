@@ -10,7 +10,10 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { object_Method, objectBase } from '@behaviorEngine/actObject'
+import { flowDesignNode } from '../flowDesigner/flowTypes'
+import { funcCode } from '@behaviorEngine/actFuncBase'
 
+@flowDesignNode(funcCode.methodsInPage)
 @Options({
   components: {}
 })

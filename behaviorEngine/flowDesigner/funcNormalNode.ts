@@ -1,7 +1,9 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h } from 'vue'
-import methodInPageNode from './methodInPageNode.vue'
 import { funcCode } from '@behaviorEngine/actFuncBase'
+import { object_Method, objectBase } from '@behaviorEngine/actObject'
+
+import { findFlowNode } from './flowTypes'
 
 class VueHtmlNode extends HtmlNode {
   private isMounted: boolean = false
@@ -11,8 +13,13 @@ class VueHtmlNode extends HtmlNode {
   constructor(props) {
     super(props)
     this.isMounted = false
-
-    this.r = h(methodInPageNode as any, {
+    const { actObj } = props.model.getProperties()
+    //找到actObj的funcCode
+    let funcCode = (actObj as objectBase).funcCode
+    //找到对应的自定义流程节点
+    let flowNodeVue = findFlowNode(funcCode)
+    //绘制节点
+    this.r = h(flowNodeVue as any, {
       properties: props.model.getProperties(),
       text: props.model.inputData
     })
@@ -22,6 +29,9 @@ class VueHtmlNode extends HtmlNode {
   }
 
   getAnchorShape(anchorData) {
+    // 找到actObj
+    const { actObj } = this.props.model.getProperties()
+
     const { x, y, type } = anchorData
     return lfh('rect', {
       x: x - 5,
