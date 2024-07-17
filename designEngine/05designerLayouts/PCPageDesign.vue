@@ -16,6 +16,9 @@ import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutB
 
 @Options({})
 export default class PCPageDesign extends EnginePage {
+  @DPropAttr(new Text_Setting('测试一下', PropertyGroupName.normal, true))
+  public wahaha: string = ''
+
   private get backgroundCute(): string {
     // window.console.log('backgroundCute:', this.background_img)
 

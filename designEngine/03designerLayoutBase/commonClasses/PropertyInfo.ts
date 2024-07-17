@@ -10,13 +10,14 @@ class DPropCache {
 export const allDPropCache: DPropCache[] = []
 export function DPropAttr(prop: PropertySetting) {
   return function (target: EngineLayout, key: string) {
-    if (!(target.constructor as any).$lylProps) {
-      ;(target.constructor as any).$lylProps = []
+    if (!(target.constructor.prototype as any).$lyl_props) {
+      target.constructor.prototype.$lyl_props = []
     }
 
-    ;(target.constructor as any).$lylProps.push(prop)
-
+    //
     prop.field = key
+    target.constructor.prototype.$lyl_props.push(prop)
+
     let targetCons = target.constructor
     let findCache = allDPropCache.find((o) => o.layoutFunc === targetCons)
     if (!findCache) {

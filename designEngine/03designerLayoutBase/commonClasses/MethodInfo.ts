@@ -10,7 +10,6 @@ export class LayoutMethod {
 
 export function DMethodAttr(info?: LayoutMethod) {
   return function (target: any, methodField: any, detail: any) {
-    debugger
     //扩展属性
     target.apiUrl = 'xxx'
     target.run = function (): void {

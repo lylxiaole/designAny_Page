@@ -42,7 +42,7 @@ export function findSystemCompByCode(code: string): any {
 export function DCompnentAttr(paltform: string, dCompType: DCompType, groupName: string, name: string, compCode: string, icon: any) {
   return function (target: Function) {
     !target.prototype.$lyl_comp && (target.prototype.$lyl_comp = {})
-    debugger
+
     // window.console.log('DCompnentAttr', target.prototype.$lyl_comp, compCode)
     target.prototype.$lyl_comp.dCompType = dCompType
     target.prototype.$lyl_comp.groupName = groupName

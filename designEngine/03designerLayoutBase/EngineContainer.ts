@@ -189,10 +189,11 @@ export default class EngineContainer extends EngineLayout {
   /**添加一个组件 */
   public async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: any, data?: SaveInfo): Promise<EngineLayout> {
     let dropcomp = dropcompclass
+    let props = dropcomp.$lyl_props
 
     dropcomp = await this.renderComponent(dropcomp)
     dropcomp.parentLayout = this
-    dropcomp.prototype = { $Meta: dropcompclass.prototype.$lyl_comp }
+    dropcomp.prototype = { $lyl_comp: dropcompclass.prototype.$lyl_comp }
     // window.console.error('绘制子组件失败,请不要保存!!!')
     // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
     this.addChild(dropcomp)
@@ -220,9 +221,7 @@ export default class EngineContainer extends EngineLayout {
   protected override async renderChildFromData(data: SaveInfo) {
     await super.renderChildFromData(data)
     let compVue = findSystemCompByCode(data.meta.compCode)
-
     debugger
-
     await this.insertComponentLayout(compVue, data.meta, null, data)
   }
   /*************容器渲染子组件的虚方法**********************/

@@ -160,7 +160,7 @@ export default class index extends PageBase {
 
     let res = await GetPageDetail(pageId)
     await this.$nextTick()
-    let designLayout: any = null
+    let designLayout: any = PCPageDesign
 
     switch (res.type) {
       case pageType.pcPage:
