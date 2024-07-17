@@ -6,15 +6,15 @@ var cellControls = []
 
 export function CellSettingAttr(type: PropertyTypeEnum) {
   return function (target: Function) {
-    !target.prototype.$Meta && (target.prototype.$Meta = {})
-    target.prototype.$Meta.celltype = type
+    !target.prototype.$lyl_cellSetting && (target.prototype.$lyl_cellSetting = {})
+    target.prototype.$lyl_cellSetting.celltype = type
     // window.console.log('类型访问器:', target)
     cellControls.push(target)
   }
 }
 
 export function getCellControl(propertySettingType: PropertyTypeEnum): typeof propertyCellBase {
-  return cellControls.filter((o) => o.prototype.$Meta.celltype == propertySettingType)[0] as typeof propertyCellBase
+  return cellControls.filter((o) => o.prototype.$lyl_cellSetting.celltype == propertySettingType)[0] as typeof propertyCellBase
 }
 
 @Options({})

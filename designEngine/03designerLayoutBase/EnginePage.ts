@@ -130,7 +130,7 @@ export default class EnginePage extends EngineContainer {
     for (let index = 0; index < comps.length; index++) {
       const comp = comps[index]
       if (comp.Id == compId) {
-        return comp.designerMethods.find((o) => o.eventName == methodName)
+        return comp.designerMethods.find((o) => o.methodName == methodName)
       }
       if (comp.children) {
         var findMethod = this.getCompMethodById(compId, methodName, comp.children as ComponentBase[])

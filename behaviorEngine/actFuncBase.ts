@@ -94,13 +94,13 @@ export enum funcStack {
 var allActFunctions = []
 export function resourceFuncAttr(name: string, desc: string, objType: objectType, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack) {
   return function (target: Function) {
-    !target.prototype.$Meta && (target.prototype.$Meta = {})
-    target.prototype.$Meta.funcCode = funcCode
-    target.prototype.$Meta.objType = objType
-    target.prototype.$Meta.funcStack = funcStack
-    target.prototype.$Meta.funcGroup = funcGroup
-    target.prototype.$Meta.name = name
-    target.prototype.$Meta.desc = desc
+    !target.prototype.$lyl_actFunc && (target.prototype.$lyl_actFunc = {})
+    target.prototype.$lyl_actFunc.funcCode = funcCode
+    target.prototype.$lyl_actFunc.objType = objType
+    target.prototype.$lyl_actFunc.funcStack = funcStack
+    target.prototype.$lyl_actFunc.funcGroup = funcGroup
+    target.prototype.$lyl_actFunc.name = name
+    target.prototype.$lyl_actFunc.desc = desc
     allActFunctions.push(target)
   }
 }

@@ -12,10 +12,9 @@ export enum paramType {
   boolean = 'boolean'
 }
 export class param {
-  key: string
-  name: string
-  type: paramType
-  val: any
+  key?: string
+  name?: string
+  val?: any
 }
 
 export class variable {

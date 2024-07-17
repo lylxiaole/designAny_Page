@@ -13,3 +13,13 @@ export class LayoutEvent {
   outParam: param = null
   behaviorIds: string[] = [] //行为的Id
 }
+
+export function DEventAttr(eventName: string) {
+  return function (target: any, eventName: any, desc: any) {
+    //扩展属性
+    target.apiUrl = 'xxx'
+    target.run = function (): void {
+      console.log('run')
+    }
+  }
+}

@@ -216,9 +216,9 @@ export default class EngineLayout extends Vue {
     this.paddingInfo.bottom = val
   }
   // *************************基础方法****************************************************************************
-  @DMethodAttr({})
-  private testMethod(name: string) {
-    console.log('EnginLayout testMethod:', name)
+  @DMethodAttr({ methodName: '测试方法', description: '', inParams: [{ name: '名称', key: 'name' }], hasOutParam: true })
+  protected testMethod(params: param[]): string {
+    return '123'
   }
 
   // *************************privates****************************************************************************
@@ -315,22 +315,6 @@ export default class EngineLayout extends Vue {
       return
     }
   }
-  protected addProperty(proper: PropertySetting) {
-    let find: any = null
-    for (let index = 0; index < this.properties().length; index++) {
-      const o = this.properties[index]
-      if (o.propertyName === proper.propertyName && o.groupName === proper.groupName) {
-        find = o
-        break
-      }
-    }
-
-    if (find) {
-      window.console.warn('已经存在相同分组相同名称的属性')
-      return
-    }
-    // this.properties().push(proper)
-  }
 
   /**触发事件 */
   protected async triggerEvent(name: string, inparams: any[]) {}
@@ -374,7 +358,7 @@ export default class EngineLayout extends Vue {
   public async getSaveData(): Promise<SaveInfo> {
     var saveinfo: SaveInfo = {
       id: this.Id,
-      meta: (this as any).prototype ? (this as any).prototype.$Meta : {},
+      meta: (this as any).prototype ? (this as any).prototype.$lyl_comp : {},
       properties: [],
       children: []
     }
@@ -424,16 +408,16 @@ export default class EngineLayout extends Vue {
   }
   /**注册方法 */
   public async registerMethods(name: string, description: string, inParams: param[], outParam: param) {
-    var event = this.designerMethods.find((o) => o.eventName == name)
+    var event = this.designerMethods.find((o) => o.methodName == name)
     if (event) {
       window.console.error('注册失败,已经有相同名称的事件存在')
       return
     }
     var newmethod = new LayoutMethod()
-    newmethod.eventName = name
+    newmethod.methodName = name
     newmethod.description = description
     newmethod.inParams = inParams
-    newmethod.outParam = outParam
+    newmethod.hasOutParam = true
     this.designerMethods.push(newmethod)
   }
   /**注册属性 */
@@ -470,7 +454,7 @@ export default class EngineLayout extends Vue {
     let method: any = null
     for (let index = 0; index < this.designerMethods.length; index++) {
       const o = this.designerMethods[index]
-      if (o.eventName === name) {
+      if (o.methodName === name) {
         method = o
         break
       }

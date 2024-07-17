@@ -10,8 +10,13 @@ class DPropCache {
 export const allDPropCache: DPropCache[] = []
 export function DPropAttr(prop: PropertySetting) {
   return function (target: EngineLayout, key: string) {
-    prop.field = key
+    if (!(target.constructor as any).$lylProps) {
+      ;(target.constructor as any).$lylProps = []
+    }
 
+    ;(target.constructor as any).$lylProps.push(prop)
+
+    prop.field = key
     let targetCons = target.constructor
     let findCache = allDPropCache.find((o) => o.layoutFunc === targetCons)
     if (!findCache) {
@@ -24,7 +29,7 @@ export function DPropAttr(prop: PropertySetting) {
       var newperperty = deepClone(prop)
       findCache.properties.push(newperperty)
     }
-    // ********* 每个通过调用这个方法,获取自己的初始化属性列表的副本,并保存在组件内部。在属性配置时使用*****************************
+    // ********* 每个组件通过调用这个方法,获取自己的初始化属性列表的副本,并保存在组件内部。在属性配置时使用*****************************
     ;(target as any).lyl_initSettingProps = (enginLayout) => {
       if (enginLayout.lyl_propertyties && enginLayout.lyl_propertyties.length > 0) {
         return enginLayout.lyl_propertyties

@@ -41,15 +41,15 @@ export function findSystemCompByCode(code: string): any {
 
 export function DCompnentAttr(paltform: string, dCompType: DCompType, groupName: string, name: string, compCode: string, icon: any) {
   return function (target: Function) {
-    !target.prototype.$Meta && (target.prototype.$Meta = {})
-
-    // window.console.log('DCompnentAttr', target.prototype.$Meta, compCode)
-    target.prototype.$Meta.dCompType = dCompType
-    target.prototype.$Meta.groupName = groupName
-    target.prototype.$Meta.name = name
-    target.prototype.$Meta.compCode = compCode
-    target.prototype.$Meta.icon = icon
-    target.prototype.$Meta.paltform = paltform
+    !target.prototype.$lyl_comp && (target.prototype.$lyl_comp = {})
+    debugger
+    // window.console.log('DCompnentAttr', target.prototype.$lyl_comp, compCode)
+    target.prototype.$lyl_comp.dCompType = dCompType
+    target.prototype.$lyl_comp.groupName = groupName
+    target.prototype.$lyl_comp.name = name
+    target.prototype.$lyl_comp.compCode = compCode
+    target.prototype.$lyl_comp.icon = icon
+    target.prototype.$lyl_comp.paltform = paltform
 
     let layoutInfo = new DCompInfo(dCompType, groupName, name, target, icon, paltform, compCode)
     allComponents.push(layoutInfo)
