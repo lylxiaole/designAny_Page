@@ -13,7 +13,7 @@ import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
 import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
-import { EnginePage, MobilePagePreview, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
+import { EnginePage, MobilePagePreview, PCPagePreview, designDrawDomVirtual, findPageByPaltform } from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
 @Options({
@@ -72,10 +72,10 @@ export default class index extends PageBase {
     let designLayout: any = typeof EnginePage
     switch (cachePageData.type) {
       case pageType.pcPage:
-        designLayout = PCPagePreview
+        designLayout = findPageByPaltform('pc', 'preview')
         break
       case pageType.mobilePage:
-        designLayout = MobilePagePreview
+        designLayout = findPageByPaltform('mobile', 'preview')
         break
       default:
         break

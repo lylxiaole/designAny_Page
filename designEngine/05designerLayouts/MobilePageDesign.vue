@@ -5,10 +5,10 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
-import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
- import DesignShell from './DesignShell.vue'
-
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+import { EnginePage, EngineLayout, EngineComponent, DPageAttr } from '../03designerLayoutBase'
+import DesignShell from './DesignShell.vue'
+@DPageAttr('mobile', 'design')
 @Options({})
 export default class MobilePageDesign extends EnginePage {
   //页面中包含的布局容器

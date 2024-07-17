@@ -7,11 +7,11 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 
-import { EnginePage, EngineLayout, EngineComponent } from '../03designerLayoutBase'
+import { EnginePage, EngineLayout, EngineComponent, DPageAttr } from '../03designerLayoutBase'
 import { BuildingFileUrlForShow } from '@common/utils'
 import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '../02common/drawVueDom'
-
+@DPageAttr('pc', 'preview')
 @Options({})
 export default class PCPagePreview extends EnginePage {
   private get backgroundCute(): string {

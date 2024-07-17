@@ -12,9 +12,10 @@ import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo'
 
-import { DPropAttr, PropertyGroupName, Text_Setting } from '../03designerLayoutBase'
+import { DPropAttr, PropertyGroupName, Text_Setting, DPageAttr } from '../03designerLayoutBase'
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 
+@DPageAttr('pc', 'design')
 @Options({})
 export default class PCPageDesign extends EnginePage {
   @DPropAttr(new Text_Setting('测试一下', PropertyGroupName.normal, true))

@@ -46,6 +46,7 @@ import toolBar from './toolBar/index.vue'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout, designDrawDomVirtual } from '@designEngine/index'
 import { behaviorList } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
+import { findPageByPaltform } from '@designEngine/index'
 
 @Options({
   components: {
@@ -159,14 +160,15 @@ export default class index extends PageBase {
 
     let res = await GetPageDetail(pageId)
     await this.$nextTick()
-    let designLayout: any = PCPageDesign
 
+    let designLayout: any = typeof PCPageDesign
+    debugger
     switch (res.type) {
       case pageType.pcPage:
-        designLayout = PCPageDesign
+        designLayout = findPageByPaltform('pc', 'design')
         break
       case pageType.mobilePage:
-        designLayout = PCPageDesign
+        designLayout = findPageByPaltform('mobile', 'design')
         break
       default:
         break

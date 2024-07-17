@@ -9,6 +9,7 @@ export { SaveInfo }
 export * from './commonClasses/PropertyInfo'
 export * from './commonClasses/MethodInfo'
 export { LayoutEvent, LayoutEventBehaviors } from './commonClasses/EventInfo'
+export * from './commonClasses/PageInfo'
 export * from './commonClasses/ComponentInfo'
 
 /**

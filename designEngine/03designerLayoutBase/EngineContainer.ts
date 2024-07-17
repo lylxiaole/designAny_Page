@@ -189,7 +189,6 @@ export default class EngineContainer extends EngineLayout {
   /**添加一个组件 */
   public async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: any, data?: SaveInfo): Promise<EngineLayout> {
     let dropcomp = dropcompclass
-    let props = dropcomp.$lyl_props
 
     dropcomp = await this.renderComponent(dropcomp)
     dropcomp.parentLayout = this
@@ -222,9 +221,6 @@ export default class EngineContainer extends EngineLayout {
     await super.renderChildFromData(data)
     let compVue = findSystemCompByCode(data.meta.compCode)
 
-    let x = findOrginProps(compVue)
-
-    debugger
     await this.insertComponentLayout(compVue, data.meta, null, data)
   }
   /*************容器渲染子组件的虚方法**********************/
