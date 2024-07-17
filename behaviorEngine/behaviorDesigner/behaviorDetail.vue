@@ -32,8 +32,7 @@ import { ref, toRaw } from '@vue/reactivity'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { behavior, action, actionDetail, factory, objectBase, objectType, object_Method } from '@behaviorEngine/index'
-import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
-import { deepClone, getUuid } from '@common/utils'
+import { EnginePage } from '@designEngine/index'
 
 import flowDetail from '../flowDesigner/index.vue'
 import resourceTree from './resourceTree.vue'

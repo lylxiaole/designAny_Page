@@ -48,7 +48,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { layoutEvent, layoutEventBehaviors, PropertyTypeEnum, Behavior_Setting } from '@designEngine/index'
+import { LayoutEvent, LayoutEventBehaviors, PropertyTypeEnum, Behavior_Setting } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
 import behaviorEventBinding, { behaviorListData } from './behaviorEventBinding.vue'
 import behaviorListInPage from './behaviorListInPage.vue'
@@ -60,9 +60,9 @@ import behaviorListInPage from './behaviorListInPage.vue'
 export default class index extends propertyCellBase<Behavior_Setting> {
   private currentComp: string = 'eventBinding' //eventBinding,allBehaviorList
 
-  private designerLayoutEvents: layoutEvent[] = []
+  private designerLayoutEvents: LayoutEvent[] = []
   private currentPageBehaviors: behavior[] = []
-  private currentData: layoutEventBehaviors[] = []
+  private currentData: LayoutEventBehaviors[] = []
 
   private windowVisible: boolean = false
   private startEdit() {
@@ -85,7 +85,7 @@ export default class index extends propertyCellBase<Behavior_Setting> {
     this.designerLayoutEvents = deepClone(this.currentLayouts[0].designerEvents)
     //当前选中控件的事件已绑定的行为
     if (this.currentValue) {
-      this.currentData = deepClone(this.currentValue) as layoutEventBehaviors[]
+      this.currentData = deepClone(this.currentValue) as LayoutEventBehaviors[]
     } else {
       this.currentData = []
     }

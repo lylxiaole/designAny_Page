@@ -38,7 +38,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { layoutEvent, layoutEventBehaviors } from '@designEngine/index'
+import { LayoutEvent, LayoutEventBehaviors } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
@@ -49,14 +49,14 @@ export enum behaviorPageType {
 export class behaviorListData {
   prePage: behaviorPageType
   selectedEventName: string
-  eventBehavior: layoutEventBehaviors
+  eventBehavior: LayoutEventBehaviors
 }
 
 //事件行为绑定组件
 @Options({})
 export default class behaviorEventBinding extends Vue {
-  @Prop() designerLayoutEvents: layoutEvent[]
-  @Prop() currentData: layoutEventBehaviors[]
+  @Prop() designerLayoutEvents: LayoutEvent[]
+  @Prop() currentData: LayoutEventBehaviors[]
   @Prop() currentPageBehaviors: behavior[]
   // **********************************
   private selectedEventName: string = ''
@@ -97,7 +97,7 @@ export default class behaviorEventBinding extends Vue {
     }
     let eventbehaviors = this.currentData.find((o) => o.eventName == event.eventName)
     if (!eventbehaviors) {
-      let neweventbeh = new layoutEventBehaviors()
+      let neweventbeh = new LayoutEventBehaviors()
       neweventbeh.eventName = event.eventName
       neweventbeh.behaviorIds = []
       this.currentData.push(neweventbeh)
@@ -167,7 +167,7 @@ export default class behaviorEventBinding extends Vue {
     if (event) {
       back.eventBehavior = deepClone(event)
     } else {
-      let neweventbeh = new layoutEventBehaviors()
+      let neweventbeh = new LayoutEventBehaviors()
       neweventbeh.eventName = this.selectedEventName
       neweventbeh.behaviorIds = []
       this.currentData.push(neweventbeh)

@@ -33,7 +33,13 @@ export class methodsInPageMethod implements actFuncBase<object_Method> {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async getFunc(obj: object_Method) {}
+  async getFunc(obj: object_Method) {
+    var params: any[] = []
+    obj.inputParams.filter((o) => {
+      params.push(o.val)
+    })
+    return this.currentPage.excuteMethod(obj.name, params)
+  }
   async setFunc(obj: object_Method, val: any) {}
   getDesc(obj: objectBase): string {
     // window.console.log('显示变量的description')
@@ -49,7 +55,7 @@ export class methodsInPageMethod implements actFuncBase<object_Method> {
   updateInparam(obj: object_Method) {}
 }
 
-@resourceFuncAttr('页面方法', '', objectType.method, funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
+@resourceFuncAttr('页面属性', '', objectType.method, funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
 export class propertiesInPageMethod implements actFuncBase<object_Method> {
   $meta: object_Method
   currentLayout: EngineLayout

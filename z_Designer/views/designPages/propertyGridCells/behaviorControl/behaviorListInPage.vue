@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { layoutEvent, layoutEventBehaviors, EnginePage } from '@designEngine/index'
+import { EnginePage } from '@designEngine/index'
 import { behavior } from '@behaviorEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 

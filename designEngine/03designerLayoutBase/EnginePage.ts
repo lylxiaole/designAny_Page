@@ -6,7 +6,8 @@ import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoad
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
 import { factory, funcCode, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
-import { layoutEvent, layoutMethod } from './commonClasses/layoutEvent'
+import { LayoutMethod } from './commonClasses/MethodInfo'
+
 import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
 // import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
@@ -122,7 +123,7 @@ export default class EnginePage extends EngineContainer {
     }
     return null
   }
-  public getCompMethodById(compId: string, methodName: string, comps?: ComponentBase[]): layoutMethod {
+  public getCompMethodById(compId: string, methodName: string, comps?: ComponentBase[]): LayoutMethod {
     if (!comps) {
       comps = this.children as ComponentBase[]
     }

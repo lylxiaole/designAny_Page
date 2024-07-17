@@ -5,7 +5,9 @@ import { DMethodAttr } from './commonClasses/MethodInfo'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
-import { layoutEvent, layoutMethod, layoutEventBehaviors } from './commonClasses/layoutEvent'
+import { LayoutEvent, LayoutEventBehaviors } from './commonClasses/EventInfo'
+import { LayoutMethod } from './commonClasses/MethodInfo'
+
 import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import designerContext from '../01designerContext/context'
@@ -100,8 +102,8 @@ export default class EngineLayout extends Vue {
   }
 
   /** 自定义方法,图形化编程会库触发这个方法*/
-  private pri_designerMethods: layoutMethod[] = []
-  public get designerMethods(): layoutMethod[] {
+  private pri_designerMethods: LayoutMethod[] = []
+  public get designerMethods(): LayoutMethod[] {
     if (!this.pri_designerMethods) {
       this.pri_designerMethods = []
     }
@@ -139,7 +141,7 @@ export default class EngineLayout extends Vue {
   @DPropAttr(new UploadFile_Setting('背景图片', PropertyGroupName.normal, true, null, 1, 'image'))
   public background_img: any = []
   @DPropAttr(new Behavior_Setting('行为绑定', PropertyGroupName.normal, true))
-  public designerEvents: layoutEventBehaviors[] = []
+  public designerEvents: LayoutEventBehaviors[] = []
 
   public get width(): any {
     return this.positionInfo.width
@@ -427,7 +429,7 @@ export default class EngineLayout extends Vue {
       window.console.error('注册失败,已经有相同名称的事件存在')
       return
     }
-    var newmethod = new layoutMethod()
+    var newmethod = new LayoutMethod()
     newmethod.eventName = name
     newmethod.description = description
     newmethod.inParams = inParams
@@ -456,7 +458,7 @@ export default class EngineLayout extends Vue {
       window.console.error('注册失败,已经有相同名称的事件存在')
       return
     }
-    var newEvent = new layoutEvent()
+    var newEvent = new LayoutEvent()
     newEvent.eventName = name
     newEvent.description = description
     newEvent.inParams = inParams

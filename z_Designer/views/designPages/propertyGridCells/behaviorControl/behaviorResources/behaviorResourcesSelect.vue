@@ -86,7 +86,7 @@ import { ref } from 'vue'
 
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, EngineComponent, EngineLayout, layoutEventBehaviors } from '@designEngine/index'
+import { EnginePage } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import { formulaType } from '@behaviorEngine/index'
 
