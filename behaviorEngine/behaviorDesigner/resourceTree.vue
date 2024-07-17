@@ -37,7 +37,7 @@ import { reactive } from 'vue'
 //
 import { object_group, getFuncObjByType } from '@behaviorEngine/actResource'
 import { funcCode } from '@behaviorEngine/actFuncBase'
-import { object_Method } from '@behaviorEngine/actObject'
+import { object_Method, objectBase } from '@behaviorEngine/actObject'
 //
 import { EnginePage, EngineContainer } from '@designEngine/index'
 import { getUuid } from '@common/utils'
@@ -46,6 +46,7 @@ class TreeNodeDC {
   id: string
   label: string
   type: string
+  actObj: objectBase
   children: TreeNodeDC[] = []
 }
 @Options({
@@ -102,6 +103,7 @@ export default class index extends ComponentBase {
         treeNodec.id = childBoj.id
         treeNodec.label = childBoj.name
         treeNodec.type = 'node'
+        treeNodec.actObj = childBoj
         treeNodeg.children.push(treeNodec)
       }
 
@@ -112,9 +114,19 @@ export default class index extends ComponentBase {
 
     return res
   }
-  private handleDragStart(node, ev) {
-    // console.log('drag start', node)
+
+  private handleDragStart(node, event) {
+    console.log('drag start', node.data.actObj)
+
+    if (node.data.type === 'group') {
+      return
+    }
+    if (event.dataTransfer) {
+      event.dataTransfer.setData('application/vueflow', JSON.stringify(node.data.actObj))
+      event.dataTransfer.effectAllowed = 'move'
+    }
   }
+
   private handleDragEnter(draggingNode, dropNode, ev) {
     // console.log('tree drag enter: ', dropNode.label)
   }

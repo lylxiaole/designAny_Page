@@ -16,7 +16,6 @@ import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr } fr
 import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
 
 import * as elemenpComps from 'element-plus'
-console.log('xxxxx:', elemenpComps)
 
 @DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
 @Options({

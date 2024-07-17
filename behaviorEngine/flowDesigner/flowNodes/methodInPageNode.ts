@@ -1,6 +1,7 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h } from 'vue'
 import methodInPageNode from './methodInPageNode.vue'
+import { funcCode } from '@behaviorEngine/actFuncBase'
 
 class VueHtmlNode extends HtmlNode {
   private isMounted: boolean = false
@@ -10,6 +11,7 @@ class VueHtmlNode extends HtmlNode {
   constructor(props) {
     super(props)
     this.isMounted = false
+
     this.r = h(methodInPageNode as any, {
       properties: props.model.getProperties(),
       text: props.model.inputData
@@ -113,7 +115,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
 }
 
 export default {
-  type: 'methodInPageNode',
+  type: funcCode.methodsInPage,
   model: VueHtmlNodeModel,
   view: VueHtmlNode
 }
