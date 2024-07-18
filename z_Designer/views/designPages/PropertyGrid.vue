@@ -142,13 +142,13 @@ export default class PropertyGrid extends Vue {
     var property_extra: PropertySetting[] = [] //临时变量
     /**用第一个布局的属性列表当作临时属性列表 */
     if (newlayouts_extra.length > 0) {
-      property_extra = [...newlayouts_extra[0].properties()]
+      property_extra = [...newlayouts_extra[0].properties]
     }
 
     /**找出所有布局容器中公有的属性 */
     for (var i = 0; i < newlayouts_extra.length; i++) {
       let findlayout = newlayouts_extra[i]
-      let findlayoutProps = findlayout.properties()
+      let findlayoutProps = findlayout.properties
       property_extra.filter((o) => {
         var findproperty = findlayoutProps.filter((p) => p.groupName == o.groupName && p.propertyName == o.propertyName)[0]
         if (!findproperty) {

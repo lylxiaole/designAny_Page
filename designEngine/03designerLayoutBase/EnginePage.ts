@@ -47,10 +47,9 @@ export default class EnginePage extends EngineContainer {
   // }
 
   mounted() {
-    this.registerEvents('加载完成', '', [], null)
-    this.registerEvents('定时器触发事件', '', [], null)
-    this.registerMethods('关闭页面', '', [], null)
-
+    // this.registerEvents('加载完成', '', [], null)
+    // this.registerEvents('定时器触发事件', '', [], null)
+    // this.registerMethods('关闭页面', '', [], null)
     // window.setInterval(() => {
     //   console.log('页面定时器测试.................')
     // }, 1000)
@@ -66,7 +65,7 @@ export default class EnginePage extends EngineContainer {
       return
     }
 
-    var event = this.designerEvents.find((o) => o.eventName == name)
+    var event = this.behaviorBinds.find((o) => o.eventName == name)
     if (!event) {
       window.console.error('事件[' + name + ']调用失败,该事件不存在')
       return

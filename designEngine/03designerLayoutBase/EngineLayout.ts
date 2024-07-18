@@ -1,16 +1,15 @@
 import { Options, Vue } from 'vue-class-component'
 import { render, toRaw } from 'vue'
-import { DPropAttr, allDPropCache } from './commonClasses/PropertyInfo'
+import { DPropAttr } from './commonClasses/PropertyInfo'
 import { DMethodAttr } from './commonClasses/MethodInfo'
+import { LayoutEvent, LayoutEventBehaviors, DEventAttr } from './commonClasses/EventInfo'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
-import { LayoutEvent, LayoutEventBehaviors } from './commonClasses/EventInfo'
 import { LayoutMethod } from './commonClasses/MethodInfo'
 
 import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 import { getUuid, deepClone, serialize } from '@common/utils'
-import designerContext from '../01designerContext/context'
 
 export class SaveInfo {
   id: string
@@ -28,10 +27,6 @@ export default class EngineLayout extends Vue {
   public renderContainer: any = {}
   public isDesigning: boolean = false
   public isNeedSave: boolean = false
-  public designerContext: any = designerContext
-  // *********组件初始化时的属性列表副本************************************
-  public lyl_propertyties: PropertySetting[] = []
-  private lyl_initSettingProps: (vuecomp) => PropertySetting[]
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
   private lyleventsOnce: any = {}
@@ -69,9 +64,6 @@ export default class EngineLayout extends Vue {
   // ********************************
   public isSelected: boolean = false
 
-  public properties(): PropertySetting[] {
-    return this.lyl_initSettingProps(this)
-  }
   /**父级布局 */
   public parentLayout: EngineLayout
   /**子级布局 */
@@ -101,15 +93,19 @@ export default class EngineLayout extends Vue {
     return res
   }
 
-  /** 自定义方法,图形化编程会库触发这个方法*/
-  private pri_designerMethods: LayoutMethod[] = []
-  public get designerMethods(): LayoutMethod[] {
-    if (!this.pri_designerMethods) {
-      this.pri_designerMethods = []
-    }
-    return this.pri_designerMethods
-  }
+  @Prop()
+  public designerMethods: LayoutMethod[]
+  @Prop()
+  public designerEvents: LayoutEvent[]
+  @Prop()
+  public properties: PropertySetting[]
 
+  @Prop()
+  public designerContext: any
+
+  // public properties: PropertySetting[] {
+  //   return this.lyl_initSettingProps(this)
+  // }
   /**生命周期 */
   created() {}
   /**生命周期 */
@@ -141,7 +137,7 @@ export default class EngineLayout extends Vue {
   @DPropAttr(new UploadFile_Setting('背景图片', PropertyGroupName.normal, true, null, 1, 'image'))
   public background_img: any = []
   @DPropAttr(new Behavior_Setting('行为绑定', PropertyGroupName.normal, true))
-  public designerEvents: LayoutEventBehaviors[] = []
+  public behaviorBinds: LayoutEventBehaviors[] = []
 
   public get width(): any {
     return this.positionInfo.width
@@ -215,9 +211,14 @@ export default class EngineLayout extends Vue {
   public set padding_bottom(val: number) {
     this.paddingInfo.bottom = val
   }
-  // *************************基础方法****************************************************************************
+  // ************************* ****************************************************************************
   @DMethodAttr({ methodName: '测试方法', description: '', inParams: [{ name: '名称', key: 'name' }], hasOutParam: true })
   protected testMethod(params: param[]): string {
+    return '123'
+  }
+
+  @DEventAttr({ eventName: '测试事件', description: '', inParams: [{ name: '名称', key: 'name' }] })
+  protected testEvent(params: param[]): string {
     return '123'
   }
 
@@ -332,7 +333,7 @@ export default class EngineLayout extends Vue {
     ///监听属性变化
     if (this.isDesigning == true) {
       await this.$nextTick()
-      let initProperties = this.properties()
+      let initProperties = this.properties
       for (let index = 0; index < initProperties.length; index++) {
         const prop = initProperties[index]
         this.$watch(
@@ -363,7 +364,7 @@ export default class EngineLayout extends Vue {
       children: []
     }
 
-    let initProperties = this.properties()
+    let initProperties = this.properties
 
     for (let index = 0; index < initProperties.length; index++) {
       const element = initProperties[index]
@@ -406,49 +407,7 @@ export default class EngineLayout extends Vue {
     }
     return null
   }
-  /**注册方法 */
-  public async registerMethods(name: string, description: string, inParams: param[], outParam: param) {
-    var event = this.designerMethods.find((o) => o.methodName == name)
-    if (event) {
-      window.console.error('注册失败,已经有相同名称的事件存在')
-      return
-    }
-    var newmethod = new LayoutMethod()
-    newmethod.methodName = name
-    newmethod.description = description
-    newmethod.inParams = inParams
-    newmethod.hasOutParam = true
-    this.designerMethods.push(newmethod)
-  }
-  /**注册属性 */
-  public async registerProperty(groupName: PropertyGroupName | string, name: string, propertySetting: PropertySetting, defaultVal?: any, canSetting: boolean = true, unit?: string) {
-    let find = this.properties().find((o) => o.propertyName == name && o.groupName == groupName)
-    if (find) {
-      //window.console.warn('已经存在相同分组相同名称的属性！:' + name)
-      return
-    }
 
-    var newperperty = new PropertySetting(name, groupName, true, defaultVal)
-    newperperty.canSetting = canSetting
-    if (unit) {
-      newperperty.unit = unit
-    }
-    // this.properties().push(newperperty)
-  }
-  /**注册事件 */
-  public async registerEvents(name: string, description: string, inParams: param[], outParam: param) {
-    var event = this.designerEvents.find((o) => o.eventName == name)
-    if (event) {
-      window.console.error('注册失败,已经有相同名称的事件存在')
-      return
-    }
-    var newEvent = new LayoutEvent()
-    newEvent.eventName = name
-    newEvent.description = description
-    newEvent.inParams = inParams
-    newEvent.outParam = outParam
-    this.designerEvents.push(newEvent)
-  }
   /**执行组件自定义方法 */
   public async excuteMethod(name: string, inparams: any[]) {
     let method: any = null
@@ -478,7 +437,7 @@ export default class EngineLayout extends Vue {
       return
     }
 
-    let initProperties = this.properties()
+    let initProperties = this.properties
     for (let index = 0; index < layout_properties.length; index++) {
       const item = layout_properties[index]
       let find = initProperties.find((o) => o.field == item.field)
@@ -489,7 +448,7 @@ export default class EngineLayout extends Vue {
   }
   public findProperties(groupName: string, name: string): PropertySetting[] {
     let res: any[] = []
-    let initProperties = this.properties()
+    let initProperties = this.properties
 
     for (let index = 0; index < initProperties.length; index++) {
       const o = initProperties[index]
@@ -500,7 +459,7 @@ export default class EngineLayout extends Vue {
     return res
   }
   public findPropertyByName(groupName: string, name: string): PropertySetting {
-    let initProperties = this.properties()
+    let initProperties = this.properties
     for (let index = 0; index < initProperties.length; index++) {
       const o = initProperties[index]
       if (o.groupName === groupName && o.propertyName === name) {
@@ -509,7 +468,7 @@ export default class EngineLayout extends Vue {
     }
   }
   public findPropertyById(Id: string): PropertySetting {
-    let initProperties = this.properties()
+    let initProperties = this.properties
     for (let index = 0; index < initProperties.length; index++) {
       const o = initProperties[index]
       if (o.id == Id) {

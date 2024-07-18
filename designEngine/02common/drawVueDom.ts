@@ -1,13 +1,21 @@
 import { ref, h, render, onMounted } from 'vue'
-import { findOrginProps } from '@designEngine/03designerLayoutBase'
+import { findOrginProps, findOrginMethods, findOrginEvents } from '@designEngine/03designerLayoutBase'
+import designerContext from '../01designerContext/context'
 
 export function designDrawDomVirtual(vueComp) {
   let fragment = window.document.createDocumentFragment() as any
   // let divdom = window.document.createElement('div')
   // fragment.appendChild(divdom)
   let allprops = findOrginProps(vueComp)
-  debugger
-  let comp = h(vueComp)
+  let methods = findOrginMethods(vueComp)
+  let events = findOrginEvents(vueComp)
+
+  let comp = h(vueComp, {
+    designerMethods: methods,
+    properties: allprops,
+    designerEvents: events,
+    designerContext: designerContext
+  })
   render(comp, fragment)
   //记录显然的目标dom,销毁时需要用到 render(null,renderContainer)
   ;(comp.component.proxy as any).renderContainer = fragment
@@ -17,8 +25,15 @@ export function designDrawDomReal(dom, vueComp) {
   // let divdom = window.document.createElement('div')
   // fragment.appendChild(divdom)
   let allprops = findOrginProps(vueComp)
-  debugger
-  let comp = h(vueComp)
+  let methods = findOrginMethods(vueComp)
+  let events = findOrginEvents(vueComp)
+
+  let comp = h(vueComp, {
+    designerMethods: methods,
+    properties: allprops,
+    designerEvents: events,
+    designerContext: designerContext
+  })
   render(comp, dom)
   //记录显然的目标dom,销毁时需要用到 render(null,renderContainer)
   ;(comp.component.proxy as any).renderContainer = dom

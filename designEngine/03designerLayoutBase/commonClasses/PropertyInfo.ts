@@ -50,23 +50,19 @@ export function DPropAttr(prop: PropertySetting) {
 }
 
 export function findOrginProps(enginLayout) {
-  debugger
-  if (enginLayout.lyl_propertyties && enginLayout.lyl_propertyties.length > 0) {
-    return enginLayout.lyl_propertyties
+  if (enginLayout.lyl_orginProps && enginLayout.lyl_orginProps.length > 0) {
+    return enginLayout.lyl_orginProps
   }
-  let findx = allDPropCache.find((o) => o.layoutFunc === enginLayout)
-  if (!findx) {
-    return []
-  }
-  let resProps = findx.properties
+
+  let resProps = []
   for (let index = 0; index < allDPropCache.length; index++) {
     const oneDPropCache = allDPropCache[index]
-    if (enginLayout.prototype instanceof oneDPropCache.layoutFunc || enginLayout.prototype == oneDPropCache.layoutFunc) {
+    if (enginLayout == oneDPropCache.layoutFunc || enginLayout.prototype instanceof oneDPropCache.layoutFunc || enginLayout.prototype == oneDPropCache.layoutFunc) {
       resProps = oneDPropCache.properties.concat(resProps)
     }
   }
-  enginLayout.lyl_propertyties = deepClone(resProps)
-  return enginLayout.lyl_propertyties
+  enginLayout.lyl_orginProps = deepClone(resProps)
+  return enginLayout.lyl_orginProps
 }
 
 export class Property {

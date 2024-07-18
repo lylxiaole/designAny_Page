@@ -162,7 +162,7 @@ export default class index extends PageBase {
     await this.$nextTick()
 
     let designLayout: any = typeof PCPageDesign
-    debugger
+
     switch (res.type) {
       case pageType.pcPage:
         designLayout = findPageByPaltform('pc', 'design')
