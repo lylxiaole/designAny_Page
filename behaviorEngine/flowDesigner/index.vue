@@ -58,7 +58,7 @@ export default class index extends ComponentBase {
     let actObj = JSON.parse(data) as objectBase
     this.currentFlow.addNode({
       id: actObj.id,
-      type: actObj.funcCode,
+      type: 'funcNormalNode',
       x: 0,
       y: 0,
       properties: { actObj: actObj }

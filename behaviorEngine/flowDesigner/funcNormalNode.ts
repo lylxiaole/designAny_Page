@@ -125,7 +125,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
 }
 
 export default {
-  type: funcCode.methodsInPage,
+  type: 'funcNormalNode',
   model: VueHtmlNodeModel,
   view: VueHtmlNode
 }
