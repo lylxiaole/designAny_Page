@@ -20,8 +20,7 @@ class VueHtmlNode extends HtmlNode {
     let flowNodeVue = findFlowNode(funcCode)
     //绘制节点
     this.r = h(flowNodeVue as any, {
-      properties: props.model.getProperties(),
-      text: props.model.inputData
+      actObj: actObj
     })
     this.app = createApp({
       render: () => this.r
@@ -32,10 +31,12 @@ class VueHtmlNode extends HtmlNode {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type } = anchorData
-    console.log('getAnchorShape:', x)
     return lfh('rect', {
       x: x,
       y: y,
+      label: '哈哈哈哈',
+      content: 'xxxx',
+      fill: 'red',
       width: 10,
       height: 10,
       className: `anchor`
