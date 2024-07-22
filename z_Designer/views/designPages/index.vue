@@ -72,7 +72,6 @@ export default class index extends PageBase {
     })
   }
   // **********当前应用的页面**********************************************************
-
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
   //所有打开的页面的引擎
@@ -88,9 +87,7 @@ export default class index extends PageBase {
     if (!page) {
       return false
     }
-    let res = this.recursiveNeedSave(page)
-
-    return res
+    return this.recursiveNeedSave(page)
   }
   private recursiveNeedSave(layout: EngineLayout): boolean {
     if (layout.isNeedSave) {

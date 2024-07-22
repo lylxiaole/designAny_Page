@@ -31,14 +31,14 @@ class VueHtmlNode extends HtmlNode {
   getAnchorShape(anchorData) {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
-
     const { x, y, type } = anchorData
+    console.log('getAnchorShape:', x)
     return lfh('rect', {
-      x: x - 5,
-      y: y - 5,
+      x: x,
+      y: y,
       width: 10,
       height: 10,
-      className: `custom-anchor ${type === 'left' ? 'incomming-anchor' : 'outgoing-anchor'}`
+      className: `anchor`
     }) as any
   }
   setHtml(rootEl) {
@@ -107,7 +107,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       isSelected,
       properties: { actObj }
     } = this
-
+    console.log('getDefaultAnchor:', x)
     let inParams = []
     let outParam = null
 
@@ -120,8 +120,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     for (let index = 0; index < inParams.length; index++) {
       let inParam = inParams[index]
       anchors.push({
-        x: x + width / 4,
-        y: y + height / 4,
+        x: x - width / 2 - 10,
+        y: y - height / 2 + index * 30,
         id: `${id}_${index}_left`,
         type: 'inParam'
       })

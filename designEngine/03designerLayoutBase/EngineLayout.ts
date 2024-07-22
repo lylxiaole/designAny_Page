@@ -206,7 +206,16 @@ export default class EngineLayout extends Vue {
     this.paddingInfo.bottom = val
   }
   // ************************* ****************************************************************************
-  @DMethodAttr({ methodName: '测试方法', description: '', inParams: [{ name: '名称', key: 'name' }], hasOutParam: true })
+  @DMethodAttr({
+    methodName: '测试方法',
+    description: '',
+    inParams: [
+      { name: '名称', key: 'name' },
+      { name: '年纪', key: 'age' },
+      { name: '成绩', key: 'score' }
+    ],
+    hasOutParam: true
+  })
   protected testMethod(params: param[]): string {
     return '123'
   }
@@ -327,15 +336,14 @@ export default class EngineLayout extends Vue {
     ///监听属性变化
     if (this.isDesigning == true) {
       await this.$nextTick()
-      let initProperties = this.properties
-      for (let index = 0; index < initProperties.length; index++) {
-        const prop = initProperties[index]
+      for (let index = 0; index < this.properties.length; index++) {
+        const prop = this.properties[index]
         this.$watch(
           prop.field,
           (newval) => {
             this.watch_properties_onDesigning(prop.field, newval)
           },
-          { deep: true, immediate: true }
+          { deep: true }
         )
       }
     }
@@ -422,7 +430,6 @@ export default class EngineLayout extends Vue {
   /**递归删除子组件 */
   public removeChildRecursion(childId: string) {
     var find = this.findLayoutRecursion(childId, this.children)
-
     find.parentLayout.removeChild(find)
   }
   /**通过已有数据加载 */

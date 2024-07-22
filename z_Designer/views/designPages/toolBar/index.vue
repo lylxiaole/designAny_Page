@@ -1,12 +1,11 @@
 <template>
   <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgb(61, 61, 61)"
     :style="{ height: height + 'px', width: '100%' }">
-    <div :style="{ height: height + 'px', width: '200px' }" style="display: flex; min-width: 200px">
-      <div style="padding: 9px; line-height: 0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }">
+    <div :style="{ height: height + 'px', width: '200px' }" style="display:flex;min-width: 200px">
+      <div style="padding:9px;line-height:0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }">
         <!-- <img style="height: 100%; width: 100%" src="../../assets/imges/designerMainLogo.png" /> -->
       </div>
-      <div class="verticalAlignCenter"
-        style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">
+      <div class="verticalAlignCenter" style="color:#fff;font-size:20px;font-family:PingFangSC-Semibold,PingFang SC;font-weight:600;margin-left: 8px">
         看板
       </div>
     </div>
