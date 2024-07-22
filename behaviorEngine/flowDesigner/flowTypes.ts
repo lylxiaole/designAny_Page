@@ -12,8 +12,6 @@ export function flowDesignNode(funcCode: funcCode) {
 }
 
 export function findFlowNode(funcCode: funcCode) {
-  let x = allFlowNodes
-  debugger
   return allFlowNodes.find((o) => o.prototype.$lyl_flowNode.funcCode === funcCode)
 }
 

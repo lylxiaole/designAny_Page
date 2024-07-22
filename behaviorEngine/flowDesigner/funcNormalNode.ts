@@ -1,7 +1,7 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h } from 'vue'
 import { funcCode } from '@behaviorEngine/actFuncBase'
-import { object_Method, objectBase } from '@behaviorEngine/actObject'
+import { object_Method, objectBase, objectType } from '@behaviorEngine/actObject'
 
 import { findFlowNode } from './flowTypes'
 
@@ -63,13 +63,13 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     this.sourceRules.push({
       message: '只允许从右边的锚点连出',
       validate: (sourceNode, targetNode, sourceAnchor) => {
-        return sourceAnchor.type === 'right'
+        return sourceAnchor.type === 'outParam'
       }
     })
     this.targetRules.push({
       message: '只允许连接左边的锚点',
       validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
-        return targetAnchor.type === 'left'
+        return targetAnchor.type === 'inParam'
       }
     })
 
@@ -83,7 +83,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
   }
   getAnchorStyle(anchorInfo) {
     const style = super.getAnchorStyle(anchorInfo)
-
     if (anchorInfo.type === 'left') {
       style.fill = 'red'
       style.hover.fill = 'red'
@@ -95,7 +94,9 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     }
     return style
   }
+
   getDefaultAnchor() {
+    //锚点计算
     const {
       id,
       x,
@@ -104,18 +105,36 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       height,
       isHovered,
       isSelected,
-      properties: { fields, isConnection }
+      properties: { actObj }
     } = this
 
+    let inParams = []
+    let outParam = null
+
+    if (actObj.objType === objectType.method) {
+      inParams = (actObj as object_Method).inputParams
+      outParam = (actObj as object_Method).outParam
+    }
+
     const anchors = []
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < inParams.length; index++) {
+      let inParam = inParams[index]
       anchors.push({
-        x: x + width / 2 - 10,
-        y: y - height / 2 + 60 + index * 24,
-        id: `${id}_${index}_right`,
-        type: 'right'
+        x: x + width / 4,
+        y: y + height / 4,
+        id: `${id}_${index}_left`,
+        type: 'inParam'
       })
     }
+    if (outParam) {
+      // anchors.push({
+      //   x: x + width / 2 - 10,
+      //   y: y - height / 2 + 60 + 0 * 24,
+      //   id: `${id}_0_right`,
+      //   type: 'outParam'
+      // })
+    }
+
     return anchors
   }
 

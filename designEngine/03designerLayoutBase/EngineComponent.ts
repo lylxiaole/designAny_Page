@@ -5,6 +5,8 @@ import { factory, param } from '@behaviorEngine/index'
 
 import { EngineLayout } from '..'
 import { DPropAttr } from './commonClasses/PropertyInfo'
+import { DEventAttr } from './commonClasses/EventInfo'
+
 import { Number_Setting, PropertyGroupName, Color_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 
 @Options({})
@@ -30,7 +32,7 @@ export default class EngineComponent extends EngineContainer {
     this.width = 200
     this.height = 200
     /**注册事件 */
-    this.registerEvents('控件加载完成事件', '', [], null)
+    this.onCompLoaded()
   }
 
   mounted() {}
@@ -102,4 +104,7 @@ export default class EngineComponent extends EngineContainer {
     }
   }
   public getModelValidate(propCode: string) {}
+
+  @DEventAttr({ eventName: '控件加载完成事件', inParams: [], hasOutParam: false })
+  private onCompLoaded() {}
 }

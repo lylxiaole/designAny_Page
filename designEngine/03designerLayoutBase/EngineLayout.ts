@@ -99,13 +99,9 @@ export default class EngineLayout extends Vue {
   public designerEvents: LayoutEvent[]
   @Prop()
   public properties: PropertySetting[]
-
   @Prop()
   public designerContext: any
 
-  // public properties: PropertySetting[] {
-  //   return this.lyl_initSettingProps(this)
-  // }
   /**生命周期 */
   created() {}
   /**生命周期 */
@@ -217,7 +213,7 @@ export default class EngineLayout extends Vue {
     return '123'
   }
 
-  @DEventAttr({ eventName: '测试事件', description: '', inParams: [{ name: '名称', key: 'name' }] })
+  @DEventAttr({ eventName: '测试事件', description: '', inParams: [{ name: '名称', key: 'name' }], hasOutParam: false })
   protected testEvent(params: param[]): string {
     return '123'
   }

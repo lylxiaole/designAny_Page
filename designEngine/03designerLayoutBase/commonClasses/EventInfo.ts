@@ -11,7 +11,7 @@ export class LayoutEvent {
   eventName?: string = ''
   description?: string = ''
   inParams?: param[] = []
-  outParam?: param = null
+  hasOutParam: boolean = false
   behaviorIds?: string[] = [] //行为的Id
   eventField?: string
 }
