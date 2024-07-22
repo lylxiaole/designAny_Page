@@ -1,15 +1,15 @@
 import { Property, PageInParams_Setting, PropertyGroupName, Number_Setting, Enum_Setting } from './commonClasses/PropertyInfo'
 import ComponentBase from './EngineComponent'
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize, strZip, strUnZip, deserialize, closeLoading_Async, showLoading_Async } from '@common/utils'
 import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
-import { factory, funcCode, objectType, object_Method, object_callback, objectBase } from '@behaviorEngine/index'
+import { factory } from '@behaviorEngine/index'
 import { LayoutMethod } from './commonClasses/MethodInfo'
 
+import { DEventAttr } from './commonClasses/EventInfo'
+
 import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
-// import { GetPageDetail, SavePageDetail } from 'z_Designer/apis/designPage'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
 import { DPropAttr } from './commonClasses/PropertyInfo'
 import { PropertySetting, Text_Setting, Behavior_Setting } from './commonClasses/PropertyInfo'
@@ -29,31 +29,7 @@ export default class EnginePage extends EngineContainer {
   @DPropAttr(new Enum_Setting('字体样式', PropertyGroupName.normal, true, null, true, ['微软雅黑', 'times new roman', '宋体', '楷体', '黑体', '隶书']))
   public fontFamily: string = '微软雅黑'
 
-  /**行为列表*/
-  // public get behaviors(): behavior[] {
-  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
-  //   if (!property.value) {
-  //     property.value = []
-  //   }
-  //   return property.value as behavior[]
-  // }
-  // public set behaviors(val: behavior[]) {
-  //   var property = this.findPropertyByName(PropertyGroupName.normal, '行为列表')
-  //   if (!property.value) {
-  //     property.value = []
-  //     return
-  //   }
-  //   property.value = val
-  // }
-
-  mounted() {
-    // this.registerEvents('加载完成', '', [], null)
-    // this.registerEvents('定时器触发事件', '', [], null)
-    // this.registerMethods('关闭页面', '', [], null)
-    // window.setInterval(() => {
-    //   console.log('页面定时器测试.................')
-    // }, 1000)
-  }
+  mounted() {}
   unmounted() {
     $(window).unbind('resize', this.onWindowResize_Scale as any)
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
@@ -234,7 +210,6 @@ export default class EnginePage extends EngineContainer {
       this.recursiveChangeNeedSave(element)
     }
   }
-
   public async loadPageById(pageId: string, params?: param[]): Promise<void> {
     let pageDC: DesignPageDC = await GetPageDetail(pageId)
     await this.loadPageByData(pageId, pageDC.designDetail, params)
@@ -263,8 +238,10 @@ export default class EnginePage extends EngineContainer {
       closeLoading_Async(index, true)
     }
   }
-
-  // *********************************************************************************************************************
+  // ***************************************************************
+  @DEventAttr({ eventName: '加载完成', description: '', inParams: [], hasOutParam: false })
+  private onLoadComplete() {}
+  // ******************************************************
   private onPageSaveSuccess(pageId: string): void {}
   private onScaleSized(): void {}
 }

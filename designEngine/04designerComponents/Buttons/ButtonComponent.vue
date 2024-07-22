@@ -14,6 +14,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr } from '@designEngine/03designerLayoutBase'
 import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
+import { DEventAttr } from '@designEngine/03designerLayoutBase'
 
 import * as elemenpComps from 'element-plus'
 
@@ -41,12 +42,15 @@ export default class ButtonComponent extends EngineComponent {
     this.width = 80
     this.height = 34
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
-    this.registerEvents('点击', '', [], null)
   }
 
   private onClick(e) {
+    e.stopPropagation()
     this.triggerEvent('点击', null)
   }
+
+  @DEventAttr({ eventName: '点击', description: '', inParams: [], hasOutParam: false })
+  private onClickEvent() {}
 }
 </script>
 

@@ -3,11 +3,9 @@ import { render, toRaw } from 'vue'
 import { DPropAttr } from './commonClasses/PropertyInfo'
 import { DMethodAttr } from './commonClasses/MethodInfo'
 import { LayoutEvent, LayoutEventBehaviors, DEventAttr } from './commonClasses/EventInfo'
-
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { paramType, param } from '@behaviorEngine/index'
 import { LayoutMethod } from './commonClasses/MethodInfo'
-
 import { Property, PropertySetting, Text_Setting, Behavior_Setting, Number_Setting, PropertyGroupName, Color_Setting, UploadFile_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 import { getUuid, deepClone, serialize } from '@common/utils'
 
