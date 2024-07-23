@@ -11,12 +11,12 @@
           <el-tree node-key="id" :data="treeData" default-expand-all @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
             @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd" @node-drop="handleDrop"
             :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
-            <template #default="{  data}">
-              <div v-if="data.type==='page'">
+            <template #default="{data}">
+              <div draggable="true" v-if="data.type==='page'">
                 <span class="icon iconfont">&#xe627;</span>
                 <span>{{data.label}}</span>
               </div>
-              <div v-if="data.type==='group'">
+              <div draggable="true" v-if="data.type==='group'">
                 <span class="icon iconfont">&#xe626;</span>
                 <span>{{data.label}}</span>
               </div>
@@ -41,6 +41,7 @@ import { object_Method, objectBase } from '@behaviorEngine/actObject'
 //
 import { EnginePage, EngineContainer } from '@designEngine/index'
 import { getUuid } from '@common/utils'
+import LogicFlow from '@logicflow/core'
 
 class TreeNodeDC {
   id: string
@@ -55,6 +56,10 @@ class TreeNodeDC {
 export default class index extends ComponentBase {
   //所有可用资源
   private objGroup: object_group[] = reactive([])
+  private currentFlow: LogicFlow
+  public setCurrentFlow(flow) {
+    this.currentFlow = flow
+  }
 
   @Prop()
   currentPage: EnginePage
@@ -116,8 +121,6 @@ export default class index extends ComponentBase {
   }
 
   private handleDragStart(node, event) {
-    console.log('drag start', node.data.actObj)
-
     if (node.data.type === 'group') {
       return
     }
@@ -125,6 +128,13 @@ export default class index extends ComponentBase {
       event.dataTransfer.setData('application/vueflow', JSON.stringify(node.data.actObj))
       event.dataTransfer.effectAllowed = 'move'
     }
+
+    // this.currentFlow.dnd.startDrag({
+    //   id: getUuid(),
+    //   type: 'funcNormalNode',
+    //   text: ` `,
+    //   properties: { actObj: node.data.actObj }
+    // })
   }
 
   private handleDragEnter(draggingNode, dropNode, ev) {

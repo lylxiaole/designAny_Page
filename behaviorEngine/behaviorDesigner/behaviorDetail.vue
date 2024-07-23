@@ -4,11 +4,11 @@
     <el-row style="height:calc(100% - 50px);background:#FFF;">
       <el-col :span="6" style="border-right:1px solid #cdcdcd">
         <!-- //资源列表 -->
-        <resource-tree :currentPage="currentPage" />
+        <resource-tree ref="resourceTree" :currentPage="currentPage" />
       </el-col>
       <el-col :span="18" style="border-right:1px solid #cdcdcd">
         <!-- 流程图 -->
-        <flow-detail />
+        <flowDesign @onFlowCreated="onFlowCreated" />
       </el-col>
     </el-row>
     <template #footer>
@@ -34,11 +34,11 @@ import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { behavior, action, actionDetail, factory, objectBase, objectType, object_Method } from '@behaviorEngine/index'
 import { EnginePage } from '@designEngine/index'
 
-import flowDetail from '../flowDesigner/index.vue'
-import resourceTree from './resourceTree.vue'
+import flowDesign from '../flowDesigner/flowDesign.vue'
+import resourceTree from '../flowDesigner/resourceTree.vue'
 
 @Options({
-  components: { flowDetail, resourceTree }
+  components: { flowDesign, resourceTree }
 })
 export default class behaviorDeatilSetting extends Vue {
   // ************************************************************
@@ -58,6 +58,10 @@ export default class behaviorDeatilSetting extends Vue {
   }
   private onCancel() {
     this.windowVisible = false
+  }
+
+  private onFlowCreated(flow) {
+    ;(this.$refs.resourceTree as resourceTree).setCurrentFlow(flow)
   }
   // ***********************************************************
   currentPage: EnginePage = null

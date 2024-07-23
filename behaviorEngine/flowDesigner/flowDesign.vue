@@ -45,6 +45,8 @@ export default class index extends ComponentBase {
     this.currentFlow.register(funcNormalNode)
     this.currentFlow.render(this.flowdata)
     this.currentFlow.translateCenter()
+
+    this.onFlowCreated(this.currentFlow)
   }
 
   // ****************拖拽******************************
@@ -59,18 +61,16 @@ export default class index extends ComponentBase {
     this.currentFlow.addNode({
       id: actObj.id,
       type: 'funcNormalNode',
-      x: 0,
-      y: 0,
+      x: event.offsetX,
+      y: event.offsetY,
       properties: { actObj: actObj }
     })
   }
 
   private onDragOver(event) {
     event.preventDefault()
-
     if (true) {
       this.isDragOver = true
-
       if (event.dataTransfer) {
         event.dataTransfer.dropEffect = 'move'
       }
@@ -80,9 +80,12 @@ export default class index extends ComponentBase {
   private onDragLeave() {
     this.isDragOver = false
   }
+
+  @Emit('onFlowCreated')
+  private onFlowCreated(flow) {}
 }
 </script>
 
 <style lang="less"   >
 @import './flowDesigner.less';
-</style>./methodInPageNode
+</style> 
