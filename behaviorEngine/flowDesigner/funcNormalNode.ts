@@ -2,8 +2,8 @@ import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h } from 'vue'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { object_Method, objectBase, objectType } from '@behaviorEngine/actObject'
-
 import { findFlowNode } from './flowTypes'
+import { getUuid } from '@common/utils'
 
 class VueHtmlNode extends HtmlNode {
   private isMounted: boolean = false
@@ -36,6 +36,7 @@ class VueHtmlNode extends HtmlNode {
       y: y,
       label: '哈哈哈哈',
       content: 'xxxx',
+      text: '123',
       fill: 'red',
       width: 10,
       height: 10,
@@ -128,12 +129,12 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       })
     }
     if (outParam) {
-      // anchors.push({
-      //   x: x + width / 2 - 10,
-      //   y: y - height / 2 + 60 + 0 * 24,
-      //   id: `${id}_0_right`,
-      //   type: 'outParam'
-      // })
+      anchors.push({
+        x: x + width / 2,
+        y: y,
+        id: `${id}_0_right`,
+        type: 'outParam'
+      })
     }
 
     return anchors
