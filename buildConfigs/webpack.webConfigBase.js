@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 let currentDir = path.resolve(__dirname).replace('\\buildConfigs', '')
+
 // ******************web打包***************************************************
 let baseconfig = {
   target: 'web',
@@ -34,7 +35,7 @@ let baseconfig = {
       {
         //
         // 命中 JavaScript 文件
-        test: /\.(js|ts|jsx|tsx)$/,
+        test: /\.(ts|tsx|js)$/,
         // 用 babel-loader 转换 JavaScript 文件
         // ?cacheDirectory 表示传给 babel-loader 的参数，用于缓存 babel 编译结果加快重新编译速度
         loader: 'babel-loader',
@@ -51,6 +52,20 @@ let baseconfig = {
               }
             ]
           ]
+        }
+      },
+      {
+        //
+        // 命中 JavaScript 文件
+        test: /\.(jsx)$/,
+        // 用 babel-loader 转换 JavaScript 文件
+        // ?cacheDirectory 表示传给 babel-loader 的参数，用于缓存 babel 编译结果加快重新编译速度
+        loader: 'babel-loader',
+        include: currentDir,
+        exclude: /node_modules/,
+        options: {
+          plugins: ['@babel/plugin-syntax-top-level-await', '@vue/babel-plugin-jsx'],
+          presets: ['@babel/preset-env', '@vue/cli-plugin-babel/preset', '@vue/babel-preset-jsx']
         }
       },
       {

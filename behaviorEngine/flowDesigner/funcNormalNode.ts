@@ -1,25 +1,25 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
-import { createApp, h } from 'vue'
+import { createApp, h, VNode, render } from 'vue'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { object_Method, objectBase, objectType } from '@behaviorEngine/actObject'
 import { findFlowNode } from './flowTypes'
 import { getUuid } from '@common/utils'
 
 class VueHtmlNode extends HtmlNode {
-  private isMounted: boolean = false
-  private r: any
-  private app: any
+  isMounted = false
+  r
+  app
 
   constructor(props) {
     super(props)
     this.isMounted = false
     const { actObj } = props.model.getProperties()
     //找到actObj的funcCode
-    let funcCode = (actObj as objectBase).funcCode
+    let funcCode = actObj.funcCode
     //找到对应的自定义流程节点
     let flowNodeVue = findFlowNode(funcCode)
     //绘制节点
-    this.r = h(flowNodeVue as any, {
+    this.r = h(flowNodeVue, {
       actObj: actObj
     })
     this.app = createApp({
@@ -30,21 +30,9 @@ class VueHtmlNode extends HtmlNode {
   getAnchorShape(anchorData) {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
-    const { x, y, type } = anchorData
-    // lfh(
-    //   'text',
-    //   {
-    //     x: x,
-    //     y: y,
-    //     fill: 'black',
-    //     width: 10,
-    //     height: 10,
-    //     className: `anchor`
-    //   },
-    //   ['哈哈哈哈']
-    // ) as any
+    const { x, y, type, text } = anchorData
 
-    return lfh('rect', { x: x, y: y, width: 10, height: 10, fill: 'red' })
+    return lfh('g', {}, [lfh('rect', { x: x, y: y, width: 10, height: 10, stroke: '#000000', strokeDasharray: '3 3' }), lfh('text', { x: x, y: y }, [text])])
   }
   setHtml(rootEl) {
     if (!this.isMounted) {
@@ -78,7 +66,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       }
     })
 
-    this.setIsShowAnchor()
+    this.setIsShowAnchor(true)
   }
   getOutlineStyle() {
     const style = super.getOutlineStyle()
@@ -88,6 +76,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
   }
   getAnchorStyle(anchorInfo) {
     const style = super.getAnchorStyle(anchorInfo)
+
     if (anchorInfo.type === 'left') {
       style.fill = 'red'
       style.hover.fill = 'red'
@@ -117,8 +106,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     let outParam = null
 
     if (actObj.objType === objectType.method) {
-      inParams = (actObj as object_Method).inputParams
-      outParam = (actObj as object_Method).outParam
+      inParams = actObj.inputParams
+      outParam = actObj.outParam
     }
 
     const anchors = []
@@ -128,7 +117,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         x: x - width / 2 - 10,
         y: y - height / 2 + index * 30,
         id: `${id}_${index}_left`,
-        type: 'inParam'
+        type: 'inParam',
+        text: '输入' + (index + 1) + ':' + inParam.name
       })
     }
     if (outParam) {
@@ -136,14 +126,15 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         x: x + width / 2,
         y: y,
         id: `${id}_0_right`,
-        type: 'outParam'
+        type: 'outParam',
+        text: '输出'
       })
     }
 
     return anchors
   }
 
-  setIsShowAnchor(flag?: boolean): void {
+  setIsShowAnchor(flag) {
     super.setIsShowAnchor(true)
   }
 }

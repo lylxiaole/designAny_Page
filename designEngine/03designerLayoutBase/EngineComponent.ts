@@ -9,8 +9,13 @@ import { DEventAttr } from './commonClasses/EventInfo'
 
 import { Number_Setting, PropertyGroupName, Color_Setting, Boolean_Setting, Enum_Setting, CompPosition_Setting, Margin_Setting, Padding_Setting } from './commonClasses/PropertyInfo'
 
+import { DCompInfo } from './commonClasses/ComponentInfo'
+
 @Options({})
 export default class EngineComponent extends EngineContainer {
+  @Prop()
+  protected compInfo: DCompInfo
+
   @DPropAttr(new Color_Setting('前景色', PropertyGroupName.normal, true))
   public foreground: string = '#000000'
   @DPropAttr(new Boolean_Setting('是否显示', PropertyGroupName.normal, true))
@@ -47,8 +52,12 @@ export default class EngineComponent extends EngineContainer {
       return
     }
     // window.console.log('触发事件:', name, this.$el)
-    var event = this.designerEvents.find((o) => o.eventName == name)
+    var event = this.behaviorBinds.find((o) => o.eventName == name)
+    if (!event) {
+      return
+    }
 
+    //TODO 在事件设计的数据中找到事件,并调用事件
     for (let index = 0; index < event.behaviorIds.length; index++) {
       const bid = event.behaviorIds[index]
       let behavior = this.topParentPage.behaviors.find((o) => o.id == bid)

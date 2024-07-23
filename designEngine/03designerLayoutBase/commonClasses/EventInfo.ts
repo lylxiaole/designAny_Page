@@ -12,7 +12,6 @@ export class LayoutEvent {
   description?: string = ''
   inParams?: param[] = []
   hasOutParam: boolean = false
-  behaviorIds?: string[] = [] //行为的Id
   eventField?: string
 }
 class LayoutEventCache {

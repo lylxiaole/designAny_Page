@@ -4,7 +4,6 @@ export function DPageAttr(paltform: string, preOrDesign: string) {
   return function (target: Function) {
     !target.prototype.$lyl_page && (target.prototype.$lyl_page = {})
 
-    // window.console.log('DCompnentAttr', target.prototype.$lyl_comp, compCode)
     target.prototype.$lyl_page.paltform = paltform
     target.prototype.$lyl_page.preOrDesign = preOrDesign
     let layoutInfo = { paltform: paltform, preOrDesign: preOrDesign, component: target }
