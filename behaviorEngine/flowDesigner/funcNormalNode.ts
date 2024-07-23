@@ -31,17 +31,20 @@ class VueHtmlNode extends HtmlNode {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type } = anchorData
-    return lfh('rect', {
-      x: x,
-      y: y,
-      label: '哈哈哈哈',
-      content: 'xxxx',
-      text: '123',
-      fill: 'red',
-      width: 10,
-      height: 10,
-      className: `anchor`
-    }) as any
+    // lfh(
+    //   'text',
+    //   {
+    //     x: x,
+    //     y: y,
+    //     fill: 'black',
+    //     width: 10,
+    //     height: 10,
+    //     className: `anchor`
+    //   },
+    //   ['哈哈哈哈']
+    // ) as any
+
+    return lfh('rect', { x: x, y: y, width: 10, height: 10, fill: 'red' })
   }
   setHtml(rootEl) {
     if (!this.isMounted) {
