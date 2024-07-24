@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="18" style="border-right:1px solid #cdcdcd">
         <!-- 流程图 -->
-        <flowDesign @onFlowCreated="onFlowCreated" />
+        <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" />
       </el-col>
     </el-row>
     <template #footer>
@@ -54,6 +54,8 @@ export default class behaviorDeatilSetting extends Vue {
     this.windowVisible = false
   }
   private onConfirm() {
+    let x = (this.$refs.flowDesign as flowDesign).getFlowData()
+
     this.windowVisible = false
   }
   private onCancel() {

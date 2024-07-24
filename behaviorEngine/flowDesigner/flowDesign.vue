@@ -48,7 +48,11 @@ export default class index extends ComponentBase {
 
     this.onFlowCreated(this.currentFlow)
   }
-
+  public getFlowData() {
+    let x = this.currentFlow.getGraphRawData()
+    debugger
+    return x
+  }
   // ****************拖拽******************************
   private isDragOver: boolean = false
   private onDrop(event) {

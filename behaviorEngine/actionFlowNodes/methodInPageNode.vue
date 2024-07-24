@@ -24,7 +24,9 @@ export default class methodInPageNode extends Vue {
   @Prop()
   private actObj: object_Method
 
-  mounted() {}
+  mounted() {
+    this.actObj.description = 'ni ha ahahhaha'
+  }
 }
 </script>
 
