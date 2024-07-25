@@ -2,9 +2,11 @@ import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h, VNode, render } from 'vue'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { object_Method, objectBase, objectType } from '@behaviorEngine/actObject'
-import { findFlowNode } from './flowTypes'
+import { findFlowNodeInner } from '../flowTypes'
 import { getUuid } from '@common/utils'
+import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 
+//一般性的流程节点
 class VueHtmlNode extends HtmlNode {
   isMounted = false
   r
@@ -17,7 +19,7 @@ class VueHtmlNode extends HtmlNode {
     //找到actObj的funcCode
     let funcCode = actObj.funcCode
     //找到对应的自定义流程节点
-    let flowNodeVue = findFlowNode(funcCode)
+    let flowNodeVue = findFlowNodeInner(funcCode)
     //绘制节点
     this.r = h(flowNodeVue, {
       actObj: actObj
@@ -140,7 +142,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
 }
 
 export default {
-  type: 'funcNormalNode',
+  type: flowNodeType.funcNormalNode,
   model: VueHtmlNodeModel,
   view: VueHtmlNode
 }

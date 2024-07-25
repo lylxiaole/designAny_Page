@@ -13,7 +13,7 @@ export { behaviorList }
 const actFuncModulesFiles = require.context('./actionResourceFunctions', true, /\.(ts|js)$/)
 
 //加载所有流程节点
-const flowNodeModulesFiles = require.context('./actionFlowNodes', true, /\.(vue)$/)
+const flowNodeModulesFiles = require.context('./flowNode_Inner', true, /\.(vue)$/)
 
 export function init(apiAddr) {
   behaviorContext.designerServerApiAddr = apiAddr

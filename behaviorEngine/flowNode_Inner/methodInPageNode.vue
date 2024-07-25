@@ -12,9 +12,9 @@ import { deepClone, getUuid } from '@common/utils'
 import { object_Method, objectBase } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowDesigner/flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
-import { debug } from 'webpack'
+import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 
-@flowDesignNode(funcCode.methodsInPage)
+@flowDesignNode(funcCode.methodsInPage, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })

@@ -11,11 +11,13 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { getUuid } from '@common/utils'
 import { object_Method, objectBase } from '@behaviorEngine/actObject'
-
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-import funcNormalNode from './funcNormalNode'
 
+import { findFlowNode } from './flowTypes'
+
+import funcNormalNode from './flowNodes/funcNormalNode'
+import defaultEdge from './flowEdges/defaultEdge'
 @Options({
   components: {}
 })
@@ -43,15 +45,28 @@ export default class index extends ComponentBase {
       ...this.silentConfig
     })
     this.currentFlow.register(funcNormalNode)
+    this.currentFlow.register(defaultEdge)
+    this.currentFlow.setDefaultEdgeType('defaultEdge')
     this.currentFlow.render(this.flowdata)
     this.currentFlow.translateCenter()
 
     this.onFlowCreated(this.currentFlow)
   }
   public getFlowData() {
-    let x = this.currentFlow.getGraphRawData()
-    debugger
-    return x
+    let graphData = this.currentFlow.getGraphData()
+    for (let index = 0; index < graphData.edges.length; index++) {
+      const edge = graphData.edges[index]
+
+      let sourceNode = this.currentFlow.getNodeModelById(edge.sourceNodeId)
+      let targetNode = this.currentFlow.getNodeModelById(edge.targetNodeId)
+
+      debugger
+      let sourceAnchor = sourceNode.getAnchorInfo(edge.sourceAnchorId)
+      let targetAnchor = targetNode.getAnchorInfo(edge.targetAnchorId)
+      debugger
+    }
+
+    return null
   }
   // ****************拖拽******************************
   private isDragOver: boolean = false
@@ -59,12 +74,16 @@ export default class index extends ComponentBase {
     if (!event.dataTransfer) {
       return
     }
-
     let data = event.dataTransfer.getData('application/vueflow')
     let actObj = JSON.parse(data) as objectBase
+    let flowNode = findFlowNode(actObj.funcCode)
+    if (!flowNode) {
+      alert('找不到对应的流程节点')
+    }
+
     this.currentFlow.addNode({
-      id: actObj.id,
-      type: 'funcNormalNode',
+      id: getUuid(),
+      type: flowNode,
       x: event.offsetX,
       y: event.offsetY,
       properties: { actObj: actObj }
@@ -92,4 +111,4 @@ export default class index extends ComponentBase {
 
 <style lang="less"   >
 @import './flowDesigner.less';
-</style> 
+</style> ./flowVueNodes/funcNormalNode./flowNodes/funcNormalNode

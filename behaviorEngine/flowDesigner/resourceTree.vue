@@ -128,13 +128,6 @@ export default class index extends ComponentBase {
       event.dataTransfer.setData('application/vueflow', JSON.stringify(node.data.actObj))
       event.dataTransfer.effectAllowed = 'move'
     }
-
-    // this.currentFlow.dnd.startDrag({
-    //   id: getUuid(),
-    //   type: 'funcNormalNode',
-    //   text: ` `,
-    //   properties: { actObj: node.data.actObj }
-    // })
   }
 
   private handleDragEnter(draggingNode, dropNode, ev) {
