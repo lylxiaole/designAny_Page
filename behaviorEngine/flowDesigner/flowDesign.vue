@@ -13,11 +13,10 @@ import { getUuid } from '@common/utils'
 import { object_Method, objectBase } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-
-import { findFlowNode } from './flowTypes'
-
+import { findFlowNode, flowNodeType } from './flowTypes'
 import funcNormalNode from './flowNodes/funcNormalNode'
 import defaultEdge from './flowEdges/defaultEdge'
+
 @Options({
   components: {}
 })
@@ -33,7 +32,7 @@ export default class index extends ComponentBase {
     stopZoomGraph: false,
     hideAnchors: false
   }
-
+  // ********初始化**************************************
   mounted() {
     this.drawFlow()
   }
@@ -52,8 +51,18 @@ export default class index extends ComponentBase {
 
     this.onFlowCreated(this.currentFlow)
   }
+  // **********************************************
   public getFlowData() {
     let graphData = this.currentFlow.getGraphData()
+
+    let allObjs: object_Method[] = []
+    for (let index = 0; index < graphData.nodes.length; index++) {
+      const node = graphData.nodes[index]
+
+      let actObj = node.properties.actObj
+      allObjs.push(actObj)
+    }
+
     for (let index = 0; index < graphData.edges.length; index++) {
       const edge = graphData.edges[index]
 
@@ -62,13 +71,16 @@ export default class index extends ComponentBase {
 
       debugger
       let sourceAnchor = sourceNode.getAnchorInfo(edge.sourceAnchorId)
+      let sourceObj = allObjs.find((o) => o.id === sourceAnchor.id)
+      debugger
       let targetAnchor = targetNode.getAnchorInfo(edge.targetAnchorId)
+      let targetObj = allObjs.find((o) => o.id === targetAnchor.id)
       debugger
     }
 
     return null
   }
-  // ****************拖拽******************************
+  // ****************拖拽行为******************************
   private isDragOver: boolean = false
   private onDrop(event) {
     if (!event.dataTransfer) {
@@ -81,13 +93,7 @@ export default class index extends ComponentBase {
       alert('找不到对应的流程节点')
     }
 
-    this.currentFlow.addNode({
-      id: getUuid(),
-      type: flowNode,
-      x: event.offsetX,
-      y: event.offsetY,
-      properties: { actObj: actObj }
-    })
+    this.addFlowNode(flowNode, event.offsetX, event.offsetY, actObj as object_Method)
   }
 
   private onDragOver(event) {
@@ -102,6 +108,16 @@ export default class index extends ComponentBase {
 
   private onDragLeave() {
     this.isDragOver = false
+  }
+  // ****************流程节点操作******************************
+  private addFlowNode(nodeType: flowNodeType, x, y, actObj: object_Method) {
+    this.currentFlow.addNode({
+      id: getUuid(),
+      type: nodeType,
+      x: x,
+      y: y,
+      properties: { actObj: actObj }
+    })
   }
 
   @Emit('onFlowCreated')

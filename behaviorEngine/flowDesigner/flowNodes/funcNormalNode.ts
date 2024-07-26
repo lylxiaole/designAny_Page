@@ -118,7 +118,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       anchors.push({
         x: x - width / 2 - 10,
         y: y - height / 2 + index * 30,
-        id: `${id}_${index}_left`,
+        id: `${inParam.key}`,
+        name: inParam.name,
         type: 'inParam',
         text: '输入' + (index + 1) + ':' + inParam.name
       })
@@ -127,7 +128,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       anchors.push({
         x: x + width / 2,
         y: y,
-        id: `${id}_0_right`,
+        id: actObj.id,
+        name: outParam.name,
         type: 'outParam',
         text: '输出'
       })

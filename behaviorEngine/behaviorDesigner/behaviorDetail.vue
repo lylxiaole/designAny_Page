@@ -55,7 +55,6 @@ export default class behaviorDeatilSetting extends Vue {
   }
   private onConfirm() {
     let x = (this.$refs.flowDesign as flowDesign).getFlowData()
-
     this.windowVisible = false
   }
   private onCancel() {
