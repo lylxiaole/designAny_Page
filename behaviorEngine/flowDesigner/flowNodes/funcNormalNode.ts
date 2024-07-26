@@ -28,7 +28,6 @@ class VueHtmlNode extends HtmlNode {
       render: () => this.r
     })
   }
-
   getAnchorShape(anchorData) {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
@@ -89,7 +88,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     }
     return style
   }
-
   getDefaultAnchor() {
     //锚点计算
     const {
@@ -112,7 +110,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     }
 
     const anchors = []
-
+    //TODO 需要设定 一个入参锚点只能连一条线
     if (inParams.length > 0) {
       for (let index = 0; index < inParams.length; index++) {
         let inParam = inParams[index]
@@ -140,7 +138,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       anchors.push({
         x: x + width / 2,
         y: y,
-        id: actObj.id,
+        id: outParam.key,
         name: outParam.name,
         type: 'outParam',
         text: '输出'
@@ -158,7 +156,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
 
     return anchors
   }
-
   setIsShowAnchor(flag) {
     super.setIsShowAnchor(true)
   }

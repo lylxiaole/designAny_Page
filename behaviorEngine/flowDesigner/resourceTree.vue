@@ -40,7 +40,7 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { object_Method, objectBase } from '@behaviorEngine/actObject'
 //
 import { EnginePage, EngineContainer } from '@designEngine/index'
-import { getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 import LogicFlow from '@logicflow/core'
 
 class TreeNodeDC {
@@ -125,7 +125,10 @@ export default class index extends ComponentBase {
       return
     }
     if (event.dataTransfer) {
-      event.dataTransfer.setData('application/vueflow', JSON.stringify(node.data.actObj))
+      let newObj = deepClone(node.data.actObj)
+      newObj.id = getUuid()
+
+      event.dataTransfer.setData('application/vueflow', JSON.stringify(newObj))
       event.dataTransfer.effectAllowed = 'move'
     }
   }

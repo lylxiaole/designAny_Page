@@ -54,15 +54,14 @@ export class objectBase {
   }
 }
 
-export class object_Method_InParam {
-  key?: string
-  name: string
-  obj: objectBase
-  // callbackbehavior: behavior
+export class object_InParam extends param {
+  refOutParamId: string
 }
 
 export class object_Method extends objectBase {
-  inputParams: param[] = []
+  preObjIds: string[]
+  nextObjIds: string[]
+  inputParams: object_InParam[] = []
   outParam: param = null
   dynamic: boolean = false
 

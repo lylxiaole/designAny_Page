@@ -4,7 +4,6 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 export enum flowNodeType {
   funcNormalNode = 'funcNormalNode'
 }
-
 //锚点类型
 export enum anchorType {
   inParam = 'inParam',
@@ -24,13 +23,12 @@ export function flowDesignNode(funcCode: funcCode, flowNode: flowNodeType) {
 export function findFlowNodeInner(funcCode: funcCode) {
   return allFlowNodes.find((o) => o.prototype.$lyl_flowNode.funcCode === funcCode)
 }
-
 export function findFlowNode(funcCode: funcCode) {
   let find = allFlowNodes.find((o) => o.prototype.$lyl_flowNode.funcCode === funcCode)
   if (find) {
     return find.prototype.$lyl_flowNode.flowNode
   } else {
-    return null
+    return flowNodeType.funcNormalNode
   }
 }
 

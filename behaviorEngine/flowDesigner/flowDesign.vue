@@ -54,31 +54,57 @@ export default class index extends ComponentBase {
   // **********************************************
   public getFlowData() {
     let graphData = this.currentFlow.getGraphRawData()
-
     let allObjs: object_Method[] = []
+    //遍历所有流程节点
     for (let index = 0; index < graphData.nodes.length; index++) {
-      const node = graphData.nodes[index]
-
-      let actObj = node.properties.actObj as any
-      allObjs.push(actObj)
+      //假设每个遍历的节点都是目标节点
+      const targetNode = graphData.nodes[index]
+      let targetActObj = targetNode.properties.actObj as object_Method
+      // *******遍历所有连线，找寻来源节点、锚点的对应关系**********************************
+      let preObjIds = []
+      //获取目标节点所有入参的连线
+      let preEdges = graphData.edges.filter((o) => o.targetNodeId === targetActObj.id)
+      for (let jndex = 0; jndex < preEdges.length; jndex++) {
+        const edge = preEdges[jndex]
+        if (preObjIds.indexOf(edge.sourceNodeId) < 0) {
+          //记录所有入参节点的ID
+          preObjIds.push(edge.sourceNodeId)
+        }
+        //通过连线的目标锚点的Id,找到目标节点对应的入参。如果找不到入参，代表连线仅仅是记录顺序，不传递数据
+        let targetInParam = targetActObj.inputParams.find((o) => o.key === edge.targetAnchorId)
+        //通过连线的来源节点Id和锚点Id,找到对应的来源节点的出参。
+        let sourceNode = graphData.nodes.find((o) => o.id === edge.sourceNodeId)
+        let sourceActObj = sourceNode.properties.actObj as object_Method
+        let sourceOutParam = sourceActObj.outParam
+        if (targetInParam && sourceOutParam) {
+          //如果出参和入参都存在。记录下来。
+          targetInParam.refOutParamId = sourceOutParam.key
+        } else if (targetInParam && !sourceOutParam) {
+          //如果目标节点存在入参，但源节点不存在出参。报错并中断
+          alert(`节点${targetNode.text}的输入${targetInParam.name}连线错误。来源节点没有输出！请检查`)
+          return
+        } else if (!targetInParam && sourceOutParam) {
+          //如果目标节点不存在入参，但源节点存在出参。通过但不记录，此处仅用于连线作用，不附带参数
+        }
+      }
+      targetActObj.preObjIds = preObjIds
+      // *******遍历所有连线,找到下级目标节点的Id**********************************
+      let nextObjIds = []
+      // 获取目标节点所有出参的连线
+      let nextEdges = graphData.edges.filter((o) => o.sourceNodeId === targetActObj.id)
+      for (let jndex = 0; jndex < nextEdges.length; jndex++) {
+        const edge = nextEdges[jndex]
+        if (nextObjIds.indexOf(edge.targetNodeId) < 0) {
+          //记录所有入参节点的ID
+          nextObjIds.push(edge.targetNodeId)
+        }
+      }
+      targetActObj.nextObjIds = nextObjIds
+      // *****************************************
+      allObjs.push(targetActObj)
     }
-
-    for (let index = 0; index < graphData.edges.length; index++) {
-      const edge = graphData.edges[index]
-
-      let sourceNode = this.currentFlow.getNodeModelById(edge.sourceNodeId)
-      let targetNode = this.currentFlow.getNodeModelById(edge.targetNodeId)
-
-      debugger
-      let sourceAnchor = sourceNode.getAnchorInfo(edge.sourceAnchorId)
-      let sourceObj = allObjs.find((o) => o.id === sourceAnchor.id)
-      debugger
-      let targetAnchor = targetNode.getAnchorInfo(edge.targetAnchorId)
-      let targetObj = allObjs.find((o) => o.id === targetAnchor.id)
-      debugger
-    }
-
-    return null
+    debugger
+    return allObjs
   }
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
@@ -112,7 +138,7 @@ export default class index extends ComponentBase {
   // ****************流程节点操作******************************
   private addFlowNode(nodeType: flowNodeType, x, y, actObj: object_Method) {
     this.currentFlow.addNode({
-      id: getUuid(),
+      id: actObj.id,
       type: nodeType,
       x: x,
       y: y,
@@ -127,4 +153,4 @@ export default class index extends ComponentBase {
 
 <style lang="less"   >
 @import './flowDesigner.less';
-</style> ./flowVueNodes/funcNormalNode./flowNodes/funcNormalNode
+</style>  

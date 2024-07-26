@@ -30,7 +30,6 @@ export function funcToObj(actFunc: any): objectBase {
   obj.description = actFunc.prototype.$lyl_actFunc.desc
   return obj
 }
-
 //根据方法的信息，把方法的元数据组织成树结构，提供给设计器使用
 export function getFuncObjsTree() {
   let res = [] //object_group
@@ -64,7 +63,6 @@ export function getFuncObjByGroup(group: funcGroup) {
 
   return objs
 }
-
 export function getFuncObjByObjType(objType: objectType) {
   let funcs = allActFunctions.filter((o: any) => o.prototype.$lyl_actFunc.objType == objType)
   let objs = []
@@ -72,10 +70,8 @@ export function getFuncObjByObjType(objType: objectType) {
     const element = funcs[index]
     objs.push(funcToObj(element))
   }
-
   return objs
 }
-
 export function getFuncByType(funcCode: funcCode) {
   // window.console.log('行为代码2', funcCode)
   var res = allActFunctions.find((o: any) => o.prototype.$lyl_actFunc.funcCode == funcCode)
@@ -85,7 +81,6 @@ export function getFuncByType(funcCode: funcCode) {
     return null
   }
 }
-
 export function getFuncObjByType(funcCode: funcCode): objectBase {
   // window.console.log('行为代码2', funcCode)
   var res = allActFunctions.find((o: any) => o.prototype.$lyl_actFunc.funcCode == funcCode)
