@@ -53,13 +53,13 @@ export default class index extends ComponentBase {
   }
   // **********************************************
   public getFlowData() {
-    let graphData = this.currentFlow.getGraphData()
+    let graphData = this.currentFlow.getGraphRawData()
 
     let allObjs: object_Method[] = []
     for (let index = 0; index < graphData.nodes.length; index++) {
       const node = graphData.nodes[index]
 
-      let actObj = node.properties.actObj
+      let actObj = node.properties.actObj as any
       allObjs.push(actObj)
     }
 

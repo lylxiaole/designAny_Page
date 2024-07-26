@@ -33,7 +33,6 @@ class VueHtmlNode extends HtmlNode {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type, text } = anchorData
-
     return lfh('g', {}, [lfh('rect', { x: x, y: y, width: 10, height: 10, stroke: '#000000', strokeDasharray: '3 3' }), lfh('text', { x: x, y: y }, [text])])
   }
   setHtml(rootEl) {
@@ -58,13 +57,13 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     this.sourceRules.push({
       message: '只允许从右边的锚点连出',
       validate: (sourceNode, targetNode, sourceAnchor) => {
-        return sourceAnchor.type === 'outParam'
+        return sourceAnchor.type === 'outParam' || sourceAnchor.type === 'just_out'
       }
     })
     this.targetRules.push({
       message: '只允许连接左边的锚点',
       validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
-        return targetAnchor.type === 'inParam'
+        return targetAnchor.type === 'inParam' || targetAnchor.type === 'just_in'
       }
     })
 
@@ -79,7 +78,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
   getAnchorStyle(anchorInfo) {
     const style = super.getAnchorStyle(anchorInfo)
 
-    if (anchorInfo.type === 'left') {
+    if (anchorInfo.type === 'inParam' || anchorInfo.type === 'just_in') {
       style.fill = 'red'
       style.hover.fill = 'red'
       style.hover.stroke = 'red'
@@ -113,17 +112,30 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     }
 
     const anchors = []
-    for (let index = 0; index < inParams.length; index++) {
-      let inParam = inParams[index]
+
+    if (inParams.length > 0) {
+      for (let index = 0; index < inParams.length; index++) {
+        let inParam = inParams[index]
+        anchors.push({
+          x: x - width / 2 - 10,
+          y: y - height / 2 + index * 30,
+          id: `${inParam.key}`,
+          name: inParam.name,
+          type: 'inParam',
+          text: '输入' + (index + 1) + ':' + inParam.name
+        })
+      }
+    } else {
       anchors.push({
-        x: x - width / 2 - 10,
-        y: y - height / 2 + index * 30,
-        id: `${inParam.key}`,
-        name: inParam.name,
-        type: 'inParam',
-        text: '输入' + (index + 1) + ':' + inParam.name
+        x: x - width / 2,
+        y: y - height / 2,
+        id: getUuid(),
+        name: '',
+        type: 'just_in',
+        text: '连线'
       })
     }
+
     if (outParam) {
       anchors.push({
         x: x + width / 2,
@@ -132,6 +144,15 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         name: outParam.name,
         type: 'outParam',
         text: '输出'
+      })
+    } else {
+      anchors.push({
+        x: x + width / 2,
+        y: y,
+        id: getUuid(),
+        name: '',
+        type: 'just_out',
+        text: '连线'
       })
     }
 
