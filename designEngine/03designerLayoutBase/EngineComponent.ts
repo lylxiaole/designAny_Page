@@ -25,14 +25,6 @@ export default class EngineComponent extends EngineContainer {
   @DPropAttr(new Number_Setting('层级设置', PropertyGroupName.normal, true))
   public zIndex: number = 1
 
-  public get topParentPage(): EnginePage {
-    let res: EngineLayout = this.parentLayout
-    while (res && res.parentLayout) {
-      res = res.parentLayout
-    }
-    return res as EnginePage
-  }
-
   created() {
     this.width = 200
     this.height = 200
@@ -40,7 +32,6 @@ export default class EngineComponent extends EngineContainer {
   }
 
   mounted() {}
-
   // *******************************publics**************************************************************************************
   protected override loadCompleted(): void {
     super.loadCompleted()
