@@ -127,7 +127,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       anchors.push({
         x: x - width / 2,
         y: y - height / 2,
-        id: getUuid(),
+        id: actObj.id + '_in',
         name: '',
         type: 'just_in',
         text: '连线'
@@ -147,7 +147,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       anchors.push({
         x: x + width / 2,
         y: y,
-        id: getUuid(),
+        id: actObj.id + '_out',
         name: '',
         type: 'just_out',
         text: '连线'

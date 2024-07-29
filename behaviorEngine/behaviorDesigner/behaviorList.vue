@@ -50,7 +50,7 @@ export default class behaviorList extends Vue {
     newbeh.id = getUuid()
     newbeh.name = '新建行为'
     newbeh.workRange = 'page'
-    newbeh.actions = []
+    // newbeh.actions = []
     newbeh.variables = []
     newbeh.inparam = {}
     this.currentPage.behaviors.unshift(newbeh)

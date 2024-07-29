@@ -31,6 +31,7 @@ export class behavior {
   variables: variable[] = [] //当前行文的上下文变量
   // actions: action[] = []
   actObjs: objectBase[] = []
+  flowData: any
 }
 
 export class action {

@@ -22,10 +22,7 @@ import defaultEdge from './flowEdges/defaultEdge'
 })
 export default class index extends ComponentBase {
   private currentFlow: LogicFlow
-  private flowdata: any = {
-    nodes: [],
-    edges: []
-  }
+
   private silentConfig = {
     stopScrollGraph: true,
     stopMoveGraph: false,
@@ -33,26 +30,9 @@ export default class index extends ComponentBase {
     hideAnchors: false
   }
   // ********初始化**************************************
-  mounted() {
-    this.drawFlow()
-  }
-  private async drawFlow() {
-    await this.$nextTick()
-    this.currentFlow = new LogicFlow({
-      container: this.$refs.flowarea as any,
-      grid: true,
-      ...this.silentConfig
-    })
-    this.currentFlow.register(funcNormalNode)
-    this.currentFlow.register(defaultEdge)
-    this.currentFlow.setDefaultEdgeType('defaultEdge')
-    this.currentFlow.render(this.flowdata)
-    this.currentFlow.translateCenter()
-
-    this.onFlowCreated(this.currentFlow)
-  }
-  // **********************************************
-  public getFlowData() {
+  mounted() {}
+  // *********保存时，获取流程数据，转换成行为列表***********
+  public getFlowData(): any {
     let graphData = this.currentFlow.getGraphRawData()
     let allObjs: object_Method[] = []
     //组织流程节点顺序关系
@@ -103,8 +83,28 @@ export default class index extends ComponentBase {
       // *****************************************
       allObjs.push(targetActObj)
     }
-    debugger
-    return allObjs
+    return { allObjs: allObjs, flowData: graphData }
+  }
+
+  public async setFlowData(flowdata: any) {
+    if (!flowdata) {
+      flowdata = {
+        nodes: [],
+        edges: []
+      }
+    }
+
+    this.currentFlow = new LogicFlow({
+      container: this.$refs.flowarea as any,
+      grid: true,
+      ...this.silentConfig
+    })
+    this.currentFlow.register(funcNormalNode)
+    this.currentFlow.register(defaultEdge)
+    this.currentFlow.setDefaultEdgeType('defaultEdge')
+    this.currentFlow.render(flowdata)
+    this.currentFlow.translateCenter()
+    this.onFlowCreated(this.currentFlow)
   }
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
@@ -119,9 +119,8 @@ export default class index extends ComponentBase {
       alert('找不到对应的流程节点')
     }
 
-    this.addFlowNode(flowNode, event.offsetX, event.offsetY, actObj as object_Method)
+    this.addFlowNode(flowNode, actObj as object_Method, event.offsetX, event.offsetY)
   }
-
   private onDragOver(event) {
     event.preventDefault()
     if (true) {
@@ -131,12 +130,11 @@ export default class index extends ComponentBase {
       }
     }
   }
-
   private onDragLeave() {
     this.isDragOver = false
   }
   // ****************流程节点操作******************************
-  private addFlowNode(nodeType: flowNodeType, x, y, actObj: object_Method) {
+  private addFlowNode(nodeType: flowNodeType, actObj: object_Method, x?, y?) {
     this.currentFlow.addNode({
       id: actObj.id,
       type: nodeType,
@@ -145,7 +143,15 @@ export default class index extends ComponentBase {
       properties: { actObj: actObj }
     })
   }
-
+  private addFlowEdge(sourceNodeId: string, sourceAnchorId: string, targetNodeId: string, targetAnchorId: string) {
+    // this.currentFlow.addEdge({
+    //   //      sourceNodeId: string;
+    //   // sourceAnchorId?: string;
+    //   // targetNodeId: string;
+    //   // targetAnchorId?: string;
+    // })
+  }
+  // ************************************************************
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
 }

@@ -41,21 +41,25 @@ import resourceTree from '../flowDesigner/resourceTree.vue'
   components: { flowDesign, resourceTree }
 })
 export default class behaviorDeatilSetting extends Vue {
-  // ************************************************************
+  currentPage: EnginePage = null
+  /**当前正在设置的行为 */
+  currentSettingBehavior: behavior = null
+  // ****************************************************
   private windowVisible: boolean = false
-  public show(behav: behavior, page: EnginePage) {
+  public async show(behav: behavior, page: EnginePage) {
     this.currentSettingBehavior = behav
     this.currentPage = page
-    // **************************************************
-    this.actionFactory = new factory(null, this.currentPage, this.currentSettingBehavior)
     this.windowVisible = true
+    await this.$nextTick()
+    ;(this.$refs.flowDesign as flowDesign).setFlowData(behav.flowData)
   }
   private onClose() {
     this.windowVisible = false
   }
   private onConfirm() {
-    let x = (this.$refs.flowDesign as flowDesign).getFlowData()
-    this.currentSettingBehavior.actObjs = x
+    let data = (this.$refs.flowDesign as flowDesign).getFlowData()
+    this.currentSettingBehavior.actObjs = data.allObjs
+    this.currentSettingBehavior.flowData = data.flowData
     this.windowVisible = false
   }
   private onCancel() {
@@ -65,42 +69,8 @@ export default class behaviorDeatilSetting extends Vue {
   private onFlowCreated(flow) {
     ;(this.$refs.resourceTree as resourceTree).setCurrentFlow(flow)
   }
-  // ***********************************************************
-  currentPage: EnginePage = null
-  /**当前正在设置的行为 */
-  currentSettingBehavior: behavior = null
-  //行为明细中，当前被选中的对象
-  private currentFocusObj: objectBase = null
-  private currentActionDetail: actionDetail | action = null
-  private actionFactory: factory = null
 
-  @Watch('currentSettingBehavior', { deep: true, immediate: true })
-  private oncurrentSettingBehaviorChanged(newval: behavior, oldval: behavior) {
-    if (oldval != newval) {
-      this.currentActionDetail = null
-      this.currentFocusObj = null
-    }
-  }
-
-  private currentSelectAction(newval: actionDetail | action) {
-    window.console.log('1动作节点变化了', newval)
-
-    this.currentActionDetail = newval
-    this.currentFocusObj = null
-  }
-  //处理就数据
-  private dealOldJsonData(objJsonData: objectBase[]): objectBase[] {
-    var newobjs: objectBase[] = []
-
-    //将就数据重新实例化成类型
-    for (let index = 0; index < objJsonData.length; index++) {
-      const obj = objJsonData[index]
-      var newObjClone = this.actionFactory.makeObject(obj.funcCode)
-      // newObjClone.cloneFrom(obj)
-      // newobjs.push(newObjClone)
-    }
-    return newobjs
-  }
+  // *****************************************************
 }
 </script>
 
