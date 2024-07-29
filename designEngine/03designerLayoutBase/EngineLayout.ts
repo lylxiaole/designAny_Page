@@ -23,7 +23,6 @@ export class Point {
 @Options({})
 export default class EngineLayout extends Vue {
   public renderContainer: any = {}
-  public isDesigning: boolean = false
   public isNeedSave: boolean = false
   // ******实现vue2.0中的事件监听**************************
   private lylevents: any = {}
@@ -66,6 +65,7 @@ export default class EngineLayout extends Vue {
   public parentLayout: EngineLayout
   /**子级布局 */
   public children: EngineLayout[] = []
+
   public get topLayout(): EngineLayout {
     if (!this.parentLayout) {
       return null
@@ -91,6 +91,8 @@ export default class EngineLayout extends Vue {
     return res
   }
 
+  @Prop()
+  public isDesigning: boolean = false
   @Prop()
   public designerMethods: LayoutMethod[]
   @Prop()
@@ -221,8 +223,8 @@ export default class EngineLayout extends Vue {
   }
 
   @DEventAttr({ eventName: '测试事件', description: '', inParams: [{ name: '名称', key: 'name' }], hasOutParam: false })
-  protected testEvent(params: param[]): string {
-    return '123'
+  protected testEvent(name: string): string {
+    return name
   }
 
   // *************************privates****************************************************************************
@@ -319,9 +321,6 @@ export default class EngineLayout extends Vue {
       return
     }
   }
-
-  /**触发事件 */
-  protected async triggerEvent(name: string, inparams: any[]) {}
   // *************************对外公布方法****************************************************************************
   public async loadData(data: SaveInfo) {
     this.children = []

@@ -1,5 +1,8 @@
-import { paramType, param } from '@behaviorEngine/index'
+import { paramType, param, factory } from '@behaviorEngine/index'
 import { deepClone, getUuid } from '@common/utils'
+import EngineLayout from '../EngineLayout'
+import EnginePage from '../EnginePage'
+//TODO 参考https://github.com/kaorun343/vue-property-decorator/blob/master/src/helpers/provideInject.ts
 
 //布局的事件所包含的行为列表
 export class LayoutEventBehaviors {
@@ -20,8 +23,44 @@ class LayoutEventCache {
 }
 
 export const allEventCache: LayoutEventCache[] = []
+function isPromise(obj: any): obj is Promise<any> {
+  return obj instanceof Promise || (obj && typeof obj.then === 'function')
+}
 export function DEventAttr(info: LayoutEvent) {
-  return function (target: any, eventField: any, desc: any) {
+  return function (target: EngineLayout, eventField: any, desc: any) {
+    // ******重写方法，使方法和行为绑定********************************************
+    const original = desc.value
+    desc.value = function emitter(...args: any[]) {
+      const emit = (returnValue: any) => {
+        let currentLayout = this as EngineLayout
+
+        if (currentLayout.isDesigning == false) {
+          let findEvent = currentLayout.behaviorBinds.find((o) => o.eventName === info.eventName)
+          if (!findEvent) {
+            return
+          }
+          debugger
+          let topPage = currentLayout.topLayout as EnginePage
+
+          for (let index = 0; index < topPage.behaviors.length; index++) {
+            const behav = topPage.behaviors[index]
+            if (findEvent.behaviorIds.indexOf(behav.id) > -1) {
+              let actFactory = new factory(target, topPage, behav)
+              actFactory.exacteAction()
+            }
+          }
+        }
+      }
+      const returnValue: any = original.apply(this, args)
+      if (isPromise(returnValue)) {
+        returnValue.then(emit)
+      } else {
+        emit(returnValue)
+      }
+
+      return returnValue
+    }
+    // **************************************************
     info.eventField = eventField
     let targetCons = target.constructor
     let findCache = allEventCache.find((o) => o.target === targetCons)
@@ -29,7 +68,6 @@ export function DEventAttr(info: LayoutEvent) {
       allEventCache.push({ target: targetCons, info: [] })
       findCache = allEventCache.find((o) => o.target === targetCons)
     }
-    // **************************************
     let findProp = findCache.info.find((o) => o.eventField === eventField)
     if (!findProp) {
       var newperperty = deepClone(info)

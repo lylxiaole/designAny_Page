@@ -55,7 +55,7 @@ export default class index extends ComponentBase {
   public getFlowData() {
     let graphData = this.currentFlow.getGraphRawData()
     let allObjs: object_Method[] = []
-    //遍历所有流程节点
+    //组织流程节点顺序关系
     for (let index = 0; index < graphData.nodes.length; index++) {
       //假设每个遍历的节点都是目标节点
       const targetNode = graphData.nodes[index]

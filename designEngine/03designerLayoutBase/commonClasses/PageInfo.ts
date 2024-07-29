@@ -1,4 +1,5 @@
 export const allPages: any[] = []
+//TODO 参考https://github.com/kaorun343/vue-property-decorator/blob/master/src/helpers/provideInject.ts
 
 export function DPageAttr(paltform: string, preOrDesign: string) {
   return function (target: Function) {

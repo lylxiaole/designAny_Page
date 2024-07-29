@@ -47,9 +47,8 @@ export default class ViewShell extends Vue {
     if (this.component != null) {
       this.component.destorymethod()
     }
-    let vueComp = designDrawDomReal(this.$refs.compContent, comp)
+    let vueComp = designDrawDomReal(this.$refs.compContent, comp, false)
     this.component = vueComp as any
-    this.component.isDesigning = false
     $(this.component.$el).css('width', '100%')
     $(this.component.$el).css('height', '100%')
 

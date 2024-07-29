@@ -37,57 +37,14 @@ export default class EngineComponent extends EngineContainer {
     this.width = 200
     this.height = 200
     /**注册事件 */
-    this.onCompLoaded()
   }
 
   mounted() {}
 
-  // *******************************protecteds**************************************************************************************
-  protected override async triggerEvent(name: string, inparam: any) {
-    super.triggerEvent(name, inparam)
-    if (!this.topParentPage) {
-      return
-    }
-    if (this.isDesigning) {
-      return
-    }
-    // window.console.log('触发事件:', name, this.$el)
-    var event = this.behaviorBinds.find((o) => o.eventName == name)
-    if (!event) {
-      return
-    }
-
-    //TODO 在事件设计的数据中找到事件,并调用事件
-    for (let index = 0; index < event.behaviorIds.length; index++) {
-      const bid = event.behaviorIds[index]
-      let behavior = this.topParentPage.behaviors.find((o) => o.id == bid)
-      if (!behavior) {
-        continue
-      }
-      behavior.inparam = null
-      if (inparam) {
-        behavior.inparam = inparam
-      }
-      let actfac = new factory(this, this.topParentPage, behavior)
-      // console.info('behavior.inparam', behavior.inparam)
-      try {
-        await actfac.exacteAction()
-      } catch (error) {
-        break
-      } finally {
-        behavior = null
-        actfac = null
-      }
-    }
-    //TODO 在事件设计的数据中找到事件,并调用事件
-    return
-  }
   // *******************************publics**************************************************************************************
   protected override loadCompleted(): void {
     super.loadCompleted()
-    this.$nextTick(() => {
-      this.triggerEvent('控件加载完成事件', null)
-    })
+    this.onCompLoaded()
   }
   /**通用的验证方法，根据编码获取 */
   public commonValid(validatorArr: any[], value: any, callback: any, message: any) {

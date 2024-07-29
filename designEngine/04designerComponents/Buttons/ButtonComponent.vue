@@ -46,7 +46,7 @@ export default class ButtonComponent extends EngineComponent {
 
   private onClick(e) {
     e.stopPropagation()
-    this.triggerEvent('点击', null)
+    this.onClickEvent()
   }
 
   @DEventAttr({ eventName: '点击', description: '', inParams: [], hasOutParam: false })

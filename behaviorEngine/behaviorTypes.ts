@@ -29,7 +29,8 @@ export class behavior {
   description: string = ''
   inparam: any = {} //行为的入参
   variables: variable[] = [] //当前行文的上下文变量
-  actions: action[] = []
+  // actions: action[] = []
+  actObjs: objectBase[] = []
 }
 
 export class action {

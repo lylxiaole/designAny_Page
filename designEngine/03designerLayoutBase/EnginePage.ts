@@ -35,44 +35,9 @@ export default class EnginePage extends EngineContainer {
     $(window).unbind('resize', this.onWindowResize_NotScale as any)
   }
   // *******************************页面行为******************************************
-  protected override async triggerEvent(name: string, inparam: any) {
-    super.triggerEvent(name, inparam)
-    if (this.isDesigning) {
-      return
-    }
 
-    var event = this.behaviorBinds.find((o) => o.eventName == name)
-    if (!event) {
-      return
-    }
-
-    //TODO 在事件设计的数据中找到事件,并调用事件
-    for (let index = 0; index < event.behaviorIds.length; index++) {
-      let bid = event.behaviorIds[index]
-      let behavior = this.behaviors.find((o) => o.id == bid)
-      if (behavior) {
-        behavior.inparam = null
-        if (inparam) {
-          behavior.inparam = inparam
-        }
-        let actfa = new factory(this, this, behavior)
-        try {
-          await actfa.exacteAction()
-        } catch (error) {
-          break
-        } finally {
-          behavior = null
-          actfa = null
-        }
-      }
-    }
-    return
-  }
   public async reLoadPageData(pageData: SaveInfo) {
     this.reLoadData(pageData)
-    if (this.triggerEvent) {
-      await this.triggerEvent('加载完成', [])
-    }
   }
   public setPageInParams(params?: param[]) {
     if (!params) {
@@ -230,7 +195,7 @@ export default class EnginePage extends EngineContainer {
       this.setPageInParams(params)
       this.scaleSize(1 - this.currentScaleSize)
       await this.$nextTick()
-      await this.triggerEvent('加载完成', [])
+      await this.onLoadComplete()
     } catch (error) {
       window.console.error(error)
     } finally {

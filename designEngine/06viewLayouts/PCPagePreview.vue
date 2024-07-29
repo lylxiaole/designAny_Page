@@ -27,7 +27,7 @@ export default class PCPagePreview extends EnginePage {
   mounted() {}
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    let { virtualDom, vueComp } = designDrawDomVirtual(ViewShell)
+    let { virtualDom, vueComp } = designDrawDomVirtual(ViewShell, false)
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as ViewShell)
     let resComp = (vueComp as ViewShell).addComponent(compCon)

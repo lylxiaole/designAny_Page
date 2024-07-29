@@ -1,5 +1,6 @@
 import { paramType, param } from '@behaviorEngine/index'
 import { deepClone, getUuid } from '@common/utils'
+//TODO 参考https://github.com/kaorun343/vue-property-decorator/blob/master/src/helpers/provideInject.ts
 
 export class LayoutMethod {
   methodName?: string = ''

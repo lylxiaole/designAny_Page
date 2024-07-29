@@ -54,7 +54,7 @@ export default class PCPageDesign extends EnginePage {
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell)
+    let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell, true)
     this.allShells.push(vueComp as DesignShell)
 
     let resComp = (vueComp as DesignShell).addComponent(compCon)

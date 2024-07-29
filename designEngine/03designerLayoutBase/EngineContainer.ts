@@ -219,7 +219,6 @@ export default class EngineContainer extends EngineLayout {
   protected override async renderChildFromData(data: SaveInfo) {
     await super.renderChildFromData(data)
     let compVue = findSystemCompByCode(data.meta.compCode)
-
     await this.insertComponentLayout(compVue, data.meta, null, data)
   }
   /*************容器渲染子组件的虚方法**********************/
