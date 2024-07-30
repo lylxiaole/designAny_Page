@@ -32,7 +32,14 @@ class VueHtmlNode extends HtmlNode {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type, text } = anchorData
-    return lfh('g', {}, [lfh('rect', { x: x, y: y, width: 10, height: 10, stroke: '#000000', strokeDasharray: '3 3' }), lfh('text', { x: x, y: y }, [text])])
+    let textPositionX = -15
+    if (type === 'outParam' || type === 'just_out') {
+      textPositionX = 8
+    } else {
+      textPositionX = -20
+    }
+
+    return lfh('g', {}, [lfh('rect', { x: x, y: y, width: 10, height: 10, stroke: '#000000', strokeDasharray: '3 3' }), lfh('text', { x: x + textPositionX, y: y }, [text])])
   }
   setHtml(rootEl) {
     if (!this.isMounted) {
@@ -48,8 +55,8 @@ class VueHtmlNode extends HtmlNode {
 
 class VueHtmlNodeModel extends HtmlNodeModel {
   setAttributes() {
-    this.width = 100
-    this.height = 100
+    this.width = 120
+    this.height = 120
     this.text.editable = false
     this.inputData = this.text.value
 
@@ -100,7 +107,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       isSelected,
       properties: { actObj }
     } = this
-    console.log('getDefaultAnchor:', x)
     let inParams = []
     let outParam = null
 
@@ -112,15 +118,16 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     const anchors = []
     //TODO 需要设定 一个入参锚点只能连一条线
     if (inParams.length > 0) {
+      let agvHeight = height / inParams.length
       for (let index = 0; index < inParams.length; index++) {
         let inParam = inParams[index]
         anchors.push({
           x: x - width / 2 - 10,
-          y: y - height / 2 + index * 30,
+          y: y - height / 2 + index * agvHeight + agvHeight / 2,
           id: `${inParam.key}`,
           name: inParam.name,
           type: 'inParam',
-          text: '输入' + (index + 1) + ':' + inParam.name
+          text: inParam.name
         })
       }
     } else {
