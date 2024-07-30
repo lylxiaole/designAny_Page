@@ -2,7 +2,7 @@ import { deepClone } from '@common/utils'
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
-import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './actObject'
+import { objectBase } from './actObject'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from './actFuncBase'
 import { getFuncObjByType, getFuncByType } from './actResource'
 
@@ -58,8 +58,8 @@ export class factory {
 
     let topActObjs = this.currentBehavior.actObjs.filter((o) => !o.preObjIds || o.preObjIds.length < 1)
     for (let index = 0; index < topActObjs.length; index++) {
-      const actObj = topActObjs[index] as object_Method
-      let newActObj = this.cloneObject(actObj) as object_Method
+      const actObj = topActObjs[index] as objectBase
+      let newActObj = this.cloneObject(actObj) as objectBase
       let result = newActObj.ref
       if (actObj.outParam) {
         actObj.outParam.val = result
@@ -69,7 +69,7 @@ export class factory {
     }
   }
 
-  private async excuteChildObjs(parentObj: object_Method, childObjs: object_Method[]) {
+  private async excuteChildObjs(parentObj: objectBase, childObjs: objectBase[]) {
     for (let index = 0; index < childObjs.length; index++) {
       const childObj = childObjs[index]
 
@@ -79,13 +79,13 @@ export class factory {
           inparam.val = parentObj.outParam.val
         }
       }
-      // ******************
+      // *********入参是否都具备了值，如果有入参没具备值，暂时先不执行*********
       let childObj_NoVal_Params = childObj.inputParams.filter((o) => !o.val)
       if (childObj_NoVal_Params.length > 0) {
         continue
       }
-
-      let newActObj = this.cloneObject(childObj) as object_Method
+      // 入参 都具备了值，可以开始执行
+      let newActObj = this.cloneObject(childObj) as objectBase
       let result = newActObj.ref
       if (newActObj.outParam) {
         childObj.outParam.val = result

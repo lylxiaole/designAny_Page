@@ -31,7 +31,7 @@ import { Options, Vue } from 'vue-class-component'
 import { ref, toRaw } from '@vue/reactivity'
 
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
-import { behavior, action, actionDetail, factory, objectBase, objectType, object_Method } from '@behaviorEngine/index'
+import { behavior } from '@behaviorEngine/index'
 import { EnginePage } from '@designEngine/index'
 
 import flowDesign from '../flowDesigner/flowDesign.vue'

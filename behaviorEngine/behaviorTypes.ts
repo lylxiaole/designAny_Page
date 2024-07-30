@@ -1,5 +1,5 @@
 /******************************行为相关 **************************/
-import { objectBase, object_Method } from './actObject'
+import { objectBase } from './actObject'
 
 export enum formulaType {
   cute = 'cute', //计算
@@ -30,7 +30,7 @@ export class behavior {
   inparam: any = {} //行为的入参
   variables: variable[] = [] //当前行文的上下文变量
   // actions: action[] = []
-  actObjs: object_Method[] = []
+  actObjs: objectBase[] = []
   flowData: any
 }
 

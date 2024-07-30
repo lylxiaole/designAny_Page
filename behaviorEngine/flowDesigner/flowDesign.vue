@@ -10,7 +10,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { getUuid } from '@common/utils'
-import { object_Method, objectBase } from '@behaviorEngine/actObject'
+import { objectBase } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import { findFlowNode, flowNodeType } from './flowTypes'
@@ -34,12 +34,12 @@ export default class index extends ComponentBase {
   // *********保存时，获取流程数据，转换成行为列表***********
   public getFlowData(): any {
     let graphData = this.currentFlow.getGraphRawData()
-    let allObjs: object_Method[] = []
+    let allObjs: objectBase[] = []
     //组织流程节点顺序关系
     for (let index = 0; index < graphData.nodes.length; index++) {
       //假设每个遍历的节点都是目标节点
       const targetNode = graphData.nodes[index]
-      let targetActObj = targetNode.properties.actObj as object_Method
+      let targetActObj = targetNode.properties.actObj as objectBase
       // *******遍历所有连线，找寻来源节点、锚点的对应关系**********************************
       let preObjIds = []
       //获取目标节点所有入参的连线
@@ -54,7 +54,7 @@ export default class index extends ComponentBase {
         let targetInParam = targetActObj.inputParams.find((o) => o.key === edge.targetAnchorId)
         //通过连线的来源节点Id和锚点Id,找到对应的来源节点的出参。
         let sourceNode = graphData.nodes.find((o) => o.id === edge.sourceNodeId)
-        let sourceActObj = sourceNode.properties.actObj as object_Method
+        let sourceActObj = sourceNode.properties.actObj as objectBase
         let sourceOutParam = sourceActObj.outParam
         if (targetInParam && sourceOutParam) {
           //如果出参和入参都存在。记录下来。
@@ -119,7 +119,7 @@ export default class index extends ComponentBase {
       alert('找不到对应的流程节点')
     }
 
-    this.addFlowNode(flowNode, actObj as object_Method, event.offsetX, event.offsetY)
+    this.addFlowNode(flowNode, actObj as objectBase, event.offsetX, event.offsetY)
   }
   private onDragOver(event) {
     event.preventDefault()
@@ -134,7 +134,7 @@ export default class index extends ComponentBase {
     this.isDragOver = false
   }
   // ****************流程节点操作******************************
-  private addFlowNode(nodeType: flowNodeType, actObj: object_Method, x?, y?) {
+  private addFlowNode(nodeType: flowNodeType, actObj: objectBase, x?, y?) {
     this.currentFlow.addNode({
       id: actObj.id,
       type: nodeType,

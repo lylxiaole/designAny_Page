@@ -1,5 +1,5 @@
 import { allActFunctions, funcGroup, funcCode } from './actFuncBase'
-import { objectBase, objectType, object_FixedVal, object_Method, object_Signs, object_Variable } from './actObject'
+import { objectBase, objectType } from './actObject'
 import { getUuid } from '@common/utils'
 
 export class object_group {
@@ -12,17 +12,7 @@ export class object_group {
 //actFunc转actObj
 export function funcToObj(actFunc: any): objectBase {
   var objType = actFunc.prototype.$lyl_actFunc.objType
-  var obj = null
-  if (objType === objectType.fixedVal) {
-    obj = new object_FixedVal()
-  } else if (objType === objectType.method) {
-    obj = new object_Method()
-  } else if (objType === objectType.signs) {
-    obj = new object_Signs()
-  } else if (objType === objectType.variable) {
-    obj = new object_Variable()
-  }
-
+  var obj = new objectBase()
   obj.id = getUuid()
   obj.name = actFunc.prototype.$lyl_actFunc.name
   obj.objType = objType

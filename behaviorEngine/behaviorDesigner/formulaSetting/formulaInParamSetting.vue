@@ -25,17 +25,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 
 import { deepClone, getUuid } from '@common/utils'
 // import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
-import {
-  behavior,
-  action,
-  actionDetail,
-  objectBase,
-  objectType,
-  object_Method,
-  object_Method_InParam,
-  factory,
-  funcCode
-} from '@behaviorEngine/index'
+import { behavior, action, actionDetail, objectBase, objectType, factory, funcCode } from '@behaviorEngine/index'
 
 @Options({
   components: {
@@ -43,81 +33,73 @@ import {
   }
 })
 export default class formulaInParamSetting extends Vue {
-  @Prop() currentObj: object_Method
-  @Prop() actionFactory: factory
-
-  @Watch('currentObj', { deep: true, immediate: true })
-  private onCurrentObjChange(newval: any) {
-    // window.console.log('入参设置,当前选择的类型实例', newval)
-  }
-
-  private get resourceTypesNotAllow(): string[] {
-    var array: string[] = []
-    array.push(funcCode.workflows)
-    array.push(funcCode.controlMethods)
-    return array
-  }
-
-  //公式的入参
-  private get currentInParams(): object_Method_InParam[] {
-    if (!this.currentObj || this.currentObj.objType != objectType.method) {
-      return []
-    }
-    var objmeth = this.currentObj as object_Method
-
-    for (let index = 0; index < objmeth.inputParams.length; index++) {
-      var param = objmeth.inputParams[index]
-      var newobj = this.actionFactory.makeObject(param.obj.funcCode)
-      newobj.cloneFrom(param.obj)
-      param.obj = newobj
-    }
-    return objmeth.inputParams
-  }
-  //
-  private onSelectNodeChanged(newObj: objectBase, oldObj: objectBase) {
-    if (!newObj) {
-      return
-    }
-    // window.console.log('替换参数节点')
-    var newObjClone = this.actionFactory.makeObject(newObj.funcCode)
-    newObjClone.cloneFrom(newObj)
-    newObjClone.id = getUuid()
-    //找到原有节点，并用新的节点替代
-    var currentObjMethod = this.currentObj as object_Method
-    var findInParam = currentObjMethod.inputParams.find((o) => o.obj == oldObj)
-    findInParam.obj = newObjClone
-  }
-
-  private addParam() {
-    this.newParamName = ''
-    this.newParanamVisible = true
-  }
-
-  newParamName: string = ''
-  newParanamVisible: boolean = false
-  private onDeleteFormula(obj: objectBase) {
-    var find = this.currentObj.inputParams.find((o) => o.obj == obj)
-    var index = this.currentObj.inputParams.indexOf(find)
-    this.currentObj.inputParams.splice(index, 1)
-  }
-
-  private onCancelNewParam() {
-    this.newParanamVisible = false
-  }
-  private onSureNewParam() {
-    if (!this.newParamName) {
-      return
-    }
-    var findsamename = this.currentObj.inputParams.find((o) => o.name == this.newParamName)
-    if (findsamename) {
-      alert('已经定义了相同名称的参数!')
-      return
-    }
-
-    var newobj = this.actionFactory.makeObject(funcCode.fixedValString)
-    this.currentObj.inputParams.push({ name: this.newParamName, obj: newobj, isModel: false })
-    this.newParanamVisible = false
-  }
+  // @Prop() currentObj: objectBase
+  // @Prop() actionFactory: factory
+  // @Watch('currentObj', { deep: true, immediate: true })
+  // private onCurrentObjChange(newval: any) {
+  //   // window.console.log('入参设置,当前选择的类型实例', newval)
+  // }
+  // private get resourceTypesNotAllow(): string[] {
+  //   var array: string[] = []
+  //   array.push(funcCode.workflows)
+  //   array.push(funcCode.controlMethods)
+  //   return array
+  // }
+  // //公式的入参
+  // private get currentInParams(): objectBase_InParam[] {
+  //   if (!this.currentObj || this.currentObj.objType != objectType.method) {
+  //     return []
+  //   }
+  //   var objmeth = this.currentObj as objectBase
+  //   for (let index = 0; index < objmeth.inputParams.length; index++) {
+  //     var param = objmeth.inputParams[index]
+  //     var newobj = this.actionFactory.makeObject(param.obj.funcCode)
+  //     newobj.cloneFrom(param.obj)
+  //     param.obj = newobj
+  //   }
+  //   return objmeth.inputParams
+  // }
+  // //
+  // private onSelectNodeChanged(newObj: objectBase, oldObj: objectBase) {
+  //   if (!newObj) {
+  //     return
+  //   }
+  //   // window.console.log('替换参数节点')
+  //   var newObjClone = this.actionFactory.makeObject(newObj.funcCode)
+  //   newObjClone.cloneFrom(newObj)
+  //   newObjClone.id = getUuid()
+  //   //找到原有节点，并用新的节点替代
+  //   var currentObjMethod = this.currentObj as objectBase
+  //   var findInParam = currentObjMethod.inputParams.find((o) => o.obj == oldObj)
+  //   findInParam.obj = newObjClone
+  // }
+  // private addParam() {
+  //   this.newParamName = ''
+  //   this.newParanamVisible = true
+  // }
+  // newParamName: string = ''
+  // newParanamVisible: boolean = false
+  // private onDeleteFormula(obj: objectBase) {
+  //   var find = this.currentObj.inputParams.find((o) => o.obj == obj)
+  //   var index = this.currentObj.inputParams.indexOf(find)
+  //   this.currentObj.inputParams.splice(index, 1)
+  // }
+  // private onCancelNewParam() {
+  //   this.newParanamVisible = false
+  // }
+  // private onSureNewParam() {
+  //   if (!this.newParamName) {
+  //     return
+  //   }
+  //   var findsamename = this.currentObj.inputParams.find((o) => o.name == this.newParamName)
+  //   if (findsamename) {
+  //     alert('已经定义了相同名称的参数!')
+  //     return
+  //   }
+  //   var newobj = this.actionFactory.makeObject(funcCode.fixedValString)
+  //   this.currentObj.inputParams.push({ name: this.newParamName, obj: newobj, isModel: false })
+  //   this.newParanamVisible = false
+  // }
 }
 </script>
 

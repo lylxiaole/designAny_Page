@@ -46,16 +46,7 @@ import { Component, Emit, Watch, Prop, InjectReactive, ProvideReactive } from 'v
 import { deepClone, getUuid } from '@common/utils'
 
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
-import {
-  object_Signs,
-  objectType,
-  funcGroup,
-  getFuncObjByObjType,
-  object_Method,
-  object_callback,
-  object_FixedVal,
-  object_Variable
-} from '@behaviorEngine/index'
+import { object_callback } from '@behaviorEngine/index'
 import resourceChooseWindow from './resoucesChooseWindow.vue'
 import callbackSetting from './callbackSetting/callbackSetting.vue'
 
@@ -64,7 +55,7 @@ import callbackSetting from './callbackSetting/callbackSetting.vue'
 })
 export default class signChooser extends Vue {
   @Prop()
-  private resourceObj: object_callback | object_Method | object_FixedVal | object_Variable
+  private resourceObj: object_callback
 
   mounted() {}
 

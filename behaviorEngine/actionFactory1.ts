@@ -2,7 +2,7 @@ import { deepClone } from '@common/utils'
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
-import { objectBase, object_FixedVal, object_Method, object_Signs, object_Variable, objectType } from './actObject'
+import { objectBase, objectType } from './actObject'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from './actFuncBase'
 import { getFuncObjByType, getFuncByType } from './actResource'
 
@@ -51,10 +51,10 @@ export class factory {
     }
     window.console.log('*****************执行行为***********************', this.currentBehavior.name)
     try {
-      for (let index = 0; index < this.currentBehavior.actions.length; index++) {
-        let action = this.currentBehavior.actions[index]
-        await this.excuteActionDetail(action)
-      }
+      // for (let index = 0; index < this.currentBehavior.actions.length; index++) {
+      //   let action = this.currentBehavior.actions[index]
+      //   await this.excuteActionDetail(action)
+      // }
     } catch (error) {
       if (error == undefined) {
         throw error

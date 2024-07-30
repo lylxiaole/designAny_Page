@@ -5,7 +5,7 @@ import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from './behaviorTypes'
 
 import { objectBase } from './actObject'
-import { objectType, object_FixedVal, object_Method, object_callback, popupCallback, object_Signs, object_Variable } from './actObject'
+import { objectType, object_callback, popupCallback } from './actObject'
 
 //方法资源分组
 export enum funcGroup {

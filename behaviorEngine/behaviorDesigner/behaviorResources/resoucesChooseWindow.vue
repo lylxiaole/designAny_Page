@@ -32,7 +32,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 import { deepClone, getUuid } from '@common/utils'
-import { objectBase, objectType, object_Variable, object_FixedVal, object_Method, object_callback } from '@behaviorEngine/index'
+import { objectBase, objectType, object_callback } from '@behaviorEngine/index'
 
 import resouceChooseComp from './resouceChooseComp.vue'
 
