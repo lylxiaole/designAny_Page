@@ -21,6 +21,13 @@ export class factory {
     this.fillFuncToObj(obj, funcCode)
     return obj
   }
+
+  public cloneObject(oldObj: objectBase): objectBase {
+    let newobj: objectBase = Object.assign({}, oldObj)
+    this.fillFuncToObj(newobj, oldObj.funcCode)
+    return newobj
+  }
+
   public fillFuncToObj(obj: objectBase, funcCode: funcCode) {
     var func = getFuncByType(funcCode)
     func.currentBehavior = this.currentBehavior
@@ -49,23 +56,47 @@ export class factory {
     if (!this.currentBehavior) {
       return
     }
-    window.console.log('*****************执行行为***********************', this.currentBehavior.name)
-    try {
-      for (let index = 0; index < this.currentBehavior.actions.length; index++) {
-        let action = this.currentBehavior.actions[index]
-        await this.excuteActionDetail(action)
+
+    let topActObjs = this.currentBehavior.actObjs.filter((o) => !o.preObjIds || o.preObjIds.length < 1)
+    for (let index = 0; index < topActObjs.length; index++) {
+      const actObj = topActObjs[index] as object_Method
+      let newActObj = this.cloneObject(actObj) as object_Method
+      let result = newActObj.ref
+      if (actObj.outParam) {
+        actObj.outParam.val = result
       }
-    } catch (error) {
-      if (error == undefined) {
-        throw error
-      }
-      if (error == '') {
-        return
-      }
+      let childObjs = this.currentBehavior.actObjs.filter((o) => actObj.nextObjIds.indexOf(o.id) > -1)
+      await this.excuteChildObjs(actObj, childObjs)
     }
-    this.currentBehavior.inparam = {}
-    this.currentBehavior.variables = []
   }
+
+  private async excuteChildObjs(parentObj: object_Method, childObjs: object_Method[]) {
+    for (let index = 0; index < childObjs.length; index++) {
+      const childObj = childObjs[index]
+
+      for (let jndex = 0; jndex < childObj.inputParams.length; jndex++) {
+        const inparam = childObj.inputParams[jndex]
+        if (parentObj.outParam && parentObj.outParam.key === inparam.refOutParamId) {
+          inparam.val = parentObj.outParam.val
+        }
+      }
+      // ******************
+      let childObj_NoVal_Params = childObj.inputParams.filter((o) => !o.val)
+      if (childObj_NoVal_Params.length > 0) {
+        continue
+      }
+
+      let newActObj = this.cloneObject(childObj) as object_Method
+      let result = newActObj.ref
+      if (newActObj.outParam) {
+        newActObj.outParam.val = result
+      }
+
+      let child_childObjs = this.currentBehavior.actObjs.filter((o) => childObj.nextObjIds.indexOf(o.id) > -1)
+      await this.excuteChildObjs(childObj, child_childObjs)
+    }
+  }
+
   private async excuteActionDetail(act: action): Promise<boolean> {
     if (act.judgingCondition && act.judgingCondition.length > 0) {
       var isThrough = await this.excuteObjs(act.judgingCondition)
