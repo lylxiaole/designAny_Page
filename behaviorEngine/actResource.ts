@@ -1,18 +1,18 @@
 import { allActFunctions, funcGroup, funcCode } from './actFuncBase'
-import { objectBase, objectType } from './actObject'
+import { actionObj, objectType } from './actObject'
 import { getUuid } from '@common/utils'
 
 export class object_group {
   key: string //node节点的key
   title: string //node节点的标题
-  childrenObjs: objectBase[] = [] //node节点的子级,有可能是
+  childrenObjs: actionObj[] = [] //node节点的子级,有可能是
   childrenGroups: object_group[] = []
 }
 
 //actFunc转actObj
-export function funcToObj(actFunc: any): objectBase {
+export function funcToObj(actFunc: any): actionObj {
   var objType = actFunc.prototype.$lyl_actFunc.objType
-  var obj = new objectBase()
+  var obj = new actionObj()
   obj.id = getUuid()
   obj.name = actFunc.prototype.$lyl_actFunc.name
   obj.objType = objType
@@ -71,7 +71,7 @@ export function getFuncByType(funcCode: funcCode) {
     return null
   }
 }
-export function getFuncObjByType(funcCode: funcCode): objectBase {
+export function getFuncObjByType(funcCode: funcCode): actionObj {
   // window.console.log('行为代码2', funcCode)
   var res = allActFunctions.find((o: any) => o.prototype.$lyl_actFunc.funcCode == funcCode)
   try {

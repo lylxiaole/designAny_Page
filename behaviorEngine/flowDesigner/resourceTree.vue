@@ -37,7 +37,7 @@ import { reactive } from 'vue'
 //
 import { object_group, getFuncObjByType } from '@behaviorEngine/actResource'
 import { funcCode } from '@behaviorEngine/actFuncBase'
-import { objectBase } from '@behaviorEngine/actObject'
+import { actionObj } from '@behaviorEngine/actObject'
 //
 import { EnginePage, EngineContainer } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
@@ -47,7 +47,7 @@ class TreeNodeDC {
   id: string
   label: string
   type: string
-  actObj: objectBase
+  actObj: actionObj
   children: TreeNodeDC[] = []
 }
 @Options({
@@ -166,7 +166,7 @@ export default class index extends ComponentBase {
     //页面方法
     for (let index = 0; index < currentPage.designerMethods.length; index++) {
       const dmethod = currentPage.designerMethods[index]
-      let actObj = getFuncObjByType(funcCode.methodsInPage) as objectBase
+      let actObj = getFuncObjByType(funcCode.methodsInPage) as actionObj
       actObj.name = '方法:' + dmethod.methodName
       //入参
       for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
@@ -193,7 +193,7 @@ export default class index extends ComponentBase {
         continue
       }
 
-      let actObj = getFuncObjByType(funcCode.propertiesInPage) as objectBase
+      let actObj = getFuncObjByType(funcCode.propertiesInPage) as actionObj
       actObj.name = '属性:' + pageProp.propertyName
       targetGroup.childrenObjs.push(actObj)
     }

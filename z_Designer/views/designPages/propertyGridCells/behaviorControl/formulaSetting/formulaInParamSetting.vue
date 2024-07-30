@@ -26,7 +26,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
-import { behavior, action, actionDetail, objectBase, objectType, factory, funcCode } from '@behaviorEngine/index'
+import { behavior, action, actionDetail, actionObj, objectType, factory, funcCode } from '@behaviorEngine/index'
 
 @Options({
   components: {
@@ -34,7 +34,7 @@ import { behavior, action, actionDetail, objectBase, objectType, factory, funcCo
   }
 })
 export default class formulaInParamSetting extends Vue {
-  // @Prop() currentObj: objectBase
+  // @Prop() currentObj: actionObj
   // @Prop() actionFactory: factory
   // @Watch('currentObj', { deep: true, immediate: true })
   // private onCurrentObjChange(newval: any) {
@@ -51,7 +51,7 @@ export default class formulaInParamSetting extends Vue {
   //   if (!this.currentObj || this.currentObj.objType != objectType.method) {
   //     return []
   //   }
-  //   var objmeth = this.currentObj as objectBase
+  //   var objmeth = this.currentObj as actionObj
   //   for (let index = 0; index < objmeth.inputParams.length; index++) {
   //     var param = objmeth.inputParams[index]
   //     var newobj = this.actionFactory.makeObject(param.obj.funcCode)
@@ -61,7 +61,7 @@ export default class formulaInParamSetting extends Vue {
   //   return objmeth.inputParams
   // }
   // //
-  // private onSelectNodeChanged(newObj: objectBase, oldObj: objectBase) {
+  // private onSelectNodeChanged(newObj: actionObj, oldObj: actionObj) {
   //   if (!newObj) {
   //     return
   //   }
@@ -80,7 +80,7 @@ export default class formulaInParamSetting extends Vue {
   // }
   // newParamName: string = ''
   // newParanamVisible: boolean = false
-  // private onDeleteFormula(obj: objectBase) {
+  // private onDeleteFormula(obj: actionObj) {
   //   var find = this.currentObj.inputParams.find((o) => o.obj == obj)
   //   var index = this.currentObj.inputParams.indexOf(find)
   //   this.currentObj.inputParams.splice(index, 1)

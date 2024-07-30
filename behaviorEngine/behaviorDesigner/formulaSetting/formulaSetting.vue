@@ -27,7 +27,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, InjectReactive, ProvideReactive } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
-import { actionDetail, formulaType, objectBase, objectType, funcCode, factory } from '@behaviorEngine/index'
+import { actionDetail, formulaType, actionObj, objectType, funcCode, factory } from '@behaviorEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 import signChooser from '../behaviorResources/signChooser.vue'
 import resourceChooser from '../behaviorResources/resourceChooser.vue'
@@ -45,7 +45,7 @@ export default class formulaSetting extends Vue {
   @Prop() actionFactory: factory
   @Prop() forType: formulaType
 
-  get currentObjs(): objectBase[] {
+  get currentObjs(): actionObj[] {
     if (!this.currentActionDetail) {
       return []
     }
@@ -77,7 +77,7 @@ export default class formulaSetting extends Vue {
     window.console.log('2动作节点变化了', newval)
   }
 
-  private onResourceNodeChanged(newObj: objectBase, oldObj: objectBase) {
+  private onResourceNodeChanged(newObj: actionObj, oldObj: actionObj) {
     // oldObj.resourceId = newObj.resourceId
     // oldObj.name = newObj.name
     // oldObj.objType = newObj.objType
@@ -106,7 +106,7 @@ export default class formulaSetting extends Vue {
     this.currentActionDetail.objs.push(newobj)
   }
 
-  private onDeleteFormula(obj: objectBase) {
+  private onDeleteFormula(obj: actionObj) {
     if (this.currentActionDetail.objs.length < 2) {
       this.currentActionDetail.objs = []
       // console.log('清除所有公式')
@@ -119,7 +119,7 @@ export default class formulaSetting extends Vue {
   }
 
   @Emit('onFocusFormula')
-  private onFocusFormula(obj: objectBase) {}
+  private onFocusFormula(obj: actionObj) {}
 }
 </script>
  

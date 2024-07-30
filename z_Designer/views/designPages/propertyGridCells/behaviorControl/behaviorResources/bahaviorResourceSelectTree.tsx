@@ -1,11 +1,11 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { VNode } from 'vue'
-import { groupNode, objectBase, objectType, object_Variable, object_FixedVal } from '@designEngine/index'
+import { groupNode, actionObj, objectType, object_Variable, object_FixedVal } from '@designEngine/index'
 
 @Options({})
 export default class bahaviorResourceSelectTree extends Vue {
-  @Prop() currentObj: objectBase
+  @Prop() currentObj: actionObj
   @Prop() resourceTypesNotAllow: string[]
   @Prop() canDeleteObj: boolean
 
@@ -13,7 +13,7 @@ export default class bahaviorResourceSelectTree extends Vue {
   private renderContext: any = null
   private selectedKeys: string[] = []
   private normalResources: groupNode[] = []
-  private signResources: objectBase[] = []
+  private signResources: actionObj[] = []
 
   private get resourceTypeNotAllow(): string[] {
     if (!this.resourceTypesNotAllow) {
@@ -121,7 +121,7 @@ export default class bahaviorResourceSelectTree extends Vue {
     return domVNodes
   }
 
-  private cuteObjectOptions(h: any, objs: objectBase[]): VNode[] {
+  private cuteObjectOptions(h: any, objs: actionObj[]): VNode[] {
     if (!objs) {
       return []
     }
@@ -139,7 +139,7 @@ export default class bahaviorResourceSelectTree extends Vue {
     return domVNodes
   }
   /*********计算数据节点************************ */
-  private getSelectedObj(id: string, groups: groupNode[]): objectBase {
+  private getSelectedObj(id: string, groups: groupNode[]): actionObj {
     for (let index = 0; index < groups.length; index++) {
       let group = groups[index]
       if (group.childrenObjs) {
@@ -171,9 +171,9 @@ export default class bahaviorResourceSelectTree extends Vue {
   }
   // ********对外事件**********************************************************
   @Emit('onSelectNodeChanged')
-  private onSelectNodeChanged(newObj: objectBase, oldObj: objectBase) {}
+  private onSelectNodeChanged(newObj: actionObj, oldObj: actionObj) {}
   @Emit('onFocus')
-  private onFocus(obj: objectBase) {}
+  private onFocus(obj: actionObj) {}
   @Emit('onDelete')
-  private onDelete(obj: objectBase) {}
+  private onDelete(obj: actionObj) {}
 }

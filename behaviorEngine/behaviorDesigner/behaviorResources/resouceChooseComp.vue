@@ -34,7 +34,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { object_group, objectBase, objectType, object_Variable, object_FixedVal, funcGroup } from '@behaviorEngine/index'
+import { object_group, actionObj, objectType, object_Variable, object_FixedVal, funcGroup } from '@behaviorEngine/index'
 import { getFuncObjsTree } from '@behaviorEngine/index'
 
 @Options({ name: 'resouceChooseComp' })
@@ -76,7 +76,7 @@ export default class resouceChooseComp extends Vue {
     let res = this.findObjFromCurrent(selecteditem)
 
     if (res.id) {
-      this.onSelectedObj(res as objectBase)
+      this.onSelectedObj(res as actionObj)
     } else {
       this.onSelectedObj(null)
     }
@@ -96,7 +96,7 @@ export default class resouceChooseComp extends Vue {
   }
 
   @Emit('onSelectedObj')
-  private onSelectedObj(obj: objectBase) {}
+  private onSelectedObj(obj: actionObj) {}
 }
 </script>
 

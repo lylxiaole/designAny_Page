@@ -4,8 +4,8 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from './behaviorTypes'
 
-import { objectBase } from './actObject'
-import { objectType, object_callback, popupCallback } from './actObject'
+import { actionObj } from './actObject'
+import { objectType, popupCallback } from './actObject'
 
 //方法资源分组
 export enum funcGroup {
@@ -114,12 +114,12 @@ export interface actFuncBase<T> {
   currentPage: EnginePage
   currentBehavior: behavior
 
-  getFunc(obj: objectBase): any
-  setFunc(obj: objectBase, val: any): void
+  getFunc(obj: actionObj): any
+  setFunc(obj: actionObj, val: any): void
   /**获取组件的描述 */
-  getDesc(obj: objectBase): string
+  getDesc(obj: actionObj): string
   /**是否存在 */
-  isExit(obj: objectBase): boolean
+  isExit(obj: actionObj): boolean
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase
+  getSettingDetail(obj: actionObj): actionObj
 }

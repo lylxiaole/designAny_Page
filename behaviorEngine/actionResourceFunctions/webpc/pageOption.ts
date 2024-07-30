@@ -3,76 +3,76 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { objectType, object_callback, popupCallback, objectBase } from '../../actObject'
+import { objectType, popupCallback, actionObj } from '../../actObject'
 
 @resourceFuncAttr('跳转页面', '', objectType.method, funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
-export class variables implements actFuncBase<objectBase> {
-  $meta: objectBase
+export class variables implements actFuncBase<actionObj> {
+  $meta: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async getFunc(obj: objectBase) {}
-  async setFunc(obj: objectBase, val: any) {}
-  getDesc(obj: objectBase): string {
+  async getFunc(obj: actionObj) {}
+  async setFunc(obj: actionObj, val: any) {}
+  getDesc(obj: actionObj): string {
     // window.console.log('显示变量的description')
     return '页面跳转'
   }
-  isExit(obj: objectBase): boolean {
+  isExit(obj: actionObj): boolean {
     return true
   }
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
+  getSettingDetail(obj: actionObj): actionObj {
     return null
   }
-  updateInparam(obj: objectBase) {}
+  updateInparam(obj: actionObj) {}
 }
 
 @resourceFuncAttr('页面方法', '', objectType.method, funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
-export class methodsInPageMethod implements actFuncBase<objectBase> {
-  $meta: objectBase
+export class methodsInPageMethod implements actFuncBase<actionObj> {
+  $meta: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async getFunc(obj: objectBase) {
+  async getFunc(obj: actionObj) {
     var params: any[] = []
     obj.inputParams.filter((o) => {
       params.push(o.val)
     })
     return this.currentPage.excuteMethod(obj.name, params)
   }
-  async setFunc(obj: objectBase, val: any) {}
-  getDesc(obj: objectBase): string {
+  async setFunc(obj: actionObj, val: any) {}
+  getDesc(obj: actionObj): string {
     // window.console.log('显示变量的description')
     return '页面方法'
   }
-  isExit(obj: objectBase): boolean {
+  isExit(obj: actionObj): boolean {
     return true
   }
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
+  getSettingDetail(obj: actionObj): actionObj {
     return null
   }
-  updateInparam(obj: objectBase) {}
+  updateInparam(obj: actionObj) {}
 }
 
 @resourceFuncAttr('页面属性', '', objectType.method, funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
-export class propertiesInPageMethod implements actFuncBase<objectBase> {
-  $meta: objectBase
+export class propertiesInPageMethod implements actFuncBase<actionObj> {
+  $meta: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async getFunc(obj: objectBase) {}
-  async setFunc(obj: objectBase, val: any) {}
-  getDesc(obj: objectBase): string {
+  async getFunc(obj: actionObj) {}
+  async setFunc(obj: actionObj, val: any) {}
+  getDesc(obj: actionObj): string {
     // window.console.log('显示变量的description')
     return '页面方法'
   }
-  isExit(obj: objectBase): boolean {
+  isExit(obj: actionObj): boolean {
     return true
   }
   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: objectBase): objectBase {
+  getSettingDetail(obj: actionObj): actionObj {
     return null
   }
-  updateInparam(obj: objectBase) {}
+  updateInparam(obj: actionObj) {}
 }

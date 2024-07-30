@@ -1,5 +1,5 @@
 /******************************行为相关 **************************/
-import { objectBase } from './actObject'
+import { actionObj } from './actObject'
 
 export enum formulaType {
   cute = 'cute', //计算
@@ -30,14 +30,14 @@ export class behavior {
   inparam: any = {} //行为的入参
   variables: variable[] = [] //当前行文的上下文变量
   // actions: action[] = []
-  actObjs: objectBase[] = []
+  actObjs: actionObj[] = []
   flowData: any
 }
 
 export class action {
   id: string
   name: string
-  judgingCondition: objectBase[] = null //动作的判断条件
+  judgingCondition: actionObj[] = null //动作的判断条件
   actionDetails: (actionDetail | action)[] = []
 }
 
@@ -46,5 +46,5 @@ export class actionDetail {
   name: string
   detail: string
   isActionDetail: boolean = true
-  objs: objectBase[] = []
+  objs: actionObj[] = []
 }

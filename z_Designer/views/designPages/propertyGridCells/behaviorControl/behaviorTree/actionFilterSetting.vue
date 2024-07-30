@@ -37,7 +37,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 
-import { action, behavior, factory, actionDetail, objectBase, formulaType, funcCode } from '@behaviorEngine/index'
+import { action, behavior, factory, actionDetail, actionObj, formulaType, funcCode } from '@behaviorEngine/index'
 import formulaSetting from '../formulaSetting/formulaSetting.vue'
 import formulaInParamSetting from '../formulaSetting/formulaInParamSetting.vue'
 import resouceChooseComp from '../behaviorResources/resouceChooseComp.vue'
@@ -83,8 +83,8 @@ export default class actionFilterSetting extends Vue {
     this.currentActionDetail = newactdeatil
   }
 
-  private dealOldJsonData(objJsonData: objectBase[]): objectBase[] {
-    var newobjs: objectBase[] = []
+  private dealOldJsonData(objJsonData: actionObj[]): actionObj[] {
+    var newobjs: actionObj[] = []
 
     //将就数据重新实例化成类型
     for (let index = 0; index < objJsonData.length; index++) {
@@ -107,10 +107,10 @@ export default class actionFilterSetting extends Vue {
   /**为了复用公式编辑界面，这个使用外部action来创造一个 actionDetail，*/
   private actionFactory: factory = null
   private currentActionDetail: actionDetail = null
-  private currentFocusObj: objectBase = null
+  private currentFocusObj: actionObj = null
   private forType: formulaType = formulaType.filter
 
-  private onFocusFormula(obj: objectBase) {
+  private onFocusFormula(obj: actionObj) {
     this.currentFocusObj = obj
   }
 

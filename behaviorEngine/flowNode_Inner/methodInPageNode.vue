@@ -11,7 +11,7 @@ import { inject } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
-import { objectBase } from '@behaviorEngine/actObject'
+import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowDesigner/flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
@@ -24,7 +24,7 @@ export default class methodInPageNode extends Vue {
   // private getNode: Function = inject('getNode')
 
   @Prop()
-  private actObj: objectBase
+  private actObj: actionObj
 
   mounted() {
     this.actObj.description = 'ni ha ahahhaha'

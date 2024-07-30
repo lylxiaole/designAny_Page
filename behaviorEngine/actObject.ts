@@ -11,7 +11,11 @@ export enum objectType {
   // callback = 'callback'
 }
 
-export class objectBase {
+export class object_InParam extends param {
+  refOutParamId: string
+}
+
+export class actionObj {
   // ******基础信息*********
   id: string //唯一Id
   // resourceId: string //资源得唯一Id，可以用这个ID匹配到资源，
@@ -37,12 +41,12 @@ export class objectBase {
     return this.getDesc(this)
   }
 
-  public setFunc: (obj: objectBase, val: any) => void = null
-  public getFunc: (obj: objectBase) => any = null
-  public getDesc: (obj: objectBase) => string = null
+  public setFunc: (obj: actionObj, val: any) => void = null
+  public getFunc: (obj: actionObj) => any = null
+  public getDesc: (obj: actionObj) => string = null
   // public updateInparamsFunction: () => void = null
 
-  public cloneFrom(obj: objectBase) {
+  public cloneFrom(obj: actionObj) {
     this.id = obj.id
     this.objType = obj.objType
     this.name = obj.name
@@ -59,28 +63,9 @@ export class objectBase {
   }
 }
 
-export class object_InParam extends param {
-  refOutParamId: string
-}
-
 /**弹窗回调的配置信息 */
 export class popupCallback {
   public id: string
   public modelBindName_InPopupPage: string
   public behaviorId_InMainPage: string
-}
-// 行为类型
-export class object_callback extends objectBase {
-  behavior: behavior
-  isChoosePageSource: boolean = false
-  pCallbacks: popupCallback[] = []
-  cloneFrom(obj: object_callback) {
-    super.cloneFrom(obj)
-    this.behavior = obj.behavior
-    this.pCallbacks = obj.pCallbacks
-    if (obj.isChoosePageSource == undefined || obj.isChoosePageSource == null) {
-      obj.isChoosePageSource = true
-    }
-    this.isChoosePageSource = obj.isChoosePageSource
-  }
 }

@@ -3,7 +3,7 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { objectType, object_callback, popupCallback, objectBase } from '../../actObject'
+import { objectType, popupCallback, actionObj } from '../../actObject'
 
 // @resourceFuncAttr('变量', '', objectType.variable, funcGroup.variables, funcCode.variables, funcStack.universal)
 // export class variables implements actFuncBase<object_Variable> {
@@ -18,15 +18,15 @@ import { objectType, object_callback, popupCallback, objectBase } from '../../ac
 //     val = val === undefined ? null : val
 //     this.currentBehavior.variables[obj.name] = val
 //   }
-//   getDesc(obj: objectBase): string {
+//   getDesc(obj: actionObj): string {
 //     // window.console.log('显示变量的description')
 //     return '变量:' + obj.name
 //   }
-//   isExit(obj: objectBase): boolean {
+//   isExit(obj: actionObj): boolean {
 //     return true
 //   }
 //   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-//   getSettingDetail(obj: objectBase): objectBase {
+//   getSettingDetail(obj: actionObj): actionObj {
 //     return null
 //   }
 //   updateInparam(obj: object_Method) {}

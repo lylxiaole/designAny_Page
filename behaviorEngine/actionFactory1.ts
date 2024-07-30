@@ -2,7 +2,7 @@ import { deepClone } from '@common/utils'
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
-import { objectBase, objectType } from './actObject'
+import { actionObj, objectType } from './actObject'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from './actFuncBase'
 import { getFuncObjByType, getFuncByType } from './actResource'
 
@@ -16,22 +16,22 @@ export class factory {
     this.currentBehavior = _behavior
   }
   /********制造object*************************************************** */
-  public makeObject(funcCode: funcCode): objectBase {
-    let obj: objectBase = getFuncObjByType(funcCode)
+  public makeObject(funcCode: funcCode): actionObj {
+    let obj: actionObj = getFuncObjByType(funcCode)
     this.fillFuncToObj(obj, funcCode)
     return obj
   }
-  public fillFuncToObj(obj: objectBase, funcCode: funcCode) {
+  public fillFuncToObj(obj: actionObj, funcCode: funcCode) {
     var func = getFuncByType(funcCode)
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
     func.$meta = obj
 
-    obj.setFunc = async (obj: objectBase, val: any) => {
+    obj.setFunc = async (obj: actionObj, val: any) => {
       await func.setFunc(obj, val)
     }
-    obj.getFunc = async (obj: objectBase) => {
+    obj.getFunc = async (obj: actionObj) => {
       var res = await func.getFunc(obj)
       if (res) {
         obj = null
@@ -40,7 +40,7 @@ export class factory {
         return res
       }
     }
-    obj.getDesc = (obj: objectBase) => {
+    obj.getDesc = (obj: actionObj) => {
       return func.getDesc(obj)
     }
   }
@@ -86,7 +86,7 @@ export class factory {
     }
   }
   private weakm = new WeakMap()
-  private async excuteObjs(objs: objectBase[]): Promise<any> {
+  private async excuteObjs(objs: actionObj[]): Promise<any> {
     this.weakm.set(this, {})
     let _runArea = this.weakm.get(this)
     let evalStr: string[] = []

@@ -32,7 +32,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 import { deepClone, getUuid } from '@common/utils'
-import { objectBase, objectType, object_callback } from '@behaviorEngine/index'
+import { actionObj, objectType } from '@behaviorEngine/index'
 
 import resouceChooseComp from './resouceChooseComp.vue'
 
@@ -50,7 +50,7 @@ export default class resoucesChooseWindow extends Vue {
     ;(this.$refs.resourceTree as any).refreshCurrentItems()
   }
 
-  private currentObj: objectBase = null
+  private currentObj: actionObj = null
 
   private onOk() {
     this.onChooseObj(this.currentObj)
@@ -60,7 +60,7 @@ export default class resoucesChooseWindow extends Vue {
     this.isVisible = false
   }
 
-  private onSelectedObj(obj: objectBase) {
+  private onSelectedObj(obj: actionObj) {
     this.currentObj = deepClone(obj)
     //window.console.log('---------------------------this.currentObj',this.currentObj)
     this.$nextTick(() => {
@@ -70,7 +70,7 @@ export default class resoucesChooseWindow extends Vue {
   }
 
   @Emit('onChooseObj')
-  private onChooseObj(obj: objectBase) {}
+  private onChooseObj(obj: actionObj) {}
 }
 </script>
 

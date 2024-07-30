@@ -3,7 +3,7 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { objectType, object_callback, popupCallback, objectBase } from '../../actObject'
+import { objectType, popupCallback, actionObj } from '../../actObject'
 
 // @resourceFuncAttr('字符串', '', objectType.fixedVal, funcGroup.fixedVal, funcCode.fixedValString, funcStack.universal)
 // export class fixedValString implements actFuncBase<object_FixedVal> {
@@ -24,14 +24,14 @@ import { objectType, object_callback, popupCallback, objectBase } from '../../ac
 //     // window.console.log('固定值填写数据了', val)
 //     obj.val = val
 //   }
-//   getDesc(obj: objectBase): string {
+//   getDesc(obj: actionObj): string {
 //     return '固定值/字符串'
 //   }
-//   isExit(obj: objectBase): boolean {
+//   isExit(obj: actionObj): boolean {
 //     return true
 //   }
 //   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-//   getSettingDetail(obj: objectBase): objectBase {
+//   getSettingDetail(obj: actionObj): actionObj {
 //     return null
 //   }
 // }
@@ -56,14 +56,14 @@ import { objectType, object_callback, popupCallback, objectBase } from '../../ac
 //     // window.console.log('固定值填写数据了', val)
 //     obj.val = val
 //   }
-//   getDesc(obj: objectBase): string {
+//   getDesc(obj: actionObj): string {
 //     return '固定值/布尔'
 //   }
-//   isExit(obj: objectBase): boolean {
+//   isExit(obj: actionObj): boolean {
 //     return true
 //   }
 //   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-//   getSettingDetail(obj: objectBase): objectBase {
+//   getSettingDetail(obj: actionObj): actionObj {
 //     return null
 //   }
 // }
@@ -87,14 +87,14 @@ import { objectType, object_callback, popupCallback, objectBase } from '../../ac
 //     // window.console.log('固定值填写数据了', val)
 //     obj.val = val
 //   }
-//   getDesc(obj: objectBase): string {
+//   getDesc(obj: actionObj): string {
 //     return '固定值/整数'
 //   }
-//   isExit(obj: objectBase): boolean {
+//   isExit(obj: actionObj): boolean {
 //     return true
 //   }
 //   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-//   getSettingDetail(obj: objectBase): objectBase {
+//   getSettingDetail(obj: actionObj): actionObj {
 //     return null
 //   }
 // }
@@ -118,14 +118,14 @@ import { objectType, object_callback, popupCallback, objectBase } from '../../ac
 //     // window.console.log('固定值填写数据了', val)
 //     obj.val = val
 //   }
-//   getDesc(obj: objectBase): string {
+//   getDesc(obj: actionObj): string {
 //     return '固定值/浮点数'
 //   }
-//   isExit(obj: objectBase): boolean {
+//   isExit(obj: actionObj): boolean {
 //     return true
 //   }
 //   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-//   getSettingDetail(obj: objectBase): objectBase {
+//   getSettingDetail(obj: actionObj): actionObj {
 //     return null
 //   }
 // }
@@ -144,14 +144,14 @@ import { objectType, object_callback, popupCallback, objectBase } from '../../ac
 //     // window.console.log('固定值填写数据了', val)
 //     obj.val = val
 //   }
-//   getDesc(obj: objectBase): string {
+//   getDesc(obj: actionObj): string {
 //     return '固定值/空值'
 //   }
-//   isExit(obj: objectBase): boolean {
+//   isExit(obj: actionObj): boolean {
 //     return true
 //   }
 //   /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-//   getSettingDetail(obj: objectBase): objectBase {
+//   getSettingDetail(obj: actionObj): actionObj {
 //     return null
 //   }
 // }

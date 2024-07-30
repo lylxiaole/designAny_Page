@@ -2,7 +2,7 @@ import { deepClone } from '@common/utils'
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
-import { objectBase } from './actObject'
+import { actionObj } from './actObject'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from './actFuncBase'
 import { getFuncObjByType, getFuncByType } from './actResource'
 
@@ -16,28 +16,28 @@ export class factory {
     this.currentBehavior = _behavior
   }
   /********制造object*************************************************** */
-  public makeObject(funcCode: funcCode): objectBase {
-    let obj: objectBase = getFuncObjByType(funcCode)
+  public makeObject(funcCode: funcCode): actionObj {
+    let obj: actionObj = getFuncObjByType(funcCode)
     this.fillFuncToObj(obj, funcCode)
     return obj
   }
 
-  public cloneObject(oldObj: objectBase): objectBase {
-    let newobj: objectBase = Object.assign({}, oldObj)
+  public cloneObject(oldObj: actionObj): actionObj {
+    let newobj: actionObj = Object.assign({}, oldObj)
     this.fillFuncToObj(newobj, oldObj.funcCode)
     return newobj
   }
-  public fillFuncToObj(obj: objectBase, funcCode: funcCode) {
+  public fillFuncToObj(obj: actionObj, funcCode: funcCode) {
     var func = getFuncByType(funcCode)
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
     func.$meta = obj
 
-    obj.setFunc = async (obj: objectBase, val: any) => {
+    obj.setFunc = async (obj: actionObj, val: any) => {
       await func.setFunc(obj, val)
     }
-    obj.getFunc = async (obj: objectBase) => {
+    obj.getFunc = async (obj: actionObj) => {
       var res = await func.getFunc(obj)
       if (res) {
         obj = null
@@ -46,7 +46,7 @@ export class factory {
         return res
       }
     }
-    obj.getDesc = (obj: objectBase) => {
+    obj.getDesc = (obj: actionObj) => {
       return func.getDesc(obj)
     }
   }
@@ -58,8 +58,8 @@ export class factory {
 
     let topActObjs = this.currentBehavior.actObjs.filter((o) => !o.preObjIds || o.preObjIds.length < 1)
     for (let index = 0; index < topActObjs.length; index++) {
-      const actObj = topActObjs[index] as objectBase
-      let newActObj = this.cloneObject(actObj) as objectBase
+      const actObj = topActObjs[index] as actionObj
+      let newActObj = this.cloneObject(actObj) as actionObj
       let result = newActObj.ref
       if (actObj.outParam) {
         actObj.outParam.val = result
@@ -69,7 +69,7 @@ export class factory {
     }
   }
 
-  private async excuteChildObjs(parentObj: objectBase, childObjs: objectBase[]) {
+  private async excuteChildObjs(parentObj: actionObj, childObjs: actionObj[]) {
     for (let index = 0; index < childObjs.length; index++) {
       const childObj = childObjs[index]
 
@@ -85,7 +85,7 @@ export class factory {
         continue
       }
       // 入参 都具备了值，可以开始执行
-      let newActObj = this.cloneObject(childObj) as objectBase
+      let newActObj = this.cloneObject(childObj) as actionObj
       let result = newActObj.ref
       if (newActObj.outParam) {
         childObj.outParam.val = result
@@ -116,7 +116,7 @@ export class factory {
   //   }
   // }
   // private weakm = new WeakMap()
-  // private async excuteObjs(objs: objectBase[]): Promise<any> {
+  // private async excuteObjs(objs: actionObj[]): Promise<any> {
   //   this.weakm.set(this, {})
   //   let _runArea = this.weakm.get(this)
   //   let evalStr: string[] = []
