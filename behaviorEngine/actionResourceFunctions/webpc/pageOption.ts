@@ -11,20 +11,7 @@ export class leadToPageMethod implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async getFunc(obj: actionObj) {}
-  async setFunc(obj: actionObj, val: any) {}
-  getDesc(obj: actionObj): string {
-    // window.console.log('显示变量的description')
-    return '页面跳转'
-  }
-  isExit(obj: actionObj): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: actionObj): actionObj {
-    return null
-  }
-  updateInparam(obj: actionObj) {}
+  async excute() {}
 }
 
 @resourceFuncAttr('页面方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
@@ -33,26 +20,13 @@ export class methodsInPageMethod implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async getFunc(obj: actionObj) {
+  async excute() {
     var params: any[] = []
-    obj.inputParams.filter((o) => {
+    this.currentActObj.inputParams.filter((o) => {
       params.push(o.val)
     })
-    return this.currentPage.excuteMethod(obj.name, params)
+    return this.currentPage.excuteMethod(this.currentActObj.name, params)
   }
-  async setFunc(obj: actionObj, val: any) {}
-  getDesc(obj: actionObj): string {
-    // window.console.log('显示变量的description')
-    return '页面方法'
-  }
-  isExit(obj: actionObj): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: actionObj): actionObj {
-    return null
-  }
-  updateInparam(obj: actionObj) {}
 }
 
 @resourceFuncAttr('页面属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
@@ -61,18 +35,5 @@ export class propertiesInPageMethod implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async getFunc(obj: actionObj) {}
-  async setFunc(obj: actionObj, val: any) {}
-  getDesc(obj: actionObj): string {
-    // window.console.log('显示变量的description')
-    return '页面方法'
-  }
-  isExit(obj: actionObj): boolean {
-    return true
-  }
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: actionObj): actionObj {
-    return null
-  }
-  updateInparam(obj: actionObj) {}
+  async excute() {}
 }

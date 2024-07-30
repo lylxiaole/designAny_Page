@@ -112,12 +112,5 @@ export interface actFuncBase {
   currentPage: EnginePage
   currentBehavior: behavior
 
-  getFunc(obj: actionObj): any
-  setFunc(obj: actionObj, val: any): void
-  /**获取组件的描述 */
-  getDesc(obj: actionObj): string
-  /**是否存在 */
-  isExit(obj: actionObj): boolean
-  /**获取公式的完善信息，包括它的入参/返回的数据结构等等 */
-  getSettingDetail(obj: actionObj): actionObj
+  excute(): any
 }

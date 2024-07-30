@@ -47,7 +47,7 @@ import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 
 import { deepClone, getUuid } from '@common/utils'
 import behaviorListInPageModal from '../../behaviorListInPageModal.vue'
-import { actionObj, funcCode, popupCallback, behavior } from '@behaviorEngine/index'
+import { actionObj, funcCode, behavior } from '@behaviorEngine/index'
 
 @Options({
   components: {
@@ -77,9 +77,9 @@ export default class callbackSetting extends Vue {
     return []
   }
 
-  private currentCallback: popupCallback = null
+  private currentCallback: any = null
   //弹窗页面入参和主页面的行为的对应关系表
-  private allCallbacks: popupCallback[] = []
+  private allCallbacks: any[] = []
 
   private chooseBahavior(callbackId: string) {
     this.currentCallback = this.allCallbacks.find((o) => o.id == callbackId)

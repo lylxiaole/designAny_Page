@@ -27,6 +27,17 @@ export class factory {
     this.fillFuncToObj(newobj, oldObj.funcCode)
     return newobj
   }
+
+  public getObjFunc(obj: actionObj): actFuncBase {
+    var func = getFuncByType(obj.funcCode)
+    func.currentBehavior = this.currentBehavior
+    func.currentLayout = this.currentLayout
+    func.currentPage = this.currentPage
+    func.currentActObj = obj
+
+    return func
+  }
+
   public fillFuncToObj(obj: actionObj, funcCode: funcCode) {
     var func = getFuncByType(funcCode)
     func.currentBehavior = this.currentBehavior
@@ -34,33 +45,34 @@ export class factory {
     func.currentPage = this.currentPage
     func.currentActObj = obj
 
-    obj.setFunc = async (obj: actionObj, val: any) => {
-      await func.setFunc(obj, val)
-    }
-    obj.getFunc = async (obj: actionObj) => {
-      var res = await func.getFunc(obj)
-      if (res) {
-        obj = null
-        return deepClone(res)
-      } else {
-        return res
-      }
-    }
-    obj.getDesc = (obj: actionObj) => {
-      return func.getDesc(obj)
-    }
+    // obj.setFunc = async (obj: actionObj, val: any) => {
+    //   await func.setFunc(obj, val)
+    // }
+    // obj.getFunc = async (obj: actionObj) => {
+    //   var res = await func.getFunc(obj)
+    //   if (res) {
+    //     obj = null
+    //     return deepClone(res)
+    //   } else {
+    //     return res
+    //   }
+    // }
+    // obj.getDesc = (obj: actionObj) => {
+    //   return func.getDesc(obj)
+    // }
   }
   /********执行行为*************************************************** */
   public async exacteAction() {
     if (!this.currentBehavior) {
       return
     }
-
+    //顶级流程节点
     let topActObjs = this.currentBehavior.actObjs.filter((o) => !o.preObjIds || o.preObjIds.length < 1)
+
     for (let index = 0; index < topActObjs.length; index++) {
       const actObj = topActObjs[index] as actionObj
-      let newActObj = this.cloneObject(actObj) as actionObj
-      let result = newActObj.ref
+      let actFunc = this.getObjFunc(actObj)
+      let result = actFunc.excute()
       if (actObj.outParam) {
         actObj.outParam.val = result
       }
@@ -85,9 +97,9 @@ export class factory {
         continue
       }
       // 入参 都具备了值，可以开始执行
-      let newActObj = this.cloneObject(childObj) as actionObj
-      let result = newActObj.ref
-      if (newActObj.outParam) {
+      let actFunc = this.getObjFunc(childObj)
+      let result = actFunc.excute()
+      if (childObj.outParam) {
         childObj.outParam.val = result
       }
 
