@@ -3,14 +3,6 @@ import { getUuid } from '@common/utils'
 import { funcCode } from './actFuncBase'
 import { param } from './behaviorTypes'
 
-export enum objectType {
-  variable = 'variable', //变量
-  fixedVal = 'fixedVal', //固定值
-  method = 'method',
-  signs = 'signs' //+。-，*，/等运算符
-  // callback = 'callback'
-}
-
 export class object_InParam extends param {
   refOutParamId: string
 }
@@ -22,7 +14,6 @@ export class actionObj {
   // pageId?: string //该资源当前所在page,部分页面资源有这个字段。
   name: string
   description: string
-  objType: objectType
   funcCode: funcCode
   // ******运行时信息*********
   preObjIds: string[]

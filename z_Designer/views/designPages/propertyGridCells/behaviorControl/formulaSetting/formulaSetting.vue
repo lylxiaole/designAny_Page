@@ -18,7 +18,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, InjectReactive } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
-import { behavior, action, actionDetail, formulaType, actionObj, objectType, funcCode, factory } from '@behaviorEngine/index'
+import { behavior, action, actionDetail, formulaType, actionObj, funcCode, factory } from '@behaviorEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 
 @Options({
@@ -72,16 +72,16 @@ export default class formulaSetting extends Vue {
     //当前公式的最后一个元素
     var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
 
-    if (!obj || obj.objType == objectType.signs) {
-      let newobj = this.actionFactory.makeObject(funcCode.fixedValString)
-      this.currentActionDetail.objs.push(newobj)
-    } else if (this.forType == formulaType.cute) {
-      let newobj = this.actionFactory.makeObject(funcCode.signAssign)
-      this.currentActionDetail.objs.push(newobj)
-    } else if (this.forType == formulaType.filter) {
-      let newobj = this.actionFactory.makeObject(funcCode.signEqual)
-      this.currentActionDetail.objs.push(newobj)
-    }
+    // if (!obj || obj.objType == objectType.signs) {
+    //   let newobj = this.actionFactory.makeObject(funcCode.fixedValString)
+    //   this.currentActionDetail.objs.push(newobj)
+    // } else if (this.forType == formulaType.cute) {
+    //   let newobj = this.actionFactory.makeObject(funcCode.signAssign)
+    //   this.currentActionDetail.objs.push(newobj)
+    // } else if (this.forType == formulaType.filter) {
+    //   let newobj = this.actionFactory.makeObject(funcCode.signEqual)
+    //   this.currentActionDetail.objs.push(newobj)
+    // }
   }
 
   private onDeleteFormula(obj: actionObj) {

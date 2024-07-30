@@ -1,7 +1,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { VNode } from 'vue'
-import { groupNode, actionObj, objectType, object_Variable, object_FixedVal } from '@designEngine/index'
+import { actionObj } from '@designEngine/index'
 
 @Options({})
 export default class bahaviorResourceSelectTree extends Vue {
@@ -12,7 +12,7 @@ export default class bahaviorResourceSelectTree extends Vue {
   // private myEventId: string = getUuid()
   private renderContext: any = null
   private selectedKeys: string[] = []
-  private normalResources: groupNode[] = []
+  // private normalResources: groupNode[] = []
   private signResources: actionObj[] = []
 
   private get resourceTypeNotAllow(): string[] {

@@ -27,7 +27,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, InjectReactive, ProvideReactive } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 
-import { actionDetail, formulaType, actionObj, objectType, funcCode, factory } from '@behaviorEngine/index'
+import { actionDetail, formulaType, actionObj, funcCode, factory } from '@behaviorEngine/index'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 import signChooser from '../behaviorResources/signChooser.vue'
 import resourceChooser from '../behaviorResources/resourceChooser.vue'
@@ -89,21 +89,20 @@ export default class formulaSetting extends Vue {
   //添加一个公式
   private addObj() {
     //当前公式的最后一个元素
-    var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
-
-    let newobj = null
-    if (obj && obj.objType === objectType.signs) {
-      newobj = this.actionFactory.makeObject(funcCode.fixedValString)
-    } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === false) {
-      newobj = this.actionFactory.makeObject(funcCode.signAssign)
-    } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === true) {
-      newobj = this.actionFactory.makeObject(funcCode.signEqual)
-    } else if (!obj && this.currentIsAction === false) {
-      newobj = this.actionFactory.makeObject(funcCode.variables)
-    } else if (!obj && this.currentIsAction === true) {
-      newobj = this.actionFactory.makeObject(funcCode.fixedValString)
-    }
-    this.currentActionDetail.objs.push(newobj)
+    // var obj = this.currentActionDetail.objs[this.currentActionDetail.objs.length - 1]
+    // let newobj = null
+    // if (obj && obj.objType === objectType.signs) {
+    //   newobj = this.actionFactory.makeObject(funcCode.fixedValString)
+    // } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === false) {
+    //   newobj = this.actionFactory.makeObject(funcCode.signAssign)
+    // } else if (obj && obj.objType !== objectType.signs && this.currentIsAction === true) {
+    //   newobj = this.actionFactory.makeObject(funcCode.signEqual)
+    // } else if (!obj && this.currentIsAction === false) {
+    //   newobj = this.actionFactory.makeObject(funcCode.variables)
+    // } else if (!obj && this.currentIsAction === true) {
+    //   newobj = this.actionFactory.makeObject(funcCode.fixedValString)
+    // }
+    // this.currentActionDetail.objs.push(newobj)
   }
 
   private onDeleteFormula(obj: actionObj) {

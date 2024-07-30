@@ -3,7 +3,7 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { objectType, popupCallback, actionObj } from '../../actObject'
+import { popupCallback, actionObj } from '../../actObject'
 
 // @resourceFuncAttr('==', '', objectType.signs, funcGroup.filterSigns, funcCode.signEqual, funcStack.universal)
 // export class filtersignEqual implements actFuncBase<object_Signs> {

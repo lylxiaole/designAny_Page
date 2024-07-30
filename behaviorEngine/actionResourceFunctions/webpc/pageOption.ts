@@ -3,9 +3,9 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { objectType, popupCallback, actionObj } from '../../actObject'
+import { popupCallback, actionObj } from '../../actObject'
 
-@resourceFuncAttr('跳转页面', '', objectType.method, funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
+@resourceFuncAttr('跳转页面', '', funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
 export class variables implements actFuncBase<actionObj> {
   $meta: actionObj
   currentLayout: EngineLayout
@@ -27,7 +27,7 @@ export class variables implements actFuncBase<actionObj> {
   updateInparam(obj: actionObj) {}
 }
 
-@resourceFuncAttr('页面方法', '', objectType.method, funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
+@resourceFuncAttr('页面方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
 export class methodsInPageMethod implements actFuncBase<actionObj> {
   $meta: actionObj
   currentLayout: EngineLayout
@@ -55,7 +55,7 @@ export class methodsInPageMethod implements actFuncBase<actionObj> {
   updateInparam(obj: actionObj) {}
 }
 
-@resourceFuncAttr('页面属性', '', objectType.method, funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
+@resourceFuncAttr('页面属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
 export class propertiesInPageMethod implements actFuncBase<actionObj> {
   $meta: actionObj
   currentLayout: EngineLayout

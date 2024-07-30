@@ -3,7 +3,7 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { objectType, popupCallback, actionObj } from '../../actObject'
+import { popupCallback, actionObj } from '../../actObject'
 
 // @resourceFuncAttr('字符串', '', objectType.fixedVal, funcGroup.fixedVal, funcCode.fixedValString, funcStack.universal)
 // export class fixedValString implements actFuncBase<object_FixedVal> {

@@ -5,7 +5,7 @@ import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from './behaviorTypes'
 
 import { actionObj } from './actObject'
-import { objectType, popupCallback } from './actObject'
+import { popupCallback } from './actObject'
 
 //方法资源分组
 export enum funcGroup {
@@ -93,7 +93,7 @@ export enum funcStack {
 }
 //反射，所有方法的实体类
 var allActFunctions = []
-export function resourceFuncAttr(name: string, desc: string, objType: objectType, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack) {
+export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack) {
   return function (target: Function) {
     !target.prototype.$lyl_actFunc && (target.prototype.$lyl_actFunc = {})
     target.prototype.$lyl_actFunc.funcCode = funcCode

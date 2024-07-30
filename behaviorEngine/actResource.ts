@@ -1,5 +1,5 @@
 import { allActFunctions, funcGroup, funcCode } from './actFuncBase'
-import { actionObj, objectType } from './actObject'
+import { actionObj } from './actObject'
 import { getUuid } from '@common/utils'
 
 export class object_group {
@@ -11,11 +11,9 @@ export class object_group {
 
 //actFunc转actObj
 export function funcToObj(actFunc: any): actionObj {
-  var objType = actFunc.prototype.$lyl_actFunc.objType
   var obj = new actionObj()
   obj.id = getUuid()
   obj.name = actFunc.prototype.$lyl_actFunc.name
-  obj.objType = objType
   obj.funcCode = actFunc.prototype.$lyl_actFunc.funcCode
   obj.description = actFunc.prototype.$lyl_actFunc.desc
   return obj
@@ -53,15 +51,7 @@ export function getFuncObjByGroup(group: funcGroup) {
 
   return objs
 }
-export function getFuncObjByObjType(objType: objectType) {
-  let funcs = allActFunctions.filter((o: any) => o.prototype.$lyl_actFunc.objType == objType)
-  let objs = []
-  for (let index = 0; index < funcs.length; index++) {
-    const element = funcs[index]
-    objs.push(funcToObj(element))
-  }
-  return objs
-}
+
 export function getFuncByType(funcCode: funcCode) {
   // window.console.log('行为代码2', funcCode)
   var res = allActFunctions.find((o: any) => o.prototype.$lyl_actFunc.funcCode == funcCode)

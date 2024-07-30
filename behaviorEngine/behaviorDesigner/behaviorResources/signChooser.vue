@@ -19,28 +19,25 @@ import { Component, Emit, Watch, Prop, InjectReactive, ProvideReactive } from 'v
 import { deepClone, getUuid } from '@common/utils'
 
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
-import { object_Signs, objectType, funcGroup, getFuncObjByObjType } from '@behaviorEngine/index'
+import { funcGroup } from '@behaviorEngine/index'
 
 @Options({
   components: {}
 })
 export default class signChooser extends Vue {
-  @Prop()
-  private signObj: object_Signs
-
-  private allSigns: any[] = []
-  mounted() {
-    this.allSigns = getFuncObjByObjType(objectType.signs)
-  }
-
-  private showClick() {
-    ;(this.$refs.dropdown1 as any).handleOpen()
-  }
-
-  private menuSelected(key) {
-    var currentnode = this.allSigns.find((o) => o.funcCode == key)
-    this.$emit('update:signObj', currentnode)
-  }
+  // @Prop()
+  // private signObj: object_Signs
+  // private allSigns: any[] = []
+  // mounted() {
+  //   this.allSigns = getFuncObjByObjType(objectType.signs)
+  // }
+  // private showClick() {
+  //   ;(this.$refs.dropdown1 as any).handleOpen()
+  // }
+  // private menuSelected(key) {
+  //   var currentnode = this.allSigns.find((o) => o.funcCode == key)
+  //   this.$emit('update:signObj', currentnode)
+  // }
 }
 </script>
  

@@ -2,7 +2,7 @@ import { deepClone } from '@common/utils'
 import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
-import { actionObj, objectType } from './actObject'
+import { actionObj } from './actObject'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from './actFuncBase'
 import { getFuncObjByType, getFuncByType } from './actResource'
 
@@ -100,13 +100,13 @@ export class factory {
       //下一个
       let nextObj = objs[index + 1]
       //判断
-      if (nextObj.objType === objectType.signs && nextObj.funcCode === funcCode.signAssign) {
-        evalStr.push('_runArea[' + index + '].ref')
-      } else {
-        let val = await newObj.ref
-        _runArea[index] = val
-        evalStr.push('_runArea[' + index + ']')
-      }
+      // if (nextObj.objType === objectType.signs && nextObj.funcCode === funcCode.signAssign) {
+      //   evalStr.push('_runArea[' + index + '].ref')
+      // } else {
+      //   let val = await newObj.ref
+      //   _runArea[index] = val
+      //   evalStr.push('_runArea[' + index + ']')
+      // }
       //最后一个元素
       if (index === objs.length - 2) {
         let lastObj = objs[index + 1]
