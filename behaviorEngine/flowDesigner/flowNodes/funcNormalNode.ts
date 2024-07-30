@@ -31,6 +31,7 @@ class VueHtmlNode extends HtmlNode {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type, text } = anchorData
+
     let textPositionX = -15
     if (type === 'outParam' || type === 'just_out') {
       textPositionX = 8
