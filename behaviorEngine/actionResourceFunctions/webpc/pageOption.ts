@@ -3,11 +3,11 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { popupCallback, actionObj } from '../../actObject'
+import { actionObj } from '../../actObject'
 
 @resourceFuncAttr('跳转页面', '', funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
-export class variables implements actFuncBase<actionObj> {
-  $meta: actionObj
+export class leadToPageMethod implements actFuncBase {
+  currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
@@ -28,8 +28,8 @@ export class variables implements actFuncBase<actionObj> {
 }
 
 @resourceFuncAttr('页面方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
-export class methodsInPageMethod implements actFuncBase<actionObj> {
-  $meta: actionObj
+export class methodsInPageMethod implements actFuncBase {
+  currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
@@ -56,8 +56,8 @@ export class methodsInPageMethod implements actFuncBase<actionObj> {
 }
 
 @resourceFuncAttr('页面属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
-export class propertiesInPageMethod implements actFuncBase<actionObj> {
-  $meta: actionObj
+export class propertiesInPageMethod implements actFuncBase {
+  currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior

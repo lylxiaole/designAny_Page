@@ -39,7 +39,6 @@ export class actionObj {
 
   public cloneFrom(obj: actionObj) {
     this.id = obj.id
-    this.objType = obj.objType
     this.name = obj.name
     this.funcCode = obj.funcCode
     this.description = obj.description
@@ -52,11 +51,4 @@ export class actionObj {
       this[key] = null
     }
   }
-}
-
-/**弹窗回调的配置信息 */
-export class popupCallback {
-  public id: string
-  public modelBindName_InPopupPage: string
-  public behaviorId_InMainPage: string
 }

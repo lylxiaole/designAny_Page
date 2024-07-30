@@ -5,7 +5,6 @@ import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from './behaviorTypes'
 
 import { actionObj } from './actObject'
-import { popupCallback } from './actObject'
 
 //方法资源分组
 export enum funcGroup {
@@ -97,7 +96,6 @@ export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGro
   return function (target: Function) {
     !target.prototype.$lyl_actFunc && (target.prototype.$lyl_actFunc = {})
     target.prototype.$lyl_actFunc.funcCode = funcCode
-    target.prototype.$lyl_actFunc.objType = objType
     target.prototype.$lyl_actFunc.funcStack = funcStack
     target.prototype.$lyl_actFunc.funcGroup = funcGroup
     target.prototype.$lyl_actFunc.name = name
@@ -108,8 +106,8 @@ export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGro
 export { allActFunctions }
 
 //方法的父类型
-export interface actFuncBase<T> {
-  $meta: T //动作的元数据，用于保存。描述了动作的类型，出入参数等关键信息
+export interface actFuncBase {
+  currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior

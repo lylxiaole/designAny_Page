@@ -32,7 +32,7 @@ export class factory {
     func.currentBehavior = this.currentBehavior
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
-    func.$meta = obj
+    func.currentActObj = obj
 
     obj.setFunc = async (obj: actionObj, val: any) => {
       await func.setFunc(obj, val)
