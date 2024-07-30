@@ -11,7 +11,6 @@ class VueHtmlNode extends HtmlNode {
   isMounted = false
   r
   app
-
   constructor(props) {
     super(props)
     this.isMounted = false
@@ -38,7 +37,6 @@ class VueHtmlNode extends HtmlNode {
     } else {
       textPositionX = -20
     }
-
     return lfh('g', {}, [lfh('rect', { x: x, y: y, width: 10, height: 10, stroke: '#000000', strokeDasharray: '3 3' }), lfh('text', { x: x + textPositionX, y: y }, [text])])
   }
   setHtml(rootEl) {
@@ -66,14 +64,13 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         return sourceAnchor.type === 'outParam' || sourceAnchor.type === 'just_out'
       }
     })
+
     this.targetRules.push({
       message: '只允许连接左边的锚点',
       validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
         return targetAnchor.type === 'inParam' || targetAnchor.type === 'just_in'
       }
     })
-
-    this.setIsShowAnchor(true)
   }
   getOutlineStyle() {
     const style = super.getOutlineStyle()
@@ -107,13 +104,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       isSelected,
       properties: { actObj }
     } = this
-    let inParams = []
-    let outParam = null
-
-    if (actObj.objType === objectType.method) {
-      inParams = actObj.inputParams
-      outParam = actObj.outParam
-    }
+    let inParams = actObj.inputParams
+    let outParam = actObj.outParam
 
     const anchors = []
     //TODO 需要设定 一个入参锚点只能连一条线
@@ -126,6 +118,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
           y: y - height / 2 + index * agvHeight + agvHeight / 2,
           id: `${inParam.key}`,
           name: inParam.name,
+          edgeAddable: false,
           type: 'inParam',
           text: inParam.name
         })
@@ -136,6 +129,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         y: y - height / 2,
         id: actObj.id + '_in',
         name: '',
+        edgeAddable: false,
         type: 'just_in',
         text: '连线'
       })
@@ -162,9 +156,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     }
 
     return anchors
-  }
-  setIsShowAnchor(flag) {
-    super.setIsShowAnchor(true)
   }
 }
 

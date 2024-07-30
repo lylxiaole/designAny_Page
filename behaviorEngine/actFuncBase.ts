@@ -112,5 +112,5 @@ export interface actFuncBase {
   currentPage: EnginePage
   currentBehavior: behavior
 
-  excute(): any
+  excute: () => Promise<any>
 }

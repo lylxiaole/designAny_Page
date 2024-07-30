@@ -20,22 +20,7 @@ export class actionObj {
   nextObjIds: string[]
   inputParams: object_InParam[] = []
   outParam: param = null
-
-  // get ref(): any {
-  //   return this.getFunc(this)
-  // }
-  // set ref(val: any) {
-  //   this.setFunc(this, val)
-  // }
-
-  // get desc(): string {
-  //   return this.getDesc(this)
-  // }
-
-  // public setFunc: (obj: actionObj, val: any) => void = null
-  // public getFunc: (obj: actionObj) => any = null
-  // public getDesc: (obj: actionObj) => string = null
-  // public updateInparamsFunction: () => void = null
+  excuted: boolean = false
 
   public cloneFrom(obj: actionObj) {
     this.id = obj.id

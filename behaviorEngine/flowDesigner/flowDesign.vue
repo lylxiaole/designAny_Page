@@ -105,6 +105,10 @@ export default class index extends ComponentBase {
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
+
+    this.currentFlow.on('connection:not-allowed', (msg) => {
+      alert(msg.msg)
+    })
   }
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
