@@ -138,7 +138,7 @@ export default class index extends ComponentBase {
       if (newObj.outParam) {
         newObj.outParam.key = getUuid()
       }
-
+      // ********************
       let flowNode = findFlowNode(newObj.funcCode)
       let dragData = {
         id: newObj.id,
