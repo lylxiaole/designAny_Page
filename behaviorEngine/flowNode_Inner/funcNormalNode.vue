@@ -14,7 +14,7 @@ import { flowDesignNode } from '../flowDesigner/flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 
-@flowDesignNode(funcCode.methodsInPage, flowNodeType.funcNormalNode)
+@flowDesignNode(null, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })

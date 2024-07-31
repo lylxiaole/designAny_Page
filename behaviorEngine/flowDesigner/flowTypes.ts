@@ -23,7 +23,12 @@ export function flowDesignNode(funcCode: funcCode, flowNode: flowNodeType) {
   }
 }
 export function findFlowNodeInner(funcCode: funcCode) {
-  return allFlowNodes.find((o) => o.prototype.$lyl_flowNode.funcCode === funcCode)
+  let find = allFlowNodes.find((o) => o.prototype.$lyl_flowNode.funcCode === funcCode)
+  if (find) {
+    return find
+  } else {
+    return allFlowNodes.find((o) => o.prototype.$lyl_flowNode.flowNode === flowNodeType.funcNormalNode)
+  }
 }
 export function findFlowNode(funcCode: funcCode) {
   let find = allFlowNodes.find((o) => o.prototype.$lyl_flowNode.funcCode === funcCode)

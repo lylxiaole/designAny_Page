@@ -179,7 +179,6 @@ export default class index extends ComponentBase {
   private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {}
   /**当确定节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {}
-
   // **********组织页面资源**************************************************************
   private makeCurrentPageGroup(targetGroup: object_group, layout: EngineContainer) {
     //页面方法
@@ -192,7 +191,6 @@ export default class index extends ComponentBase {
         layoutId: layout.Id,
         methodField: dmethod.methodField
       }
-
       //入参
       for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
         const inparam = dmethod.inParams[jndex]
@@ -216,7 +214,6 @@ export default class index extends ComponentBase {
       if (lprop.canSetting === false) {
         continue
       }
-
       let actObj = getFuncObjByType(funcCode.propertiesInPage) as actionObj
       actObj.description = '属性:' + lprop.propertyName
       actObj.resourceFilter = {
@@ -224,9 +221,19 @@ export default class index extends ComponentBase {
         propField: lprop.field
       }
       actObj.name = lprop.propertyName
+      //入参
+      actObj.inputParams.push({
+        key: getUuid(),
+        name: '设定值'
+      } as any)
+      //出参
+      actObj.outParam = {
+        key: getUuid(),
+        name: ''
+      } as any
       targetGroup.childrenObjs.push(actObj)
     }
-    //页面子组件
+    //递归遍历页面子组件
     if (layout.children.length > 0) {
       for (let index = 0; index < layout.children.length; index++) {
         let child = layout.children[index]
