@@ -64,13 +64,10 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         return sourceAnchor.type === anchorType.outParam || sourceAnchor.type === anchorType.justOut
       }
     })
-    //TODO 需要设定 一个入参锚点只能连一条线
+    //限定 一个入参锚点只能连一条线
     this.sourceRules.push({
       message: '当前入参已存在连线，不可重复连线',
       validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
-        let sourceObj = sourceNode.properties.actObj
-        let targetObj = sourceNode.properties.actObj
-
         let find = this.graphModel.edges.find((o) => o.targetNodeId === targetNode.id && o.targetAnchorId === targetAnchor.id)
         if (!find) {
           return true
