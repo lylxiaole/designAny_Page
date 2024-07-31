@@ -148,9 +148,6 @@ export default class index extends ComponentBase {
       }
 
       this.currentFlow.dnd.startDrag(dragData)
-
-      // event.dataTransfer.setData('application/vueflow', JSON.stringify(newObj))
-      // event.dataTransfer.effectAllowed = 'move'
     }
   }
 

@@ -54,7 +54,7 @@ export class methodsInPageMethod implements actFuncBase {
       window.console.error('方法调用失败,该方法不存在')
       return
     }
-
+    // ****调用**************
     let result = targetLayout[method.methodField].apply(targetLayout, params)
     if (isPromise(result)) {
       return await result
