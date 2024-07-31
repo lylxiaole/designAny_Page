@@ -1,5 +1,5 @@
 import { getUuid } from '@common/utils'
-import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
+import { EngineComponent, EnginePage, LayoutMethod } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
@@ -17,15 +17,43 @@ export class leadToPageMethod implements actFuncBase {
 @resourceFuncAttr('页面方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
 export class methodsInPageMethod implements actFuncBase {
   currentActObj: actionObj
+  currentBehavior: behavior
+
   currentLayout: EngineLayout
   currentPage: EnginePage
-  currentBehavior: behavior
+
   async excute() {
     var params: any[] = []
     this.currentActObj.inputParams.filter((o) => {
       params.push(o.val)
     })
-    return this.currentPage.excuteMethod(this.currentActObj.name, params)
+    // ********************************
+    let layoutId = this.currentActObj.resourceId
+    let methodName = this.currentActObj.name
+    let targetLayout: EngineLayout = null
+    if (this.currentPage.Id === layoutId) {
+      targetLayout = this.currentPage
+    } else {
+      targetLayout = this.currentPage.findLayoutRecursion(layoutId, this.currentPage.children)
+    }
+
+    if (!targetLayout) {
+      window.console.error('找不到布局')
+      return
+    }
+    let method: LayoutMethod = null
+    for (let index = 0; index < targetLayout.designerMethods.length; index++) {
+      const o = targetLayout.designerMethods[index]
+      if (o.methodName === methodName) {
+        method = o
+        break
+      }
+    }
+    if (!method) {
+      window.console.error('方法调用失败,该方法不存在')
+      return
+    }
+    return targetLayout[method.methodField].apply(targetLayout, params)
   }
 }
 

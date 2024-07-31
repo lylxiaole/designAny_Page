@@ -128,7 +128,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         for (let index = 0; index < inParams.length; index++) {
           let inParam = inParams[index]
           anchors.push({
-            x: x - width / 2 - 10,
+            x: x - width / 2,
             y: y - height / 2 + index * agvHeight + agvHeight / 2,
             id: `${inParam.key}`,
             name: inParam.name,

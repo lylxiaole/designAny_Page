@@ -28,7 +28,6 @@ export default class EngineComponent extends EngineContainer {
   created() {
     this.width = 200
     this.height = 200
-    /**注册事件 */
   }
 
   mounted() {}

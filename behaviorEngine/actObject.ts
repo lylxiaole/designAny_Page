@@ -10,14 +10,16 @@ export class object_InParam extends param {
 export class actionObj {
   // ******基础信息*********
   id: string //唯一Id
-  // resourceId: string //资源得唯一Id，可以用这个ID匹配到资源，
+  resourceId: string //资源得唯一Id，可以用这个ID匹配到资源，
   // pageId?: string //该资源当前所在page,部分页面资源有这个字段。
   name: string
   description: string
+
   funcCode: funcCode
   // ******运行时信息*********
   preObjIds: string[]
   nextObjIds: string[]
+
   inputParams: object_InParam[] = []
   outParam: param = null
   excuted: boolean = false

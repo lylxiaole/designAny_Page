@@ -218,7 +218,8 @@ export default class EngineLayout extends Vue {
     ],
     hasOutParam: true
   })
-  protected testMethod(params: param[]): string {
+  protected testMethod(name: string, age: string, score: string): string {
+    debugger
     return '123'
   }
 
@@ -409,23 +410,6 @@ export default class EngineLayout extends Vue {
     return null
   }
 
-  /**执行组件自定义方法 */
-  public async excuteMethod(name: string, inparams: any[]) {
-    let method: any = null
-    for (let index = 0; index < this.designerMethods.length; index++) {
-      const o = this.designerMethods[index]
-      if (o.methodName === name) {
-        method = o
-        break
-      }
-    }
-    if (!method) {
-      window.console.error('方法调用失败,该方法不存在')
-      return
-    }
-    return method.callback(inparams)
-    //TODO 图形化编程工具会在此处调用注册的方法
-  }
   /**递归删除子组件 */
   public removeChildRecursion(childId: string) {
     var find = this.findLayoutRecursion(childId, this.children)

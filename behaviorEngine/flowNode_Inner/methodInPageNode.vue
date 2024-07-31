@@ -1,6 +1,5 @@
 <template>
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
-    <el-row> {{actObj?actObj.name:''}}</el-row>
     <el-row> {{actObj?actObj.description:''}}</el-row>
   </el-row>
 </template>

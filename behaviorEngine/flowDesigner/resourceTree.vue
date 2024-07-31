@@ -107,7 +107,7 @@ export default class index extends ComponentBase {
         const childBoj = group.childrenObjs[jndex]
         let treeNodec = new TreeNodeDC()
         treeNodec.id = childBoj.id
-        treeNodec.label = childBoj.name
+        treeNodec.label = childBoj.description
         treeNodec.type = 'node'
         treeNodec.actObj = childBoj
         treeNodeg.children.push(treeNodec)
@@ -127,8 +127,18 @@ export default class index extends ComponentBase {
     }
 
     if (event.dataTransfer) {
-      let newObj = deepClone(node.data.actObj)
+      let newObj = deepClone(node.data.actObj) as actionObj
       newObj.id = getUuid()
+      if (newObj.inputParams) {
+        for (let index = 0; index < newObj.inputParams.length; index++) {
+          const element = newObj.inputParams[index]
+          element.key = getUuid()
+        }
+      }
+      if (newObj.outParam) {
+        newObj.outParam.key = getUuid()
+      }
+
       let flowNode = findFlowNode(newObj.funcCode)
       let dragData = {
         id: newObj.id,
@@ -173,12 +183,14 @@ export default class index extends ComponentBase {
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {}
 
   // **********组织页面资源**************************************************************
-  private makeCurrentPageGroup(targetGroup: object_group, currentPage: EngineContainer) {
+  private makeCurrentPageGroup(targetGroup: object_group, layout: EngineContainer) {
     //页面方法
-    for (let index = 0; index < currentPage.designerMethods.length; index++) {
-      const dmethod = currentPage.designerMethods[index]
+    for (let index = 0; index < layout.designerMethods.length; index++) {
+      const dmethod = layout.designerMethods[index]
       let actObj = getFuncObjByType(funcCode.methodsInPage) as actionObj
-      actObj.name = '方法:' + dmethod.methodName
+      actObj.name = dmethod.methodName
+      actObj.description = '方法:' + dmethod.methodName
+      actObj.resourceId = layout.Id
       //入参
       for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
         const inparam = dmethod.inParams[jndex]
@@ -194,24 +206,25 @@ export default class index extends ComponentBase {
           name: ''
         } as any
       }
-
       targetGroup.childrenObjs.push(actObj)
     }
     //页面属性
-    for (let index = 0; index < currentPage.properties.length; index++) {
-      const pageProp = currentPage.properties[index]
+    for (let index = 0; index < layout.properties.length; index++) {
+      const pageProp = layout.properties[index]
       if (pageProp.canSetting === false) {
         continue
       }
 
       let actObj = getFuncObjByType(funcCode.propertiesInPage) as actionObj
-      actObj.name = '属性:' + pageProp.propertyName
+      actObj.description = '属性:' + pageProp.propertyName
+      actObj.resourceId = layout.Id
+      actObj.name = pageProp.propertyName
       targetGroup.childrenObjs.push(actObj)
     }
     //页面子组件
-    if (currentPage.children.length > 0) {
-      for (let index = 0; index < currentPage.children.length; index++) {
-        let child = currentPage.children[index]
+    if (layout.children.length > 0) {
+      for (let index = 0; index < layout.children.length; index++) {
+        let child = layout.children[index]
         let childrenGroup = new object_group()
         childrenGroup.title = '子组件:' + child.name
         childrenGroup.key = child.Id

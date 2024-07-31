@@ -30,22 +30,23 @@ export function DEventAttr(info: LayoutEvent) {
   return function (target: EngineLayout, eventField: any, desc: any) {
     // ******重写方法，使方法和行为绑定********************************************
     const original = desc.value
+    debugger
+    let x = original.arguments
+    debugger
     desc.value = function emitter(...args: any[]) {
       const emit = (returnValue: any) => {
         let currentLayout = this as EngineLayout
-
         if (currentLayout.isDesigning == false) {
           let findEvent = currentLayout.behaviorBinds.find((o) => o.eventName === info.eventName)
           if (!findEvent) {
             return
           }
-          debugger
-          let topPage = currentLayout.topLayout as EnginePage
 
+          let topPage = currentLayout.topLayout as EnginePage
           for (let index = 0; index < topPage.behaviors.length; index++) {
             const behav = topPage.behaviors[index]
             if (findEvent.behaviorIds.indexOf(behav.id) > -1) {
-              let actFactory = new factory(target, topPage, behav)
+              let actFactory = new factory(currentLayout, topPage, behav)
               actFactory.exacteAction()
             }
           }

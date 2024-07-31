@@ -38,6 +38,7 @@ export class factory {
     if (!this.currentBehavior) {
       return
     }
+
     //初始化
     for (let index = 0; index < this.currentBehavior.actObjs.length; index++) {
       const element = this.currentBehavior.actObjs[index]
@@ -75,12 +76,14 @@ export class factory {
         //子级有入参，需要把上级的出参赋值给子级的入参
         let inParam = childObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
         inParam.val = parentObj.outParam.val
+
         //如果子级的所有上级都执行完成,可以开始执行子级
         let allParents = this.currentBehavior.actObjs.filter((o) => childObj.preObjIds.indexOf(o.id) > -1)
         let noExcutedParent = allParents.find((o) => o.excuted === false)
         if (!noExcutedParent) {
           let childObj_func = this.getObjFunc(childObj)
           childObj.excuted = false
+          debugger
           await childObj_func.excute()
           childObj.excuted = true
         }

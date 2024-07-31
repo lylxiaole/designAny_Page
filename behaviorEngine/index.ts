@@ -3,7 +3,7 @@ export { behaviorContext }
 // export * from './04_actionReaourceTree'
 export * from './actFuncBase'
 export * from './actObject'
-export * from './actionFactory_oldback'
+export * from './actionFactory'
 export * from './actResource'
 export * from './behaviorTypes'
 
