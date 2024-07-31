@@ -38,7 +38,6 @@ export class factory {
     if (!this.currentBehavior) {
       return
     }
-
     //初始化
     for (let index = 0; index < this.currentBehavior.actObjs.length; index++) {
       const element = this.currentBehavior.actObjs[index]
