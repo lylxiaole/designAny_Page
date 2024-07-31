@@ -218,7 +218,7 @@ export default class EngineLayout extends Vue {
     ],
     hasOutParam: true
   })
-  protected testMethod(name: string, age: string, score: string): string {
+  protected async testMethod(name: string, age: string, score: string): Promise<string> {
     debugger
     return '123'
   }

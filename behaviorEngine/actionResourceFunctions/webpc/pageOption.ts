@@ -4,6 +4,7 @@ import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
 import { actionObj } from '../../actObject'
+import { isPromise } from '@vue/shared'
 
 @resourceFuncAttr('跳转页面', '', funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
 export class leadToPageMethod implements actFuncBase {
@@ -53,7 +54,13 @@ export class methodsInPageMethod implements actFuncBase {
       window.console.error('方法调用失败,该方法不存在')
       return
     }
-    return targetLayout[method.methodField].apply(targetLayout, params)
+
+    let result = targetLayout[method.methodField].apply(targetLayout, params)
+    if (isPromise(result)) {
+      return await result
+    } else {
+      return result
+    }
   }
 }
 

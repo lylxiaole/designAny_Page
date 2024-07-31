@@ -49,7 +49,6 @@ export class factory {
     for (let index = 0; index < topActObjs.length; index++) {
       const actObj = topActObjs[index] as actionObj
       let actFunc = this.getObjFunc(actObj)
-      actObj.excuted = false
       //异步同时执行,效率高
       actFunc.excute().then((result) => {
         actObj.excuted = true
@@ -82,15 +81,16 @@ export class factory {
         let noExcutedParent = allParents.find((o) => o.excuted === false)
         if (!noExcutedParent) {
           let childObj_func = this.getObjFunc(childObj)
-          childObj.excuted = false
-          debugger
-          await childObj_func.excute()
+          let res = await childObj_func.excute()
           childObj.excuted = true
+          if (childObj.outParam) {
+            childObj.outParam.val = res
+          }
+          //进行下一次递归
+          let child_childObjs = this.currentBehavior.actObjs.filter((o) => childObj.nextObjIds.indexOf(o.id) > -1)
+          await this.excuteChildObjs(childObj, child_childObjs)
         }
       }
-      //进行下一次递归
-      let child_childObjs = this.currentBehavior.actObjs.filter((o) => childObj.nextObjIds.indexOf(o.id) > -1)
-      await this.excuteChildObjs(childObj, child_childObjs)
     }
   }
 }
