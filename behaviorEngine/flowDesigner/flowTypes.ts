@@ -7,7 +7,9 @@ export enum flowNodeType {
 //锚点类型
 export enum anchorType {
   inParam = 'inParam',
-  outParam = 'outParam'
+  outParam = 'outParam',
+  justIn = 'just_in',
+  justOut = 'just_out'
 }
 
 const allFlowNodes: any[] = []

@@ -13,7 +13,7 @@ import { getUuid } from '@common/utils'
 import { actionObj } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-import { findFlowNode, flowNodeType } from './flowTypes'
+import { findFlowNode, flowNodeType, anchorType } from './flowTypes'
 import funcNormalNode from './flowNodes/funcNormalNode'
 import defaultEdge from './flowEdges/defaultEdge'
 
@@ -106,8 +106,32 @@ export default class index extends ComponentBase {
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
 
-    this.currentFlow.on('connection:not-allowed', (msg) => {
-      alert(msg.msg)
+    this.currentFlow.on('connection:not-allowed', this.onEdgeConnectNotAllowed)
+    this.currentFlow.on('anchor:dragstart', this.onAnchorDragStart)
+    this.currentFlow.on('anchor:dragend', this.onAnchorDragEnd)
+  }
+  // ****************流程图事件****************************
+  private async onEdgeConnectNotAllowed(msg) {
+    alert(msg.msg)
+  }
+
+  private onAnchorDragStart({ data, nodeModel }) {
+    this.currentFlow.graphModel.nodes.forEach((node) => {
+      if (nodeModel.id !== node.id) {
+        node.isShowAnchor = true
+        node.setProperties({
+          isConnection: true
+        })
+      }
+    })
+  }
+
+  private onAnchorDragEnd({ data, nodeModel }) {
+    this.currentFlow.graphModel.nodes.forEach((node) => {
+      if (nodeModel.id !== node.id) {
+        node.isShowAnchor = false
+        this.currentFlow.deleteProperty(node.id, 'isConnection')
+      }
     })
   }
   // ****************拖拽行为******************************
@@ -147,14 +171,7 @@ export default class index extends ComponentBase {
       properties: { actObj: actObj }
     })
   }
-  private addFlowEdge(sourceNodeId: string, sourceAnchorId: string, targetNodeId: string, targetAnchorId: string) {
-    // this.currentFlow.addEdge({
-    //   //      sourceNodeId: string;
-    //   // sourceAnchorId?: string;
-    //   // targetNodeId: string;
-    //   // targetAnchorId?: string;
-    // })
-  }
+
   // ************************************************************
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
