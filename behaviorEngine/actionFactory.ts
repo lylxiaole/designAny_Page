@@ -3,7 +3,7 @@ import { EnginePage, EngineLayout } from '@designEngine/index'
 import { behavior, actionDetail, action } from './behaviorTypes'
 
 import { actionObj } from './actObject'
-import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from './actFuncBase'
+import { actFuncBase, resourceFuncAttr, funcCode } from './actFuncBase'
 import { getFuncObjByType, getFuncByType } from './actResource'
 
 export class factory {
