@@ -460,18 +460,6 @@ export default class EngineLayout extends Vue {
       }
     }
   }
-
-  public setPropertyVal(property: PropertySetting, val: any, isForce: boolean = false): boolean {
-    let convert_value = property.convert(val)
-    let field = property.field
-    if (isForce == false && serialize(this[field]) == serialize(convert_value)) {
-      return false
-    }
-
-    this[field] = convert_value
-    return true
-  }
-
   // *************************对外公布事件****************************************************************************
   @Emit('onDPropertyChange')
   protected onDPropertyChange(layout: EngineLayout, field: string, val: any) {}
