@@ -137,25 +137,14 @@ export default class index extends ComponentBase {
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
   private onDrop(event) {
-    if (!event.dataTransfer) {
-      return
-    }
-    let data = event.dataTransfer.getData('application/vueflow')
-    let actObj = JSON.parse(data) as actionObj
-    let flowNode = findFlowNode(actObj.funcCode)
-    if (!flowNode) {
-      alert('找不到对应的流程节点')
-    }
-
-    this.addFlowNode(flowNode, actObj as actionObj, event.offsetX, event.offsetY)
+    this.currentFlow.dnd.onDrop(event)
   }
   private onDragOver(event) {
     event.preventDefault()
-    if (true) {
-      this.isDragOver = true
-      if (event.dataTransfer) {
-        event.dataTransfer.dropEffect = 'move'
-      }
+
+    this.isDragOver = true
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move'
     }
   }
   private onDragLeave() {

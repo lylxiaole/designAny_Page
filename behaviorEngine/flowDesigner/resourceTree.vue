@@ -42,6 +42,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { EnginePage, EngineContainer } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import LogicFlow from '@logicflow/core'
+import { findFlowNode, flowNodeType, anchorType } from './flowTypes'
 
 class TreeNodeDC {
   id: string
@@ -124,12 +125,22 @@ export default class index extends ComponentBase {
     if (node.data.type === 'group') {
       return
     }
+
     if (event.dataTransfer) {
       let newObj = deepClone(node.data.actObj)
       newObj.id = getUuid()
+      let flowNode = findFlowNode(newObj.funcCode)
+      let dragData = {
+        id: newObj.id,
+        type: flowNode,
+        // text?: TextConfig;
+        properties: { actObj: newObj }
+      }
 
-      event.dataTransfer.setData('application/vueflow', JSON.stringify(newObj))
-      event.dataTransfer.effectAllowed = 'move'
+      this.currentFlow.dnd.startDrag(dragData)
+
+      // event.dataTransfer.setData('application/vueflow', JSON.stringify(newObj))
+      // event.dataTransfer.effectAllowed = 'move'
     }
   }
 
