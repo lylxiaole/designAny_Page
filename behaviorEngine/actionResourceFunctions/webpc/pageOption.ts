@@ -29,8 +29,7 @@ export class methodsInPageMethod implements actFuncBase {
       params.push(o.val)
     })
     // ********************************
-    let layoutId = this.currentActObj.resourceId
-    let methodName = this.currentActObj.name
+    let { layoutId, methodField } = this.currentActObj.resourceFilter
     let targetLayout: EngineLayout = null
     if (this.currentPage.Id === layoutId) {
       targetLayout = this.currentPage
@@ -42,20 +41,9 @@ export class methodsInPageMethod implements actFuncBase {
       window.console.error('找不到布局')
       return
     }
-    let method: LayoutMethod = null
-    for (let index = 0; index < targetLayout.designerMethods.length; index++) {
-      const o = targetLayout.designerMethods[index]
-      if (o.methodName === methodName) {
-        method = o
-        break
-      }
-    }
-    if (!method) {
-      window.console.error('方法调用失败,该方法不存在')
-      return
-    }
+
     // ****调用**************
-    let result = targetLayout[method.methodField].apply(targetLayout, params)
+    let result = targetLayout[methodField].apply(targetLayout, params)
     if (isPromise(result)) {
       return await result
     } else {
@@ -70,5 +58,14 @@ export class propertiesInPageMethod implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {}
+  async excute() {
+    let { layoutId, propField } = this.currentActObj.resourceFilter
+    let targetLayout: EngineLayout = null
+    if (this.currentPage.Id === layoutId) {
+      targetLayout = this.currentPage
+    } else {
+      targetLayout = this.currentPage.findLayoutRecursion(layoutId, this.currentPage.children)
+    }
+    return targetLayout[propField]
+  }
 }

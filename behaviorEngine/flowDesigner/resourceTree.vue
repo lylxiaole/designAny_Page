@@ -127,6 +127,7 @@ export default class index extends ComponentBase {
     }
 
     if (event.dataTransfer) {
+      //
       let newObj = deepClone(node.data.actObj) as actionObj
       newObj.id = getUuid()
       if (newObj.inputParams) {
@@ -187,7 +188,11 @@ export default class index extends ComponentBase {
       let actObj = getFuncObjByType(funcCode.methodsInPage) as actionObj
       actObj.name = dmethod.methodName
       actObj.description = '方法:' + dmethod.methodName
-      actObj.resourceId = layout.Id
+      actObj.resourceFilter = {
+        layoutId: layout.Id,
+        methodField: dmethod.methodField
+      }
+
       //入参
       for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
         const inparam = dmethod.inParams[jndex]
@@ -207,15 +212,18 @@ export default class index extends ComponentBase {
     }
     //页面属性
     for (let index = 0; index < layout.properties.length; index++) {
-      const pageProp = layout.properties[index]
-      if (pageProp.canSetting === false) {
+      const lprop = layout.properties[index]
+      if (lprop.canSetting === false) {
         continue
       }
 
       let actObj = getFuncObjByType(funcCode.propertiesInPage) as actionObj
-      actObj.description = '属性:' + pageProp.propertyName
-      actObj.resourceId = layout.Id
-      actObj.name = pageProp.propertyName
+      actObj.description = '属性:' + lprop.propertyName
+      actObj.resourceFilter = {
+        layoutId: layout.Id,
+        propField: lprop.field
+      }
+      actObj.name = lprop.propertyName
       targetGroup.childrenObjs.push(actObj)
     }
     //页面子组件
