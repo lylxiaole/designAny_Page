@@ -5,12 +5,12 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { getUuid } from '@common/utils'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-
+const anchorSize = 10
 //一般性的流程节点
 class VueHtmlNode extends HtmlNode {
-  isMounted = false
-  r
-  app
+  private isMounted: boolean = false
+  private r: any
+  private app: any
   constructor(props) {
     super(props)
     this.isMounted = false
@@ -31,13 +31,14 @@ class VueHtmlNode extends HtmlNode {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type, text } = anchorData
-    let textPositionX = -15
-    if (type === anchorType.outParam || type === anchorType.justOut) {
-      textPositionX = 8
-    } else {
-      textPositionX = -20
-    }
-    return lfh('g', {}, [lfh('rect', { x: x, y: y, width: 10, height: 10, stroke: '#000000', strokeDasharray: '3 3' }), lfh('text', { x: x + textPositionX, y: y }, [text])])
+    // let textPositionX = -15
+    // if (type === anchorType.outParam || type === anchorType.justOut) {
+    //   textPositionX = 8
+    // } else {
+    //   textPositionX = -20
+    // }
+    // return lfh('g', {}, [lfh('rect', { x: x, y: y, width: 10, height: 10, stroke: '#000000', strokeDasharray: '3 3' }), lfh('text', { x: x + textPositionX, y: y }, [text])])
+    return lfh('g', {}, [lfh('rect', { x: x, y: y, width: anchorSize, height: anchorSize, stroke: '#000000', strokeDasharray: '3 3' })])
   }
   setHtml(rootEl) {
     if (!this.isMounted) {
@@ -53,8 +54,8 @@ class VueHtmlNode extends HtmlNode {
 
 class VueHtmlNodeModel extends HtmlNodeModel {
   setAttributes() {
-    this.width = 120
-    this.height = 120
+    this.width = 150
+    this.height = 150
     this.text.editable = false
     this.inputData = this.text.value
 
@@ -128,8 +129,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         for (let index = 0; index < inParams.length; index++) {
           let inParam = inParams[index]
           anchors.push({
-            x: x - width / 2,
-            y: y - height / 2 + index * agvHeight + agvHeight / 2,
+            x: x - width / 2 - anchorSize / 2,
+            y: y - height / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
             id: `${inParam.key}`,
             name: inParam.name,
             edgeAddable: false,
@@ -139,13 +140,13 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         }
       } else {
         anchors.push({
-          x: x - width / 2,
-          y: y - height / 2,
+          x: x - width / 2 - anchorSize / 2,
+          y: y - height / 2 - anchorSize / 2,
           id: actObj.id + '_in',
           name: '',
           edgeAddable: false,
           type: anchorType.justIn,
-          text: '连线'
+          text: '无输入'
         })
       }
     }
@@ -153,8 +154,8 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     if (!isConnection) {
       if (outParam) {
         anchors.push({
-          x: x + width / 2,
-          y: y,
+          x: x + width / 2 - anchorSize,
+          y: y - anchorSize / 2,
           id: outParam.key,
           name: outParam.name,
           type: anchorType.outParam,
@@ -162,12 +163,12 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         })
       } else {
         anchors.push({
-          x: x + width / 2,
-          y: y,
+          x: x + width / 2 - anchorSize,
+          y: y - anchorSize / 2,
           id: actObj.id + '_out',
           name: '',
           type: anchorType.justOut,
-          text: '连线'
+          text: '无输出'
         })
       }
     }

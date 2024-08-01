@@ -1,6 +1,34 @@
 <template>
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
-    <el-row> {{actObj?actObj.description:''}}</el-row>
+    <el-col style="width:40px">
+      <template v-if="actObj.inputParams">
+        <el-row v-for="inParam in actObj.inputParams" :key="inParam.key">
+          {{inParam.name}}
+        </el-row>
+      </template>
+      <template v-else>
+        <el-row>
+          无输入
+        </el-row>
+      </template>
+    </el-col>
+    <!-- **************************************************** -->
+    <el-col style="width:calc(100% - 80px)">
+      <el-row> {{actObj?actObj.description:''}}</el-row>
+    </el-col>
+    <!-- **************************************************** -->
+    <el-col style="width:40px">
+      <template v-if="actObj.outParam">
+        <el-row>
+          输出
+        </el-row>
+      </template>
+      <template v-else>
+        <el-row>
+          无输出
+        </el-row>
+      </template>
+    </el-col>
   </el-row>
 </template>
 
@@ -24,7 +52,9 @@ export default class methodInPageNode extends Vue {
   @Prop()
   private actObj: actionObj
 
-  mounted() {}
+  mounted() {
+    this.actObj.outParam
+  }
 }
 </script>
 
