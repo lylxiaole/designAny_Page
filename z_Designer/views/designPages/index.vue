@@ -170,7 +170,7 @@ export default class index extends PageBase {
     }
 
     /************************渲染页面 */
-    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout)
+    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true)
     await (vueComp as PCPageDesign).loadPageByData(pageId, res.designDetail)
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0

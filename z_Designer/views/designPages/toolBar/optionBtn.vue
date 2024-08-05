@@ -1,6 +1,6 @@
 <template>
   <div class="verticalAlignCenter">
-    <div :style="{ width:'60px'}" class="iconitem themeHover" @click="onclick">
+    <div :style="{ width:'auto'}" class="iconitem themeHover" @click="onclick">
       <div class="flexHorilanLayout">
         {{icon}}
       </div>

@@ -2,9 +2,7 @@
   <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgb(61, 61, 61)"
     :style="{ height: height + 'px', width: '100%' }">
     <div :style="{ height: height + 'px', width: '200px' }" style="display:flex;min-width: 200px">
-      <div style="padding:9px;line-height:0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }">
-        <!-- <img style="height: 100%; width: 100%" src="../../assets/imges/designerMainLogo.png" /> -->
-      </div>
+      <div style="padding:9px;line-height:0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }" />
       <div class="verticalAlignCenter" style="color:#fff;font-size:20px;font-family:PingFangSC-Semibold,PingFang SC;font-weight:600;margin-left: 8px">
         看板
       </div>
@@ -15,14 +13,17 @@
     <!-- <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" /> -->
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
-      <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparent"
+      <optionBtn :style="{ height: height + 'px','width':'100px' }" label="字典管理" />
+
+      <optionBtn :style="{ height: height + 'px','width':'100px' }" label="函数管理" />
+      <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background:transparent;"
         :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
         <template #content>
           <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
             <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn :style="{ height: height + 'px' }" label="组件" />
+        <optionBtn :style="{ height: height + 'px' }" style="width:80px" label="组件" />
       </el-tooltip>
       <!-- *************************************************************************** -->
       <div :style="{ width:  '120px' }" class="iconitem themeHover">
