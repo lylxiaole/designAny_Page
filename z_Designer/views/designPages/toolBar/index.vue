@@ -26,16 +26,16 @@
         <optionBtn :style="{ height: height + 'px' }" style="width:80px" label="组件" />
       </el-tooltip>
       <!-- *************************************************************************** -->
-      <div :style="{ width:  '120px' }" class="iconitem themeHover">
+      <div :style="{ width:'120px' }" class="iconitem themeHover">
         <div class="flexHorilanLayout">
           <el-input-number v-model="pageScale" controls-position="right" size="small" :min="0.01" :step="0.01" :max="1000" :precision="2" />
         </div>
         <div class="flexHorilanLayout verticalAlignCenter">缩放窗口</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px' }" label="预览" @click="onPreView" />
+      <optionBtn :style="{height:height + 'px','width':'80px'}" label="预览" @click="onPreView" />
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px' }" label="退出设计" @click="onQuit" />
+      <optionBtn :style="{height:height + 'px' ,'width':'80px'}" label="退出设计" @click="onQuit" />
     </div>
   </div>
 </template>
