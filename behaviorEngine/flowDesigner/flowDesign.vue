@@ -97,6 +97,23 @@ export default class index extends ComponentBase {
     this.currentFlow = new LogicFlow({
       container: this.$refs.flowarea as any,
       grid: true,
+      keyboard: {
+        enabled: true,
+        shortcuts: [
+          {
+            keys: ['backspace', 'delete'],
+            callback: () => {
+              const r = window.confirm('确定要删除吗？')
+              if (r) {
+                const elements = this.currentFlow.getSelectElements(true)
+                this.currentFlow.clearSelectElements()
+                elements.edges.forEach((edge) => this.currentFlow.deleteEdge(edge.id))
+                elements.nodes.forEach((node) => this.currentFlow.deleteNode(node.id))
+              }
+            }
+          }
+        ]
+      },
       ...this.silentConfig
     })
     this.currentFlow.register(funcNormalNode)

@@ -1,10 +1,10 @@
 <template>
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
-    <el-col style="width:40px">
+    <el-col style="width:40px;height:100%">
       <template v-if="actObj.inputParams">
-        <el-row v-for="inParam in actObj.inputParams" :key="inParam.key">
+        <div v-for="inParam in actObj.inputParams" :key="inParam.key" :style="{'height':inParamHeight}" class="verticalAlignCenter">
           {{inParam.name}}
-        </el-row>
+        </div>
       </template>
       <template v-else>
         <el-row>
@@ -49,12 +49,18 @@ import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 export default class methodInPageNode extends Vue {
   // private getNode: Function = inject('getNode')
 
+  public get inParamHeight() {
+    if (!this.actObj.inputParams || this.actObj.inputParams.length < 1) {
+      return '0px'
+    } else {
+      return 100 / this.actObj.inputParams.length + '%'
+    }
+  }
+
   @Prop()
   private actObj: actionObj
 
-  mounted() {
-    this.actObj.outParam
-  }
+  mounted() {}
 }
 </script>
 
