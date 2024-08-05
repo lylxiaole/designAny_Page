@@ -48,7 +48,6 @@ import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 })
 export default class methodInPageNode extends Vue {
   // private getNode: Function = inject('getNode')
-
   public get inParamHeight() {
     if (!this.actObj.inputParams || this.actObj.inputParams.length < 1) {
       return '0px'
