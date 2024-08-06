@@ -62,14 +62,8 @@ export async function DeleteAPI(apiId: string): Promise<boolean> {
   return resp.data
 }
 
-export async function UpdateAPI(api: ThirtyApiDC): Promise<boolean> {
-  let url = apiAddr() + 'api/thirtyApi/UpdateAPI'
-  const resp = await ajaxPost(url, api)
-  return resp.data
-}
-
-export async function GetApiSimpleInfo(apiId: string): Promise<ThirtyApiDC> {
-  let url = apiAddr() + 'api/thirtyApi/GetApiSimpleInfo?apiId=' + apiId
+export async function GetApiDetail(apiId: string): Promise<ThirtyApiDC> {
+  let url = apiAddr() + 'api/thirtyApi/GetApiDetail?apiId=' + apiId
   const resp = await ajaxGet(url)
   return resp.data
 }

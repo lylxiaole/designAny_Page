@@ -28,6 +28,7 @@ export default class index extends PageBase {
   private async onChooseApi(apiId) {
     if (!apiId) {
       this.currentApiContent = null
+      return
     }
 
     this.currentApiContent = await GetApiContent(apiId)

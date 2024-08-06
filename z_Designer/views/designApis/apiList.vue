@@ -18,7 +18,6 @@
                 <template #icon>
                   <div>
                     <span class="icon iconfont">&#xe627;</span>
-                    <span v-if="data.isDefault">【首页】</span>
                   </div>
                 </template>
               </btreeNode>
