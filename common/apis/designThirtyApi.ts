@@ -14,6 +14,9 @@ export class ThirtyApiDC extends BaseClass {
   public name: string
   public desc: string
   public index: number
+
+  private inParams: string[]
+  private headers: string[]
 }
 export class ThirtyAPIGroupDC extends BaseClass {
   public parentGroupId: string

@@ -1,8 +1,30 @@
 <template>
   <div>
-    <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd">
+    <el-form :model="currentApiContent" label-width="120px">
+      <el-form-item label="描述">
+        <el-input v-model="currentApiContent.desc" />
+      </el-form-item>
 
-    </div>
+      <el-form-item label="域名">
+        <el-input v-model="currentApiContent.host" />
+      </el-form-item>
+      <el-form-item label="路径">
+        <el-input v-model="currentApiContent.path" />
+      </el-form-item>
+      <el-form-item label="请求类型">
+        <el-input v-model="currentApiContent.requestType" />
+      </el-form-item>
+
+      <el-form-item label="请求头">
+        <el-input v-model="currentApiContent.headers" />
+      </el-form-item>
+      <el-form-item label="链接参数">
+        <el-input v-model="currentApiContent.requestType" />
+      </el-form-item>
+      <el-form-item label="body参数">
+        <el-input v-model="currentApiContent.bodyContent" />
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -10,22 +32,19 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { ApiContentDC, UpdateSertAPIContent } from '@common/apis/designApi'
+import { ThirtyApiDC } from '@common/apis/designThirtyApi'
 
 @Options({
   components: {}
 })
 export default class apiDetail extends ComponentBase {
-  @Prop({ default: null })
-  private currentApiContent: ApiContentDC
+  private currentApiContent: ThirtyApiDC
 
-  private nodes: any[] = []
+  public setApiContent(data?) {
+    this.currentApiContent = data
+  }
 
   mounted() {}
-
-  private async startDesignApp() {
-    // this.$router.push({ path: '/designPages', query: { appId: this.currentApplication.id } })
-  }
 }
 </script>
 
