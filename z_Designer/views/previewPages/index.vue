@@ -81,7 +81,7 @@ export default class index extends PageBase {
         break
     }
     /************************渲染页面 */
-    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout)
+    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false)
     await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail)
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0

@@ -16,7 +16,6 @@ const routes: IRouteClass[] = [
         },
         component: () => import('./views/designApplications/index.vue')
       },
-
       {
         icon: 'icon-all-fill',
         path: '/designApis',
@@ -34,6 +33,24 @@ const routes: IRouteClass[] = [
           title: '我的数据库'
         },
         component: () => import('./views/designDatabases/index.vue')
+      },
+      {
+        icon: 'icon-all-fill',
+        path: '/designDictionary',
+        name: 'designDictionary',
+        meta: {
+          title: '字典管理'
+        },
+        component: () => import('./views/designDictionary/index.vue')
+      },
+      {
+        icon: 'icon-all-fill',
+        path: '/designThirtyApis',
+        name: 'designThirtyApis',
+        meta: {
+          title: '外部接口'
+        },
+        component: () => import('./views/designThirtyApis/index.vue')
       }
     ]
   },
@@ -43,7 +60,7 @@ const routes: IRouteClass[] = [
     name: 'designPages',
     hidden: true,
     meta: {
-      title: '我的页面'
+      title: '应用设计'
     },
     component: () => import('./views/designPages/index.vue')
   },
@@ -53,7 +70,7 @@ const routes: IRouteClass[] = [
     name: 'viewPages',
     hidden: true,
     meta: {
-      title: '我的页面'
+      title: '应用预览'
     },
     component: () => import('./views/previewPages/index.vue')
   },
