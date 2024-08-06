@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="currentApiContent">
     <el-form :model="currentApiContent" label-width="120px">
       <el-form-item label="描述">
         <el-input v-model="currentApiContent.desc" />
@@ -41,6 +41,7 @@ export default class apiDetail extends ComponentBase {
   private currentApiContent: ThirtyApiDC
 
   public setApiContent(data?) {
+    debugger
     this.currentApiContent = data
   }
 
