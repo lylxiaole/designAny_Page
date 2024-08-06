@@ -25,7 +25,7 @@ export async function GetAll(): Promise<DictionaryEntity[]> {
   const resp = await ajaxGet(url)
   return resp.data
 }
-export async function DeleteApiGroup(data: DictionaryEntity): Promise<boolean> {
+export async function DeleteDictionary(data: DictionaryEntity): Promise<boolean> {
   let url = apiAddr() + 'api/designDictionary/delete'
   const resp = await ajaxPost(url, data)
   return resp.data
