@@ -13,9 +13,6 @@
     <!-- <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" /> -->
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
-      <optionBtn :style="{ height: height + 'px','width':'100px' }" label="字典管理" />
-
-      <optionBtn :style="{ height: height + 'px','width':'100px' }" label="函数管理" />
       <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background:transparent;"
         :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
         <template #content>
@@ -46,10 +43,13 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import componentListControl from './ComponentListControl.vue'
 import optionBtn from './optionBtn.vue'
+import { behaviorList } from '@behaviorEngine/index'
+
 @Options({
   components: {
     componentListControl,
-    optionBtn
+    optionBtn,
+    behaviorList
   }
 })
 export default class quickActionBar extends Vue {

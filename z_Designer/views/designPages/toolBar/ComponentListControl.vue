@@ -16,7 +16,7 @@
             <div style="width:100%;height:35px;text-align:center">
               <el-image style="font-size:30px;" draggable="false" :src="item.icon" />
             </div>
-            <div style="font-size:12px;padding-top:3px;text-align:center;color:rgba(0,0,0,0.5);width:100%;height:20px" slot="cover">
+            <div style="font-size:12px;padding-top:3px;text-align:center;color:rgba(0,0,0,0.5);width:100%;height:20px">
               {{item.name}}
             </div>
           </div>
