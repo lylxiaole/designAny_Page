@@ -277,6 +277,7 @@ export default class EngineLayout extends Vue {
     }
     if (this.children.indexOf(child) < 0) {
       this.children.push(child)
+      this.isNeedSave = true
       this.$lylemit('onChildrenCountChange')
     }
   }
@@ -303,6 +304,7 @@ export default class EngineLayout extends Vue {
       window.console.error(error)
     }
     this.children.splice(index, 1)
+    this.isNeedSave = true
     this.$lylemit('onChildrenCountChange')
   }
   protected removeChilds(childs: EngineLayout[]) {
