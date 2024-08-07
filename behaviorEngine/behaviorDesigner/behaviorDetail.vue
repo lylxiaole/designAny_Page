@@ -4,7 +4,7 @@
     <el-row style="height:calc(100% - 50px);background:#FFF;">
       <el-col :span="6" style="border-right:1px solid #cdcdcd">
         <!-- //资源列表 -->
-        <resource-tree ref="resourceTree" :currentPage="currentPage" />
+        <resource-tree ref="resourceTree" />
       </el-col>
       <el-col :span="18" style="border-right:1px solid #cdcdcd">
         <!-- 流程图 -->
@@ -52,6 +52,11 @@ export default class behaviorDeatilSetting extends Vue {
     this.windowVisible = true
     await this.$nextTick()
     ;(this.$refs.flowDesign as flowDesign).setFlowData(behav.flowData)
+    ;(this.$refs.resourceTree as resourceTree).setCurrentPage(page)
+  }
+
+  private onFlowCreated(flow) {
+    ;(this.$refs.resourceTree as resourceTree).setCurrentFlow(flow)
   }
   private onClose() {
     this.windowVisible = false
@@ -64,10 +69,6 @@ export default class behaviorDeatilSetting extends Vue {
   }
   private onCancel() {
     this.windowVisible = false
-  }
-
-  private onFlowCreated(flow) {
-    ;(this.$refs.resourceTree as resourceTree).setCurrentFlow(flow)
   }
 
   // *****************************************************

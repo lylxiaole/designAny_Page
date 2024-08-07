@@ -62,10 +62,9 @@ export default class index extends ComponentBase {
     this.currentFlow = flow
   }
 
-  @Prop()
   currentPage: EnginePage
-  @Watch('currentPage', { deep: true, immediate: true })
-  private onCurrentPageChanged(page: EnginePage) {
+  public setCurrentPage(page: EnginePage) {
+    this.currentPage = page
     //计算当前页面可用资源
     let findObjGroupIndex = this.objGroup.findIndex((o) => o.key == page.Id)
     if (findObjGroupIndex > -1) {
@@ -81,6 +80,7 @@ export default class index extends ComponentBase {
   }
 
   mounted() {}
+
   // **********资源树操作**************************************************************
   private seachVal: string = ''
   private treeData: TreeNodeDC[] = []

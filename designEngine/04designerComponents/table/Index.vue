@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr } from '@designEngine/03designerLayoutBase'
-import { PropertyGroupName, TableColumn_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
+import { PropertyGroupName, TableColumn_Setting, Text_Setting, JsonContent_Setting } from '@designEngine/03designerLayoutBase'
 
 import VxeUI from 'vxe-pc-ui'
 import { VxeTable, VxeColumn, VxeColgroup } from 'vxe-table'
@@ -40,10 +40,10 @@ VxeUI.setLanguage('zh-CN')
 })
 export default class Index extends EngineComponent {
   private pageVO: any = { total: 500, currentPage: 1, pageSize: 10 }
-
-  @DPropAttr(new Text_Setting('数据', PropertyGroupName.special, false, null))
+  // **************可设置属性************************
+  @DPropAttr(new JsonContent_Setting('数据', PropertyGroupName.special, true, null))
   private tableData: any[] = []
-
+  // **************不可设置属性************************
   @DPropAttr(new TableColumn_Setting('列设置', PropertyGroupName.special, true, null))
   private tableColumns: any[] = []
 
