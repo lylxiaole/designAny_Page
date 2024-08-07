@@ -21,11 +21,7 @@
           <el-tab-pane label="属性" name="first">
             <propertyGrid ref="propertyGrid" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
           </el-tab-pane>
-          <el-tab-pane label="行为" name="second">
-            <behaviorList :currentPage="currentShowEngine" />
-          </el-tab-pane>
         </el-tabs>
-
       </el-col>
     </el-row>
 

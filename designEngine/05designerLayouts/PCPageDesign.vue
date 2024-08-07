@@ -48,9 +48,6 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onClick_Event = this.listenOnClick
     this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
-    let x = this.properties
-    let y = this.designerEvents
-    let z = this.designerMethods
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {

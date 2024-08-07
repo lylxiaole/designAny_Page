@@ -92,7 +92,7 @@ export default class EngineLayout extends Vue {
   }
 
   @Prop()
-  public isDesigning: boolean = false
+  public isDesigning: boolean
   @Prop()
   public designerMethods: LayoutMethod[]
   @Prop()

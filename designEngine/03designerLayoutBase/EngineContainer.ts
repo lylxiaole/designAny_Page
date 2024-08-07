@@ -187,16 +187,7 @@ export default class EngineContainer extends EngineLayout {
   }
   // **********************************************************************
   /**添加一个组件 */
-  public async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: any, data?: SaveInfo): Promise<EngineLayout> {
-    let dropcomp = dropcompclass
-    dropcomp = await this.renderComponent(dropcomp)
-    dropcomp.parentLayout = this
-    // window.console.error('绘制子组件失败,请不要保存!!!')
-    // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
-    this.addChild(dropcomp)
-    await dropcomp.loadData(data)
-    return dropcomp as EngineLayout
-  }
+
   //选中子组件
   public chooseComps(comps: EngineLayout[]) {
     this.cancelCompSelected(this.children)
@@ -214,11 +205,22 @@ export default class EngineContainer extends EngineLayout {
     })
     this.isSelected = false
   }
-  // *************************overrides**************************************
+  // ************************* **************************************
   protected override async renderChildFromData(data: SaveInfo) {
     await super.renderChildFromData(data)
     let compVue = findSystemCompByCode(data.meta.compCode)
     await this.insertComponentLayout(compVue, data.meta, null, data)
+  }
+
+  public async insertComponentLayout(dropcompclass: any, compInfo: any, dragType?: any, data?: SaveInfo): Promise<EngineLayout> {
+    let dropcomp = dropcompclass
+    dropcomp = await this.renderComponent(dropcomp)
+    dropcomp.parentLayout = this
+    // window.console.error('绘制子组件失败,请不要保存!!!')
+    // layerPopup.warning('绘制子组件失败,请不要保存!!!' + common.serialize(error))
+    this.addChild(dropcomp)
+    await dropcomp.loadData(data)
+    return dropcomp as EngineLayout
   }
   /*************容器渲染子组件的虚方法**********************/
   protected async renderComponent(compCon: EngineLayout): Promise<EngineLayout> {
