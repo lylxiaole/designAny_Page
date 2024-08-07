@@ -16,6 +16,13 @@
             <el-input v-model="scope.row.title" size="small"></el-input>
           </template>
         </el-table-column>
+        <!-- ********************* -->
+        <el-table-column prop="field" label="字段名" width="150">
+          <template #default="scope">
+            <el-input v-model="scope.row.field" size="small"></el-input>
+          </template>
+        </el-table-column>
+        <!-- ********************* -->
         <el-table-column prop="type" label="列类型" width="150">
           <template #default="scope">
             <el-select v-model="scope.row.type" placeholder="Select" size="small" style="width: 100%">
@@ -27,12 +34,13 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column prop="field" label="字段名" width="150">
+        <!-- ********************* -->
+        <el-table-column prop="isShow" label="是否显示" width="150">
           <template #default="scope">
-            <el-input v-model="scope.row.field" size="small"></el-input>
+            <el-switch v-model="scope.row.isShow" size="small"></el-switch>
           </template>
         </el-table-column>
-
+        <!-- ********************* -->
         <el-table-column fixed="right" label="操作">
           <template #default="scope">
             <el-button size="small" @click="() => rowdelete(scope.row.key)">删除</el-button>
@@ -63,6 +71,7 @@ class columnConfig {
   public type: string
   public title: string
   public field: string
+  public isShow: boolean
 }
 
 @CellSettingAttr(PropertyTypeEnum.tableColumn)
@@ -82,6 +91,7 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     var newRow = new columnConfig()
     newRow.key = getUuid()
     newRow.title = '新建'
+    newRow.isShow = true
     this.localData.push(newRow)
   }
   private rowdelete(key: string) {

@@ -227,8 +227,7 @@ export default class EngineLayout extends Vue {
   protected testEvent(name: string): string {
     return name
   }
-
-  // *************************privates****************************************************************************
+  // *************************privates***********************************************************************
   public async destorymethod() {
     this.$off()
     for (let index = 0; index < this.children.length; index++) {
@@ -265,7 +264,7 @@ export default class EngineLayout extends Vue {
     this.isNeedSave = true
     this.onDPropertyChange(this, field, newval)
   }
-  // *************************protect方法****************************************************************************
+  // *************************protect方法**********************************************************************
   protected async renderChildFromData(data: SaveInfo) {}
   protected loadCompleted() {
     this.$lylemit('onLYLMounted', this)

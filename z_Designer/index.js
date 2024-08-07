@@ -39,7 +39,6 @@ currentApp.use(contextmenu)
 currentApp.use(system.router)
 currentApp.use(system.store)
 currentApp.use(system.i18n)
-
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   currentApp.component(key, component)
 }

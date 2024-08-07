@@ -288,7 +288,6 @@ export class Behavior_Setting extends PropertySetting {
 export class PageInParams_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.pageInParams
 }
-
 export class TableColumn_Setting extends PropertySetting {
   public type: PropertyTypeEnum = PropertyTypeEnum.tableColumn
 }
