@@ -13,7 +13,14 @@
       <!-- <el-table-column type="selection" width="55" /> -->
       <el-table-column prop="name" label="名称">
         <template #default="scope">
-          <editableText v-model="scope.name" />
+          <editableText v-model:value="scope.row.name" />
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作" prop="action" width="420px">
+        <template #default="record">
+          <el-button @click="()=>{editBehavior(record.row)}" type="link">编辑</el-button>
+          <el-button @click="()=>{deleteBehavior(record.row)}" type="link">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -6,7 +6,8 @@
       </slot>
     </div>
     <div style="height:100%;float:left;padding-left:3px;box-sizing:border-box">
-      <span v-if="isEdit===false" class="gad-b-tree-node-span" style="display:flex;justify-content:center;align-items:Center;"> {{ currentValue }}
+      <span v-if="isEdit===false" class="gad-b-tree-node-span" style="display:flex;justify-content:center;align-items:Center;">
+        {{ currentValue }}
       </span>
       <el-input v-else ref="currentInput" size="small" v-model="currentValue" @change="onNodevalChanged" @blur="onTreeNodeBlur" style="width:auto" />
     </div>
@@ -38,7 +39,7 @@ export default class bTreeNode extends Vue {
   }
 
   private onTreeNodeBlur(e: any) {
-    this.currentValue = this.oldValue
+    this.updateValue_Inner(this.currentValue)
     this.isEdit = false
   }
 
