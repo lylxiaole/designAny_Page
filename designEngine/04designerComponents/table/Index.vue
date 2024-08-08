@@ -1,15 +1,15 @@
 <template>
   <div style="width:100%;height:100%;">
-    <VxeTable :data="tableData" stripe border :style="{'height':isShowPager?'calc(100% - 38px)':'100%','background-color':cellBackground}"
+    <VxeTable :data="tableData" ref="table" stripe border :style="{'height':isShowPager?'calc(100% - 38px)':'100%','background-color':cellBackground}"
       :row-config="{isCurrent: true, isHover: true}" :column-config="{resizable: true}"
       :header-cell-style="{backgroundColor: headerBackground,color: headerFontColor}"
       :cell-style="{ backgroundColor:cellBackground,color:cellFontColor,'border-color':'black'}">
-
-      <VxeColumn v-for="columnconfig in tableColumns" :key="columnconfig.key" :type="columnconfig.type" :title="columnconfig.title"
-        :field="columnconfig.field"></VxeColumn>
+      <template v-for="columnconfig in tableColumns" :key="columnconfig.key">
+        <VxeColumn v-if="columnconfig.isShow" :type="columnconfig.type" :title="columnconfig.title" :field="columnconfig.field"></VxeColumn>
+      </template>
     </VxeTable>
 
-    <VxePager v-if="isShowPager" style="height:38px" :style="{ 'background-color':cellBackground}" size="small"
+    <VxePager v-if="isShowPager" style="height:38px" :style="{ 'background-color':headerBackground,color:headerFontColor}" size="small"
       v-model:currentPage="pageVO.currentPage" v-model:pageSize="pageVO.pageSize" :total="pageVO.total" @page-change="onPageChange">
     </VxePager>
   </div>
@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr } from '@designEngine/03designerLayoutBase'
+import { EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr, DMethodAttr } from '@designEngine/03designerLayoutBase'
 import {
   PropertyGroupName,
   TableColumn_Setting,
@@ -60,11 +60,13 @@ export default class Index extends EngineComponent {
 
   @DPropAttr(new Color_Setting('表头背景色', PropertyGroupName.special, true, null))
   private headerBackground: string = '#cdcdcd'
+
   @DPropAttr(new Color_Setting('表头字体颜色', PropertyGroupName.special, true, null))
   private headerFontColor: string = '#000000'
 
   @DPropAttr(new Color_Setting('表身背景色', PropertyGroupName.special, true, null))
   private cellBackground: string = '#cdcdcd'
+
   @DPropAttr(new Color_Setting('表身字体颜色', PropertyGroupName.special, true, null))
   private cellFontColor: string = '#000000'
 
@@ -80,6 +82,23 @@ export default class Index extends EngineComponent {
     hasOutParam: false
   })
   private onPageChange(pageSize, currentPage) {}
+
+  @DMethodAttr({ methodName: '获取选择行', hasOutParam: true })
+  private getSelectedRows() {
+    let findradioCol = this.tableColumns.find((o) => o.type === 'radio')
+
+    let findcheckCol = this.tableColumns.find((o) => o.type === 'checkbox')
+    if (findradioCol) {
+      let row = (this.$refs.table as any).getRadioRecord(true)
+      return [row]
+    } else if (findcheckCol) {
+      let rows = (this.$refs.table as any).getCheckboxRecords(true)
+      return rows
+    } else {
+      let row = (this.$refs.table as any).getCurrentRecord()
+      return [row]
+    }
+  }
 
   mounted() {
     this.width = 500

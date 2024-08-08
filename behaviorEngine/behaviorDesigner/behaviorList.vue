@@ -10,12 +10,10 @@
     </div>
     <el-table :data="allBehaviors" style="width:100%" height="calc(100% - 30px)">
       <!-- <el-table-column fixed type="index" width="50" /> -->
-      <el-table-column type="selection" width="55" />
-      <el-table-column prop="name" label="名称" />
-      <el-table-column label="操作" prop="action" width="420px">
-        <template #default="record">
-          <el-button @click="()=>{editBehavior(record.row)}" type="link">编辑</el-button>
-          <el-button @click="()=>{deleteBehavior(record.row)}" type="link">删除</el-button>
+      <!-- <el-table-column type="selection" width="55" /> -->
+      <el-table-column prop="name" label="名称">
+        <template #default="scope">
+          <editableText v-model="scope.name" />
         </template>
       </el-table-column>
     </el-table>
@@ -31,9 +29,9 @@ import { behavior } from '@behaviorEngine/index'
 import { EnginePage } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorDetail from './behaviorDetail.vue'
-
+import editableText from '@common/components/Text/editableText.vue'
 @Options({
-  components: { behaviorDetail: behaviorDetail }
+  components: { behaviorDetail: behaviorDetail, editableText }
 })
 export default class behaviorList extends Vue {
   @Prop() currentPage: EnginePage

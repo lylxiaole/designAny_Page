@@ -41,6 +41,12 @@
           </template>
         </el-table-column>
         <!-- ********************* -->
+        <el-table-column prop="isShow" label="是否显示" width="150">
+          <template #default="scope">
+            <el-switch v-model="scope.row.isShow" size="small"></el-switch>
+          </template>
+        </el-table-column>
+        <!-- ********************* -->
         <el-table-column fixed="right" label="操作">
           <template #default="scope">
             <el-button size="small" @click="() => rowdelete(scope.row.key)">删除</el-button>

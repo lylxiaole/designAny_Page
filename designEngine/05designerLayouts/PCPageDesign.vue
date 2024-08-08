@@ -48,6 +48,7 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onClick_Event = this.listenOnClick
     this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
+    this.designEvets.onSave_Event = this.listenOnSave_Event
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
@@ -221,10 +222,15 @@ export default class PCPageDesign extends EnginePage {
 
     e.stopPropagation()
   }
+  private listenOnSave_Event(e: Event) {
+    e.preventDefault()
+    e.stopPropagation()
+  }
   // ******************************************************
   private listenOnClick(e: Event, target: any) {
     this.chooseComps([])
   }
+
   // ******************************************************
   public closeDesign() {
     this.destorymethod()
