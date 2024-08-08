@@ -53,9 +53,8 @@ export default class PCPageDesign extends EnginePage {
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell, true)
     this.allShells.push(vueComp as DesignShell)
-
+    // ***************************************
     let resComp = (vueComp as DesignShell).addComponent(compCon)
-
     resComp.$once('onLYLMounted', () => {
       ;(vueComp as DesignShell).startListenItemDrag()
     })
@@ -64,8 +63,7 @@ export default class PCPageDesign extends EnginePage {
       this.allShells.splice(findIndex, 1)
       ;(vueComp as DesignShell).destorymethod()
     })
-
-    // ;(vueComp as DesignShell).startListenItemDrag()
+    // ***************************************
     $(this.$el).append(virtualDom)
     return resComp
   }
@@ -145,7 +143,6 @@ export default class PCPageDesign extends EnginePage {
       return true
     }
     let dragComp = this.findLayoutRecursion(compInfo.compId, this.children) as EngineLayout
-    // window.console.log('*****感知拖拽，容器Id=' + this.Id + '***组件Id=', compInfo.compId)
     if (!dragComp) {
       return false
     }

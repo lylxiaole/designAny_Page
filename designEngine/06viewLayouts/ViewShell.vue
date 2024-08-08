@@ -3,9 +3,14 @@
       'margin-left':component==null?0:component.margin_left+'px','margin-right':component==null?0:component.margin_right+'px','margin-top':component==null?0:component.margin_top+'px','margin-bottom':component==null?0:component.margin_bottom+'px',
       'padding-left':component==null?0:component.padding_left+'px','padding-right':component==null?0:component.padding_right+'px','padding-top':component==null?0:component.padding_top+'px','padding-bottom':component==null?0:component.padding_bottom+'px',
       'position':'absolute','display':'block','tabindex':'1' }">
-    <div :class="themeClass" style="width:100%;height:100%;tab-index:1" :style="{zIndex:0,'font-family':component==null?'':component.fontFamily }">
+    <div style="width:100%;height:100%;tab-index:1"
+      :style="{zIndex:0,'font-family':component==null?'':component.fontFamily,'display':(component&&component.display)?'block':'none' }">
       <div style="tab-index:1" ref="compContent"></div>
     </div>
+
+    <div v-if="component&&component.disabled" class="disableDiv" style="width:100%;height:100%;position:absolute;top:0px;left:0px;">
+    </div>
+
   </div>
 </template>
 
@@ -14,7 +19,6 @@ import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { ref, h, render, onMounted } from 'vue'
 import { EngineComponent } from '../03designerLayoutBase'
-import { deepClone } from '@common/utils'
 import { designDrawDomReal } from '../02common/drawVueDom'
 
 @Options({})
@@ -57,5 +61,8 @@ export default class ViewShell extends Vue {
 }
 </script>
  
-<style scoped>
+<style lang="less" scoped>
+.disableDiv {
+  background: rgba(0, 0, 0, 0.4);
+}
 </style>

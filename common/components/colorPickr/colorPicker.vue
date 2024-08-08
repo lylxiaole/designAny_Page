@@ -36,8 +36,8 @@ export default class npColorPicker extends Vue {
       // Can be a HTMLElement.
       el: $(this.$el).find('.colorarea')[0],
       // Which theme you want to use. Can be 'classic', 'monolith' or 'nano'
-      theme: 'nano',
-      default: this.color,
+      theme: 'classic',
+      default: this.color ? this.color : '#000000',
       swatches: [
         'rgba(244, 67, 54, 1)',
         'rgba(233, 30, 99, 0.95)',
