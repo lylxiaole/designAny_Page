@@ -22,11 +22,9 @@ export default class bTreeNode extends Vue {
 
   private isEdit: boolean = false
   private currentValue: string = ''
-  private oldValue: string = ''
 
   mounted() {
     this.currentValue = deepClone(this.value)
-    this.oldValue = deepClone(this.value)
   }
 
   private onNodevalChanged(e: any) {

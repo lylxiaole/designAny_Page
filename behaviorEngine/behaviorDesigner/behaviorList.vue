@@ -9,11 +9,11 @@
       </el-button>
     </div>
     <el-table :data="allBehaviors" style="width:100%" height="calc(100% - 30px)">
-      <!-- <el-table-column fixed type="index" width="50" /> -->
+      <el-table-column fixed type="index" width="50" />
       <!-- <el-table-column type="selection" width="55" /> -->
       <el-table-column prop="name" label="名称">
-        <template #default="scope">
-          <editableText v-model:value="scope.row.name" />
+        <template #default="record">
+          <editableText v-model:value="record.row.name" />
         </template>
       </el-table-column>
 
@@ -37,6 +37,7 @@ import { EnginePage } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorDetail from './behaviorDetail.vue'
 import editableText from '@common/components/Text/editableText.vue'
+import { toRaw } from 'vue'
 @Options({
   components: { behaviorDetail: behaviorDetail, editableText }
 })
@@ -47,7 +48,9 @@ export default class behaviorList extends Vue {
     if (!this.currentPage) {
       return []
     }
-    return this.currentPage.behaviors
+    let x = this.currentPage.behaviors
+    debugger
+    return x
   }
 
   private addBehavior() {
@@ -55,7 +58,6 @@ export default class behaviorList extends Vue {
     newbeh.id = getUuid()
     newbeh.name = '新建行为'
     newbeh.workRange = 'page'
-    // newbeh.actions = []
     newbeh.variables = []
     newbeh.inparam = {}
     this.currentPage.behaviors.unshift(newbeh)
@@ -67,7 +69,7 @@ export default class behaviorList extends Vue {
   }
 
   private deleteBehavior(record: behavior) {
-    let index = this.currentPage.behaviors.findIndex((o) => o === record)
+    let index = this.currentPage.behaviors.findIndex((o) => o.id === record.id)
     this.currentPage.behaviors.splice(index, 1)
   }
 }
