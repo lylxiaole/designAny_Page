@@ -48,9 +48,7 @@ export default class behaviorList extends Vue {
     if (!this.currentPage) {
       return []
     }
-    let x = this.currentPage.behaviors
-    debugger
-    return x
+    return this.currentPage.behaviors
   }
 
   private addBehavior() {
