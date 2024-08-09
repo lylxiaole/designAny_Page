@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width:100%;position:relative">
     <apiList @onChooseApi="onChooseApi" style="width:250px;height:100%;float:left" />
-    <apiDetail ref="apiDetail" style="width:calc(100% - 250px);height:100%;float:left" />
+    <apiDetail v-if="currentApiContent" ref="apiDetail" style="width:calc(100% - 250px);height:100%;float:left" />
   </div>
 </template>
 
@@ -29,6 +29,8 @@ export default class index extends PageBase {
     } else {
       this.currentApiContent = await GetApiDetail(apiId)
     }
+
+    await this.$nextTick()
     ;(this.$refs.apiDetail as apiDetail).setApiContent(this.currentApiContent)
   }
 }
