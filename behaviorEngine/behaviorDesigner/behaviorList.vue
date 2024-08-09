@@ -42,7 +42,12 @@ import { toRaw } from 'vue'
   components: { behaviorDetail: behaviorDetail, editableText }
 })
 export default class behaviorList extends Vue {
-  @Prop() currentPage: EnginePage
+  @Prop({
+    default: () => {
+      return null
+    }
+  })
+  currentPage: EnginePage
 
   private get allBehaviors(): behavior[] {
     if (!this.currentPage) {
@@ -58,7 +63,7 @@ export default class behaviorList extends Vue {
     newbeh.workRange = 'page'
     newbeh.variables = []
     newbeh.inparam = {}
-    this.currentPage.behaviors.unshift(newbeh)
+    this.allBehaviors.unshift(newbeh)
   }
 
   //编辑，跳转到行为细节详情
@@ -67,8 +72,8 @@ export default class behaviorList extends Vue {
   }
 
   private deleteBehavior(record: behavior) {
-    let index = this.currentPage.behaviors.findIndex((o) => o.id === record.id)
-    this.currentPage.behaviors.splice(index, 1)
+    let index = this.allBehaviors.findIndex((o) => o.id === record.id)
+    this.allBehaviors.splice(index, 1)
   }
 }
 </script>

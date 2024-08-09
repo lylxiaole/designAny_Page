@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { behaviorList } from '@behaviorEngine/index'
-import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { EnginePage } from '@designEngine/index'
 
 @Options({
   components: { behaviorList }
@@ -44,8 +44,6 @@ export default class behaviorSettingDialog extends Vue {
   private onCancel() {
     this.windowVisible = false
   }
-
-  // *****************************************************
 }
 </script>
 
