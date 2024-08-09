@@ -192,13 +192,16 @@ export default class index extends ComponentBase {
         methodField: dmethod.methodField
       }
       //入参
-      for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
-        const inparam = dmethod.inParams[jndex]
-        actObj.inputParams.push({
-          key: getUuid(),
-          name: inparam.name
-        } as any)
+      if (dmethod.inParams) {
+        for (let jndex = 0; jndex < dmethod.inParams.length; jndex++) {
+          const inparam = dmethod.inParams[jndex]
+          actObj.inputParams.push({
+            key: getUuid(),
+            name: inparam.name
+          } as any)
+        }
       }
+
       //出参
       if (dmethod.hasOutParam) {
         actObj.outParam = {

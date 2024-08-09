@@ -31,22 +31,6 @@
       </div>
     </div>
 
-    <!-- <el-table :data="allBehaviors" style="width:100%" height="calc(100% - 30px)">
-      <el-table-column fixed type="index" width="50" />
-      <el-table-column prop="name" label="名称">
-        <template #default="record">
-          <editableText v-model:value="record.row.name" />
-        </template>
-      </el-table-column>
-
-      <el-table-column label="操作" prop="action" width="420px">
-        <template #default="record">
-          <el-button @click="()=>{editBehavior(record.row)}" type="link">编辑</el-button>
-          <el-button @click="()=>{deleteBehavior(record.row)}" type="link">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table> -->
-
     <behaviorDetail ref="behaviorDetail" />
   </el-row>
 </template>
