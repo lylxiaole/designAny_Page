@@ -5,8 +5,18 @@
         <el-input style="width:400px" v-model="currentApi.desc" />
       </el-form-item>
       <el-form-item label="域名">
-        <el-input style="width:400px" v-model="currentApi.host" />
+        <el-radio-group v-model="currentApi.hostIsDictionary">
+          <el-radio label="使用字典" :value="true" />
+          <el-radio label="手动填写" :value="false" />
+        </el-radio-group>
+
+        <el-select v-if="currentApi.hostIsDictionary" style="width:400px" v-model="currentApi.requestType">
+          <el-option v-for="dic in allDictorys" :key="dic.id" :label="dic.value" :value="dic.key" />
+        </el-select>
+
+        <el-input v-else style="width:400px" v-model="currentApi.host" />
       </el-form-item>
+
       <el-form-item label="路径">
         <el-input style="width:400px" v-model="currentApi.path" />
       </el-form-item>
@@ -40,12 +50,17 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { ThirtyApiDC } from '@common/apis/designThirtyApi'
+import { ThirtyApiDC, AddOrUpdateAPI } from '@common/apis/designThirtyApi'
 import paramsEidtor from './paramsEidtor.vue'
+import { GetAll } from '@common/apis/designDictionary'
+
 @Options({
   components: { paramsEidtor }
 })
 export default class apiDetail extends ComponentBase {
+  @Prop()
+  private allDictorys: any[]
+
   private currentApi: ThirtyApiDC = new ThirtyApiDC()
 
   public setApiContent(data?) {
@@ -53,9 +68,15 @@ export default class apiDetail extends ComponentBase {
   }
 
   mounted() {}
-  private onSureHandle() {
+
+  private async onSureHandle() {
     let x = this.currentApi
-    debugger
+    let res = await AddOrUpdateAPI(x)
+    if (res) {
+      alert('保存成功')
+    } else {
+      alert('保存失败')
+    }
   }
 }
 </script>

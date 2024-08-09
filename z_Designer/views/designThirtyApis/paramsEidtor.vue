@@ -9,7 +9,7 @@
     <el-row style="height:35px;border:1px solid #cdcdcd">
       <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="2">序号</el-col>
       <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="9">字段</el-col>
-      <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="9">注释</el-col>
+      <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="9">备注</el-col>
       <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="4">操作</el-col>
     </el-row>
     <div style="height:calc(100% - 70px);overflow-y:auto;border:1px solid #cdcdcd">
@@ -18,7 +18,7 @@
           <span>{{index+1}}</span>
         </el-col>
         <el-col style="display:flex;border:1px solid #cdcdcd" class="flexHorilanLayout verticalAlignCenter" :span="9">
-          <editableText style="width:100%" v-model:value="param.field" />
+          <editableText style="width:100%" v-model:value="param.key" />
         </el-col>
         <el-col style="display:flex;border:1px solid #cdcdcd" class="flexHorilanLayout verticalAlignCenter" :span="9">
           <editableText style="width:100%" v-model:value="param.name" />
@@ -48,11 +48,12 @@ export default class paramsEidtor extends PageBase {
   mounted() {}
 
   private addParam() {
-    this.params.push({ field: '', name: '新建' })
+    let index = this.params.length + 1
+    this.params.push({ key: 'param' + index, name: '参数' + index })
   }
 
   private deleteParam(param) {
-    let index = this.params.findIndex((o) => o.field === param.field)
+    let index = this.params.findIndex((o) => o.key === param.key)
     this.params.splice(index, 1)
   }
 }
