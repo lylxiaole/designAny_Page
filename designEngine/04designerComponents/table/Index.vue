@@ -9,8 +9,8 @@
       </template>
     </VxeTable>
 
-    <VxePager v-if="isShowPager" style="height:38px" :style="{ 'background-color':headerBackground,color:headerFontColor}" size="small"
-      v-model:currentPage="pageVO.currentPage" v-model:pageSize="pageVO.pageSize" :total="pageVO.total" @page-change="onPageChange">
+    <VxePager v-if="isShowPager" style="height:38px" size="small" v-model:currentPage="pageVO.currentPage" v-model:pageSize="pageVO.pageSize"
+      :total="pageVO.total" @page-change="onPageChange">
     </VxePager>
   </div>
 </template>
@@ -18,14 +18,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr, DMethodAttr } from '@designEngine/03designerLayoutBase'
-import {
-  PropertyGroupName,
-  TableColumn_Setting,
-  Text_Setting,
-  JsonContent_Setting,
-  Boolean_Setting,
-  Color_Setting
-} from '@designEngine/03designerLayoutBase'
+import { PropertyGroupName, TableColumn_Setting, JsonContent_Setting, Boolean_Setting, Color_Setting } from '@designEngine/03designerLayoutBase'
 
 import VxeUI from 'vxe-pc-ui'
 import { VxeTable, VxeColumn, VxeColgroup } from 'vxe-table'

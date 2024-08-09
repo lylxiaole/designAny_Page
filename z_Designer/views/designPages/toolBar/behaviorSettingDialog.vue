@@ -1,9 +1,9 @@
 <template style="height:100%">
   <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为绑定" style="height:600px" width="800px" v-model="windowVisible" append-to-body
     :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-row style="height:calc(100% - 50px);background:#FFF;">
+    <div style="height:calc(100% - 50px);background:#FFF;width:100%">
       <behaviorList :currentPage="currentPage" />
-    </el-row>
+    </div>
     <template #footer>
       <el-row class="dialog-footer" style="height:50px">
         <div class="steps-action">

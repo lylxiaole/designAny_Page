@@ -1,4 +1,4 @@
-<template style="height:100%">
+<template style="height:100%;width:100%">
   <el-row v-if="currentPage" style="height:100%;background:#FFF;">
     <div style="width:100%;height:30px;justify-content:left;overflow:hidden;" class="flexHorilanLayout">
       <div style="background:#18aeb7;width:6px;height:26px;"></div>
@@ -8,9 +8,31 @@
         添加行为
       </el-button>
     </div>
-    <el-table :data="allBehaviors" style="width:100%" height="calc(100% - 30px)">
+
+    <div style="height:calc(100% - 30px);width:100%;">
+      <el-row style="height:35px">
+        <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="2">序号</el-col>
+        <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="11">名称</el-col>
+        <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="11">操作</el-col>
+      </el-row>
+      <div style="height:calc(100% - 35px);overflow-y:auto">
+        <el-row v-for="(beha,index) in allBehaviors" :key="beha.id" style="margin-top:4px">
+          <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="2">
+            <span>{{index+1}}</span>
+          </el-col>
+          <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
+            <editableText v-model:value="beha.name" />
+          </el-col>
+          <el-col style="display:flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
+            <el-button @click="()=>{editBehavior(beha)}" type="link">编辑</el-button>
+            <el-button @click="()=>{deleteBehavior(beha)}" type="link">删除</el-button>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
+
+    <!-- <el-table :data="allBehaviors" style="width:100%" height="calc(100% - 30px)">
       <el-table-column fixed type="index" width="50" />
-      <!-- <el-table-column type="selection" width="55" /> -->
       <el-table-column prop="name" label="名称">
         <template #default="record">
           <editableText v-model:value="record.row.name" />
@@ -23,7 +45,7 @@
           <el-button @click="()=>{deleteBehavior(record.row)}" type="link">删除</el-button>
         </template>
       </el-table-column>
-    </el-table>
+    </el-table> -->
 
     <behaviorDetail ref="behaviorDetail" />
   </el-row>
@@ -53,6 +75,7 @@ export default class behaviorList extends Vue {
     if (!this.currentPage) {
       return []
     }
+
     return this.currentPage.behaviors
   }
 
