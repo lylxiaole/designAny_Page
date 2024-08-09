@@ -103,7 +103,7 @@ export default class quickActionBar extends Vue {
   }
   /*************定制化控制项************************************************************************ */
   private async onQuit() {
-    this.$router.back()
+    this.$router.push('/designApplications')
   }
   /*************对外公布事件************************************************************************ */
   @Emit('onSave')
