@@ -28,6 +28,15 @@ export default class index extends PageBase {
       this.currentApiContent = null
     } else {
       this.currentApiContent = await GetApiDetail(apiId)
+      if (!this.currentApiContent.headers) {
+        this.currentApiContent.headers = []
+      }
+      if (!this.currentApiContent.bodyContent) {
+        this.currentApiContent.bodyContent = []
+      }
+      if (!this.currentApiContent.inParams) {
+        this.currentApiContent.inParams = []
+      }
     }
 
     await this.$nextTick()
