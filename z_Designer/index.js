@@ -23,12 +23,14 @@ import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 // ****************************************************
 import { init as designEngineInit } from '@designEngine/index'
-import { init as behaviorEngineInit } from '@behaviorEngine/index'
 designEngineInit(apiAddr())
-behaviorEngineInit(apiAddr())
-// *********************************************************
+import { GetAll } from '@common/apis/designDictionary'
+import { GetGroupApisAll } from '@common/apis/designApi'
+import { init as behaviorEngineInit } from '@behaviorEngine/index'
+behaviorEngineInit(apiAddr(), GetAll, GetGroupApisAll)
+// *****************************************************
 import App from './views/App.vue'
-// *********************************************************
+// ***************************************************
 import contextmenu from 'v-contextmenu'
 import 'v-contextmenu/dist/themes/default.css'
 // *********************************************************

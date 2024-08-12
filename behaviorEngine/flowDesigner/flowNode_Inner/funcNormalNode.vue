@@ -46,7 +46,7 @@ import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 @Options({
   components: {}
 })
-export default class methodInPageNode extends Vue {
+export default class funcNormalNode extends Vue {
   // private getNode: Function = inject('getNode')
   public get inParamHeight() {
     if (!this.actObj.inputParams || this.actObj.inputParams.length < 1) {

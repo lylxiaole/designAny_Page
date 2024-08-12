@@ -52,7 +52,7 @@ export default class behaviorDeatilSetting extends Vue {
     this.windowVisible = true
     await this.$nextTick()
     ;(this.$refs.flowDesign as flowDesign).setFlowData(behav.flowData)
-    ;(this.$refs.resourceTree as resourceTree).setCurrentPage(page)
+    ;(this.$refs.resourceTree as resourceTree).init(page)
   }
 
   private onFlowCreated(flow) {

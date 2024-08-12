@@ -8,7 +8,7 @@
       </el-row>
       <el-row style="overflow: hidden; width: 100%; bottom: 0px;height:calc(100% - 50px)">
         <div style="overflow: auto; width: 100%; height: 100%; ">
-          <el-tree node-key="id" :data="treeData" default-expand-all @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
+          <el-tree node-key="id" :data="treeData" @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
             @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd" @node-drop="handleDrop"
             :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
             <template #default="{data}">
@@ -63,20 +63,31 @@ export default class index extends ComponentBase {
   }
 
   currentPage: EnginePage
-  public setCurrentPage(page: EnginePage) {
+  public init(page: EnginePage) {
     this.currentPage = page
     //计算当前页面可用资源
     let findObjGroupIndex = this.objGroup.findIndex((o) => o.key == page.Id)
     if (findObjGroupIndex > -1) {
       this.objGroup.splice(findObjGroupIndex, 1)
     }
-    //
-    let findObjGroup = new object_group()
-    findObjGroup.key = page.Id
-    findObjGroup.title = '当前页面:' + page.name
-    this.makeCurrentPageGroup(findObjGroup, page)
-    //
-    this.objGroup.push(findObjGroup)
+    //计算页面
+    let pageObjGroup = new object_group()
+    pageObjGroup.key = page.Id
+    pageObjGroup.title = '页面资源:' + page.name
+    this.makeCurrentPageGroup(pageObjGroup, page)
+    this.objGroup.push(pageObjGroup)
+    //计算字典资源
+    let dictionaryGroup = new object_group()
+    dictionaryGroup.key = getUuid()
+    dictionaryGroup.title = '字典'
+    this.makeDictionaryGroup(dictionaryGroup)
+    this.objGroup.push(dictionaryGroup)
+    //计算外部api资源
+    let thirtyApiGroup = new object_group()
+    thirtyApiGroup.key = getUuid()
+    thirtyApiGroup.title = '接口'
+    this.makeApisGroup(thirtyApiGroup)
+    this.objGroup.push(thirtyApiGroup)
   }
 
   mounted() {}
@@ -175,11 +186,7 @@ export default class index extends ComponentBase {
       return false
     }
   }
-  /**当节点名称改变后 */
-  private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {}
-  /**当确定节点的新名称 */
-  private async onSureNodeName(id: string, newtitle: string, nodedata: any) {}
-  // **********组织页面资源**************************************************************
+  // **********计算页面资源**************************************************************
   private makeCurrentPageGroup(targetGroup: object_group, layout: EngineContainer) {
     //页面方法
     for (let index = 0; index < layout.designerMethods.length; index++) {
@@ -201,7 +208,6 @@ export default class index extends ComponentBase {
           } as any)
         }
       }
-
       //出参
       if (dmethod.hasOutParam) {
         actObj.outParam = {
@@ -249,7 +255,24 @@ export default class index extends ComponentBase {
       }
     }
   }
+  // ***********计算后端字典资源树*******************************************************
+  private makeDictionaryGroup(targetGroup: object_group) {
+    let actObj = getFuncObjByType(funcCode.dictionary) as actionObj
+    actObj.name = '字典'
+    actObj.description = '字典:'
+    actObj.resourceFilter = {}
+    targetGroup.childrenObjs = []
+    targetGroup.childrenObjs.push(actObj)
+  }
   // ***********计算后端接口资源树*******************************************************
+  private makeApisGroup(targetGroup: object_group) {
+    let actObj = getFuncObjByType(funcCode.thirtyApi) as actionObj
+    actObj.name = '接口'
+    actObj.description = '接口:'
+    actObj.resourceFilter = {}
+    targetGroup.childrenObjs = []
+    targetGroup.childrenObjs.push(actObj)
+  }
 }
 </script>
 

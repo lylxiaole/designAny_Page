@@ -9,8 +9,8 @@
           <el-radio label="使用字典" :value="true" />
           <el-radio label="手动填写" :value="false" />
         </el-radio-group>
-
-        <el-select v-if="currentApi.hostIsDictionary" style="width:400px" v-model="currentApi.requestType">
+        <br />
+        <el-select v-if="currentApi.hostIsDictionary" style="width:400px" v-model="currentApi.host">
           <el-option v-for="dic in allDictorys" :key="dic.id" :label="dic.value" :value="dic.key" />
         </el-select>
 
