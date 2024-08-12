@@ -87,7 +87,7 @@ export default class index extends ComponentBase {
     let thirtyApiGroup = new object_group()
     thirtyApiGroup.key = getUuid()
     thirtyApiGroup.title = '外部接口'
-    let datas = await behaviorContext.getAllThirtyApis()
+    let datas = behaviorContext.allThirtyApis
     await this.makeApisGroup(thirtyApiGroup, datas)
     this.objGroup.push(thirtyApiGroup)
   }
@@ -244,7 +244,7 @@ export default class index extends ComponentBase {
   }
   // ***********计算后端字典资源树*******************************************************
   private async makeDictionaryGroup(targetGroup: object_group) {
-    let datas = await behaviorContext.getAllDictionary()
+    let datas = behaviorContext.allDictionary
     for (let index = 0; index < datas.length; index++) {
       const element = datas[index]
       let actObj = getFuncObjByType(funcCode.dictionary) as actionObj
@@ -280,21 +280,23 @@ export default class index extends ComponentBase {
           actObj.description = api.name
           actObj.inputParams = []
           actObj.resourceFilter = {
-            apiId: api.id
+            apiInfo: api
           }
 
           for (let index = 0; index < api.headers.length; index++) {
             const header = api.headers[index]
-            actObj.inputParams.push({ key: header.key + '_header', name: '请求头:' + header.name })
+            actObj.inputParams.push({ key: header.key + '&header', name: '请求头:' + header.name })
           }
           for (let index = 0; index < api.inParams.length; index++) {
             const inparam = api.inParams[index]
-            actObj.inputParams.push({ key: inparam.key + '_param', name: '链接参数:' + inparam.name })
+            actObj.inputParams.push({ key: inparam.key + '&param', name: '链接参数:' + inparam.name })
           }
           for (let index = 0; index < api.bodyContent.length; index++) {
             const bodycontent = api.bodyContent[index]
-            actObj.inputParams.push({ key: bodycontent.key + '_body', name: 'body参数:' + bodycontent.name })
+            actObj.inputParams.push({ key: bodycontent.key + '&body', name: 'body参数:' + bodycontent.name })
           }
+
+          actObj.outParam = { key: getUuid(), name: '' }
 
           actGroup.childrenObjs.push(actObj)
         }

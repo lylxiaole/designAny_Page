@@ -33,7 +33,7 @@ export default class index extends ComponentBase {
   // *********保存时，获取流程数据，转换成行为列表***********
   public getFlowData(): any {
     let graphData = this.currentFlow.getGraphRawData()
-    debugger
+
     let allObjs: actionObj[] = []
     //组织流程节点顺序关系
     for (let index = 0; index < graphData.nodes.length; index++) {
