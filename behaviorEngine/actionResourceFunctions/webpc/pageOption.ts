@@ -66,6 +66,12 @@ export class propertiesInPageMethod implements actFuncBase {
     } else {
       targetLayout = this.currentPage.findLayoutRecursion(layoutId, this.currentPage.children)
     }
+
+    if (this.currentActObj.inputParams[0].refOutParamId) {
+      debugger
+      targetLayout[propField] = this.currentActObj.inputParams[0].val
+    }
+
     return targetLayout[propField]
   }
 }

@@ -20,7 +20,7 @@ class VueHtmlNode extends HtmlNode {
     //找到actObj的funcCode
     let funcCode = actObj.funcCode
     //绘制节点
-    this.r = h(nodeBase, {
+    this.r = h(nodeBase as any, {
       funcCode: funcCode,
       nodeModel: props.model
     })
@@ -137,7 +137,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       } else {
         anchors.push({
           x: x - width / 2 - anchorSize / 2,
-          y: y - height / 2 - anchorSize / 2,
+          y: y,
           id: actObj.id + '_in',
           name: '',
           edgeAddable: false,

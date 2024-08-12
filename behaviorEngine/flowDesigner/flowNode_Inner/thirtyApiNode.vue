@@ -1,8 +1,6 @@
 <template>
   <div style="width:100;height:100%">
-    <el-select style="width:100%" v-model="selectedKey">
-      <el-option v-for="dic in allDictionarys" :key="dic.id" :label="dic.value" :value="dic.key" />
-    </el-select>
+    <el-row> {{actObj?actObj.description:''}}</el-row>
   </div>
 </template>
 
@@ -25,34 +23,7 @@ export default class thirtyApiNode extends Vue {
   @Prop()
   private actObj: actionObj
 
-  mounted() {
-    this.loadData()
-  }
-
-  private selectedKey: string = null
-  @Watch('selectedKey')
-  private onselectedKeyChanged(val) {
-    if (!val) {
-      this.actObj.outParam = null
-      this.actObj.resourceFilter = {}
-    } else {
-      this.actObj.outParam = {
-        key: getUuid(),
-        name: ''
-      }
-      this.actObj.resourceFilter = {
-        dicKey: val
-      }
-    }
-  }
-
-  private allThirtyApis = []
-  private async loadData() {
-    let allApis = await behaviorContext.getAllThirtyApis()
-    debugger
-    this.allThirtyApis = allApis
-    this.selectedKey = this.actObj.resourceFilter.dicKey
-  }
+  mounted() {}
 }
 </script>
 

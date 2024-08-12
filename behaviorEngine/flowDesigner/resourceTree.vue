@@ -8,9 +8,8 @@
       </el-row>
       <el-row style="overflow: hidden; width: 100%; bottom: 0px;height:calc(100% - 50px)">
         <div style="overflow: auto; width: 100%; height: 100%; ">
-          <el-tree node-key="id" :data="treeData" @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
-            @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd" @node-drop="handleDrop"
-            :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
+          <el-tree node-key="id" :data="treeData" @node-drag-start="handleDragStart" :allow-drop="allowDrop" :allow-drag="allowDrag"
+            :expand-on-click-node="false" draggable highlight-current>
             <template #default="{data}">
               <div draggable="true" v-if="data.type==='page'">
                 <span class="icon iconfont">&#xe627;</span>
@@ -145,11 +144,11 @@ export default class index extends ComponentBase {
       if (newObj.inputParams) {
         for (let index = 0; index < newObj.inputParams.length; index++) {
           const element = newObj.inputParams[index]
-          element.key = getUuid()
+          // element.key = getUuid()
         }
       }
       if (newObj.outParam) {
-        newObj.outParam.key = getUuid()
+        // newObj.outParam.key = getUuid()
       }
       // ********************
       let flowNode = findFlowNode(newObj.funcCode)
@@ -163,24 +162,10 @@ export default class index extends ComponentBase {
     }
   }
 
-  private handleDragEnter(draggingNode, dropNode, ev) {
-    // console.log('tree drag enter: ', dropNode.label)
-  }
-  private handleDragLeave(draggingNode, dropNode, ev) {
-    // console.log('tree drag leave: ', dropNode.label)
-  }
-  private handleDragOver(draggingNode, dropNode, ev) {
-    // console.log('tree drag over: ', dropNode.label)
-  }
-  private handleDragEnd(draggingNode, dropNode, dropType, ev) {
-    // console.log('tree drag end: ', dropNode && dropNode.label, dropType)
-  }
-  private async handleDrop(draggingNode, dropNode, dropType, ev) {}
   private allowDrop(draggingNode, dropNode, type) {
     return false
   }
   private allowDrag(draggingNode) {
-    return true
     if (draggingNode.data.type === 'node') {
       return true
     } else {
@@ -262,11 +247,12 @@ export default class index extends ComponentBase {
     for (let index = 0; index < datas.length; index++) {
       const element = datas[index]
       let actObj = getFuncObjByType(funcCode.dictionary) as actionObj
-      actObj.name = element.key
-      actObj.description = element.key
+      actObj.name = '字典:' + element.key
+      actObj.description = '字典:' + element.key
       actObj.resourceFilter = {
         dicKey: element.key
       }
+      actObj.outParam = { key: getUuid(), name: '' }
       targetGroup.childrenObjs = []
       targetGroup.childrenObjs.push(actObj)
     }
@@ -284,13 +270,31 @@ export default class index extends ComponentBase {
       }
       if (group.childrenAPIs) {
         for (let index = 0; index < group.childrenAPIs.length; index++) {
+          //根据接口内容，制作actObj
           const api = group.childrenAPIs[index]
+
           let actObj = getFuncObjByType(funcCode.thirtyApi) as actionObj
           actObj.name = api.name
+          actObj.id = getUuid()
           actObj.description = api.name
+          actObj.inputParams = []
           actObj.resourceFilter = {
             apiId: api.id
           }
+
+          for (let index = 0; index < api.headers.length; index++) {
+            const header = api.headers[index]
+            actObj.inputParams.push({ key: header.key + '_header', name: '请求头:' + header.name })
+          }
+          for (let index = 0; index < api.inParams.length; index++) {
+            const inparam = api.inParams[index]
+            actObj.inputParams.push({ key: inparam.key + '_param', name: '链接参数:' + inparam.name })
+          }
+          for (let index = 0; index < api.bodyContent.length; index++) {
+            const bodycontent = api.bodyContent[index]
+            actObj.inputParams.push({ key: bodycontent.key + '_body', name: 'body参数:' + bodycontent.name })
+          }
+
           actGroup.childrenObjs.push(actObj)
         }
       }

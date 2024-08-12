@@ -13,7 +13,6 @@ import { getUuid } from '@common/utils'
 import { actionObj } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-import { findFlowNode, flowNodeType, anchorType } from './flowTypes'
 import funcNormalNode from './flowNodes/funcNormalNode'
 import defaultEdge from './flowEdges/defaultEdge'
 
@@ -34,6 +33,7 @@ export default class index extends ComponentBase {
   // *********保存时，获取流程数据，转换成行为列表***********
   public getFlowData(): any {
     let graphData = this.currentFlow.getGraphRawData()
+    debugger
     let allObjs: actionObj[] = []
     //组织流程节点顺序关系
     for (let index = 0; index < graphData.nodes.length; index++) {
@@ -160,7 +160,6 @@ export default class index extends ComponentBase {
   }
   private onDragOver(event) {
     event.preventDefault()
-
     this.isDragOver = true
     if (event.dataTransfer) {
       event.dataTransfer.dropEffect = 'move'

@@ -2,12 +2,13 @@
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
     <div style="width:40px;height:100%">
       <template v-if="actObj&&actObj.inputParams&&actObj.inputParams.length>0">
-        <div v-for="inParam in actObj.inputParams" :key="inParam.key" :style="{'height':inParamHeight}" class="verticalAlignCenter">
+        <div v-for="inParam in actObj.inputParams" :key="inParam.key" :style="{'height':inParamHeight}" style="font-size:12px"
+          class="verticalAlignCenter">
           {{inParam.name}}
         </div>
       </template>
       <template v-else>
-        <div style="height:100%;width:100%" class="verticalAlignCenter">
+        <div style="height:100%;width:100%;font-size:12px" class="verticalAlignCenter">
           无输入
         </div>
       </template>
@@ -19,14 +20,14 @@
     <!-- **************************************************** -->
     <div style="width:40px">
       <template v-if="actObj&&actObj.outParam">
-        <el-row>
+        <div style="font-size:12px">
           输出
-        </el-row>
+        </div>
       </template>
       <template v-else>
-        <el-row>
+        <div style="font-size:12px">
           无输出
-        </el-row>
+        </div>
       </template>
     </div>
   </el-row>
