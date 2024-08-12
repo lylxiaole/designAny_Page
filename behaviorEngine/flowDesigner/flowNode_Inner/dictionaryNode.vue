@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { inject } from 'vue'
+import { inject, watch } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
@@ -60,20 +60,43 @@ export default class dictionaryNode extends Vue {
       return 100 / this.actObj.inputParams.length + '%'
     }
   }
-
   @Prop()
-  private actObj: actionObj
+  private nodeModel: any
+
+  private get actObj(): actionObj {
+    let { actObj } = this.nodeModel.getProperties()
+    return actObj
+  }
 
   mounted() {
     this.loadData()
   }
 
   private selectedKey: string = null
+  @Watch('selectedKey')
+  private onselectedKeyChanged(val) {
+    if (!val) {
+      this.actObj.outParam = null
+      this.actObj.resourceFilter = {}
+    } else {
+      this.actObj.outParam = {
+        key: getUuid(),
+        name: ''
+      }
+      this.actObj.resourceFilter = {
+        dicKey: val
+      }
+    }
+    this.nodeModel.setProperties({ actObj: this.actObj })
+    this.nodeModel.updateAnchor()
+    this.$forceUpdate()
+  }
+
   private allDictionarys = []
   private async loadData() {
     let allDics = await behaviorContext.getAllDictionary()
-
     this.allDictionarys = allDics
+    this.selectedKey = this.actObj.resourceFilter.dicKey
   }
 }
 </script>

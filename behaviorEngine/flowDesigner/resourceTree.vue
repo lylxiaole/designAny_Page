@@ -138,7 +138,6 @@ export default class index extends ComponentBase {
     }
 
     if (event.dataTransfer) {
-      //
       let newObj = deepClone(node.data.actObj) as actionObj
       newObj.id = getUuid()
       if (newObj.inputParams) {
@@ -155,7 +154,6 @@ export default class index extends ComponentBase {
       let dragData = {
         id: newObj.id,
         type: flowNode,
-        // text?: TextConfig;
         properties: { actObj: newObj }
       }
 

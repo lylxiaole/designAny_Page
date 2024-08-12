@@ -55,9 +55,13 @@ export default class thirtyApiNode extends Vue {
       return 100 / this.actObj.inputParams.length + '%'
     }
   }
-
   @Prop()
-  private actObj: actionObj
+  private nodeModel: any
+
+  private get actObj(): actionObj {
+    let { actObj } = this.nodeModel.getProperties()
+    return actObj
+  }
 
   mounted() {}
 }

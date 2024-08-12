@@ -57,7 +57,12 @@ export default class funcNormalNode extends Vue {
   }
 
   @Prop()
-  private actObj: actionObj
+  private nodeModel: any
+
+  private get actObj(): actionObj {
+    let { actObj } = this.nodeModel.getProperties()
+    return actObj
+  }
 
   mounted() {}
 }

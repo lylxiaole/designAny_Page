@@ -83,6 +83,7 @@ export default class index extends ComponentBase {
       // *****************************************
       allObjs.push(targetActObj)
     }
+
     return { allObjs: allObjs, flowData: graphData }
   }
 
@@ -168,8 +169,6 @@ export default class index extends ComponentBase {
   private onDragLeave() {
     this.isDragOver = false
   }
-  // ****************流程节点操作******************************
-
   // ************************************************************
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}

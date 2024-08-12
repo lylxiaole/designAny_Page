@@ -1,5 +1,5 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
-import { createApp, h, VNode, render } from 'vue'
+import { createApp, h, VNode, render, ref } from 'vue'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { actionObj } from '@behaviorEngine/actObject'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
@@ -14,19 +14,22 @@ class VueHtmlNode extends HtmlNode {
   constructor(props) {
     super(props)
     this.isMounted = false
-    const { actObj } = props.model.getProperties()
+    let { actObj } = props.model.getProperties()
+
     //找到actObj的funcCode
     let funcCode = actObj.funcCode
-
     //找到对应的自定义流程节点
     let flowNodeVue = findFlowNodeInner(funcCode)
     //绘制节点
     this.r = h(flowNodeVue, {
-      actObj: actObj
+      actObj: actObj,
+      nodeModel: props.model
     })
+
     this.app = createApp({
       render: () => this.r
     })
+
     this.app.use(ElementPlus)
   }
   getAnchorShape(anchorData) {
@@ -168,6 +171,21 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       }
     }
     return anchors
+  }
+
+  updateAnchor() {
+    this.incoming.edges.forEach((egde) => {
+      // 调用自定义的更新方案
+      debugger
+      egde.updatePathByAnchor()
+    })
+    this.outgoing.edges.forEach((edge) => {
+      // 调用自定义的更新方案
+      debugger
+      edge.updatePathByAnchor()
+    })
+
+    this.setAttributes()
   }
 }
 
