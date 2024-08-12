@@ -68,7 +68,6 @@ export class propertiesInPageMethod implements actFuncBase {
     }
 
     if (this.currentActObj.inputParams[0].refOutParamId) {
-      debugger
       targetLayout[propField] = this.currentActObj.inputParams[0].val
     }
 

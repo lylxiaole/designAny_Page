@@ -64,6 +64,7 @@ export default class index extends ComponentBase {
 
   currentPage: EnginePage
   public async init(page: EnginePage) {
+    this.objGroup = []
     this.currentPage = page
     //计算当前页面可用资源
     let findObjGroupIndex = this.objGroup.findIndex((o) => o.key == page.Id)
