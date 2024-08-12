@@ -45,11 +45,13 @@ export default class index extends ComponentBase {
       //获取目标节点所有入参的连线
       let preEdges = graphData.edges.filter((o) => o.targetNodeId === targetActObj.id)
       if (preEdges.length < 1) {
+        //目标节点没有上级连接，清除所有入参refOutParamId
         for (let index = 0; index < targetActObj.inputParams.length; index++) {
           const targetinparam = targetActObj.inputParams[index]
           targetinparam.refOutParamId = null
         }
       } else {
+        //目标节点有上级连接，组织所有入参refOutParamId
         for (let jndex = 0; jndex < preEdges.length; jndex++) {
           const edge = preEdges[jndex]
           if (preObjIds.indexOf(edge.sourceNodeId) < 0) {
