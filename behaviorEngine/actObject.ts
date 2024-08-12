@@ -4,7 +4,7 @@ import { funcCode } from './actFuncBase'
 import { param } from './behaviorTypes'
 
 export class object_InParam extends param {
-  refOutParamId: string
+  refOutParamId?: string
 }
 
 export class actionObj {

@@ -180,6 +180,7 @@ export default class index extends ComponentBase {
     return false
   }
   private allowDrag(draggingNode) {
+    return true
     if (draggingNode.data.type === 'node') {
       return true
     } else {

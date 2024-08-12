@@ -4,7 +4,7 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { actionObj } from '@behaviorEngine/actObject'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { getUuid } from '@common/utils'
-import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
+import ElementPlus from 'element-plus'
 const anchorSize = 10
 //一般性的流程节点
 class VueHtmlNode extends HtmlNode {
@@ -17,6 +17,7 @@ class VueHtmlNode extends HtmlNode {
     const { actObj } = props.model.getProperties()
     //找到actObj的funcCode
     let funcCode = actObj.funcCode
+
     //找到对应的自定义流程节点
     let flowNodeVue = findFlowNodeInner(funcCode)
     //绘制节点
@@ -26,6 +27,7 @@ class VueHtmlNode extends HtmlNode {
     this.app = createApp({
       render: () => this.r
     })
+    this.app.use(ElementPlus)
   }
   getAnchorShape(anchorData) {
     // 找到actObj

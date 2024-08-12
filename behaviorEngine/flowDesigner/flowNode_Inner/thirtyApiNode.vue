@@ -1,6 +1,6 @@
 <template>
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
-    <el-col style="width:40px;height:100%">
+    <div style="width:40px;height:100%">
       <template v-if="actObj.inputParams">
         <div v-for="inParam in actObj.inputParams" :key="inParam.key" :style="{'height':inParamHeight}" class="verticalAlignCenter">
           {{inParam.name}}
@@ -11,13 +11,13 @@
           无输入
         </el-row>
       </template>
-    </el-col>
+    </div>
     <!-- **************************************************** -->
-    <el-col style="width:calc(100% - 80px)">
-      <el-row> 外部Api</el-row>
-    </el-col>
+    <div style="width:calc(100% - 80px)">
+      <el-row>外部Api</el-row>
+    </div>
     <!-- **************************************************** -->
-    <el-col style="width:40px">
+    <div style="width:40px">
       <template v-if="actObj.outParam">
         <el-row>
           输出
@@ -28,7 +28,7 @@
           无输出
         </el-row>
       </template>
-    </el-col>
+    </div>
   </el-row>
 </template>
 
@@ -46,7 +46,7 @@ import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 @Options({
   components: {}
 })
-export default class dictionaryNode extends Vue {
+export default class thirtyApiNode extends Vue {
   // private getNode: Function = inject('getNode')
   public get inParamHeight() {
     if (!this.actObj.inputParams || this.actObj.inputParams.length < 1) {

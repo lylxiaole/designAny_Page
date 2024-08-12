@@ -1,7 +1,7 @@
 <template>
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
-    <el-col style="width:40px;height:100%">
-      <template v-if="actObj.inputParams">
+    <div style="width:40px;height:100%">
+      <template v-if="actObj.inputParams&&actObj.inputParams.length>0">
         <div v-for="inParam in actObj.inputParams" :key="inParam.key" :style="{'height':inParamHeight}" class="verticalAlignCenter">
           {{inParam.name}}
         </div>
@@ -11,13 +11,17 @@
           无输入
         </el-row>
       </template>
-    </el-col>
+    </div>
     <!-- **************************************************** -->
-    <el-col style="width:calc(100% - 80px)">
-      <el-row> 字典</el-row>
-    </el-col>
+    <div style="width:calc(100% - 80px)">
+      <el-row>
+        <el-select style="width:100%" v-model="selectedKey">
+          <el-option v-for="dic in allDictionarys" :key="dic.id" :label="dic.value" :value="dic.key" />
+        </el-select>
+      </el-row>
+    </div>
     <!-- **************************************************** -->
-    <el-col style="width:40px">
+    <div style="width:40px">
       <template v-if="actObj.outParam">
         <el-row>
           输出
@@ -28,7 +32,7 @@
           无输出
         </el-row>
       </template>
-    </el-col>
+    </div>
   </el-row>
 </template>
 
@@ -41,6 +45,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @flowDesignNode(funcCode.dictionary, flowNodeType.funcNormalNode)
 @Options({
@@ -60,8 +65,15 @@ export default class dictionaryNode extends Vue {
   private actObj: actionObj
 
   mounted() {
-    this.actObj.inputParams = []
-    this.actObj.inputParams.push({ name: '测试入参', key: getUuid() })
+    this.loadData()
+  }
+
+  private selectedKey: string = null
+  private allDictionarys = []
+  private async loadData() {
+    let allDics = await behaviorContext.getAllDictionary()
+
+    this.allDictionarys = allDics
   }
 }
 </script>

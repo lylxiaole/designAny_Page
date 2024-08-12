@@ -154,6 +154,7 @@ export default class index extends ComponentBase {
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
   private onDrop(event) {
+    this.isDragOver = false
     this.currentFlow.dnd.onDrop(event)
   }
   private onDragOver(event) {
@@ -168,15 +169,6 @@ export default class index extends ComponentBase {
     this.isDragOver = false
   }
   // ****************流程节点操作******************************
-  private addFlowNode(nodeType: flowNodeType, actObj: actionObj, x?, y?) {
-    this.currentFlow.addNode({
-      id: actObj.id,
-      type: nodeType,
-      x: x,
-      y: y,
-      properties: { actObj: actObj }
-    })
-  }
 
   // ************************************************************
   @Emit('onFlowCreated')
