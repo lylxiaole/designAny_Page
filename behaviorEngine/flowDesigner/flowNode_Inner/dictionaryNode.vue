@@ -24,8 +24,6 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class dictionaryNode extends Vue {
   @Prop()
   private actObj: actionObj
-  @Emit('update:actObj')
-  private updateActObjInnner(val) {}
 
   mounted() {
     this.loadData()
@@ -46,8 +44,6 @@ export default class dictionaryNode extends Vue {
         dicKey: val
       }
     }
-
-    this.updateActObjInnner(this.actObj)
   }
 
   private allDictionarys = []

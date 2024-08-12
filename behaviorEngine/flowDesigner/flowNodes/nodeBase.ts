@@ -118,7 +118,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     let outParam = actObj.outParam
 
     const anchors = []
-
     // *********显示入参锚点********************************
     if (isConnection || !(isHovered || isSelected)) {
       if (inParams && inParams.length > 0) {

@@ -32,12 +32,9 @@ import { DeleteDictionary, GetAll } from '@common/apis/designDictionary'
   components: { addOrUpdateDialog }
 })
 export default class index extends PageBase {
-  mounted() {}
-
-  activated() {
+  mounted() {
     this.refreshList()
   }
-
   private allData: any[] = []
   private async refreshList() {
     this.allData = await GetAll()

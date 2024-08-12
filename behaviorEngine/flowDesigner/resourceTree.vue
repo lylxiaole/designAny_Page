@@ -43,6 +43,7 @@ import { EnginePage, EngineContainer } from '@designEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 import LogicFlow from '@logicflow/core'
 import { findFlowNode, flowNodeType, anchorType } from './flowTypes'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 class TreeNodeDC {
   id: string
@@ -63,7 +64,7 @@ export default class index extends ComponentBase {
   }
 
   currentPage: EnginePage
-  public init(page: EnginePage) {
+  public async init(page: EnginePage) {
     this.currentPage = page
     //计算当前页面可用资源
     let findObjGroupIndex = this.objGroup.findIndex((o) => o.key == page.Id)
@@ -80,13 +81,14 @@ export default class index extends ComponentBase {
     let dictionaryGroup = new object_group()
     dictionaryGroup.key = getUuid()
     dictionaryGroup.title = '字典'
-    this.makeDictionaryGroup(dictionaryGroup)
+    await this.makeDictionaryGroup(dictionaryGroup)
     this.objGroup.push(dictionaryGroup)
     //计算外部api资源
     let thirtyApiGroup = new object_group()
     thirtyApiGroup.key = getUuid()
-    thirtyApiGroup.title = '接口'
-    this.makeApisGroup(thirtyApiGroup)
+    thirtyApiGroup.title = '外部接口'
+    let datas = await behaviorContext.getAllThirtyApis()
+    await this.makeApisGroup(thirtyApiGroup, datas)
     this.objGroup.push(thirtyApiGroup)
   }
 
@@ -255,22 +257,46 @@ export default class index extends ComponentBase {
     }
   }
   // ***********计算后端字典资源树*******************************************************
-  private makeDictionaryGroup(targetGroup: object_group) {
-    let actObj = getFuncObjByType(funcCode.dictionary) as actionObj
-    actObj.name = '字典'
-    actObj.description = '字典:'
-    actObj.resourceFilter = {}
-    targetGroup.childrenObjs = []
-    targetGroup.childrenObjs.push(actObj)
+  private async makeDictionaryGroup(targetGroup: object_group) {
+    let datas = await behaviorContext.getAllDictionary()
+    for (let index = 0; index < datas.length; index++) {
+      const element = datas[index]
+      let actObj = getFuncObjByType(funcCode.dictionary) as actionObj
+      actObj.name = element.key
+      actObj.description = element.key
+      actObj.resourceFilter = {
+        dicKey: element.key
+      }
+      targetGroup.childrenObjs = []
+      targetGroup.childrenObjs.push(actObj)
+    }
   }
-  // ***********计算后端接口资源树*******************************************************
-  private makeApisGroup(targetGroup: object_group) {
-    let actObj = getFuncObjByType(funcCode.thirtyApi) as actionObj
-    actObj.name = '接口'
-    actObj.description = '接口:'
-    actObj.resourceFilter = {}
-    targetGroup.childrenObjs = []
-    targetGroup.childrenObjs.push(actObj)
+  // ***********计算外部接口资源树*******************************************************
+  private async makeApisGroup(targetGroup: object_group, topGroups: any[]) {
+    for (let index = 0; index < topGroups.length; index++) {
+      let group = topGroups[index]
+      let actGroup = new object_group()
+      actGroup.key = group.id
+      actGroup.title = group.groupName
+      actGroup.childrenObjs = []
+      if (group.childrenGroups) {
+        this.makeApisGroup(actGroup, group.childrenGroups)
+      }
+      if (group.childrenAPIs) {
+        for (let index = 0; index < group.childrenAPIs.length; index++) {
+          const api = group.childrenAPIs[index]
+          let actObj = getFuncObjByType(funcCode.thirtyApi) as actionObj
+          actObj.name = api.name
+          actObj.description = api.name
+          actObj.resourceFilter = {
+            apiId: api.id
+          }
+          actGroup.childrenObjs.push(actObj)
+        }
+      }
+
+      targetGroup.childrenGroups.push(actGroup)
+    }
   }
 }
 </script>

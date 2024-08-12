@@ -1,7 +1,7 @@
 <template>
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
     <div style="width:40px;height:100%">
-      <template v-if="actObj.inputParams&&actObj.inputParams.length>0">
+      <template v-if="actObj&&actObj.inputParams&&actObj.inputParams.length>0">
         <div v-for="inParam in actObj.inputParams" :key="inParam.key" :style="{'height':inParamHeight}" class="verticalAlignCenter">
           {{inParam.name}}
         </div>
@@ -18,7 +18,7 @@
     </div>
     <!-- **************************************************** -->
     <div style="width:40px">
-      <template v-if="actObj.outParam">
+      <template v-if="actObj&&actObj.outParam">
         <el-row>
           输出
         </el-row>
@@ -63,20 +63,19 @@ export default class nodeBase extends Vue {
   @Prop()
   private funcCode: funcCode
 
-  private get actObj(): actionObj {
-    let { actObj } = this.nodeModel.getProperties()
-    return actObj
-  }
+  private actObj: actionObj = null
 
-  @Watch('actObj', { deep: true })
   private onActObjChanged(val) {
-    debugger
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()
     this.$forceUpdate()
   }
 
   mounted() {
+    let { actObj } = this.nodeModel.getProperties()
+    let newActObj = deepClone(actObj)
+    //
+    this.actObj = newActObj
     let flowNodeVue = findFlowNodeInner(this.funcCode)
     let r = h(flowNodeVue, { actObj: this.actObj })
     let app = createApp({
@@ -84,6 +83,8 @@ export default class nodeBase extends Vue {
     })
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)
+    //
+    this.$watch('actObj', this.onActObjChanged, { deep: true })
   }
 }
 </script>
