@@ -7,7 +7,7 @@ import { actionObj } from '../../actObject'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
 
-@resourceFuncAttr('字典', '', funcGroup.pageOption, funcCode.dictionary, funcStack.webpc)
+@resourceFuncAttr('字典', '', funcGroup.pageOption, funcCode.dictionary, funcStack.universal)
 export class dictionarys implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -20,7 +20,7 @@ export class dictionarys implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('外部接口', '', funcGroup.pageOption, funcCode.thirtyApi, funcStack.webpc)
+@resourceFuncAttr('外部接口', '', funcGroup.pageOption, funcCode.thirtyApi, funcStack.universal)
 export class thirtyApis implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -72,7 +72,7 @@ export class thirtyApis implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('动态判断条件', '', funcGroup.pageOption, funcCode.oneParamJude, funcStack.webpc)
+@resourceFuncAttr('单入口判断条件', '', funcGroup.pageOption, funcCode.oneParamJude, funcStack.universal)
 export class oneParamJude implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

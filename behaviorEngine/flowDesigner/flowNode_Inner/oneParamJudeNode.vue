@@ -1,6 +1,6 @@
 <template>
   <div style="width:100;height:100%">
-    <el-row> {{actObj?actObj.description:''}}</el-row>
+    <el-row> 单条件判断</el-row>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 
-@flowDesignNode(funcCode.oneParamJude, flowNodeType.oneParamJudeNode)
+@flowDesignNode(funcCode.oneParamJude, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })
