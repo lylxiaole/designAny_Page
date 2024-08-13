@@ -14,7 +14,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import funcNormalNode from './flowNodes/funcNormalNode'
-import JudeNode from './flowNodes/JudeNode'
+import JudeNode from './flowNodes/oneParamJudeNode'
 
 import defaultEdge from './flowEdges/defaultEdge'
 
@@ -189,4 +189,4 @@ export default class index extends ComponentBase {
 
 <style lang="less"   >
 @import './flowDesigner.less';
-</style>  
+</style>  ./flowNodes/oneParamJudeNode
