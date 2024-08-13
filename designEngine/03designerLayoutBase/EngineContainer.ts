@@ -44,7 +44,6 @@ export default class EngineContainer extends EngineLayout {
   /**对外公布方法 尺寸向右变化*/
   private childSizeChange_Right(comp: EngineLayout, compParentEle: Element, xchanged: number) {
     let compLeft = $(compParentEle).position().left + $(compParentEle).width()
-
     if ($(compParentEle).width() + xchanged >= 20) {
       comp.width = ($(compParentEle).width() + xchanged).toFixed(0) + 'px'
     }
