@@ -2,7 +2,9 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 
 //节点类型
 export enum flowNodeType {
-  funcNormalNode = 'funcNormalNode'
+  funcNormalNode = 'funcNormalNode',
+
+  JudeNode = 'funcNormalNode'
 }
 //锚点类型
 export enum anchorType {

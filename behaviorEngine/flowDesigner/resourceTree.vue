@@ -90,6 +90,12 @@ export default class index extends ComponentBase {
     let datas = behaviorContext.allThirtyApis
     await this.makeApisGroup(thirtyApiGroup, datas)
     this.objGroup.push(thirtyApiGroup)
+    //判断条件
+    let judgeGroup = new object_group()
+    judgeGroup.key = getUuid()
+    judgeGroup.title = '判断条件'
+    this.makejudgeGroup(judgeGroup)
+    this.objGroup.push(judgeGroup)
   }
 
   mounted() {}
@@ -308,6 +314,18 @@ export default class index extends ComponentBase {
 
       targetGroup.childrenGroups.push(actGroup)
     }
+  }
+  //************计算判断条件**************************************************** */
+
+  private async makejudgeGroup(targetGroup: object_group) {
+    let actObj = getFuncObjByType(funcCode.dynamicJudgmentConditions) as actionObj
+    actObj.name = '动态判断条件'
+    actObj.id = getUuid()
+    actObj.description = '动态判断条件'
+    actObj.inputParams = []
+    actObj.resourceFilter = {}
+    targetGroup.childrenObjs.push(actObj)
+    //////
   }
 }
 </script>

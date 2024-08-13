@@ -178,8 +178,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       egde.updatePathByAnchor()
     })
     this.outgoing.edges.forEach((edge) => {
-      // 调用自定义的更新方案
-      debugger
       edge.updatePathByAnchor()
     })
 

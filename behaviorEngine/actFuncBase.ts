@@ -39,8 +39,10 @@ export enum funcCode {
   methodsInPage = 'methodsInPage',
   leadToPage = 'leadToPage',
 
-  dictionary = 'dictionary',
-  thirtyApi = 'thirtyApi'
+  dictionary = 'dictionary', //字典
+  thirtyApi = 'thirtyApi', //外部API
+
+  dynamicJudgmentConditions = 'dynamicJudgmentConditions' //动态判断条件
 }
 //方法作用范围
 export enum funcStack {

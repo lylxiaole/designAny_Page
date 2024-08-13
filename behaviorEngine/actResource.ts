@@ -48,7 +48,6 @@ export function getFuncObjByGroup(group: funcGroup) {
     const element = funcs[index]
     objs.push(funcToObj(element))
   }
-
   return objs
 }
 

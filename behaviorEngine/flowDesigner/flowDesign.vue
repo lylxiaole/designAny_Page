@@ -14,6 +14,8 @@ import { actionObj } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import funcNormalNode from './flowNodes/funcNormalNode'
+import JudeNode from './flowNodes/JudeNode'
+
 import defaultEdge from './flowEdges/defaultEdge'
 
 @Options({
@@ -127,6 +129,7 @@ export default class index extends ComponentBase {
       },
       ...this.silentConfig
     })
+    this.currentFlow.register(JudeNode)
     this.currentFlow.register(funcNormalNode)
     this.currentFlow.register(defaultEdge)
     this.currentFlow.setDefaultEdgeType('defaultEdge')
