@@ -44,7 +44,7 @@ const codeFormats = [
   'pharmacode',
   'codabar'
 ]
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '一维码组件', 'NpBarCode', npGridIco)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '一维码组件', 'NpBarCode_001', npGridIco)
 @Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}

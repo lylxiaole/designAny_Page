@@ -16,7 +16,7 @@ import { shallowRef } from 'vue'
 
 import elementResizeDetectorMaker from 'element-resize-detector'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通EChart', 'EchartNormal', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通EChart', 'EchartNormal_001', null)
 @Options({})
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})

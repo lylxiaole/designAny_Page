@@ -291,13 +291,12 @@ export default class index extends ComponentBase {
             const inparam = api.inParams[index]
             actObj.inputParams.push({ key: inparam.key + '&param', name: '链接参数:' + inparam.name })
           }
-          for (let index = 0; index < api.bodyContent.length; index++) {
-            const bodycontent = api.bodyContent[index]
-            actObj.inputParams.push({ key: bodycontent.key + '&body', name: 'body参数:' + bodycontent.name })
+          // for (let index = 0; index < api.bodyContent.length; index++) {
+          if (api.requestType !== 'Get') {
+            actObj.inputParams.push({ key: '&body', name: 'body参数' })
           }
 
           actObj.outParam = { key: getUuid(), name: '' }
-
           actGroup.childrenObjs.push(actObj)
         }
       }

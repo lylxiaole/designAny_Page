@@ -25,7 +25,7 @@ import {
 
 import { getUuid, deepClone } from '@common/utils'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '二维码组件', 'NPQrCode', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '二维码组件', 'NPQrCode_001', null)
 @Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'

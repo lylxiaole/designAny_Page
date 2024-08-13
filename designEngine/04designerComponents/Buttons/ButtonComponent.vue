@@ -18,7 +18,7 @@ import { DEventAttr } from '@designEngine/03designerLayoutBase'
 
 import * as elemenpComps from 'element-plus'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent1', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent_001', null)
 @Options({
   components: {
     ...(elemenpComps as any)

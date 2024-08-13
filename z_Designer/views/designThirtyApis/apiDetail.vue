@@ -36,9 +36,9 @@
       <el-form-item label="链接参数">
         <paramsEidtor style="width:400px" :params="currentApi.inParams" />
       </el-form-item>
-      <el-form-item label="body参数">
+      <!-- <el-form-item label="body参数">
         <paramsEidtor style="width:400px" :params="currentApi.bodyContent" />
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <div style="height:50px">
       <el-button type="primary" @click="onSureHandle">确定</el-button>

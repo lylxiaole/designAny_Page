@@ -35,7 +35,7 @@ import zhCN from 'vxe-pc-ui/lib/language/zh-CN'
 VxeUI.setI18n('zh-CN', zhCN)
 VxeUI.setLanguage('zh-CN')
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '表格', 'Table1', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '表格', 'Table_001', null)
 @Options({
   components: {
     VxeTable,
