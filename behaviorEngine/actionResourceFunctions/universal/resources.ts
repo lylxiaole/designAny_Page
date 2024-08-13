@@ -36,7 +36,10 @@ export class thirtyApis implements actFuncBase {
 
     for (let index = 0; index < inParams.length; index++) {
       const inParam = inParams[index]
-      if (inParam.key.indexOf('&body') > -1) {
+      if (inParam.key.indexOf('&body') > -1 && apiInfo.bodyIsParam && apiInfo.requestType !== 'Get') {
+        let key = inParam.key.split('&')[0]
+        body[key] = inParam.val
+      } else if (inParam.key.indexOf('&body') > -1 && !apiInfo.bodyIsParam && apiInfo.requestType !== 'Get') {
         body = inParam.val
       } else if (inParam.key.indexOf('&param') > -1) {
         let key = inParam.key.split('&')[0]

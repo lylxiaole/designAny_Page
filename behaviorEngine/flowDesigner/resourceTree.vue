@@ -120,7 +120,7 @@ export default class index extends ComponentBase {
         const childBoj = group.childrenObjs[jndex]
         let treeNodec = new TreeNodeDC()
         treeNodec.id = childBoj.id
-        treeNodec.label = childBoj.description
+        treeNodec.label = childBoj.name
         treeNodec.type = 'node'
         treeNodec.actObj = childBoj
         treeNodeg.children.push(treeNodec)
@@ -179,8 +179,8 @@ export default class index extends ComponentBase {
     for (let index = 0; index < layout.designerMethods.length; index++) {
       const dmethod = layout.designerMethods[index]
       let actObj = getFuncObjByType(funcCode.methodsInPage) as actionObj
-      actObj.name = dmethod.methodName
-      actObj.description = '方法:' + dmethod.methodName
+      actObj.name = '方法:' + dmethod.methodName
+      actObj.description = '组件:' + layout.name + '-方法:' + dmethod.methodName
       actObj.resourceFilter = {
         layoutId: layout.Id,
         methodField: dmethod.methodField
@@ -211,12 +211,12 @@ export default class index extends ComponentBase {
         continue
       }
       let actObj = getFuncObjByType(funcCode.propertiesInPage) as actionObj
-      actObj.description = '属性:' + lprop.propertyName
+      actObj.name = '属性:' + lprop.propertyName
+      actObj.description = '组件:' + layout.name + '-属性:' + lprop.propertyName
       actObj.resourceFilter = {
         layoutId: layout.Id,
         propField: lprop.field
       }
-      actObj.name = lprop.propertyName
       //入参
       actObj.inputParams.push({
         key: getUuid(),
@@ -291,8 +291,13 @@ export default class index extends ComponentBase {
             const inparam = api.inParams[index]
             actObj.inputParams.push({ key: inparam.key + '&param', name: '链接参数:' + inparam.name })
           }
-          // for (let index = 0; index < api.bodyContent.length; index++) {
-          if (api.requestType !== 'Get') {
+          //除了Get请求，其它的都需要使用body
+          if (api.requestType !== 'Get' && api.bodyIsParam) {
+            for (let index = 0; index < api.bodyContent.length; index++) {
+              const body = api.bodyContent[index]
+              actObj.inputParams.push({ key: body.key + '&body', name: 'body参数:' + body.name })
+            }
+          } else if (api.requestType !== 'Get' && !api.bodyIsParam) {
             actObj.inputParams.push({ key: '&body', name: 'body参数' })
           }
 

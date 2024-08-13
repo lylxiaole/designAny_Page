@@ -13,7 +13,6 @@
         <el-select v-if="currentApi.hostIsDictionary" style="width:400px" v-model="currentApi.host">
           <el-option v-for="dic in allDictorys" :key="dic.id" :label="dic.value" :value="dic.key" />
         </el-select>
-
         <el-input v-else style="width:400px" v-model="currentApi.host" />
       </el-form-item>
 
@@ -36,9 +35,14 @@
       <el-form-item label="链接参数">
         <paramsEidtor style="width:400px" :params="currentApi.inParams" />
       </el-form-item>
-      <!-- <el-form-item label="body参数">
-        <paramsEidtor style="width:400px" :params="currentApi.bodyContent" />
-      </el-form-item> -->
+
+      <el-form-item label="body参数" v-show="currentApi.requestType!=='Get'">
+        <el-radio-group style="width:100%" v-model="currentApi.bodyIsParam">
+          <el-radio label="细分参数" :value="true" />
+          <el-radio label="不细分参数" :value="false" />
+        </el-radio-group>
+        <paramsEidtor v-show="currentApi.bodyIsParam" style="width:400px" :params="currentApi.bodyContent" />
+      </el-form-item>
     </el-form>
     <div style="height:50px">
       <el-button type="primary" @click="onSureHandle">确定</el-button>
