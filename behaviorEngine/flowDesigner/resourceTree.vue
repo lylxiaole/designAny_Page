@@ -318,7 +318,7 @@ export default class index extends ComponentBase {
   //************计算判断条件**************************************************** */
 
   private async makejudgeGroup(targetGroup: object_group) {
-    let actObj = getFuncObjByType(funcCode.dynamicJudgmentConditions) as actionObj
+    let actObj = getFuncObjByType(funcCode.oneParamJude) as actionObj
     actObj.name = '动态判断条件'
     actObj.id = getUuid()
     actObj.description = '动态判断条件'

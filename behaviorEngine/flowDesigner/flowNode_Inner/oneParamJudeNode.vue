@@ -15,11 +15,11 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 
-@flowDesignNode(funcCode.dynamicJudgmentConditions, flowNodeType.JudeNode)
+@flowDesignNode(funcCode.oneParamJude, flowNodeType.oneParamJudeNode)
 @Options({
   components: {}
 })
-export default class dictionaryNode extends Vue {
+export default class oneParamJudeNode extends Vue {
   @Prop()
   private actObj: actionObj
 

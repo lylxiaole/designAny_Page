@@ -42,7 +42,7 @@ export enum funcCode {
   dictionary = 'dictionary', //字典
   thirtyApi = 'thirtyApi', //外部API
 
-  dynamicJudgmentConditions = 'dynamicJudgmentConditions' //动态判断条件
+  oneParamJude = 'oneParamJude' //单条件判断
 }
 //方法作用范围
 export enum funcStack {

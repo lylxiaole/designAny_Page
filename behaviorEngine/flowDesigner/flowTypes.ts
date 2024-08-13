@@ -4,7 +4,7 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 export enum flowNodeType {
   funcNormalNode = 'funcNormalNode',
 
-  JudeNode = 'funcNormalNode'
+  oneParamJudeNode = 'oneParamJudeNode'
 }
 //锚点类型
 export enum anchorType {

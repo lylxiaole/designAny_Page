@@ -72,8 +72,8 @@ export class thirtyApis implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('动态判断条件', '', funcGroup.pageOption, funcCode.dynamicJudgmentConditions, funcStack.webpc)
-export class dynamicJudgmentConditions implements actFuncBase {
+@resourceFuncAttr('动态判断条件', '', funcGroup.pageOption, funcCode.oneParamJude, funcStack.webpc)
+export class oneParamJude implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage

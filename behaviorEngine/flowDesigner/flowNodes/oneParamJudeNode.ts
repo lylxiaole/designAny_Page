@@ -13,7 +13,7 @@ class NodeView extends VueHtmlNode {}
 class NodeModel extends VueHtmlNodeModel {}
 
 export default {
-  type: flowNodeType.JudeNode,
+  type: flowNodeType.oneParamJudeNode,
   model: NodeModel,
   view: NodeView
 }
