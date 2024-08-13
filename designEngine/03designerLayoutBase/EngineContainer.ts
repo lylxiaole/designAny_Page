@@ -23,29 +23,75 @@ export default class EngineContainer extends EngineLayout {
   /**********************************底层拖拽改变尺寸方法 ******************************/
   /**对外公布方法 尺寸向上变化*/
   private childSizeChange_Up(comp: EngineLayout, compParentEle: Element, ychanged: number, mousetop: number) {
-    if ($(compParentEle).height() - ychanged >= 20) {
+    if ($(compParentEle).height() - ychanged < 20) {
+      // 限定最小高度
+      return
+    }
+
+    if (comp.top.toString().indexOf('%') > -1) {
+      let persent = mousetop / $(this.$el).height()
+      comp.top = (persent * 100).toFixed(1) + '%'
+    } else {
       comp.top = mousetop.toFixed(0) + 'px'
-      comp.height = ($(compParentEle).height() - ychanged).toFixed(0) + 'px'
+    }
+    let changedHeight = $(compParentEle).height() - ychanged
+    if (comp.height.toString().indexOf('%') > -1) {
+      let persent = changedHeight / $(this.$el).height()
+      comp.height = (persent * 100).toFixed(1) + '%'
+    } else {
+      comp.height = changedHeight.toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向下变化*/
   private childSizeChange_Down(comp: EngineLayout, compParentEle: Element, ychanged: number) {
-    if ($(compParentEle).height() + ychanged >= 20) {
-      comp.height = ($(compParentEle).height() + ychanged).toFixed(0) + 'px'
+    if ($(compParentEle).height() + ychanged < 20) {
+      // 限定最小高度
+      return
+    }
+
+    let changedHeight = $(compParentEle).height() + ychanged
+    if (comp.height.toString().indexOf('%') > -1) {
+      let persent = changedHeight / $(this.$el).height()
+      comp.height = (persent * 100).toFixed(1) + '%'
+    } else {
+      comp.height = changedHeight.toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向左变化*/
   private childSizeChange_Left(comp: EngineLayout, compParentEle: Element, xchanged: number, mouseleft: number) {
-    if ($(compParentEle).width() - xchanged >= 20) {
+    if ($(compParentEle).width() - xchanged < 20) {
+      //限定最小宽度
+      return
+    }
+    //
+    if (comp.left.toString().indexOf('%') > -1) {
+      let persent = mouseleft / $(this.$el).width()
+      comp.left = (persent * 100).toFixed(1) + '%'
+    } else {
       comp.left = mouseleft.toFixed(0) + 'px'
-      comp.width = ($(compParentEle).width() - xchanged).toFixed(0) + 'px'
+    }
+    //
+    let changedWidth = $(compParentEle).width() - xchanged
+    if (comp.width.toString().indexOf('%') > -1) {
+      let persent = changedWidth / $(this.$el).width()
+      comp.width = (persent * 100).toFixed(1) + '%'
+    } else {
+      comp.width = changedWidth.toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸向右变化*/
   private childSizeChange_Right(comp: EngineLayout, compParentEle: Element, xchanged: number) {
-    let compLeft = $(compParentEle).position().left + $(compParentEle).width()
-    if ($(compParentEle).width() + xchanged >= 20) {
-      comp.width = ($(compParentEle).width() + xchanged).toFixed(0) + 'px'
+    if ($(compParentEle).width() + xchanged < 20) {
+      //限定最小宽度
+      return
+    }
+
+    let changedWidth = $(compParentEle).width() + xchanged
+    if (comp.width.toString().indexOf('%') > -1) {
+      let persent = changedWidth / $(this.$el).width()
+      comp.width = (persent * 100).toFixed(1) + '%'
+    } else {
+      comp.width = changedWidth.toFixed(0) + 'px'
     }
   }
   /**对外公布方法 尺寸左上变化*/
@@ -113,6 +159,27 @@ export default class EngineContainer extends EngineLayout {
         break
       default:
         break
+    }
+  }
+
+  protected changeComponentPosition(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, compId: string) {
+    let dragComp = this.children.find((o) => o.Id == compId)
+    if (dragComp.left.indexOf('%') > -1) {
+      //使用百分比值布局
+      let persent = mouseleft / $(this.$el).width()
+      dragComp.left = (persent * 100).toFixed(1) + '%'
+    } else {
+      //使用单位值布局，px,rem等
+      dragComp.left = mouseleft.toFixed(0) + 'px'
+    }
+
+    if (dragComp.top.indexOf('%') > -1) {
+      //使用百分比值布局
+      let persent = mousetop / $(this.$el).height()
+      dragComp.top = (persent * 100).toFixed(1) + '%'
+    } else {
+      //使用单位值布局，px,rem等
+      dragComp.top = mousetop.toFixed(0) + 'px'
     }
   }
   /**********************************拖拽时的描边尺子 ******************************/

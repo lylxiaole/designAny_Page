@@ -66,12 +66,11 @@ export default class index extends PageBase {
     GetApplication(this.applicationId).then((res) => {
       this.application = res
     })
-
-    $('body').on('keydown', this._onKeyDown)
+    $(window).on('keydown', this._onKeyDown)
   }
 
   unmounted() {
-    $('body').off('keydown', this._onKeyDown)
+    $(window).off('keydown', this._onKeyDown)
   }
 
   // **********当前应用的页面**********************************************************
@@ -196,52 +195,13 @@ export default class index extends PageBase {
   }
   // *************右侧属性窗*******************************************************
   private activeName: string = 'first'
-
   // ********************************************************************
   private _onKeyDown = (e: any) => {
     var keyCode = e.keyCode || e.which || e.charCode
     var ctrlKey = e.ctrlKey || e.metaKey
-
-    if (keyCode == 37 && ctrlKey == false) {
-      //左键
-      e.preventDefault()
-    } else if (keyCode == 38 && ctrlKey == false) {
-      //上键
-      e.preventDefault()
-    } else if (keyCode == 39 && ctrlKey == false) {
-      //右键
-      e.preventDefault()
-    } else if (keyCode == 40 && ctrlKey == false) {
-      //下键
-      e.preventDefault()
-    } else if (keyCode == 37 && ctrlKey == true) {
-      //ctrl+左键
-      e.preventDefault()
-    } else if (keyCode == 38 && ctrlKey == true) {
-      //ctrl+上键
-      e.preventDefault()
-    } else if (keyCode == 39 && ctrlKey == true) {
-      //ctrl+右键
-      e.preventDefault()
-    } else if (keyCode == 40 && ctrlKey == true) {
-      //ctrl+下键
-      e.preventDefault()
-    } else if (keyCode == 48 && ctrlKey == true) {
-      //ctrl+0
-      e.preventDefault()
-    } else if (keyCode == 83 && ctrlKey == true) {
-      //ctrl+s
+    if (keyCode == 83 && ctrlKey == true) {
       e.preventDefault()
       this.onSaveCurrentPage()
-    } else if (keyCode == 67 && ctrlKey == true) {
-      //ctrl+c
-      e.preventDefault()
-    } else if (keyCode == 88 && ctrlKey == true) {
-      //ctrl+x
-      e.preventDefault()
-    } else if (keyCode == 86 && ctrlKey == true) {
-      //ctrl+v
-      e.preventDefault()
     }
   }
 }

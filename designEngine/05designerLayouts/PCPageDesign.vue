@@ -48,7 +48,6 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onClick_Event = this.listenOnClick
     this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
-    this.designEvets.onSave_Event = this.listenOnSave_Event
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
@@ -148,24 +147,7 @@ export default class PCPageDesign extends EnginePage {
     }
     // console.log('-------------------------', left, $(this.$el).offset().left)
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      // 在容器内拖拽组件位置
-      if (dragComp.left.indexOf('%') > -1) {
-        //使用百分比值布局
-        let persent = mouseleft / $(dragComp.topLayout.$el).width()
-        dragComp.left = (persent * 100).toFixed(1) + '%'
-      } else {
-        //使用单位值布局，px,rem等
-        dragComp.left = mouseleft.toFixed(0) + 'px'
-      }
-
-      if (dragComp.top.indexOf('%') > -1) {
-        //使用百分比值布局
-        let persent = mousetop / $(dragComp.topLayout.$el).height()
-        dragComp.top = (persent * 100).toFixed(1) + '%'
-      } else {
-        //使用单位值布局，px,rem等
-        dragComp.top = mousetop.toFixed(0) + 'px'
-      }
+      this.changeComponentPosition(xchanged, ychanged, mouseleft, mousetop, compInfo.compId)
       return false
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
       // 在容器内拖拽组件大小
@@ -211,6 +193,7 @@ export default class PCPageDesign extends EnginePage {
     }
   }
   private async listenOnPaste(e) {
+    debugger
     if (!DesignEvents.copyComp) {
       return
     }
@@ -236,10 +219,7 @@ export default class PCPageDesign extends EnginePage {
 
     e.stopPropagation()
   }
-  private listenOnSave_Event(e: Event) {
-    e.preventDefault()
-    e.stopPropagation()
-  }
+
   // ******************************************************
   private listenOnClick(e: Event, target: any) {
     this.chooseComps([])

@@ -263,6 +263,7 @@ export default class DesignEvents {
   private _onKeyDown = (e: any) => {
     var keyCode = e.keyCode || e.which || e.charCode
     var ctrlKey = e.ctrlKey || e.metaKey
+
     // window.console.log('_onKeyDown:', e.target)
     if (this.onKeyDown_Event) {
       this.onKeyDown_Event(e)
@@ -270,55 +271,55 @@ export default class DesignEvents {
 
     if (keyCode == 37 && ctrlKey == false && this.onPositionLeft_Event) {
       //左键
-      e.preventDefault()
+      // e.preventDefault()
       this.onPositionLeft_Event(e)
     } else if (keyCode == 38 && ctrlKey == false && this.onPositionTop_Event) {
       //上键
-      e.preventDefault()
+      // e.preventDefault()
       this.onPositionTop_Event(e)
     } else if (keyCode == 39 && ctrlKey == false && this.onPositionRight_Event) {
       //右键
-      e.preventDefault()
+      //  e.preventDefault()
       this.onPositionRight_Event(e)
     } else if (keyCode == 40 && ctrlKey == false && this.onPositionBotton_Event) {
       //下键
-      e.preventDefault()
+      //  e.preventDefault()
       this.onPositionBotton_Event(e)
     } else if (keyCode == 37 && ctrlKey == true && this.onWidthSmall_Event) {
       //ctrl+左键
-      e.preventDefault()
+      //  e.preventDefault()
       this.onWidthSmall_Event(e)
     } else if (keyCode == 38 && ctrlKey == true && this.onHeightSmall_Event) {
       //ctrl+上键
-      e.preventDefault()
+      // e.preventDefault()
       this.onHeightSmall_Event(e)
     } else if (keyCode == 39 && ctrlKey == true && this.onWidthBig_Event) {
       //ctrl+右键
-      e.preventDefault()
+      //  e.preventDefault()
       this.onWidthBig_Event(e)
     } else if (keyCode == 40 && ctrlKey == true && this.onHeightBig_Event) {
       //ctrl+下键
-      e.preventDefault()
+      //  e.preventDefault()
       this.onHeightBig_Event(e)
     } else if (keyCode == 48 && ctrlKey == true && this.onRestoreScale_Event) {
       //ctrl+0
-      e.preventDefault()
+      // e.preventDefault()
       this.onRestoreScale_Event(e)
     } else if (keyCode == 83 && ctrlKey == true && this.onSave_Event) {
       //ctrl+s
-      e.preventDefault()
+      //  e.preventDefault()
       this.onSave_Event(e)
     } else if (keyCode == 67 && ctrlKey == true && this.onCopy_Event) {
       //ctrl+c
-      e.preventDefault()
+      // e.preventDefault()
       this.onCopy_Event(e)
     } else if (keyCode == 88 && ctrlKey == true && this.onCut_Event) {
       //ctrl+x
-      e.preventDefault()
+      // e.preventDefault()
       this.onCut_Event(e)
     } else if (keyCode == 86 && ctrlKey == true && this.onPaste_Event) {
       //ctrl+v
-      e.preventDefault()
+      //  e.preventDefault()
       this.onPaste_Event(e)
     }
   }
