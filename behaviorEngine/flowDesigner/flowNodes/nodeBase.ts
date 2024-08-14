@@ -138,7 +138,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         anchors.push({
           x: x - width / 2 - anchorSize / 2,
           y: y,
-          id: actObj.id + '_in',
+          id: actObj.id + '_' + anchorType.justIn,
           name: '',
           edgeAddable: false,
           type: anchorType.justIn,
@@ -161,7 +161,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         anchors.push({
           x: x + width / 2 - anchorSize,
           y: y - anchorSize / 2,
-          id: actObj.id + '_out',
+          id: actObj.id + '_' + anchorType.justOut,
           name: '',
           type: anchorType.justOut,
           text: '无输出'

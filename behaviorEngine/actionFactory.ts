@@ -45,30 +45,19 @@ export class factory {
     }
     //顶级流程节点
     let topActObjs = this.currentBehavior.actObjs.filter((o) => !o.preObjIds || o.preObjIds.length < 1)
-    for (let index = 0; index < topActObjs.length; index++) {
-      const actObj = topActObjs[index] as actionObj
-      let actFunc = this.getObjFunc(actObj)
-      //异步同时执行,效率高
-      actFunc.excute().then((result) => {
-        actObj.excuted = true
-        if (actObj.outParam) {
-          actObj.outParam.val = result
-        }
-        let childObjs = this.currentBehavior.actObjs.filter((o) => actObj.nextObjIds.indexOf(o.id) > -1)
-        this.excuteChildObjs(actObj, childObjs)
-      })
-    }
+    this.excuteChildObjs(null, topActObjs)
   }
 
   private async excuteChildObjs(parentObj: actionObj, childObjs: actionObj[]) {
     for (let index = 0; index < childObjs.length; index++) {
       const childObj = childObjs[index]
-
-      if (!childObj.inputParams || childObj.inputParams.length < 1) {
+      if (!parentObj || !childObj.preObjIds || childObj.preObjIds.length < 1 || !childObj.inputParams || childObj.inputParams.length < 1) {
         //子级节点没有入参，上下级只是顺序关系，子级可以直接执行
         let childObj_func = this.getObjFunc(childObj)
-        childObj.excuted = false
-        await childObj_func.excute()
+        let res = await childObj_func.excute()
+        if (childObj.outParam) {
+          childObj.outParam.val = res
+        }
         childObj.excuted = true
       } else {
         //子级有入参，需要把上级的出参赋值给子级的入参
@@ -84,10 +73,14 @@ export class factory {
           if (childObj.outParam) {
             childObj.outParam.val = res
           }
-          //进行下一次递归
-          let child_childObjs = this.currentBehavior.actObjs.filter((o) => childObj.nextObjIds.indexOf(o.id) > -1)
-          await this.excuteChildObjs(childObj, child_childObjs)
         }
+      }
+
+      //进行下一次递归
+      if (childObj.isJudeNode === true) {
+      } else {
+        let child_childObjs = this.currentBehavior.actObjs.filter((o) => childObj.nextObjIds.indexOf(o.id) > -1)
+        await this.excuteChildObjs(childObj, child_childObjs)
       }
     }
   }

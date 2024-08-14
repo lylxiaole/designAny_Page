@@ -148,15 +148,6 @@ export default class index extends ComponentBase {
     if (event.dataTransfer) {
       let newObj = deepClone(node.data.actObj) as actionObj
       newObj.id = getUuid()
-      if (newObj.inputParams) {
-        for (let index = 0; index < newObj.inputParams.length; index++) {
-          const element = newObj.inputParams[index]
-          // element.key = getUuid()
-        }
-      }
-      if (newObj.outParam) {
-        // newObj.outParam.key = getUuid()
-      }
       // ********************
       let flowNode = findFlowNode(newObj.funcCode)
       let dragData = {
@@ -319,11 +310,13 @@ export default class index extends ComponentBase {
 
   private async makejudgeGroup(targetGroup: object_group) {
     let actObj = getFuncObjByType(funcCode.oneParamJude) as actionObj
-    actObj.name = '动态判断条件'
+    actObj.name = '单条件判断'
     actObj.id = getUuid()
-    actObj.description = '动态判断条件'
+    actObj.description = '单条件判断'
     actObj.inputParams = []
+    actObj.isJudeNode = true
     actObj.resourceFilter = {}
+    actObj.outParam = { key: getUuid(), name: '判断结果' }
     targetGroup.childrenObjs.push(actObj)
     //////
   }

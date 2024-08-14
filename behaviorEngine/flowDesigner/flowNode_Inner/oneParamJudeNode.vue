@@ -15,7 +15,7 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 
-@flowDesignNode(funcCode.oneParamJude, flowNodeType.funcNormalNode)
+@flowDesignNode(funcCode.oneParamJude, flowNodeType.onParamJudeNode)
 @Options({
   components: {}
 })

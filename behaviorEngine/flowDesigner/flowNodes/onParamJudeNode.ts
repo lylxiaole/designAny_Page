@@ -1,0 +1,85 @@
+import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
+import { createApp, h, VNode, render } from 'vue'
+import { funcCode } from '@behaviorEngine/actFuncBase'
+import { actionObj } from '@behaviorEngine/actObject'
+import { findFlowNodeInner, anchorType } from '../flowTypes'
+import { getUuid } from '@common/utils'
+import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
+import { VueHtmlNodeModel, VueHtmlNode } from './nodeBase'
+const anchorSize = 10
+//一般性的流程节点
+class NodeView extends VueHtmlNode {}
+
+class NodeModel extends VueHtmlNodeModel {
+  getDefaultAnchor() {
+    //锚点计算
+    const {
+      id,
+      x,
+      y,
+      width,
+      height,
+      isHovered,
+      isSelected,
+      properties: { actObj, isConnection }
+    } = this
+    let inParams = actObj.inputParams
+    let outParam = actObj.outParam
+
+    const anchors = []
+    // *********显示入参锚点********************************
+    if (isConnection || !(isHovered || isSelected)) {
+      if (inParams && inParams.length > 0) {
+        let agvHeight = height / inParams.length
+        for (let index = 0; index < inParams.length; index++) {
+          let inParam = inParams[index]
+          anchors.push({
+            x: x - width / 2 - anchorSize / 2,
+            y: y - height / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
+            id: `${inParam.key}`,
+            name: inParam.name,
+            edgeAddable: false,
+            type: anchorType.inParam,
+            text: inParam.name
+          })
+        }
+      } else {
+        anchors.push({
+          x: x - width / 2 - anchorSize / 2,
+          y: y,
+          id: actObj.id + '_' + anchorType.justIn,
+          name: '',
+          edgeAddable: false,
+          type: anchorType.justIn,
+          text: '无输入'
+        })
+      }
+    }
+    // **********显示出参锚点*******************************
+    if (!isConnection) {
+      anchors.push({
+        x: x + width / 2 - anchorSize,
+        y: y - height / 4 - anchorSize,
+        id: outParam.key + '_' + anchorType.judeYes,
+        name: outParam.name,
+        type: anchorType.judeYes,
+        text: '通过'
+      })
+      anchors.push({
+        x: x + width / 2 - anchorSize,
+        y: y + height / 4 - anchorSize,
+        id: outParam.key + '_' + anchorType.judeNo,
+        name: outParam.name,
+        type: anchorType.judeNo,
+        text: '不通过'
+      })
+    }
+    return anchors
+  }
+}
+
+export default {
+  type: flowNodeType.onParamJudeNode,
+  model: NodeModel,
+  view: NodeView
+}

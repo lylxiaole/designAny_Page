@@ -2,14 +2,17 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 
 //节点类型
 export enum flowNodeType {
-  funcNormalNode = 'funcNormalNode'
+  funcNormalNode = 'funcNormalNode',
+  onParamJudeNode = 'onParamJudeNode'
 }
 //锚点类型
 export enum anchorType {
   inParam = 'inParam',
   outParam = 'outParam',
   justIn = 'just_in',
-  justOut = 'just_out'
+  justOut = 'just_out',
+  judeYes = 'jude_yes',
+  judeNo = 'jude_no'
 }
 
 const allFlowNodes: any[] = []
