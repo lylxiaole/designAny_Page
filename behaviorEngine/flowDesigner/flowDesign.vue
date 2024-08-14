@@ -55,7 +55,7 @@ export default class index extends ComponentBase {
         //目标节点有上级连接，组织所有入参refOutParamId
         for (let jndex = 0; jndex < preEdges.length; jndex++) {
           const edge = preEdges[jndex]
-          let preObjId = edge.sourceNodeId
+          let preObjId = null
 
           //通过连线的目标锚点的Id,找到目标节点对应的入参。如果找不到入参，代表连线仅仅是记录顺序，不传递数据
           let targetInParam = targetActObj.inputParams.find((o) => o.key === edge.targetAnchorId)
@@ -86,18 +86,19 @@ export default class index extends ComponentBase {
             if (sourceActObj.isJudeNode == true) {
               //如果源节点是判断节点，需要特殊处理
               if (edge.sourceAnchorId.indexOf(anchorType.judeNo) > -1) {
-                preObjId = sourceActObj.id + '_' + anchorType.judeNo
+                preObjId = edge.sourceNodeId + '_' + anchorType.judeNo
               } else if (edge.sourceAnchorId.indexOf(anchorType.judeYes) > -1) {
-                preObjId = sourceActObj.id + '_' + anchorType.judeYes
+                preObjId = edge.sourceNodeId + '_' + anchorType.judeYes
               }
             } else {
+              preObjId = edge.sourceNodeId
               //do nothing
             }
+          }
 
-            if (preObjIds.indexOf(edge.sourceNodeId) < 0) {
-              //记录所有入参节点的ID
-              preObjIds.push(preObjId)
-            }
+          //记录所有来源节点的ID
+          if (preObjIds.indexOf(preObjId) < 0) {
+            preObjIds.push(preObjId)
           }
         }
       }

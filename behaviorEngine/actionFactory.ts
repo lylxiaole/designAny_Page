@@ -51,34 +51,42 @@ export class factory {
   private async excuteChildObjs(parentObj: actionObj, childObjs: actionObj[]) {
     for (let index = 0; index < childObjs.length; index++) {
       const childObj = childObjs[index]
-      if (!parentObj || !childObj.preObjIds || childObj.preObjIds.length < 1 || !childObj.inputParams || childObj.inputParams.length < 1) {
-        //子级节点没有入参，上下级只是顺序关系，子级可以直接执行
+      if (!parentObj || !childObj.preObjIds || childObj.preObjIds.length < 1) {
+        //子级节点没有上级，子级可以直接执行
         let childObj_func = this.getObjFunc(childObj)
         let res = await childObj_func.excute()
         if (childObj.outParam) {
           childObj.outParam.val = res
         }
         childObj.excuted = true
-      } else {
-        //子级有入参，需要把上级的出参赋值给子级的入参
-        let inParam = childObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
-        inParam.val = parentObj.outParam.val
-        //如果子级的所有上级都执行完成,可以开始执行子级
-        let allParents = this.currentBehavior.actObjs.filter((o) => childObj.preObjIds.indexOf(o.id) > -1)
-        let noExcutedParent = allParents.find((o) => o.excuted === false)
-        if (!noExcutedParent) {
-          let childObj_func = this.getObjFunc(childObj)
-          let res = await childObj_func.excute()
-          childObj.excuted = true
-          if (childObj.outParam) {
-            childObj.outParam.val = res
-          }
+        //执行完成,进行下一次递归
+        let child_childObjs = this.currentBehavior.actObjs.filter((o) => childObj.nextObjIds.indexOf(o.id) > -1)
+        await this.excuteChildObjs(childObj, child_childObjs)
+        break
+      }
+
+      if (parentObj && parentObj.isJudeNode) {
+        //上级节点是判断节点
+        let judgeRes = parentObj.outParam.val
+        if (childObj.inputParams && childObj.inputParams.length > 0) {
+        } else {
         }
       }
 
-      //进行下一次递归
-      if (childObj.isJudeNode === true) {
-      } else {
+      //子级有入参，需要把上级的出参赋值给子级的入参
+      let inParam = childObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
+      inParam.val = parentObj.outParam.val
+      //如果子级的所有上级都执行完成,可以开始执行子级
+      let allParents = this.currentBehavior.actObjs.filter((o) => childObj.preObjIds.indexOf(o.id) > -1)
+      let noExcutedParent = allParents.find((o) => o.excuted === false)
+      if (!noExcutedParent) {
+        let childObj_func = this.getObjFunc(childObj)
+        let res = await childObj_func.excute()
+        childObj.excuted = true
+        if (childObj.outParam) {
+          childObj.outParam.val = res
+        }
+        //执行完成,进行下一次递归
         let child_childObjs = this.currentBehavior.actObjs.filter((o) => childObj.nextObjIds.indexOf(o.id) > -1)
         await this.excuteChildObjs(childObj, child_childObjs)
       }
