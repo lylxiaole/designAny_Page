@@ -60,16 +60,16 @@ class NodeModel extends VueHtmlNodeModel {
       anchors.push({
         x: x + width / 2 - anchorSize,
         y: y - height / 4 - anchorSize,
-        id: outParam.key + '_' + anchorType.judeYes,
-        name: outParam.name,
+        id: actObj.id + '_' + anchorType.judeYes,
+        name: '通过',
         type: anchorType.judeYes,
         text: '通过'
       })
       anchors.push({
         x: x + width / 2 - anchorSize,
         y: y + height / 4 - anchorSize,
-        id: outParam.key + '_' + anchorType.judeNo,
-        name: outParam.name,
+        id: actObj.id + '_' + anchorType.judeNo,
+        name: '不通过',
         type: anchorType.judeNo,
         text: '不通过'
       })

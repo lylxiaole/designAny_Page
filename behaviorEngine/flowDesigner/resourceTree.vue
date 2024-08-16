@@ -316,7 +316,7 @@ export default class index extends ComponentBase {
     actObj.inputParams = []
     actObj.isJudeNode = true
     actObj.resourceFilter = {}
-    actObj.outParam = { key: getUuid(), name: '判断结果' }
+    actObj.outParam = null
     targetGroup.childrenObjs.push(actObj)
     //////
   }

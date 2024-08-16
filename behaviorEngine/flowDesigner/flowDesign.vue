@@ -14,7 +14,8 @@ import { actionObj } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import funcNormalNode from './flowNodes/funcNormalNode'
-import { findFlowNodeInner, anchorType } from './flowTypes'
+import onParamJudeNode from './flowNodes/onParamJudeNode'
+
 import defaultEdge from './flowEdges/defaultEdge'
 
 @Options({
@@ -54,46 +55,32 @@ export default class index extends ComponentBase {
       } else {
         //目标节点有上级连接，组织所有入参refOutParamId
         for (let jndex = 0; jndex < preEdges.length; jndex++) {
-          const edge = preEdges[jndex]
           let preObjId = null
-
+          const edge = preEdges[jndex]
           //通过连线的目标锚点的Id,找到目标节点对应的入参。如果找不到入参，代表连线仅仅是记录顺序，不传递数据
           let targetInParam = targetActObj.inputParams.find((o) => o.key === edge.targetAnchorId)
           //通过连线的来源节点Id和锚点Id,找到对应的来源节点的出参。
           let sourceNode = graphData.nodes.find((o) => o.id === edge.sourceNodeId)
           let sourceActObj = sourceNode.properties.actObj as actionObj
-
           let sourceOutParam = sourceActObj.outParam
-          if (targetInParam && sourceOutParam) {
-            if (sourceActObj.isJudeNode == true) {
-              //如果源节点是判断节点，需要特殊处理
-              let sourceOutParam = sourceActObj.outParam
-              if (edge.sourceAnchorId.indexOf(anchorType.judeNo) > -1) {
-                targetInParam.refOutParamId = sourceOutParam.key + '_' + anchorType.judeNo
-              } else if (edge.sourceAnchorId.indexOf(anchorType.judeYes) > -1) {
-                targetInParam.refOutParamId = sourceOutParam.key + '_' + anchorType.judeYes
-              }
-            } else {
-              //如果源节点是普通节点，目标节点的入参Id就是源节点的出参Id
-              targetInParam.refOutParamId = sourceOutParam.key
-            }
+
+          if (sourceActObj.isJudeNode == true) {
+            //如果源节点是判断节点，需要特殊处理。判断节点没有出参。
+            preObjId = edge.sourceAnchorId
+          } else if (!sourceOutParam) {
+            //如果源节点是没有出参的普通节点
+            preObjId = edge.sourceAnchorId
+          } else if (targetInParam && sourceOutParam) {
+            //如果源节点是普通节点。源节点的出参连线到的是目标节点的入参
+            targetInParam.refOutParamId = sourceOutParam.key
           } else if (targetInParam && !sourceOutParam) {
+            preObjId = edge.sourceAnchorId
             //如果目标节点存在入参，但源节点不存在出参。报错并中断
             alert(`节点${targetNode.text}的输入${targetInParam.name}连线错误。来源节点没有输出！请检查`)
-            return
+            throw `节点${targetNode.text}的输入${targetInParam.name}连线错误。来源节点没有输出！请检查`
           } else if (!targetInParam && sourceOutParam) {
             //如果目标节点不存在入参，但源节点存在出参。通过但不记录，此处仅用于连线作用，不附带参数
-            if (sourceActObj.isJudeNode == true) {
-              //如果源节点是判断节点，需要特殊处理
-              if (edge.sourceAnchorId.indexOf(anchorType.judeNo) > -1) {
-                preObjId = edge.sourceNodeId + '_' + anchorType.judeNo
-              } else if (edge.sourceAnchorId.indexOf(anchorType.judeYes) > -1) {
-                preObjId = edge.sourceNodeId + '_' + anchorType.judeYes
-              }
-            } else {
-              preObjId = edge.sourceNodeId
-              //do nothing
-            }
+            preObjId = edge.sourceNodeId
           }
 
           //记录所有来源节点的ID
@@ -153,6 +140,8 @@ export default class index extends ComponentBase {
       },
       ...this.silentConfig
     })
+    this.currentFlow.register(onParamJudeNode)
+
     this.currentFlow.register(funcNormalNode)
     this.currentFlow.register(defaultEdge)
     this.currentFlow.setDefaultEdgeType('defaultEdge')
