@@ -68,9 +68,9 @@ export class factory {
         let judgeRes = parentObj.outParam.val
         let preObjId = null
         if (judgeRes === true) {
-          preObjId = parentObj.id + '_' + anchorType.judeYes
+          preObjId = parentObj.id + '_yes'
         } else {
-          preObjId = parentObj.id + '_' + anchorType.judeYes
+          preObjId = parentObj.id + '_no'
         }
         if (childObj.preObjIds.indexOf(preObjId) > -1) {
           //上级节点是判断节点.判断的结果不与子级的任何入参对接。所以不需要等待所有入参都具备，可以直接执行子级

@@ -1,9 +1,8 @@
 <template>
   <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
-    <div style="width:40px;height:100%">
-      <template v-if="actObj&&actObj.inputParams&&actObj.inputParams.length>0">
-        <div v-for="inParam in actObj.inputParams" :key="inParam.key" :style="{'height':inParamHeight}" style="font-size:12px"
-          class="verticalAlignCenter">
+    <div style="width:12px;height:100%">
+      <template v-if="inParamAnchors&&inParamAnchors.length>0">
+        <div v-for="inParam in inParamAnchors" :key="inParam.id" :style="{'height':inParamHeight}" style="font-size:12px" class="verticalAlignCenter">
           {{inParam.name}}
         </div>
       </template>
@@ -14,14 +13,15 @@
       </template>
     </div>
     <!-- **************************************************** -->
-    <div style="width:calc(100% - 80px)">
+    <div style="width:calc(100% - 24px)">
       <div ref="renderContainer"></div>
     </div>
     <!-- **************************************************** -->
-    <div style="width:40px">
-      <template v-if="actObj&&actObj.outParam">
-        <div style="font-size:12px">
-          输出
+    <div style="width:12px">
+      <template v-if="outParamAnchors&&outParamAnchors.length>0">
+        <div v-for="outParam in outParamAnchors" :key="outParam.id" :style="{'height':outParamHeight}" style="font-size:12px"
+          class="verticalAlignCenter">
+          {{outParam.name}}
         </div>
       </template>
       <template v-else>
@@ -44,28 +44,53 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import ElementPlus from 'element-plus'
+import { HtmlNode, HtmlNodeModel } from '@logicflow/core'
 
 @Options({
   components: {}
 })
 export default class nodeBase extends Vue {
-  // private getNode: Function = inject('getNode')
-  public get inParamHeight() {
-    if (!this.actObj.inputParams || this.actObj.inputParams.length < 1) {
-      return '0px'
-    } else {
-      return 100 / this.actObj.inputParams.length + '%'
-    }
-  }
-
   @Prop()
-  private nodeModel: any
+  private nodeModel: HtmlNodeModel
 
   @Prop()
   private funcCode: funcCode
 
-  private actObj: actionObj = null
+  public get inParamAnchors(): any[] {
+    if (!this.nodeModel) {
+      return []
+    }
 
+    var inparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.inParam || o.type === anchorType.justIn)
+    return inparamsAnchors
+  }
+
+  public get inParamHeight() {
+    if (!this.inParamAnchors || this.inParamAnchors.length < 1) {
+      return '0px'
+    } else {
+      return 100 / this.inParamAnchors.length + '%'
+    }
+  }
+
+  public get outParamAnchors(): any[] {
+    if (!this.nodeModel) {
+      return []
+    }
+
+    var outparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.outParam || o.type === anchorType.justOut)
+    return outparamsAnchors
+  }
+
+  public get outParamHeight() {
+    if (!this.outParamAnchors || this.outParamAnchors.length < 1) {
+      return '0px'
+    } else {
+      return 100 / this.outParamAnchors.length + '%'
+    }
+  }
+
+  private actObj: actionObj = null
   private onActObjChanged(val) {
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()

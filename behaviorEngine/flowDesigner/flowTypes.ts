@@ -10,9 +10,7 @@ export enum anchorType {
   inParam = 'inParam',
   outParam = 'outParam',
   justIn = 'just_in',
-  justOut = 'just_out',
-  judeYes = 'jude_yes',
-  judeNo = 'jude_no'
+  justOut = 'just_out'
 }
 
 const allFlowNodes: any[] = []

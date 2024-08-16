@@ -34,7 +34,7 @@ class VueHtmlNode extends HtmlNode {
   getAnchorShape(anchorData) {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
-    const { x, y, type, text } = anchorData
+    const { x, y, type, name } = anchorData
     return lfh('g', {}, [lfh('rect', { x: x, y: y, width: anchorSize, height: anchorSize, stroke: '#000000', strokeDasharray: '3 3' })])
   }
   setHtml(rootEl) {
@@ -62,9 +62,15 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         return sourceAnchor.type === anchorType.outParam || sourceAnchor.type === anchorType.justOut
       }
     })
+    this.targetRules.push({
+      message: '只允许连接左边的锚点',
+      validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
+        return targetAnchor.type === anchorType.inParam || targetAnchor.type === anchorType.justIn
+      }
+    })
     //限定 一个入参锚点只能连一条线
     this.sourceRules.push({
-      message: '当前入参已存在连线，不可重复连线',
+      message: '目标已存在连线，不可重复连线',
       validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
         let find = this.graphModel.edges.find((o) => o.targetNodeId === targetNode.id && o.targetAnchorId === targetAnchor.id)
         if (!find) {
@@ -72,13 +78,6 @@ class VueHtmlNodeModel extends HtmlNodeModel {
         } else {
           return false
         }
-      }
-    })
-
-    this.targetRules.push({
-      message: '只允许连接左边的锚点',
-      validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
-        return targetAnchor.type === anchorType.inParam || targetAnchor.type === anchorType.justIn
       }
     })
   }
@@ -130,8 +129,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
             id: `${inParam.key}`,
             name: inParam.name,
             edgeAddable: false,
-            type: anchorType.inParam,
-            text: inParam.name
+            type: anchorType.inParam
           })
         }
       } else {
@@ -139,10 +137,9 @@ class VueHtmlNodeModel extends HtmlNodeModel {
           x: x - width / 2 - anchorSize / 2,
           y: y,
           id: actObj.id + '_' + anchorType.justIn,
-          name: '',
+          name: '无输入',
           edgeAddable: false,
-          type: anchorType.justIn,
-          text: '无输入'
+          type: anchorType.justIn
         })
       }
     }
@@ -154,17 +151,15 @@ class VueHtmlNodeModel extends HtmlNodeModel {
           y: y - anchorSize / 2,
           id: outParam.key,
           name: outParam.name,
-          type: anchorType.outParam,
-          text: '输出'
+          type: anchorType.outParam
         })
       } else {
         anchors.push({
           x: x + width / 2 - anchorSize,
           y: y - anchorSize / 2,
           id: actObj.id + '_' + anchorType.justOut,
-          name: '',
-          type: anchorType.justOut,
-          text: '无输出'
+          name: '无输出',
+          type: anchorType.justOut
         })
       }
     }

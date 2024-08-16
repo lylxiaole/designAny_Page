@@ -196,7 +196,7 @@ export default class index extends ComponentBase {
       if (dmethod.hasOutParam) {
         actObj.outParam = {
           key: getUuid(),
-          name: ''
+          name: '输出'
         } as any
       }
       targetGroup.childrenObjs.push(actObj)
@@ -222,7 +222,7 @@ export default class index extends ComponentBase {
       //出参
       actObj.outParam = {
         key: getUuid(),
-        name: ''
+        name: '输出'
       } as any
       targetGroup.childrenObjs.push(actObj)
     }
@@ -250,7 +250,7 @@ export default class index extends ComponentBase {
       actObj.resourceFilter = {
         dicKey: element.key
       }
-      actObj.outParam = { key: getUuid(), name: '' }
+      actObj.outParam = { key: getUuid(), name: '输出' }
       targetGroup.childrenObjs = []
       targetGroup.childrenObjs.push(actObj)
     }
@@ -298,7 +298,7 @@ export default class index extends ComponentBase {
             actObj.inputParams.push({ key: '&body', name: 'body参数' })
           }
 
-          actObj.outParam = { key: getUuid(), name: '' }
+          actObj.outParam = { key: getUuid(), name: '输出' }
           actGroup.childrenObjs.push(actObj)
         }
       }
@@ -313,7 +313,7 @@ export default class index extends ComponentBase {
     actObj.name = '单条件判断'
     actObj.id = getUuid()
     actObj.description = '单条件判断'
-    actObj.inputParams = []
+    actObj.inputParams = [{ key: getUuid(), name: '被对比值' }]
     actObj.isJudeNode = true
     actObj.resourceFilter = {}
     actObj.outParam = null

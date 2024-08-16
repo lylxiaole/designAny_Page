@@ -39,8 +39,7 @@ class NodeModel extends VueHtmlNodeModel {
             id: `${inParam.key}`,
             name: inParam.name,
             edgeAddable: false,
-            type: anchorType.inParam,
-            text: inParam.name
+            type: anchorType.inParam
           })
         }
       } else {
@@ -48,10 +47,9 @@ class NodeModel extends VueHtmlNodeModel {
           x: x - width / 2 - anchorSize / 2,
           y: y,
           id: actObj.id + '_' + anchorType.justIn,
-          name: '',
+          name: '无输入',
           edgeAddable: false,
-          type: anchorType.justIn,
-          text: '无输入'
+          type: anchorType.justIn
         })
       }
     }
@@ -60,18 +58,16 @@ class NodeModel extends VueHtmlNodeModel {
       anchors.push({
         x: x + width / 2 - anchorSize,
         y: y - height / 4 - anchorSize,
-        id: actObj.id + '_' + anchorType.judeYes,
+        id: actObj.id + '_yes',
         name: '通过',
-        type: anchorType.judeYes,
-        text: '通过'
+        type: anchorType.justOut
       })
       anchors.push({
         x: x + width / 2 - anchorSize,
         y: y + height / 4 - anchorSize,
-        id: actObj.id + '_' + anchorType.judeNo,
+        id: actObj.id + '_no',
         name: '不通过',
-        type: anchorType.judeNo,
-        text: '不通过'
+        type: anchorType.justOut
       })
     }
     return anchors
