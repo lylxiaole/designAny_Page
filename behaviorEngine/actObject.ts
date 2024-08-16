@@ -5,6 +5,7 @@ import { param } from './behaviorTypes'
 
 export class object_InParam extends param {
   refOutParamId?: string
+  valueFilter?: string
 }
 
 export class actionObj {

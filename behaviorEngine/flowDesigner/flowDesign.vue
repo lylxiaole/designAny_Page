@@ -64,17 +64,26 @@ export default class index extends ComponentBase {
           let sourceActObj = sourceNode.properties.actObj as actionObj
           let sourceOutParam = sourceActObj.outParam
 
+          //连线的文本，当作目标入参的值的筛选条件
+          if (edge.text && targetInParam) {
+            let inParamValueFilter = edge.text as any
+            targetInParam.valueFilter = inParamValueFilter.value
+          } else if (!edge.text && targetInParam) {
+            targetInParam.valueFilter = null
+          }
+          //开始计算ActObj的连线
           if (sourceActObj.isJudeNode == true) {
             //如果源节点是判断节点，需要特殊处理。判断节点没有出参。
-            preObjId = edge.sourceAnchorId
+            preObjId = edge.sourceNodeId
           } else if (!sourceOutParam) {
             //如果源节点是没有出参的普通节点
-            preObjId = edge.sourceAnchorId
+            preObjId = edge.sourceNodeId
           } else if (targetInParam && sourceOutParam) {
             //如果源节点是普通节点。源节点的出参连线到的是目标节点的入参
+            preObjId = edge.sourceNodeId
             targetInParam.refOutParamId = sourceOutParam.key
           } else if (targetInParam && !sourceOutParam) {
-            preObjId = edge.sourceAnchorId
+            preObjId = edge.sourceNodeId
             //如果目标节点存在入参，但源节点不存在出参。报错并中断
             alert(`节点${targetNode.text}的输入${targetInParam.name}连线错误。来源节点没有输出！请检查`)
             throw `节点${targetNode.text}的输入${targetInParam.name}连线错误。来源节点没有输出！请检查`
@@ -106,7 +115,7 @@ export default class index extends ComponentBase {
       // *****************************************
       allObjs.push(targetActObj)
     }
-
+    debugger
     return { allObjs: allObjs, flowData: graphData }
   }
 

@@ -46,7 +46,7 @@ export class factory {
     }
     //顶级流程节点
     let topActObjs = this.currentBehavior.actObjs.filter((o) => !o.preObjIds || o.preObjIds.length < 1)
-    this.excuteChildObjs(null, topActObjs)
+    await this.excuteChildObjs(null, topActObjs)
   }
 
   private async excuteChildObjs(parentObj: actionObj, childObjs: actionObj[]) {
@@ -86,7 +86,12 @@ export class factory {
       } else {
         //子级如果有入参，需要把上级的出参赋值给子级的入参
         let inParam = childObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
-        inParam.val = parentObj.outParam.val
+        debugger
+        if (inParam && inParam.valueFilter) {
+          inParam.val = parentObj.outParam.val[inParam.valueFilter]
+        } else {
+          inParam.val = parentObj.outParam.val
+        }
 
         //如果子级的所有上级都执行完成,可以开始执行子级
         let allParents = this.currentBehavior.actObjs.filter((o) => childObj.preObjIds.indexOf(o.id) > -1)

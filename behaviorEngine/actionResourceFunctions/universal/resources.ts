@@ -59,7 +59,7 @@ export class thirtyApis implements actFuncBase {
     }
     let requestType = apiInfo.requestType
 
-    return await axios.request({
+    let response = await axios.request({
       //请求类型
       method: requestType,
       //URL
@@ -69,6 +69,8 @@ export class thirtyApis implements actFuncBase {
       //设置请求体(即传输的数据)
       data: body
     })
+    debugger
+    return response.data
   }
 }
 
@@ -78,5 +80,8 @@ export class oneParamJude implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {}
+  async excute() {
+    let inparamVal = this.currentActObj.inputParams[0].val
+    debugger
+  }
 }
