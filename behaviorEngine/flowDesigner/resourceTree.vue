@@ -71,7 +71,7 @@ export default class index extends ComponentBase {
     if (findObjGroupIndex > -1) {
       this.objGroup.splice(findObjGroupIndex, 1)
     }
-    //计算页面
+    //计算页面属性，方法等资源
     let pageObjGroup = new object_group()
     pageObjGroup.key = page.Id
     pageObjGroup.title = '页面资源:' + page.name
@@ -96,6 +96,7 @@ export default class index extends ComponentBase {
     judgeGroup.title = '判断条件'
     this.makejudgeGroup(judgeGroup)
     this.objGroup.push(judgeGroup)
+    //
   }
 
   mounted() {}
@@ -307,7 +308,6 @@ export default class index extends ComponentBase {
     }
   }
   //************计算判断条件**************************************************** */
-
   private async makejudgeGroup(targetGroup: object_group) {
     let actObj = getFuncObjByType(funcCode.oneParamJude) as actionObj
     actObj.name = '单条件判断'
@@ -316,6 +316,21 @@ export default class index extends ComponentBase {
     actObj.inputParams = [{ key: getUuid(), name: '被对比值' }]
     actObj.isJudeNode = true
     actObj.resourceFilter = {}
+    actObj.outParam = null
+    targetGroup.childrenObjs.push(actObj)
+    //////
+  }
+  // ************计算提示窗********************************************
+  private async makeNotificationGroup(targetGroup: object_group) {
+    let actObj = getFuncObjByType(funcCode.NotificationDialog) as actionObj
+    actObj.name = '提示窗'
+    actObj.id = getUuid()
+    actObj.description = '提示窗'
+    actObj.inputParams = []
+    actObj.resourceFilter = {
+      message: '',
+      type: 'success'
+    }
     actObj.outParam = null
     targetGroup.childrenObjs.push(actObj)
     //////

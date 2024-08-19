@@ -35,7 +35,9 @@ class VueHtmlNode extends HtmlNode {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type, name } = anchorData
-    return lfh('g', {}, [lfh('rect', { x: x, y: y, width: anchorSize, height: anchorSize, stroke: '#000000', strokeDasharray: '3 3' })])
+    let rect = { x: x, y: y, width: anchorSize, height: anchorSize, stroke: '#000000', strokeDasharray: '3 3' }
+    let text = { x: x, y: y, fontSize: 8, fill: 'black', textAnchor: 'middle' }
+    return lfh('g', {}, [lfh('rect', rect, []), lfh('text', text, [name])])
   }
   setHtml(rootEl) {
     if (!this.isMounted) {
@@ -55,7 +57,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     this.height = 150
     this.text.editable = false
     this.inputData = this.text.value
-
+    this.setIsShowAnchor()
     this.sourceRules.push({
       message: '只允许从右边的锚点连出',
       validate: (sourceNode, targetNode, sourceAnchor) => {
@@ -118,51 +120,50 @@ class VueHtmlNodeModel extends HtmlNodeModel {
 
     const anchors = []
     // *********显示入参锚点********************************
-    if (isConnection || !(isHovered || isSelected)) {
-      if (inParams && inParams.length > 0) {
-        let agvHeight = height / inParams.length
-        for (let index = 0; index < inParams.length; index++) {
-          let inParam = inParams[index]
-          anchors.push({
-            x: x - width / 2 - anchorSize / 2,
-            y: y - height / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
-            id: `${inParam.key}`,
-            name: inParam.name,
-            edgeAddable: false,
-            type: anchorType.inParam
-          })
-        }
-      } else {
+    if (inParams && inParams.length > 0) {
+      let agvHeight = height / inParams.length
+      for (let index = 0; index < inParams.length; index++) {
+        let inParam = inParams[index]
         anchors.push({
           x: x - width / 2 - anchorSize / 2,
-          y: y,
-          id: actObj.id + '_' + anchorType.justIn,
-          name: '无输入',
+          y: y - height / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
+          id: `${inParam.key}`,
+          name: inParam.name,
           edgeAddable: false,
-          type: anchorType.justIn
+          type: anchorType.inParam
         })
       }
+    } else {
+      anchors.push({
+        x: x - width / 2 - anchorSize / 2,
+        y: y,
+        id: actObj.id + '_' + anchorType.justIn,
+        name: '无输入',
+        edgeAddable: false,
+        type: anchorType.justIn
+      })
     }
     // **********显示出参锚点*******************************
-    if (!isConnection) {
-      if (outParam) {
-        anchors.push({
-          x: x + width / 2 - anchorSize,
-          y: y - anchorSize / 2,
-          id: outParam.key,
-          name: outParam.name,
-          type: anchorType.outParam
-        })
-      } else {
-        anchors.push({
-          x: x + width / 2 - anchorSize,
-          y: y - anchorSize / 2,
-          id: actObj.id + '_' + anchorType.justOut,
-          name: '无输出',
-          type: anchorType.justOut
-        })
-      }
+    // if (!isConnection) {
+    if (outParam) {
+      anchors.push({
+        x: x + width / 2 - anchorSize,
+        y: y - anchorSize / 2,
+        id: outParam.key,
+        name: outParam.name,
+        type: anchorType.outParam
+      })
+    } else {
+      anchors.push({
+        x: x + width / 2 - anchorSize,
+        y: y - anchorSize / 2,
+        id: actObj.id + '_' + anchorType.justOut,
+        name: '无输出',
+        type: anchorType.justOut
+      })
     }
+
+    // }
     return anchors
   }
 
@@ -177,6 +178,10 @@ class VueHtmlNodeModel extends HtmlNodeModel {
     })
 
     this.setAttributes()
+  }
+
+  setIsShowAnchor(flag?: boolean) {
+    super.setIsShowAnchor(true)
   }
 }
 

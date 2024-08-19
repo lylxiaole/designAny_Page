@@ -1,6 +1,6 @@
 <template>
-  <el-row style="border:1px solid #cdcdcd;width：100%;height:100%;box-sizing:border-box;background:#fff" class="verticalAlignCenter flexHorilanLayout">
-    <div style="width:12px;height:100%">
+  <el-row style="border:1px solid #cdcdcd;width:100%;height:100%;box-sizing:border-box;background:#fff;position:relative">
+    <!-- <div style="height:100%;">
       <template v-if="inParamAnchors&&inParamAnchors.length>0">
         <div v-for="inParam in inParamAnchors" :key="inParam.id" :style="{'height':inParamHeight}" style="font-size:12px" class="verticalAlignCenter">
           {{inParam.name}}
@@ -11,13 +11,13 @@
           无输入
         </div>
       </template>
-    </div>
+    </div> -->
     <!-- **************************************************** -->
-    <div style="width:calc(100% - 24px)">
+    <div style="width:100%;height:100%;margin:10px" class="verticalAlignCenter flexHorilanLayout">
       <div ref="renderContainer"></div>
     </div>
     <!-- **************************************************** -->
-    <div style="width:12px">
+    <!-- <div style="height:100%">
       <template v-if="outParamAnchors&&outParamAnchors.length>0">
         <div v-for="outParam in outParamAnchors" :key="outParam.id" :style="{'height':outParamHeight}" style="font-size:12px"
           class="verticalAlignCenter">
@@ -29,7 +29,7 @@
           无输出
         </div>
       </template>
-    </div>
+    </div> -->
   </el-row>
 </template>
 

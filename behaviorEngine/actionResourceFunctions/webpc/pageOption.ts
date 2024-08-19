@@ -5,6 +5,7 @@ import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
 import { actionObj } from '../../actObject'
 import { isPromise } from '@vue/shared'
+import { ElNotification } from 'element-plus'
 
 @resourceFuncAttr('跳转页面', '', funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
 export class leadToPageMethod implements actFuncBase {
@@ -72,5 +73,17 @@ export class propertiesInPageMethod implements actFuncBase {
     }
 
     return targetLayout[propField]
+  }
+}
+// *************************************************************************
+@resourceFuncAttr('提示窗', '', funcGroup.pageOption, funcCode.oneParamJude, funcStack.universal)
+export class NotificationError implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute() {
+    let msg = this.currentActObj.resourceFilter.message
+    ElNotification.error({ title: '错误', message: msg })
   }
 }
