@@ -8,7 +8,7 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
 import { number } from 'echarts'
 
-@resourceFuncAttr('字典', '', funcGroup.pageOption, funcCode.dictionary, funcStack.universal)
+@resourceFuncAttr('字典', '', funcGroup.universalTool, funcCode.dictionary, funcStack.universal, [], { key: getUuid(), name: '输出' })
 export class dictionarys implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -21,7 +21,7 @@ export class dictionarys implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('外部接口', '', funcGroup.pageOption, funcCode.thirtyApi, funcStack.universal)
+@resourceFuncAttr('外部接口', '', funcGroup.universalTool, funcCode.thirtyApi, funcStack.universal, [], { key: getUuid(), name: '输出' })
 export class thirtyApis implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -75,7 +75,7 @@ export class thirtyApis implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('单入口判断条件', '', funcGroup.pageOption, funcCode.oneParamJude, funcStack.universal)
+@resourceFuncAttr('单条件判断', '', funcGroup.universalTool, funcCode.oneParamJude, funcStack.universal, [{ key: getUuid(), name: '入参' }], { key: getUuid(), name: '输出' })
 export class oneParamJude implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -91,7 +91,7 @@ export class oneParamJude implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('固定值', '', funcGroup.pageOption, funcCode.fixedVal, funcStack.universal)
+@resourceFuncAttr('固定值', '', funcGroup.universalTool, funcCode.fixedVal, funcStack.universal, [], { key: getUuid(), name: '输出' })
 export class fixedValue implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

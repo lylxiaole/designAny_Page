@@ -2,17 +2,14 @@ import Vue from 'vue'
 import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
-import { behavior } from './behaviorTypes'
+import { behavior, param } from './behaviorTypes'
 
 import { actionObj } from './actObject'
 
 //方法资源分组
 export enum funcGroup {
-  fixedVal = 'fixedVal',
-  cuteSigns = 'cuteSigns',
-  filterSigns = 'filterSigns',
-  variables = 'variables',
-  pageOption = 'pageOption'
+  universalTool = '通用工具',
+  pageOption = '页面资源'
 }
 //方法编码-需要保证唯一性
 export enum funcCode {
@@ -37,7 +34,6 @@ export enum funcCode {
 
   propertiesInPage = 'propertiesInPage',
   methodsInPage = 'methodsInPage',
-  leadToPage = 'leadToPage',
 
   dictionary = 'dictionary', //字典
   thirtyApi = 'thirtyApi', //外部API
@@ -45,7 +41,7 @@ export enum funcCode {
   oneParamJude = 'oneParamJude', //单条件判断
   notificationDialog = 'notificationDialog', //提示窗
   fixedVal = 'fixedVal',
-  leadToOtherPage = 'leadToOtherPage' //提示窗
+  leadToOtherPage = 'leadToOtherPage'
 }
 //方法作用范围
 export enum funcStack {
@@ -56,12 +52,14 @@ export enum funcStack {
 }
 //反射，所有方法的实体类
 var allActFunctions = []
-export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack) {
+export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack, inparams?: param[], outParam?: param) {
   return function (target: Function) {
     !target.prototype.$lyl_actFunc && (target.prototype.$lyl_actFunc = {})
     target.prototype.$lyl_actFunc.funcCode = funcCode
     target.prototype.$lyl_actFunc.funcStack = funcStack
     target.prototype.$lyl_actFunc.funcGroup = funcGroup
+    target.prototype.$lyl_actFunc.inparams = inparams
+    target.prototype.$lyl_actFunc.outParam = outParam
     target.prototype.$lyl_actFunc.name = name
     target.prototype.$lyl_actFunc.desc = desc
     allActFunctions.push(target)

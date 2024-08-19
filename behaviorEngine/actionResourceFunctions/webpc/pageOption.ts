@@ -7,16 +7,7 @@ import { actionObj } from '../../actObject'
 import { isPromise } from '@vue/shared'
 import { ElNotification } from 'element-plus'
 
-@resourceFuncAttr('跳转页面', '', funcGroup.pageOption, funcCode.leadToPage, funcStack.webpc)
-export class leadToPageMethod implements actFuncBase {
-  currentActObj: actionObj
-  currentLayout: EngineLayout
-  currentPage: EnginePage
-  currentBehavior: behavior
-  async excute() {}
-}
-
-@resourceFuncAttr('页面方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc)
+@resourceFuncAttr('页面方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc, [], { key: getUuid(), name: '输出' })
 export class methodsInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
@@ -53,7 +44,7 @@ export class methodsInPageMethod implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('页面属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc)
+@resourceFuncAttr('页面属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc, [{ key: getUuid(), name: '设定值' }], { key: getUuid(), name: '输出' })
 export class propertiesInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -76,7 +67,7 @@ export class propertiesInPageMethod implements actFuncBase {
   }
 }
 // *************************************************************************
-@resourceFuncAttr('提示窗', '', funcGroup.pageOption, funcCode.notificationDialog, funcStack.universal)
+@resourceFuncAttr('提示窗', '', funcGroup.pageOption, funcCode.notificationDialog, funcStack.universal, [], null)
 export class NotificationError implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -108,7 +99,7 @@ export class NotificationError implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('页面跳转', '', funcGroup.pageOption, funcCode.leadToOtherPage, funcStack.universal)
+@resourceFuncAttr('页面跳转', '', funcGroup.pageOption, funcCode.leadToOtherPage, funcStack.universal, [], null)
 export class leadToPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

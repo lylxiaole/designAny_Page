@@ -33,7 +33,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { reactive } from 'vue'
 //
-import { object_group, getFuncObjByType } from '@behaviorEngine/actResource'
+import { object_group, getFuncObjByType, getFuncObjsTree } from '@behaviorEngine/actResource'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { actionObj } from '@behaviorEngine/actObject'
 //
@@ -64,6 +64,10 @@ export default class index extends ComponentBase {
   currentPage: EnginePage
 
   public async init(page: EnginePage) {
+    this.objGroup = getFuncObjsTree()
+    debugger
+    return
+
     this.objGroup = []
     this.currentPage = page
     //计算当前页面可用资源
