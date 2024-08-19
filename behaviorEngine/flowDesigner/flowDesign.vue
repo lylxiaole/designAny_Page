@@ -75,7 +75,6 @@ export default class index extends ComponentBase {
           if (sourceActObj.isJudeNode == true) {
             //如果源节点是判断节点，需要特殊处理。判断节点没有出参。
             preObjId = edge.sourceAnchorId
-            debugger
           } else if (!sourceOutParam) {
             //如果源节点是没有出参的普通节点
             preObjId = edge.sourceNodeId
@@ -135,7 +134,7 @@ export default class index extends ComponentBase {
         enabled: true,
         shortcuts: [
           {
-            keys: ['backspace', 'delete'],
+            keys: ['delete'],
             callback: () => {
               const r = window.confirm('确定要删除吗？')
               if (r) {
@@ -145,6 +144,10 @@ export default class index extends ComponentBase {
                 elements.nodes.forEach((node) => this.currentFlow.deleteNode(node.id))
               }
             }
+          },
+          {
+            keys: ['backspace'],
+            callback: () => {}
           }
         ]
       },
