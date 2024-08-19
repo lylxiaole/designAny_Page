@@ -1,5 +1,6 @@
 <template>
-  <el-row style="border:1px solid #cdcdcd;width:100%;height:100%;box-sizing:border-box;background:#fff;position:relative">
+  <el-row style="border:1px solid #cdcdcd;width:100%;height:100%;box-sizing:border-box;background:#fff;position:relative;padding:10px"
+    class="topnodediv verticalAlignCenter flexHorilanLayout">
     <!-- <div style="height:100%;">
       <template v-if="inParamAnchors&&inParamAnchors.length>0">
         <div v-for="inParam in inParamAnchors" :key="inParam.id" :style="{'height':inParamHeight}" style="font-size:12px" class="verticalAlignCenter">
@@ -13,9 +14,7 @@
       </template>
     </div> -->
     <!-- **************************************************** -->
-    <div style="width:100%;height:100%;margin:10px" class="verticalAlignCenter flexHorilanLayout">
-      <div ref="renderContainer"></div>
-    </div>
+    <div ref="renderContainer"></div>
     <!-- **************************************************** -->
     <!-- <div style="height:100%">
       <template v-if="outParamAnchors&&outParamAnchors.length>0">
@@ -117,4 +116,7 @@ export default class nodeBase extends Vue {
 
 
 <style lang="less" scoped>
+.topnodediv {
+  font-size: 12px;
+}
 </style>

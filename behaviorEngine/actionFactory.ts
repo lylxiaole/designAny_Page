@@ -86,7 +86,7 @@ export class factory {
       } else {
         //子级如果有入参，需要把上级的出参赋值给子级的入参
         let inParam = childObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
-        debugger
+
         if (inParam && inParam.valueFilter) {
           inParam.val = parentObj.outParam.val[inParam.valueFilter]
         } else {

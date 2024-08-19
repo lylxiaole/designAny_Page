@@ -76,7 +76,7 @@ export class propertiesInPageMethod implements actFuncBase {
   }
 }
 // *************************************************************************
-@resourceFuncAttr('提示窗', '', funcGroup.pageOption, funcCode.oneParamJude, funcStack.universal)
+@resourceFuncAttr('提示窗', '', funcGroup.pageOption, funcCode.notificationDialog, funcStack.universal)
 export class NotificationError implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -84,6 +84,34 @@ export class NotificationError implements actFuncBase {
   currentBehavior: behavior
   async excute() {
     let msg = this.currentActObj.resourceFilter.message
-    ElNotification.error({ title: '错误', message: msg })
+    let type = this.currentActObj.resourceFilter.type
+
+    return new Promise((reslove, reject) => {
+      if (type === 'success') {
+        ElNotification.success({
+          title: '成功',
+          message: msg,
+          onClose: () => {
+            reslove(null)
+          }
+        })
+      } else if (type === 'error') {
+        ElNotification.error({
+          title: '错误',
+          message: msg,
+          onClose: () => {
+            reslove(null)
+          }
+        })
+      } else {
+        ElNotification.info({
+          title: '信息',
+          message: msg,
+          onClose: () => {
+            reslove(null)
+          }
+        })
+      }
+    })
   }
 }

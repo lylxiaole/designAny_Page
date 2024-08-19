@@ -69,7 +69,7 @@ export class thirtyApis implements actFuncBase {
       //设置请求体(即传输的数据)
       data: body
     })
-    debugger
+
     return response.data
   }
 }
@@ -82,6 +82,6 @@ export class oneParamJude implements actFuncBase {
   currentBehavior: behavior
   async excute() {
     let inparamVal = this.currentActObj.inputParams[0].val
-    debugger
+    return inparamVal
   }
 }

@@ -96,7 +96,12 @@ export default class index extends ComponentBase {
     judgeGroup.title = '判断条件'
     this.makejudgeGroup(judgeGroup)
     this.objGroup.push(judgeGroup)
-    //
+    //提示窗
+    let notificationGroup = new object_group()
+    notificationGroup.key = getUuid()
+    notificationGroup.title = '提示窗'
+    this.makeNotificationGroup(notificationGroup)
+    this.objGroup.push(notificationGroup)
   }
 
   mounted() {}
@@ -271,7 +276,6 @@ export default class index extends ComponentBase {
         for (let index = 0; index < group.childrenAPIs.length; index++) {
           //根据接口内容，制作actObj
           const api = group.childrenAPIs[index]
-
           let actObj = getFuncObjByType(funcCode.thirtyApi) as actionObj
           actObj.name = api.name
           actObj.id = getUuid()
@@ -316,16 +320,16 @@ export default class index extends ComponentBase {
     actObj.inputParams = [{ key: getUuid(), name: '被对比值' }]
     actObj.isJudeNode = true
     actObj.resourceFilter = {}
-    actObj.outParam = null
+    actObj.outParam = { key: getUuid(), name: '输出' }
     targetGroup.childrenObjs.push(actObj)
     //////
   }
   // ************计算提示窗********************************************
   private async makeNotificationGroup(targetGroup: object_group) {
-    let actObj = getFuncObjByType(funcCode.NotificationDialog) as actionObj
-    actObj.name = '提示窗'
+    let actObj = getFuncObjByType(funcCode.notificationDialog) as actionObj
+    actObj.name = '通用提示窗'
     actObj.id = getUuid()
-    actObj.description = '提示窗'
+    actObj.description = '通用提示窗'
     actObj.inputParams = []
     actObj.resourceFilter = {
       message: '',

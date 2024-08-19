@@ -1,5 +1,23 @@
 <template>
-  <el-row> {{actObj?actObj.description:''}}</el-row>
+  <el-row style="width:100%;height:100%">
+    <el-row> {{actObj?actObj.description:''}}</el-row>
+    <el-row>
+      <el-col :span="6">提示窗类型:</el-col>
+      <el-col :span="18">
+        <el-select v-model="actObj.resourceFilter.type" placeholder="Select" size="small">
+          <el-option key="success" label="success" value="success" />
+          <el-option key="error" label="error" value="error" />
+          <el-option key="info" label="info" value="info" />
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="6">提示内容:</el-col>
+      <el-col :span="18">
+        <el-input v-model="actObj.resourceFilter.message" placeholder="Please input" />
+      </el-col>
+    </el-row>
+  </el-row>
 </template>
 
 <script lang="ts">
@@ -12,7 +30,7 @@ import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 
-@flowDesignNode(funcCode.NotificationDialog, flowNodeType.funcNormalNode)
+@flowDesignNode(funcCode.notificationDialog, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })

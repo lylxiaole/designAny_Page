@@ -43,7 +43,7 @@ export enum funcCode {
   thirtyApi = 'thirtyApi', //外部API
 
   oneParamJude = 'oneParamJude', //单条件判断
-  NotificationDialog = 'NotificationDialog' //提示窗
+  notificationDialog = 'notificationDialog' //提示窗
 }
 //方法作用范围
 export enum funcStack {

@@ -28,48 +28,44 @@ class NodeModel extends VueHtmlNodeModel {
 
     const anchors = []
     // *********显示入参锚点********************************
-    if (isConnection || !(isHovered || isSelected)) {
-      if (inParams && inParams.length > 0) {
-        let agvHeight = height / inParams.length
-        for (let index = 0; index < inParams.length; index++) {
-          let inParam = inParams[index]
-          anchors.push({
-            x: x - width / 2 - anchorSize / 2,
-            y: y - height / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
-            id: `${inParam.key}`,
-            name: inParam.name,
-            edgeAddable: false,
-            type: anchorType.inParam
-          })
-        }
-      } else {
+    if (inParams && inParams.length > 0) {
+      let agvHeight = height / inParams.length
+      for (let index = 0; index < inParams.length; index++) {
+        let inParam = inParams[index]
         anchors.push({
           x: x - width / 2 - anchorSize / 2,
-          y: y,
-          id: actObj.id + '_' + anchorType.justIn,
-          name: '无输入',
+          y: y - height / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
+          id: `${inParam.key}`,
+          name: inParam.name,
           edgeAddable: false,
-          type: anchorType.justIn
+          type: anchorType.inParam
         })
       }
+    } else {
+      anchors.push({
+        x: x - width / 2 - anchorSize / 2,
+        y: y,
+        id: actObj.id + '_' + anchorType.justIn,
+        name: '无输入',
+        edgeAddable: false,
+        type: anchorType.justIn
+      })
     }
     // **********显示出参锚点*******************************
-    if (!isConnection) {
-      anchors.push({
-        x: x + width / 2 - anchorSize,
-        y: y - height / 4 - anchorSize,
-        id: actObj.id + '_yes',
-        name: '通过',
-        type: anchorType.justOut
-      })
-      anchors.push({
-        x: x + width / 2 - anchorSize,
-        y: y + height / 4 - anchorSize,
-        id: actObj.id + '_no',
-        name: '不通过',
-        type: anchorType.justOut
-      })
-    }
+    anchors.push({
+      x: x + width / 2 - anchorSize,
+      y: y - height / 4 - anchorSize,
+      id: actObj.id + '_yes',
+      name: '通过',
+      type: anchorType.justOut
+    })
+    anchors.push({
+      x: x + width / 2 - anchorSize,
+      y: y + height / 4 - anchorSize,
+      id: actObj.id + '_no',
+      name: '不通过',
+      type: anchorType.justOut
+    })
     return anchors
   }
 }

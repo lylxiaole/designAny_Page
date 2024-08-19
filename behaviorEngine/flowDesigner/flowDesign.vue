@@ -74,7 +74,8 @@ export default class index extends ComponentBase {
           //开始计算ActObj的连线
           if (sourceActObj.isJudeNode == true) {
             //如果源节点是判断节点，需要特殊处理。判断节点没有出参。
-            preObjId = edge.sourceNodeId
+            preObjId = edge.sourceAnchorId
+            debugger
           } else if (!sourceOutParam) {
             //如果源节点是没有出参的普通节点
             preObjId = edge.sourceNodeId
