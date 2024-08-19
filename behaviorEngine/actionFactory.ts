@@ -73,6 +73,18 @@ export class factory {
           preObjId = parentObj.id + '_no'
         }
         if (childObj.preObjIds.indexOf(preObjId) > -1) {
+          //上级如果是的判断节点，那就采用判断节点的上级出参，作为入参
+          let inParam = childObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
+          let parentParentObj = this.currentBehavior.actObjs.find((o) => parentObj.preObjIds.indexOf(o.id) > -1)
+
+          //判断节点的上级必有返回值
+          if (inParam && inParam.valueFilter) {
+            inParam.val = parentParentObj.outParam.val[inParam.valueFilter]
+          } else if (inParam) {
+            inParam.val = parentParentObj.outParam.val
+          } else {
+          }
+
           //上级节点是判断节点.判断的结果不与子级的任何入参对接。所以不需要等待所有入参都具备，可以直接执行子级
           let childObj_func = this.getObjFunc(childObj)
           let res = await childObj_func.excute()
@@ -88,8 +100,9 @@ export class factory {
         let inParam = childObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
         if (inParam && inParam.valueFilter) {
           inParam.val = parentObj.outParam.val[inParam.valueFilter]
-        } else {
+        } else if (inParam) {
           inParam.val = parentObj.outParam.val
+        } else {
         }
         //如果子级的所有上级都执行完成,可以开始执行子级
         let allParents = this.currentBehavior.actObjs.filter((o) => childObj.preObjIds.indexOf(o.id) > -1)

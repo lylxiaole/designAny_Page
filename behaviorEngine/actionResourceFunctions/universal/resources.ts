@@ -82,13 +82,10 @@ export class oneParamJude implements actFuncBase {
   currentBehavior: behavior
   async excute() {
     let inparamVal = this.currentActObj.inputParams[0].val
-
     let judeParam = this.currentActObj.resourceFilter.judeParam
     let judeVal = this.currentActObj.resourceFilter.judeVal
-
     let js = inparamVal + judeParam + judeVal
     let res = eval(js)
-
     return res
   }
 }

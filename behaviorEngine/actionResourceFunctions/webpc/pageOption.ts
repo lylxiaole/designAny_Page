@@ -86,32 +86,24 @@ export class NotificationError implements actFuncBase {
     let msg = this.currentActObj.resourceFilter.message
     let type = this.currentActObj.resourceFilter.type
 
-    return new Promise((reslove, reject) => {
-      if (type === 'success') {
-        ElNotification.success({
-          title: '成功',
-          message: msg,
-          onClose: () => {
-            reslove(null)
-          }
-        })
-      } else if (type === 'error') {
-        ElNotification.error({
-          title: '错误',
-          message: msg,
-          onClose: () => {
-            reslove(null)
-          }
-        })
-      } else {
-        ElNotification.info({
-          title: '信息',
-          message: msg,
-          onClose: () => {
-            reslove(null)
-          }
-        })
-      }
-    })
+    if (type === 'success') {
+      ElNotification.success({
+        title: '成功',
+        message: msg,
+        onClose: () => {}
+      })
+    } else if (type === 'error') {
+      ElNotification.error({
+        title: '错误',
+        message: msg,
+        onClose: () => {}
+      })
+    } else {
+      ElNotification.info({
+        title: '信息',
+        message: msg,
+        onClose: () => {}
+      })
+    }
   }
 }

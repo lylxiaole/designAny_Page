@@ -75,6 +75,9 @@ export default class index extends ComponentBase {
           if (sourceActObj.isJudeNode == true) {
             //如果源节点是判断节点，需要特殊处理。判断节点没有出参。
             preObjId = edge.sourceAnchorId
+            if (targetInParam) {
+              targetInParam.refOutParamId = sourceOutParam.key
+            }
           } else if (!sourceOutParam) {
             //如果源节点是没有出参的普通节点
             preObjId = edge.sourceNodeId
