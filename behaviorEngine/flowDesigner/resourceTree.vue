@@ -90,18 +90,16 @@ export default class index extends ComponentBase {
     let datas = behaviorContext.allThirtyApis
     await this.makeApisGroup(thirtyApiGroup, datas)
     this.objGroup.push(thirtyApiGroup)
-    //判断条件
-    let judgeGroup = new object_group()
-    judgeGroup.key = getUuid()
-    judgeGroup.title = '判断条件'
-    this.makejudgeGroup(judgeGroup)
-    this.objGroup.push(judgeGroup)
-    //提示窗
-    let notificationGroup = new object_group()
-    notificationGroup.key = getUuid()
-    notificationGroup.title = '提示窗'
-    this.makeNotificationGroup(notificationGroup)
-    this.objGroup.push(notificationGroup)
+    //工具
+    let toolgroup = new object_group()
+    toolgroup.key = getUuid()
+    toolgroup.title = '工具'
+    //----判断条件
+    this.makejudgeGroup(toolgroup)
+    //----提示窗
+    this.makeNotificationGroup(toolgroup)
+    this.objGroup.push(toolgroup)
+    //
   }
 
   mounted() {}
@@ -314,12 +312,15 @@ export default class index extends ComponentBase {
   //************计算判断条件**************************************************** */
   private async makejudgeGroup(targetGroup: object_group) {
     let actObj = getFuncObjByType(funcCode.oneParamJude) as actionObj
-    actObj.name = '单条件判断'
+    actObj.name = '值判断-手输'
     actObj.id = getUuid()
-    actObj.description = '单条件判断'
-    actObj.inputParams = [{ key: getUuid(), name: '被对比值' }]
+    actObj.description = '值判断-手输'
+    actObj.inputParams = [{ key: getUuid(), name: '入参' }]
     actObj.isJudeNode = true
-    actObj.resourceFilter = {}
+    actObj.resourceFilter = {
+      judeParam: '===',
+      judeVal: true
+    }
     actObj.outParam = { key: getUuid(), name: '输出' }
     targetGroup.childrenObjs.push(actObj)
     //////
@@ -327,9 +328,9 @@ export default class index extends ComponentBase {
   // ************计算提示窗********************************************
   private async makeNotificationGroup(targetGroup: object_group) {
     let actObj = getFuncObjByType(funcCode.notificationDialog) as actionObj
-    actObj.name = '通用提示窗'
+    actObj.name = '通用提示窗-手输'
     actObj.id = getUuid()
-    actObj.description = '通用提示窗'
+    actObj.description = '通用提示窗-手输'
     actObj.inputParams = []
     actObj.resourceFilter = {
       message: '',
