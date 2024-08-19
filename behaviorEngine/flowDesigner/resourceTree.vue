@@ -98,6 +98,8 @@ export default class index extends ComponentBase {
     this.makejudgeGroup(toolgroup)
     //----提示窗
     this.makeNotificationGroup(toolgroup)
+    //----固定值
+    this.makeFixedValueGroup(toolgroup)
     this.objGroup.push(toolgroup)
     //
   }
@@ -347,6 +349,20 @@ export default class index extends ComponentBase {
       type: 'success'
     }
     actObj.outParam = null
+    targetGroup.childrenObjs.push(actObj)
+    //////
+  }
+  private async makeFixedValueGroup(targetGroup: object_group) {
+    let actObj = getFuncObjByType(funcCode.fixedVal) as actionObj
+    actObj.name = '固定值-手输'
+    actObj.id = getUuid()
+    actObj.description = '固定值-手输'
+    actObj.inputParams = []
+    actObj.resourceFilter = {
+      value: '',
+      type: ''
+    }
+    actObj.outParam = { key: getUuid(), name: '输出' }
     targetGroup.childrenObjs.push(actObj)
     //////
   }

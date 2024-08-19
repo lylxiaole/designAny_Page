@@ -6,6 +6,7 @@ import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '.
 import { actionObj } from '../../actObject'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
+import { number } from 'echarts'
 
 @resourceFuncAttr('字典', '', funcGroup.pageOption, funcCode.dictionary, funcStack.universal)
 export class dictionarys implements actFuncBase {
@@ -87,5 +88,25 @@ export class oneParamJude implements actFuncBase {
     let js = inparamVal + judeParam + judeVal
     let res = eval(js)
     return res
+  }
+}
+
+@resourceFuncAttr('固定值', '', funcGroup.pageOption, funcCode.fixedVal, funcStack.universal)
+export class fixedValue implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute() {
+    let type = this.currentActObj.resourceFilter.type
+    let value = this.currentActObj.resourceFilter.value
+
+    if (type === 'bool') {
+      return Boolean(value)
+    } else if (type === 'string') {
+      return value.toString()
+    } else if (type === 'number') {
+      return parseFloat(value)
+    }
   }
 }

@@ -151,6 +151,10 @@ export default class index extends ComponentBase {
           {
             keys: ['backspace'],
             callback: () => {}
+          },
+          {
+            keys: ['ctrl+v', 'ctrl+c'],
+            callback: (e) => {}
           }
         ]
       },

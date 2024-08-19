@@ -16,11 +16,11 @@ export enum funcGroup {
 }
 //方法编码-需要保证唯一性
 export enum funcCode {
-  fixedValBool = 'fixedValBool',
-  fixedValString = 'fixedValBool',
-  fixedValFloat = 'fixedValFloat',
-  fixedValNone = 'fixedValNone',
-  fixedValInt = 'fixedValInt',
+  // fixedValBool = 'fixedValBool',
+  // fixedValString = 'fixedValBool',
+  // fixedValFloat = 'fixedValFloat',
+  // fixedValNone = 'fixedValNone',
+  // fixedValInt = 'fixedValInt',
   signAdd = 'signAdd', //加
   signReduce = 'signReduce', //减
   signAssign = 'signAssign', //赋值
@@ -43,7 +43,8 @@ export enum funcCode {
   thirtyApi = 'thirtyApi', //外部API
 
   oneParamJude = 'oneParamJude', //单条件判断
-  notificationDialog = 'notificationDialog' //提示窗
+  notificationDialog = 'notificationDialog', //提示窗
+  fixedVal = 'fixedVal'
 }
 //方法作用范围
 export enum funcStack {
