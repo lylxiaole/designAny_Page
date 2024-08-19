@@ -44,7 +44,8 @@ export enum funcCode {
 
   oneParamJude = 'oneParamJude', //单条件判断
   notificationDialog = 'notificationDialog', //提示窗
-  fixedVal = 'fixedVal'
+  fixedVal = 'fixedVal',
+  leadToOtherPage = 'leadToOtherPage' //提示窗
 }
 //方法作用范围
 export enum funcStack {

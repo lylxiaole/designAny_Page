@@ -8,18 +8,16 @@
 import { Options, Vue } from 'vue-class-component'
 
 import { EnginePage, EngineLayout, EngineComponent, DPageAttr } from '../03designerLayoutBase'
-import { BuildingFileUrlForShow } from '@common/utils'
-import ViewShell from './ViewShell.vue'
+ import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 @DPageAttr('pc', 'preview')
 @Options({})
 export default class PCPagePreview extends EnginePage {
   private get backgroundCute(): string {
-    // window.console.log('backgroundCute:', this.background_img)
-    if (!this.background_img || !this.background_img.uid) {
+    if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
-    return 'url("' + BuildingFileUrlForShow(this.background_img.uid) + '")'
+    return 'url("' + this.designerContext.getFileApiAddr(this.background_img[0].uid) + '")'
   }
   public allShells: ViewShell[] = []
 

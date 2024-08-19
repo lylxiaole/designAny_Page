@@ -101,7 +101,6 @@ export default class index extends ComponentBase {
     //----固定值
     this.makeFixedValueGroup(toolgroup)
     this.objGroup.push(toolgroup)
-    //
   }
 
   mounted() {}

@@ -107,3 +107,15 @@ export class NotificationError implements actFuncBase {
     }
   }
 }
+
+@resourceFuncAttr('页面跳转', '', funcGroup.pageOption, funcCode.leadToOtherPage, funcStack.universal)
+export class leadToPage implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute() {
+    let newpageId = this.currentActObj.resourceFilter.pageId
+    this.currentPage.onLYLLeadToOtherPage(newpageId)
+  }
+}

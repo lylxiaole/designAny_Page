@@ -69,7 +69,7 @@ export default class index extends PageBase {
       this.openedPageData.push(cachePageData)
     }
     await this.$nextTick()
-    let designLayout: any = typeof EnginePage
+    let designLayout: EnginePage = null
     switch (cachePageData.type) {
       case pageType.pcPage:
         designLayout = findPageByPaltform('pc', 'preview')
@@ -88,7 +88,13 @@ export default class index extends PageBase {
     ;(vueComp as any).top = 0
     this.currentOpenEngin = vueComp as any
     await this.$nextTick()
+    $(this.$refs.renderArea).html('')
     $(this.$refs.renderArea).append(virtualDom)
+
+    designLayout.$once('onLYLLeadToOtherPage', (pageId) => {
+      designLayout.destorymethod()
+      this.openPage(pageId)
+    })
   }
 
   // ************************************

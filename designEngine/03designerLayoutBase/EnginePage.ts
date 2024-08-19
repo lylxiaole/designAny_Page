@@ -6,13 +6,12 @@ import EngineLayout, { SaveInfo } from './EngineLayout'
 import EngineContainer from './EngineContainer'
 import { factory } from '@behaviorEngine/index'
 import { LayoutMethod } from './commonClasses/MethodInfo'
-
 import { DEventAttr } from './commonClasses/EventInfo'
-
 import { action, actionDetail, behavior, paramType, param } from '@behaviorEngine/index'
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
 import { DPropAttr } from './commonClasses/PropertyInfo'
 import { PropertySetting, Text_Setting, Behavior_Setting } from './commonClasses/PropertyInfo'
+import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 
 @Options({})
 export default class EnginePage extends EngineContainer {
@@ -208,4 +207,7 @@ export default class EnginePage extends EngineContainer {
   // ******************************************************
   private onPageSaveSuccess(pageId: string): void {}
   private onScaleSized(): void {}
+
+  @Emit('onLYLLeadToOtherPage')
+  public onLYLLeadToOtherPage(pageId: string): void {}
 }
