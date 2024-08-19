@@ -21,7 +21,6 @@
               </div>
             </template>
           </el-tree>
-
         </div>
       </el-row>
     </div>
@@ -63,6 +62,7 @@ export default class index extends ComponentBase {
   }
 
   currentPage: EnginePage
+
   public async init(page: EnginePage) {
     this.objGroup = []
     this.currentPage = page
@@ -100,6 +100,8 @@ export default class index extends ComponentBase {
     this.makeNotificationGroup(toolgroup)
     //----固定值
     this.makeFixedValueGroup(toolgroup)
+    /**页面跳转 */
+    this.makeLeadToPageGroup(toolgroup)
     this.objGroup.push(toolgroup)
   }
 
@@ -362,6 +364,20 @@ export default class index extends ComponentBase {
       type: ''
     }
     actObj.outParam = { key: getUuid(), name: '输出' }
+    targetGroup.childrenObjs.push(actObj)
+    //////
+  }
+
+  private async makeLeadToPageGroup(targetGroup: object_group) {
+    let actObj = getFuncObjByType(funcCode.leadToOtherPage) as actionObj
+    actObj.name = '跳转页面'
+    actObj.id = getUuid()
+    actObj.description = '跳转页面'
+    actObj.inputParams = []
+    actObj.resourceFilter = {
+      pageId: ''
+    }
+    actObj.outParam = null
     targetGroup.childrenObjs.push(actObj)
     //////
   }

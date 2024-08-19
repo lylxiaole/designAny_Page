@@ -90,9 +90,8 @@ export default class index extends PageBase {
     await this.$nextTick()
     $(this.$refs.renderArea).html('')
     $(this.$refs.renderArea).append(virtualDom)
-
-    designLayout.$once('onLYLLeadToOtherPage', (pageId) => {
-      designLayout.destorymethod()
+    ;(vueComp as any).$once('onLYLLeadToOtherPage', (pageId) => {
+      this.currentOpenEngin.destorymethod()
       this.openPage(pageId)
     })
   }
@@ -103,7 +102,6 @@ export default class index extends PageBase {
     if (this.currentOpenEngin) {
       this.currentOpenEngin.destorymethod()
     }
-
     this.windowVisible = false
   }
 }

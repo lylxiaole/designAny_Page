@@ -66,6 +66,7 @@ import {
   DeleteGroup,
   pageType
 } from '@common/apis/designPage'
+import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { types } from 'util'
@@ -98,6 +99,10 @@ export default class index extends ComponentBase {
       this.treeData = await GetApplicationPages(application.id)
     } else {
       this.treeData = []
+    }
+
+    behaviorContext.getAllPageInfos = () => {
+      return this.treeData
     }
   }
   // *********pageGroups管理**************************************************

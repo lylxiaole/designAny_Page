@@ -3,7 +3,7 @@
     <el-row style="height:60px;width:100%">
       <div ref="toobar"></div>
       <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine?currentShowEngine.Id:'')" :height="60"
-        @onSave="onSaveCurrentPage" @onPreView="onPreView"></toolBar>
+        @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
     </el-row>
     <el-row style="height:calc(100% - 60px);width:100%;display:block;position:relative;display:block">
       <el-col style="width:250px;height:100%;float:left">
@@ -26,6 +26,8 @@
     </el-row>
 
     <previewPage ref="previewPage" />
+    <behaviorSettingDialog ref="behaviorSettingDialog" />
+
   </el-row>
 </template>
 
@@ -40,9 +42,10 @@ import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout, designDrawDomVirtual } from '@designEngine/index'
-import { behaviorList } from '@behaviorEngine/index'
+import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
 import { findPageByPaltform } from '@designEngine/index'
+import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
 
 @Options({
   components: {
@@ -54,7 +57,8 @@ import { findPageByPaltform } from '@designEngine/index'
     pCPageDesign: PCPageDesign,
     pCPagePreview: PCPagePreview,
     behaviorList: behaviorList,
-    previewPage: previewPage
+    previewPage: previewPage,
+    behaviorSettingDialog: behaviorSettingDialog
   }
 })
 export default class index extends PageBase {
@@ -66,13 +70,12 @@ export default class index extends PageBase {
     GetApplication(this.applicationId).then((res) => {
       this.application = res
     })
+
     $(window).on('keydown', this._onKeyDown)
   }
-
   unmounted() {
     $(window).off('keydown', this._onKeyDown)
   }
-
   // **********当前应用的页面**********************************************************
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
@@ -192,6 +195,10 @@ export default class index extends PageBase {
   }
   private async onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
+  }
+
+  private onSettingBehavior() {
+    ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine)
   }
   // *************右侧属性窗*******************************************************
   private activeName: string = 'first'

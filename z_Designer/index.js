@@ -24,6 +24,7 @@ const apiAddr = () => getConfigByName('apiAddr')
 // ****************************************************
 import { init as designEngineInit } from '@designEngine/index'
 designEngineInit(apiAddr())
+
 import { GetAll } from '@common/apis/designDictionary'
 import { GetGroupApisAll } from '@common/apis/designThirtyApi'
 import { init as behaviorEngineInit } from '@behaviorEngine/index'

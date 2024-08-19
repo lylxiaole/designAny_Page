@@ -59,7 +59,6 @@ export default class behaviorList extends Vue {
     if (!this.currentPage) {
       return []
     }
-
     return this.currentPage.behaviors
   }
 

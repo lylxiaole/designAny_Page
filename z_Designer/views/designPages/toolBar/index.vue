@@ -13,7 +13,7 @@
     <!-- <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" /> -->
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
-      <optionBtn v-if="currentPage" :style="{height:height + 'px','width':'80px'}" label="页面行为" @click="onShowBahaviorSetting" />
+      <optionBtn v-if="currentPage" :style="{height:height + 'px','width':'80px'}" label="页面行为" @click="onSettingBehavior" />
 
       <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background:transparent;"
         :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
@@ -37,7 +37,6 @@
       <optionBtn :style="{height:height + 'px' ,'width':'80px'}" label="退出设计" @click="onQuit" />
     </div>
 
-    <behaviorSettingDialog ref="behaviorSettingDialog" />
   </div>
 </template>
 
@@ -47,12 +46,10 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
 import componentListControl from './ComponentListControl.vue'
 import optionBtn from './optionBtn.vue'
-import behaviorSettingDialog from './behaviorSettingDialog.vue'
 @Options({
   components: {
     componentListControl,
-    optionBtn,
-    behaviorSettingDialog
+    optionBtn
   }
 })
 export default class quickActionBar extends Vue {
@@ -97,10 +94,7 @@ export default class quickActionBar extends Vue {
   }
   //************导入插件********************************************************
   private leadinPlugin() {}
-  //  ******************************************************
-  private onShowBahaviorSetting() {
-    ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentPage)
-  }
+
   /*************定制化控制项************************************************************************ */
   private async onQuit() {
     this.$router.push('/designApplications')
@@ -120,6 +114,9 @@ export default class quickActionBar extends Vue {
 
   @Emit('onPreView')
   private onPreView() {}
+
+  @Emit('onSettingBehavior')
+  private onSettingBehavior() {}
 }
 </script>
 

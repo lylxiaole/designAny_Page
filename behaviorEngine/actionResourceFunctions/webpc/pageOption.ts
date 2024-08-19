@@ -116,6 +116,7 @@ export class leadToPage implements actFuncBase {
   currentBehavior: behavior
   async excute() {
     let newpageId = this.currentActObj.resourceFilter.pageId
-    this.currentPage.onLYLLeadToOtherPage(newpageId)
+
+    this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }

@@ -4,11 +4,8 @@
     <el-row>
       <el-col :span="6">选择页面:</el-col>
       <el-col :span="18">
-        <el-select v-model="actObj.resourceFilter.type" placeholder="Select" size="small">
-          <el-option key="bool" label="bool" value="bool" />
-          <el-option key="string" label="string" value="string" />
-          <el-option key="number" label="number" value="number" />
-        </el-select>
+        <el-tree-select node-key="id" :check-on-click-node="false" v-model="actObj.resourceFilter.pageId" :data="allPageInfos"
+          :render-after-expand="false" />
       </el-col>
     </el-row>
   </el-row>
@@ -23,6 +20,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @flowDesignNode(funcCode.leadToOtherPage, flowNodeType.funcNormalNode)
 @Options({
@@ -32,7 +30,11 @@ export default class fixedValue extends Vue {
   @Prop()
   private actObj: actionObj
 
-  mounted() {}
+  private allPageInfos: any[] = []
+
+  mounted() {
+    this.allPageInfos = behaviorContext.getAllPageInfos()
+  }
 }
 </script>
 
