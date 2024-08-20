@@ -4,7 +4,7 @@
     <el-row>
       <el-col :span="6">选择字典:</el-col>
       <el-col :span="18">
-        <el-select v-model="selectKey" placeholder="Select" size="small">
+        <el-select v-model="actObj.resourceFilter.dicKey" placeholder="Select" size="small">
           <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.desc" :value="dic.key" />
         </el-select>
       </el-col>
