@@ -3,9 +3,8 @@
   <el-row>
     <el-col :span="6">选择接口:</el-col>
     <el-col :span="18">
-      <el-select v-model="selectKey" placeholder="Select" size="small">
-        <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.desc" :value="dic.key" />
-      </el-select>
+      <el-tree-select node-key="id" :check-on-click-node="false" v-model="actObj.resourceFilter.pageId" :data="allPageInfos"
+        :render-after-expand="false" />
     </el-col>
   </el-row>
 </template>
@@ -29,7 +28,17 @@ export default class thirtyApiNode extends Vue {
   @Prop()
   private actObj: actionObj
 
-  mounted() {}
+  mounted() {
+    this.loadAllApis()
+  }
+
+  private allApisTree: any[] = []
+  private loadAllApis() {
+    let allApis = behaviorContext.allThirtyApis
+    this.allApisTree = this.orgnizeTree(allApis)
+  }
+
+  private orgnizeTree(allApis: any[]): any[] {}
 }
 </script>
 
