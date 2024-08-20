@@ -65,7 +65,7 @@ export default class index extends ComponentBase {
 
   public async init(page: EnginePage) {
     this.objGroup = getFuncObjsTree()
-    debugger
+
     return
 
     this.objGroup = []
