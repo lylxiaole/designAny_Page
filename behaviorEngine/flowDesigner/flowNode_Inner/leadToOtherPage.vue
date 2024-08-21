@@ -5,7 +5,7 @@
       <el-col :span="6">选择页面:</el-col>
       <el-col :span="18">
         <el-tree-select node-key="id" :check-on-click-node="false" v-model="actObj.resourceFilter.pageId" :data="allPageInfos"
-          :render-after-expand="false" />
+          :render-after-expand="false" @current-change="onCurrentNodeChange" />
       </el-col>
     </el-row>
   </el-row>
@@ -21,6 +21,7 @@ import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
+import { EnginePage } from '@designEngine/index'
 
 @flowDesignNode(funcCode.leadToOtherPage, flowNodeType.funcNormalNode)
 @Options({
@@ -29,11 +30,20 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class fixedValue extends Vue {
   @Prop()
   private actObj: actionObj
+  @Prop()
+  private currentPage: EnginePage
 
   private allPageInfos: any[] = []
 
   mounted() {
     this.allPageInfos = behaviorContext.getAllPageInfos()
+  }
+
+  private onCurrentNodeChange(nodedata, node, e: Event) {
+    if (nodedata.type === 'group') {
+      e.stopPropagation()
+      return
+    }
   }
 }
 </script>

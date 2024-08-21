@@ -17,6 +17,7 @@ class VueHtmlNode extends HtmlNode {
     super(props)
     this.isMounted = false
     let { actObj } = props.model.getProperties()
+
     //找到actObj的funcCode
     let funcCode = actObj.funcCode
     //绘制节点

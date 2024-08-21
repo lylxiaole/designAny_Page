@@ -31,7 +31,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-import behaviorContext from '@behaviorEngine/01designerContext/context'
+ import { EnginePage } from '@designEngine/index'
 
 @flowDesignNode(funcCode.oneParamJude, flowNodeType.onParamJudeNode)
 @Options({
@@ -40,7 +40,8 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class oneParamJudeNode extends Vue {
   @Prop()
   private actObj: actionObj
-
+  @Prop()
+  private currentPage: EnginePage
   mounted() {}
 }
 </script>

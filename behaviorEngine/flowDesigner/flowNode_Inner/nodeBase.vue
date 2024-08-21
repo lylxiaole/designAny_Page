@@ -44,6 +44,7 @@ import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import ElementPlus from 'element-plus'
 import { HtmlNode, HtmlNodeModel } from '@logicflow/core'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @Options({
   components: {}
@@ -102,7 +103,7 @@ export default class nodeBase extends Vue {
     //
     this.actObj = newActObj
     let flowNodeVue = findFlowNodeInner(this.funcCode)
-    let r = h(flowNodeVue, { actObj: this.actObj })
+    let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
     let app = createApp({
       render: () => r
     })

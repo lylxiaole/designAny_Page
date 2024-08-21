@@ -29,6 +29,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
+import { EnginePage } from '@designEngine/index'
 
 @flowDesignNode(funcCode.notificationDialog, flowNodeType.funcNormalNode)
 @Options({
@@ -37,6 +38,9 @@ import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 export default class NotificationDialogNode extends Vue {
   @Prop()
   private actObj: actionObj
+
+  @Prop()
+  private currentPage: EnginePage
 
   mounted() {}
 }

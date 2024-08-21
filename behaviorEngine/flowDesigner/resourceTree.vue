@@ -67,9 +67,10 @@ export default class index extends ComponentBase {
     this.objGroup = getFuncObjsTree()
 
     return
+    this.currentPage = page
 
     this.objGroup = []
-    this.currentPage = page
+
     //计算当前页面可用资源
     let findObjGroupIndex = this.objGroup.findIndex((o) => o.key == page.Id)
     if (findObjGroupIndex > -1) {

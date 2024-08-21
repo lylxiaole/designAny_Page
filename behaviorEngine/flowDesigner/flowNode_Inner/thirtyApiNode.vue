@@ -3,8 +3,8 @@
   <el-row>
     <el-col :span="6">选择接口:</el-col>
     <el-col :span="18">
-      <el-tree-select node-key="id" :check-on-click-node="false" v-model="actObj.resourceFilter.pageId" :data="allPageInfos"
-        :render-after-expand="false" />
+      <el-tree-select node-key="id" :check-on-click-node="false" v-model="currentSelectId" :data="allApisTree" :render-after-expand="false"
+        @current-change="onCurrentNodeChange" />
     </el-col>
   </el-row>
 </template>
@@ -19,6 +19,7 @@ import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
+import { EnginePage } from '@designEngine/index'
 
 @flowDesignNode(funcCode.thirtyApi, flowNodeType.funcNormalNode)
 @Options({
@@ -27,18 +28,77 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class thirtyApiNode extends Vue {
   @Prop()
   private actObj: actionObj
-
+  @Prop()
+  private currentPage: EnginePage
   mounted() {
     this.loadAllApis()
+
+    if (this.actObj.resourceFilter.apiInfo) {
+      this.currentSelectId = this.actObj.resourceFilter.apiInfo.id
+    }
   }
 
+  private currentSelectId: string = null
   private allApisTree: any[] = []
   private loadAllApis() {
     let allApis = behaviorContext.allThirtyApis
     this.allApisTree = this.orgnizeTree(allApis)
   }
 
-  private orgnizeTree(allApis: any[]): any[] {}
+  private orgnizeTree(allApis: any[]): any[] {
+    let trees: any = []
+    for (let index = 0; index < allApis.length; index++) {
+      const apiinfo = allApis[index]
+      if (apiinfo.groupName) {
+        let children = apiinfo.childrenAPIs.concat(apiinfo.childrenGroups)
+        let childrenTree = this.orgnizeTree(children)
+        trees.push({
+          type: 'group',
+          id: apiinfo.id,
+          label: apiinfo.groupName,
+          children: childrenTree
+        })
+      } else {
+        trees.push({
+          type: 'api',
+          id: apiinfo.id,
+          label: apiinfo.name,
+          apidata: apiinfo
+        })
+      }
+    }
+
+    return trees
+  }
+
+  private onCurrentNodeChange(nodedata, node, e: Event) {
+    if (nodedata.type === 'group') {
+      e.stopPropagation()
+      return
+    }
+    this.actObj.resourceFilter.apiInfo = nodedata.apidata
+
+    this.actObj.inputParams = []
+    for (let index = 0; index < nodedata.apidata.headers.length; index++) {
+      const header = nodedata.apidata.headers[index]
+      this.actObj.inputParams.push({ key: header.key + '&header', name: '请求头:' + header.name })
+    }
+    for (let index = 0; index < nodedata.apidata.inParams.length; index++) {
+      const inparam = nodedata.apidata.inParams[index]
+      this.actObj.inputParams.push({ key: inparam.key + '&param', name: '链接参数:' + inparam.name })
+    }
+    //除了Get请求，其它的都需要使用body
+    if (nodedata.apidata.requestType !== 'Get' && nodedata.apidata.bodyIsParam) {
+      for (let index = 0; index < nodedata.apidata.bodyContent.length; index++) {
+        const body = nodedata.apidata.bodyContent[index]
+        this.actObj.inputParams.push({ key: body.key + '&body', name: 'body参数:' + body.name })
+      }
+    } else if (nodedata.apidata.requestType !== 'Get' && !nodedata.apidata.bodyIsParam) {
+      this.actObj.inputParams.push({ key: '&body', name: 'body参数' })
+    }
+
+    this.actObj.outParam = { key: getUuid(), name: '输出' }
+  }
 }
 </script>
 

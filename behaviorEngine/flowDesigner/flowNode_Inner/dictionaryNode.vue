@@ -23,6 +23,7 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { object_group, getFuncObjByType, getFuncObjsTree } from '@behaviorEngine/actResource'
+import { EnginePage } from '@designEngine/index'
 
 @flowDesignNode(funcCode.dictionary, flowNodeType.funcNormalNode)
 @Options({
@@ -31,6 +32,8 @@ import { object_group, getFuncObjByType, getFuncObjsTree } from '@behaviorEngine
 export default class dictionaryNode extends Vue {
   @Prop()
   private actObj: actionObj
+  @Prop()
+  private currentPage: EnginePage
 
   mounted() {
     this.loadAllData()

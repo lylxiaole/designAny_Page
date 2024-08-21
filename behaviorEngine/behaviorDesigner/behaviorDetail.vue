@@ -29,13 +29,12 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { ref, toRaw } from '@vue/reactivity'
-
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { behavior } from '@behaviorEngine/index'
 import { EnginePage } from '@designEngine/index'
-
 import flowDesign from '../flowDesigner/flowDesign.vue'
 import resourceTree from '../flowDesigner/resourceTree.vue'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @Options({
   components: { flowDesign, resourceTree }
@@ -49,6 +48,7 @@ export default class behaviorDeatilSetting extends Vue {
   public async show(behav: behavior, page: EnginePage) {
     this.currentSettingBehavior = behav
     this.currentPage = page
+    behaviorContext.currentDesignPage = page
     this.windowVisible = true
     await this.$nextTick()
     ;(this.$refs.flowDesign as flowDesign).setFlowData(behav.flowData)
