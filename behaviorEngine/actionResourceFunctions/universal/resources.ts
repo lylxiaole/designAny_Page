@@ -75,7 +75,7 @@ export class thirtyApis implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('单条件判断', '', funcGroup.universalTool, funcCode.oneParamJude, funcStack.universal, [{ key: getUuid(), name: '入参' }], { key: getUuid(), name: '输出' })
+@resourceFuncAttr('单条件判断', '', funcGroup.universalTool, funcCode.oneParamJude, funcStack.universal, [{ key: getUuid(), name: '入参' }], { key: getUuid(), name: '输出' }, true)
 export class oneParamJude implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

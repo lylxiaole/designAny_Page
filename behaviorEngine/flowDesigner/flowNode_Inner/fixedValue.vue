@@ -1,6 +1,5 @@
 <template>
   <el-row style="width:100%;height:100%">
-    <el-row> {{actObj?actObj.description:''}}</el-row>
     <el-row>
       <el-col :span="6">值类型:</el-col>
       <el-col :span="18">

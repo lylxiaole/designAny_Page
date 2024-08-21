@@ -1,5 +1,4 @@
 <template>
-  <el-row> {{actObj?actObj.description:''}}</el-row>
 </template>
 
 <script lang="ts">

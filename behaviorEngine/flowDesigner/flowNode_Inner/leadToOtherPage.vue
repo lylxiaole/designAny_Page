@@ -1,11 +1,10 @@
 <template>
   <el-row style="width:100%;height:100%">
-    <el-row> {{actObj?actObj.description:''}}</el-row>
     <el-row>
       <el-col :span="6">选择页面:</el-col>
       <el-col :span="18">
         <el-tree-select node-key="id" :check-on-click-node="false" v-model="actObj.resourceFilter.pageId" :data="allPageInfos"
-          :render-after-expand="false" @current-change="onCurrentNodeChange" />
+          :render-after-expand="true" @node-click="onCurrentNodeChange" />
       </el-col>
     </el-row>
   </el-row>
@@ -39,10 +38,9 @@ export default class fixedValue extends Vue {
     this.allPageInfos = behaviorContext.getAllPageInfos()
   }
 
-  private onCurrentNodeChange(nodedata, node, e: Event) {
+  private onCurrentNodeChange(nodedata, node, obj) {
     if (nodedata.type === 'group') {
-      e.stopPropagation()
-      return
+      throw '分组不能被选中'
     }
   }
 }

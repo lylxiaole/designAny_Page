@@ -52,7 +52,7 @@ export enum funcStack {
 }
 //反射，所有方法的实体类
 var allActFunctions = []
-export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack, inparams?: param[], outParam?: param) {
+export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGroup, funcCode?: funcCode, funcStack?: funcStack, inparams?: param[], outParam?: param, isJudeNode?: boolean) {
   return function (target: Function) {
     !target.prototype.$lyl_actFunc && (target.prototype.$lyl_actFunc = {})
     target.prototype.$lyl_actFunc.funcCode = funcCode
@@ -61,6 +61,7 @@ export function resourceFuncAttr(name: string, desc: string, funcGroup?: funcGro
     target.prototype.$lyl_actFunc.inparams = inparams
     target.prototype.$lyl_actFunc.outParam = outParam
     target.prototype.$lyl_actFunc.name = name
+    target.prototype.$lyl_actFunc.isJudeNode = isJudeNode
     target.prototype.$lyl_actFunc.desc = desc
     allActFunctions.push(target)
   }

@@ -1,6 +1,5 @@
 <template>
   <div style="width:100;height:100%">
-    <el-row> {{actObj?actObj.description:''}}</el-row>
     <el-row>
       <el-col :span="6">选择字典:</el-col>
       <el-col :span="18">

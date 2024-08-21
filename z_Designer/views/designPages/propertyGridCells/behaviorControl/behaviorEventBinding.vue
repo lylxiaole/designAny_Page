@@ -23,11 +23,11 @@
         <el-table-column prop="name" label="行为名称" />
         <el-table-column prop="workRange" label="作用范围" />
         <el-table-column prop="description" label="描述" />
-        <el-table-column label="操作" prop="action" width="420px">
-          <template #default="record">
-            <el-button @click="()=>{moveUpBehavior(record.id)}" type="link"> 上移</el-button>
-            <el-button @click="()=>{moveDownBehavior(record.id)}" type="link"> 下移</el-button>
-            <el-button @click="()=>{removeBehavior(record.id)}" type="link"> 移除</el-button>
+        <el-table-column label="操作" width="420px">
+          <template #default="{row}">
+            <el-button @click="()=>{moveUpBehavior(row.id)}" type="link"> 上移</el-button>
+            <el-button @click="()=>{moveDownBehavior(row.id)}" type="link"> 下移</el-button>
+            <el-button @click="()=>{removeBehavior(row.id)}" type="link"> 移除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -150,6 +150,7 @@ export default class behaviorEventBinding extends Vue {
     if (!event) {
       return
     }
+    debugger
     let findindex = event.behaviorIds.findIndex((o) => o == behaviorId)
     if (findindex >= 0) {
       event.behaviorIds.splice(findindex, 1)

@@ -18,6 +18,7 @@ export function funcToObj(actFunc: any): actionObj {
   obj.description = actFunc.prototype.$lyl_actFunc.desc
   obj.inputParams = actFunc.prototype.$lyl_actFunc.inparams
   obj.outParam = actFunc.prototype.$lyl_actFunc.outParam
+  obj.isJudeNode = actFunc.prototype.$lyl_actFunc.isJudeNode
   obj.resourceFilter = {}
   return obj
 }

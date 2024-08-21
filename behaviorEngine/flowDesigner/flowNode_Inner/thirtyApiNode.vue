@@ -1,10 +1,9 @@
 <template>
-  <el-row> {{actObj?actObj.description:''}}</el-row>
   <el-row>
     <el-col :span="6">选择接口:</el-col>
     <el-col :span="18">
-      <el-tree-select node-key="id" :check-on-click-node="false" v-model="currentSelectId" :data="allApisTree" :render-after-expand="false"
-        @current-change="onCurrentNodeChange" />
+      <el-tree-select node-key="id" :check-on-click-node="false" v-model="currentSelectId" :data="allApisTree" :render-after-expand="true"
+        @node-click="onCurrentNodeChange" />
     </el-col>
   </el-row>
 </template>
@@ -73,8 +72,7 @@ export default class thirtyApiNode extends Vue {
 
   private onCurrentNodeChange(nodedata, node, e: Event) {
     if (nodedata.type === 'group') {
-      e.stopPropagation()
-      return
+      throw '分组不能被选中'
     }
     this.actObj.resourceFilter.apiInfo = nodedata.apidata
 

@@ -1,6 +1,7 @@
 <template>
-  <el-row style="border:1px solid #cdcdcd;width:100%;height:100%;box-sizing:border-box;background:#fff;position:relative;padding:10px"
+  <el-row style="border:1px solid #cdcdcd;width:100%;height:100%;box-sizing:border-box;background:#fff;position:relative;padding:5px"
     class="topnodediv verticalAlignCenter flexHorilanLayout">
+
     <!-- <div style="height:100%;">
       <template v-if="inParamAnchors&&inParamAnchors.length>0">
         <div v-for="inParam in inParamAnchors" :key="inParam.id" :style="{'height':inParamHeight}" style="font-size:12px" class="verticalAlignCenter">
@@ -13,8 +14,11 @@
         </div>
       </template>
     </div> -->
+    <el-row style="height:25px;width:100%" class="verticalAlignCenter flexHorilanLayout">
+      {{actObj?actObj.name:''}}
+    </el-row>
     <!-- **************************************************** -->
-    <div ref="renderContainer"></div>
+    <div style="width:100%;height:calc(100% - 25px)" ref="renderContainer"></div>
     <!-- **************************************************** -->
     <!-- <div style="height:100%">
       <template v-if="outParamAnchors&&outParamAnchors.length>0">

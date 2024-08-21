@@ -16,10 +16,11 @@ export class actionObj {
   name: string
   description: string
   funcCode: funcCode
+  isJudeNode: boolean = false //是否是判断节点。判断节点会根据返回结果的true/false,再决定执行哪些子级
+
   // ******运行时信息*********
   preObjIds: string[]
   nextObjIds: string[]
-  isJudeNode: boolean = false //是否是判断节点。判断节点会根据返回结果的true/false,再决定执行哪些子级
 
   inputParams: object_InParam[] = []
   outParam: param = null

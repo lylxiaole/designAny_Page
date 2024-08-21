@@ -9,7 +9,7 @@
       <el-row style="overflow: hidden; width: 100%; bottom: 0px;height:calc(100% - 50px)">
         <div style="overflow: auto; width: 100%; height: 100%; ">
           <el-tree node-key="id" :data="treeData" @node-drag-start="handleDragStart" :allow-drop="allowDrop" :allow-drag="allowDrag"
-            :expand-on-click-node="false" draggable highlight-current>
+            :expand-on-click-node="true" draggable highlight-current>
             <template #default="{data}">
               <div draggable="true" v-if="data.type==='page'">
                 <span class="icon iconfont">&#xe627;</span>

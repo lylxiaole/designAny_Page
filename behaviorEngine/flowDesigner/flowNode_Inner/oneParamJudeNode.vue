@@ -1,6 +1,5 @@
 <template>
   <div style="width:100;height:100%">
-    <el-row> {{actObj?actObj.description:''}}</el-row>
     <el-row>
       <el-col :span="6">判断条件:</el-col>
       <el-col :span="18">
@@ -31,7 +30,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
- import { EnginePage } from '@designEngine/index'
+import { EnginePage } from '@designEngine/index'
 
 @flowDesignNode(funcCode.oneParamJude, flowNodeType.onParamJudeNode)
 @Options({
