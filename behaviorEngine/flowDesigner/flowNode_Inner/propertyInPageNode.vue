@@ -40,7 +40,9 @@ export default class propertyInPageNode extends Vue {
   @Prop()
   private currentPage: EnginePage
 
-  public makeParamKey: (key) => string
+  public makeParamKey(key) {
+    return this.actObj.id + '&' + key
+  }
 
   // ***********布局*******************************
   private currentLayoutId: string = null

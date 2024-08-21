@@ -29,7 +29,9 @@ export default class thirtyApiNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-  public makeParamKey: (key) => string
+  public makeParamKey(key) {
+    return this.actObj.id + '&' + key
+  }
 
   mounted() {
     this.loadAllApis()

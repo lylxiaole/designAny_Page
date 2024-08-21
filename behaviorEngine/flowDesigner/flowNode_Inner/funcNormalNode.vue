@@ -21,7 +21,9 @@ export default class funcNormalNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-  public makeParamKey: (key) => string
+  public makeParamKey(key) {
+    return this.actObj.id + '&' + key
+  }
 
   mounted() {}
 }

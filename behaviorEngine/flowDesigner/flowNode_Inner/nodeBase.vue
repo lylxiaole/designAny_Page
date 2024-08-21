@@ -112,6 +112,7 @@ export default class nodeBase extends Vue {
       render: () => r,
       methods: {
         makeParamKey: (key) => {
+          debugger
           return this.actObj.id + '&' + key
         }
       }
