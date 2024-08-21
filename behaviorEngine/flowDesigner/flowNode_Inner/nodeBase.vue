@@ -109,7 +109,12 @@ export default class nodeBase extends Vue {
     let flowNodeVue = findFlowNodeInner(this.funcCode)
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
     let app = createApp({
-      render: () => r
+      render: () => r,
+      methods: {
+        makeParamKey: (key) => {
+          return this.actObj.id + '&' + key
+        }
+      }
     })
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)

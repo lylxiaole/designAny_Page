@@ -31,6 +31,7 @@ export default class fixedValue extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
+  public makeParamKey: (key) => string
 
   private allPageInfos: any[] = []
 

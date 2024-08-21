@@ -29,6 +29,8 @@ export default class thirtyApiNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
+  public makeParamKey: (key) => string
+
   mounted() {
     this.loadAllApis()
 
@@ -79,23 +81,23 @@ export default class thirtyApiNode extends Vue {
     this.actObj.inputParams = []
     for (let index = 0; index < nodedata.apidata.headers.length; index++) {
       const header = nodedata.apidata.headers[index]
-      this.actObj.inputParams.push({ key: header.key + '&header', name: '请求头:' + header.name })
+      this.actObj.inputParams.push({ key: this.makeParamKey(header.key + '&header'), name: '请求头:' + header.name })
     }
     for (let index = 0; index < nodedata.apidata.inParams.length; index++) {
       const inparam = nodedata.apidata.inParams[index]
-      this.actObj.inputParams.push({ key: inparam.key + '&param', name: '链接参数:' + inparam.name })
+      this.actObj.inputParams.push({ key: this.makeParamKey(inparam.key + '&param'), name: '链接参数:' + inparam.name })
     }
     //除了Get请求，其它的都需要使用body
     if (nodedata.apidata.requestType !== 'Get' && nodedata.apidata.bodyIsParam) {
       for (let index = 0; index < nodedata.apidata.bodyContent.length; index++) {
         const body = nodedata.apidata.bodyContent[index]
-        this.actObj.inputParams.push({ key: body.key + '&body', name: 'body参数:' + body.name })
+        this.actObj.inputParams.push({ key: this.makeParamKey(body.key + '&body'), name: 'body参数:' + body.name })
       }
     } else if (nodedata.apidata.requestType !== 'Get' && !nodedata.apidata.bodyIsParam) {
-      this.actObj.inputParams.push({ key: '&body', name: 'body参数' })
+      this.actObj.inputParams.push({ key: this.makeParamKey('body'), name: 'body参数' })
     }
 
-    this.actObj.outParam = { key: getUuid(), name: '输出' }
+    this.actObj.outParam = { key: this.makeParamKey('输出'), name: '输出' }
   }
 }
 </script>

@@ -41,6 +41,8 @@ export default class oneParamJudeNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
+  public makeParamKey: (key) => string
+
   mounted() {}
 }
 </script>

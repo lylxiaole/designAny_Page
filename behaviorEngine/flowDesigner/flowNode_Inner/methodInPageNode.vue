@@ -39,6 +39,7 @@ export default class propertyInPageNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
+  public makeParamKey: (key) => string
 
   // ***********布局*******************************
   private currentLayoutId: string = null
@@ -109,7 +110,7 @@ export default class propertyInPageNode extends Vue {
       for (let jndex = 0; jndex < method.inParams.length; jndex++) {
         const inparam = method.inParams[jndex]
         inparams.push({
-          key: getUuid(),
+          key: this.makeParamKey(inparam.name),
           name: inparam.name
         } as any)
       }
@@ -117,7 +118,7 @@ export default class propertyInPageNode extends Vue {
 
       if (method.hasOutParam) {
         this.actObj.outParam = {
-          key: getUuid(),
+          key: this.makeParamKey('输出'),
           name: '输出'
         } as any
       }

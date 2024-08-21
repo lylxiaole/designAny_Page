@@ -33,6 +33,7 @@ export default class dictionaryNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
+  public makeParamKey: (key) => string
 
   mounted() {
     this.loadAllData()
@@ -43,19 +44,6 @@ export default class dictionaryNode extends Vue {
 
   private loadAllData() {
     this.allDictionary = behaviorContext.allDictionary
-
-    // for (let index = 0; index < datas.length; index++) {
-    //   const element = datas[index]
-    //   let actObj = getFuncObjByType(funcCode.dictionary) as actionObj
-    //   actObj.name = '字典:' + element.key
-    //   actObj.description = '字典:' + element.key
-    //   actObj.resourceFilter = {
-    //     dicKey: element.key
-    //   }
-    //   actObj.outParam = { key: getUuid(), name: '输出' }
-    //   targetGroup.childrenObjs = []
-    //   targetGroup.childrenObjs.push(actObj)
-    // }
   }
 }
 </script>

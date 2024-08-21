@@ -40,6 +40,7 @@ export default class NotificationDialogNode extends Vue {
 
   @Prop()
   private currentPage: EnginePage
+  public makeParamKey: (key) => string
 
   mounted() {}
 }

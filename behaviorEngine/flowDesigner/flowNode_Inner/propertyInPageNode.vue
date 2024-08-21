@@ -40,6 +40,8 @@ export default class propertyInPageNode extends Vue {
   @Prop()
   private currentPage: EnginePage
 
+  public makeParamKey: (key) => string
+
   // ***********布局*******************************
   private currentLayoutId: string = null
   private get currentLayout(): EngineLayout {
@@ -102,13 +104,14 @@ export default class propertyInPageNode extends Vue {
       this.actObj.outParam = null
     } else {
       this.actObj.inputParams = []
+
       this.actObj.inputParams.push({
-        key: getUuid(),
+        key: this.makeParamKey('设定值'),
         name: '设定值'
       } as any)
       //出参
       this.actObj.outParam = {
-        key: getUuid(),
+        key: this.makeParamKey('输出'),
         name: '输出'
       } as any
     }
