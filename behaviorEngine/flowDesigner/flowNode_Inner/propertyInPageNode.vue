@@ -3,8 +3,8 @@
     <el-row>
       <el-col :span="6">选择布局:</el-col>
       <el-col :span="18">
-        <el-tree-select node-key="id" :check-on-click-node="false" v-model="currentLayoutId" :data="allayouts" :render-after-expand="true"
-          @current-change="onLayoutChange" />
+        <el-tree-select node-key="id" :check-on-click-node="true" check-strictly v-model="currentLayoutId" :data="allayouts"
+          :render-after-expand="true" @check-change="onLayoutChange" default-expand-all />
       </el-col>
     </el-row>
     <el-row>
@@ -77,6 +77,7 @@ export default class propertyInPageNode extends Vue {
     return trees
   }
   private onLayoutChange(nodedata, node, e: Event) {
+    debugger
     this.currentPropField = null
     this.actObj.resourceFilter.layoutId = nodedata.id
   }
