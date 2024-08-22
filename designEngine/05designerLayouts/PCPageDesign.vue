@@ -210,7 +210,6 @@ export default class PCPageDesign extends EnginePage {
       compData.id = getUuid()
     }
     let compclass = findSystemCompByCode(compData.meta.compCode)
-
     let newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
 
     let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
