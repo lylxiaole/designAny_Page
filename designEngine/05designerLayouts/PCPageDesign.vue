@@ -199,10 +199,8 @@ export default class PCPageDesign extends EnginePage {
     if (!DesignEvents.copyComp) {
       return
     }
-
     // window.console.log('onPaste_Event')
     let compData = deepClone(await DesignEvents.copyComp.getSaveData())
-
     if (DesignEvents.isCut) {
       //剪切--删除原有组件
       let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
@@ -214,8 +212,9 @@ export default class PCPageDesign extends EnginePage {
     let compclass = findSystemCompByCode(compData.meta.compCode)
 
     let newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
-    let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
 
+    let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
+    //定位
     let persentleft = (selfPosition.left + 5) / $(this.$el).width()
     newcopyComp.left = (persentleft * 100).toFixed(1) + '%'
 

@@ -59,7 +59,7 @@ export default class NpBarCode extends EngineComponent {
   }
 
   protected onDPropertyChange(layout: EngineLayout, field: string, val: any) {
-    this.initBarCode()
+    // this.initBarCode()
   }
 
   @DPropAttr(new Text_Setting('内容', PropertyGroupName.special, true))

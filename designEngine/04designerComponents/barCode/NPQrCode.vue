@@ -45,7 +45,7 @@ export default class NPQrCode extends EngineComponent {
   beforeUnmount() {}
 
   protected onDPropertyChange(layout: EngineLayout, field: string, val: any) {
-    this.initQrCode()
+    // this.initQrCode()
   }
 
   @DPropAttr(new Text_Setting('内容', PropertyGroupName.special, true))

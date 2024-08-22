@@ -207,26 +207,7 @@ export default class EngineLayout extends Vue {
   public set padding_bottom(val: number) {
     this.paddingInfo.bottom = val
   }
-  // ************************* ****************************************************************************
-  @DMethodAttr({
-    methodName: '测试方法',
-    description: '',
-    inParams: [
-      { name: '名称', key: 'name' },
-      { name: '年纪', key: 'age' },
-      { name: '成绩', key: 'score' }
-    ],
-    hasOutParam: true
-  })
-  protected async testMethod(name: string, age: string, score: string): Promise<string> {
-    debugger
-    return '123'
-  }
 
-  @DEventAttr({ eventName: '测试事件', description: '', inParams: [{ name: '名称', key: 'name' }], hasOutParam: false })
-  protected testEvent(name: string): string {
-    return name
-  }
   // *************************privates***********************************************************************
   public async destorymethod() {
     this.$off()
@@ -260,7 +241,7 @@ export default class EngineLayout extends Vue {
     }
   }
   private watch_properties_onDesigning(field: string, newval: any) {
-    console.log('***************watch_properties_onDesigning:', field, newval)
+    // console.log('***************watch_properties_onDesigning:', field, newval)
     this.isNeedSave = true
     this.onDPropertyChange(this, field, newval)
   }
