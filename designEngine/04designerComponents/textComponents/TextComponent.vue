@@ -45,26 +45,21 @@ export default class TextComponent extends EngineComponent {
     this.height = '4%'
     this.background = 'white'
   }
+
   @DPropAttr(new Boolean_Setting('是否可点击开启编辑', PropertyGroupName.special, true))
   private contentEditabl: boolean = false
-
   @DPropAttr(new Enum_Setting('粗细', PropertyGroupName.special, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
   private fontWeight: string = 'normal'
   @DPropAttr(new Enum_Setting('倾斜', PropertyGroupName.special, true, null, true, ['oblique', 'normal']))
   private fontStyle: string = 'normal'
-
   @DPropAttr(new Enum_Setting('垂直对齐', PropertyGroupName.special, true, null, true, ['top', 'middle', 'bottom']))
-  private verticalAlign: string = 'top'
-
+  private verticalAlign: string = 'middle'
   @DPropAttr(new Text_Setting('文本', PropertyGroupName.special, true))
   private CurrentText: string = '暂无数据'
-
   @DPropAttr(new Enum_Setting('自动换行', PropertyGroupName.special, true, null, true, ['nowrap', 'wrap']))
   private space: string = 'wrap'
-
   @DPropAttr(new Enum_Setting('水平对齐', PropertyGroupName.special, true, null, true, ['left', 'center', 'right']))
   private Horienten: string = 'center'
-
   @DPropAttr(new Boolean_Setting('是否显示边框', PropertyGroupName.special, true))
   private isShowBorder: boolean = false
 }
