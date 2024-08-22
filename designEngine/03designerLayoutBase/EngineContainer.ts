@@ -252,8 +252,6 @@ export default class EngineContainer extends EngineLayout {
     $(this.verRule).hide()
   }
   // **********************************************************************
-  /**添加一个组件 */
-
   //选中子组件
   public chooseComps(comps: EngineLayout[]) {
     this.cancelCompSelected(this.children)

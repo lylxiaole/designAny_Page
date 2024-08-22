@@ -89,6 +89,7 @@ export default class index extends PageBase {
     this.currentOpenEngin = vueComp as any
     await this.$nextTick()
     $(this.$refs.renderArea).html('')
+
     $(this.$refs.renderArea).append(virtualDom)
     ;(vueComp as any).$once('onLYLLeadToOtherPage', (pageId) => {
       this.currentOpenEngin.destorymethod()
