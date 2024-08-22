@@ -35,16 +35,20 @@ export default class fixedValue extends Vue {
     return this.actObj.id + '&' + key
   }
 
+  private currentSelectId: string = null
   private allPageInfos: any[] = []
 
   mounted() {
     this.allPageInfos = behaviorContext.getAllPageInfos()
+    this.currentSelectId = this.actObj.resourceFilter.pageId
   }
 
   private onCurrentNodeChange(nodedata, node, obj) {
     if (nodedata.type === 'group') {
       throw '分组不能被选中'
     }
+    this.currentSelectId = nodedata.id
+    this.actObj.resourceFilter.pageId = nodedata.id
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <el-col :span="6">选择接口:</el-col>
     <el-col :span="18">
       <el-tree-select node-key="id" :check-on-click-node="true" v-model="currentSelectId" :data="allApisTree" :render-after-expand="true"
-        @check-change="onCurrentNodeChange" default-expand-all />
+        @check-change="onCurrentNodeChange" default-expand-all check-strictly />
     </el-col>
   </el-row>
 </template>

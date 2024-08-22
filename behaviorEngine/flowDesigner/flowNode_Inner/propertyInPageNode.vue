@@ -77,7 +77,6 @@ export default class propertyInPageNode extends Vue {
     return trees
   }
   private onLayoutChange(nodedata, node, e: Event) {
-    debugger
     this.currentPropField = null
     this.actObj.resourceFilter.layoutId = nodedata.id
   }
