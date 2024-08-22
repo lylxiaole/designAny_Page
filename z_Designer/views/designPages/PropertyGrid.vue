@@ -3,7 +3,7 @@
     <el-radio-group @change="changeActivekey" v-model="selectGropName" size="small"
       style="margin-left:30px;margin-top:10px;box-sizing:border-box;height:35px">
       <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :label="group.groupName"
-        style="width:110px;height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+        style="height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
       </el-radio-button>
     </el-radio-group>
     <!-- ******************************** -->

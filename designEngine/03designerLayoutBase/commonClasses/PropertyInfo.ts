@@ -72,7 +72,8 @@ export enum PropertyTypeEnum {
 }
 export enum PropertyGroupName {
   normal = '基础设置',
-  special = '特有属性'
+  special = '特有属性',
+  data = '数据'
   //theme = '主题',
 }
 export class PropertySetting {

@@ -70,7 +70,7 @@ export class factory {
           if (parentParentObj.outParam) {
             //判断节点的上级必有返回值
             if (inParam && inParam.valueFilter) {
-              inParam.val = parentParentObj.outParam.val[inParam.valueFilter]
+              inParam.val = this.cuteFilterVal(parentParentObj.outParam.val, inParam.valueFilter)
             } else if (inParam) {
               inParam.val = parentParentObj.outParam.val
             } else {
@@ -92,7 +92,7 @@ export class factory {
           //子级如果有入参，上级有出参，需要把上级的出参赋值给子级的入参
           let inParam = currentObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
           if (inParam && inParam.valueFilter) {
-            inParam.val = parentObj.outParam.val[inParam.valueFilter]
+            inParam.val = this.cuteFilterVal(parentObj.outParam.val, inParam.valueFilter)
           } else if (inParam) {
             inParam.val = parentObj.outParam.val
           } else {
@@ -129,5 +129,15 @@ export class factory {
         await this.excuteChildObjs(currentObj, child_childObjs)
       }
     }
+  }
+
+  private cuteFilterVal(val, filter: string) {
+    let filters = filter.split('.')
+    let res = val
+    for (let index = 0; index < filters.length; index++) {
+      const filterx = filters[index]
+      res = res[filterx]
+    }
+    return res
   }
 }

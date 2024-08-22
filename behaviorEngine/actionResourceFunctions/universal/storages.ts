@@ -12,14 +12,17 @@ export class windowLocalStorage implements actFuncBase {
   currentPage: EnginePage
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
-    let localStorageKey = this.currentActObj.resourceFilter.localStorageKey
-    let val: string = null
+    let localStorageKey = this.currentActObj.resourceFilter.key
+    if (!localStorageKey) {
+      throw '键不存在'
+    }
+    //为了不污染系统的其它缓存
+    localStorageKey = 'leldesignLocalStorage&' + localStorageKey
 
     if (inparams[0]) {
-      val = inparams[0].val
+      let val = inparams[0].val
       window.localStorage.setItem(localStorageKey, val)
     }
-
     return window.localStorage.getItem(localStorageKey)
   }
 }

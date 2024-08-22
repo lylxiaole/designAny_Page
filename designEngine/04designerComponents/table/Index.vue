@@ -1,23 +1,23 @@
 <template>
   <div style="width:100%;height:100%;">
-    <VxeTable :data="tableData" ref="table" stripe border :style="{'height':isShowPager?'calc(100% - 38px)':'100%','background-color':cellBackground}"
-      :row-config="{isCurrent: true, isHover: true}" :column-config="{resizable: true}"
-      :header-cell-style="{backgroundColor: headerBackground,color: headerFontColor}"
+    <VxeTable :data="tableData" ref="table" stripe border style="overflow-y:auto"
+      :style="{'height':isShowPager?'calc(100% - 38px)':'100%','background-color':cellBackground}" :row-config="{isCurrent: true, isHover: true}"
+      :column-config="{resizable: true}" :header-cell-style="{backgroundColor: headerBackground,color: headerFontColor}"
       :cell-style="{ backgroundColor:cellBackground,color:cellFontColor,'border-color':'black'}">
       <template v-for="columnconfig in tableColumns" :key="columnconfig.key">
         <VxeColumn v-if="columnconfig.isShow" :type="columnconfig.type" :title="columnconfig.title" :field="columnconfig.field"></VxeColumn>
       </template>
     </VxeTable>
 
-    <VxePager v-if="isShowPager" style="height:38px" size="small" v-model:currentPage="pageVO.currentPage" v-model:pageSize="pageVO.pageSize"
-      :total="pageVO.total" @page-change="onPageChange">
+    <VxePager v-if="isShowPager" style="height:38px" size="small" v-model:currentPage="pageIndex" v-model:pageSize="pageSize" :total="dataTotalCount"
+      @page-change="onPageChange">
     </VxePager>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr, DMethodAttr } from '@designEngine/03designerLayoutBase'
+import { EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr, DMethodAttr, Number_Setting } from '@designEngine/03designerLayoutBase'
 import { PropertyGroupName, TableColumn_Setting, JsonContent_Setting, Boolean_Setting, Color_Setting } from '@designEngine/03designerLayoutBase'
 
 import VxeUI from 'vxe-pc-ui'
@@ -44,10 +44,10 @@ VxeUI.setLanguage('zh-CN')
   }
 })
 export default class Index extends EngineComponent {
-  private pageVO: any = { total: 500, currentPage: 1, pageSize: 10 }
   // ************** 属性************************
-  @DPropAttr(new JsonContent_Setting('数据', PropertyGroupName.special, true, null))
+  @DPropAttr(new JsonContent_Setting('数据', PropertyGroupName.data, true, null))
   private tableData: any[] = []
+
   @DPropAttr(new TableColumn_Setting('列设置', PropertyGroupName.special, true, null))
   private tableColumns: any[] = []
 
@@ -64,7 +64,14 @@ export default class Index extends EngineComponent {
   private cellFontColor: string = '#000000'
 
   @DPropAttr(new Boolean_Setting('是否有分页', PropertyGroupName.special, true, null))
-  private isShowPager: any[] = []
+  private isShowPager: boolean = true
+
+  @DPropAttr(new Number_Setting('当前页', PropertyGroupName.data, true, null))
+  private pageIndex: number = 1
+  @DPropAttr(new Number_Setting('页大小', PropertyGroupName.data, true, null))
+  private pageSize: number = 50
+  @DPropAttr(new Number_Setting('数据总条数', PropertyGroupName.data, false, null))
+  private dataTotalCount: number = 0
 
   @DEventAttr({
     eventName: '分页变化',

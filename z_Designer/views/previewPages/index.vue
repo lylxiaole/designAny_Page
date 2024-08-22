@@ -98,10 +98,12 @@ export default class index extends PageBase {
 
   // ************************************
   private onClose() {
-    this.openedPageData = []
-    if (this.currentOpenEngin) {
-      this.currentOpenEngin.destorymethod()
-    }
+    try {
+      this.openedPageData = []
+      if (this.currentOpenEngin) {
+        this.currentOpenEngin.destorymethod()
+      }
+    } catch (error) {}
     this.windowVisible = false
   }
 }
