@@ -403,11 +403,9 @@ export default class EngineLayout extends Vue {
       return
     }
 
-    let initProperties = this.properties
     for (let index = 0; index < layout_properties.length; index++) {
       const item = layout_properties[index]
-
-      let find = initProperties.find((o) => o.field == item.field)
+      let find = this.properties.find((o) => o.field == item.field)
       if (find) {
         this[item.field] = item.value
       }
