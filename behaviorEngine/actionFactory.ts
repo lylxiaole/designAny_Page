@@ -23,7 +23,6 @@ export class factory {
     func.currentLayout = this.currentLayout
     func.currentPage = this.currentPage
     func.currentActObj = obj
-
     return func
   }
 
@@ -55,7 +54,7 @@ export class factory {
       if (!parentObj) {
         //子级节点没有上级，子级可以直接执行
         let childObj_func = this.getObjFunc(currentObj)
-        let res = await childObj_func.excute()
+        let res = await childObj_func.excute([])
         if (currentObj.outParam) {
           currentObj.outParam.val = res
         }
@@ -64,19 +63,24 @@ export class factory {
         let child_childObjs = this.currentBehavior.actObjs.filter((o) => currentObj.nextObjIds.indexOf(o.id) > -1)
         await this.excuteChildObjs(currentObj, child_childObjs)
       } else if (parentObj && parentObj.isJudeNode) {
-        //上级如果是的判断节点，那就采用判断节点的上级出参，作为入参
-        let inParam = currentObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
-        let parentParentObj = this.currentBehavior.actObjs.find((o) => parentObj.preObjIds.indexOf(o.id) > -1)
-        //判断节点的上级必有返回值
-        if (inParam && inParam.valueFilter) {
-          inParam.val = parentParentObj.outParam.val[inParam.valueFilter]
-        } else if (inParam) {
-          inParam.val = parentParentObj.outParam.val
-        } else {
+        if (parentObj.outParam) {
+          //上级如果是的判断节点，那就采用判断节点的上级出参，作为入参
+          let inParam = currentObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
+          let parentParentObj = this.currentBehavior.actObjs.find((o) => parentObj.preObjIds.indexOf(o.id) > -1)
+          if (parentParentObj.outParam) {
+            //判断节点的上级必有返回值
+            if (inParam && inParam.valueFilter) {
+              inParam.val = parentParentObj.outParam.val[inParam.valueFilter]
+            } else if (inParam) {
+              inParam.val = parentParentObj.outParam.val
+            } else {
+            }
+          }
         }
         //上级节点是判断节点.判断的结果不与子级的任何入参对接。所以不需要等待所有入参都具备，可以直接执行子级
         let childObj_func = this.getObjFunc(currentObj)
-        let res = await childObj_func.excute()
+        let usefulInparams = currentObj.inputParams.filter((o) => o.refOutParamId)
+        let res = await childObj_func.excute(usefulInparams)
         currentObj.excuted = true
         if (currentObj.outParam) {
           currentObj.outParam.val = res
@@ -84,14 +88,17 @@ export class factory {
         let child_childObjs = this.currentBehavior.actObjs.filter((o) => currentObj.nextObjIds.indexOf(o.id) > -1)
         await this.excuteChildObjs(currentObj, child_childObjs)
       } else {
-        //子级如果有入参，需要把上级的出参赋值给子级的入参
-        let inParam = currentObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
-        if (inParam && inParam.valueFilter) {
-          inParam.val = parentObj.outParam.val[inParam.valueFilter]
-        } else if (inParam) {
-          inParam.val = parentObj.outParam.val
-        } else {
+        if (parentObj.outParam) {
+          //子级如果有入参，上级有出参，需要把上级的出参赋值给子级的入参
+          let inParam = currentObj.inputParams.find((o) => o.refOutParamId === parentObj.outParam.key)
+          if (inParam && inParam.valueFilter) {
+            inParam.val = parentObj.outParam.val[inParam.valueFilter]
+          } else if (inParam) {
+            inParam.val = parentObj.outParam.val
+          } else {
+          }
         }
+
         //如果子级的所有上级都执行完成,可以开始执行子级
         let allParents = this.currentBehavior.actObjs.filter((o) => currentObj.preObjIds.indexOf(o.id) > -1)
         let noExcutedParent = allParents.find((o) => o.excuted === false)
@@ -99,8 +106,10 @@ export class factory {
           continue
         }
         let childObj_func = this.getObjFunc(currentObj)
-        let res = await childObj_func.excute()
+        let usefulInparams = currentObj.inputParams.filter((o) => o.refOutParamId)
+        let res = await childObj_func.excute(usefulInparams)
         currentObj.excuted = true
+
         if (currentObj.outParam) {
           currentObj.outParam.val = res
         }
@@ -117,7 +126,6 @@ export class factory {
           let currengObjId = currentObj.id
           child_childObjs = this.currentBehavior.actObjs.filter((o) => o.preObjIds.indexOf(currengObjId) > -1)
         }
-
         await this.excuteChildObjs(currentObj, child_childObjs)
       }
     }

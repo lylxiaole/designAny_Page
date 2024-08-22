@@ -55,7 +55,7 @@ import {
   DeleteApiGroup,
   UpdateApiGroup,
   GetGroupApisAll,
-  AddOrUpdateAPI,
+  AddOrUpdateAPITreeInfo,
   DeleteAPI,
   UpdateNodesSort,
   GetApiDetail
@@ -246,7 +246,7 @@ export default class apiList extends ComponentBase {
     dragingNodeData.parentGroupId = parentGroupId
     if (dragingNodeData.type === 'api') {
       let data = this.makeDesignApiDCByNode(dragingNodeData)
-      await AddOrUpdateAPI(data)
+      await AddOrUpdateAPITreeInfo(data)
     } else if (dragingNodeData.type === 'group') {
       let data = this.makeDesignApiGroupDCByNode(dragingNodeData)
       await UpdateApiGroup(data)
@@ -286,10 +286,10 @@ export default class apiList extends ComponentBase {
   }
   /**当节点名称改变后 */
   private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {
-    let find = this.searchNodeById(id, this.treeData)
-    if (nodedata.type === 'api') {
-    } else {
-    }
+    // let find = this.searchNodeById(id, this.treeData)
+    // if (nodedata.type === 'api') {
+    // } else {
+    // }
   }
   /**当确定节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
@@ -297,7 +297,7 @@ export default class apiList extends ComponentBase {
     find.label = newtitle
     if (nodedata.type === 'api') {
       let data = this.makeDesignApiDCByNode(find)
-      await AddOrUpdateAPI(data)
+      await AddOrUpdateAPITreeInfo(data)
     } else {
       let data = this.makeDesignApiGroupDCByNode(find)
       await UpdateApiGroup(data)
@@ -407,7 +407,7 @@ export default class apiList extends ComponentBase {
     let parentGroupId = this.currentRightClickNode.id
     let datadc = this.searchNodeById(parentGroupId, this.treeData)
     let index = this.cuteChildrenMaxIndex(datadc) + 1
-    let res = await AddOrUpdateAPI({ name: '新建接口', groupId: parentGroupId, index: index, desc: '' } as any)
+    let res = await AddOrUpdateAPITreeInfo({ name: '新建接口', groupId: parentGroupId, index: index, desc: '' } as any)
 
     let newnode: TreeNodeDC = {
       id: res.id,

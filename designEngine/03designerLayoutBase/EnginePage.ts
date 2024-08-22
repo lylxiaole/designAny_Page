@@ -175,6 +175,7 @@ export default class EnginePage extends EngineContainer {
   }
   public async loadPageById(pageId: string, params?: param[]): Promise<void> {
     let pageDC: DesignPageDC = await GetPageDetail(pageId)
+
     await this.loadPageByData(pageId, pageDC.designDetail, params)
   }
   public async loadPageByData(pageId: string, pageDataStr: string, params?: param[]) {
@@ -194,6 +195,7 @@ export default class EnginePage extends EngineContainer {
       this.setPageInParams(params)
       this.scaleSize(1 - this.currentScaleSize)
       await this.$nextTick()
+
       await this.onLoadComplete()
     } catch (error) {
       window.console.error(error)

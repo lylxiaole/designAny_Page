@@ -120,8 +120,11 @@ export default class PCPageDesign extends EnginePage {
         break
     }
     if (dropcomp) {
-      dropcomp.left = screenLeft + 'px'
-      dropcomp.top = screenTop + 'px'
+      let persentleft = screenLeft / $(this.$el).width()
+      dropcomp.left = (persentleft * 100).toFixed(1) + '%'
+
+      let persenttop = screenTop / $(this.$el).height()
+      dropcomp.top = (persenttop * 100).toFixed(1) + '%'
     }
     return false
   }
@@ -193,7 +196,6 @@ export default class PCPageDesign extends EnginePage {
     }
   }
   private async listenOnPaste(e) {
-    debugger
     if (!DesignEvents.copyComp) {
       return
     }
@@ -213,10 +215,14 @@ export default class PCPageDesign extends EnginePage {
 
     let newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
     let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
-    newcopyComp.left = (selfPosition.left + 5).toFixed(0) + 'px'
-    newcopyComp.top = (selfPosition.top + 5).toFixed(0) + 'px'
-    this.chooseComps([newcopyComp])
 
+    let persentleft = (selfPosition.left + 5) / $(this.$el).width()
+    newcopyComp.left = (persentleft * 100).toFixed(1) + '%'
+
+    let persenttop = (selfPosition.top + 5) / $(this.$el).height()
+    newcopyComp.top = (persenttop * 100).toFixed(1) + '%'
+
+    this.chooseComps([newcopyComp])
     e.stopPropagation()
   }
 

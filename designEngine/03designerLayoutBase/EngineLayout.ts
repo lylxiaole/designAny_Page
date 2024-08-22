@@ -68,7 +68,7 @@ export default class EngineLayout extends Vue {
 
   public get topLayout(): EngineLayout {
     if (!this.parentLayout) {
-      return null
+      return this
     }
 
     let top: EngineLayout = this.parentLayout

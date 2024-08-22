@@ -35,8 +35,8 @@ export default class NPQrCode extends EngineComponent {
   }
 
   mounted() {
-    this.width = '300px'
-    this.height = '300px'
+    this.width = '10%'
+    this.height = '10%'
 
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
     this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false

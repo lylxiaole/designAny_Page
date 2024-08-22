@@ -70,7 +70,6 @@ export default class index extends PageBase {
     GetApplication(this.applicationId).then((res) => {
       this.application = res
     })
-
     $(window).on('keydown', this._onKeyDown)
   }
   unmounted() {
@@ -193,7 +192,7 @@ export default class index extends PageBase {
     }
     await this.currentShowEngine.save(this.applicationId)
   }
-  private async onPreView() {
+  private onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }
 

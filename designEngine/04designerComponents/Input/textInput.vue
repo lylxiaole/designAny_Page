@@ -1,6 +1,6 @@
  
 <template>
-  <div style="height:100%;">
+  <div style="height:100%;width:100%">
     <el-input v-model="currentText" :type="type" :show-password="type==='password'" :placeholder="placeholder" :readonly="readonly" :style="{
           'height':'100%','width':'100%'}" />
   </div>
@@ -28,8 +28,8 @@ export default class textInput extends EngineComponent {
   isShowInput: boolean = false
 
   mounted() {
-    this.width = '150px'
-    this.height = '40px'
+    this.width = '10%'
+    this.height = '4%'
     this.background = 'white'
   }
 

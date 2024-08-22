@@ -41,8 +41,8 @@ export default class TextComponent extends EngineComponent {
   isShowInput: boolean = false
 
   mounted() {
-    this.width = '150px'
-    this.height = '40px'
+    this.width = '10%'
+    this.height = '4%'
     this.background = 'white'
   }
   @DPropAttr(new Boolean_Setting('是否可点击开启编辑', PropertyGroupName.special, true))

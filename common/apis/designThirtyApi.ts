@@ -60,6 +60,12 @@ export async function AddOrUpdateAPI(api: ThirtyApiDC): Promise<ThirtyApiDC> {
   return resp.data
 }
 
+export async function AddOrUpdateAPITreeInfo(api: ThirtyApiDC): Promise<ThirtyApiDC> {
+  let url = apiAddr() + 'api/thirtyApi/AddOrUpdateAPITreeInfo'
+  const resp = await ajaxPost(url, api)
+  return resp.data
+}
+
 export async function DeleteAPI(apiId: string): Promise<boolean> {
   let url = apiAddr() + 'api/thirtyApi/DeleteAPI'
   const resp = await ajaxPost(url, apiId)

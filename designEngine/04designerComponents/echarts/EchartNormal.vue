@@ -46,8 +46,8 @@ export default class EchartNormal extends EngineComponent {
   }
 
   mounted() {
-    this.width = '500px'
-    this.height = '500px'
+    this.width = '30%'
+    this.height = '30%'
     //*********************** */
     this.myChart = echarts.init(this.$refs.echartsArea as any)
     this.myChart.setOption(this.option, { notMerge: true })

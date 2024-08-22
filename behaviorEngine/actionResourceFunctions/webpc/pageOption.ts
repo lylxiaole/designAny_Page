@@ -3,7 +3,7 @@ import { EngineComponent, EnginePage, LayoutMethod } from '@designEngine/03desig
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { actionObj } from '../../actObject'
+import { actionObj, object_InParam } from '../../actObject'
 import { isPromise } from '@vue/shared'
 import { ElNotification } from 'element-plus'
 
@@ -15,9 +15,9 @@ export class methodsInPageMethod implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
 
-  async excute() {
+  async excute(inparams: object_InParam[]) {
     var params: any[] = []
-    this.currentActObj.inputParams.filter((o) => {
+    inparams.filter((o) => {
       params.push(o.val)
     })
     // ********************************
@@ -50,7 +50,7 @@ export class propertiesInPageMethod implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {
+  async excute(inparams: object_InParam[]) {
     let { layoutId, propField } = this.currentActObj.resourceFilter
     let targetLayout: EngineLayout = null
     if (this.currentPage.Id === layoutId) {
@@ -59,8 +59,8 @@ export class propertiesInPageMethod implements actFuncBase {
       targetLayout = this.currentPage.findLayoutRecursion(layoutId, this.currentPage.children)
     }
 
-    if (this.currentActObj.inputParams[0].refOutParamId) {
-      targetLayout[propField] = this.currentActObj.inputParams[0].val
+    if (inparams[0]) {
+      targetLayout[propField] = inparams[0].val
     }
 
     return targetLayout[propField]
@@ -73,7 +73,7 @@ export class NotificationError implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {
+  async excute(inparams: object_InParam[]) {
     let msg = this.currentActObj.resourceFilter.message
     let type = this.currentActObj.resourceFilter.type
 
@@ -105,9 +105,8 @@ export class leadToPage implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {
+  async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
-
     this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }

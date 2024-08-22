@@ -3,10 +3,9 @@ import { EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { actionObj } from '../../actObject'
+import { actionObj, object_InParam } from '../../actObject'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
-import { number } from 'echarts'
 
 @resourceFuncAttr('字典', '', funcGroup.universalTool, funcCode.dictionary, funcStack.universal, [], { key: getUuid(), name: '输出' })
 export class dictionarys implements actFuncBase {
@@ -14,7 +13,7 @@ export class dictionarys implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {
+  async excute(inparams: object_InParam[]) {
     let key = this.currentActObj.resourceFilter.dicKey
     let dic = behaviorContext.allDictionary.find((o) => o.key === key)
     return dic.value
@@ -27,16 +26,15 @@ export class thirtyApis implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {
+  async excute(inparams: object_InParam[]) {
     let apiInfo = this.currentActObj.resourceFilter.apiInfo
-    let inParams = this.currentActObj.inputParams
 
     let header = {}
     let body = {}
     let urlParam = {}
 
-    for (let index = 0; index < inParams.length; index++) {
-      const inParam = inParams[index]
+    for (let index = 0; index < inparams.length; index++) {
+      const inParam = inparams[index]
       if (inParam.key.indexOf('&body') > -1 && apiInfo.bodyIsParam && apiInfo.requestType !== 'Get') {
         let key = inParam.key.split('&')[1]
         body[key] = inParam.val
@@ -81,8 +79,8 @@ export class oneParamJude implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {
-    let inparamVal = this.currentActObj.inputParams[0].val
+  async excute(inparams: object_InParam[]) {
+    let inparamVal = inparams[0].val
     let judeParam = this.currentActObj.resourceFilter.judeParam
     let judeVal = this.currentActObj.resourceFilter.judeVal
     let js = inparamVal + judeParam + judeVal
@@ -97,7 +95,7 @@ export class fixedValue implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute() {
+  async excute(inparams: object_InParam[]) {
     let type = this.currentActObj.resourceFilter.type
     let value = this.currentActObj.resourceFilter.value
 

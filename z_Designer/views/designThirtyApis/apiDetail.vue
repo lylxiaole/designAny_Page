@@ -64,12 +64,8 @@ import { GetAll } from '@common/apis/designDictionary'
 export default class apiDetail extends ComponentBase {
   @Prop()
   private allDictorys: any[]
-
-  private currentApi: ThirtyApiDC = new ThirtyApiDC()
-
-  public setApiContent(data?) {
-    this.currentApi = data
-  }
+  @Prop()
+  private currentApi: ThirtyApiDC
 
   mounted() {}
 

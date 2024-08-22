@@ -1,23 +1,7 @@
  
 <template>
-  <div style="height:100%;">
-    <div :id="Id" :style="{backgroundColor:background,borderWidth:isShowBorder?'1px':'0px',borderStyle:'solid',borderColor:'#000000'}"
-      style="height:100%;display: table;table-layout: fixed;width:100%;">
-      <el-input v-model="input" type="password" placeholder="Please input password" show-password />
-
-      <span :style="{
-          'height':'100%','width':'100%',
-          'font-weight':fontWeight,
-          'color':foreground,
-          'font-size': fontSize + 'px',
-          'font-style':fontStyle,
-          'text-align': Horienten,
-          'vertical-align':verticalAlign,
-          'text-overflow':'ellipsis',
-          'overflow':'hidden',
-          'display':'table-cell',
-          'white-space':space}" v-html="CurrentText"></span>
-    </div>
+  <div style="height:100%;width:100%">
+    <el-input-number v-model="currentVal" size="small" :style="{'height':'100%','width':'100%'}" />
   </div>
 </template>
 
@@ -43,30 +27,13 @@ export default class numberInput extends EngineComponent {
   isShowInput: boolean = false
 
   mounted() {
-    this.width = '150px'
-    this.height = '40px'
+    this.width = '10%'
+    this.height = '4%'
     this.background = 'white'
   }
 
-  @DPropAttr(new Enum_Setting('粗细', PropertyGroupName.special, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
-  private fontWeight: string = 'normal'
-  @DPropAttr(new Enum_Setting('倾斜', PropertyGroupName.special, true, null, true, ['oblique', 'normal']))
-  private fontStyle: string = 'normal'
-
-  @DPropAttr(new Enum_Setting('垂直对齐', PropertyGroupName.special, true, null, true, ['top', 'middle', 'bottom']))
-  private verticalAlign: string = 'top'
-
-  @DPropAttr(new Text_Setting('文本', PropertyGroupName.special, true))
-  private CurrentText: string = '暂无数据'
-
-  @DPropAttr(new Enum_Setting('自动换行', PropertyGroupName.special, true, null, true, ['nowrap', 'wrap']))
-  private space: string = 'wrap'
-
-  @DPropAttr(new Enum_Setting('水平对齐', PropertyGroupName.special, true, null, true, ['left', 'center', 'right']))
-  private Horienten: string = 'center'
-
-  @DPropAttr(new Boolean_Setting('是否显示边框', PropertyGroupName.special, true))
-  private isShowBorder: boolean = false
+  @DPropAttr(new Number_Setting('值', PropertyGroupName.special, true))
+  private currentVal: number = 0
 }
 </script>
 

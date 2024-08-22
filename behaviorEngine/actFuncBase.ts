@@ -4,11 +4,12 @@ import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior, param } from './behaviorTypes'
 
-import { actionObj } from './actObject'
+import { actionObj, object_InParam } from './actObject'
 
 //方法资源分组
 export enum funcGroup {
   universalTool = '通用工具',
+  storages = '缓存',
   pageOption = '页面资源'
 }
 //方法编码-需要保证唯一性
@@ -41,7 +42,8 @@ export enum funcCode {
   oneParamJude = 'oneParamJude', //单条件判断
   notificationDialog = 'notificationDialog', //提示窗
   fixedVal = 'fixedVal',
-  leadToOtherPage = 'leadToOtherPage'
+  leadToOtherPage = 'leadToOtherPage',
+  windowLocalStorage = 'windowLocalStorage'
 }
 //方法作用范围
 export enum funcStack {
@@ -75,5 +77,5 @@ export interface actFuncBase {
   currentPage: EnginePage
   currentBehavior: behavior
 
-  excute: () => Promise<any>
+  excute: (inparams: object_InParam[]) => Promise<any>
 }

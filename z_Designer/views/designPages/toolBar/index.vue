@@ -32,7 +32,7 @@
         <div class="flexHorilanLayout verticalAlignCenter">缩放窗口</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{height:height + 'px','width':'80px'}" label="预览" @click="onPreView" />
+      <optionBtn :style="{height:height + 'px','width':'80px'}" label="预览" @mouseup="onPreView" />
       <!-- *************************************************************************** -->
       <optionBtn :style="{height:height + 'px' ,'width':'80px'}" label="退出设计" @click="onQuit" />
     </div>

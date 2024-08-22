@@ -39,8 +39,8 @@ export default class ButtonComponent extends EngineComponent {
   }
 
   mounted() {
-    this.width = 80
-    this.height = 34
+    this.width = '10%'
+    this.height = '4%'
     this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
   }
 
