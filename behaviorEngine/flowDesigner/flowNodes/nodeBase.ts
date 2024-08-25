@@ -6,10 +6,11 @@ import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { getUuid } from '@common/utils'
 import ElementPlus from 'element-plus'
 import nodeBase from '../flowNode_Inner/nodeBase.vue'
-
+import { RectResize } from '@logicflow/extension'
+import '@logicflow/extension/lib/style/index.css'
 const anchorSize = 10
 //一般性的流程节点
-class VueHtmlNode extends HtmlNode {
+class VueHtmlNode extends RectResize.view {
   private isMounted: boolean = false
   private r: any
   private app: any
@@ -52,7 +53,7 @@ class VueHtmlNode extends HtmlNode {
   }
 }
 
-class VueHtmlNodeModel extends HtmlNodeModel {
+class VueHtmlNodeModel extends RectResize.model {
   setAttributes() {
     this.width = 150
     this.height = 150
@@ -84,12 +85,7 @@ class VueHtmlNodeModel extends HtmlNodeModel {
       }
     })
   }
-  getOutlineStyle() {
-    const style = super.getOutlineStyle()
-    style.stroke = 'blue'
-    style.hover.stroke = 'blue'
-    return style
-  }
+
   getAnchorStyle(anchorInfo) {
     const style = super.getAnchorStyle(anchorInfo)
 

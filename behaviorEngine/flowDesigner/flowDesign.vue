@@ -13,9 +13,11 @@ import { getUuid } from '@common/utils'
 import { actionObj } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
+ 
+LogicFlow.use(SelectionSelect)
+
 import funcNormalNode from './flowNodes/funcNormalNode'
 import onParamJudeNode from './flowNodes/onParamJudeNode'
-
 import defaultEdge from './flowEdges/defaultEdge'
 
 @Options({
@@ -28,7 +30,10 @@ export default class index extends ComponentBase {
     stopScrollGraph: true,
     stopMoveGraph: false,
     stopZoomGraph: false,
-    hideAnchors: false
+    hideAnchors: false,
+
+    edgeTextEdit: true,
+    edgeTextDraggable: true
   }
   // ********初始化**************************************
   mounted() {}
@@ -158,10 +163,11 @@ export default class index extends ComponentBase {
           }
         ]
       },
+      plugins: [SelectionSelect],
       ...this.silentConfig
     })
-    this.currentFlow.register(onParamJudeNode)
 
+    this.currentFlow.register(onParamJudeNode)
     this.currentFlow.register(funcNormalNode)
     this.currentFlow.register(defaultEdge)
     this.currentFlow.setDefaultEdgeType('defaultEdge')
