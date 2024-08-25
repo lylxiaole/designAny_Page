@@ -6,11 +6,11 @@ import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { getUuid } from '@common/utils'
 import ElementPlus from 'element-plus'
 import nodeBase from '../flowNode_Inner/nodeBase.vue'
-import { RectResize } from '@logicflow/extension'
+import { HtmlResize } from '@logicflow/extension'
 import '@logicflow/extension/lib/style/index.css'
 const anchorSize = 10
 //一般性的流程节点
-class VueHtmlNode extends RectResize.view {
+class VueHtmlNode extends HtmlResize.view {
   private isMounted: boolean = false
   private r: any
   private app: any
@@ -33,6 +33,7 @@ class VueHtmlNode extends RectResize.view {
 
     this.app.use(ElementPlus)
   }
+
   getAnchorShape(anchorData) {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
@@ -53,10 +54,15 @@ class VueHtmlNode extends RectResize.view {
   }
 }
 
-class VueHtmlNodeModel extends RectResize.model {
-  setAttributes() {
+class VueHtmlNodeModel extends HtmlResize.model {
+  initNodeData(data) {
+    super.initNodeData(data)
     this.width = 150
     this.height = 150
+    this.maxWidth = 800
+    this.maxHeight = 800
+  }
+  setAttributes() {
     this.text.editable = false
     this.inputData = this.text.value
     this.setIsShowAnchor()
@@ -85,7 +91,21 @@ class VueHtmlNodeModel extends RectResize.model {
       }
     })
   }
-
+  getResizeOutlineStyle() {
+    return {
+      stroke: '#000000',
+      strokeWidth: 1,
+      strokeDasharray: '3,3'
+    }
+  }
+  getControlPointStyle() {
+    return {
+      width: 7,
+      height: 7,
+      fill: '#FFFFFF',
+      stroke: '#000000'
+    }
+  }
   getAnchorStyle(anchorInfo) {
     const style = super.getAnchorStyle(anchorInfo)
 

@@ -1846,7 +1846,7 @@
     mousetrap "^1.6.5"
     preact "^10.4.8"
 
-"@logicflow/core@^1.2.10":
+"@logicflow/core@^1.2.28":
   version "1.2.28"
   resolved "https://r.cnpmjs.org/@logicflow/core/-/core-1.2.28.tgz#f01e939e8b85e37c00222444beffbe1a8ab3958f"
   integrity sha512-xj9zxYsudK9YLI2UrUa9mXWd4tp8z56Rx4il9Fc/baUWEDwogjqCgblSKepGxEgTX2XX2fQIfUrzqEUoWu2VYQ==
@@ -1855,13 +1855,12 @@
     mousetrap "^1.6.5"
     preact "^10.4.8"
 
-"@logicflow/extension@1.2.10":
-  version "1.2.10"
-  resolved "https://r.cnpmjs.org/@logicflow/extension/-/extension-1.2.10.tgz#86c374807659cd8fed32f3103d22e664d0aa0fc3"
-  integrity sha512-aDsQq7x7nGyt/OpfVFRGqrzh25iM2eJdG9+J7VDzXXsmiYmVRuexBzJlO0WMVgiF0AVutfk7rTGbIaDRVmH3kQ==
+"@logicflow/extension@^1.2.10":
+  version "1.2.28"
+  resolved "https://r.cnpmjs.org/@logicflow/extension/-/extension-1.2.28.tgz#a81e7c8fadab8565c2e9221fcfa6bdcf8d0bcc83"
+  integrity sha512-OHaO57SxjNwDDYVAqrJp/fq9g0NDc4elHmZnWGIqLbkbOMJhiU9IUT2WWK6DctUoYzxhGzTR4Ai5S/TFZ9JjGA==
   dependencies:
-    "@logicflow/core" "^1.2.10"
-    ids "^1.0.0"
+    "@logicflow/core" "^1.2.28"
     jest "27.5.1"
     lodash-es "^4.17.21"
     preact "^10.4.8"
@@ -8135,11 +8134,6 @@ icss-utils@^5.0.0, icss-utils@^5.1.0:
   version "5.1.0"
   resolved "https://r2.cnpmjs.org/icss-utils/-/icss-utils-5.1.0.tgz#c6be6858abd013d768e98366ae47e25d5887b1ae"
   integrity sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==
-
-ids@^1.0.0:
-  version "1.0.5"
-  resolved "https://r.cnpmjs.org/ids/-/ids-1.0.5.tgz#0aeb4777e77e0017a983c9f7b0ca0cccf352afe4"
-  integrity sha512-XQ0yom/4KWTL29sLG+tyuycy7UmeaM/79GRtSJq6IG9cJGIPeBz5kwDCguie3TwxaMNIc3WtPi0cTa1XYHicpw==
 
 ieee754@^1.1.4:
   version "1.2.1"

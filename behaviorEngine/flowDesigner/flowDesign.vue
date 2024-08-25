@@ -13,8 +13,6 @@ import { getUuid } from '@common/utils'
 import { actionObj } from '@behaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
- 
-LogicFlow.use(SelectionSelect)
 
 import funcNormalNode from './flowNodes/funcNormalNode'
 import onParamJudeNode from './flowNodes/onParamJudeNode'
@@ -163,7 +161,6 @@ export default class index extends ComponentBase {
           }
         ]
       },
-      plugins: [SelectionSelect],
       ...this.silentConfig
     })
 
