@@ -13,7 +13,7 @@
     <el-row style="width:100%;height:50%">
       <el-col :span="6">值:</el-col>
       <el-col :span="18">
-        <el-input v-model="actObj.resourceFilter.value" placeholder="Please input" />
+        <el-input v-model="actObj.resourceFilter.value" placeholder="Please input" size="small" />
       </el-col>
     </el-row>
   </el-row>

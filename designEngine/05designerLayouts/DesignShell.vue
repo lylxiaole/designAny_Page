@@ -36,7 +36,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { ref, h, render, onMounted, createVNode, createBlock } from 'vue'
-import dragHelper from '@designEngine/02common/dragHelper_new'
+import dragHelper from '@designEngine/02common/dragHelper'
 
 import { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { EngineComponent } from '../03designerLayoutBase'
