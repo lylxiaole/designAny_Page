@@ -47,6 +47,8 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 import { HtmlNode, HtmlNodeModel } from '@logicflow/core'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 

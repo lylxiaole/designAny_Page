@@ -1,14 +1,13 @@
 <template>
-  <div style="width:100;height:100%">
-    <el-row>
-      <el-col :span="6">选择字典:</el-col>
-      <el-col :span="18">
-        <el-select v-model="actObj.resourceFilter.dicKey" placeholder="Select" size="small">
-          <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.desc" :value="dic.key" />
-        </el-select>
-      </el-col>
-    </el-row>
-  </div>
+  <el-row style="width:100%;height:100%">
+    <el-col>选择字典:</el-col>
+
+    <el-col>
+      <el-select v-model="actObj.resourceFilter.dicKey" placeholder="Select" size="small">
+        <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.desc" :value="dic.key" />
+      </el-select>
+    </el-col>
+  </el-row>
 </template>
 
 <script lang="ts">
