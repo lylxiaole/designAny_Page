@@ -38,6 +38,8 @@ class VueHtmlNode extends HtmlResize.view {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type, name } = anchorData
+    console.log('anchorData:', anchorData, this.props.model)
+
     let rect = { x: x, y: y, width: anchorSize, height: anchorSize, stroke: '#000000', strokeDasharray: '3 3' }
     let text = { x: x, y: y, fontSize: 8, fill: 'black', textAnchor: 'middle' }
     return lfh('g', {}, [lfh('rect', rect, []), lfh('text', text, [name])])
@@ -57,6 +59,7 @@ class VueHtmlNode extends HtmlResize.view {
 class VueHtmlNodeModel extends HtmlResize.model {
   initNodeData(data) {
     super.initNodeData(data)
+
     this.width = 150
     this.height = 150
     this.maxWidth = 800

@@ -66,7 +66,6 @@ export default class index extends ComponentBase {
           let sourceNode = graphData.nodes.find((o) => o.id === edge.sourceNodeId)
           let sourceActObj = sourceNode.properties.actObj as actionObj
           let sourceOutParam = sourceActObj.outParam
-
           //连线的文本，当作目标入参的值的筛选条件
           if (edge.text && targetInParam) {
             let inParamValueFilter = edge.text as any
@@ -97,7 +96,6 @@ export default class index extends ComponentBase {
             //如果目标节点不存在入参，但源节点存在出参。通过但不记录，此处仅用于连线作用，不附带参数
             preObjId = edge.sourceNodeId
           }
-
           //记录所有来源节点的ID
           if (preObjIds.indexOf(preObjId) < 0) {
             preObjIds.push(preObjId)
