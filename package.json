@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start_Designer_Dev": "cross-env NODE_ENV=development webpack serve --config buildConfigs/designer.config.js --mode development",
-    "build_Designer": "cross-env NODE_ENV=production webpack --config buildConfigs/designer.config.js --mode production"
+    "build_Designer": "cross-env NODE_ENV=production webpack --config buildConfigs/designer.config.js --mode production",
+    "build_DesignEngine": "cross-env NODE_ENV=production webpack --config buildConfigs/designEngine.config.js --mode production"
   },
   "repository": {
     "type": "git",

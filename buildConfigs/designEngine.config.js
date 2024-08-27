@@ -1,8 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 let currentDir = path.resolve(__dirname).replace('\\buildConfigs', '')
 
@@ -212,7 +210,7 @@ let baseconfig = {
         vendors: {
           // 基本框架
           chunks: 'all',
-          test: /(react|react-dom|react-dom-router|babel-polyfill|mobx)/,
+          test: /(vue|vxe-table|vxe-table)/,
           priority: 100,
           name: 'vendors'
         },
@@ -248,7 +246,9 @@ let baseconfig = {
     modules: [
       // 寻找模块的根目录，array 类型，默认以 node_modules 为根目录
       path.resolve(currentDir, 'node_modules'),
-      path.resolve(currentDir, 'common')
+      path.resolve(currentDir, 'common'),
+      path.resolve(currentDir, 'designEngine'),
+      path.resolve(currentDir, 'behaviorEngine')
       // path.resolve(currentDir, 'z_Report')
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'], // 模块的后缀名，import时不需要后缀名
@@ -260,6 +260,7 @@ let baseconfig = {
     alias: {
       '@common': path.resolve(currentDir, 'common'), //引入模块时，自动寻找
       '@designEngine': path.resolve(currentDir, 'designEngine'), //引入模块时，自动寻找
+      '@behaviorEngine': path.resolve(currentDir, 'behaviorEngine'), //引入模块时，自动寻找
       path: false, // require.resolve('path-browserify'),
       stream: false, //require.resolve("stream-browserify"),
       http: false, //require.resolve("stream-http"),
@@ -293,61 +294,20 @@ let baseconfig = {
       // 过滤要检查的文件
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js')
     }
-  },
-
-  devServer: {
-    // proxy: {
-    //   // 代理到后端服务接口
-    //   '/api': 'http://localhost:3000'
-    // },
-    // contentBase: path.resolve(currentDir, 'dists/dist_report'),
-    compress: true,
-    host: '127.0.0.1',
-    port: 9000,
-    hot: true,
-    open: true,
-    profile: true // 是否捕捉 Webpack 构建的性能信息，用于分析什么原因导致构建性能不佳
   }
 }
 
-module.exports = function initConifg(distDir, projectDir, templateFile, devPort) {
-  baseconfig.plugins.push(
-    new HtmlWebpackPlugin({
-      //
-      chunks: 'all', //允许自动注入的chunk
-      filename: 'index.html',
-      template: `public/${templateFile}`,
-      inject: false,
-      minify: {
-        removeComments: true, //清除注释
-        collapseWhitespace: true //清理空格
-      }
-    })
-  )
-  baseconfig.plugins.push(
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(currentDir, 'public/assets'),
-          to: 'assets'
-        },
-        {
-          from: path.resolve(currentDir, `${projectDir}/configs.js`),
-          to: `../${distDir}`
-        }
-      ]
-    })
-  )
-  baseconfig.entry.index = path.resolve(currentDir, `${projectDir}/index.js`)
-  baseconfig.devServer.contentBase = path.resolve(currentDir, `dists/${distDir}`)
+function initConifg(distDir, projectDir) {
+  baseconfig.entry.index = path.resolve(currentDir, `${projectDir}/index.ts`)
 
-  baseconfig.devServer.port = devPort
   baseconfig.output.path = path.resolve(currentDir, `dists/${distDir}`)
   baseconfig.resolve.modules.push(path.resolve(currentDir, projectDir))
-  console.log('baseconfig.resolve.alias', path.resolve(currentDir, projectDir))
+
   baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
-  baseconfig.resolve.alias['@common'] = path.resolve(currentDir, 'common')
-  baseconfig.resolve.alias['@designEngine'] = path.resolve(currentDir, 'designEngine')
-  baseconfig.resolve.alias['@behaviorEngine'] = path.resolve(currentDir, 'behaviorEngine')
   return baseconfig
 }
+
+// console.log('initConifg:', initConifg)
+let config = initConifg('dist_designEngine', 'designEngine')
+// console.log('config:', config)
+module.exports = config
