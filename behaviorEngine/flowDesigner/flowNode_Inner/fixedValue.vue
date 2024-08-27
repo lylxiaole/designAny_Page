@@ -1,6 +1,6 @@
 <template>
   <el-row style="width:100%;height:100%">
-    <el-row>
+    <el-row style="width:100%;height:50%">
       <el-col :span="6">值类型:</el-col>
       <el-col :span="18">
         <el-select v-model="actObj.resourceFilter.type" placeholder="Select" size="small">
@@ -10,10 +10,10 @@
         </el-select>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row style="width:100%;height:50%">
       <el-col :span="6">值:</el-col>
       <el-col :span="18">
-        <el-input v-model="actObj.resourceFilter.value" placeholder="Please input" />
+        <el-input v-model="actObj.resourceFilter.value" placeholder="Please input" size="small" />
       </el-col>
     </el-row>
   </el-row>

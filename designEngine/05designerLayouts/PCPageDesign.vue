@@ -18,12 +18,9 @@ import { designDrawDomVirtual } from '../02common/drawVueDom'
 @DPageAttr('pc', 'design')
 @Options({})
 export default class PCPageDesign extends EnginePage {
-  @DPropAttr(new Text_Setting('测试一下', PropertyGroupName.normal, true))
-  public wahaha: string = ''
-
+  
   private get backgroundCute(): string {
-    // window.console.log('backgroundCute:', this.background_img)
-
+    // window.console.log('backgroundCute:', this.background_img) 
     if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
@@ -83,7 +80,7 @@ export default class PCPageDesign extends EnginePage {
   }
   private async listenOnDrop(
     el: Element,
-    targetContainer: Element,
+    container: Element,
     screenLeft: number,
     screenTop: number,
     dragdata: DragItemData<any>
@@ -96,11 +93,9 @@ export default class PCPageDesign extends EnginePage {
     let compInfo = dragdata.dragData as any
     if (!compInfo) {
       return true
-    }
-    // window.console.log('listenOnDrop:', dragdata)
+    } 
 
-    let dropcomp: EngineLayout = null
-
+    let dropcomp: EngineLayout = null 
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {

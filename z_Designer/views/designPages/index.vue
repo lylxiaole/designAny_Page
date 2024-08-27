@@ -1,7 +1,6 @@
 <template>
   <el-row style="height:100%;width:100%">
     <el-row style="height:60px;width:100%">
-      <div ref="toobar"></div>
       <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine?currentShowEngine.Id:'')" :height="60"
         @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
     </el-row>

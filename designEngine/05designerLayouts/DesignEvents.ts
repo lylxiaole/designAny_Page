@@ -1,4 +1,4 @@
-import dragHelper from '@designEngine/02common/dragHelper_new'
+import dragHelper from '@designEngine/02common/dragHelper'
 import { Options, Vue } from 'vue-class-component'
 import EngineLayout, { SaveInfo } from '@designEngine/03designerLayoutBase/EngineLayout'
 import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/ComponentInfo'
