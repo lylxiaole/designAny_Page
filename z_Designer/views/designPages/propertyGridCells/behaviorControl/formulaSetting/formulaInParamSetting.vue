@@ -24,7 +24,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 
 import { deepClone, getUuid } from '@common/utils'
-import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist'
 import bahaviorResourceTree from '../behaviorResources/behaviorResourcesSelect.vue'
 import { behavior, action, actionDetail, actionObj, factory, funcCode } from '@behaviorEngine/index'
 

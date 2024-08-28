@@ -1,7 +1,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { VNode } from 'vue'
-import { actionObj } from '@designEngine/index'
+import { actionObj } from '@design-any/interface/dist'
 
 @Options({})
 export default class bahaviorResourceSelectTree extends Vue {

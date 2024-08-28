@@ -43,7 +43,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, EngineComponent, EngineLayout } from '@designEngine/index'
+import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist'
 import componentListControl from './ComponentListControl.vue'
 import optionBtn from './optionBtn.vue'
 @Options({

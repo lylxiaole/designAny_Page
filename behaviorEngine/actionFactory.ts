@@ -1,5 +1,5 @@
 import { deepClone } from '@common/utils'
-import { EnginePage, EngineLayout } from '@designEngine/index'
+import { EnginePage, EngineLayout } from '@design-any/interface/dist'
 import { behavior, actionDetail, action } from './behaviorTypes'
 import { findFlowNodeInner, anchorType } from './flowDesigner/flowTypes'
 

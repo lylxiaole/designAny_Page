@@ -1,9 +1,6 @@
 import dragHelper from '@designEngine/02common/dragHelper'
 import { Options, Vue } from 'vue-class-component'
-import EngineLayout, { SaveInfo } from '@designEngine/03designerLayoutBase/EngineLayout'
-import { findSystemCompByCode } from '@designEngine/03designerLayoutBase/commonClasses/ComponentInfo'
-import EngineContainer from '@designEngine/03designerLayoutBase/EngineContainer'
-import EnginePage from '@designEngine/03designerLayoutBase/EnginePage'
+import { EnginePage, EngineContainer, findSystemCompByCode, EngineLayout, SaveInfo } from '@design-any/interface/dist'
 import { getUuid, deepClone, serialize } from '@common/utils'
 
 /**拖拽行为类型 */

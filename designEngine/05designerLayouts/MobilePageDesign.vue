@@ -6,8 +6,9 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, EngineLayout, EngineComponent, DPageAttr } from '../03designerLayoutBase'
+import { EnginePage, EngineLayout, EngineComponent, DPageAttr } from '@design-any/interface/dist'
 import DesignShell from './DesignShell.vue'
+
 @DPageAttr('mobile', 'design')
 @Options({})
 export default class MobilePageDesign extends EnginePage {

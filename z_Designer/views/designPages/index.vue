@@ -40,10 +40,18 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
-import { EnginePage, MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, EngineLayout, designDrawDomVirtual } from '@designEngine/index'
+import {
+  EnginePage,
+  MobilePageDesign,
+  MobilePagePreview,
+  PCPageDesign,
+  PCPagePreview,
+  EngineLayout,
+  designDrawDomVirtual
+} from '@design-any/interface/dist'
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
-import { findPageByPaltform } from '@designEngine/index'
+import { findPageByPaltform } from '@design-any/interface/dist'
 import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
 
 @Options({

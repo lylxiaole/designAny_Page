@@ -1,5 +1,5 @@
 import { ref, h, render, onMounted, createApp } from 'vue'
-import { findOrginProps, findOrginMethods, findOrginEvents, findOrginCompInfo } from '@designEngine/03designerLayoutBase'
+import { findOrginProps, findOrginMethods, findOrginEvents, findOrginCompInfo } from '@design-any/interface/dist'
 import designerContext from '../01designerContext/context'
 import ElementPlus from 'element-plus'
 export function designDrawDomVirtual(vueComp, isDesigning) {

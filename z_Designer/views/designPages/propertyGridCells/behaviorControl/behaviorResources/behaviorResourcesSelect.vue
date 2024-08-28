@@ -22,12 +22,14 @@
       <el-dropdown @command="menuSelected">
         <span class="el-dropdown-link">
           {{currentTitle}}
-          <el-icon class="el-icon--right"><arrow-down /></el-icon>
+          <el-icon class="el-icon--right">
+            <arrow-down />
+          </el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-for="sign in allSigns" :key="sign.funcCode" :command="sign.funcCode"
-              :value="sign.funcCode">{{sign.name}}</el-dropdown-item>
+            <el-dropdown-item v-for="sign in allSigns" :key="sign.funcCode" :command="sign.funcCode" :value="sign.funcCode">{{sign.name}}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -56,8 +58,8 @@
             </template>
           </el-input>
           <!-- 弹窗关闭 点击展示行为设置弹窗 -->
-          <el-button v-if="currentObj.objType=='callback'" type="primary" class="themeButton"
-            @click="()=>{this.settingCallBack(this.currentObj)}">行为绑定
+          <el-button v-if="currentObj.objType=='callback'" type="primary" class="themeButton" @click="()=>{this.settingCallBack(this.currentObj)}">
+            行为绑定
           </el-button>
           <!-- // -->
           <div v-if="currentObj.objType=='method'" style="margin-top:4px">
@@ -86,7 +88,7 @@ import { ref } from 'vue'
 
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage } from '@designEngine/index'
+import { EnginePage } from '@design-any/interface/dist'
 import { deepClone, getUuid } from '@common/utils'
 import { formulaType } from '@behaviorEngine/index'
 

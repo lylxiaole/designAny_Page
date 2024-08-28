@@ -68,8 +68,7 @@ import {
 } from '@common/apis/designPage'
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 
-import btreeNode from '@common/components/Treenode/bTreeNode.vue'
-import { types } from 'util'
+import btreeNode from '@common/components/Treenode/bTreeNode.vue' 
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
 enum rightMenus {

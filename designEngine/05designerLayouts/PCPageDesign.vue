@@ -6,13 +6,15 @@
 
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
-import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '../03designerLayoutBase'
+
 import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
-import { findSystemCompByCode } from '../03designerLayoutBase/commonClasses/ComponentInfo'
 
-import { DPropAttr, PropertyGroupName, Text_Setting, DPageAttr } from '../03designerLayoutBase'
+import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from  '@design-any/interface/dist'
+import { findSystemCompByCode } from  '@design-any/interface/dist'
+import { DPropAttr, PropertyGroupName, Text_Setting, DPageAttr } from  '@design-any/interface/dist'
+
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 
 @DPageAttr('pc', 'design')

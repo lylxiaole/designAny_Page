@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 
-import { EnginePage, EngineLayout, EngineComponent, DPageAttr } from '../03designerLayoutBase'
+import { EnginePage, EngineLayout, EngineComponent, DPageAttr } from  '@design-any/interface/dist'
  import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 @DPageAttr('pc', 'preview')

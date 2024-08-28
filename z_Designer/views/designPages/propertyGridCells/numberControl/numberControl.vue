@@ -18,7 +18,7 @@ import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, Number_Setting } from '@designEngine/index'
+import { PropertyTypeEnum, Number_Setting } from '@design-any/interface/dist'
 
 @CellSettingAttr(PropertyTypeEnum.number)
 @Options({})

@@ -10,7 +10,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, Boolean_Setting } from '@designEngine/index'
+import { PropertyTypeEnum, Boolean_Setting } from '@design-any/interface/dist'
 
 @CellSettingAttr(PropertyTypeEnum.boolean)
 @Options({

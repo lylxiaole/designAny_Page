@@ -34,7 +34,7 @@ import jsonEditorCommon from './jsonEditorCommon.vue'
 
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, JsonContent_Setting } from '@designEngine/index'
+import { PropertyTypeEnum, JsonContent_Setting } from '@design-any/interface/dist'
 
 @CellSettingAttr(PropertyTypeEnum.jsonContent)
 @Options({
