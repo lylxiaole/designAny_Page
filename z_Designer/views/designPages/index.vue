@@ -35,23 +35,18 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
 
-import { pageType, DesignPageDC, GetPageDetail } from '@common/apis/designPage'
+import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
-import {
-  EnginePage,
-  MobilePageDesign,
-  MobilePagePreview,
-  PCPageDesign,
-  PCPagePreview,
-  EngineLayout,
-  designDrawDomVirtual
-} from '@design-any/interface/dist'
+import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist'
+
+import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
+
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
-import { findPageByPaltform } from '@design-any/interface/dist'
+import { findPageByPaltform, utils } from '@design-any/interface/dist'
 import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
 
 @Options({
@@ -166,6 +161,12 @@ export default class index extends PageBase {
       return
     }
     let res = await GetPageDetail(pageId)
+    let pageData: SaveInfo = null
+    if (res.designDetail) {
+      pageData = utils.strUnZip(res.designDetail)
+      pageData = utils.deserialize(res.designDetail)
+    }
+
     let designLayout: any = typeof PCPageDesign
 
     switch (res.type) {
@@ -181,7 +182,7 @@ export default class index extends PageBase {
 
     /************************渲染页面 */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true)
-    await (vueComp as PCPageDesign).loadPageByData(pageId, res.designDetail)
+    await (vueComp as PCPageDesign).loadPageByData(pageId, pageData)
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
@@ -197,7 +198,12 @@ export default class index extends PageBase {
     if (!this.currentShowEngine) {
       return
     }
-    await this.currentShowEngine.save(this.applicationId)
+
+    let data = this.currentShowEngine.getSaveData()
+    var saveinfoStr = utils.serialize(data)
+    saveinfoStr = utils.strZip(saveinfoStr)
+    await SavePageDetail({ appId: this.applicationId, id: this.currentShowEngine.Id, designDetail: saveinfoStr } as any)
+    this.currentShowEngine.recursiveChangeNeedSave(this.currentShowEngine)
   }
   private onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)

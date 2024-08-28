@@ -22,7 +22,7 @@ registerRouteHook(system.router, system.store)
 import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 // ****************************************************
-import { init as designEngineInit } from '@design-any/interface/dist'
+import { init as designEngineInit } from '@designEngine/index'
 designEngineInit(apiAddr())
 
 import { GetAll } from '@common/apis/designDictionary'

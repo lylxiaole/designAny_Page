@@ -13,7 +13,7 @@ import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from  '@design-any/interface/dist'
 import { findSystemCompByCode } from  '@design-any/interface/dist'
-import { DPropAttr, PropertyGroupName, Text_Setting, DPageAttr } from  '@design-any/interface/dist'
+import { DPropAttr, PropertyGroupName, Text_Setting,DPageAttr } from  '@design-any/interface/dist/index'
 
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 
