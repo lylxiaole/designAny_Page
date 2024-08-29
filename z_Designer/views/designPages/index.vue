@@ -48,7 +48,7 @@ import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
-import utils from '@design-any/interface/dist/utils'
+import * as utils from '@design-any/interface/dist/utils'
 
 import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
 

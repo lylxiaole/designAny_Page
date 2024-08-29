@@ -18,6 +18,8 @@ import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/
 import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 
+import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+
 import * as elemenpComps from 'element-plus'
 
 @DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent_001', null)
