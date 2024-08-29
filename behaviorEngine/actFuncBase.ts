@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { getUuid } from '@common/utils'
-import { EngineComponent, EnginePage } from '@designEngine/03designerLayoutBase'
+import { EngineComponent, EnginePage } from '@design-any/interface/dist/index'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior, param } from './behaviorTypes'
 

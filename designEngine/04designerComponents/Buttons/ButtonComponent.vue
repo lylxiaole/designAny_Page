@@ -12,9 +12,9 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr } from '@designEngine/03designerLayoutBase'
-import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
-import { DEventAttr } from '@designEngine/03designerLayoutBase'
+import { EngineLayout, EngineComponent, DCompType, DCompnentAttr, DPropAttr } from '@design-any/interface/dist/index'
+import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@design-any/interface/dist/index'
+import { DEventAttr } from '@design-any/interface/dist/index'
 
 import * as elemenpComps from 'element-plus'
 

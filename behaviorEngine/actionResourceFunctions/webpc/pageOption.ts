@@ -1,5 +1,5 @@
 import { getUuid } from '@common/utils'
-import { EngineComponent, EnginePage, LayoutMethod } from '@designEngine/03designerLayoutBase'
+import { EngineComponent, EnginePage, LayoutMethod } from '@design-any/interface/dist/index'
 import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
 import { behavior } from '../../behaviorTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'

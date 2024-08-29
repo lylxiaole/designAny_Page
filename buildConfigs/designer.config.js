@@ -275,8 +275,6 @@ let baseconfig = {
       '@common': path.resolve(currentDir, 'common'), //引入模块时，自动寻找
       '@designEngine': path.resolve(currentDir, 'designEngine'), //引入模块时，自动寻找
       '@behaviorEngine': path.resolve(currentDir, 'behaviorEngine'), //引入模块时，自动寻找
-      '@design-any/interface': path.resolve(currentDir, 'behaviorEngine'),
-
       path: false, // require.resolve('path-browserify'),
       stream: false, //require.resolve("stream-browserify"),
       http: false, //require.resolve("stream-http"),

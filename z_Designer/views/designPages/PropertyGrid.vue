@@ -29,8 +29,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { Property, PropertySetting, PropertyTypeEnum } from '@designEngine/03designerLayoutBase'
-import { EnginePage, EngineLayout } from '@designEngine/03designerLayoutBase'
+import { Property, PropertySetting, PropertyTypeEnum } from '@design-any/interface/dist/index'
+import { EnginePage, EngineLayout } from '@design-any/interface/dist/index'
 import { deepClone, serialize, deserialize } from '@common/utils'
 import propertyCellBase, { getCellControl } from './propertyGridCells/common'
 

@@ -17,7 +17,6 @@ import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, Color_Setting } from '@design-any/interface/dist/index'
-
 import bcolorPicker from '@common/components/colorPickr/colorPicker.vue'
 
 @CellSettingAttr(PropertyTypeEnum.color)

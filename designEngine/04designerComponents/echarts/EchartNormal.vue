@@ -8,8 +8,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@designEngine/03designerLayoutBase'
-import { DPropAttr, Property, PropertyGroupName, JsonContent_Setting, Text_Setting } from '@designEngine/03designerLayoutBase'
+import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@design-any/interface/dist/index'
+import { DPropAttr, Property, PropertyGroupName, JsonContent_Setting, Text_Setting } from '@design-any/interface/dist/index'
 import { getUuid, deepClone } from '@common/utils'
 import * as echarts from 'echarts'
 import { shallowRef } from 'vue'

@@ -66,7 +66,6 @@ export default class pageInParams extends propertyCellBase<PageInParams_Setting>
     var newRow = new param()
     newRow.key = getUuid()
     newRow.name = ''
-    newRow.type = paramType.string
     this.localData.push(newRow)
   }
 
@@ -83,7 +82,6 @@ export default class pageInParams extends propertyCellBase<PageInParams_Setting>
       var newparaminfo = new param()
       newparaminfo.key = o.key
       newparaminfo.name = o.name
-      newparaminfo.type = o.type
       this.localData.push(newparaminfo)
     })
   }

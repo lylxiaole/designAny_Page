@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr, DMethodAttr, Number_Setting } from '@designEngine/03designerLayoutBase'
-import { PropertyGroupName, TableColumn_Setting, JsonContent_Setting, Boolean_Setting, Color_Setting } from '@designEngine/03designerLayoutBase'
+import { EngineComponent, DCompType, DCompnentAttr, DPropAttr, DEventAttr, DMethodAttr, Number_Setting } from '@design-any/interface/dist/index'
+import { PropertyGroupName, TableColumn_Setting, JsonContent_Setting, Boolean_Setting, Color_Setting } from '@design-any/interface/dist/index'
 
 import VxeUI from 'vxe-pc-ui'
 import { VxeTable, VxeColumn, VxeColgroup } from 'vxe-table'

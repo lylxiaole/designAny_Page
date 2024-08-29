@@ -1,6 +1,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { PropertyTypeEnum, Property, PropertySetting, EnginePage, EngineLayout } from '@design-any/interface/dist/index'
+import { PropertyTypeEnum, Property, PropertySetting, EnginePage, EngineLayout } from '@design-any/interface/dist'
 
 var cellControls = []
 

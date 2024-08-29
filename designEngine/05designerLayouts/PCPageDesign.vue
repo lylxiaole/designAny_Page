@@ -11,18 +11,17 @@ import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 
-import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from  '@design-any/interface/dist/index'
-import { findSystemCompByCode } from  '@design-any/interface/dist/index'
-import { DPropAttr, PropertyGroupName, Text_Setting,DPageAttr } from  '@design-any/interface/dist/index'
+import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@design-any/interface/dist/index'
+import { findSystemCompByCode } from '@design-any/interface/dist/index'
+import { DPropAttr, PropertyGroupName, Text_Setting, DPageAttr } from '@design-any/interface/dist/index'
 
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 
 @DPageAttr('pc', 'design')
 @Options({})
 export default class PCPageDesign extends EnginePage {
-  
   private get backgroundCute(): string {
-    // window.console.log('backgroundCute:', this.background_img) 
+    // window.console.log('backgroundCute:', this.background_img)
     if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
@@ -80,13 +79,7 @@ export default class PCPageDesign extends EnginePage {
     this.top += ymove
     this.$forceUpdate()
   }
-  private async listenOnDrop(
-    el: Element,
-    container: Element,
-    screenLeft: number,
-    screenTop: number,
-    dragdata: DragItemData<any>
-  ): Promise<boolean> {
+  private async listenOnDrop(el: Element, container: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): Promise<boolean> {
     // window.console.log('listenOnDrop:', 1)
     if (!dragdata) {
       return true
@@ -95,9 +88,9 @@ export default class PCPageDesign extends EnginePage {
     let compInfo = dragdata.dragData as any
     if (!compInfo) {
       return true
-    } 
+    }
 
-    let dropcomp: EngineLayout = null 
+    let dropcomp: EngineLayout = null
     switch (dragdata.type) {
       case DragItemTypeEnum.drop_system_component:
         {
