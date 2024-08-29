@@ -25,10 +25,10 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
-import { funcCode } from '@design-any/interface/dist'
+import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
-import { EnginePage, EngineLayout } from '@design-any/interface/dist/index'
+import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 
 @flowDesignNode(funcCode.methodsInPage, flowNodeType.funcNormalNode)
 @Options({

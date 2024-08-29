@@ -11,8 +11,19 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@design-any/interface/dist/index'
-import { DPropAttr, Property, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/index'
+import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+
+import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+
+import {
+  DPropAttr,
+  Property,
+  PropertyGroupName,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@common/utils'
 import { npGridIco } from '@designEngine/assets/icons.js'

@@ -38,8 +38,9 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { behavior } from '@design-any/interface/dist/index'
-import { EnginePage } from '@design-any/interface/dist/index'
+import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
+
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorDetail from './behaviorDetail.vue'
 import editableText from '@common/components/Text/editableText.vue'

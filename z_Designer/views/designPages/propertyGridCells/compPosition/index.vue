@@ -30,7 +30,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, CompPosition_Setting } from '@design-any/interface/dist/index'
+import { PropertyTypeEnum, CompPosition_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
 @CellSettingAttr(PropertyTypeEnum.compPosition)
 @Options({

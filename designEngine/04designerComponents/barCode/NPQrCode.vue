@@ -11,7 +11,9 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import QRCode from 'qrcode'
-import { EngineLayout, EngineComponent, DCompType, DCompnentAttr } from '@design-any/interface/dist/index'
+import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+
 import {
   DPropAttr,
   Property,
@@ -21,7 +23,7 @@ import {
   Boolean_Setting,
   Enum_Setting,
   Color_Setting
-} from '@design-any/interface/dist/index'
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
 import { getUuid, deepClone } from '@common/utils'
 

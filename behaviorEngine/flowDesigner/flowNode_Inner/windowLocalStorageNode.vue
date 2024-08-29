@@ -16,9 +16,9 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
-import { funcCode } from '@design-any/interface/dist'
+import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-import { EnginePage } from '@design-any/interface/dist/index'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 @flowDesignNode(funcCode.windowLocalStorage, flowNodeType.funcNormalNode)
 @Options({

@@ -11,9 +11,10 @@ import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 
-import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@design-any/interface/dist/index'
-import { findSystemCompByCode } from '@design-any/interface/dist/index'
-import { DPropAttr, PropertyGroupName, Text_Setting, DPageAttr } from '@design-any/interface/dist/index'
+import {  EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
+import { findSystemCompByCode} from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+ 
+import {  DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 

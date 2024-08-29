@@ -1,9 +1,8 @@
 import { getUuid } from '@common/utils'
-import { EnginePage } from '@design-any/interface/dist/index'
-import { EngineLayout } from '@design-any/interface/dist'
-import { behavior } from '@design-any/interface/dist'
-import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '@design-any/interface/dist'
-import { actionObj, object_InParam } from '@design-any/interface/dist'
+import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
+import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
+import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 
 @resourceFuncAttr('字符串缓存', '', funcGroup.storages, funcCode.windowLocalStorage, funcStack.universal, [{ key: getUuid(), name: '设定值' }], { key: getUuid(), name: '输出' })
 export class windowLocalStorage implements actFuncBase {

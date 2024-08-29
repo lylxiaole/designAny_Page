@@ -13,8 +13,7 @@
 import { Options, Vue } from 'vue-class-component'
 
 import propertyCellBase from '../common'
-import { PropertyTypeEnum, Text_Setting } from '@design-any/interface/dist/index'
-
+import { PropertyTypeEnum, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { CellSettingAttr } from '../common'
 
 @CellSettingAttr(PropertyTypeEnum.text)

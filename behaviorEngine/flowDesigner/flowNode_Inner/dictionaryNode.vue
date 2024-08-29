@@ -15,13 +15,13 @@ import { inject, watch } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
-import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
-import { funcCode } from '@design-any/interface/dist'
+import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
+
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
-import { object_group, getFuncObjByType, getFuncObjsTree } from '@behaviorEngine/actResource'
-import { EnginePage } from '@design-any/interface/dist/index'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 @flowDesignNode(funcCode.dictionary, flowNodeType.funcNormalNode)
 @Options({

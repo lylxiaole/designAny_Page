@@ -6,7 +6,9 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, DPageAttr } from '@design-any/interface/dist/index'
+import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+
 @DPageAttr('mobile', 'preview')
 @Options({})
 export default class MobilePagePreview extends EnginePage {}
