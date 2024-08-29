@@ -163,8 +163,8 @@ export default class index extends PageBase {
     let res = await GetPageDetail(pageId)
     let pageData: SaveInfo = null
     if (res.designDetail) {
-      pageData = utils.strUnZip(res.designDetail)
-      pageData = utils.deserialize(res.designDetail)
+      let pageDataJson = utils.strUnZip(res.designDetail)
+      pageData = utils.deserialize(pageDataJson)
     }
 
     let designLayout: any = typeof PCPageDesign
