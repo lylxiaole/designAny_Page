@@ -37,7 +37,7 @@ import { object_group, getFuncObjByType, getFuncObjsTree } from '@behaviorEngine
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { actionObj } from '@behaviorEngine/actObject'
 //
-import { EnginePage, EngineContainer } from '@design-any/interface/dist'
+import { EnginePage, EngineContainer } from '@design-any/interface/dist/index'
 import { deepClone, getUuid } from '@common/utils'
 import LogicFlow from '@logicflow/core'
 import { findFlowNode, flowNodeType, anchorType } from './flowTypes'

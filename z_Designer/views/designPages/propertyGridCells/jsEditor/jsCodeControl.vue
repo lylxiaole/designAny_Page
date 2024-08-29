@@ -17,7 +17,7 @@ import npAceEditor from '@common/components/commonComponents/npAceEditor.vue'
 
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, JsonContent_Setting } from '@design-any/interface/dist'
+import { PropertyTypeEnum, JsonContent_Setting } from '@design-any/interface/dist/index'
 
 // @CellSettingAttr(PropertyTypeEnum.jsonContent)
 @Options({

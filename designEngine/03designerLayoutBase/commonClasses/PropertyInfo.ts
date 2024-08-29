@@ -1,5 +1,5 @@
 // import { deepClone, getUuid } from '@common/utils'
-// import { EngineLayout } from '@design-any/interface/dist'
+// import { EngineLayout } from '@design-any/interface/dist/index'
 // import { isBoolean, isString, isNumber } from 'xe-utils'
 // //TODO 参考https://github.com/kaorun343/vue-property-decorator/blob/master/src/helpers/provideInject.ts
 // class DPropCache {

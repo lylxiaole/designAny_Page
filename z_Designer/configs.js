@@ -1,5 +1,5 @@
 window.__globalConfig = {
   projectName: 'super pro',
-  apiAddr: 'http://127.0.0.1:65013/',
-  websocketAddr: 'ws://127.0.0.1:65012/'
+  apiAddr: 'http://127.0.0.1:66013/',
+  websocketAddr: 'ws://127.0.0.1:66012/'
 }

@@ -60,7 +60,7 @@ import { Component, Emit, Watch, Prop, InjectReactive } from 'vue-property-decor
 import { deepClone, getUuid, serialize } from '@common/utils'
 import { behavior, action, actionDetail, funcCode, factory } from '@behaviorEngine/index'
 import actionFilterSetting from './actionFilterSetting.vue'
-import { EnginePage, EngineLayout } from '@design-any/interface/dist'
+import { EnginePage, EngineLayout } from '@design-any/interface/dist/index'
 import btreeNode from './bTreeNode.vue'
 import Clipboard from 'clipboard'
 

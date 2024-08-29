@@ -38,7 +38,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, Margin_Setting, Padding_Setting } from '@design-any/interface/dist'
+import { PropertyTypeEnum, Margin_Setting, Padding_Setting } from '@design-any/interface/dist/index'
 
 @CellSettingAttr(PropertyTypeEnum.padding)
 @Options({

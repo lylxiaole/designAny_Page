@@ -29,7 +29,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist'
+import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist/index'
 
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj, funcCode } from '@behaviorEngine/index'

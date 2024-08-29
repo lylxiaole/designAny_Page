@@ -68,7 +68,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import propertyCellBase from '../common'
-import { PropertyTypeEnum, TableColumn_Setting } from '@design-any/interface/dist'
+import { PropertyTypeEnum, TableColumn_Setting } from '@design-any/interface/dist/index'
 import { CellSettingAttr } from '../common'
 import { getUuid, deepClone } from '@common/utils'
 

@@ -38,7 +38,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
-import { PropertyTypeEnum, PageInParams_Setting } from '@design-any/interface/dist'
+import { PropertyTypeEnum, PageInParams_Setting } from '@design-any/interface/dist/index'
 import { CellSettingAttr } from '../common'
 import { param, paramType } from '@behaviorEngine/index'
 

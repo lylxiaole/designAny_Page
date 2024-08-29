@@ -21,7 +21,7 @@ import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { object_group, getFuncObjByType, getFuncObjsTree } from '@behaviorEngine/actResource'
-import { EnginePage } from '@design-any/interface/dist'
+import { EnginePage } from '@design-any/interface/dist/index'
 
 @flowDesignNode(funcCode.dictionary, flowNodeType.funcNormalNode)
 @Options({

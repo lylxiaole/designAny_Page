@@ -30,7 +30,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-import { EnginePage } from '@design-any/interface/dist'
+import { EnginePage } from '@design-any/interface/dist/index'
 
 @flowDesignNode(funcCode.oneParamJude, flowNodeType.onParamJudeNode)
 @Options({

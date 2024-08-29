@@ -24,7 +24,7 @@ import { getUuid, deepClone } from '@common/utils'
 
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, NumberList_Setting } from '@design-any/interface/dist'
+import { PropertyTypeEnum, NumberList_Setting } from '@design-any/interface/dist/index'
 
 @CellSettingAttr(PropertyTypeEnum.numberList)
 @Options({})

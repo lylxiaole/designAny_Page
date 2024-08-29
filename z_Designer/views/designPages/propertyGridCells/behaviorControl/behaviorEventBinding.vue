@@ -38,7 +38,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { LayoutEvent, LayoutEventBehaviors } from '@design-any/interface/dist'
+import { LayoutEvent, LayoutEventBehaviors } from '@design-any/interface/dist/index'
 import { behavior } from '@behaviorEngine/index'
 import { deepClone, getUuid } from '@common/utils'
 

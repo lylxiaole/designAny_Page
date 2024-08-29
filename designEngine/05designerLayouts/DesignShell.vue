@@ -39,7 +39,7 @@ import { ref, h, render, onMounted, createVNode, createBlock } from 'vue'
 import dragHelper from '@designEngine/02common/dragHelper'
 
 import { DragItemData, DragItemTypeEnum } from './DesignEvents'
-import { EngineComponent } from '@design-any/interface/dist'
+import { EngineComponent } from '@design-any/interface/dist/index'
 import { designDrawDomReal } from '../02common/drawVueDom'
 
 import { deepClone } from '@common/utils'

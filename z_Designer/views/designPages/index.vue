@@ -40,13 +40,13 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 import pagelist from './pagelist.vue'
 import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
-import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist'
+import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist/index'
 
 import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
 
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
-import { findPageByPaltform, utils } from '@design-any/interface/dist'
+import { findPageByPaltform, utils } from '@design-any/interface/dist/index'
 import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
 
 @Options({
