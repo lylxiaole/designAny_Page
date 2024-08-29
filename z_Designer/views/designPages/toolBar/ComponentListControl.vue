@@ -32,7 +32,10 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import dragHelper from '@designEngine/02common/dragHelper'
 // 所有系统组件
-import * as engin from '@design-any/interface/dist/index'
+
+import { DragItemData, DragItemTypeEnum } from '@designEngine/05designerLayouts/DesignEvents'
+
+import { DCompInfo, DCompType, allComponents } from '@design-any/interface/dist/index'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {
@@ -40,7 +43,7 @@ class ComponentGroupInfo {
   }
   groupId: string
   groupName: string
-  components: engin.DCompInfo[] = []
+  components: DCompInfo[] = []
 }
 
 @Options({})
@@ -69,8 +72,8 @@ export default class ComponentListControl extends Vue {
   private sys_limitCompCodes: string[]
   ///////////////////////
   private dragHelpers: dragHelper[] = []
-  private dragType: engin.DragItemTypeEnum = engin.DragItemTypeEnum.drop_system_component
-  private dataSource: engin.DCompInfo[] = []
+  private dragType: DragItemTypeEnum = DragItemTypeEnum.drop_system_component
+  private dataSource: DCompInfo[] = []
   private compGroupName: string = ''
   private defaultSelectedKeys: any[] = []
 
@@ -131,17 +134,17 @@ export default class ComponentListControl extends Vue {
       })
   }
   /**包含组件的分组名，和组件的名字。不包含组件的类型信息 */
-  private organizeDragData(el: Element): engin.DragItemData<any> {
-    let dragType = $(el).attr('dragType') as engin.DragItemTypeEnum
-    let type = $(el).attr('compType') as engin.DCompType
+  private organizeDragData(el: Element): DragItemData<any> {
+    let dragType = $(el).attr('dragType') as DragItemTypeEnum
+    let type = $(el).attr('compType') as DCompType
     let compName = $(el).attr('compName')
     let compGroupName = $(el).attr('compGroupName')
     let compCode = $(el).attr('compCode')
     let platform = $(el).attr('platform')
 
-    let compInfo = new engin.DCompInfo(type, compGroupName, compName, null, '', platform, compCode)
+    let compInfo = new DCompInfo(type, compGroupName, compName, null, '', platform, compCode)
     //window.console.log('---------------------------------------------------compInfocompInfocompInfocompInfocompInfo', compInfo)
-    let dragd = new engin.DragItemData<any>()
+    let dragd = new DragItemData<any>()
     dragd.type = dragType
     dragd.dragData = compInfo
     return dragd
@@ -154,8 +157,8 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private cuteSystemComponents() {
-    engin.allComponents
-      .filter((o) => o.type == engin.DCompType.system_component)
+    allComponents
+      .filter((o) => o.type == DCompType.system_component)
       .filter((element) => {
         let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
         if (findgroup.length < 1) {

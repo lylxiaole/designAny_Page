@@ -1716,10 +1716,10 @@
   resolved "https://r.cnpmjs.org/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz#b6c75a56a1947cc916ea058772d666a2c8932f31"
   integrity sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==
 
-"@design-any/interface@^0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.31.tgz#4dce548edf2a24a944ee108bbda40ec029fad9af"
-  integrity sha512-gQ68alPwu9V9IsQTtDRPtzPMLwDT7wUeTq9wOPEQtTu3s5opQkpQl21Xbgik7pdShhc6l+ooXAHlAXTAkQrFGw==
+"@design-any/interface@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.32.tgz#da426616ed841c33e0bfffc1fb02f375e9acd9f1"
+  integrity sha512-xTnYtgEqtHXG2yABuSIuZu2SWgRbX5xEmceyXDZGjPlRaLL2pd2ieoAv1aZ8RoDJPCT6kagNHxI6BdlP8Nl+6Q==
   dependencies:
     "@babel/core" "^7.25.2"
     "@babel/plugin-syntax-top-level-await" "^7.14.5"

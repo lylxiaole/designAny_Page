@@ -1,8 +1,3 @@
-/**
- * 事件设置
- * By LYL
- * 日期
- */
 <template>
   <div>
     <DatePicker v-model="currentValue" :dateType="currentProperty.dateType" :showTime="currentProperty.showTime" :format="currentProperty.format" />
