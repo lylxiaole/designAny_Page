@@ -1,9 +1,9 @@
 import { getUuid } from '@common/utils'
 import { EngineComponent, EnginePage, LayoutMethod } from '@design-any/interface/dist/index'
-import EngineLayout from '@designEngine/03designerLayoutBase/EngineLayout'
-import { behavior } from '../../behaviorTypes'
-import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '../../actFuncBase'
-import { actionObj, object_InParam } from '../../actObject'
+import { EngineLayout } from '@design-any/interface/dist'
+import { behavior } from '@design-any/interface/dist'
+import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '@design-any/interface/dist'
+import { actionObj, object_InParam } from '@design-any/interface/dist'
 import { isPromise } from '@vue/shared'
 import { ElNotification } from 'element-plus'
 

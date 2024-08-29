@@ -40,7 +40,7 @@ import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
 import { PropertyTypeEnum, PageInParams_Setting } from '@design-any/interface/dist/index'
 import { CellSettingAttr } from '../common'
-import { param, paramType } from '@behaviorEngine/index'
+import { param, paramType } from '@design-any/interface/dist/index'
 
 @CellSettingAttr(PropertyTypeEnum.pageInParams)
 @Options({})

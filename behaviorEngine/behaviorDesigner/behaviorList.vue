@@ -38,7 +38,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { behavior } from '@behaviorEngine/index'
+import { behavior } from '@design-any/interface/dist/index'
 import { EnginePage } from '@design-any/interface/dist/index'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorDetail from './behaviorDetail.vue'

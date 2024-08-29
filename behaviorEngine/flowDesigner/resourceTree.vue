@@ -33,9 +33,9 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { reactive } from 'vue'
 //
-import { object_group, getFuncObjByType, getFuncObjsTree } from '@behaviorEngine/actResource'
-import { funcCode } from '@behaviorEngine/actFuncBase'
-import { actionObj } from '@behaviorEngine/actObject'
+import { object_group, getFuncObjByType, getFuncObjsTree } from '@design-any/interface/dist'
+import { funcCode } from '@design-any/interface/dist'
+import { actionObj } from '@design-any/interface/dist'
 //
 import { EnginePage, EngineContainer } from '@design-any/interface/dist/index'
 import { deepClone, getUuid } from '@common/utils'
