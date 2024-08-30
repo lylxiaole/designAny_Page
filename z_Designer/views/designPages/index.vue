@@ -84,9 +84,9 @@ export default class index extends PageBase {
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
   //所有打开的页面的引擎
-  private openPageEngines: EnginePage[] = []
+  private openPageEngines: PCPageDesign[] = []
   //当前设计的页面引擎
-  private get currentShowEngine(): EnginePage {
+  private get currentShowEngine(): PCPageDesign {
     let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
     return findengine
   }
@@ -131,7 +131,7 @@ export default class index extends PageBase {
     }
   }
   //打开新页面
-  private openPage(page: DesignPageDC, pageengine: EnginePage) {
+  private openPage(page: DesignPageDC, pageengine: PCPageDesign) {
     let engine = this.openPageEngines.find((o) => o.Id === page.id)
     if (!engine) {
       this.openPageEngines.push(pageengine)
@@ -189,7 +189,7 @@ export default class index extends PageBase {
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
-    this.openPage(res, vueComp as any)
+    this.openPage(res, vueComp as PCPageDesign)
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(virtualDom)
   }
@@ -202,7 +202,8 @@ export default class index extends PageBase {
       return
     }
 
-    let data = this.currentShowEngine.getSaveData()
+    let data = await this.currentShowEngine.getSaveData()
+
     var saveinfoStr = utils.serialize(data)
     saveinfoStr = utils.strZip(saveinfoStr)
     await SavePageDetail({ appId: this.applicationId, id: this.currentShowEngine.Id, designDetail: saveinfoStr } as any)

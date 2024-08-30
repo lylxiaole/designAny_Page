@@ -6,15 +6,13 @@
 
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
-
 import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
 import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 
-import {  EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
-import { findSystemCompByCode} from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
- 
-import {  DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
+import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
+import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 
@@ -49,7 +47,7 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
   }
 
-  protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
+  protected override async renderComponent(compCon: EngineComponent): Promise<EngineComponent> {
     let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell, true)
     this.allShells.push(vueComp as DesignShell)
     // ***************************************

@@ -2,37 +2,13 @@
   <el-row style="border:1px solid #cdcdcd;width:100%;height:100%;box-sizing:border-box;background:#fff;position:relative;padding:5px"
     class="topnodediv verticalAlignCenter flexHorilanLayout">
 
-    <!-- <div style="height:100%;">
-      <template v-if="inParamAnchors&&inParamAnchors.length>0">
-        <div v-for="inParam in inParamAnchors" :key="inParam.id" :style="{'height':inParamHeight}" style="font-size:12px" class="verticalAlignCenter">
-          {{inParam.name}}
-        </div>
-      </template>
-      <template v-else>
-        <div style="height:100%;width:100%;font-size:12px" class="verticalAlignCenter">
-          无输入
-        </div>
-      </template>
-    </div> -->
-    <el-row style="height:25px;width:100%" class="verticalAlignCenter flexHorilanLayout">
+    <el-row style="height:25px;width:100%;font-size:14px;font-weight:600;" class="verticalAlignCenter flexHorilanLayout">
       {{actObj?actObj.name:''}}
     </el-row>
     <!-- **************************************************** -->
     <div style="width:100%;height:calc(100% - 25px);box-sizing:border-box;padding:0px 20px" ref="renderContainer"></div>
     <!-- **************************************************** -->
-    <!-- <div style="height:100%">
-      <template v-if="outParamAnchors&&outParamAnchors.length>0">
-        <div v-for="outParam in outParamAnchors" :key="outParam.id" :style="{'height':outParamHeight}" style="font-size:12px"
-          class="verticalAlignCenter">
-          {{outParam.name}}
-        </div>
-      </template>
-      <template v-else>
-        <div style="font-size:12px">
-          无输出
-        </div>
-      </template>
-    </div> -->
+
   </el-row>
 </template>
 

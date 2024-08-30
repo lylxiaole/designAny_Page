@@ -1,11 +1,9 @@
 <template>
   <el-row style="width:100%;height:100%">
-    <el-row>
-      <el-col :span="6">键:</el-col>
-      <el-col :span="18">
-        <el-input v-model="actObj.resourceFilter.key" placeholder="Please input" />
-      </el-col>
-    </el-row>
+    <el-col :span="6">键:</el-col>
+    <el-col :span="18">
+      <el-input v-model="actObj.resourceFilter.key" placeholder="Please input" size="small" />
+    </el-col>
   </el-row>
 </template>
 
