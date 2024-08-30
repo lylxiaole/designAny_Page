@@ -1,7 +1,5 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h, VNode, render } from 'vue'
-import { funcCode } from '@behaviorEngine/actFuncBase'
-import { actionObj } from '@behaviorEngine/actObject'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { getUuid } from '@common/utils'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'

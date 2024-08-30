@@ -16,11 +16,12 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { flowDesignNode } from '../flowTypes'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
+
 import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 @flowDesignNode(funcCode.dictionary, flowNodeType.funcNormalNode)
@@ -32,9 +33,6 @@ export default class dictionaryNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-  public makeParamKey(key) {
-    return this.actObj.id + '&' + key
-  }
 
   mounted() {
     this.loadAllData()

@@ -29,6 +29,7 @@ import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 @flowDesignNode(funcCode.methodsInPage, flowNodeType.funcNormalNode)
 @Options({
@@ -39,9 +40,6 @@ export default class propertyInPageNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-  public makeParamKey(key) {
-    return this.actObj.id + '&' + key
-  }
 
   // ***********布局*******************************
   private currentLayoutId: string = null
@@ -78,7 +76,6 @@ export default class propertyInPageNode extends Vue {
     return trees
   }
   private onLayoutChange(nodedata, node, e: Event) {
-    debugger
     this.currentMethodField = null
     this.actObj.resourceFilter.layoutId = nodedata.id
   }
@@ -113,7 +110,7 @@ export default class propertyInPageNode extends Vue {
       for (let jndex = 0; jndex < method.inParams.length; jndex++) {
         const inparam = method.inParams[jndex]
         inparams.push({
-          key: this.makeParamKey(inparam.name),
+          key: makeParamKey(this.actObj.id, inparam.name),
           name: inparam.name
         } as any)
       }
@@ -121,7 +118,7 @@ export default class propertyInPageNode extends Vue {
 
       if (method.hasOutParam) {
         this.actObj.outParam = {
-          key: this.makeParamKey('输出'),
+          key: makeParamKey(this.actObj.id, '输出'),
           name: '输出'
         } as any
       }

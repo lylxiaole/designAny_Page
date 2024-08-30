@@ -11,6 +11,7 @@ import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 @flowDesignNode(null, flowNodeType.funcNormalNode)
 @Options({
@@ -21,9 +22,6 @@ export default class funcNormalNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-  public makeParamKey(key) {
-    return this.actObj.id + '&' + key
-  }
 
   mounted() {}
 }

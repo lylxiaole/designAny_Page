@@ -1,7 +1,5 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h, VNode, render, ref } from 'vue'
-import { funcCode } from '@behaviorEngine/actFuncBase'
-import { actionObj } from '@behaviorEngine/actObject'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { getUuid } from '@common/utils'
 import ElementPlus from 'element-plus'
@@ -18,7 +16,6 @@ class VueHtmlNode extends HtmlResize.view {
     super(props)
     this.isMounted = false
     let { actObj } = props.model.getProperties()
-
     //找到actObj的funcCode
     let funcCode = actObj.funcCode
     //绘制节点
@@ -40,7 +37,21 @@ class VueHtmlNode extends HtmlResize.view {
     const { x, y, type, name } = anchorData
     console.log('anchorData:', anchorData, this.props.model)
 
-    let rect = { x: x, y: y, width: anchorSize, height: anchorSize, stroke: '#000000', strokeDasharray: '3 3' }
+    let isConnected = false
+    if (anchorData.type === anchorType.justOut || anchorData.type === anchorType.outParam) {
+      isConnected = this.props.model.outgoing.edges.find((o) => o.sourceAnchorId === anchorData.id) != null
+    } else {
+      isConnected = this.props.model.incoming.edges.find((o) => o.targetAnchorId === anchorData.id) != null
+    }
+
+    let color = '#000000'
+    if (isConnected) {
+      color = 'green'
+    } else {
+      color = 'red'
+    }
+
+    let rect = { x: x, y: y, width: anchorSize, height: anchorSize, fill: color, stroke: color, strokeDasharray: '3 3' }
     let text = { x: x, y: y, fontSize: 8, fill: 'black', textAnchor: 'middle' }
     return lfh('g', {}, [lfh('rect', rect, []), lfh('text', text, [name])])
   }

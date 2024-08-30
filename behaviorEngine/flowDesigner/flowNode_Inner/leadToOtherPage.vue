@@ -21,6 +21,7 @@ import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 @flowDesignNode(funcCode.leadToOtherPage, flowNodeType.funcNormalNode)
 @Options({
@@ -31,9 +32,6 @@ export default class fixedValue extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-  public makeParamKey(key) {
-    return this.actObj.id + '&' + key
-  }
 
   private currentSelectId: string = null
   private allPageInfos: any[] = []

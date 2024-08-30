@@ -19,6 +19,7 @@ import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 @flowDesignNode(funcCode.windowLocalStorage, flowNodeType.funcNormalNode)
 @Options({
@@ -29,9 +30,6 @@ export default class windowLocalStorageNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-  public makeParamKey(key) {
-    return this.actObj.id + '&' + key
-  }
 
   mounted() {}
 }

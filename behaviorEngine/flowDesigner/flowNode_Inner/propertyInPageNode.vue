@@ -29,6 +29,7 @@ import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 @flowDesignNode(funcCode.propertiesInPage, flowNodeType.funcNormalNode)
 @Options({
@@ -39,10 +40,6 @@ export default class propertyInPageNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-
-  public makeParamKey(key) {
-    return this.actObj.id + '&' + key
-  }
 
   // ***********布局*******************************
   private currentLayoutId: string = null
@@ -108,12 +105,12 @@ export default class propertyInPageNode extends Vue {
       this.actObj.inputParams = []
 
       this.actObj.inputParams.push({
-        key: this.makeParamKey('设定值'),
+        key: makeParamKey(this.actObj.id, '设定值'),
         name: '设定值'
       } as any)
       //出参
       this.actObj.outParam = {
-        key: this.makeParamKey('输出'),
+        key: makeParamKey(this.actObj.id, '输出'),
         name: '输出'
       } as any
     }
