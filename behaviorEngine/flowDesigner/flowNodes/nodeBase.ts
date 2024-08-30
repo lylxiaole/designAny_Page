@@ -6,6 +6,8 @@ import ElementPlus from 'element-plus'
 import nodeBase from '../flowNode_Inner/nodeBase.vue'
 import { HtmlResize } from '@logicflow/extension'
 import '@logicflow/extension/lib/style/index.css'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
+
 const anchorSize = 10
 //一般性的流程节点
 class VueHtmlNode extends HtmlResize.view {
@@ -38,10 +40,13 @@ class VueHtmlNode extends HtmlResize.view {
     console.log('anchorData:', anchorData, this.props.model)
 
     let isConnected = false
+    let textX_move = 0
     if (anchorData.type === anchorType.justOut || anchorData.type === anchorType.outParam) {
       isConnected = this.props.model.outgoing.edges.find((o) => o.sourceAnchorId === anchorData.id) != null
+      textX_move = (8 * name.length) / 2
     } else {
       isConnected = this.props.model.incoming.edges.find((o) => o.targetAnchorId === anchorData.id) != null
+      textX_move = (-8 * name.length) / 2
     }
 
     let color = '#000000'
@@ -50,9 +55,10 @@ class VueHtmlNode extends HtmlResize.view {
     } else {
       color = 'red'
     }
-
+    let fontSize = 8
+    //********************* */
     let rect = { x: x, y: y, width: anchorSize, height: anchorSize, fill: color, stroke: color, strokeDasharray: '3 3' }
-    let text = { x: x, y: y, fontSize: 8, fill: 'black', textAnchor: 'middle' }
+    let text = { x: x + textX_move, y: y + fontSize, fontSize: fontSize, fill: 'black', textAnchor: 'left' }
     return lfh('g', {}, [lfh('rect', rect, []), lfh('text', text, [name])])
   }
   setHtml(rootEl) {
@@ -71,8 +77,8 @@ class VueHtmlNodeModel extends HtmlResize.model {
   initNodeData(data) {
     super.initNodeData(data)
 
-    this.width = 150
-    this.height = 150
+    this.width = 260
+    this.height = 120
     this.maxWidth = 800
     this.maxHeight = 800
   }
@@ -188,7 +194,7 @@ class VueHtmlNodeModel extends HtmlResize.model {
       anchors.push({
         x: x + width / 2 - anchorSize,
         y: y - anchorSize / 2,
-        id: actObj.id + '_' + anchorType.justOut,
+        id: makeParamKey(actObj.id, '输出'),
         name: '无输出',
         type: anchorType.justOut
       })

@@ -1,6 +1,6 @@
 <template>
   <el-row style="width:100%;height:100%">
-    <el-row>
+    <el-row style="width:100%;height:50%">
       <el-col :span="6">提示窗类型:</el-col>
       <el-col :span="18">
         <el-select v-model="actObj.resourceFilter.type" placeholder="Select" size="small">
@@ -10,10 +10,10 @@
         </el-select>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row style="width:100%;height:50%">
       <el-col :span="6">提示内容:</el-col>
       <el-col :span="18">
-        <el-input v-model="actObj.resourceFilter.message" placeholder="Please input" />
+        <el-input v-model="actObj.resourceFilter.message" size="small" placeholder="Please input" />
       </el-col>
     </el-row>
   </el-row>
