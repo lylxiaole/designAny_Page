@@ -28,9 +28,7 @@ export function designDrawDomVirtual(vueComp, isDesigning) {
 
   let app = createApp({ render: () => comp })
   app.use(ElementPlus)
-
   app.mount(fragment)
-
   //记录显然的目标dom,销毁时需要用到 render(null,renderContainer)
   ;(comp.component.proxy as any).renderContainer = fragment
   return { virtualDom: fragment, vueComp: comp.component.proxy }

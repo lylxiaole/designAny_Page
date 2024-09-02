@@ -1461,10 +1461,10 @@
   resolved "https://r.cnpmjs.org/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz#b6c75a56a1947cc916ea058772d666a2c8932f31"
   integrity sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==
 
-"@design-any/interface@^0.0.41":
-  version "0.0.41"
-  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.41.tgz#617c6add858aaf79616eaaad2d610072bb8e4d1f"
-  integrity sha512-K2OPcsJhZPbmcT2rdrYYmuknvlik1UW2HHuNsepEw7RbNAkZ0d9huPik4V/as5rshWSa872wUvc1gNFxyoER2Q==
+"@design-any/interface@^0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.42.tgz#8fea8d18278575a51a4dc9f92b442414bb3a8f5b"
+  integrity sha512-hvcqdLdXOP115LiC1iFpg2s8QJ2tv/liAGCTx9M5UPHU5A+VgUkMoPUOZbCKHJCuHpouyLGOqy4VZA+bVt58zQ==
   dependencies:
     circular-json-es6 "^2.0.2"
     commonjs "^0.0.1"
