@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
-import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import { EngineLayout, EngineComponent } from '@design-any/interface/LayoutInterface'
+import { DCompType, DCompnentAttr } from '@design-any/interface/LayoutAttr/ComponentInfo'
 
 import {
   DPropAttr,
@@ -28,9 +28,9 @@ import {
   JsonContent_Setting,
   Boolean_Setting,
   Color_Setting
-} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
-import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
+} from '@design-any/interface/LayoutAttr/PropertyInfo'
+import { DEventAttr } from '@design-any/interface/LayoutAttr/EventInfo'
+import { DMethodAttr } from '@design-any/interface/LayoutAttr/MethodInfo'
 
 import VxeUI from 'vxe-pc-ui'
 import { VxeTable, VxeColumn, VxeColgroup } from 'vxe-table'

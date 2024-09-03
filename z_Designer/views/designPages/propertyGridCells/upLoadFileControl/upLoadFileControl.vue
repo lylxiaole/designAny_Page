@@ -18,7 +18,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, UploadFile_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { PropertyTypeEnum, UploadFile_Setting } from '@design-any/interface/LayoutAttr/PropertyInfo'
 
 import uploadFile from './uploadFile.vue'
 

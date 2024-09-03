@@ -9,7 +9,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, JsonContent_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { PropertyTypeEnum, JsonContent_Setting } from '@design-any/interface/LayoutAttr/PropertyInfo'
 
 @CellSettingAttr(PropertyTypeEnum.jsonContent)
 @Options({})

@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { behaviorList } from '@behaviorEngine/index'
-import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage } from '@design-any/interface/LayoutInterface'
 
 @Options({
   components: { behaviorList }

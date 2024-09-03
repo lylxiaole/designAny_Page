@@ -16,8 +16,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
-import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
+import { EnginePage } from '@design-any/interface/LayoutInterface'
+import { behavior } from '@design-any/interface/bahaviorEngine/behavior'
 import { deepClone, getUuid } from '@common/utils'
 
 //事件行为绑定组件

@@ -1,4 +1,4 @@
-import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { funcCode } from '@design-any/interface/bahaviorEngine/actFunc'
 
 //节点类型
 export enum flowNodeType {

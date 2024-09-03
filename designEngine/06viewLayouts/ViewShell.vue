@@ -18,8 +18,8 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { ref, h, render, onMounted } from 'vue'
- 
- import { EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+
+import { EngineComponent } from '@design-any/interface/LayoutInterface'
 
 import { designDrawDomReal } from '../02common/drawVueDom'
 

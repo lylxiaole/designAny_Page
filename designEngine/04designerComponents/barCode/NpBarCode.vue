@@ -11,9 +11,9 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import { DCompType, DCompnentAttr } from '@design-any/interface/LayoutAttr/ComponentInfo'
 
-import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+import { EngineLayout, EngineComponent } from '@design-any/interface/LayoutInterface'
 
 import {
   DPropAttr,
@@ -23,7 +23,7 @@ import {
   Text_Setting,
   Boolean_Setting,
   Enum_Setting
-} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+} from '@design-any/interface/LayoutAttr/PropertyInfo'
 import JsBarcode from 'jsbarcode'
 import { getUuid, deepClone } from '@common/utils'
 import { npGridIco } from '@designEngine/assets/icons.js'

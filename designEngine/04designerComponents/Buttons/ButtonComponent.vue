@@ -12,13 +12,13 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
-import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import { EngineLayout, EngineComponent } from '@design-any/interface/LayoutInterface'
+import { DCompType, DCompnentAttr } from '@design-any/interface/LayoutAttr/ComponentInfo'
 
-import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
+import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@design-any/interface/LayoutAttr/PropertyInfo'
+import { DEventAttr } from '@design-any/interface/LayoutAttr/EventInfo'
 
-import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { DPropAttr } from '@design-any/interface/LayoutAttr/PropertyInfo'
 
 import * as elemenpComps from 'element-plus'
 

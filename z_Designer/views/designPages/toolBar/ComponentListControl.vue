@@ -35,7 +35,7 @@ import dragHelper from '@designEngine/02common/dragHelper'
 
 import { DragItemData, DragItemTypeEnum } from '@designEngine/05designerLayouts/DesignEvents'
 
-import { DCompInfo, DCompType, allComponents } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import { DCompInfo, DCompType, allComponents } from '@design-any/interface/LayoutAttr/ComponentInfo'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {

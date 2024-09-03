@@ -31,6 +31,9 @@
       "@behaviorEngine/*": [
         "behaviorEngine/*"
       ],
+      "@design-any/interface/*": [
+        "designInterface/*"
+      ],
       "@/*": [
         "z_Designer/*"
       ],

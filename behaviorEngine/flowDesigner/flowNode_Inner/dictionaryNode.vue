@@ -19,10 +19,10 @@ import { flowDesignNode } from '../flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
-import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
-import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
+import { funcCode } from '@design-any/interface/bahaviorEngine/actFunc'
+import { actionObj } from '@design-any/interface/bahaviorEngine/actObject'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage } from '@design-any/interface/LayoutInterface'
 
 @flowDesignNode(funcCode.dictionary, flowNodeType.funcNormalNode)
 @Options({

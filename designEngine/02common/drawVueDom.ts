@@ -1,9 +1,9 @@
 import { ref, h, render, onMounted, createApp } from 'vue'
 
-import { findOrginCompInfo } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
-import { findOrginEvents } from '@design-any/interface/dist/LayoutAttr/EventInfo'
-import { findOrginMethods } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
-import { findOrginProps } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { findOrginCompInfo } from '@design-any/interface/LayoutAttr/ComponentInfo'
+import { findOrginEvents } from '@design-any/interface/LayoutAttr/EventInfo'
+import { findOrginMethods } from '@design-any/interface/LayoutAttr/MethodInfo'
+import { findOrginProps } from '@design-any/interface/LayoutAttr/PropertyInfo'
 
 import designerContext from '../01designerContext/context'
 import ElementPlus from 'element-plus'
