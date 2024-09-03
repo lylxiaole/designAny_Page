@@ -32,7 +32,7 @@
         "behaviorEngine/*"
       ],
       "@design-any/interface/*": [
-        "designInterface/*"
+        "D:/lowCode_production/design-any_-interface/*"
       ],
       "@/*": [
         "z_Designer/*"

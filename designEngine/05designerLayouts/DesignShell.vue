@@ -39,7 +39,7 @@ import { ref, h, render, onMounted, createVNode, createBlock } from 'vue'
 import dragHelper from '@designEngine/02common/dragHelper'
 
 import { DragItemData, DragItemTypeEnum } from './DesignEvents'
-import { EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+import { EngineComponent, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { designDrawDomReal } from '../02common/drawVueDom'
 
 import { deepClone } from '@common/utils'
@@ -103,6 +103,10 @@ export default class DesignShell extends Vue {
     this._dragHelper = new dragHelper(this.$el)
     this._dragHelper.makeContainerCannotDrop()
     this._dragHelper.makeDomCannotDrag(this.$el)
+    this._dragHelper.registerOnDragEnd((e) => {
+      ;(this.component.topLayout as EnginePage).clearHorRule()
+      ;(this.component.topLayout as EnginePage).clearVerRule()
+    })
   }
 
   destorymethod() {

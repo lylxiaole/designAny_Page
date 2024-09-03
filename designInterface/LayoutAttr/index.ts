@@ -1,5 +1,0 @@
-export * from './ComponentInfo'
-export * from './EventInfo'
-export * from './MethodInfo'
-export * from './PageInfo'
-export * from './PropertyInfo'

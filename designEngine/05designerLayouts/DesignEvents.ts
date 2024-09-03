@@ -201,8 +201,7 @@ export default class DesignEvents {
     return iscontinue
   }
   private _onDragEnd = (el: Element) => {
-    this.clearCachePoint()
-
+    debugger
     if (!this.onDragEnd_Event) {
       return
     }
@@ -372,7 +371,6 @@ export default class DesignEvents {
     }
   }
   private _mouseUp = (e: any) => {
-    this.clearCachePoint()
     if (!this.onMoudeUp_Event) {
       return true
     }
@@ -381,7 +379,6 @@ export default class DesignEvents {
     this.clearBoxSelectInfo(e)
     /********************** */
     this.eventsOptions.isMouseDown = false
-
     this.onMoudeUp_Event(e)
   }
   private clearBoxSelectInfo(e: any) {
@@ -423,9 +420,7 @@ export default class DesignEvents {
       this.onWindowResize_Event(e)
     }, 500)
   }
-  private clearCachePoint() {
-    // window.console.log('clearCachePoint:', this.eventsOptions)
-  }
+
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void
   onCut_Event(e: Event) {

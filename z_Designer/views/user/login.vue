@@ -146,10 +146,10 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
-  .el-input__wrapper{
-  box-shadow:none;
-  background-color:transparent;
-}
+  .el-input__wrapper {
+    box-shadow: none;
+    background-color: transparent;
+  }
   .el-input {
     display: inline-block;
     height: 47px;

@@ -37,7 +37,7 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onDrop_Event = this.listenOnDrop
     this.designEvets.onDragMove_Event = this.listenOnDragMove
     this.designEvets.onDelete_Event = this.listenOnDeleteKey
-    this.designEvets.onDragEnd_Event = this.listenOnDragEnd
+
     this.designEvets.onCut_Event = this.listenOnCut
     this.designEvets.onCopy_Event = this.listenOnCopy
     this.designEvets.onPaste_Event = this.listenOnPaste
@@ -150,10 +150,7 @@ export default class PCPageDesign extends EnginePage {
     return true
   }
   // **************************************************************************
-  private listenOnDragEnd() {
-    this.clearHorRule()
-    this.clearVerRule()
-  }
+
   private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     if (this.selectedChildren.length > 0) {
