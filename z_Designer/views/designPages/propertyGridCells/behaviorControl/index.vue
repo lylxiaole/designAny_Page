@@ -48,11 +48,11 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
-import { PropertyTypeEnum, Behavior_Setting } from '@design-any/interface/LayoutAttr/PropertyInfo'
+import { PropertyTypeEnum, Behavior_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
-import { LayoutEvent, LayoutEventBehaviors } from '@design-any/interface/LayoutAttr/EventInfo'
+import { LayoutEvent, LayoutEventBehaviors } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 
-import { behavior } from '@design-any/interface/bahaviorEngine/behavior'
+import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import behaviorEventBinding, { behaviorListData } from './behaviorEventBinding.vue'
 import behaviorListInPage from './behaviorListInPage.vue'
 

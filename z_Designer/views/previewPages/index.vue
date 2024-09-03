@@ -13,9 +13,9 @@ import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
 import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
-import { findPageByPaltform } from '@design-any/interface/LayoutAttr/PageInfo'
+import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
-import { EnginePage } from '@design-any/interface/LayoutInterface'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 import { MobilePagePreview, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
 

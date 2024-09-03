@@ -6,8 +6,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { DPageAttr } from '@design-any/interface/LayoutAttr/PageInfo'
-import { EnginePage } from '@design-any/interface/LayoutInterface'
+import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 @DPageAttr('mobile', 'preview')
 @Options({})

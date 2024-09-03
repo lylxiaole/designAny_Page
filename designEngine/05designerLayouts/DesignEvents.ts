@@ -1,8 +1,8 @@
 import dragHelper from '@designEngine/02common/dragHelper'
 import { Options, Vue } from 'vue-class-component'
-import { EnginePage, EngineContainer, EngineLayout, SaveInfo } from '@design-any/interface/LayoutInterface'
+import { EnginePage, EngineContainer, EngineLayout, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 
-import { findSystemCompByCode } from '@design-any/interface/LayoutAttr/ComponentInfo'
+import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
 import { getUuid, deepClone, serialize } from '@common/utils'
 

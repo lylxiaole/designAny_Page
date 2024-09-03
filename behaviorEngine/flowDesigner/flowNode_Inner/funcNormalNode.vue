@@ -10,7 +10,7 @@ import { actionObj } from '@behaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@behaviorEngine/actFuncBase'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-import { EnginePage } from '@design-any/interface/LayoutInterface'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 @flowDesignNode(null, flowNodeType.funcNormalNode)

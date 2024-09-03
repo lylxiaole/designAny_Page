@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "module": "es6",
+    "target": "es5",
     // 这可以对 `this` 上的数据 property 进行更严格的推断
     "strict": true,
     "moduleResolution": "node",

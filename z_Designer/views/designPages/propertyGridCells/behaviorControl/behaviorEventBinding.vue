@@ -38,8 +38,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { LayoutEvent, LayoutEventBehaviors } from '@design-any/interface/LayoutAttr/EventInfo'
-import { behavior } from '@design-any/interface/bahaviorEngine/behavior'
+import { LayoutEvent, LayoutEventBehaviors } from '@design-any/interface/dist/LayoutAttr/EventInfo'
+import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { deepClone, getUuid } from '@common/utils'
 
 export enum behaviorPageType {

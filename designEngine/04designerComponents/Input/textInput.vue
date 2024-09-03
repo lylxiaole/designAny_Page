@@ -9,8 +9,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-import { EngineLayout, EngineComponent } from '@design-any/interface/LayoutInterface'
-import { DCompType, DCompnentAttr } from '@design-any/interface/LayoutAttr/ComponentInfo'
+import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import {
   DPropAttr,
   Property,
@@ -19,7 +19,7 @@ import {
   Text_Setting,
   Boolean_Setting,
   Enum_Setting
-} from '@design-any/interface/LayoutAttr/PropertyInfo'
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
 
 @DCompnentAttr('pc', DCompType.system_component, '系统组件', '文本输入框', 'textInput_001', null)
