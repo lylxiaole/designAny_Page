@@ -15,7 +15,8 @@ import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
-import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
+import * as utils from '@design-any/interface/dist/utils'
 
 import { MobilePagePreview, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
 
@@ -34,7 +35,7 @@ export default class index extends PageBase {
   private applicationId: string = null
   private application: ApplicationDC = null
   private allPageSimples: any[] = []
-  private openedPageData: any = []
+  private openedPageData: any[] = []
   private currentOpenEngin: EnginePage = null
 
   mounted() {}
@@ -71,6 +72,10 @@ export default class index extends PageBase {
     let cachePageData = this.openedPageData.find((o) => o.id === pageId)
     if (!cachePageData) {
       cachePageData = await GetPageDetail(pageId)
+      if (cachePageData.designDetail) {
+        let pageDataJson = utils.strUnZip(cachePageData.designDetail)
+        cachePageData.designDetail = utils.deserialize(pageDataJson)
+      }
       this.openedPageData.push(cachePageData)
     }
     await this.$nextTick()

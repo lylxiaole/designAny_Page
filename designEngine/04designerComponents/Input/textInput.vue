@@ -13,7 +13,6 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import {
   DPropAttr,
-  Property,
   PropertyGroupName,
   Number_Setting,
   Text_Setting,
@@ -34,16 +33,16 @@ export default class textInput extends EngineComponent {
     this.background = 'white'
   }
 
-  @DPropAttr(new Text_Setting('值', PropertyGroupName.special, true))
+  @DPropAttr(new Text_Setting('值', PropertyGroupName.data, true))
   private currentText: string = ''
 
-  @DPropAttr(new Text_Setting('提示语', PropertyGroupName.special, true))
+  @DPropAttr(new Text_Setting('提示语', PropertyGroupName.data, true))
   private placeholder: string = '请输入一个值'
 
-  @DPropAttr(new Boolean_Setting('只读', PropertyGroupName.special, true))
+  @DPropAttr(new Boolean_Setting('只读', PropertyGroupName.data, true))
   private readonly: boolean = false
 
-  @DPropAttr(new Enum_Setting('文本类型', PropertyGroupName.special, true, null, true, ['text', 'password']))
+  @DPropAttr(new Enum_Setting('文本类型', PropertyGroupName.data, true, null, true, ['text', 'password']))
   private type: string = 'text'
 }
 </script>

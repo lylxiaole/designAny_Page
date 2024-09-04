@@ -10,7 +10,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
-import { DPropAttr, Property, PropertyGroupName, JsonContent_Setting, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { DPropAttr, PropertyGroupName, JsonContent_Setting, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
 import * as echarts from 'echarts'
 import { shallowRef } from 'vue'
@@ -23,7 +23,7 @@ export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})
   private resizeListener: any = null
 
-  @DPropAttr(new JsonContent_Setting('Option设置', PropertyGroupName.special, true))
+  @DPropAttr(new JsonContent_Setting('Option设置', PropertyGroupName.data, true))
   private option: any = {
     grid: {
       width: '100%',

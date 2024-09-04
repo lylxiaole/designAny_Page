@@ -45,7 +45,7 @@ export default class ButtonComponent extends EngineComponent {
   mounted() {
     this.width = '10%'
     this.height = '4%'
-    this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, '背景图片').canSetting = false
   }
 
   private onClick(e) {

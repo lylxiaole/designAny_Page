@@ -12,7 +12,6 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import {
   DPropAttr,
-  Property,
   PropertyGroupName,
   Number_Setting,
   Text_Setting,
@@ -33,7 +32,7 @@ export default class numberInput extends EngineComponent {
     this.background = 'white'
   }
 
-  @DPropAttr(new Number_Setting('值', PropertyGroupName.special, true))
+  @DPropAttr(new Number_Setting('值', PropertyGroupName.data, true))
   private currentVal: number = 0
 }
 </script>

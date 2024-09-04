@@ -11,7 +11,6 @@ export function designDrawDomVirtual(vueComp, isDesigning) {
   let fragment = window.document.createDocumentFragment() as any
   // let divdom = window.document.createElement('div')
   // fragment.appendChild(divdom)
-
   let allprops = findOrginProps(vueComp)
   let methods = findOrginMethods(vueComp)
   let events = findOrginEvents(vueComp)

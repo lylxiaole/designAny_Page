@@ -27,7 +27,6 @@ import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/
 
 import {
   DPropAttr,
-  Property,
   PropertyGroupName,
   Number_Setting,
   Text_Setting,

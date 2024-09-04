@@ -1,7 +1,7 @@
  
  <template>
   <div>
-    <el-select v-model="currentValue" size="mini" style="width:120px">
+    <el-select v-model="currentValue" size="small" style="width:120px">
       <el-option v-for="item in allOptions" :key="item" :label="item" :value="item" />
     </el-select>
   </div>

@@ -17,7 +17,6 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 
 import {
   DPropAttr,
-  Property,
   PropertyGroupName,
   Number_Setting,
   Text_Setting,
@@ -56,8 +55,8 @@ export default class NpBarCode extends EngineComponent {
     this.width = '10%'
     this.height = '10%'
 
-    this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
-    this.findPropertyByName(PropertyGroupName.normal, '背景色').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, '背景色').canSetting = false
     this.initBarCode()
   }
 

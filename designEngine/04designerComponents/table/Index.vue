@@ -60,22 +60,22 @@ export default class Index extends EngineComponent {
   @DPropAttr(new JsonContent_Setting('数据', PropertyGroupName.data, true, null))
   private tableData: any[] = []
 
-  @DPropAttr(new TableColumn_Setting('列设置', PropertyGroupName.special, true, null))
+  @DPropAttr(new TableColumn_Setting('列设置', PropertyGroupName.data, true, null))
   private tableColumns: any[] = []
 
-  @DPropAttr(new Color_Setting('表头背景色', PropertyGroupName.special, true, null))
+  @DPropAttr(new Color_Setting('表头背景色', PropertyGroupName.style, true, null))
   private headerBackground: string = '#cdcdcd'
 
-  @DPropAttr(new Color_Setting('表头字体颜色', PropertyGroupName.special, true, null))
+  @DPropAttr(new Color_Setting('表头字体颜色', PropertyGroupName.style, true, null))
   private headerFontColor: string = '#000000'
 
-  @DPropAttr(new Color_Setting('表身背景色', PropertyGroupName.special, true, null))
+  @DPropAttr(new Color_Setting('表身背景色', PropertyGroupName.style, true, null))
   private cellBackground: string = '#cdcdcd'
 
-  @DPropAttr(new Color_Setting('表身字体颜色', PropertyGroupName.special, true, null))
+  @DPropAttr(new Color_Setting('表身字体颜色', PropertyGroupName.style, true, null))
   private cellFontColor: string = '#000000'
 
-  @DPropAttr(new Boolean_Setting('是否有分页', PropertyGroupName.special, true, null))
+  @DPropAttr(new Boolean_Setting('是否有分页', PropertyGroupName.data, true, null))
   private isShowPager: boolean = true
 
   @DPropAttr(new Number_Setting('当前页', PropertyGroupName.data, true, null))
