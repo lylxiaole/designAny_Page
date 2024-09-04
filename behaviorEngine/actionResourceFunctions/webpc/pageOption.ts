@@ -6,7 +6,7 @@ import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEn
 import { isPromise } from '@vue/shared'
 import { ElNotification } from 'element-plus'
 
-@resourceFuncAttr('页面方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc, [], { key: getUuid(), name: '输出' })
+@resourceFuncAttr('布局方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc, [], { key: getUuid(), name: '输出' })
 export class methodsInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
@@ -43,7 +43,7 @@ export class methodsInPageMethod implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('页面属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc, [{ key: getUuid(), name: '设定值' }], { key: getUuid(), name: '输出' })
+@resourceFuncAttr('布局属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc, [{ key: getUuid(), name: '设定值' }], { key: getUuid(), name: '输出' })
 export class propertiesInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
