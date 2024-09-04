@@ -29,10 +29,10 @@ import * as elemenpComps from 'element-plus'
   }
 })
 export default class ButtonComponent extends EngineComponent {
-  @DPropAttr(new Text_Setting('按钮文本', PropertyGroupName.special, true))
+  @DPropAttr(new Text_Setting('按钮文本', PropertyGroupName.data, true))
   private btnText: any = '新增按钮'
 
-  @DPropAttr(new UploadFile_Setting('按钮图标', PropertyGroupName.special, true, null, 1, 'image'))
+  @DPropAttr(new UploadFile_Setting('按钮图标', PropertyGroupName.data, true, null, 1, 'image'))
   private btnIcon: any[] = []
   private get btnIconUrl() {
     if (!this.btnIcon || this.btnIcon.length < 1) {
