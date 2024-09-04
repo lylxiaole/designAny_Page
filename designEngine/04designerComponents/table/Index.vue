@@ -115,7 +115,7 @@ export default class Index extends EngineComponent {
   mounted() {
     this.width = '70%'
     this.height = '50%'
-    this.findPropertyByName(PropertyGroupName.normal, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, '背景图片').canSetting = false
   }
 }
 </script>

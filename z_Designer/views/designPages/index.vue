@@ -190,6 +190,7 @@ export default class index extends PageBase {
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
     this.openPage(res, vueComp as PCPageDesign)
+    this.$forceUpdate()
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(virtualDom)
   }
