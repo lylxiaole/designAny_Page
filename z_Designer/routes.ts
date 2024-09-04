@@ -16,24 +16,24 @@ const routes: IRouteClass[] = [
         },
         component: () => import('./views/designApplications/index.vue')
       },
-      {
-        icon: 'icon-all-fill',
-        path: '/designApis',
-        name: 'designApis',
-        meta: {
-          title: '我的接口'
-        },
-        component: () => import('./views/designApis/index.vue')
-      },
-      {
-        icon: 'icon-all-fill',
-        path: '/designDatabases',
-        name: 'designDatabases',
-        meta: {
-          title: '我的数据库'
-        },
-        component: () => import('./views/designDatabases/index.vue')
-      },
+      // {
+      //   icon: 'icon-all-fill',
+      //   path: '/designApis',
+      //   name: 'designApis',
+      //   meta: {
+      //     title: '我的接口'
+      //   },
+      //   component: () => import('./views/designApis/index.vue')
+      // },
+      // {
+      //   icon: 'icon-all-fill',
+      //   path: '/designDatabases',
+      //   name: 'designDatabases',
+      //   meta: {
+      //     title: '我的数据库'
+      //   },
+      //   component: () => import('./views/designDatabases/index.vue')
+      // },
       {
         icon: 'icon-all-fill',
         path: '/designDictionary',
