@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { applicationType } from '@common/apis/designApplication'
 
@@ -48,7 +48,10 @@ export default class index extends ComponentBase {
         return '报表'
         break
       case applicationType.webSystem:
-        return '业务系统'
+        return '网页程序'
+        break
+      case applicationType.H5App:
+        return 'H5 App'
         break
       default:
         return ''

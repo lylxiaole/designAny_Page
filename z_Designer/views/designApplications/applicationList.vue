@@ -16,9 +16,10 @@
         </el-form-item>
         <el-form-item label="应用类型">
           <el-select v-model="applicationForm.type" placeholder="请选择应用类型">
-            <el-option label="看板" :value="0"></el-option>
-            <el-option label="报表" :value="2"></el-option>
-            <el-option label="业务系统" :value="4"></el-option>
+            <!-- <el-option label="看板" :value="0"></el-option>
+            <el-option label="报表" :value="1"></el-option> -->
+            <el-option label="网页程序" :value="2"></el-option>
+            <el-option label="H5 App" :value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>

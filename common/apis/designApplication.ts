@@ -4,7 +4,8 @@ const apiAddr = () => getConfigByName('apiAddr')
 export enum applicationType {
   dashBoard = 0, //PC看板
   report = 1, //PC报表
-  webSystem = 2 //PC网页
+  webSystem = 2, //PC网页
+  H5App = 3
 }
 export class ApplicationDC {
   public type: applicationType
