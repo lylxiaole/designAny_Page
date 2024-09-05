@@ -7,7 +7,7 @@
     <div class="right-menu" style="width:205px">
       <template v-if="device!=='mobile'">
         <error-log class="errLog-container right-menu-item hover-effect" />
-         <el-tooltip content="Global Size" effect="dark" placement="bottom">
+        <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
       </template>
@@ -17,21 +17,6 @@
           <i style="font-size:26px" class="el-icon-setting" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <!-- <router-link to="/selfInfo/index">
-            <el-dropdown-item>个人信息</el-dropdown-item>
-          </router-link>
-          <router-link to="/profile/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link>
-          <router-link to="/">
-            <el-dropdown-item>Dashboard</el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a> -->
           <el-dropdown-item @click.native="logout">
             <span style="display:block;">退出</span>
           </el-dropdown-item>
@@ -43,21 +28,19 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import {   Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@common/components/Breadcrumb/index.vue'
 import Hamburger from '@common/components/Hamburger/index.vue'
 import ErrorLog from '@common/components/ErrorLog/index.vue'
- import SizeSelect from '@common/components/SizeSelect/index.vue'
+import SizeSelect from '@common/components/SizeSelect/index.vue'
 import Search from '@common/components/HeaderSearch/index.vue'
 import TagsView from './TagsView/index.vue'
 
 @Options({
   components: {
-    Breadcrumb,
     Hamburger,
-    ErrorLog, 
+    ErrorLog,
     SizeSelect,
     Search,
     TagsView

@@ -7,15 +7,12 @@
       <div style="height:calc(100% - 30pt);width:100%;overflow:hidden">
         <app-main style="width:100%;height:100%;overflow:hidden" />
       </div>
-      <!-- <right-panel>
-        <settings />  
-      </right-panel> -->
+
     </div>
   </div>
 </template>
 
 <script>
-import RightPanel from '@common/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView, TopBar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
@@ -24,7 +21,6 @@ export default {
   components: {
     AppMain,
     Navbar,
-    RightPanel,
     Settings,
     Sidebar,
     TagsView,
