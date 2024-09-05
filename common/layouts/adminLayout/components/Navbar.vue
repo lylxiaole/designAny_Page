@@ -16,12 +16,15 @@
         <div class="avatar-wrapper">
           <i style="font-size:26px" class="el-icon-setting" />
         </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="logout">
-            <span style="display:block;">退出</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click.native="logout">
+              <span style="display:block;">退出</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
+
     </div>
   </div>
 </template>

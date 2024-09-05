@@ -74,7 +74,7 @@ let baseconfig = {
         use: ['source-map-loader'],
         // 要把 source-map-loader 的执行顺序放到最前面，如果在 source-map-loader 之前有 Loader 转换了该 JavaScript 文件，会导致 Source Map 映射错误
         enforce: 'pre',
-        include: [path.resolve(currentDir, 'node_modules/')]
+        include: /node_modules/
       },
       {
         //样式不需要模块化-我们项目只用less或者scss模块化

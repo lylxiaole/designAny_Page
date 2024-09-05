@@ -1,6 +1,9 @@
 <template>
   <div style="padding:8px;width:100%;height:100%;box-sizing:border-box" class="">
-    阿九阿九阿九阿九
+    <div style="width:100%;height:calc(100% - 50px)">
+      <lylJSEditor />
+    </div>
+
     <div style="height:50px">
       <el-button type="primary" @click="onSureHandle">确定</el-button>
     </div>
@@ -12,9 +15,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/designJSFunc'
-
+import lylJSEditor from '@common/components/commonComponents/lylJSEditor.vue'
 @Options({
-  components: {}
+  components: { lylJSEditor: lylJSEditor }
 })
 export default class funcDetail extends ComponentBase {
   @Prop()

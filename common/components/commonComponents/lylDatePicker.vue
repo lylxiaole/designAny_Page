@@ -20,11 +20,11 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import moment from 'moment'
 
 @Options({})
-export default class npDatePicker extends Vue {
+export default class lylDatePicker extends Vue {
   private get currentTime(): moment.Moment {
     if (this.value) {
       if (this.dateType == 'week') {

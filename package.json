@@ -83,7 +83,7 @@
     "@types/uuid": "^8.3.1",
     "@vue/babel-plugin-jsx": "^1.2.2",
     "@vue/babel-preset-jsx": "^1.4.0",
-    "ace-builds": "^1.33.1",
+    "ace-builds": "^1.36.2",
     "autoprefixer": "^10.3.1",
     "axios": "^0.21.1",
     "browserify-zlib": "^0.2.0",

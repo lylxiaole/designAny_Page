@@ -8,7 +8,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
-import npDatePicker from '@common/components/commonComponents/npDatePicker.vue'
+import lylDatePicker from '@common/components/commonComponents/lylDatePicker.vue'
 import propertyCellBase from '../common'
 import { CellSettingAttr } from '../common'
 import { PropertyTypeEnum, TimePickerFile_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
@@ -16,7 +16,7 @@ import { PropertyTypeEnum, TimePickerFile_Setting } from '@design-any/interface/
 @CellSettingAttr(PropertyTypeEnum.timePicker)
 @Options({
   components: {
-    DatePicker: npDatePicker
+    DatePicker: lylDatePicker
   }
 })
 export default class timePickerControl extends propertyCellBase<TimePickerFile_Setting> {
