@@ -10,7 +10,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { useAttrs, ref } from 'vue'
 // ***********************************************
 import ace from 'ace-builds'
-import workerJavascriptUrl from 'ace-builds/src-noconflict/worker-javascript?url'
+import workerJavascriptUrl from 'ace-builds/src-noconflict/worker-javascript'
 import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/ext-searchbox'
 import 'ace-builds/src-noconflict/ext-language_tools'
@@ -29,7 +29,7 @@ export default class lylJSEditor extends Vue {
     ace.config.setModuleUrl('ace/mode/javascript_worker', workerJavascriptUrl)
     const editor = ace.edit(this.$refs.drawarea as any, {
       mode: 'ace/mode/javascript',
-      useWorker: false
+      useWorker: true
     })
     editor.setOptions({
       enableBasicAutocompletion: true,
