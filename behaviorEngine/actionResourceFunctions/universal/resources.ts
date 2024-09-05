@@ -12,8 +12,10 @@ export class dictionarys implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
+
   async excute(inparams: object_InParam[]) {
     let key = this.currentActObj.resourceFilter.dicKey
+
     let dic = behaviorContext.allDictionary.find((o) => o.key === key)
     return dic.value
   }
@@ -25,9 +27,10 @@ export class thirtyApis implements actFuncBase {
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute(inparams: object_InParam[]) {
-    let apiInfo = this.currentActObj.resourceFilter.apiInfo
 
+  async excute(inparams: object_InParam[]) {
+    //
+    let apiInfo = this.currentActObj.resourceFilter.apiInfo
     let header = {}
     let body = {}
     let urlParam = {}

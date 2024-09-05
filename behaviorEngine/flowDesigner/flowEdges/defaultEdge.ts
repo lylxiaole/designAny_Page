@@ -29,8 +29,8 @@ class defaultEdgeModel extends PolylineEdgeModel {
   getTextStyle() {
     const style = super.getTextStyle()
     style.color = '#3451F1'
-    style.fontSize = 30
-    style.background.fill = '#F2F131'
+    style.fontSize = 12
+    // style.background.fill = '#F2F131'
     return style
   }
   getOutlineStyle() {
