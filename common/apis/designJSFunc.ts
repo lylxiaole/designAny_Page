@@ -64,8 +64,8 @@ export async function AddOrUpdateFunTreeInfo(api: JSFuncEntity): Promise<JSFuncE
   return resp.data
 }
 
-export async function DeleteAPI(funcId: string): Promise<boolean> {
-  let url = apiAddr() + 'api/jsFunc/DeleteAPI'
+export async function DeleteFunc(funcId: string): Promise<boolean> {
+  let url = apiAddr() + 'api/jsFunc/DeleteFunc'
   const resp = await ajaxPost(url, funcId)
   return resp.data
 }

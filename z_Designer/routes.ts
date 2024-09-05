@@ -14,7 +14,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: '我的应用'
         },
-        component: () => import('./views/designApplications/index.vue')
+        component: () => require('./views/designApplications/index.vue')
       },
       // {
       //   icon: 'icon-all-fill',
@@ -34,15 +34,7 @@ const routes: IRouteClass[] = [
       //   },
       //   component: () => import('./views/designDatabases/index.vue')
       // },
-      {
-        icon: 'icon-all-fill',
-        path: '/designDictionary',
-        name: 'designDictionary',
-        meta: {
-          title: '字典管理'
-        },
-        component: () => import('./views/designDictionary/index.vue')
-      },
+
       {
         icon: 'icon-all-fill',
         path: '/designThirtyApis',
@@ -50,7 +42,25 @@ const routes: IRouteClass[] = [
         meta: {
           title: '外部接口'
         },
-        component: () => import('./views/designThirtyApis/index.vue')
+        component: () => require('./views/designThirtyApis/index.vue')
+      },
+      {
+        icon: 'icon-all-fill',
+        path: '/designDictionary',
+        name: 'designDictionary',
+        meta: {
+          title: '字典管理'
+        },
+        component: () => require('./views/designDictionary/index.vue')
+      },
+      {
+        icon: 'icon-all-fill',
+        path: '/designFunctions',
+        name: 'designFunctions',
+        meta: {
+          title: 'JS函数管理'
+        },
+        component: () => require('./views/designFunctions/index.vue')
       }
     ]
   },
@@ -62,7 +72,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '应用设计'
     },
-    component: () => import('./views/designPages/index.vue')
+    component: () => require('./views/designPages/index.vue')
   },
   {
     icon: 'icon-all-fill',
@@ -72,7 +82,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '应用预览'
     },
-    component: () => import('./views/previewPages/index.vue')
+    component: () => require('./views/previewPages/index.vue')
   },
   {
     path: '/login',
@@ -81,7 +91,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '登录'
     },
-    component: () => import('./views/user/login.vue')
+    component: () => require('./views/user/login.vue')
   },
   {
     path: '/register',
@@ -90,7 +100,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: '注册'
     },
-    component: () => import('./views/user/register.vue')
+    component: () => require('./views/user/register.vue')
   }
 ]
 
