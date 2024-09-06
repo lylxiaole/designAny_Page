@@ -29,6 +29,9 @@ export default class index extends PageBase {
       this.currentFuncContent = null
     } else {
       this.currentFuncContent = await GetFuncDetail(funcId)
+      if (!this.currentFuncContent.content) {
+        this.currentFuncContent.content = 'function main(val){ return  1}'
+      }
     }
 
     ;(this.$refs.funcDetail as funcDetail).setCurrentFunc(this.currentFuncContent)

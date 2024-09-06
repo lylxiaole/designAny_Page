@@ -16,6 +16,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/designJSFunc'
 import lylJSEditor from '@common/components/commonComponents/lylJSEditor.vue'
+import excuteJS from '@common/components/commonComponents/funcstrExcute'
 @Options({
   components: { lylJSEditor: lylJSEditor }
 })
@@ -36,12 +37,14 @@ export default class funcDetail extends ComponentBase {
   private async onSureHandle() {
     this.currentFunc.content = (this.$refs.lylJSEditor as lylJSEditor).getValue()
     try {
-      var closep = function (val) {
-        return eval(val)
-      }
-
-      let x = closep(this.currentFunc.content)
-      debugger
+      let excutejs = new excuteJS(this.currentFunc.content)
+      excutejs.validate()
+      // ;(function (jscontent) {
+      //   jscontent = 'var func=' + jscontent
+      //   eval(jscontent)
+      //   let x = this
+      //   debugger
+      // })(this.currentFunc.content)
     } catch (error: any) {
       alert('保存失败:' + error.message)
       return

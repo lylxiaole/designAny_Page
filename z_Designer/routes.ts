@@ -58,7 +58,7 @@ const routes: IRouteClass[] = [
         path: '/designFunctions',
         name: 'designFunctions',
         meta: {
-          title: 'JS函数管理'
+          title: 'JS函数'
         },
         component: () => require('./views/designFunctions/index.vue')
       }

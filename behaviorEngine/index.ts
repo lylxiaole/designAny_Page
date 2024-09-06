@@ -8,12 +8,14 @@ const actFuncModulesFiles = require.context('./actionResourceFunctions', true, /
 //加载所有流程节点
 const flowNodeModulesFiles = require.context('./flowDesigner/flowNode_Inner', true, /\.(vue)$/)
 
-export async function init(apiAddr, getAllDictionary, getAllThirtyApis) {
+export async function init(apiAddr, getAllDictionary, getAllThirtyApis, getGroupFuncsAll) {
   behaviorContext.designerServerApiAddr = apiAddr
   behaviorContext.getAllDictionary = getAllDictionary
   behaviorContext.getAllThirtyApis = getAllThirtyApis
+  behaviorContext.getAllJSFuncs = getGroupFuncsAll
   behaviorContext.allDictionary = await getAllDictionary()
   behaviorContext.allThirtyApis = await getAllThirtyApis()
+  behaviorContext.allJSFuncs = await getGroupFuncsAll()
 
   actFuncModulesFiles.keys().reduce((modules, modulePath) => {
     const value = actFuncModulesFiles(modulePath)

@@ -27,8 +27,10 @@ designEngineInit(apiAddr())
 
 import { GetAll } from '@common/apis/designDictionary'
 import { GetGroupApisAll } from '@common/apis/designThirtyApi'
+import { GetGroupFuncsAll } from '@common/apis/designJSFunc'
+
 import { init as behaviorEngineInit } from '@behaviorEngine/index'
-behaviorEngineInit(apiAddr(), GetAll, GetGroupApisAll)
+behaviorEngineInit(apiAddr(), GetAll, GetGroupApisAll, GetGroupFuncsAll)
 // *****************************************************
 import App from './views/App.vue'
 // ***************************************************

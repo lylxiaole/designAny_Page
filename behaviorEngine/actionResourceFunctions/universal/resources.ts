@@ -5,6 +5,7 @@ import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '@
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
+import excuteJS from '@common/components/commonComponents/funcstrExcute'
 
 @resourceFuncAttr('字典', '', funcGroup.universalTool, funcCode.dictionary, funcStack.universal, [], { key: getUuid(), name: '输出' })
 export class dictionarys implements actFuncBase {
@@ -15,7 +16,6 @@ export class dictionarys implements actFuncBase {
 
   async excute(inparams: object_InParam[]) {
     let key = this.currentActObj.resourceFilter.dicKey
-
     let dic = behaviorContext.allDictionary.find((o) => o.key === key)
     return dic.value
   }
@@ -109,4 +109,13 @@ export class fixedValue implements actFuncBase {
       return parseFloat(value)
     }
   }
+}
+
+@resourceFuncAttr('JS函数', '', funcGroup.universalTool, funcCode.jsFunction, funcStack.universal, [], {})
+export class jsFunction implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute(inparams: object_InParam[]) {}
 }
