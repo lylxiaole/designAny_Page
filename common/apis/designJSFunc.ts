@@ -14,7 +14,6 @@ export class JSFuncEntity extends BaseClass {
   public name: string
   public desc: string
   public index: number
-
   public content: string
 }
 export class JSFuncGroupDC extends BaseClass {

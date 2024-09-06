@@ -18,16 +18,16 @@ function excuteJS(jscontent) {
     let isHaveOutput = jscontent.indexOf(' return ') > -1
     return {
       inparams: inparams,
-      isHaveOutput: isHaveOutput
+      haveOutput: isHaveOutput
     }
   }
 
-  this.startExcute = function () {
+  this.startExcute = function (args) {
     let newjscontent = jscontent + "\n if(!main){throw '必须有main函数'}"
     newjscontent += '\n this.func=main'
     eval(newjscontent)
-    let x = this
-    debugger
+
+    return this.func.apply(this, args)
   }
 }
 export default excuteJS

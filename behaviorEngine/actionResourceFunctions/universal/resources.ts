@@ -6,6 +6,7 @@ import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEn
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
 import excuteJS from '@common/components/commonComponents/funcstrExcute'
+import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/designJSFunc'
 
 @resourceFuncAttr('字典', '', funcGroup.universalTool, funcCode.dictionary, funcStack.universal, [], { key: getUuid(), name: '输出' })
 export class dictionarys implements actFuncBase {
@@ -111,11 +112,43 @@ export class fixedValue implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('JS函数', '', funcGroup.universalTool, funcCode.jsFunction, funcStack.universal, [], {})
+@resourceFuncAttr('JS函数', '', funcGroup.universalTool, funcCode.jsFunction, funcStack.universal, [], null)
 export class jsFunction implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
   currentBehavior: behavior
-  async excute(inparams: object_InParam[]) {}
+  async excute(inparams: object_InParam[]) {
+    let funcId = this.currentActObj.resourceFilter.funcId
+    let func = this.loopFindFunc(funcId, behaviorContext.allJSFuncs)
+    if (!func || !func.content) {
+      throw '函数不存在'
+    }
+
+    let excutejs = new excuteJS(func.content)
+    var params: any[] = []
+    inparams.filter((o) => {
+      params.push(o.val)
+    })
+
+    let res = excutejs.startExcute(params)
+
+    return res
+  }
+
+  private loopFindFunc(targetId: string, allfuncs: JSFuncGroupDC[]) {
+    for (let index = 0; index < allfuncs.length; index++) {
+      const group = allfuncs[index]
+
+      let find = group.childrenFuncs.find((o) => o.id === targetId)
+      if (find) {
+        return find
+      }
+      find = this.loopFindFunc(targetId, group.childrenGroups)
+      if (find) {
+        return find
+      }
+    }
+    return null
+  }
 }
