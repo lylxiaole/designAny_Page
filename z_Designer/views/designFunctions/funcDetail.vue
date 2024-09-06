@@ -38,16 +38,7 @@ export default class funcDetail extends ComponentBase {
     this.currentFunc.content = (this.$refs.lylJSEditor as lylJSEditor).getValue()
     try {
       let excutejs = new excuteJS(this.currentFunc.content)
-      let res = excutejs.validate()
-      debugger
-      this.currentFunc.inParams = res.inparams
-      this.currentFunc.haveOutput = res.haveOutput
-      // ;(function (jscontent) {
-      //   jscontent = 'var func=' + jscontent
-      //   eval(jscontent)
-      //   let x = this
-      //   debugger
-      // })(this.currentFunc.content)
+      excutejs.validate()
     } catch (error: any) {
       alert('保存失败:' + error.message)
       return
