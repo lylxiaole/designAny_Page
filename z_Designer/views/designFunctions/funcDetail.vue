@@ -1,7 +1,7 @@
 <template>
   <div style="padding:8px;width:100%;height:100%;box-sizing:border-box" class="">
     <div style="width:100%;height:calc(100% - 50px)">
-      <lylJSEditor />
+      <lylJSEditor ref="lylJSEditor" />
     </div>
 
     <div style="height:50px">
@@ -20,14 +20,34 @@ import lylJSEditor from '@common/components/commonComponents/lylJSEditor.vue'
   components: { lylJSEditor: lylJSEditor }
 })
 export default class funcDetail extends ComponentBase {
-  @Prop()
   private currentFunc: JSFuncEntity
+
+  public setCurrentFunc(func: JSFuncEntity) {
+    this.currentFunc = func
+    if (func) {
+      ;(this.$refs.lylJSEditor as lylJSEditor).setValue(func.content)
+    } else {
+      ;(this.$refs.lylJSEditor as lylJSEditor).setValue(null)
+    }
+  }
 
   mounted() {}
 
   private async onSureHandle() {
-    let x = this.currentFunc
-    let res = await AddOrUpdateFunc(x)
+    this.currentFunc.content = (this.$refs.lylJSEditor as lylJSEditor).getValue()
+    try {
+      var closep = function (val) {
+        return eval(val)
+      }
+
+      let x = closep(this.currentFunc.content)
+      debugger
+    } catch (error: any) {
+      alert('保存失败:' + error.message)
+      return
+    }
+
+    let res = await AddOrUpdateFunc(this.currentFunc)
     if (res) {
       alert('保存成功')
     } else {
