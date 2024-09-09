@@ -1,6 +1,6 @@
 <template>
   <div class="verticalAlignCenter">
-    <div :style="{ width: 'auto' }" class="iconitem themeHover" @click="onclick">
+    <div :style="{ width: 'auto' }" class="iconitem themeHover" :title="tooltiptext" @click="onclick">
       <div style="height: 20px" class="flexHorilanLayout">
         <el-image draggable="false" :src="icon"></el-image>
       </div>
@@ -17,6 +17,9 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 export default class optionBtn extends Vue {
   @Prop()
   private label
+
+  @Prop()
+  private tooltiptext
 
   @Prop()
   private icon

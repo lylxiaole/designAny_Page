@@ -51,13 +51,15 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.canDrop = true
     this.designEvets.onDrop_Event = this.listenOnDrop
     this.designEvets.onDragMove_Event = this.listenOnDragMove
-    this.designEvets.onDelete_Event = this.listenOnDeleteKey
 
+    this.designEvets.onDelete_Event = this.listenOnDeleteKey
     this.designEvets.onCut_Event = this.listenOnCut
     this.designEvets.onCopy_Event = this.listenOnCopy
     this.designEvets.onPaste_Event = this.listenOnPaste
-    this.designEvets.onMouseMove_Event = this.listenOnMousemove
     this.designEvets.onClick_Event = this.listenOnClick
+    this.designEvets.onPreStep_Event = this.listenOnPreStep
+    this.designEvets.onNextStep_Event = this.listenOnNextStep
+
     this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
   }
@@ -86,21 +88,18 @@ export default class PCPageDesign extends EnginePage {
     return resComp
   }
   /**********************************监听设计事件 ******************************/
-  private listenOnMousemove(e: MouseEvent) {}
-
   private listenOnChangedScale_Event(sizechange: number): boolean {
     this.scaleSize(sizechange)
     this.designEvets.setCurrentScaleSize(sizechange)
     return false
   }
-
   private listenOnDragSelf_Event(xmove: number, ymove: number) {
     this.left += xmove
     this.top += ymove
     this.$forceUpdate()
   }
   private async listenOnDrop(el: Element, container: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): Promise<boolean> {
-    // window.console.log('listenOnDrop:', 1)
+    // window.console.log('listenOnDrop:', dragdata)
     if (!dragdata) {
       return true
     }
@@ -118,14 +117,6 @@ export default class PCPageDesign extends EnginePage {
           dropcomp = await this.insertComponentLayout(compVue, compInfo, dragdata.type)
         }
         break
-      //暂时保留
-      case DragItemTypeEnum.drop_component_template:
-        {
-          let compdata = this.getCompTemplateData(compInfo.sourceId)
-          let compVue = findSystemCompByCode(compInfo.compCode)
-          dropcomp = await this.insertComponentLayout(compVue, compInfo, dragdata.type, compdata)
-        }
-        break
       default:
         break
     }
@@ -138,7 +129,7 @@ export default class PCPageDesign extends EnginePage {
     }
     return false
   }
-  protected listenOnDragMove(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, el: Element, dragdata?: DragItemData<any>): boolean {
+  private listenOnDragMove(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, el: Element, dragdata?: DragItemData<any>): boolean {
     // window.console.log('listenOnDragMove:', dragdata)
     if (!dragdata) {
       return true
@@ -227,8 +218,9 @@ export default class PCPageDesign extends EnginePage {
   private changeStack_right: changeStack[] = []
   private changeFromStack: boolean = false
   private propOldValCache: any[] = []
+
   private cacheOldVal(layoutId, fieldId, val) {
-    val = JSON.stringify(val)
+    val = deepClone(val)
     let cacheval = this.propOldValCache.find((o) => o.layoutId === layoutId && o.fieldId === fieldId)
     if (!cacheval) {
       this.propOldValCache.push({ layoutId: layoutId, fieldId: fieldId, val: val })
@@ -241,7 +233,7 @@ export default class PCPageDesign extends EnginePage {
     if (!cacheval) {
       throw '出问题了'
     } else {
-      return JSON.parse(cacheval.val)
+      return cacheval.val
     }
   }
   private async startListenEngineChange(layout: EngineLayout) {
@@ -254,6 +246,7 @@ export default class PCPageDesign extends EnginePage {
         property.field,
         (newval) => {
           let oldVal = this.getCacheOldVal(layout.Id, property.field)
+          newval = deepClone(newval)
           this.whileLayoutPropertyValChanged(layout.Id, property.field, oldVal, newval)
           this.cacheOldVal(layout.Id, property.field, newval)
         },
@@ -277,24 +270,34 @@ export default class PCPageDesign extends EnginePage {
     if (this.changeFromStack) {
       return
     }
-    console.log('whileLayoutPropertyValChanged:', layoutId, field, oldval, newval)
+    // console.log('whileLayoutPropertyValChanged:', layoutId, field, oldval, newval)
     this.changeStack_left.unshift({ type: stackType.propChanged, childId: undefined, layoutId: layoutId, propField: field, val: { oldval: oldval, newval: newval } })
+    if (this.changeStack_left.length > 100) {
+      this.changeStack_left.splice(99, this.changeStack_left.length - 100)
+    }
   }
   private whileLayoutRemoveChild(layoutId, childId, childData) {
     this.isNeedSave = true
     if (this.changeFromStack) {
       return
     }
-    console.log('whileLayoutRemoveChild:', layoutId, childId, childData)
+    // console.log('whileLayoutRemoveChild:', layoutId, childId, childData)
     this.changeStack_left.unshift({ type: stackType.removeChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
+    if (this.changeStack_left.length > 100) {
+      this.changeStack_left.splice(99, this.changeStack_left.length - 100)
+    }
   }
   private whileLayoutAddChild(layoutId, childId, childData) {
     this.isNeedSave = true
     if (this.changeFromStack) {
       return
     }
-    console.log('whileLayoutAddChild:', layoutId, childId, childData)
+    // console.log('whileLayoutAddChild:', layoutId, childId, childData)
     this.changeStack_left.unshift({ type: stackType.addChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
+
+    if (this.changeStack_left.length > 100) {
+      this.changeStack_left.splice(99, this.changeStack_left.length - 100)
+    }
   }
 
   public get canToPreStack() {
@@ -317,7 +320,6 @@ export default class PCPageDesign extends EnginePage {
       try {
         let stack = this.changeStack_left[0]
         let findLayout = this.findLayoutRecursion(stack.layoutId, [this])
-        console.log('toPreStack:', stack)
         if (stack.type === stackType.propChanged) {
           findLayout[stack.propField] = stack.val.oldval
         } else if (stack.type === stackType.addChild) {
@@ -327,7 +329,9 @@ export default class PCPageDesign extends EnginePage {
         }
         this.changeStack_left.splice(0, 1)
         this.changeStack_right.unshift(stack)
+        console.log(`toPreStack--- --left stack legth:${this.changeStack_left.length},right stack legth:${this.changeStack_right.length}`)
       } catch (error) {}
+
       await this.$nextTick()
       this.changeFromStack = false
     }
@@ -348,6 +352,7 @@ export default class PCPageDesign extends EnginePage {
 
         this.changeStack_right.splice(0, 1)
         this.changeStack_left.unshift(stack)
+        console.log(`toNextStack--- --left stack legth:${this.changeStack_left.length},right stack legth:${this.changeStack_right.length}`)
       } catch (error) {}
       await this.$nextTick()
       this.changeFromStack = false
@@ -357,6 +362,22 @@ export default class PCPageDesign extends EnginePage {
   private listenOnClick(e: Event, target: any) {
     this.chooseComps([])
   }
+
+  private listenOnPreStep(e: Event) {
+    e.preventDefault()
+    if (this.canToPreStack) {
+      this.toPreStack()
+    }
+    e.stopPropagation()
+  }
+  private listenOnNextStep(e: Event) {
+    e.preventDefault()
+    if (this.canToNextStack) {
+      this.toNextStack()
+    }
+    e.stopPropagation()
+  }
+
   // ******************************************************
   public closeDesign() {
     this.destorymethod()

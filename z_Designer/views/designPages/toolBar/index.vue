@@ -5,10 +5,10 @@
       <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">看板</div>
     </div>
     <!-- *************************************************************************** -->
-    <optionBtn :style="{ height: height + 'px' }" :label="'保存' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'保存' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
 
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'前一步'" @mouseup="topre" />
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'后一步'" @mouseup="tonext" />
+    <optionBtn v-if="currentPage && currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :icon="chexiaoIcon" :label="'前一步'" @mouseup="topre" />
+    <optionBtn v-if="currentPage && currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :icon="fanchexiaoIcon" :label="'后一步'" @mouseup="tonext" />
 
     <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="previewIcon" label="预览" @mouseup="onPreView" />
 
@@ -46,7 +46,7 @@ import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface
 import componentListControl from './ComponentListControl.vue'
 import optionBtn from './optionBtn.vue'
 
-import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon } from '@/assets/designIcons'
+import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon } from '@/assets/designIcons'
 
 @Options({
   components: {
@@ -60,6 +60,8 @@ export default class quickActionBar extends Vue {
   private quitIcon: any = quitIcon
   private previewIcon: any = previewIcon
   private behaviorIcon: any = behaviorIcon
+  private chexiaoIcon: any = chexiaoIcon
+  private fanchexiaoIcon: any = fanchexiaoIcon
 
   @Prop() private height: number
   /**当前的布局页面属性，外部通过绑定传递进来 */

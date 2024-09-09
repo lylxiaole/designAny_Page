@@ -10,15 +10,7 @@ import { getUuid, deepClone, serialize } from '@common/utils'
 export enum DragItemTypeEnum {
   drop_system_component = 'drop_system_component',
   dragmove_component_inpage = 'dragmove_component_inpage',
-  drag_component_size = 'drag_component_size',
-  drag_gridLayout_col = 'drag_gridLayout_col',
-  /**拖拽组件模板 */
-  drop_component_template = 'drop_component_template',
-  functional_component = 'functional_component',
-  /**拖拽模型组件 */
-  drop_model_component = 'drop_modal_component',
-  /**在拖拽表单内的组件 */
-  drag_compInForm = 'drag_compInForm'
+  drag_component_size = 'drag_component_size'
 }
 export class DragItemData<T> {
   type: DragItemTypeEnum
@@ -311,6 +303,12 @@ export default class DesignEvents {
       //ctrl+v
       //  e.preventDefault()
       this.onPaste_Event(e)
+    } else if (keyCode == 90 && ctrlKey == true && this.onPaste_Event) {
+      this.onPreStep_Event(e)
+      //ctrl+z
+    } else if (keyCode == 89 && ctrlKey == true && this.onPaste_Event) {
+      //ctrl+y
+      this.onNextStep_Event(e)
     }
   }
   private pri_onMouseWheel = (e: any) => {
@@ -466,6 +464,15 @@ export default class DesignEvents {
       this._vueComp.removeChildRecursion(comp.Id)
     }
   }
+  onPreStep_Event(e: Event) {
+    e.preventDefault()
+    // window.console.log('按了删除键', this.name)
+  }
+  onNextStep_Event(e: Event) {
+    e.preventDefault()
+    // window.console.log('按了删除键', this.name)
+  }
+
   onPositionLeft_Event: (e: Event) => void
   onPositionRight_Event: (e: Event) => void
   onPositionTop_Event: (e: Event) => void
