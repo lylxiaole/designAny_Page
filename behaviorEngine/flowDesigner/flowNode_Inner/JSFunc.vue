@@ -36,16 +36,16 @@ export default class JSFunc extends Vue {
   mounted() {
     this.loadAllApis()
 
-    if (this.actObj.resourceFilter.funcInfo) {
-      this.currentSelectId = this.actObj.resourceFilter.funcInfo.id
+    if (this.actObj.resourceFilter.funcId) {
+      this.currentSelectId = this.actObj.resourceFilter.funcId
     }
   }
 
   private currentSelectId: string = null
   private allFuncsTree: any[] = []
 
-  private loadAllApis() {
-    let allfuncs = behaviorContext.allJSFuncs
+  private async loadAllApis() {
+    let allfuncs = await behaviorContext.getAllJSFuncs()
     this.allFuncsTree = this.orgnizeTree(allfuncs)
   }
 
@@ -97,7 +97,6 @@ export default class JSFunc extends Vue {
     } else {
       this.actObj.outParam = null
     }
-    debugger
   }
 }
 </script>
