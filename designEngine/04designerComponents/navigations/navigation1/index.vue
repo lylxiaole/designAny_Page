@@ -21,7 +21,7 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '文本组件', 'TextComponent_001', null)
+@DCompnentAttr('pc', DCompType.system_component, '系统组件', '导航栏1', 'navigation1', null)
 @Options({})
 export default class TextComponent extends EngineComponent {
   isShowIndex: boolean = false
