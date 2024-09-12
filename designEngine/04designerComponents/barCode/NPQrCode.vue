@@ -25,8 +25,9 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
 import { getUuid, deepClone } from '@common/utils'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '二维码组件', 'NPQrCode_001', null)
+@DCompnentAttr(paltform.universal, DCompType.system_component, '系统组件', '二维码组件', 'NPQrCode_001', null)
 @Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'

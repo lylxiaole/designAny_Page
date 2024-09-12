@@ -20,7 +20,9 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '数字输入框', 'numberInput_001', null)
+import paltform from '@design-any/interface/dist/enums/paltform'
+
+@DCompnentAttr(paltform.universal, DCompType.system_component, '系统组件', '数字输入框', 'numberInput_001', null)
 @Options({})
 export default class numberInput extends EngineComponent {
   isShowIndex: boolean = false

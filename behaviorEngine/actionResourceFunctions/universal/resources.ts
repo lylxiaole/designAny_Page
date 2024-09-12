@@ -1,12 +1,13 @@
 import { getUuid } from '@common/utils'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
 import excuteJS from '@common/components/commonComponents/funcstrExcute'
 import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/designJSFunc'
+import funcStack from '@design-any/interface/dist/enums/funcStack'
 
 @resourceFuncAttr('字典', '', funcGroup.universalTool, funcCode.dictionary, funcStack.universal, [], { key: getUuid(), name: '输出' })
 export class dictionarys implements actFuncBase {

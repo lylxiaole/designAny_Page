@@ -19,10 +19,10 @@ import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@design-any
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-
 import * as elemenpComps from 'element-plus'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent_001', null)
+@DCompnentAttr(paltform.universal, DCompType.system_component, '系统组件', '普通按钮', 'ButtonComponent_001', null)
 @Options({
   components: {
     ...(elemenpComps as any)

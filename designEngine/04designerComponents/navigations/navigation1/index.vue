@@ -20,13 +20,11 @@ import {
   Enum_Setting
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '导航栏1', 'navigation1', null)
+@DCompnentAttr(paltform.webpc, DCompType.system_component, '系统组件', '导航栏1', 'navigation1', null)
 @Options({})
-export default class TextComponent extends EngineComponent {
-  isShowIndex: boolean = false
-  isShowInput: boolean = false
-
+export default class index extends EngineComponent {
   mounted() {
     this.width = '10%'
     this.height = '4%'

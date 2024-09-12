@@ -34,8 +34,9 @@ import {
   Enum_Setting
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '文本组件', 'TextComponent_001', null)
+@DCompnentAttr(paltform.universal, DCompType.system_component, '系统组件', '文本组件', 'TextComponent_001', null)
 @Options({})
 export default class TextComponent extends EngineComponent {
   isShowIndex: boolean = false

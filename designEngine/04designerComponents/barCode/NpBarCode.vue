@@ -46,7 +46,9 @@ const codeFormats = [
   'pharmacode',
   'codabar'
 ]
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '一维码组件', 'NpBarCode_001', npGridIco)
+import paltform from '@design-any/interface/dist/enums/paltform'
+
+@DCompnentAttr(paltform.universal, DCompType.system_component, '系统组件', '一维码组件', 'NpBarCode_001', npGridIco)
 @Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}

@@ -17,7 +17,9 @@ import { shallowRef } from 'vue'
 
 import elementResizeDetectorMaker from 'element-resize-detector'
 
-@DCompnentAttr('pc', DCompType.system_component, '系统组件', '普通EChart', 'EchartNormal_001', null)
+import paltform from '@design-any/interface/dist/enums/paltform'
+
+@DCompnentAttr(paltform.universal, DCompType.system_component, '系统组件', '普通EChart', 'EchartNormal_001', null)
 @Options({})
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})
