@@ -4,11 +4,8 @@
     <div class="main-container" style="height:100%;overflow:hidden;margin-left:0px">
       <el-row class="toprow">
         <!-- 放logo和文字的 -->
-        <el-col :span="4" style="height:60px;line-height: 60px;padding-left: 32px; ">
-          <span key="expand" class="sidebar-logo-link" to="/">
-            <img :src="currentAppInfo ? currentAppInfo.icon : ''" class="sidebar-logo" />
-            <span class="sidebar-title">{{ this.currentAppInfo ? this.currentAppInfo.name : '' }}</span>
-          </span>
+        <el-col :span="4" style="height:60px;line-height: 60px;padding-left: 32px;">
+
         </el-col>
         <!-- 小标签 -->
         <el-col :span="13" style="height:60px; ">
@@ -55,9 +52,12 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
 import paltform from '@design-any/interface/dist/enums/paltform'
+// ****************************************
+import Sidebar from './sideBar/Sidebar.vue'
+import Navbar from './Navbar.vue'
 
 @DCompnentAttr(paltform.webpc, DCompType.system_component, '系统组件', '导航栏1', 'navigation1', null)
-@Options({})
+@Options({ components: { Sidebar, Navbar } })
 export default class index extends EngineComponent {
   mounted() {
     this.width = '10%'

@@ -14,7 +14,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
-import sidebarItem from './sidebarItem.vue'
+import sidebarItem from './SidebarItem.vue'
 
 @Options({ components: { sidebarItem } })
 export default class index extends Vue {
