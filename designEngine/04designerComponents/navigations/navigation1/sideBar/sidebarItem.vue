@@ -24,7 +24,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 
 @Options({})
-export default class sidebarItem extends Vue {
+export default class SidebarItem extends Vue {
   private onlyOneChild: any = null
 
   @Prop()

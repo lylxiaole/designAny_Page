@@ -19,6 +19,7 @@ import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface
 import * as utils from '@design-any/interface/dist/utils'
 
 import { MobilePagePreview, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
 import { behaviorList } from '@behaviorEngine/index'
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
@@ -82,10 +83,10 @@ export default class index extends PageBase {
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
       case pageType.pcPage:
-        designLayout = findPageByPaltform('pc', 'preview')
+        designLayout = findPageByPaltform(paltform.webpc, 'preview')
         break
       case pageType.mobilePage:
-        designLayout = findPageByPaltform('mobile', 'preview')
+        designLayout = findPageByPaltform(paltform.webapp, 'preview')
         break
       default:
         break

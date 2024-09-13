@@ -9,10 +9,11 @@ import { Options, Vue } from 'vue-class-component'
 
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage, EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
 import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '../02common/drawVueDom'
-@DPageAttr('pc', 'preview')
+@DPageAttr(paltform.webpc, 'preview')
 @Options({})
 export default class PCPagePreview extends EnginePage {
   private get backgroundCute(): string {

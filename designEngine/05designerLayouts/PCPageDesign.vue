@@ -13,10 +13,11 @@ import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
 import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 
-@DPageAttr('pc', 'design')
+@DPageAttr(paltform.webpc, 'design')
 @Options({})
 export default class PCPageDesign extends EnginePage {
   private get backgroundCute(): string {

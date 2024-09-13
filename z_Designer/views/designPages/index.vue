@@ -49,7 +49,7 @@ import previewPage from '@/views/previewPages/index.vue'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import * as utils from '@design-any/interface/dist/utils'
-
+import paltform from '@design-any/interface/dist/enums/paltform'
 import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
 
 @Options({
@@ -174,10 +174,10 @@ export default class index extends PageBase {
 
     switch (res.type) {
       case pageType.pcPage:
-        designLayout = findPageByPaltform('pc', 'design')
+        designLayout = findPageByPaltform(paltform.webpc, 'design')
         break
       case pageType.mobilePage:
-        designLayout = findPageByPaltform('mobile', 'design')
+        designLayout = findPageByPaltform(paltform.webapp, 'design')
         break
       default:
         break
