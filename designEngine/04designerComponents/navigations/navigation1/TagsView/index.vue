@@ -34,17 +34,13 @@ export default {
   },
   computed: {
     visitedViews() {
-      return this.$store.state.system.visitedViews
+      return []
     },
     routes() {
-      return this.$store.state.system.routes
+      return []
     }
   },
   watch: {
-    $route() {
-      this.addTags()
-      this.moveToCurrentTag()
-    },
     visible(value) {
       if (value) {
         document.body.addEventListener('click', this.closeMenu)
@@ -95,11 +91,6 @@ export default {
       }
     },
     addTags() {
-      const { name } = this.$route
-      if (name) {
-        this.$store.dispatch('system/addVisitedView', this.$route)
-        this.$store.dispatch('system/addCachedView', this.$route)
-      }
       return false
     },
     moveToCurrentTag() {

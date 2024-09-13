@@ -7,6 +7,7 @@ import { findOrginProps } from '@design-any/interface/dist/LayoutAttr/PropertyIn
 
 import designerContext from '../01designerContext/context'
 import ElementPlus from 'element-plus'
+
 export function designDrawDomVirtual(vueComp, isDesigning) {
   let fragment = window.document.createDocumentFragment() as any
   // let divdom = window.document.createElement('div')

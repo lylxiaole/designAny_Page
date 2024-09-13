@@ -60,8 +60,8 @@ import Navbar from './Navbar.vue'
 @Options({ components: { Sidebar, Navbar } })
 export default class index extends EngineComponent {
   mounted() {
-    this.width = '10%'
-    this.height = '4%'
+    this.width = '50%'
+    this.height = '50%'
     this.background = 'white'
   }
 }

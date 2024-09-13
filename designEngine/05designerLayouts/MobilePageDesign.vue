@@ -8,8 +8,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DPageAttr('mobile', 'design')
+@DPageAttr(paltform.webapp, 'design')
 @Options({})
 export default class MobilePageDesign extends EnginePage {
   //页面中包含的布局容器

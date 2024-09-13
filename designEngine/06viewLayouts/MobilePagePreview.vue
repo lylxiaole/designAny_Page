@@ -8,8 +8,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DPageAttr('mobile', 'preview')
+@DPageAttr(paltform.webapp, 'preview')
 @Options({})
 export default class MobilePagePreview extends EnginePage {}
 </script>

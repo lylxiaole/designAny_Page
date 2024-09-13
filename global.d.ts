@@ -17,13 +17,15 @@ declare module '*.less' {
   export default classes
 }
 
+// import { Options, Vue } from 'vue-class-component'
 // declare module '*.vue' {
-//   import { Options, Vue } from 'vue-class-component'
-
 //   export default Vue
 // }
-
-// **************vue申明*******
+import Vue from 'vue'
+declare module '*.vue' {
+  export default Vue
+}
+// **************vue内部变量申明*******
 import Vuex, { Store, createStore } from 'vuex'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

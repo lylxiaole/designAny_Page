@@ -16,32 +16,7 @@ import TagsView from './TagsView/index.vue'
     TagsView
   }
 })
-export default class Navbar extends Vue {
-  private get sidebar() {
-    return this.$store.state.system.sidebar
-  }
-  private get avatar() {
-    // window.console.log('navbar avatar:', this.$store.getters.avatar)
-    return this.$store.state.system.avatar
-  }
-  private get device() {
-    window.console.log('this.$store.state.system.device', this.$store.state.system.device)
-    return this.$store.state.system.device
-  }
-
-  private toggleSideBar() {
-    this.$store.dispatch('system/toggleSideBar')
-  }
-  private async logout() {
-    window.console.log('logout')
-    try {
-      await this.$store.dispatch('system/logout')
-    } catch (error) {
-    } finally {
-      this.$router.push(`/user/login?redirect=${this.$route.fullPath}`)
-    }
-  }
-}
+export default class Navbar extends Vue {}
 </script>
 
 <style lang="scss" scoped>

@@ -20,10 +20,10 @@ export default {
     }
   },
   mounted() {
-    this.scrollWrapper.addEventListener('scroll', this.emitScroll, true)
+    // this.scrollWrapper.addEventListener('scroll', this.emitScroll, true)
   },
   beforeDestroy() {
-    this.scrollWrapper.removeEventListener('scroll', this.emitScroll)
+    // this.scrollWrapper.removeEventListener('scroll', this.emitScroll)
   },
   methods: {
     handleScroll(e) {
