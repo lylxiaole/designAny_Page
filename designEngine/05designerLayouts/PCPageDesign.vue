@@ -14,7 +14,6 @@ import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@des
 import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
-
 import { designDrawDomVirtual } from '../02common/drawVueDom'
 
 @DPageAttr(paltform.webpc, 'design')
@@ -25,7 +24,7 @@ export default class PCPageDesign extends EnginePage {
     if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
-    return 'url("' + this.designerContext.getFileApiAddr(this.background_img[0].uid) + '")'
+    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '")'
   }
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true

@@ -34,12 +34,13 @@ export default class ButtonComponent extends EngineComponent {
 
   @DPropAttr(new UploadFile_Setting('按钮图标', PropertyGroupName.data, true, null, 1, 'image'))
   private btnIcon: any[] = []
+
   private get btnIconUrl() {
     if (!this.btnIcon || this.btnIcon.length < 1) {
       return ''
     }
 
-    return this.designerContext.getFileApiAddr(this.btnIcon[0].uid)
+    return this.applicationContext.getFileApiAddr(this.btnIcon[0].uid)
   }
 
   mounted() {

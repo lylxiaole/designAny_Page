@@ -55,10 +55,14 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 // ****************************************
 import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
+import { PropertyTypeEnum, AppPagesChoose_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
-@DCompnentAttr(paltform.webpc, DCompType.system_component, '系统组件', '导航栏1', 'navigation1', null)
+@DCompnentAttr(paltform.webpc, DCompType.system_component, '系统组件', '导航栏模板', 'navigation1', null)
 @Options({ components: { Sidebar, Navbar } })
 export default class index extends EngineComponent {
+  @DPropAttr(new AppPagesChoose_Setting('页面清单', PropertyGroupName.data, true))
+  private allPages: any[] = []
+
   mounted() {
     this.width = '50%'
     this.height = '50%'

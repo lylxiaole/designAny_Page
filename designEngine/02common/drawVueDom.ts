@@ -5,7 +5,7 @@ import { findOrginEvents } from '@design-any/interface/dist/LayoutAttr/EventInfo
 import { findOrginMethods } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
 import { findOrginProps } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
-import designerContext from '../01designerContext/context'
+import applicationContext from '../01designerContext/context'
 import ElementPlus from 'element-plus'
 
 export function designDrawDomVirtual(vueComp, isDesigning) {
@@ -21,7 +21,7 @@ export function designDrawDomVirtual(vueComp, isDesigning) {
     designerMethods: methods,
     properties: allprops,
     designerEvents: events,
-    designerContext: designerContext,
+    applicationContext: applicationContext,
     compInfo: compInfo,
     isDesigning: isDesigning
   })
@@ -45,7 +45,7 @@ export function designDrawDomReal(dom, vueComp, isDesigning) {
     designerMethods: methods,
     properties: allprops,
     designerEvents: events,
-    designerContext: designerContext,
+    applicationContext: applicationContext,
     compInfo: compInfo,
     isDesigning: isDesigning
   })

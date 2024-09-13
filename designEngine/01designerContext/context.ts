@@ -1,8 +1,8 @@
-var designerContext = {
+var applicationContext = {
   designerServerApiAddr: '',
   getFileApiAddr: (fileId) => {
-    return designerContext.designerServerApiAddr + 'api/file/GetFile?fileId=' + fileId
+    return applicationContext.designerServerApiAddr + 'api/file/GetFile?fileId=' + fileId
   }
 }
 
-export default designerContext
+export default applicationContext

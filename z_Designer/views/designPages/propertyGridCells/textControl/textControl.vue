@@ -1,8 +1,4 @@
-/**
- * 文本设置
- * By LYL
- * 日期
- */
+ 
 <template>
   <div>
     <el-input size="small" v-model="currentValue" @change="onValueChanged" placeholder="请输入" />
