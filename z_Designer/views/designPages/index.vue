@@ -18,7 +18,7 @@
       <el-col style="width:250px;height:100%;float:left">
         <el-tabs v-model="activeName" type="card" class="demo-tabs">
           <el-tab-pane label="属性" name="first">
-            <propertyGrid ref="propertyGrid" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
+            <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
           </el-tab-pane>
         </el-tabs>
       </el-col>

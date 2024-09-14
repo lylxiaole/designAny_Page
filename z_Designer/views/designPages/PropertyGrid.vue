@@ -15,7 +15,8 @@
         <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
           {{propertyInfo.name}}</el-col>
         <el-col :span="12" style="margin-left:4px">
-          <component :is="propertyInfo.comp" :property="propertyInfo.property" :page="currentPage" :layouts="currentLayouts">
+          <component :is="propertyInfo.comp" :property="propertyInfo.property" :application="application" :page="currentPage"
+            :layouts="currentLayouts">
           </component>
         </el-col>
         <el-col :span="2">
@@ -27,12 +28,13 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options, prop, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { PropertySetting, PropertyTypeEnum } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, serialize, deserialize } from '@common/utils'
 import propertyCellBase, { getCellControl } from './propertyGridCells/common'
+import { ApplicationDC } from '@common/apis/designApplication'
 
 class PropertyGroupInfo {
   groupName: string
@@ -74,6 +76,8 @@ modulesFiles.keys().reduce((modules, modulePath) => {
   components: {}
 })
 export default class PropertyGrid extends Vue {
+  @Prop()
+  public application: ApplicationDC
   /**当前的布局页面 */
   @Prop()
   public currentPage: EnginePage

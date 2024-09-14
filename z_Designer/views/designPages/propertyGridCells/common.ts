@@ -2,6 +2,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { PropertyTypeEnum, PropertySetting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
 var cellControls = []
 
@@ -28,6 +29,9 @@ export default class propertyCellBase<T> extends Vue {
   /**当前需要设置的布局类 */
   @Prop()
   protected layouts: EngineLayout[] | EngineLayout
+
+  @Prop()
+  protected application: ApplicationDC
 
   /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
   protected get currentProperty(): T {

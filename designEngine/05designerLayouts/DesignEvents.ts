@@ -201,7 +201,6 @@ export default class DesignEvents {
     return iscontinue
   }
   private _onDragEnd = (el: Element) => {
-    debugger
     if (!this.onDragEnd_Event) {
       return
     }
