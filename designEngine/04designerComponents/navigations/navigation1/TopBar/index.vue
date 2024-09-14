@@ -3,9 +3,9 @@
 
     <template></template>
 
-    <UserOption class="item" />
+    <!-- <UserOption class="item" />
     <Language class="item" style="margin-right: 20px;" />
-    <ThemePicker class="item" />
+    <ThemePicker class="item" /> -->
 
   </div>
 </template>

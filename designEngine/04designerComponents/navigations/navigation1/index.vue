@@ -1,6 +1,6 @@
  
 <template>
-  <div :class="classObj" class="app-wrapper" style="overflow:hidden">
+  <div class="app-wrapper" style="overflow:hidden">
     <div class="main-container" style="height:100%;overflow:hidden;margin-left:0px">
       <el-row class="toprow">
         <!-- 放logo和文字的 -->
@@ -21,16 +21,16 @@
       </el-row>
 
       <el-row style="height:calc(100% - 60px);;width:100%;overflow:hidden;padding:10px;box-sizing: border-box;">
-        <el-col style="height:100%;width: 240px;overflow:hidden;padding:10px;box-sizing: border-box;">
+        <div style="height:100%;width: 240px;overflow:hidden;padding:10px;box-sizing: border-box;overflow-y:auto">
           <!-- 左边菜单栏 :style="{ width: isCollapse ? '64px' : '240px' }"-->
-          <Sidebar />
-        </el-col>
-        <el-col style="height:100%; width: calc(100% - 240px);overflow:hidden">
+          <Sidebar :allPages="selectedPages" />
+        </div>
+        <div style="height:100%; width: calc(100% - 240px);overflow:hidden">
           <!-- 中间展示区域 :style="{ width: isCollapse ? 'calc(100% - 64px)' : 'calc(100% - 240px)'-->
           <el-row style="height:100%;padding:10px;box-sizing: border-box;width:100%;">
-            <app-main style="width:100%;height:100%;overflow:hidden;display:inherit" />
+            <div ref="container"></div>
           </el-row>
-        </el-col>
+        </div>
       </el-row>
     </div>
   </div>
@@ -55,13 +55,15 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 // ****************************************
 import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
+import TopBar from './TopBar/index.vue'
+
 import { PropertyTypeEnum, AppPagesChoose_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
 @DCompnentAttr(paltform.webpc, DCompType.system_component, '系统组件', '导航栏模板', 'navigation1', null)
-@Options({ components: { Sidebar, Navbar } })
+@Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
   @DPropAttr(new AppPagesChoose_Setting('页面清单', PropertyGroupName.data, true))
-  private allPages: any[] = []
+  private selectedPages: any[] = []
 
   mounted() {
     this.width = '50%'

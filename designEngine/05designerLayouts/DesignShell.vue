@@ -48,7 +48,7 @@ import { deepClone } from '@common/utils'
 export default class DesignShell extends Vue {
   public renderContainer: any = {}
 
-  private _dragHelper: dragHelper = null
+  private local_dragHelper: dragHelper = null
 
   public component: EngineComponent = null
   public positionval: string = null
@@ -101,10 +101,10 @@ export default class DesignShell extends Vue {
   }
 
   mounted() {
-    this._dragHelper = new dragHelper(this.$el)
-    this._dragHelper.makeContainerCannotDrop()
-    this._dragHelper.makeDomCannotDrag(this.$el)
-    this._dragHelper.registerOnDragEnd((e) => {
+    this.local_dragHelper = new dragHelper(this.$el)
+    this.local_dragHelper.makeContainerCannotDrop()
+    this.local_dragHelper.makeDomCannotDrag(this.$el)
+    this.local_dragHelper.registerOnDragEnd((e) => {
       ;(this.component.topLayout as EnginePage).clearHorRule()
       ;(this.component.topLayout as EnginePage).clearVerRule()
     })
@@ -145,8 +145,8 @@ export default class DesignShell extends Vue {
     dragdata.dragData = { compId: this.component.Id }
     //
     let dragicon = this.$refs.dragmengb as Element
-    this._dragHelper.makeDomCanDrag(dragicon)
-    this._dragHelper.makeDragItemInfo(dragicon, deepClone(dragdata))
+    this.local_dragHelper.makeDomCanDrag(dragicon)
+    this.local_dragHelper.makeDragItemInfo(dragicon, deepClone(dragdata))
     // ******************************************
     let you_xia = this.$refs['semove'] as Element
     let zuo_xia = this.$refs['swmove'] as Element
@@ -158,37 +158,37 @@ export default class DesignShell extends Vue {
     let you = this.$refs['emove'] as Element
     dragdata = { type: DragItemTypeEnum.drag_component_size }
     //
-    this._dragHelper.makeDomCanDrag(you_xia)
+    this.local_dragHelper.makeDomCanDrag(you_xia)
     dragdata.dragData = { position: 'you_xia', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(you_xia, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(you_xia, deepClone(dragdata))
     //
-    this._dragHelper.makeDomCanDrag(zuo_xia)
+    this.local_dragHelper.makeDomCanDrag(zuo_xia)
     dragdata.dragData = { position: 'zuo_xia', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(zuo_xia, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(zuo_xia, deepClone(dragdata))
     //
-    this._dragHelper.makeDomCanDrag(you_shang)
+    this.local_dragHelper.makeDomCanDrag(you_shang)
     dragdata.dragData = { position: 'you_shang', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(you_shang, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(you_shang, deepClone(dragdata))
     //
-    this._dragHelper.makeDomCanDrag(zuo_shang)
+    this.local_dragHelper.makeDomCanDrag(zuo_shang)
     dragdata.dragData = { position: 'zuo_shang', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(zuo_shang, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(zuo_shang, deepClone(dragdata))
     //
-    this._dragHelper.makeDomCanDrag(shang)
+    this.local_dragHelper.makeDomCanDrag(shang)
     dragdata.dragData = { position: 'shang', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(shang, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(shang, deepClone(dragdata))
     //
-    this._dragHelper.makeDomCanDrag(xia)
+    this.local_dragHelper.makeDomCanDrag(xia)
     dragdata.dragData = { position: 'xia', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(xia, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(xia, deepClone(dragdata))
     //
-    this._dragHelper.makeDomCanDrag(zuo)
+    this.local_dragHelper.makeDomCanDrag(zuo)
     dragdata.dragData = { position: 'zuo', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(zuo, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(zuo, deepClone(dragdata))
     //
-    this._dragHelper.makeDomCanDrag(you)
+    this.local_dragHelper.makeDomCanDrag(you)
     dragdata.dragData = { position: 'you', compId: this.component.Id }
-    this._dragHelper.makeDragItemInfo(you, deepClone(dragdata))
+    this.local_dragHelper.makeDragItemInfo(you, deepClone(dragdata))
   }
 
   public onStartDrag(el: Element, dragdata: DragItemData<any>) {

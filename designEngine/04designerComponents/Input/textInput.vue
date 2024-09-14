@@ -34,6 +34,11 @@ export default class textInput extends EngineComponent {
     this.background = 'white'
   }
 
+  @Watch('currentText', { deep: true, immediate: true })
+  private onchanged(val) {
+    debugger
+  }
+
   @DPropAttr(new Text_Setting('值', PropertyGroupName.data, true))
   private currentText: string = ''
 

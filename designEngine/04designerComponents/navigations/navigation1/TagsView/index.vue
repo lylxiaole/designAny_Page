@@ -1,18 +1,18 @@
 <template>
   <div id="tags-view-container" class="tags-view-container" style="overflow-y:hidden">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
-      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.path" :class="isActive(tag) ? 'active' : ''"
+      <!-- <router-link v-for="tag in visitedViews" ref="tag" :key="tag.path" :class="isActive(tag) ? 'active' : ''"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" class="tags-view-item"
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''" @contextmenu.prevent="openMenu(tag, $event)">
         {{ $t(tag.title) }}
         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link>
+      </router-link> -->
     </scroll-pane>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">刷新</li>
+      <!-- <li @click="refreshSelectedTag(selectedTag)">刷新</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭</li>
       <li @click="closeOthersTags">关闭其它</li>
-      <li @click="closeAllTags(selectedTag)">关闭所有</li>
+      <li @click="closeAllTags(selectedTag)">关闭所有</li> -->
     </ul>
   </div>
 </template>

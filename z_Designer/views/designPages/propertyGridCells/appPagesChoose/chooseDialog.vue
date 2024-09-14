@@ -6,7 +6,7 @@
       <el-tree ref="leftTree" node-key="id" :data="allPageTree" show-checkbox default-expand-all :allow-drop="false" :allow-drag="false"
         :expand-on-click-node="false" draggable highlight-current>
         <template #default="{data}">
-          <el-text @dragover="ondragOver_leftNode" @drop="ondrop_leftleftNode">{{data.label}}</el-text>
+          <el-text>{{data.label}}</el-text>
         </template>
       </el-tree>
     </el-row>
