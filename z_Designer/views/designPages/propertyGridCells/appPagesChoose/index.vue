@@ -7,7 +7,7 @@
       选择页面
     </el-button>
 
-    <chooseDialog ref="chooseDialog" />
+    <chooseDialog ref="chooseDialog" @onChangeTree="onChangeTree" />
   </div>
 </template>
 
@@ -28,6 +28,10 @@ export default class index extends propertyCellBase<AppPagesChoose_Setting> {
   private async startEdit() {
     let allPages = await GetApplicationPages(this.application.id)
     ;(this.$refs.chooseDialog as chooseDialog).show(this.currentValue, allPages)
+  }
+
+  private onChangeTree(val) {
+    this.currentValue = val
   }
 }
 </script>
