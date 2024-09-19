@@ -41,7 +41,8 @@ import dragHelper from '@designEngine/02common/dragHelper'
 import { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { EngineComponent, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
-import { designDrawDomReal } from '../02common/drawVueDom'
+ import {  designDrawDomReal } from '@design-any/interface/dist/utils/drawVueDom'
+ 
 import applicationContext from '@designEngine/01designerContext/context'
 
 import { deepClone } from '@common/utils'

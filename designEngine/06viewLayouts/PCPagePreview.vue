@@ -12,7 +12,7 @@ import { EnginePage, EngineLayout, EngineComponent } from '@design-any/interface
 import paltform from '@design-any/interface/dist/enums/paltform'
 
 import ViewShell from './ViewShell.vue'
-import { designDrawDomVirtual } from '../02common/drawVueDom'
+import { designDrawDomVirtual } from  '@design-any/interface/dist/utils/drawVueDom' 
 import applicationContext from '../01designerContext/context'
 
 @DPageAttr(paltform.webpc, 'preview')

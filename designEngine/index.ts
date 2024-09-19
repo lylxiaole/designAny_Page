@@ -1,4 +1,3 @@
-export * from './02common/drawVueDom'
 export * from './05designerLayouts/DesignEvents'
 
 import MobilePageDesign from './05designerLayouts/PCPageDesign.vue'

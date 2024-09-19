@@ -42,8 +42,8 @@ import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 
-import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
-
+import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview  } from '@designEngine/index'
+import { designDrawDomVirtual } from  '@design-any/interface/dist/utils/drawVueDom' 
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
 

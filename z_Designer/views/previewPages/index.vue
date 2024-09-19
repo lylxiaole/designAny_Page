@@ -1,9 +1,8 @@
 <template>
-  <el-dialog ref="previewPopup" class="bhaviorDialog" style="height:100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose"
-    :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
-    <el-row style="height:100%;width:100%;display:block;position:relative;display:block">
-      <div ref="renderArea" style="width:100%;height:100%;overflow:hidden"></div>
-      <el-button @click="onClose" style="background:red;position:absolute;left:0px;top:0px">退出预览</el-button>
+  <el-dialog ref="previewPopup" class="bhaviorDialog" style="height: 100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+    <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
+      <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
+      <el-button @click="onClose" style="background: red; position: absolute; left: 0px; top: 0px">退出预览</el-button>
     </el-row>
   </el-dialog>
 </template>
@@ -18,7 +17,8 @@ import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageIn
 import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
 
-import { MobilePagePreview, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
+import { MobilePagePreview, PCPagePreview } from '@designEngine/index'
+import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import paltform from '@design-any/interface/dist/enums/paltform'
 import applicationContext from '@designEngine/01designerContext/context'
 

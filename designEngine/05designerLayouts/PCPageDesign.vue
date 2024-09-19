@@ -14,7 +14,7 @@ import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@des
 import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
-import { designDrawDomVirtual } from '../02common/drawVueDom'
+import { designDrawDomVirtual } from  '@design-any/interface/dist/utils/drawVueDom' 
 import applicationContext from '../01designerContext/context'
 
 @DPageAttr(paltform.webpc, 'design')
