@@ -1,8 +1,11 @@
-var applicationContext = {
-  designerServerApiAddr: '',
-  getFileApiAddr: (fileId) => {
-    return applicationContext.designerServerApiAddr + 'api/file/GetFile?fileId=' + fileId
-  }
+import ApplicationContext from '@design-any/interface/dist/LayoutInterface/ApplicationContext'
+
+var applicationContext: ApplicationContext = {
+  engineServerApiAddr: '',
+  getFileApiAddr: function (fileId) {
+    return this.engineServerApiAddr + 'api/file/GetFile?fileId=' + fileId
+  },
+  getPageDetailById: async function (pageId: string) {}
 }
 
 export default applicationContext

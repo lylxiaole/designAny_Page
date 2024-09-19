@@ -1,10 +1,8 @@
 <template>
-  <div :style="{position:'relative','width':width,'height':height,'left':left,'top':top ,'background':backgroundCute,'padding':'0px' }"
-    oncontextmenu="self.event.returnValue=false" style="border-radius:0px">
-  </div>
+  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }" oncontextmenu="self.event.returnValue=false" style="border-radius: 0px"></div>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
@@ -14,7 +12,7 @@ import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@des
 import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
-import { designDrawDomVirtual } from  '@design-any/interface/dist/utils/drawVueDom' 
+import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
 
 @DPageAttr(paltform.webpc, 'design')
@@ -118,14 +116,7 @@ export default class PCPageDesign extends EnginePage {
     }
     return false
   }
-  protected listenOnDragMove(
-    xchanged: number,
-    ychanged: number,
-    mouseleft: number,
-    mousetop: number,
-    el: Element,
-    dragdata?: DragItemData<any>
-  ): boolean {
+  protected listenOnDragMove(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, el: Element, dragdata?: DragItemData<any>): boolean {
     // window.console.log('listenOnDragMove:', dragdata)
     if (!dragdata) {
       return true
@@ -222,7 +213,7 @@ export default class PCPageDesign extends EnginePage {
   }
 }
 </script>
- 
+
 <style lang="less" scoped>
 // .container {
 //   padding: 0px;
@@ -230,4 +221,4 @@ export default class PCPageDesign extends EnginePage {
 //   border: none;
 //   border-radius: 0px;
 // }
-</style> 
+</style>
