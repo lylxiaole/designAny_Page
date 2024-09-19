@@ -22,6 +22,7 @@ import { ref, h, render, onMounted } from 'vue'
 import { EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 
 import { designDrawDomReal } from '../02common/drawVueDom'
+import applicationContext from '@designEngine/01designerContext/context'
 
 @Options({})
 export default class ViewShell extends Vue {
@@ -53,7 +54,7 @@ export default class ViewShell extends Vue {
     if (this.component != null) {
       this.component.destorymethod()
     }
-    let vueComp = designDrawDomReal(this.$refs.compContent, comp, false)
+    let vueComp = designDrawDomReal(this.$refs.compContent, comp, false, { applicationContext: applicationContext })
     this.component = vueComp as any
     $(this.component.$el).css('width', '100%')
     $(this.component.$el).css('height', '100%')

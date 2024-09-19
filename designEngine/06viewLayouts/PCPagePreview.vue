@@ -13,6 +13,8 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 
 import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '../02common/drawVueDom'
+import applicationContext from '../01designerContext/context'
+
 @DPageAttr(paltform.webpc, 'preview')
 @Options({})
 export default class PCPagePreview extends EnginePage {
@@ -28,7 +30,7 @@ export default class PCPagePreview extends EnginePage {
   mounted() {}
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
-    let { virtualDom, vueComp } = designDrawDomVirtual(ViewShell, false)
+    let { virtualDom, vueComp } = designDrawDomVirtual(ViewShell, false, { applicationContext: applicationContext })
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as ViewShell)
     let resComp = (vueComp as ViewShell).addComponent(compCon)

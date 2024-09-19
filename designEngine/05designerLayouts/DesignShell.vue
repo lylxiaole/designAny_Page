@@ -42,6 +42,7 @@ import { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { EngineComponent, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 import { designDrawDomReal } from '../02common/drawVueDom'
+import applicationContext from '@designEngine/01designerContext/context'
 
 import { deepClone } from '@common/utils'
 @Options({})
@@ -132,7 +133,7 @@ export default class DesignShell extends Vue {
       this.component.destorymethod()
     }
 
-    let vueComp = designDrawDomReal(this.$refs.compContent, comp, true)
+    let vueComp = designDrawDomReal(this.$refs.compContent, comp, true, { applicationContext: applicationContext })
     this.component = vueComp as any
 
     $(this.component.$el).css('width', '100%')

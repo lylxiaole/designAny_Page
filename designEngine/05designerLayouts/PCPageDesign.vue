@@ -15,6 +15,7 @@ import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/Comp
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
 import { designDrawDomVirtual } from '../02common/drawVueDom'
+import applicationContext from '../01designerContext/context'
 
 @DPageAttr(paltform.webpc, 'design')
 @Options({})
@@ -48,7 +49,7 @@ export default class PCPageDesign extends EnginePage {
   }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineComponent> {
-    let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell, true)
+    let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell, true, { applicationContext: applicationContext })
     this.allShells.push(vueComp as DesignShell)
     // ***************************************
     let resComp = (vueComp as DesignShell).addComponent(compCon)

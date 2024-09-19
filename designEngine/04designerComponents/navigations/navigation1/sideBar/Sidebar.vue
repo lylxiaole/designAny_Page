@@ -4,7 +4,7 @@
     <el-menu :default-active="activeMenu" :collapse="false" class="secondMenu" background-color="transparent" :unique-opened="false"
       active-text-color="#FFFFFF" :collapse-transition="false" mode="vertical">
       <template v-for="page in allPages" :key="page.id">
-        <sidebar-item :item="page" />
+        <sidebar-item :item="page" @linkClick="linkClick" />
       </template>
     </el-menu>
   </div>
@@ -23,10 +23,10 @@ export default class index extends Vue {
   @Prop()
   private allPages: any[]
 
-  @Watch('allPages', { deep: true, immediate: true })
-  private onchanged(val) {}
-
   mounted() {}
+
+  @Emit('linkClick')
+  private linkClick(pageId) {}
 }
 </script>
 

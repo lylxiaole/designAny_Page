@@ -20,6 +20,7 @@ import * as utils from '@design-any/interface/dist/utils'
 
 import { MobilePagePreview, PCPagePreview, designDrawDomVirtual } from '@designEngine/index'
 import paltform from '@design-any/interface/dist/enums/paltform'
+import applicationContext from '@designEngine/01designerContext/context'
 
 import { behaviorList } from '@behaviorEngine/index'
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
@@ -92,7 +93,7 @@ export default class index extends PageBase {
         break
     }
     /************************渲染页面 */
-    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false)
+    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false, { applicationContext: applicationContext })
     await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail)
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0

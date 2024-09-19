@@ -8,7 +8,7 @@ import { findOrginProps } from '@design-any/interface/dist/LayoutAttr/PropertyIn
 import applicationContext from '../01designerContext/context'
 import ElementPlus from 'element-plus'
 
-export function designDrawDomVirtual(vueComp, isDesigning) {
+export function designDrawDomVirtual(vueComp, isDesigning, anyx) {
   let fragment = window.document.createDocumentFragment() as any
   // let divdom = window.document.createElement('div')
   // fragment.appendChild(divdom)
@@ -33,7 +33,7 @@ export function designDrawDomVirtual(vueComp, isDesigning) {
   ;(comp.component.proxy as any).renderContainer = fragment
   return { virtualDom: fragment, vueComp: comp.component.proxy }
 }
-export function designDrawDomReal(dom, vueComp, isDesigning) {
+export function designDrawDomReal(dom, vueComp, isDesigning, anyx) {
   // let divdom = window.document.createElement('div')
   // fragment.appendChild(divdom)
   let allprops = findOrginProps(vueComp)

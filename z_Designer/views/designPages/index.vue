@@ -51,6 +51,7 @@ import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageIn
 import * as utils from '@design-any/interface/dist/utils'
 import paltform from '@design-any/interface/dist/enums/paltform'
 import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
+import applicationContext from '@designEngine/01designerContext/context'
 
 @Options({
   components: {
@@ -184,7 +185,7 @@ export default class index extends PageBase {
     }
 
     /************************渲染页面 */
-    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true)
+    let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
     await (vueComp as PCPageDesign).loadPageByData(pageId, pageData)
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0
