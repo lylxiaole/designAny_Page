@@ -57,7 +57,6 @@ class ComponentGroupInfo {
 
 @Options({})
 export default class ComponentListControl extends Vue {
-  private systemCompsActiveKey: string[] = []
   private get systemComponents(): ComponentGroupInfo[] {
     var res: ComponentGroupInfo[] = []
     if (!this.systemCompGroups || !this.sys_limitGroupNames) {
@@ -93,14 +92,7 @@ export default class ComponentListControl extends Vue {
   beforeUnmount() {
     this.clearDrags()
   }
-  @Watch('systemCompsActiveKey', { deep: true })
-  private watchSystemCompsActiveKeyChange(keys: string[]) {
-    window.console.info('systemCompsActiveKey', this.systemCompsActiveKey)
-    this.$nextTick(() => {
-      //window.console.log('给组件列表添加拖拽事件了')
-      this.refreshDrags()
-    })
-  }
+
   changeActivekey(key: any) {
     this.renderStyle()
   }
@@ -125,7 +117,6 @@ export default class ComponentListControl extends Vue {
       .each((index, element) => {
         //window.console.log('---------------------组件列表', element)
         var find = this.dragHelpers.filter((o) => o.currentContainer == element)[0]
-
         if (!find) {
           //注册拖拽插件
           var draghelper = new dragHelper(element)
@@ -165,7 +156,7 @@ export default class ComponentListControl extends Vue {
     })
   }
   /**计算系统自带组件的分组 */
-  private cuteSystemComponents() {
+  private async cuteSystemComponents() {
     getAllComponents()
       .filter((o) => o.type == DCompType.system_component)
       .filter((element) => {
@@ -179,14 +170,17 @@ export default class ComponentListControl extends Vue {
       })
     //window.console.info('this.systemComponents', this.systemComponents)
     let defaultSelectedKey = this.systemCompGroups[0].groupName
-    this.systemCompsActiveKey.push(defaultSelectedKey)
+    // this.systemCompsActiveKey.push(defaultSelectedKey)
     let findgroup = this.systemCompGroups.filter((o) => o.groupName == defaultSelectedKey)[0]
     this.compGroupName = findgroup.groupName
     findgroup.components.forEach((element) => {
       this.dataSource.push(element)
     })
+
+    await this.$nextTick()
+    this.refreshDrags()
   }
-  private onClick(item) {
+  private async onClick(item) {
     this.dataSource = []
     this.compGroupName = ''
     let findgroup = this.systemCompGroups.filter((o) => o.groupName == item.groupName)[0]
@@ -194,6 +188,8 @@ export default class ComponentListControl extends Vue {
     findgroup.components.forEach((element) => {
       this.dataSource.push(element)
     })
+    await this.$nextTick()
+    this.refreshDrags()
   }
   // ***********************************************************************
 }
@@ -218,6 +214,8 @@ img {
 .compGroup {
   width: 100%;
   height: 30px;
+  box-sizing: border-box;
+  margin: 6px 0;
   font-size: 18px;
   cursor: pointer;
   background-color: rgba(240, 242, 245, 1);
