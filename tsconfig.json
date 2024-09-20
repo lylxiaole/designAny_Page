@@ -22,34 +22,18 @@
     "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@common/*": [
-        "common/*"
-      ],
-      "@designEngine/*": [
-        "designEngine/*"
-      ],
-      "@behaviorEngine/*": [
-        "behaviorEngine/*"
-      ],
-      "@design-any/interface/*": [
-        "D:/lowCode_production/design-any_-interface/*"
-      ],
-      "@/*": [
-        "z_Designer/*"
-      ],
-      "tslib": [
-        "node_modules/tslib/tslib.d.ts"
-      ]
+      "@common/*": ["common/*"],
+      "@designEngine/*": ["designEngine/*"],
+      "@behaviorEngine/*": ["behaviorEngine/*"],
+      "@design-any/interface/*": ["D:/lowCode_production/design-any_-interface/*"],
+      "@/*": ["z_Designer/*"],
+      "tslib": ["node_modules/tslib/tslib.d.ts"]
     }
   },
-  "exclude": [ // 不编译这些目录里的文件
+  "exclude": [
+    // 不编译这些目录里的文件
     "node_modules",
     "dist*"
   ],
-  "include": [
-    "**/*.ts",
-    "**/*.d.ts",
-    "**/*.tsx",
-    "**/*.vue"
-  ]
+  "include": ["**/*.ts", "**/*.d.ts", "**/*.tsx", "**/*.vue"]
 }

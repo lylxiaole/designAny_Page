@@ -260,7 +260,8 @@ let baseconfig = {
       path.resolve(currentDir, 'common'),
       path.resolve(currentDir, 'designEngine'),
       path.resolve(currentDir, 'behaviorEngine'),
-      path.resolve(currentDir, 'D:/lowCode_production/design-any_-interface')
+      path.resolve(currentDir, 'D:/lowCode_production/design-any_-interface'),
+      path.resolve(currentDir, 'D:/lowCode_production/designAny_extand_components/dists')
       // path.resolve(currentDir, 'z_Report')
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'], // 模块的后缀名，import时不需要后缀名
@@ -274,6 +275,7 @@ let baseconfig = {
       '@designEngine': path.resolve(currentDir, 'designEngine'), //引入模块时，自动寻找
       '@behaviorEngine': path.resolve(currentDir, 'behaviorEngine'), //引入模块时，自动寻找
       '@design-any/interface': path.resolve(currentDir, 'D:/lowCode_production/design-any_-interface'),
+      '@design-any/basiccomps': path.resolve(currentDir, 'D:/lowCode_production/designAny_extand_components/dists'),
       path: false, // require.resolve('path-browserify'),
       stream: false, //require.resolve("stream-browserify"),
       http: false, //require.resolve("stream-http"),

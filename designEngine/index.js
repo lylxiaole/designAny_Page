@@ -14,20 +14,27 @@ import * as utils from '@design-any/interface/dist/utils'
 
 /**加载所有设计器组件 */
 const modulesFiles = require.context('./', true, /\.(vue|ts)$/)
+const modulesFiles1 = require.context('@design-any/basiccomps', true, /\.(js)$/)
 
 export function init(apiAddr, getPageDetail) {
   applicationContext.engineServerApiAddr = apiAddr
-  applicationContext.getPageDetailById = async function (pageId: string) {
+  applicationContext.getPageDetailById = async function (pageId) {
     let res = await GetPageDetail(pageId)
-    let pageData: any = null
+    let pageData = null
     if (res.designDetail) {
       let pageDataJson = utils.strUnZip(res.designDetail)
       pageData = utils.deserialize(pageDataJson)
     }
     return pageData
   }
+  // ***********************
   modulesFiles.keys().reduce((modules, modulePath) => {
-    const value = modulesFiles<any>(modulePath)
+    const value = modulesFiles(modulePath)
+    return modules
+  }, {})
+  // **************************
+  modulesFiles1.keys().reduce((modules, modulePath) => {
+    const value = modulesFiles(modulePath)
     return modules
   }, {})
 }
