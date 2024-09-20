@@ -1,23 +1,32 @@
 <template>
-  <el-row style="height:357px;">
+  <el-row style="height: 357px">
     <el-col :span="7">
-      <div style="height:357px;width:124px;overflow-x:hidden;overflow-y:auto;">
+      <div style="height: 357px; width: 124px; overflow-x: hidden; overflow-y: auto">
         <div v-for="group in systemComponents" :key="group.groupName" class="compGroup verticalAlignCenter flexHorilanLayout" @click="onClick(group)">
-          {{group.groupName}}
+          {{ group.groupName }}
         </div>
       </div>
     </el-col>
     <el-col :span="17">
-      <div style="display:flex;flex-wrap: wrap">
-        <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" draggable="true" :dragType="dragType" :compName="item.name"
-          :compCode="item.compCode" :compType="item.type" :platform="item.platform"
-          style="width:50px;height:55px;background-color:transparent;border:none;text-align:center">
+      <div style="display: flex; flex-wrap: wrap">
+        <div
+          v-for="item in dataSource"
+          :key="item.compCode"
+          class="mydragItem"
+          draggable="true"
+          :dragType="dragType"
+          :compName="item.name"
+          :compCode="item.compCode"
+          :compType="item.type"
+          :platform="item.platform"
+          style="width: 50px; height: 55px; background-color: transparent; border: none; text-align: center"
+        >
           <div>
-            <div style="width:100%;height:35px;text-align:center">
-              <el-image style="font-size:30px;" draggable="false" :src="item.icon" />
+            <div style="width: 100%; height: 35px; text-align: center">
+              <el-image style="font-size: 30px" draggable="false" :src="item.icon" />
             </div>
-            <div style="font-size:12px;padding-top:3px;text-align:center;color:rgba(0,0,0,0.5);width:100%;height:20px">
-              {{item.name}}
+            <div style="font-size: 12px; padding-top: 3px; text-align: center; color: rgba(0, 0, 0, 0.5); width: 100%; height: 20px">
+              {{ item.name }}
             </div>
           </div>
         </div>
@@ -35,7 +44,7 @@ import dragHelper from '@designEngine/02common/dragHelper'
 
 import { DragItemData, DragItemTypeEnum } from '@designEngine/05designerLayouts/DesignEvents'
 
-import { DCompInfo, DCompType, allComponents } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import { DCompInfo, DCompType, getAllComponents } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {
@@ -157,7 +166,7 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private cuteSystemComponents() {
-    allComponents
+    getAllComponents()
       .filter((o) => o.type == DCompType.system_component)
       .filter((element) => {
         let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
@@ -190,7 +199,7 @@ export default class ComponentListControl extends Vue {
 }
 </script>
 
-<style  lang="less" scoped>
+<style lang="less" scoped>
 img {
   user-select: none;
   -webkit-user-drag: none;

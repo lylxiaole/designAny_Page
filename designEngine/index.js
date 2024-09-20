@@ -9,12 +9,13 @@ export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
 import applicationContext from './01designerContext/context'
 import { GetPageDetail } from '@common/apis/designPage'
 export { applicationContext }
-
 import * as utils from '@design-any/interface/dist/utils'
+
+import '@design-any/basiccomps/designany.basiccomps.min.js'
 
 /**加载所有设计器组件 */
 const modulesFiles = require.context('./', true, /\.(vue|ts)$/)
-const modulesFiles1 = require.context('@design-any/basiccomps', true, /\.(js)$/)
+// const modulesFiles1 = require.context('@design-any/basiccomps', true, /\.(js)$/)
 
 export function init(apiAddr, getPageDetail) {
   applicationContext.engineServerApiAddr = apiAddr
@@ -33,8 +34,8 @@ export function init(apiAddr, getPageDetail) {
     return modules
   }, {})
   // **************************
-  modulesFiles1.keys().reduce((modules, modulePath) => {
-    const value = modulesFiles(modulePath)
-    return modules
-  }, {})
+  // modulesFiles1.keys().reduce((modules, modulePath) => {
+  //   const value = modulesFiles(modulePath)
+  //   return modules
+  // }, {})
 }

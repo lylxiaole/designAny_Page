@@ -26,6 +26,7 @@
       "@designEngine/*": ["designEngine/*"],
       "@behaviorEngine/*": ["behaviorEngine/*"],
       "@design-any/interface/*": ["D:/lowCode_production/design-any_-interface/*"],
+      "@design-any/basiccomps/*": ["D:/lowCode_production/designAny_extand_components/dist/*"],
       "@/*": ["z_Designer/*"],
       "tslib": ["node_modules/tslib/tslib.d.ts"]
     }
