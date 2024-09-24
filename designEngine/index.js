@@ -16,7 +16,6 @@ import '@design-any/basiccomps/index.css'
 
 /**加载所有设计器组件 */
 const modulesFiles = require.context('./', true, /\.(vue|ts)$/)
-// const modulesFiles1 = require.context('@design-any/basiccomps', true, /\.(js)$/)
 
 export function init(apiAddr, getPageDetail) {
   applicationContext.engineServerApiAddr = apiAddr
