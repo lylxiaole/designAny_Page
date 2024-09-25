@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>复合输入框组件</title>
+    <desc>Created with Sketch.</desc>
+    <g id="复合输入框组件" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="分组-2" transform="translate(10.000000, 10.000000)">
+            <g id="图片组件-copy">
+                <path d="M50,87 L50,113 L24,113 L24,87 L50,87 Z M45,92 L29,92 L29,108 L45,108 L45,92 Z M110,95 L110,105 L60,105 L60,95 L110,95 Z M50,57 L50,83 L24,83 L24,57 L50,57 Z M45,62 L29,62 L29,78 L45,78 L45,62 Z M110,65 L110,75 L60,75 L60,65 L110,65 Z M50,27 L50,53 L24,53 L24,27 L50,27 Z M45,32 L29,32 L29,48 L45,48 L45,32 Z M110,35 L110,45 L60,45 L60,35 L110,35 Z" id="形状结合" fill="#F6C444"></path>
+                <path d="M20,0 L20,5 L120,5 L120,0 L140,0 L140,20 L135,20 L135,120 L140,120 L140,140 L120,140 L120,135 L20,135 L20,140 L0,140 L0,120 L5,120 L5,20 L0,20 L0,0 L20,0 Z M120,14.999 L20,14.999 L20,20 L14.999,20 L14.999,120 L20,120 L20,124.999 L120,124.999 L120,120 L124.999,120 L124.999,20 L120,20 L120,14.999 Z M52.232233,26.232233 L55.767767,29.767767 L38,47.5355339 L27.232233,36.767767 L30.767767,33.232233 L38,40.465 L52.232233,26.232233 Z" id="形状结合" fill="#18AEB7" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

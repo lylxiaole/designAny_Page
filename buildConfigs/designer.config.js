@@ -259,10 +259,7 @@ let baseconfig = {
       path.resolve(currentDir, 'node_modules'),
       path.resolve(currentDir, 'common'),
       path.resolve(currentDir, 'designEngine'),
-      path.resolve(currentDir, 'behaviorEngine'),
-      path.resolve(currentDir, 'D:/lowCode_production/design-any_-interface'),
-      path.resolve(currentDir, 'D:/lowCode_production/designAny_extand_components/dists')
-      // path.resolve(currentDir, 'z_Report')
+      path.resolve(currentDir, 'behaviorEngine')
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'], // 模块的后缀名，import时不需要后缀名
     symlinks: true, // 是否跟随文件软链接去搜寻模块的路径

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Tabs备份 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Tabs备份-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="折线图" transform="translate(5.000000, 10.000000)" fill-rule="nonzero">
+            <path d="M150,10 L150,140 L0,140 L0,35 L70,35 L70,10 L150,10 Z M140,45 L10,45 L10,130 L140,130 L140,45 Z M130,95 L130,105 L20,105 L20,95 L130,95 Z M130,70 L130,80 L20,80 L20,70 L130,70 Z M105,20 L80,20 L80,35 L105,35 L105,20 Z M140,20 L115,20 L115,35 L140,35 L140,20 Z" id="形状结合" fill="#18AEB7"></path>
+            <path d="M0,0 L70,0 L70,45 L0,45 L0,0 Z M10,10 L10,35 L60,35 L60,10 L10,10 Z" id="矩形" fill="#F6C444"></path>
+        </g>
+    </g>
+</svg>

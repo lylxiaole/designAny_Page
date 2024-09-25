@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>甘特图备份 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="甘特图备份-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="折线图备份" transform="translate(0.000000, 5.000000)">
+            <path d="M5,0 L5,10 L40,10 L40,0 L45,0 L45,150 L40,150 L40,35 L5,35 L5,150 L0,150 L0,0 L5,0 Z M85,0 L85,80 L120,80 L120,0 L125,0 L125,115 L155,115 L155,0 L160,0 L160,150 L155,150 L155,140 L125,140 L125,150 L120,150 L120,105 L85,105 L85,150 L80,150 L80,0 L85,0 Z" id="形状" fill="#18AEB7"></path>
+            <rect id="矩形" fill="#F6C444" x="40" y="45" width="45" height="25"></rect>
+        </g>
+    </g>
+</svg>

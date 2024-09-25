@@ -9,18 +9,7 @@
     </el-col>
     <el-col :span="17">
       <div style="display: flex; flex-wrap: wrap">
-        <div
-          v-for="item in dataSource"
-          :key="item.compCode"
-          class="mydragItem"
-          draggable="true"
-          :dragType="dragType"
-          :compName="item.name"
-          :compCode="item.compCode"
-          :compType="item.type"
-          :platform="item.platform"
-          style="width: 50px; height: 55px; background-color: transparent; border: none; text-align: center"
-        >
+        <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" draggable="true" :dragType="dragType" :compName="item.name" :compCode="item.compCode" :platform="item.platform" style="width: 50px; height: 55px; background-color: transparent; border: none; text-align: center">
           <div>
             <div style="width: 100%; height: 35px; text-align: center">
               <el-image style="font-size: 30px" draggable="false" :src="item.icon" />
@@ -44,7 +33,7 @@ import dragHelper from '@designEngine/02common/dragHelper'
 
 import { DragItemData, DragItemTypeEnum } from '@designEngine/05designerLayouts/DesignEvents'
 
-import { DCompInfo, DCompType, getAllComponents } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import { DCompInfo, getAllComponents } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {
@@ -136,13 +125,12 @@ export default class ComponentListControl extends Vue {
   /**包含组件的分组名，和组件的名字。不包含组件的类型信息 */
   private organizeDragData(el: Element): DragItemData<any> {
     let dragType = $(el).attr('dragType') as DragItemTypeEnum
-    let type = $(el).attr('compType') as DCompType
     let compName = $(el).attr('compName')
     let compGroupName = $(el).attr('compGroupName')
     let compCode = $(el).attr('compCode')
     let platform = $(el).attr('platform')
 
-    let compInfo = new DCompInfo(type, compGroupName, compName, null, '', platform, compCode)
+    let compInfo = new DCompInfo(compGroupName, compName, null, '', platform, compCode)
     //window.console.log('---------------------------------------------------compInfocompInfocompInfocompInfocompInfo', compInfo)
     let dragd = new DragItemData<any>()
     dragd.type = dragType
@@ -157,17 +145,15 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private async cuteSystemComponents() {
-    getAllComponents()
-      .filter((o) => o.type == DCompType.system_component)
-      .filter((element) => {
-        let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
-        if (findgroup.length < 1) {
-          let newgroup = new ComponentGroupInfo(element.groupName)
-          this.systemCompGroups.push(newgroup)
-        }
-        let group = this.systemCompGroups.filter((o) => o.groupName == element.groupName)[0]
-        group.components.push(element)
-      })
+    getAllComponents().filter((element) => {
+      let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
+      if (findgroup.length < 1) {
+        let newgroup = new ComponentGroupInfo(element.groupName)
+        this.systemCompGroups.push(newgroup)
+      }
+      let group = this.systemCompGroups.filter((o) => o.groupName == element.groupName)[0]
+      group.components.push(element)
+    })
     //window.console.info('this.systemComponents', this.systemComponents)
     let defaultSelectedKey = this.systemCompGroups[0].groupName
     // this.systemCompsActiveKey.push(defaultSelectedKey)
