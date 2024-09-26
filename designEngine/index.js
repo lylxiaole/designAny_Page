@@ -11,8 +11,9 @@ import { GetPageDetail } from '@common/apis/designPage'
 export { applicationContext }
 import * as utils from '@design-any/interface/dist/utils'
 
-import './allcomps/designany.basiccomps.min.js'
-import './allcomps/designany.basiccomps.min.css'
+import './comps/designany.basiccomps.min.js'
+import './comps/designany.basiccomps.min.css'
+
 /**加载所有设计器组件 */
 const modulesFiles = require.context('./', true, /\.(vue|ts)$/)
 
