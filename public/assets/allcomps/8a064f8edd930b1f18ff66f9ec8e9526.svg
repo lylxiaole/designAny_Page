@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>ant日历备份 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="ant日历备份-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-20" transform="translate(10.000000, 5.000000)">
+            <path d="M45,0 L45,10 L95,10 L95,0 L110,0 L110,10 L140,10 L140,140 L0,140 L0,10 L30,10 L30,0 L45,0 Z M130,50 L10,50 L10,130 L130,130 L130,50 Z M30,19.999 L10,20 L10,40 L130,40 L130,20 L110,19.999 L110,30 L95,30 L95,19.999 L45,19.999 L45,30 L30,30 L30,19.999 Z" id="形状结合" fill="#18AEB7" fill-rule="nonzero"></path>
+            <path d="M45,95 L45,115 L25,115 L25,95 L45,95 Z M80,95 L80,115 L60,115 L60,95 L80,95 Z M115,95 L115,115 L95,115 L95,95 L115,95 Z M45,65 L45,85 L25,85 L25,65 L45,65 Z M80,65 L80,85 L60,85 L60,65 L80,65 Z M115,65 L115,85 L95,85 L95,65 L115,65 Z" id="形状结合" fill="#F6C444"></path>
+        </g>
+    </g>
+</svg>
