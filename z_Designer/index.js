@@ -8,7 +8,7 @@ require('@common/assets/iconfont1/iconfont.js')
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-// *********************************************************
+// ************加载vxetable*********************************************
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/style.css'
 // ***********系统环境初始化*********************************
@@ -21,14 +21,16 @@ registerRouteHook(system.router, system.store)
 // ****************************************************
 import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
-// ****************************************************
+// ************加载外部组件*************************************
+import './extand_components/designany.basiccomps.min.css'
+import './extand_components/designany.basiccomps.min.js'
+// ***********初始化设计引擎************************************
 import { init as designEngineInit } from '@designEngine/index'
 designEngineInit(apiAddr())
-
+// ***********初始化行为引擎**************************************
 import { GetAll } from '@common/apis/designDictionary'
 import { GetGroupApisAll } from '@common/apis/designThirtyApi'
 import { GetGroupFuncsAll } from '@common/apis/designJSFunc'
-
 import { init as behaviorEngineInit } from '@behaviorEngine/index'
 behaviorEngineInit(apiAddr(), GetAll, GetGroupApisAll, GetGroupFuncsAll)
 // *****************************************************

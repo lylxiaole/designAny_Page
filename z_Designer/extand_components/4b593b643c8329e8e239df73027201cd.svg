@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>星期备份</title>
+    <desc>Created with Sketch.</desc>
+    <g id="星期备份" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="分组-2备份-3" transform="translate(5.000000, 5.000000)">
+            <path d="M29.999,15 L30,30 L55,30 L55,15 L95,15 L95,30 L120,30 L120,15 L150,15 L150,150 L0,150 L0,15 L29.999,15 Z M140,50 L10,50 L10,140 L140,140 L140,50 Z M50,0 L50,25 L35,25 L35,0 L50,0 Z M115,0 L115,25 L100,25 L100,0 L115,0 Z" id="形状" fill="#18AEB7" fill-rule="nonzero"></path>
+            <path d="M70,90 L70,100 L20,100 L20,90 L70,90 Z M130,70 L130,80 L60,80 L60,70 L130,70 Z" id="形状结合" fill="#F6C444"></path>
+        </g>
+    </g>
+</svg>

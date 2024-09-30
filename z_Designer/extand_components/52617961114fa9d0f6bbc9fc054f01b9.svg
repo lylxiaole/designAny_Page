@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>删除</title>
+    <desc>Created with Sketch.</desc>
+    <g id="删除" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M20,29 L20,91 L80,91 L80,29 L20,29 Z M13,22 L87,22 L87,93 C87,95.7614237 84.7614237,98 82,98 L18,98 C15.2385763,98 13,95.7614237 13,93 L13,22 Z M35,37 L43,37 L43,83 L35,83 L35,37 Z M57,37 L65,37 L65,83 L57,83 L57,37 Z M29.0829584,7 C29.5590365,4.16228666 32.0270037,2 35,2 L65,2 C67.9729963,2 70.4409635,4.16228666 70.9170416,7 L87,7 C89.7614237,7 92,9.23857625 92,12 L92,17 L8,17 L8,12 C8,9.23857625 10.2385763,7 13,7 L29.0829584,7 Z" id="形状" fill="#FF5544" fill-rule="nonzero"></path>
+    </g>
+</svg>

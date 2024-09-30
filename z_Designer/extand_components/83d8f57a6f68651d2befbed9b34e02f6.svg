@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="160px" viewBox="0 0 160 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>穿梭框备份</title>
+    <desc>Created with Sketch.</desc>
+    <g id="穿梭框备份" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-26" transform="translate(5.000000, 15.000000)">
+            <path d="M55,0 L55,130 L0,130 L0,0 L55,0 Z M150,0 L150,130 L95,130 L95,0 L150,0 Z M45,10 L10,10 L10,120 L45,120 L45,10 Z M140,10 L105,10 L105,120 L140,120 L140,10 Z" id="形状结合" fill="#18AEB7" fill-rule="nonzero"></path>
+            <path d="M90,75 L90,105 L60,105 L60,75 L90,75 Z M71.6530209,78.6423893 L68.117487,82.1779232 L75.9395638,90 L68.117487,97.8220768 L71.6530209,101.357611 L83.0106316,90 L71.6530209,78.6423893 Z M90,25 L90,55 L60,55 L60,25 L90,25 Z M78.3469791,28.6423893 L66.9893684,40 L78.3469791,51.3576107 L81.882513,47.8220768 L74.0604362,40 L81.882513,32.1779232 L78.3469791,28.6423893 Z" id="形状结合" fill="#F6C444"></path>
+        </g>
+    </g>
+</svg>
