@@ -914,7 +914,7 @@
 
 "@babel/plugin-transform-modules-commonjs@^7.24.7", "@babel/plugin-transform-modules-commonjs@^7.24.8":
   version "7.24.8"
-  resolved "https://r.cnpmjs.org/@babel/plugin-transform-modules-commonjs/-/plugin-transform-modules-commonjs-7.24.8.tgz#ab6421e564b717cb475d6fff70ae7f103536ea3c"
+  resolved "https://registry.npmmirror.com/@babel/plugin-transform-modules-commonjs/-/plugin-transform-modules-commonjs-7.24.8.tgz#ab6421e564b717cb475d6fff70ae7f103536ea3c"
   integrity sha512-WHsk9H8XxRs3JXKWFiqtQebdh9b/pTk4EgueygFzYlTKAg0Ud985mSevdNjdXdFBATSKVJGQXP1tv6aGbssLKA==
   dependencies:
     "@babel/helper-module-transforms" "^7.24.8"
@@ -14926,7 +14926,7 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
 
 vue3-ts-jsoneditor@^2.11.2:
   version "2.11.2"
-  resolved "https://r.cnpmjs.org/vue3-ts-jsoneditor/-/vue3-ts-jsoneditor-2.11.2.tgz#20326d1b1bd5f874d42aff3b92da318ce267a4bd"
+  resolved "https://registry.npmmirror.com/vue3-ts-jsoneditor/-/vue3-ts-jsoneditor-2.11.2.tgz#20326d1b1bd5f874d42aff3b92da318ce267a4bd"
   integrity sha512-jb4Gt+NmJe8hQJYdfzs9JF+7ZF7Ncgipy6D4g6AqQv7457Yor6zh0PuM+6Ph7UKafkVVIbkg5WMmdB2SOSFDfA==
   dependencies:
     immutable-json-patch "^6.0.0"

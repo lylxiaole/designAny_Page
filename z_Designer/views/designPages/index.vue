@@ -1,21 +1,20 @@
 <template>
-  <el-row style="height:100%;width:100%">
-    <el-row style="height:60px;width:100%">
-      <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine?currentShowEngine.Id:'')" :height="60"
-        @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
+  <el-row style="height: 100%; width: 100%">
+    <el-row style="height: 60px; width: 100%">
+      <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
     </el-row>
-    <el-row style="height:calc(100% - 60px);width:100%;display:block;position:relative;display:block">
-      <el-col style="width:250px;height:100%;float:left">
+    <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
+      <el-col style="width: 250px; height: 100%; float: left">
         <pagelist :currentApplication="application" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
       </el-col>
-      <el-col class="pageList" style="width:calc(100% - 500px);height:100%;float:left">
-        <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width:100%;height:100%">
-          <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name+(needSave(page.Id)?'*':'')" :name="page.Id">
-            <div style="width:100%;height:100%;overflow:auto" :ref="page.Id"></div>
+      <el-col class="pageList" style="width: calc(100% - 500px); height: 100%; float: left">
+        <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width: 100%; height: 100%">
+          <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id">
+            <div style="width: 100%; height: 100%; overflow: auto" :ref="page.Id"></div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
-      <el-col style="width:250px;height:100%;float:left">
+      <el-col style="width: 250px; height: 100%; float: left">
         <el-tabs v-model="activeName" type="card" class="demo-tabs">
           <el-tab-pane label="属性" name="first">
             <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
@@ -26,7 +25,6 @@
 
     <previewPage ref="previewPage" />
     <behaviorSettingDialog ref="behaviorSettingDialog" />
-
   </el-row>
 </template>
 
@@ -42,8 +40,8 @@ import PropertyGrid from './PropertyGrid.vue'
 import toolBar from './toolBar/index.vue'
 import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 
-import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview  } from '@designEngine/index'
-import { designDrawDomVirtual } from  '@design-any/interface/dist/utils/drawVueDom' 
+import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
+import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import previewPage from '@/views/previewPages/index.vue'
 

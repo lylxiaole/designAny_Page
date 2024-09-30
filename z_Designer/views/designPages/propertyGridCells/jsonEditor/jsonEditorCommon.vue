@@ -1,8 +1,6 @@
- 
 <template>
   <div>
-    <JsonEditor ref="editor" height="100%" mode="text" :askToFormat="false" :mainMenuBar="true" :navigationBar="false"
-      :queryLanguagesIds="queryLanguages" v-model:json="jsonData" @error="onError" @focus="onFocus" @blur="onBlur" @change="onChange" />
+    <lylJSONEditor ref="editor" height="100%" />
   </div>
 </template>
 
@@ -12,16 +10,16 @@ import { ref, watch, reactive } from 'vue'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone } from '@common/utils'
 import { isString } from 'xe-utils'
-import JsonEditor from 'vue3-ts-jsoneditor'
+// import JsonEditor from 'vue3-ts-jsoneditor/dist/index.mjs'
+import lylJSONEditor from '@common/components/commonComponents/lylJSONEditor.vue'
 
 @Options({
   components: {
-    JsonEditor: JsonEditor
+    lylJSONEditor: lylJSONEditor
   }
 })
 export default class jsonEditorCommon extends Vue {
   private jsonData: any = reactive({})
-  private queryLanguages = reactive(['javascript', 'lodash', 'jmespath'])
   // ******************************************
   public setJsonData(val) {
     if (isString(val)) {
@@ -29,31 +27,19 @@ export default class jsonEditorCommon extends Vue {
     } else {
       this.jsonData = val
     }
+    ;(this.$refs.editor as lylJSONEditor).setValue(this.jsonData)
   }
   public getJsonData() {
-    let x = (this.$refs.editor as any).$get().text
+    let x = (this.$refs.editor as lylJSONEditor).getValue()
     if (!x) {
       x = JSON.stringify(this.jsonData)
     }
     return JSON.parse(x)
   }
   // ******************************************
-  private onError = (error) => {}
-
-  private onFocus = () => {}
-
-  private onBlur = () => {}
-
-  private onChange = () => {
-    ;(this.$refs.editor as any).value.$validate()
-  }
-
-  // ******************************************
   mounted() {}
 }
 </script>
-
-
 
 <style lang="less" scoped>
 /deep/.jse-button.jse-group-button.jse-first.jse-selected.svelte-7deygj {
