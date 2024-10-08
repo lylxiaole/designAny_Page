@@ -23,11 +23,11 @@
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
       <!-- *************************************************************************** -->
-      <div :style="{ width: '150px' }" class="iconitem themeHover">
-        <div class="flexHorilanLayout" style="width: 100%">
+      <div :style="{ width: '150px' }" style="margin-right: 15px" class="iconitem themeHover">
+        <div class="flexHorilanLayout" style="width: 100%; height: 50%">
           <el-input-number v-model="pageScale" style="width: 100%" controls-position="right" size="small" :min="0.01" :step="0.01" :max="1000" :precision="2" />
         </div>
-        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%">缩放窗口</div>
+        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">缩放窗口</div>
       </div>
       <!-- *************************************************************************** -->
       <optionBtn :style="{ height: height + 'px', width: '80px' }" :icon="quitIcon" label="退出设计" @click="onQuit" />

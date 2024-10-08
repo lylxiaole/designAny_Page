@@ -25,7 +25,6 @@
       "@common/*": ["common/*"],
       "@designEngine/*": ["designEngine/*"],
       "@behaviorEngine/*": ["behaviorEngine/*"],
-
       "@/*": ["z_Designer/*"],
       "tslib": ["node_modules/tslib/tslib.d.ts"]
     }

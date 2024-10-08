@@ -7,19 +7,15 @@
       <el-col style="width: 250px; height: 100%; float: left">
         <pagelist :currentApplication="application" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
       </el-col>
-      <el-col class="pageList" style="width: calc(100% - 500px); height: 100%; float: left">
-        <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="border-card" style="width: 100%; height: 100%">
+      <el-col class="designArea" style="width: calc(100% - 500px); height: 100%; float: left">
+        <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="card" style="width: 100%; height: 100%">
           <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id">
-            <div style="width: 100%; height: 100%; overflow: auto" :ref="page.Id"></div>
+            <div style="width: 100%; height: 100%; overflow: auto; border: 1px solid var(--el-border-color-light); box-sizing: border-box" :ref="page.Id"></div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
       <el-col style="width: 250px; height: 100%; float: left">
-        <el-tabs v-model="activeName" type="card" class="demo-tabs">
-          <el-tab-pane label="属性" name="first">
-            <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
-          </el-tab-pane>
-        </el-tabs>
+        <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
       </el-col>
     </el-row>
 
@@ -230,7 +226,7 @@ export default class index extends PageBase {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .toolbarheader {
   height: 42px;
   padding: 0px;
@@ -239,16 +235,17 @@ export default class index extends PageBase {
   height: calc(100% - 42px);
 }
 
-.pageList > .el-tabs--border-card {
-  box-sizing: border-box;
+/deep/.designArea > .el-tabs {
+  --el-tabs-header-height: 35px;
 }
-.pageList > .el-tabs--border-card > .el-tabs__header {
-  height: 39px;
-  box-sizing: border-box;
-}
-.pageList > .el-tabs--border-card > .el-tabs__content {
+/deep/.designArea .el-tabs__content {
   padding: 0px;
-  height: calc(100% - 39px);
+  height: calc(100% - 39px) !important;
+  box-sizing: border-box;
+}
+
+/deep/.designArea .el-tabs__header {
+  margin: 0px !important;
   box-sizing: border-box;
 }
 </style>

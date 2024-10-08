@@ -1,26 +1,20 @@
 <template>
-  <div style="overflow:hidden">
-    <el-radio-group @change="changeActivekey" v-model="selectGropName" size="small"
-      style="margin-left:30px;margin-top:10px;box-sizing:border-box;height:35px">
-      <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :label="group.groupName"
-        style="height:30px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
-      </el-radio-button>
+  <div style="overflow: hidden">
+    <el-radio-group @change="changeActivekey" v-model="selectGropName" size="small" class="flexHorilanLayout" style="box-sizing: border-box; height: 35px; border: 1px solid var(--el-border-color-light); width: 100%">
+      <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :label="group.groupName" style="text-align: center; text-overflow: ellipsis; white-space: nowrap"></el-radio-button>
     </el-radio-group>
     <!-- ******************************** -->
-    <el-row style="width:100%;height:1px;background:rgba(233,233,233,1);margin-top:10px;box-sizing:border-box"></el-row>
     <!-- ************************************* -->
-    <div style="width:100%;height:calc(100% - 120px);overflow-y:auto; ">
-      <el-row class="propertyGridRow" style="margin-top:10px;" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow"
-        :key="propertyInfo.name" :disabled="propertyInfo.isEnable==false">
-        <el-col :span="8" style="margin-left:16px;font-size:14px;font-weight:400;color:rgba(0,0,0,0.65);line-height:22px;font-size:14px;">
-          {{propertyInfo.name}}</el-col>
-        <el-col :span="12" style="margin-left:4px">
-          <component :is="propertyInfo.comp" :property="propertyInfo.property" :application="application" :page="currentPage"
-            :layouts="currentLayouts">
-          </component>
+    <div style="width: 100%; height: calc(100% - 120px); overflow-y: auto">
+      <el-row class="propertyGridRow" style="margin-top: 10px" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow" :key="propertyInfo.name" :disabled="propertyInfo.isEnable == false">
+        <el-col :span="8" style="margin-left: 16px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 0.65); line-height: 22px; font-size: 14px">
+          {{ propertyInfo.name }}
+        </el-col>
+        <el-col :span="12" style="margin-left: 4px">
+          <component :is="propertyInfo.comp" :property="propertyInfo.property" :application="application" :page="currentPage" :layouts="currentLayouts"></component>
         </el-col>
         <el-col :span="2">
-          <span>{{propertyInfo.property.unit}}</span>
+          <span>{{ propertyInfo.property.unit }}</span>
         </el-col>
       </el-row>
     </div>
@@ -146,7 +140,7 @@ export default class PropertyGrid extends Vue {
     var property_extra: PropertySetting[] = [] //临时变量
     /**用第一个布局的属性列表当作临时属性列表 */
     if (newlayouts_extra.length > 0) {
-      property_extra = [...newlayouts_extra[0].properties]
+      Object.assign(property_extra, newlayouts_extra[0].properties)
     }
 
     /**找出所有布局容器中公有的属性 */
@@ -179,7 +173,6 @@ export default class PropertyGrid extends Vue {
     })
 
     this.propertyGroups = propertyGroups
-    console.log('propertyGroups:', propertyGroups)
   }
 
   mounted() {}
@@ -187,11 +180,10 @@ export default class PropertyGrid extends Vue {
   changeActivekey(groupname: string) {
     let groupName = groupname
     this.selectGropName = groupname
-    let tempGrop = this.propertyGroups.filter((o) => o.groupName == groupName)[0]
   }
 }
 </script>
- 
+
 <style scoped>
 .propertyGridRow {
   margin: 5px 0px;

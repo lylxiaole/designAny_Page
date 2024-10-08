@@ -1,10 +1,10 @@
 <template>
   <div class="verticalAlignCenter">
     <div :style="{ width: 'auto' }" class="iconitem themeHover" @click="onclick">
-      <div style="height: 26px" class="flexHorilanLayout">
+      <div style="height: 20px" class="flexHorilanLayout">
         <el-image draggable="false" :src="icon"></el-image>
       </div>
-      <div class="flexHorilanLayout verticalAlignCenter">{{ label }}</div>
+      <div style="height: calc(100% - 20px)" class="flexHorilanLayout verticalAlignCenter">{{ label }}</div>
     </div>
   </div>
 </template>
@@ -29,13 +29,13 @@ export default class optionBtn extends Vue {
 
 <style lang="less" scoped>
 .iconitem {
-  padding: 8px 8px;
+  padding: 4px 4px;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
   color: white;
 }
 .iconitem .iconfont {
-  font-size: 26px;
+  font-size: 20px;
 }
 </style>
