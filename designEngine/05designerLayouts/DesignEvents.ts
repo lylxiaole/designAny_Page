@@ -119,22 +119,22 @@ export default class DesignEvents {
     }
     this.eventsOptions.isCaptureEvent = true
     // window.console.log('捕捉鼠标键盘动作')
-    this._vueComp.$el.addEventListener('click', this._onClick)
-    this._vueComp.$el.addEventListener('dblclick', this._onDoubleClick)
-    this._vueComp.$el.addEventListener('keyup', this._onKeyUp)
-    this._vueComp.$el.addEventListener('keydown', this._onKeyDown)
-    this._vueComp.$el.addEventListener('mousemove', this._mouseMove)
-    this._vueComp.$el.addEventListener('mouseup', this._mouseUp)
-    this._vueComp.$el.addEventListener('mousedown', this._mouseDown)
-    // $('html').bind('mousewheel', this._onMouseWheel)
-    $(this._vueComp.$el)[0].addEventListener('mousewheel', this._onMouseWheel, { passive: false })
-    $(window).bind('onbeforeunload', this._onWindowUnload)
+    this._vueComp.$el.addEventListener('click', this.pri_onClick)
+    this._vueComp.$el.addEventListener('dblclick', this.pri_onDoubleClick)
+    this._vueComp.$el.addEventListener('keyup', this.pri_onKeyUp)
+    this._vueComp.$el.addEventListener('keydown', this.pri_onKeyDown)
+    this._vueComp.$el.addEventListener('mousemove', this.pri_mouseMove)
+    this._vueComp.$el.addEventListener('mouseup', this.pri_mouseUp)
+    this._vueComp.$el.addEventListener('mousedown', this.pri_mouseDown)
+    // $('html').bind('mousewheel', this.pri_onMouseWheel)
+    $(this._vueComp.$el)[0].addEventListener('mousewheel', this.pri_onMouseWheel, { passive: false })
+    $(window).bind('onbeforeunload', this.pri_onWindowUnload)
     this._dragHelper.makeDomContainer()
-    this._dragHelper.registerOnDrag(this._onDrag)
-    this._dragHelper.registerOnDrop(this._onDrop)
-    this._dragHelper.registerOnDragMove(this._onDragMove)
-    this._dragHelper.registerOnDragEnd(this._onDragEnd)
-    this._dragHelper.registerOnDragOut(this._onDragOut)
+    this._dragHelper.registerOnDrag(this.pri_onDrag)
+    this._dragHelper.registerOnDrop(this.pri_onDrop)
+    this._dragHelper.registerOnDragMove(this.pri_onDragMove)
+    this._dragHelper.registerOnDragEnd(this.pri_onDragEnd)
+    this._dragHelper.registerOnDragOut(this.pri_onDragOut)
     // this._dragHelper.registerOnDragClone(this._onDragClone)
   }
   /**停止捕捉鼠标键盘 */
@@ -145,22 +145,22 @@ export default class DesignEvents {
     // window.console.log('释放鼠标键盘动作')
     this.eventsOptions.isCaptureEvent = false
     if (this._vueComp.$el) {
-      this._vueComp.$el.removeEventListener('click', this._onClick)
-      this._vueComp.$el.removeEventListener('dblclick', this._onDoubleClick)
-      this._vueComp.$el.removeEventListener('keyup', this._onKeyUp)
-      this._vueComp.$el.removeEventListener('keydown', this._onKeyDown)
-      this._vueComp.$el.removeEventListener('mousemove', this._mouseMove)
-      this._vueComp.$el.removeEventListener('mouseup', this._mouseUp)
-      this._vueComp.$el.removeEventListener('mousedown', this._mouseDown)
-      // $('html').unbind('mousewheel', this._onMouseWheel)
-      $(this._vueComp.$el)[0].removeEventListener('mousewheel', this._onMouseWheel)
-      $(window).unbind('beforeunload unload', this._onWindowUnload)
+      this._vueComp.$el.removeEventListener('click', this.pri_onClick)
+      this._vueComp.$el.removeEventListener('dblclick', this.pri_onDoubleClick)
+      this._vueComp.$el.removeEventListener('keyup', this.pri_onKeyUp)
+      this._vueComp.$el.removeEventListener('keydown', this.pri_onKeyDown)
+      this._vueComp.$el.removeEventListener('mousemove', this.pri_mouseMove)
+      this._vueComp.$el.removeEventListener('mouseup', this.pri_mouseUp)
+      this._vueComp.$el.removeEventListener('mousedown', this.pri_mouseDown)
+      // $('html').unbind('mousewheel', this.pri_onMouseWheel)
+      $(this._vueComp.$el)[0].removeEventListener('mousewheel', this.pri_onMouseWheel)
+      $(window).unbind('beforeunload unload', this.pri_onWindowUnload)
       this._dragHelper.removeContainer()
     }
   }
 
   /********************Drag事件****************************************************** */
-  private _onDrag = (el: Element, sourceContainer: Element) => {
+  private pri_onDrag = (el: Element, sourceContainer: Element) => {
     if (sourceContainer != this._vueComp.$el) {
       return
     }
@@ -174,8 +174,8 @@ export default class DesignEvents {
     this._dragHelper.makeDragItemInfo(el, currentDragData)
     return true
   }
-  private _onDrop = async (el: Element, targetContainer: Element, x: number, y: number): Promise<boolean> => {
-    // window.console.log('_onDrop:', this)
+  private pri_onDrop = async (el: Element, targetContainer: Element, x: number, y: number): Promise<boolean> => {
+    // window.console.log('pri_onDrop:', this)
     if (!this.canDrop || !this.onDrop_Event) {
       return true
     }
@@ -188,7 +188,7 @@ export default class DesignEvents {
     // return true
   }
 
-  private _onDragMove = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean => {
+  private pri_onDragMove = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean => {
     if (this.canDrop == false || !this.onDragMove_Event) {
       return true
     }
@@ -200,14 +200,14 @@ export default class DesignEvents {
 
     return iscontinue
   }
-  private _onDragEnd = (el: Element) => {
+  private pri_onDragEnd = (el: Element) => {
     if (!this.onDragEnd_Event) {
       return
     }
     DesignEvents.isDraging = false
     this.onDragEnd_Event()
   }
-  private _onDragOut = (el: Element, targetContainer: Element): boolean => {
+  private pri_onDragOut = (el: Element, targetContainer: Element): boolean => {
     if (!this.onDragOut_Event) {
       return true
     }
@@ -228,8 +228,8 @@ export default class DesignEvents {
     this.onDragClone_Event(clone)
   }
   /************************************************************************** */
-  private _onClick = (e: Event) => {
-    //window.console.log('最底层,_onClick')
+  private pri_onClick = (e: Event) => {
+    //window.console.log('最底层,pri_onClick')
     if (!this.onClick_Event) {
       return
     }
@@ -239,10 +239,10 @@ export default class DesignEvents {
     }
     window.clearTimeout(this.eventsOptions.clickTimer)
     this.eventsOptions.clickTimer = null
-    //window.console.log('最底层,_onClick')
+    //window.console.log('最底层,pri_onClick')
     this.onClick_Event(e, this)
   }
-  private _onDoubleClick = (e: Event) => {
+  private pri_onDoubleClick = (e: Event) => {
     if (!this.onDoubleClick_Event) {
       return
     }
@@ -250,7 +250,7 @@ export default class DesignEvents {
     // window.console.log('点击')
     this.onDoubleClick_Event(e, this)
   }
-  private _onKeyUp = (e: any) => {
+  private pri_onKeyUp = (e: any) => {
     var keyCode = e.keyCode || e.which || e.charCode
     if (keyCode == 46 && this.onDelete_Event) {
       //删除
@@ -258,11 +258,11 @@ export default class DesignEvents {
       this.onDelete_Event(e)
     }
   }
-  private _onKeyDown = (e: any) => {
+  private pri_onKeyDown = (e: any) => {
     var keyCode = e.keyCode || e.which || e.charCode
     var ctrlKey = e.ctrlKey || e.metaKey
 
-    // window.console.log('_onKeyDown:', e.target)
+    // window.console.log('pri_onKeyDown:', e.target)
     if (this.onKeyDown_Event) {
       this.onKeyDown_Event(e)
     }
@@ -321,7 +321,7 @@ export default class DesignEvents {
       this.onPaste_Event(e)
     }
   }
-  private _onMouseWheel = (e: any) => {
+  private pri_onMouseWheel = (e: any) => {
     var ctrlKey = e.ctrlKey || e.metaKey
     if (ctrlKey == true && this.onChangedScale_Event) {
       e.preventDefault()
@@ -335,7 +335,7 @@ export default class DesignEvents {
       this.onMouseWheelInLayout_Event(e)
     }
   }
-  private _mouseMove = (e: any) => {
+  private pri_mouseMove = (e: any) => {
     if (!this.onMouseMove_Event) {
       return true
     }
@@ -348,8 +348,8 @@ export default class DesignEvents {
       // this.onSelectChanged.call(this, data)
       if (this.eventsOptions.boxSelectBorder == null && this.onBoxSelect_Event) {
         this.eventsOptions.boxSelectBorder = $('<div class="boxSelectBorder" style="border:1px solid red;position:absolute;background-color:transparent;z-index:199"></div>')
-        this.eventsOptions.boxSelectBorder.bind('mousemove', this._mouseMove)
-        this.eventsOptions.boxSelectBorder.bind('mouseup', this._mouseUp)
+        this.eventsOptions.boxSelectBorder.bind('mousemove', this.pri_mouseMove)
+        this.eventsOptions.boxSelectBorder.bind('mouseup', this.pri_mouseUp)
         $('body').append(this.eventsOptions.boxSelectBorder)
       }
       if (this.onBoxSelect_Event) {
@@ -369,7 +369,7 @@ export default class DesignEvents {
       // this.startMouseDragPoint_top = currentDragTop
     }
   }
-  private _mouseUp = (e: any) => {
+  private pri_mouseUp = (e: any) => {
     if (!this.onMoudeUp_Event) {
       return true
     }
@@ -381,8 +381,8 @@ export default class DesignEvents {
     this.onMoudeUp_Event(e)
   }
   private clearBoxSelectInfo(e: any) {
-    $('.boxSelectBorder').unbind('mousemove', this._mouseMove)
-    $('.boxSelectBorder').unbind('mouseup', this._mouseUp)
+    $('.boxSelectBorder').unbind('mousemove', this.pri_mouseMove)
+    $('.boxSelectBorder').unbind('mouseup', this.pri_mouseUp)
     $('.boxSelectBorder').remove()
     if (this.eventsOptions.boxSelectBorder) {
       this.eventsOptions.boxSelectBorder = null
@@ -391,7 +391,7 @@ export default class DesignEvents {
       e.stopPropagation()
     }
   }
-  private _mouseDown = (e: any) => {
+  private pri_mouseDown = (e: any) => {
     this.eventsOptions.clickTimer = window.setTimeout(() => {
       window.clearTimeout(this.eventsOptions.clickTimer)
       this.eventsOptions.clickTimer = null
@@ -406,7 +406,7 @@ export default class DesignEvents {
     this.eventsOptions.isMouseDown = true
     this.onMoudeDown_Event(e)
   }
-  private _onWindowUnload = (e: any) => {
+  private pri_onWindowUnload = (e: any) => {
     if (this.onWindowUnload_Event) {
       this.onWindowUnload_Event(e)
     }

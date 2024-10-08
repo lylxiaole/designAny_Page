@@ -1,26 +1,26 @@
 <template>
-  <div style="padding:8px;width:100%;height:100%;box-sizing:border-box" class="">
-    <el-form :model="currentApi" label-width="120px" style="height:calc(100% - 50px);overflow-y:auto">
+  <div style="padding: 8px; width: 100%; height: 100%; box-sizing: border-box" class="">
+    <el-form :model="currentApi" label-width="120px" style="height: calc(100% - 50px); overflow-y: auto">
       <el-form-item label="描述">
-        <el-input style="width:400px" v-model="currentApi.desc" />
+        <el-input style="width: 400px" v-model="currentApi.desc" />
       </el-form-item>
       <el-form-item label="域名">
         <el-radio-group v-model="currentApi.hostIsDictionary">
-          <el-radio label="使用字典" :value="true" />
-          <el-radio label="手动填写" :value="false" />
+          <el-radio :value="true">使用字典</el-radio>
+          <el-radio :value="false">手动填写</el-radio>
         </el-radio-group>
         <br />
-        <el-select v-if="currentApi.hostIsDictionary" style="width:400px" v-model="currentApi.host">
+        <el-select v-if="currentApi.hostIsDictionary" style="width: 400px" v-model="currentApi.host">
           <el-option v-for="dic in allDictorys" :key="dic.id" :label="dic.value" :value="dic.key" />
         </el-select>
-        <el-input v-else style="width:400px" v-model="currentApi.host" />
+        <el-input v-else style="width: 400px" v-model="currentApi.host" />
       </el-form-item>
 
       <el-form-item label="路径">
-        <el-input style="width:400px" v-model="currentApi.path" />
+        <el-input style="width: 400px" v-model="currentApi.path" />
       </el-form-item>
       <el-form-item label="请求类型">
-        <el-select style="width:400px" v-model="currentApi.requestType">
+        <el-select style="width: 400px" v-model="currentApi.requestType">
           <el-option label="Post" value="Post" />
           <el-option label="Get" value="Get" />
           <el-option label="Put" value="Put" />
@@ -30,21 +30,21 @@
       </el-form-item>
 
       <el-form-item label="请求头">
-        <paramsEidtor style="width:400px" :params="currentApi.headers" />
+        <paramsEidtor style="width: 400px" :params="currentApi.headers" />
       </el-form-item>
       <el-form-item label="链接参数">
-        <paramsEidtor style="width:400px" :params="currentApi.inParams" />
+        <paramsEidtor style="width: 400px" :params="currentApi.inParams" />
       </el-form-item>
 
-      <el-form-item label="body参数" v-show="currentApi.requestType!=='Get'">
-        <el-radio-group style="width:100%" v-model="currentApi.bodyIsParam">
-          <el-radio label="细分参数" :value="true" />
-          <el-radio label="不细分参数" :value="false" />
+      <el-form-item label="body参数" v-show="currentApi.requestType !== 'Get'">
+        <el-radio-group style="width: 100%" v-model="currentApi.bodyIsParam">
+          <el-radio :value="true">细分参数</el-radio>
+          <el-radio :value="false">不细分参数</el-radio>
         </el-radio-group>
-        <paramsEidtor v-show="currentApi.bodyIsParam" style="width:400px" :params="currentApi.bodyContent" />
+        <paramsEidtor v-show="currentApi.bodyIsParam" style="width: 400px" :params="currentApi.bodyContent" />
       </el-form-item>
     </el-form>
-    <div style="height:50px">
+    <div style="height: 50px">
       <el-button type="primary" @click="onSureHandle">确定</el-button>
     </div>
   </div>
