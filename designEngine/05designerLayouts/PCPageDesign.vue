@@ -30,11 +30,6 @@ export default class PCPageDesign extends EnginePage {
   public isDesigning: boolean = true
   private designEvets: DesignEvents = null
 
-  @Watch('isNeedSave')
-  private onisNeedSavechanged(val) {
-    debugger
-  }
-
   mounted() {
     this.designEvets = new DesignEvents(this)
     this.designEvets.canDrag = false
