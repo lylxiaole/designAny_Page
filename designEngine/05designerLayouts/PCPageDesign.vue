@@ -14,6 +14,7 @@ import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
+import { Watch } from 'vue-property-decorator'
 
 @DPageAttr(paltform.webpc, 'design')
 @Options({})
@@ -28,6 +29,11 @@ export default class PCPageDesign extends EnginePage {
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
   private designEvets: DesignEvents = null
+
+  @Watch('isNeedSave')
+  private onisNeedSavechanged(val) {
+    debugger
+  }
 
   mounted() {
     this.designEvets = new DesignEvents(this)

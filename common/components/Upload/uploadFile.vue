@@ -1,29 +1,25 @@
 <template>
   <div>
-    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small"
-      style="width:82px;height:30px;background:rgba(24,183,101,1);border-radius:2px;border:1px solid rgba(12,155,81,1);border-color:rgba(24,183,101,1);">
-      <img v-if="imageUrl" v-lazy="imageUrl" :width="15+'px'" :height="15+'px'" />
+    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small" style="width: 82px; height: 30px; background: rgba(24, 183, 101, 1); border-radius: 2px; border: 1px solid rgba(12, 155, 81, 1); border-color: rgba(24, 183, 101, 1)">
+      <img v-if="imageUrl" v-lazy="imageUrl" :width="15 + 'px'" :height="15 + 'px'" />
       <span>上传文件</span>
     </el-button>
     <el-dialog :maskClosable="false" title="选择文件" v-model:visible="windowVisible" width="60%" :destroyOnClose="true">
-      <div style="min-height:7em">
-        <el-upload :action="uploadServerAddr" :headers="headers" :file-list="currentFileList" :before-upload="beforeUpload"
-          :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
+      <div style="min-height: 7em">
+        <el-upload :action="uploadServerAddr" :headers="headers" :file-list="currentFileList" :before-upload="beforeUpload" :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
           <!-- ****上传文件的按钮************************************ -->
-          <template v-if="currentFileList.length<maxFileLength" #default>
-            <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
+          <template v-if="currentFileList.length < maxFileLength" #default>
+            <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">
               <i class="el-icon-plus"></i>
             </div>
           </template>
           <template v-else #default>
-            <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
-              上传数量已经到达最大
-            </div>
+            <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">上传数量已经到达最大</div>
           </template>
           <!-- ****已上传文件************************************ -->
-          <template #file="{file}">
+          <template #file="{ file }">
             <div>
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview" @click="handlePreview(file)">
                   <i class="el-icon-zoom-in"></i>
@@ -194,8 +190,6 @@ export default class uploadFile extends Vue {
   private upLoadCallBack(relativePath: any) {}
 }
 </script>
-
-
 
 <style lang="less" scoped>
 .hideClass {

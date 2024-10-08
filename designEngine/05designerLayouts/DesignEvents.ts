@@ -135,7 +135,6 @@ export default class DesignEvents {
     this._dragHelper.registerOnDragMove(this.pri_onDragMove)
     this._dragHelper.registerOnDragEnd(this.pri_onDragEnd)
     this._dragHelper.registerOnDragOut(this.pri_onDragOut)
-    // this._dragHelper.registerOnDragClone(this._onDragClone)
   }
   /**停止捕捉鼠标键盘 */
   protected realseEvent() {
@@ -187,7 +186,6 @@ export default class DesignEvents {
     // this._dragHelper.dragCancel()
     // return true
   }
-
   private pri_onDragMove = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean => {
     if (this.canDrop == false || !this.onDragMove_Event) {
       return true
@@ -220,12 +218,6 @@ export default class DesignEvents {
     //   window.console.log('拖拽超出了范围', targetContainer)
     //   this._dragHelper.dragEnd()
     // }
-  }
-  private _onDragClone = (clone: Element) => {
-    if (!this.onDragClone_Event) {
-      return true
-    }
-    this.onDragClone_Event(clone)
   }
   /************************************************************************** */
   private pri_onClick = (e: Event) => {
@@ -411,15 +403,6 @@ export default class DesignEvents {
       this.onWindowUnload_Event(e)
     }
   }
-  private _onWindowResize = (e: any) => {
-    if (!this.onWindowResize_Event) {
-      return
-    }
-    window.setTimeout(() => {
-      this.onWindowResize_Event(e)
-    }, 500)
-  }
-
   /**********************对外公布的事件 **********************************/
   onKeyDown_Event: (e: Event) => void
   onCut_Event(e: Event) {

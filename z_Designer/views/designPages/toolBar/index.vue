@@ -6,6 +6,10 @@
     </div>
     <!-- *************************************************************************** -->
     <optionBtn :style="{ height: height + 'px' }" :label="'保存' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
+
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'前一步' + (needSave ? '*' : '')" :icon="saveIcon" @click="topre" />
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'后一步' + (needSave ? '*' : '')" :icon="saveIcon" @click="tonext" />
+
     <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="previewIcon" label="预览" @mouseup="onPreView" />
 
     <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
@@ -90,6 +94,15 @@ export default class quickActionBar extends Vue {
     }
     this.onSave(this.currentPage.Id)
   }
+
+  public topre() {
+    this.currentPage.toPreStack()
+  }
+
+  public tonext() {
+    this.currentPage.toNextStack()
+  }
+
   private getPopupContainer() {
     this.$nextTick(() => {
       $(this.$el).find('.ant-tooltip-inner').css('padding', '0px')

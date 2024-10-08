@@ -91,24 +91,7 @@ export default class index extends PageBase {
     if (!page) {
       return false
     }
-    return this.recursiveNeedSave(page)
-  }
-  private recursiveNeedSave(layout: EngineLayout): boolean {
-    if (layout.isNeedSave) {
-      return true
-    }
-
-    for (let index = 0; index < layout.children.length; index++) {
-      const element = layout.children[index]
-      if (element.isNeedSave) {
-        return true
-      }
-      let res = this.recursiveNeedSave(element)
-      if (res) {
-        return res
-      }
-    }
-    return false
+    return page.isNeedSave
   }
   // *****************************************
   //当前选择的组件列表
@@ -203,7 +186,7 @@ export default class index extends PageBase {
     var saveinfoStr = utils.serialize(data)
     saveinfoStr = utils.strZip(saveinfoStr)
     await SavePageDetail({ appId: this.applicationId, id: this.currentShowEngine.Id, designDetail: saveinfoStr } as any)
-    this.currentShowEngine.recursiveChangeNeedSave(this.currentShowEngine)
+    this.currentShowEngine.isNeedSave = false
   }
   private onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
