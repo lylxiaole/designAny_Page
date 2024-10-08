@@ -7,8 +7,8 @@
     <!-- *************************************************************************** -->
     <optionBtn :style="{ height: height + 'px' }" :label="'保存' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
 
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'前一步'" @click="topre" />
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'后一步'" @click="tonext" />
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'前一步'" @mouseup="topre" />
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="'后一步'" @mouseup="tonext" />
 
     <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="previewIcon" label="预览" @mouseup="onPreView" />
 
@@ -96,7 +96,7 @@ export default class quickActionBar extends Vue {
   }
 
   public topre() {
-    debugger
+    console.log('topre')
     this.currentPage.toPreStack()
   }
 
