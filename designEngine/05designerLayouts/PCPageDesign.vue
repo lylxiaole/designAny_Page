@@ -267,7 +267,7 @@ export default class PCPageDesign extends EnginePage {
     if (layout.children && layout.children.length > 0) {
       for (let index = 0; index < layout.children.length; index++) {
         const childrenLayout = layout.children[index]
-        this.startListenEngineChange(childrenLayout)
+        await this.startListenEngineChange(childrenLayout)
       }
     }
   }
@@ -281,7 +281,6 @@ export default class PCPageDesign extends EnginePage {
     this.changeStack_left.unshift({ type: stackType.propChanged, childId: undefined, layoutId: layoutId, propField: field, val: { oldval: oldval, newval: newval } })
   }
   private whileLayoutRemoveChild(layoutId, childId, childData) {
-    debugger
     if (this.changeFromStack) {
       return
     }
@@ -290,7 +289,6 @@ export default class PCPageDesign extends EnginePage {
     this.changeStack_left.unshift({ type: stackType.removeChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
   }
   private whileLayoutAddChild(layoutId, childId, childData) {
-    debugger
     if (this.changeFromStack) {
       return
     }
@@ -314,7 +312,6 @@ export default class PCPageDesign extends EnginePage {
     }
   }
   public async toPreStack() {
-    debugger
     if (this.changeStack_left && this.changeStack_left.length > 0) {
       this.changeFromStack = true
       try {
@@ -324,9 +321,9 @@ export default class PCPageDesign extends EnginePage {
         if (stack.type === stackType.propChanged) {
           findLayout[stack.propField] = stack.val.oldval
         } else if (stack.type === stackType.addChild) {
-          findLayout.removeChildRecursion(stack.childId)
+          await findLayout.removeChildRecursion(stack.childId)
         } else if (stack.type === stackType.removeChild) {
-          findLayout.loadChildrenData([stack.val])
+          await findLayout.loadChildrenData([stack.val])
         }
         this.changeStack_left.splice(0, 1)
         this.changeStack_right.unshift(stack)
@@ -344,9 +341,9 @@ export default class PCPageDesign extends EnginePage {
         if (stack.type === stackType.propChanged) {
           findLayout[stack.propField] = stack.val.newval
         } else if (stack.type === stackType.addChild) {
-          findLayout.loadChildrenData([stack.val])
+          await findLayout.loadChildrenData([stack.val])
         } else if (stack.type === stackType.removeChild) {
-          findLayout.removeChildRecursion(stack.childId)
+          await findLayout.removeChildRecursion(stack.childId)
         }
 
         this.changeStack_right.splice(0, 1)
