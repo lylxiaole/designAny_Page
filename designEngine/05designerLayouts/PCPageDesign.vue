@@ -273,27 +273,27 @@ export default class PCPageDesign extends EnginePage {
   }
 
   private whileLayoutPropertyValChanged(layoutId, field, oldval, newval) {
+    this.isNeedSave = true
     if (this.changeFromStack) {
       return
     }
     console.log('whileLayoutPropertyValChanged:', layoutId, field, oldval, newval)
-    this.isNeedSave = true
     this.changeStack_left.unshift({ type: stackType.propChanged, childId: undefined, layoutId: layoutId, propField: field, val: { oldval: oldval, newval: newval } })
   }
   private whileLayoutRemoveChild(layoutId, childId, childData) {
+    this.isNeedSave = true
     if (this.changeFromStack) {
       return
     }
     console.log('whileLayoutRemoveChild:', layoutId, childId, childData)
-    this.isNeedSave = true
     this.changeStack_left.unshift({ type: stackType.removeChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
   }
   private whileLayoutAddChild(layoutId, childId, childData) {
+    this.isNeedSave = true
     if (this.changeFromStack) {
       return
     }
     console.log('whileLayoutAddChild:', layoutId, childId, childData)
-    this.isNeedSave = true
     this.changeStack_left.unshift({ type: stackType.addChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
   }
 
