@@ -101,7 +101,6 @@ export default class quickActionBar extends Vue {
   }
 
   public tonext() {
-    debugger
     this.currentPage.toNextStack()
   }
 

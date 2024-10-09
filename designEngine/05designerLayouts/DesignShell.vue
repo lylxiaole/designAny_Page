@@ -1,38 +1,45 @@
 <template>
-  <div :class="hoverClass" :style="{'width':component==null?0:component.width ,'height':component==null?0:component.height,'z-index':component==null?0:component.zIndex,'left':component==null?0:component.left ,'top':component==null?0:component.top ,
-      'margin-left':component==null?0:component.margin_left+'px','margin-right':component==null?0:component.margin_right+'px','margin-top':component==null?0:component.margin_top+'px','margin-bottom':component==null?0:component.margin_bottom+'px',
-      'padding-left':component==null?0:component.padding_left+'px','padding-right':component==null?0:component.padding_right+'px','padding-top':component==null?0:component.padding_top+'px','padding-bottom':component==null?0:component.padding_bottom+'px',
-       'border':boarderStyle,'position':positionval==null?'absolute':positionval,'display':'block','tabindex':'1' }">
+  <div
+    :class="hoverClass"
+    :style="{
+      width: component == null ? 0 : component.width,
+      height: component == null ? 0 : component.height,
+      'z-index': component == null ? 0 : component.zIndex,
+      left: component == null ? 0 : component.left,
+      top: component == null ? 0 : component.top,
+      'margin-left': component == null ? 0 : component.margin_left + 'px',
+      'margin-right': component == null ? 0 : component.margin_right + 'px',
+      'margin-top': component == null ? 0 : component.margin_top + 'px',
+      'margin-bottom': component == null ? 0 : component.margin_bottom + 'px',
+      'padding-left': component == null ? 0 : component.padding_left + 'px',
+      'padding-right': component == null ? 0 : component.padding_right + 'px',
+      'padding-top': component == null ? 0 : component.padding_top + 'px',
+      'padding-bottom': component == null ? 0 : component.padding_bottom + 'px',
+      border: boarderStyle,
+      position: positionval == null ? 'absolute' : positionval,
+      display: 'block',
+      tabindex: '1'
+    }"
+  >
+    <div ref="compContent" :class="themeClass" style="width: 100%; height: 100%; tab-index: 1" :style="{ zIndex: 0, 'font-family': component == null ? '' : component.fontFamily }"></div>
 
-    <div ref="compContent" :class="themeClass" style="width:100%;height:100%;tab-index:1"
-      :style="{zIndex:0,'font-family':component==null?'':component.fontFamily }"> </div>
-
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="semove"
-      style="width:16px;height:16px;right:-16px; bottom:-16px;position:absolute;cursor: se-resize;;z-index:99" draggable="true"></div>
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="swmove"
-      style="width:16px;height:16px;left:-16px; bottom:-16px;position:absolute;cursor: sw-resize;;z-index:99" draggable="true"></div>
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="nemove"
-      style="width:16px;height:16px;right:-16px; top:-16px;position:absolute;cursor: ne-resize;;z-index:99" draggable="true"></div>
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="nwmove"
-      style="width:16px;height:16px;left:-16px; top:-16px;position:absolute;cursor: nw-resize;;z-index:99" draggable="true"></div>
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="nmove"
-      style="width:96%;height:16px;left:2%; top:-16px;position:absolute;cursor:n-resize;;z-index:99" draggable="true"></div>
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="smove"
-      style="width:96%;height:16px;left:2%; bottom:-16px;position:absolute;cursor:s-resize;;z-index:99" draggable="true"></div>
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="wmove"
-      style="width:16px;height:96%;top:2%; left:-16px;position:absolute;cursor:w-resize;;z-index:99" draggable="true"></div>
-    <div v-show="isSelectedArea===true" class="dragbutton" ref="emove"
-      style="width:16px;height:96%;top:2%; right:-16px;position:absolute;cursor:e-resize;;z-index:99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="semove" style="width: 16px; height: 16px; right: -16px; bottom: -16px; position: absolute; cursor: se-resize; z-index: 99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="swmove" style="width: 16px; height: 16px; left: -16px; bottom: -16px; position: absolute; cursor: sw-resize; z-index: 99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="nemove" style="width: 16px; height: 16px; right: -16px; top: -16px; position: absolute; cursor: ne-resize; z-index: 99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="nwmove" style="width: 16px; height: 16px; left: -16px; top: -16px; position: absolute; cursor: nw-resize; z-index: 99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="nmove" style="width: 96%; height: 16px; left: 2%; top: -16px; position: absolute; cursor: n-resize; z-index: 99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="smove" style="width: 96%; height: 16px; left: 2%; bottom: -16px; position: absolute; cursor: s-resize; z-index: 99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="wmove" style="width: 16px; height: 96%; top: 2%; left: -16px; position: absolute; cursor: w-resize; z-index: 99" draggable="true"></div>
+    <div v-show="isSelectedArea === true" class="dragbutton" ref="emove" style="width: 16px; height: 96%; top: 2%; right: -16px; position: absolute; cursor: e-resize; z-index: 99" draggable="true"></div>
     <!-- *************************** -->
-    <div v-show="component" type="drag" style="width:100%;height:100%;position:absolute;left:0px;top:0px;tab-index:1;z-index:99" @click="onCompClick"
-      ref="dragmengb" class="dragmengb" :style="{zIndex:3 }"></div>
+    <div v-show="component" type="drag" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; tab-index: 1; z-index: 99" @click="onCompClick" ref="dragmengb" class="dragmengb" :style="{ zIndex: 3 }"></div>
 
     <!-- <div ref="dragIcon" class="el-icon-rank" v-show="isSelectedArea===true"
       style="font-size:1.4em;color:#FAAD14;cursor:pointer;left:0;top:0;position:absolute;z-index:4">拖拽</div> -->
   </div>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { ref, h, render, onMounted, createVNode, createBlock } from 'vue'
@@ -41,8 +48,8 @@ import dragHelper from '@designEngine/02common/dragHelper'
 import { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { EngineComponent, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
- import {  designDrawDomReal } from '@design-any/interface/dist/utils/drawVueDom'
- 
+import { designDrawDomReal } from '@design-any/interface/dist/utils/drawVueDom'
+
 import applicationContext from '@designEngine/01designerContext/context'
 
 import { deepClone } from '@common/utils'
@@ -101,7 +108,6 @@ export default class DesignShell extends Vue {
       return ''
     }
   }
-
   mounted() {
     this.local_dragHelper = new dragHelper(this.$el)
     this.local_dragHelper.makeContainerCannotDrop()
@@ -111,7 +117,6 @@ export default class DesignShell extends Vue {
       ;(this.component.topLayout as EnginePage).clearVerRule()
     })
   }
-
   destorymethod() {
     render(null, this.renderContainer)
     $(this.$el).remove()
@@ -122,13 +127,11 @@ export default class DesignShell extends Vue {
       delete this[key]
     }
   }
-
   private onCompClick(e) {
     e.stopPropagation()
     ;(this.component.parentLayout as any).chooseComps([this.component])
     $(this.$el).focus()
   }
-
   public addComponent(comp: any) {
     if (this.component != null) {
       this.component.destorymethod()
@@ -141,7 +144,6 @@ export default class DesignShell extends Vue {
     $(this.component.$el).css('height', '100%')
     return this.component
   }
-
   public startListenItemDrag() {
     let dragdata: any = { type: DragItemTypeEnum.dragmove_component_inpage }
     dragdata.dragData = { compId: this.component.Id }
@@ -192,20 +194,9 @@ export default class DesignShell extends Vue {
     dragdata.dragData = { position: 'you', compId: this.component.Id }
     this.local_dragHelper.makeDragItemInfo(you, deepClone(dragdata))
   }
-
-  public onStartDrag(el: Element, dragdata: DragItemData<any>) {
-    window.console.log('DesignShell onStartDrag:', el)
-    if (el.className.indexOf('el-icon-rank') > -1 || el.className.indexOf('dragmengb') > -1) {
-      dragdata.type = DragItemTypeEnum.dragmove_component_inpage
-      dragdata.dragData = { compId: this.component.Id }
-      return
-    } else {
-      dragdata.type = DragItemTypeEnum.drag_component_size
-    }
-  }
 }
 </script>
- 
+
 <style lang="less" scoped>
 .gad-mengb:hover {
   -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);

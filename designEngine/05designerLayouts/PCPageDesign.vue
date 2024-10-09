@@ -3,6 +3,7 @@
 </template>
 
 <script lang="ts">
+import { computed } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
@@ -14,7 +15,21 @@ import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
-import { Watch } from 'vue-property-decorator'
+import { toRaw } from 'vue'
+
+enum stackType {
+  propChanged = 'propChanged',
+  addChild = 'addChild',
+  removeChild = 'removeChild'
+}
+
+class changeStack {
+  type: stackType
+  layoutId: string
+  propField: string | undefined
+  childId: string | undefined
+  val: any
+}
 
 @DPageAttr(paltform.webpc, 'design')
 @Options({})
@@ -46,7 +61,10 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
   }
-
+  protected override loadCompleted(): void {
+    super.loadCompleted()
+    this.startListenEngineChange(this)
+  }
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineComponent> {
     if (!compCon) {
       debugger
@@ -59,6 +77,7 @@ export default class PCPageDesign extends EnginePage {
       ;(vueComp as DesignShell).startListenItemDrag()
     })
     resComp.$once('onLYLDestroyed', () => {
+      debugger
       let findIndex = this.allShells.findIndex((o) => o == vueComp)
       this.allShells.splice(findIndex, 1)
       ;(vueComp as DesignShell).destorymethod()
@@ -146,7 +165,6 @@ export default class PCPageDesign extends EnginePage {
     return true
   }
   // **************************************************************************
-
   private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     if (this.selectedChildren.length > 0) {
@@ -205,12 +223,144 @@ export default class PCPageDesign extends EnginePage {
     this.chooseComps([newcopyComp])
     e.stopPropagation()
   }
+  // *******************************监听数据变化,可用于撤销，前进,保存*********************
+  private changeStack_left: changeStack[] = []
+  private changeStack_right: changeStack[] = []
+  private changeFromStack: boolean = false
+  private propOldValCache: any[] = []
+  private cacheOldVal(layoutId, fieldId, val) {
+    val = JSON.stringify(val)
+    let cacheval = this.propOldValCache.find((o) => o.layoutId === layoutId && o.fieldId === fieldId)
+    if (!cacheval) {
+      this.propOldValCache.push({ layoutId: layoutId, fieldId: fieldId, val: val })
+    } else {
+      cacheval.val = val
+    }
+  }
+  private getCacheOldVal(layoutId, fieldId) {
+    let cacheval = this.propOldValCache.find((o) => o.layoutId === layoutId && o.fieldId === fieldId)
+    if (!cacheval) {
+      throw '出问题了'
+    } else {
+      return JSON.parse(cacheval.val)
+    }
+  }
+  private async startListenEngineChange(layout: EngineLayout) {
+    await this.$nextTick()
+    for (let index = 0; index < layout.properties.length; index++) {
+      const property = layout.properties[index]
+      let oldVal = layout[property.field]
+      this.cacheOldVal(layout.Id, property.field, oldVal)
+      layout.$watch(
+        property.field,
+        (newval) => {
+          let oldVal = this.getCacheOldVal(layout.Id, property.field)
+          this.whileLayoutPropertyValChanged(layout.Id, property.field, oldVal, newval)
+          this.cacheOldVal(layout.Id, property.field, newval)
+        },
+        { deep: true }
+      )
+    }
 
+    layout.$on('onLYLRemoveChild', this.whileLayoutRemoveChild)
+    layout.$on('onLYLAddChild', this.whileLayoutAddChild)
+
+    if (layout.children && layout.children.length > 0) {
+      for (let index = 0; index < layout.children.length; index++) {
+        const childrenLayout = layout.children[index]
+        this.startListenEngineChange(childrenLayout)
+      }
+    }
+  }
+
+  private whileLayoutPropertyValChanged(layoutId, field, oldval, newval) {
+    if (this.changeFromStack) {
+      return
+    }
+    console.log('whileLayoutPropertyValChanged:', layoutId, field, oldval, newval)
+    this.isNeedSave = true
+    this.changeStack_left.unshift({ type: stackType.propChanged, childId: undefined, layoutId: layoutId, propField: field, val: { oldval: oldval, newval: newval } })
+  }
+  private whileLayoutRemoveChild(layoutId, childId, childData) {
+    debugger
+    if (this.changeFromStack) {
+      return
+    }
+    console.log('whileLayoutRemoveChild:', layoutId, childId, childData)
+    this.isNeedSave = true
+    this.changeStack_left.unshift({ type: stackType.removeChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
+  }
+  private whileLayoutAddChild(layoutId, childId, childData) {
+    debugger
+    if (this.changeFromStack) {
+      return
+    }
+    console.log('whileLayoutAddChild:', layoutId, childId, childData)
+    this.isNeedSave = true
+    this.changeStack_left.unshift({ type: stackType.addChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
+  }
+
+  public get canToPreStack() {
+    if (this.changeStack_left && this.changeStack_left.length > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+  public get canToNextStack() {
+    if (this.changeStack_right && this.changeStack_right.length > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+  public async toPreStack() {
+    debugger
+    if (this.changeStack_left && this.changeStack_left.length > 0) {
+      this.changeFromStack = true
+      try {
+        let stack = this.changeStack_left[0]
+        let findLayout = this.findLayoutRecursion(stack.layoutId, [this])
+        console.log('toPreStack:', stack)
+        if (stack.type === stackType.propChanged) {
+          findLayout[stack.propField] = stack.val.oldval
+        } else if (stack.type === stackType.addChild) {
+          findLayout.removeChildRecursion(stack.childId)
+        } else if (stack.type === stackType.removeChild) {
+          findLayout.loadChildrenData([stack.val])
+        }
+        this.changeStack_left.splice(0, 1)
+        this.changeStack_right.unshift(stack)
+      } catch (error) {}
+      await this.$nextTick()
+      this.changeFromStack = false
+    }
+  }
+  public async toNextStack() {
+    if (this.changeStack_right && this.changeStack_right.length > 0) {
+      this.changeFromStack = true
+      try {
+        let stack = this.changeStack_right[0]
+        let findLayout = this.findLayoutRecursion(stack.layoutId, [this])
+        if (stack.type === stackType.propChanged) {
+          findLayout[stack.propField] = stack.val.newval
+        } else if (stack.type === stackType.addChild) {
+          findLayout.loadChildrenData([stack.val])
+        } else if (stack.type === stackType.removeChild) {
+          findLayout.removeChildRecursion(stack.childId)
+        }
+
+        this.changeStack_right.splice(0, 1)
+        this.changeStack_left.unshift(stack)
+      } catch (error) {}
+      await this.$nextTick()
+      this.changeFromStack = false
+    }
+  }
   // ******************************************************
   private listenOnClick(e: Event, target: any) {
     this.chooseComps([])
   }
-
   // ******************************************************
   public closeDesign() {
     this.destorymethod()
