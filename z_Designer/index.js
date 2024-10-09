@@ -22,8 +22,9 @@ registerRouteHook(system.router, system.store)
 import { getConfigByName } from '@common/baseConfigs'
 const apiAddr = () => getConfigByName('apiAddr')
 // ************加载外部组件*************************************
-import '@/extand_components/designany.basiccomps.min.css'
-import '@/extand_components/designany.basiccomps.min.js'
+// import '@/extand_components/designany.basiccomps.min.css'
+// import '@/extand_components/designany.basiccomps.min.js'
+import '@/extand_components/index.js'
 // ***********初始化设计引擎************************************
 import { init as designEngineInit } from '@designEngine/index'
 designEngineInit(apiAddr())

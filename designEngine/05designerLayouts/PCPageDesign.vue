@@ -77,7 +77,6 @@ export default class PCPageDesign extends EnginePage {
       ;(vueComp as DesignShell).startListenItemDrag()
     })
     resComp.$once('onLYLDestroyed', () => {
-      debugger
       let findIndex = this.allShells.findIndex((o) => o == vueComp)
       this.allShells.splice(findIndex, 1)
       ;(vueComp as DesignShell).destorymethod()
