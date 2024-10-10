@@ -1,11 +1,15 @@
 <template>
   <div style="height:100%;width：100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
-    <el-row style="height: 3rem" class="middleAlign">
+    <el-row style="height: 3rem" class="middleAlign verticalAlignCenter">
       <el-button style="height: 25px" @click="addAppHandle" size="small" type="primary">{{ $t('menu.addAppOpt') }}</el-button>
     </el-row>
     <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
-      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem" @click="selectAppliction(app)">
-        {{ app.name }}
+      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem verticalAlignCenter flexHorilanLayout" @click="selectAppliction(app)">
+        <div style="width: calc(100% - 96px); float: left">
+          {{ app.name }}
+        </div>
+        <el-button style="margin-left: 8px; width: 40px; float: left" link type="primary" @click="editAppInfo">Edit</el-button>
+        <el-button style="margin-left: 8px; width: 40px; float: left" link type="primary" @click="deleteAppInfo">Delete</el-button>
       </div>
     </el-row>
     <!-- ********************************************************** -->
@@ -19,6 +23,7 @@ import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication, ApplicationDC } from '@common/apis/designApplication'
 import appEditDialog from './appEditDialog.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 @Options({ components: { appEditDialog } })
 export default class applicationList extends ComponentBase {
@@ -30,6 +35,7 @@ export default class applicationList extends ComponentBase {
 
   public async refreshAppList() {
     this.allApps = await GetApplicationList()
+    await this.refreshChoose()
   }
   public async refreshChoose() {
     if (!this.currentApplication) {
@@ -54,7 +60,30 @@ export default class applicationList extends ComponentBase {
     this.currentApplication = app
     this.onCurrentApplicationChanged(app)
   }
+  private editAppInfo() {
+    ;(this.$refs.appEditDialog as appEditDialog).editAppHandle(this.currentApplication)
+  }
+  private async deleteAppInfo() {
+    try {
+      let res = await ElMessageBox.prompt('Please input application name to confirm', 'Tip', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel'
+      })
+      const { value } = res
+      if (!value || value !== this.currentApplication.name) {
+        throw 'input error'
+      }
+      await DeleteApplication(this.currentApplication)
+      await this.refreshAppList()
+    } catch (error: any) {
+      ElMessage({
+        type: 'info',
+        message: error || error.message
+      })
+    }
+  }
 
+  // ************************************************
   @Emit('onCurrentApplicationChanged')
   private onCurrentApplicationChanged(app: any) {}
 }

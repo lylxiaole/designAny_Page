@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%; width: 100%; position: relative">
-    <applicationList ref="applicationList" @onCurrentApplicationChanged="onCurrentApplicationChanged" style="width: 250px; height: 100%; float: left"></applicationList>
-    <applicationDetail ref="applicationDetail" :currentApplication="currentApplication" @onAppChanged="onAppChanged" style="width: calc(100% - 250px); height: 100%; float: left"></applicationDetail>
+    <applicationList ref="applicationList" @onCurrentApplicationChanged="onCurrentApplicationChanged" style="width: 400px; height: 100%; float: left"></applicationList>
+    <applicationDetail ref="applicationDetail" :currentApplication="currentApplication" style="width: calc(100% - 400px); height: 100%; float: left"></applicationDetail>
   </div>
 </template>
 
@@ -23,11 +23,6 @@ export default class index extends PageBase {
   // ******************************************************************
   private async onCurrentApplicationChanged(app: any) {
     this.currentApplication = app
-  }
-
-  private async onAppChanged() {
-    await (this.$refs.applicationList as applicationList).refreshAppList()
-    await (this.$refs.applicationList as applicationList).refreshChoose()
   }
 }
 </script>

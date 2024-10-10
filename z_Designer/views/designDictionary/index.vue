@@ -1,17 +1,17 @@
 <template>
   <div>
     <el-row style="height: 50px; line-height: 50px">
-      <el-button style="margin-left: 20px" link type="primary" @click="onAddNew">新增</el-button>
+      <el-button style="margin-left: 20px" link type="primary" @click="onAddNew">Add New</el-button>
     </el-row>
     <el-row style="height: calc(100% - 50px)">
       <el-table :data="allData" style="width: 100%">
-        <el-table-column prop="desc" label="描述" />
-        <el-table-column prop="key" label="键" />
-        <el-table-column prop="value" label="值" />
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column prop="key" label="Key" />
+        <el-table-column prop="value" label="Value" />
+        <el-table-column prop="desc" label="Desc" />
+        <el-table-column fixed="right" label="Options" width="120">
           <template #default="{ row }">
-            <el-button link type="primary" size="small" @click="onEdit(row)">编辑</el-button>
-            <el-button link type="primary" size="small" @click="onDelete(row)">删除</el-button>
+            <el-button link type="primary" size="small" @click="onEdit(row)">Edit</el-button>
+            <el-button link type="primary" size="small" @click="onDelete(row)">Delete</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -11,20 +11,12 @@
       </el-row>
 
       <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="deleteAppInfo">{{ $t('opts.delete') }}</el-button>
+        <el-button style="width: 140px" type="primary" @click="startDesignApp">{{ $t('opts.designApp') }}</el-button>
       </el-row>
       <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="editAppInfo">{{ $t('opts.edit') }}</el-button>
-      </el-row>
-
-      <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="startDesignApp">{{ $t('opts.designApp') }}</el-button>
-      </el-row>
-      <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="startDesignApp">{{ $t('opts.viewApp') }}</el-button>
+        <el-button style="width: 140px" type="primary" @click="startDesignApp">{{ $t('opts.viewApp') }}</el-button>
       </el-row>
     </div>
-    <appEditDialog ref="appEditDialog" @onSure="onAppChanged" />
   </div>
 </template>
 
@@ -80,28 +72,6 @@ export default class index extends ComponentBase {
   private editAppInfo() {
     ;(this.$refs.appEditDialog as appEditDialog).editAppHandle(this.currentApplication)
   }
-  private async deleteAppInfo() {
-    try {
-      let res = await ElMessageBox.prompt('Please input application name to confirm', 'Tip', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel'
-      })
-      const { value } = res
-      if (!value || value !== this.currentApplication.name) {
-        throw 'input error'
-      }
-      await DeleteApplication(this.currentApplication)
-      this.onAppChanged()
-    } catch (error: any) {
-      ElMessage({
-        type: 'info',
-        message: error || error.message
-      })
-    }
-  }
-
-  @Emit('onAppChanged')
-  private onAppChanged() {}
 }
 </script>
 

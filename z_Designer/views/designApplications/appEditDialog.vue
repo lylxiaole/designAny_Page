@@ -40,6 +40,9 @@ export default class appEditDialog extends PageBase {
     type: 2
   }
   public async addAppHandle() {
+    this.applicationForm.name = ''
+    this.applicationForm.type = 2
+    this.applicationForm.id = undefined
     this.isEdit = false
     this.dialogVisible = true
   }
