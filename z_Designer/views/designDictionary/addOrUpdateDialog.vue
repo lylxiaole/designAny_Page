@@ -1,22 +1,21 @@
 <template>
-  <el-dialog ref="previewPopup" style="height:400px;width:600px;top:100px" v-model="windowVisible" :close-on-click-modal="false"
-    :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+  <el-dialog ref="previewPopup" style="height: 400px; width: 600px; top: 100px" v-model="windowVisible" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-form :model="dictionary" label-width="120px">
-      <el-form-item label="描述">
+      <el-form-item label="Desc">
         <el-input v-model="dictionary.desc" />
       </el-form-item>
-      <el-form-item label="键">
+      <el-form-item label="Key">
         <el-input v-model="dictionary.key" />
       </el-form-item>
-      <el-form-item label="值">
+      <el-form-item label="Value">
         <el-input v-model="dictionary.value" />
       </el-form-item>
     </el-form>
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="onCancel">取消</el-button>
-        <el-button type="primary" @click="onSure">确定</el-button>
+        <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="primary" @click="onSure">Sure</el-button>
       </span>
     </template>
   </el-dialog>

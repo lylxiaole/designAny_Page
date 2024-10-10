@@ -1,25 +1,20 @@
-<template style="height:100%">
-  <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为绑定" style="height:600px" width="800px" v-model="windowVisible" append-to-body
-    :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-row style="height:calc(100% - 50px);background:#FFF;">
-      <el-col :span="6" style="border-right:1px solid #cdcdcd">
+<template style="height: 100%">
+  <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为绑定" style="height: 600px" width="800px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+    <el-row style="height: calc(100% - 50px); background: #fff">
+      <el-col :span="6" style="border-right: 1px solid #cdcdcd">
         <!-- //资源列表 -->
         <resource-tree ref="resourceTree" />
       </el-col>
-      <el-col :span="18" style="border-right:1px solid #cdcdcd">
+      <el-col :span="18" style="border-right: 1px solid #cdcdcd">
         <!-- 流程图 -->
         <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" />
       </el-col>
     </el-row>
     <template #footer>
-      <el-row class="dialog-footer" style="height:50px">
+      <el-row class="dialog-footer" style="height: 50px">
         <div class="steps-action">
-          <el-button @click="onCancel">
-            取消
-          </el-button>
-          <el-button :style="{'margin-left':'8px'}" type="primary" @click="onConfirm">
-            确认
-          </el-button>
+          <el-button @click="onCancel">Cancel</el-button>
+          <el-button :style="{ 'margin-left': '8px' }" type="primary" @click="onConfirm">Sure</el-button>
         </div>
       </el-row>
     </template>
@@ -78,5 +73,4 @@ export default class behaviorDeatilSetting extends Vue {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

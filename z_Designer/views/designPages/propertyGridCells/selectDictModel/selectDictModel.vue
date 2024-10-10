@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-button type="primary" class="themeButton" @click="selectDict" size="small">选择枚举</a-button>
+    <a-button type="primary" class="themeButton" @click="selectDict" size="small">Choose Enum</a-button>
   </div>
 </template>
 <script lang="ts">

@@ -2,13 +2,13 @@
   <div class="login-container">
     <el-form ref="loginFormControl" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
       <div class="title-container">
-        <h3 class="title">登录</h3>
+        <h3 class="title">Sign In</h3>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
           <i class="el-icon-user" />
         </span>
-        <el-input ref="username" v-model="loginForm.username" placeholder="用户名" name="username" type="text" tabindex="1" autocomplete="on" />
+        <el-input ref="username" v-model="loginForm.username" placeholder="Username" name="username" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
 
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
@@ -16,19 +16,15 @@
           <span class="svg-container">
             <i class="el-icon-lock" />
           </span>
-          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="密码" name="password" tabindex="2"
-            autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="Password" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:65%;margin-bottom:30px;" @click.native.prevent="handleLogin">账号密码登录</el-button>
-      <el-button type="text" style="width:30%;margin-bottom:30px;" @click.native.prevent="handleLoginRegister">注册</el-button>
-
+      <el-button :loading="loading" type="primary" style="width: 65%; margin-bottom: 30px" @click.native.prevent="handleLogin">Sign In</el-button>
+      <el-button type="text" style="width: 30%; margin-bottom: 30px" @click.native.prevent="handleLoginRegister">Sign Up</el-button>
     </el-form>
-
   </div>
 </template>
-
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
@@ -128,7 +124,6 @@ export default class loginPage extends PageBase {
   }
 }
 </script>
- 
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */

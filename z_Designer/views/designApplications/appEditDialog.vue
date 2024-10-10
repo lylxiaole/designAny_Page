@@ -1,22 +1,22 @@
 <template>
-  <el-dialog title="提示" v-model="dialogVisible" width="350px" center>
+  <el-dialog title="Tip" v-model="dialogVisible" width="350px" center>
     <el-form ref="currentFrom" :inline="false" style="height: 200px" :model="applicationForm" class="demo-ruleForm">
-      <el-form-item label="应用名称" style="width: 300px">
-        <el-input v-model="applicationForm.name" placeholder="应用名称"></el-input>
+      <el-form-item label="Application Name" style="width: 300px">
+        <el-input v-model="applicationForm.name" placeholder="Please Input"></el-input>
       </el-form-item>
-      <el-form-item label="应用类型" dis style="width: 300px">
-        <el-select v-model="applicationForm.type" :disabled="isEdit" placeholder="请选择应用类型">
+      <el-form-item label="Application Type" style="width: 300px">
+        <el-select v-model="applicationForm.type" :disabled="isEdit" placeholder="Please Input">
           <!-- <el-option label="看板" :value="0"></el-option>
             <el-option label="报表" :value="1"></el-option> -->
-          <el-option label="网页程序" :value="2"></el-option>
+          <el-option label="PC App" :value="2"></el-option>
           <el-option label="H5 App" :value="3"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="onCancelHandle">取 消</el-button>
-        <el-button type="primary" @click="onSureHandle">确定</el-button>
+        <el-button @click="onCancelHandle">Cancel</el-button>
+        <el-button type="primary" @click="onSureHandle">Sure</el-button>
       </span>
     </template>
   </el-dialog>

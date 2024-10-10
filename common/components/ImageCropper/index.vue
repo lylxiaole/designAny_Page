@@ -6,8 +6,7 @@
       </div>
 
       <div v-show="step == 1" class="vicp-step1">
-        <div class="vicp-drop-area" @dragleave="preventDefault" @dragover="preventDefault" @dragenter="preventDefault" @click="handleClick"
-          @drop="handleChange">
+        <div class="vicp-drop-area" @dragleave="preventDefault" @dragover="preventDefault" @dragenter="preventDefault" @click="handleClick" @drop="handleChange">
           <i v-show="loading != 1" class="vicp-icon1">
             <i class="vicp-icon1-arrow" />
             <i class="vicp-icon1-body" />
@@ -15,7 +14,7 @@
           </i>
           <span v-show="loading !== 1" class="vicp-hint">{{ lang.hint }}</span>
           <span v-show="!isSupported" class="vicp-no-supported-hint">{{ lang.noSupported }}</span>
-          <input v-show="false" v-if="step == 1" ref="fileinput" type="file" @change="handleChange">
+          <input v-show="false" v-if="step == 1" ref="fileinput" type="file" @change="handleChange" />
         </div>
         <div v-show="hasError" class="vicp-error">
           <i class="vicp-icon2" />
@@ -30,16 +29,34 @@
         <div class="vicp-crop">
           <div v-show="true" class="vicp-crop-left">
             <div class="vicp-img-container">
-              <img ref="img" :src="sourceImgUrl" :style="sourceImgStyle" class="vicp-img" draggable="false" @drag="preventDefault"
-                @dragstart="preventDefault" @dragend="preventDefault" @dragleave="preventDefault" @dragover="preventDefault"
-                @dragenter="preventDefault" @drop="preventDefault" @touchstart="imgStartMove" @touchmove="imgMove" @touchend="createImg"
-                @touchcancel="createImg" @mousedown="imgStartMove" @mousemove="imgMove" @mouseup="createImg" @mouseout="createImg">
+              <img
+                ref="img"
+                :src="sourceImgUrl"
+                :style="sourceImgStyle"
+                class="vicp-img"
+                draggable="false"
+                @drag="preventDefault"
+                @dragstart="preventDefault"
+                @dragend="preventDefault"
+                @dragleave="preventDefault"
+                @dragover="preventDefault"
+                @dragenter="preventDefault"
+                @drop="preventDefault"
+                @touchstart="imgStartMove"
+                @touchmove="imgMove"
+                @touchend="createImg"
+                @touchcancel="createImg"
+                @mousedown="imgStartMove"
+                @mousemove="imgMove"
+                @mouseup="createImg"
+                @mouseout="createImg"
+              />
               <div :style="sourceImgShadeStyle" class="vicp-img-shade vicp-img-shade-1" />
               <div :style="sourceImgShadeStyle" class="vicp-img-shade vicp-img-shade-2" />
             </div>
 
             <div class="vicp-range">
-              <input :value="scale.range" type="range" step="1" min="0" max="100" @input="zoomChange">
+              <input :value="scale.range" type="range" step="1" min="0" max="100" @input="zoomChange" />
               <i class="vicp-icon5" @mousedown="startZoomSub" @mouseout="endZoomSub" @mouseup="endZoomSub" />
               <i class="vicp-icon6" @mousedown="startZoomAdd" @mouseout="endZoomAdd" @mouseup="endZoomAdd" />
             </div>
@@ -52,11 +69,11 @@
           <div v-show="true" class="vicp-crop-right">
             <div class="vicp-preview">
               <div v-if="!noSquare" class="vicp-preview-item">
-                <img :src="createImgUrl" :style="previewStyle">
+                <img :src="createImgUrl" :style="previewStyle" />
                 <span>{{ lang.preview }}</span>
               </div>
               <div v-if="!noCircle" class="vicp-preview-item vicp-preview-item-circle">
-                <img :src="createImgUrl" :style="previewStyle">
+                <img :src="createImgUrl" :style="previewStyle" />
                 <span>{{ lang.preview }}</span>
               </div>
             </div>
@@ -588,7 +605,7 @@ export default {
       }
       zoom()
     },
-    // 按钮松开或移开取消放大
+    // 按钮松开或移开Cancel放大
     endZoomAdd(e) {
       this.scale.zoomAddOn = false
     },
@@ -607,7 +624,7 @@ export default {
       }
       zoom()
     },
-    // 按钮松开或移开取消缩小
+    // 按钮松开或移开Cancel缩小
     endZoomSub(e) {
       const { scale } = this
       scale.zoomSubOn = false
@@ -665,7 +682,7 @@ export default {
       const canvas = this.$refs.canvas
       const ctx = canvas.getContext('2d')
       if (e) {
-        // 取消鼠标按下移动状态
+        // Cancel鼠标按下移动状态
         this.sourceImgMouseDown.on = false
       }
       canvas.width = this.width
@@ -1254,26 +1271,8 @@ export default {
   box-shadow: 0 2px 6px 0 rgba(68, 170, 119, 0.3);
   -webkit-transition: width 0.15s linear;
   transition: width 0.15s linear;
-  background-image: -webkit-linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.2) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.2) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-image: linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.2) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.2) 75%,
-    transparent 75%,
-    transparent
-  );
+  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
   background-size: 40px 40px;
   -webkit-animation: vicp_progress 0.5s linear infinite;
   animation: vicp_progress 0.5s linear infinite;

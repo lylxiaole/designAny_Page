@@ -1,13 +1,12 @@
 <template>
-  <el-row style="width:100%;height:100%">
-    <el-row style="width:100%;height:50%">
+  <el-row style="width: 100%; height: 100%">
+    <el-row style="width: 100%; height: 50%">
       <el-col :span="6">选择布局:</el-col>
       <el-col :span="18">
-        <el-tree-select node-key="id" size="small" :check-on-click-node="true" check-strictly v-model="currentLayoutId" :data="allayouts"
-          :render-after-expand="true" @check-change="onLayoutChange" default-expand-all />
+        <el-tree-select node-key="id" size="small" :check-on-click-node="true" check-strictly v-model="currentLayoutId" :data="allayouts" :render-after-expand="true" @check-change="onLayoutChange" default-expand-all />
       </el-col>
     </el-row>
-    <el-row style="width:100%;height:50%">
+    <el-row style="width: 100%; height: 50%">
       <el-col :span="6">选择属性:</el-col>
       <el-col :span="18">
         <el-select v-model="currentPropField" placeholder="Select" size="small">
@@ -105,13 +104,13 @@ export default class propertyInPageNode extends Vue {
       this.actObj.inputParams = []
 
       this.actObj.inputParams.push({
-        key: makeParamKey(this.actObj.id, '设定值'),
-        name: '设定值'
+        key: makeParamKey(this.actObj.id, 'input'),
+        name: 'input'
       } as any)
       //出参
       this.actObj.outParam = {
-        key: makeParamKey(this.actObj.id, '输出'),
-        name: '输出'
+        key: makeParamKey(this.actObj.id, 'output'),
+        name: 'output'
       } as any
     }
   }
@@ -123,6 +122,4 @@ export default class propertyInPageNode extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

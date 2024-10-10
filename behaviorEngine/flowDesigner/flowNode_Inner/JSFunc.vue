@@ -1,9 +1,8 @@
 <template>
-  <el-row style="width:100%;height:100%">
+  <el-row style="width: 100%; height: 100%">
     <el-col>选择函数:</el-col>
     <el-col>
-      <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allFuncsTree"
-        :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
+      <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allFuncsTree" :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
     </el-col>
   </el-row>
 </template>
@@ -93,7 +92,7 @@ export default class JSFunc extends Vue {
     }
 
     if (res.haveOutput) {
-      this.actObj.outParam = { key: makeParamKey(this.actObj.id, '输出'), name: '输出' }
+      this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: 'output' }
     } else {
       this.actObj.outParam = null
     }
@@ -101,6 +100,4 @@ export default class JSFunc extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

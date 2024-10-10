@@ -1,24 +1,23 @@
- 
 <template>
   <div>
     <el-collapse v-model="activeNames">
       <el-collapse-item name="1">
-        <el-row style="position:relative">
-          <span class="normaltext" style="float:left;width:32px">宽:</span>
-          <el-input size="small" type="text" style="float:left;width:90px" v-model="currentValue.width" placeholder="请输入" />
+        <el-row style="position: relative">
+          <span class="normaltext" style="float: left; width: 32px">Width:</span>
+          <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.width" placeholder="Please Input" />
         </el-row>
-        <el-row style="position:relative;margin-top:2px">
-          <span class="normaltext" style="float:left;width:32px">高:</span>
-          <el-input size="small" type="text" style="float:left;width:90px" v-model="currentValue.height" placeholder="请输入" />
+        <el-row style="position: relative; margin-top: 2px">
+          <span class="normaltext" style="float: left; width: 32px">Height:</span>
+          <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.height" placeholder="Please Input" />
         </el-row>
         <!-- ************************************************************************** -->
-        <el-row style="position:relative;margin-top:2px">
-          <span class="normaltext" style="float:left;width:32px">左边:</span>
-          <el-input size="small" type="text" style="float:left;width:90px" v-model="currentValue.x" placeholder="请输入" />
+        <el-row style="position: relative; margin-top: 2px">
+          <span class="normaltext" style="float: left; width: 32px">Left:</span>
+          <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.x" placeholder="Please Input" />
         </el-row>
-        <el-row style="position:relative;margin-top:2px">
-          <span class="normaltext" style="float:left;width:32px">顶部:</span>
-          <el-input size="small" type="text" style="float:left;width:90px" v-model="currentValue.y" placeholder="请输入" />
+        <el-row style="position: relative; margin-top: 2px">
+          <span class="normaltext" style="float: left; width: 32px">Top:</span>
+          <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.y" placeholder="Please Input" />
         </el-row>
       </el-collapse-item>
     </el-collapse>
@@ -42,8 +41,6 @@ export default class index extends propertyCellBase<CompPosition_Setting> {
   mounted() {}
 }
 </script>
-
-
 
 <style lang="less" scoped>
 .normaltext {

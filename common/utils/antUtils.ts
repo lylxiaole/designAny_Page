@@ -8,8 +8,8 @@ export function delModal(callBack: any) {
     title: '删除操作',
     content: '确定要删除这条数据吗？',
     centered: true,
-    okText: '确定',
-    cancelText: '取消',
+    okText: 'Sure',
+    cancelText: 'Cancel',
     onOk: callBack
   })
 }
@@ -32,7 +32,7 @@ export function confirmModal(param: param) {
     content: contentPrivate,
     centered: true,
     okText: okTextPrivate,
-    cancelText: '取消',
+    cancelText: 'Cancel',
     onOk: param.callBack
   })
 }

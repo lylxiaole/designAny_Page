@@ -139,7 +139,6 @@ export default class DesignShell extends Vue {
 
     let vueComp = designDrawDomReal(this.$refs.compContent, comp, true, { applicationContext: applicationContext })
     this.component = vueComp as any
-
     $(this.component.$el).css('width', '100%')
     $(this.component.$el).css('height', '100%')
     return this.component
@@ -148,9 +147,9 @@ export default class DesignShell extends Vue {
     let dragdata: any = { type: DragItemTypeEnum.dragmove_component_inpage }
     dragdata.dragData = { compId: this.component.Id }
     //
-    let dragicon = this.$refs.dragmengb as Element
-    this.local_dragHelper.makeDomCanDrag(dragicon)
-    this.local_dragHelper.makeDragItemInfo(dragicon, deepClone(dragdata))
+    let dragmengb = this.$refs.dragmengb as Element
+    this.local_dragHelper.makeDomCanDrag(dragmengb)
+    this.local_dragHelper.makeDragItemInfo(dragmengb, deepClone(dragdata))
     // ******************************************
     let you_xia = this.$refs['semove'] as Element
     let zuo_xia = this.$refs['swmove'] as Element

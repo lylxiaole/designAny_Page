@@ -1,36 +1,30 @@
 <template>
   <div>
-    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small"
-      style="width:82px;height:30px;background:rgba(24,183,101,1);border-radius:2px;border:1px solid rgba(12,155,81,1);border-color:rgba(24,183,101,1);">
-      <img v-if="imageUrl" v-lazy="imageUrl" :width="15+'px'" :height="15+'px'" />
-      <span>上传文件</span>
+    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small" style="width: 82px; height: 30px; background: rgba(24, 183, 101, 1); border-radius: 2px; border: 1px solid rgba(12, 155, 81, 1); border-color: rgba(24, 183, 101, 1)">
+      <img v-if="imageUrl" v-lazy="imageUrl" :width="15 + 'px'" :height="15 + 'px'" />
+      <span>Upload File</span>
     </el-button>
 
-    <el-dialog ref="previewPopup" title="上传文件" class="bhaviorDialog" style="height:400px;width:600px" v-model="windowVisible"
-      :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
-
+    <el-dialog ref="previewPopup" title="Upload File" class="bhaviorDialog" style="height: 400px; width: 600px" v-model="windowVisible" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
       <!-- :before-close="onClose" -->
 
-      <div style="height:calc(100% - 70px)">
-        <el-upload :action="uploadServerAddr" v-model:file-list="currentFileList" :headers="httpHeaders" :before-upload="beforeUpload"
-          :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
+      <div style="height: calc(100% - 70px)">
+        <el-upload :action="uploadServerAddr" v-model:file-list="currentFileList" :headers="httpHeaders" :before-upload="beforeUpload" :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
           <!-- ****上传文件的按钮************************************ -->
-          <template v-if="currentFileList.length<maxFileLength" #default>
-            <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
+          <template v-if="currentFileList.length < maxFileLength" #default>
+            <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">
               <el-icon class="avatar-uploader-icon">
                 <Plus />
               </el-icon>
             </div>
           </template>
           <template v-else #default>
-            <div style="height:100%;width:100%" class="flexHorilanLayout verticalAlignCenter">
-              上传数量已经到达最大
-            </div>
+            <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">The maximum number of uploads has been reached</div>
           </template>
           <!-- ****已上传文件************************************ -->
-          <template #file="{file}">
+          <template #file="{ file }">
             <div>
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview" @click="handlePreview(file)">
                   <el-icon class="avatar-uploader-icon">
@@ -51,12 +45,11 @@
         <el-dialog v-model="previewVisible">
           <img w-full :src="previewImage" alt="Preview Image" />
         </el-dialog>
-
       </div>
       <template #footer>
-        <div class="dialog-footer" style="height:50px">
-          <el-button @click="handleWindowClose">取 消</el-button>
-          <el-button type="primary" @click="handleWindowOK">确 定</el-button>
+        <div class="dialog-footer" style="height: 50px">
+          <el-button @click="handleWindowClose">Cancel</el-button>
+          <el-button type="primary" @click="handleWindowOK">Sure</el-button>
         </div>
       </template>
     </el-dialog>
@@ -149,7 +142,7 @@ export default class uploadFile extends Vue {
   }
 
   handleWindowClose() {
-    //window.console.log('确定')
+    //window.console.log('Sure')
     this.windowVisible = false
   }
   handleUploadSuccess(response: any, file: File) {
@@ -161,7 +154,7 @@ export default class uploadFile extends Vue {
 
     var filesclone = []
     if (this.fileList) {
-      filesclone = filesclone.concat([...this.fileList])
+      filesclone = filesclone.concat(deepClone(this.fileList))
     }
 
     filesclone.push(newfileinfo)
@@ -196,7 +189,7 @@ export default class uploadFile extends Vue {
   }
   handleRemove(file: any) {
     window.console.log('handleRemove:', file)
-    var filesclone = [...this.fileList]
+    var filesclone = deepClone(this.fileList)
     var findfile = filesclone.filter((o) => o.uid == file.uid)[0]
 
     var findfileIndex = filesclone.indexOf(findfile)
@@ -211,8 +204,6 @@ export default class uploadFile extends Vue {
   private upLoadCallBack(relativePath: any) {}
 }
 </script>
-
-
 
 <style lang="less" scoped>
 .hideClass {

@@ -2,7 +2,7 @@
   <el-dialog ref="previewPopup" class="bhaviorDialog" style="height: 100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
       <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
-      <el-button @click="onClose" style="background: red; position: absolute; left: 0px; top: 0px">退出预览</el-button>
+      <el-button @click="onClose" style="background: red; position: absolute; left: 0px; top: 0px">Exit</el-button>
     </el-row>
   </el-dialog>
 </template>

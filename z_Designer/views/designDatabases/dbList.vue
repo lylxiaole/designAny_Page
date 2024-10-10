@@ -1,11 +1,11 @@
 <template>
   <div style="height:100%;width：100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
-    <el-row style="height:3rem;" class="middleAlign">
-      <el-button style="height:25px" @click="addDBHandle" size="small" type="primary">添加数据库</el-button>
+    <el-row style="height: 3rem" class="middleAlign">
+      <el-button style="height: 25px" @click="addDBHandle" size="small" type="primary">添加数据库</el-button>
     </el-row>
-    <el-row style="height:calc(100% - 3rem);overflow-y:auto;display:block">
+    <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
       <div v-for="db in allDBS" :key="db.id" :style="dbItemStyle(db)" class="applicationItem" @click="selectDB(db)">
-        {{db.databaseName}}
+        {{ db.databaseName }}
       </div>
     </el-row>
     <!-- ********************************************************** -->
@@ -26,14 +26,14 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="onCancelHandle">取 消</el-button>
-          <el-button type="primary" @click="onSureHandle">确定</el-button>
+          <el-button type="primary" @click="onSureHandle">Sure</el-button>
         </span>
       </template>
     </el-dialog>
   </div>
 </template>
 
-<script lang="ts"  >
+<script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
 

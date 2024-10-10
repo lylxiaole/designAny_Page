@@ -22,7 +22,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="onCancelHandle">取 消</el-button>
-        <el-button type="primary" @click="onSureHandle">确定</el-button>
+        <el-button type="primary" @click="onSureHandle">Sure</el-button>
       </span>
     </template>
   </el-dialog>
@@ -86,5 +86,4 @@ export default class columnEditDialog extends PageBase {
 }
 </script>
 
-<style>
-</style>
+<style></style>

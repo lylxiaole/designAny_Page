@@ -1,11 +1,11 @@
 <template>
-  <div style="padding:8px;width:100%;height:100%;box-sizing:border-box" class="">
-    <div style="width:100%;height:calc(100% - 50px)">
+  <div style="padding: 8px; width: 100%; height: 100%; box-sizing: border-box" class="">
+    <div style="width: 100%; height: calc(100% - 50px)">
       <lylJSEditor ref="lylJSEditor" />
     </div>
 
-    <div style="height:50px">
-      <el-button type="primary" @click="onSureHandle">确定</el-button>
+    <div style="height: 50px">
+      <el-button type="primary" @click="onSureHandle">Sure</el-button>
     </div>
   </div>
 </template>

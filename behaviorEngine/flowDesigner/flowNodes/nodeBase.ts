@@ -194,7 +194,7 @@ class VueHtmlNodeModel extends HtmlResize.model {
       anchors.push({
         x: x + width / 2 - anchorSize,
         y: y - anchorSize / 2,
-        id: makeParamKey(actObj.id, '输出'),
+        id: makeParamKey(actObj.id, 'output'),
         name: '无输出',
         type: anchorType.justOut
       })

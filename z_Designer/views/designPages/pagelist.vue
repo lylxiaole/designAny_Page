@@ -2,7 +2,7 @@
   <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
     <el-row style="height: 35px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
       <el-row style="margin: 3px 15px">
-        <!-- <el-input size="small" style="margin-bottom: 8px" v-model="seachVal" placeholder="请输入内容"></el-input> -->
+        <!-- <el-input size="small" style="margin-bottom: 8px" v-model="seachVal" placeholder="Please Input内容"></el-input> -->
       </el-row>
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 35px)">
@@ -30,7 +30,7 @@
                 <template #icon>
                   <div>
                     <span class="icon iconfont">&#xe627;</span>
-                    <span v-if="data.isDefault">【首页】</span>
+                    <span v-if="data.isDefault">【First Page】</span>
                   </div>
                 </template>
               </btreeNode>
@@ -67,13 +67,13 @@ import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
 enum rightMenus {
-  addPage = '新建页面',
-  setDefault = '设置默认页',
-  addGroup = '新建分组',
-  saveAs = '另存为',
-  rename = '重命名',
-  edit = '编辑',
-  delete = '删除'
+  addPage = 'New Page',
+  setDefault = 'As First Page',
+  addGroup = 'New Group',
+  saveAs = 'Save As',
+  rename = 'Rename',
+  edit = 'Edit',
+  delete = 'Delete'
 }
 
 @Options({
@@ -256,7 +256,7 @@ export default class index extends ComponentBase {
     } else {
     }
   }
-  /**当确定节点的新名称 */
+  /**当Sure节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
     let find = this.searchNodeById(id, this.treeData)
     find.label = newtitle
@@ -414,7 +414,7 @@ export default class index extends ComponentBase {
     if (res) {
       this.setNodeDefault(pageId, this.treeData)
     } else {
-      alert('设置首页失败')
+      alert('Setting Failed')
     }
   }
   private async deleteNode() {

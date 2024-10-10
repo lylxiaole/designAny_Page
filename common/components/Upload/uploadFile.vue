@@ -33,7 +33,7 @@
         </el-upload>
         <!-- ****预览窗口************************************ -->
         <el-dialog v-model:visible="previewVisible">
-          <img alt="example" style="width: 100%" :src="previewImage" cancelText="取消" okText="确定" />
+          <img alt="example" style="width: 100%" :src="previewImage" cancelText="Cancel" okText="Sure" />
           <template #footer>
             <div class="dialog-footer">
               <el-button @click="handlePreviewClose">取 消</el-button>
@@ -130,7 +130,7 @@ export default class uploadFile extends Vue {
   }
 
   handleWindowClose() {
-    //window.console.log('确定')
+    //window.console.log('Sure')
     this.windowVisible = false
   }
   handleUploadSuccess(response: any, file: File) {

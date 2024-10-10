@@ -1,5 +1,6 @@
 import { IRouteClass } from 'common/baseConfigs'
 import adminLayout from '@common/layouts/adminLayout/index.vue'
+import { getLocale } from '@common/baseConfigs'
 
 const routes: IRouteClass[] = [
   {
@@ -12,7 +13,7 @@ const routes: IRouteClass[] = [
         path: '/designApplications',
         name: 'designApplications',
         meta: {
-          title: '我的应用'
+          title: getLocale().t('menu.myApps')
         },
         component: () => require('./views/designApplications/index.vue')
       },
@@ -34,13 +35,12 @@ const routes: IRouteClass[] = [
       //   },
       //   component: () => import('./views/designDatabases/index.vue')
       // },
-
       {
         icon: 'icon-all-fill',
         path: '/designThirtyApis',
         name: 'designThirtyApis',
         meta: {
-          title: '外部接口'
+          title: getLocale().t('menu.HttpApi')
         },
         component: () => require('./views/designThirtyApis/index.vue')
       },
@@ -49,7 +49,7 @@ const routes: IRouteClass[] = [
         path: '/designDictionary',
         name: 'designDictionary',
         meta: {
-          title: '字典管理'
+          title: getLocale().t('menu.Dictionarys')
         },
         component: () => require('./views/designDictionary/index.vue')
       },
@@ -58,7 +58,7 @@ const routes: IRouteClass[] = [
         path: '/designFunctions',
         name: 'designFunctions',
         meta: {
-          title: 'JS函数'
+          title: getLocale().t('menu.JSFuncs')
         },
         component: () => require('./views/designFunctions/index.vue')
       }

@@ -2,23 +2,23 @@
   <div>
     <ul>
       <li v-for="(col, i) in currentValue" :key="col.key">
-        <a-row :gutter="5" style="margin-bottom:5px;">
+        <a-row :gutter="5" style="margin-bottom: 5px">
           <a-col :span="12">
-            <a-input size="small" placeholder="请输入" v-model="col.value" />
+            <a-input size="small" placeholder="Please Input" v-model="col.value" />
           </a-col>
           <a-col :span="4">
-            <a-icon size="small" type="minus-circle" @click="removeComp(i,col)" v-if="removeVisible" />
+            <a-icon size="small" type="minus-circle" @click="removeComp(i, col)" v-if="removeVisible" />
           </a-col>
           <a-col :span="4">
-            <a-icon size="small" type="up-circle" @click="upComp(i,col)" />
+            <a-icon size="small" type="up-circle" @click="upComp(i, col)" />
           </a-col>
           <a-col :span="4">
-            <a-icon size="small" type="down-circle" @click="downComp(i,col)" />
+            <a-icon size="small" type="down-circle" @click="downComp(i, col)" />
           </a-col>
         </a-row>
       </li>
     </ul>
-    <a-button type="link" @click="addComp" v-if="addVisible">添加</a-button>
+    <a-button type="link" @click="addComp" v-if="addVisible">Add New</a-button>
   </div>
 </template>
 
@@ -101,8 +101,6 @@ export default class textList extends propertyCellBase<TextList_Setting> {
   }
 }
 </script>
-
-
 
 <style scoped>
 ul {

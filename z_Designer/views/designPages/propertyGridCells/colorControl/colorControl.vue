@@ -1,11 +1,6 @@
-/**
- * 颜色设置
- * By LYL
- * 日期
- */
 <template>
   <div>
-    <bcolorPicker v-model:color="currentValue" style="height:25px"></bcolorPicker>
+    <bcolorPicker v-model:color="currentValue" style="height: 25px"></bcolorPicker>
   </div>
 </template>
 
@@ -32,7 +27,4 @@ export default class colorPicker extends propertyCellBase<Color_Setting> {
 }
 </script>
 
-
-
-<style scoped>
-</style>
+<style scoped></style>

@@ -8,7 +8,7 @@ import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEn
 import { isPromise } from '@vue/shared'
 import { ElNotification } from 'element-plus'
 
-@resourceFuncAttr('布局方法', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc, [], { key: getUuid(), name: '输出' })
+@resourceFuncAttr('Component Method', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc, [], { key: getUuid(), name: 'output' })
 export class methodsInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
@@ -31,7 +31,7 @@ export class methodsInPageMethod implements actFuncBase {
     }
 
     if (!targetLayout) {
-      window.console.error('找不到布局')
+      window.console.error('Component not found')
       return
     }
 
@@ -45,7 +45,7 @@ export class methodsInPageMethod implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('布局属性', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc, [{ key: getUuid(), name: '设定值' }], { key: getUuid(), name: '输出' })
+@resourceFuncAttr('Component Property', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
 export class propertiesInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -68,7 +68,7 @@ export class propertiesInPageMethod implements actFuncBase {
   }
 }
 // *************************************************************************
-@resourceFuncAttr('提示窗', '', funcGroup.pageOption, funcCode.notificationDialog, funcStack.universal, [], null)
+@resourceFuncAttr('MessageBox', '', funcGroup.pageOption, funcCode.notificationDialog, funcStack.universal, [], null)
 export class NotificationError implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -80,19 +80,19 @@ export class NotificationError implements actFuncBase {
 
     if (type === 'success') {
       ElNotification.success({
-        title: '成功',
+        title: 'success',
         message: msg,
         onClose: () => {}
       })
     } else if (type === 'error') {
       ElNotification.error({
-        title: '错误',
+        title: 'error',
         message: msg,
         onClose: () => {}
       })
     } else {
       ElNotification.info({
-        title: '信息',
+        title: 'info',
         message: msg,
         onClose: () => {}
       })
@@ -100,7 +100,7 @@ export class NotificationError implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('页面跳转', '', funcGroup.pageOption, funcCode.leadToOtherPage, funcStack.universal, [], null)
+@resourceFuncAttr('Page jump', '', funcGroup.pageOption, funcCode.leadToOtherPage, funcStack.universal, [], null)
 export class leadToPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

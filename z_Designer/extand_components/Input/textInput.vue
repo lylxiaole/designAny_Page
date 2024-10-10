@@ -44,7 +44,7 @@ export default class textInput extends EngineComponent {
   private currentText: string = ''
 
   @DPropAttr(new Text_Setting('提示语', PropertyGroupName.data, true))
-  private placeholder: string = '请输入一个值'
+  private placeholder: string = 'Please Input一个值'
 
   @DPropAttr(new Boolean_Setting('只读', PropertyGroupName.data, true))
   private readonly: boolean = false

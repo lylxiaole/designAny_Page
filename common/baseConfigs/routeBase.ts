@@ -9,7 +9,7 @@ export function initRoutes(inroutes) {
   let newroutes = routes.concat(inroutes)
   routeConfigs = newroutes
 
-  const currentRoute = createRouter({
+  currentRoute = createRouter({
     history: createWebHashHistory(),
     routes: routeConfigs,
     scrollBehavior: () => ({ y: 0 } as any)

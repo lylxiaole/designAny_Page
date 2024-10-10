@@ -1,8 +1,7 @@
 <template>
-  <div style="height:100%;width:100%;position:relative">
-    <apiList @onChooseApi="onChooseApi" style="width:250px;height:100%;float:left" />
-    <apiDetail v-if="currentApiContent" :currentApi="currentApiContent" ref="apiDetail" :allDictorys="allDictorys"
-      style="width:calc(100% - 250px);height:100%;float:left" />
+  <div style="height: 100%; width: 100%; position: relative">
+    <apiList @onChooseApi="onChooseApi" style="width: 250px; height: 100%; float: left" />
+    <apiDetail v-if="currentApiContent" :currentApi="currentApiContent" ref="apiDetail" :allDictorys="allDictorys" style="width: calc(100% - 250px); height: 100%; float: left" />
   </div>
 </template>
 
@@ -52,5 +51,4 @@ export default class index extends PageBase {
 }
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

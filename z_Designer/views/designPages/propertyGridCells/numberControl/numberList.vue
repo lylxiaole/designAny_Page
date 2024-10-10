@@ -4,16 +4,15 @@
       <li v-for="(col, i) in currentValue" :key="i">
         <a-row :gutter="5">
           <a-col :span="20">
-            <a-input-number style="margin-bottom:5px;" size="small" v-model="col.value" :min="currentProperty.min" :max="currentProperty.max"
-              :defaultValue="currentProperty.min" />
+            <a-input-number style="margin-bottom: 5px" size="small" v-model="col.value" :min="currentProperty.min" :max="currentProperty.max" :defaultValue="currentProperty.min" />
           </a-col>
           <a-col :span="4">
-            <a-icon size="small" type="minus-circle" @click="removeComp(i,col)" v-if="removeVisible" />
+            <a-icon size="small" type="minus-circle" @click="removeComp(i, col)" v-if="removeVisible" />
           </a-col>
         </a-row>
       </li>
     </ul>
-    <a-button type="link" @click="addComp" v-if="addVisible">添加</a-button>
+    <a-button type="link" @click="addComp" v-if="addVisible">Add New</a-button>
   </div>
 </template>
 
@@ -83,8 +82,6 @@ export default class numberList extends propertyCellBase<NumberList_Setting> {
   }
 }
 </script>
-
-
 
 <style scoped>
 ul {

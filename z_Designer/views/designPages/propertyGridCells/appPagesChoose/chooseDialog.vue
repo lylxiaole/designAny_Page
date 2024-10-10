@@ -1,12 +1,9 @@
- 
 <template>
-  <el-dialog ref="previewPopup" class="bhaviorDialog" title="选择页面" style="height:600px" width="800px" v-model="windowVisible" append-to-body
-    :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-row style="height:480px;width:100%;background:#FFF">
-      <el-tree ref="leftTree" node-key="id" :data="allPageTree" show-checkbox default-expand-all :allow-drop="false" :allow-drag="false"
-        :expand-on-click-node="false" draggable highlight-current>
-        <template #default="{data}">
-          <el-text>{{data.label}}</el-text>
+  <el-dialog ref="previewPopup" class="bhaviorDialog" title="选择页面" style="height: 600px" width="800px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+    <el-row style="height: 480px; width: 100%; background: #fff">
+      <el-tree ref="leftTree" node-key="id" :data="allPageTree" show-checkbox default-expand-all :allow-drop="false" :allow-drag="false" :expand-on-click-node="false" draggable highlight-current>
+        <template #default="{ data }">
+          <el-text>{{ data.label }}</el-text>
         </template>
       </el-tree>
     </el-row>
@@ -14,12 +11,8 @@
     <template #footer>
       <el-row class="dialog-footer">
         <div class="steps-action">
-          <el-button @click="onCancel">
-            取消
-          </el-button>
-          <el-button :style="{'margin-left':' 8px'}" type="primary" @click="onConfirm">
-            确认
-          </el-button>
+          <el-button @click="onCancel">Cancel</el-button>
+          <el-button :style="{ 'margin-left': ' 8px' }" type="primary" @click="onConfirm">确认</el-button>
         </div>
       </el-row>
     </template>
@@ -139,7 +132,4 @@ export default class chooseDialog extends Vue {
 }
 </script>
 
-
-
-<style scoped>
-</style>
+<style scoped></style>

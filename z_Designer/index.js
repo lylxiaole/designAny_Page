@@ -13,6 +13,7 @@ import VXETable from 'vxe-table'
 import 'vxe-table/lib/style.css'
 // ***********系统环境初始化*********************************
 let configs = window.__globalConfig
+
 import routes from './routes'
 import appState from './appState'
 let system = initSystem(routes, configs, appState)

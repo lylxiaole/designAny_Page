@@ -1,21 +1,22 @@
 import { initConfig, getConfigByName } from './configBase'
 import { initRoutes, getRoutes, getCurrentRoute } from './routeBase'
 import { initStore, getStore } from './vuexBase'
-import { initLocale } from './localeBase'
+import { initLocale, getLocale } from './localeBase'
 
 import '../themeBase/global.less'
 
 export default function initSystem(inroutes, configs, state) {
   initConfig(configs)
+  let i18n = initLocale()
   let router = initRoutes(inroutes)
   let store = initStore(state)
-  let i18n = initLocale()
   return { router, store, i18n }
 }
 
 export { getConfigByName }
 export { getRoutes, getCurrentRoute }
 export { getStore }
+export { getLocale, initLocale }
 
 export interface IRouteClass {
   meta?: any

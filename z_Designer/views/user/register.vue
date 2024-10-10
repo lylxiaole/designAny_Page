@@ -3,52 +3,50 @@
     <!-- *********************************************************************************** -->
     <el-form v-show="isRegister" :rules="requestEmailRoules" ref="requestEmailForm" class="login-form" :model="requestEmailFormData">
       <div class="title-container">
-        <h3 class="title">注册</h3>
+        <h3 class="title">Sign Up</h3>
       </div>
       <!-- ****用户名******************************************************************************* -->
       <el-form-item prop="username">
         <span class="svg-container">
           <i class="el-icon-user" />
         </span>
-        <el-input ref="username" v-model="requestEmailFormData.username" placeholder="用户名" name="username" type="text" tabindex="1"
-          autocomplete="on" />
+        <el-input ref="username" v-model="requestEmailFormData.username" placeholder="Username" name="username" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
       <!-- ****邮箱******************************************************************************* -->
       <el-form-item prop="email">
         <span class="svg-container">
           <i class="el-icon-message" />
         </span>
-        <el-input ref="email" v-model="requestEmailFormData.email" placeholder="邮箱" name="email" type="text" tabindex="1" autocomplete="on" />
+        <el-input ref="email" v-model="requestEmailFormData.email" placeholder="Email" name="email" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
       <!-- ****密码******************************************************************************* -->
       <el-form-item prop="pwd">
         <span class="svg-container">
           <i class="el-icon-lock" />
         </span>
-        <el-input ref="pwd" v-model="requestEmailFormData.pwd" placeholder="密码" name="pwd" type="text" tabindex="1" autocomplete="on" />
+        <el-input ref="pwd" v-model="requestEmailFormData.pwd" placeholder="Password" name="pwd" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
-      <el-button type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleRequestEmail">验证邮箱</el-button>
+      <el-button type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleRequestEmail">Validate Email</el-button>
     </el-form>
     <!-- *********************************************************************************** -->
     <el-form v-show="!isRegister" :rules="checkEmailRoules" ref="checkEmailForm" class="login-form" :model="checkEmailFormData">
       <div class="title-container">
-        <h3 class="title">验证码</h3>
+        <h3 class="title">Validate Code</h3>
       </div>
       <el-form-item prop="checkingCode">
         <span class="svg-container">
           <i class="el-icon-user" />
         </span>
-        <el-input ref="checkingCode" v-model="checkEmailFormData.checkingCode" placeholder="验证码" name="checkingCode" type="text" tabindex="1"
-          autocomplete="on" />
+        <el-input ref="checkingCode" v-model="checkEmailFormData.checkingCode" placeholder="Validate Code" name="checkingCode" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
-      <el-button type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleCheckEmail"> 验证 </el-button>
+      <el-button type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleCheckEmail">Validate</el-button>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Component, Emit,Watch,Prop } from 'vue-property-decorator'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { AxiosResponse } from 'axios'
 import { requestRegisterUser, CheckRegisterInfo } from '@common/apis/user'
 import { validUsername } from '@common/utils/validate'
@@ -68,14 +66,14 @@ export default class register extends PageBase {
 
   private validateUsername(rule, value, callback) {
     if (!validUsername(value)) {
-      callback(new Error('请输入合法的用户名'))
+      callback(new Error('Please Input Legitimate username'))
     } else {
       callback()
     }
   }
   private validatePassword(rule, value, callback) {
     if (value.length < 3) {
-      callback(new Error('密码最少3位'))
+      callback(new Error('Password must be at least 3 characters long'))
     } else {
       callback()
     }
@@ -124,7 +122,7 @@ export default class register extends PageBase {
   }
 }
 </script>
- 
+
 <style lang="scss">
 $bg: #283443;
 $light_gray: #fff;

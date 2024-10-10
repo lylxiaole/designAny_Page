@@ -5,12 +5,12 @@
       <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">{{ application ? application.name : '' }}</div>
     </div>
     <!-- *************************************************************************** -->
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'保存' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'Save' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
 
     <optionBtn v-if="currentPage && currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :icon="chexiaoIcon" :label="'前一步'" @mouseup="topre" />
     <optionBtn v-if="currentPage && currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :icon="fanchexiaoIcon" :label="'后一步'" @mouseup="tonext" />
 
-    <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="previewIcon" label="预览" @mouseup="onPreView" />
+    <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="previewIcon" label="Preview" @mouseup="onPreView" />
 
     <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
       <template #content>
@@ -18,12 +18,10 @@
           <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
         </div>
       </template>
-      <optionBtn :style="{ height: height + 'px' }" style="margin-left: 30px; width: 80px" :icon="componentsIcon" label="组件" />
+      <optionBtn :style="{ height: height + 'px' }" style="margin-left: 30px; width: 80px" :icon="componentsIcon" label="Components" />
     </el-tooltip>
 
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="behaviorIcon" label="页面行为" @click="onSettingBehavior" />
-    <!-- *************************************************************************** -->
-    <!-- <optionBtn :style="{ height: height + 'px' }" label="导入插件" @click="leadinPlugin" /> -->
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="behaviorIcon" label="Behaviors" @click="onSettingBehavior" />
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
       <!-- *************************************************************************** -->
@@ -31,10 +29,10 @@
         <div class="flexHorilanLayout" style="width: 100%; height: 50%">
           <el-input-number v-model="pageScale" style="width: 100%" controls-position="right" size="small" :min="0.01" :step="0.01" :max="1000" :precision="2" />
         </div>
-        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">缩放窗口</div>
+        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px', width: '80px' }" :icon="quitIcon" label="退出设计" @click="onQuit" />
+      <optionBtn :style="{ height: height + 'px', width: '80px' }" :icon="quitIcon" label="Exit" @click="onQuit" />
     </div>
   </div>
 </template>

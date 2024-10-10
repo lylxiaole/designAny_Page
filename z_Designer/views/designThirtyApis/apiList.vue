@@ -1,8 +1,8 @@
 <template>
-  <div style="height: 100%; width: 100%" @click="onClickBlankArea">
+  <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
     <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
       <el-row style="margin: 3px 15px">
-        <!-- <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="请输入内容"></el-input> -->
+        <!-- <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="Please Input内容"></el-input> -->
       </el-row>
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 50px)">
@@ -75,12 +75,12 @@ class TreeNodeDC {
 }
 
 enum rightMenus {
-  addPage = '新建接口',
-  addGroup = '新建分组',
-  saveAs = '另存为',
-  rename = '重命名',
-  edit = '编辑',
-  delete = '删除'
+  addPage = 'New Api',
+  addGroup = 'New Group',
+  saveAs = 'Save As',
+  rename = 'Rename',
+  edit = 'Edit',
+  delete = 'Delete'
 }
 
 @Options({

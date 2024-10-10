@@ -1,6 +1,5 @@
 <template>
-  <div style="box-sizing:border-box;width:100%;height:100%;background-color:#cdcdcd" class="sql" @drop="onDrop" @dragover="onDragOver"
-    @dragleave="onDragLeave">
+  <div style="box-sizing: border-box; width: 100%; height: 100%; background-color: #cdcdcd" class="sql" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
     <div ref="flowarea"></div>
   </div>
 </template>
@@ -10,7 +9,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { getUuid } from '@common/utils'
-import { actionObj } from '@behaviorEngine/actObject'
+import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 
@@ -140,7 +139,7 @@ export default class index extends ComponentBase {
           {
             keys: ['delete'],
             callback: () => {
-              const r = window.confirm('确定要删除吗？')
+              const r = window.confirm('Sure要删除吗？')
               if (r) {
                 const elements = this.currentFlow.getSelectElements(true)
                 this.currentFlow.clearSelectElements()
@@ -220,6 +219,7 @@ export default class index extends ComponentBase {
 }
 </script>
 
-<style lang="less"   >
+<style lang="less">
 @import './flowDesigner.less';
-</style>  ./flowNodes/oneParamJudeNode
+</style>
+./flowNodes/oneParamJudeNode

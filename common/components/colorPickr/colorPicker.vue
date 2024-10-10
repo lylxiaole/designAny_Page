@@ -1,6 +1,6 @@
 <template>
-  <div style="width:100%;height:100%;">
-    <div class="colorarea"> </div>
+  <div style="width: 100%; height: 100%">
+    <div class="colorarea"></div>
   </div>
 </template>
 
@@ -77,7 +77,7 @@ export default class npColorPicker extends Vue {
       strings: {
         save: '保存', // Default for save button
         clear: '清空', // Default for clear button
-        cancel: '取消' // Default for cancel button
+        cancel: 'Cancel' // Default for cancel button
       }
     })
 
@@ -101,8 +101,6 @@ export default class npColorPicker extends Vue {
   }
 }
 </script>
-
-
 
 <style scoped>
 .pcr-app[data-theme='nano'] .pcr-interaction {

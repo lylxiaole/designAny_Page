@@ -1,12 +1,6 @@
-/**
- * 文件上传设置
- * By LYL
- * 日期
- */
 <template>
   <div>
-    <uploadFile v-model:fileList="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentProperty.maxFileLength"
-      :fileType="currentProperty.fileType" :upLoadSize="currentProperty.fileSize" />
+    <uploadFile v-model:fileList="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentProperty.maxFileLength" :fileType="currentProperty.fileType" :upLoadSize="currentProperty.fileSize" />
     <!-- <UploadFile :fileList.sync="currentValue" backgroundColor="@themeBackground" :maxFileLength="currentProperty.maxFileLength"
       :fileType="currentProperty.fileType" :upLoadSize="currentProperty.fileSize">
     </UploadFile> -->
@@ -33,7 +27,4 @@ export default class upLoadFileControl extends propertyCellBase<UploadFile_Setti
 }
 </script>
 
-
-
-<style scoped>
-</style>
+<style scoped></style>

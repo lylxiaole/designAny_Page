@@ -7,7 +7,7 @@ export default {
     fail: '图片上传失败',
     preview: '头像预览',
     btn: {
-      off: '取消',
+      off: 'Cancel',
       close: '关闭',
       back: '上一步',
       save: '保存'
@@ -26,7 +26,7 @@ export default {
     fail: '圖片上傳失敗',
     preview: '頭像預覽',
     btn: {
-      off: '取消',
+      off: 'Cancel',
       close: '關閉',
       back: '上一步',
       save: '保存'
@@ -53,7 +53,7 @@ export default {
     error: {
       onlyImg: 'Image only',
       outOfSize: 'Image exceeds size limit: ',
-      lowestPx: 'Image\'s size is too low. Expected at least: '
+      lowestPx: "Image's size is too low. Expected at least: "
     }
   },
   ro: {
@@ -118,7 +118,7 @@ export default {
   fr: {
     hint: 'Cliquez ou glissez le fichier ici.',
     loading: 'Téléchargement…',
-    noSupported: 'Votre navigateur n\'est pas supporté. Utilisez IE10 + ou un autre navigateur s\'il vous plaît.',
+    noSupported: "Votre navigateur n'est pas supporté. Utilisez IE10 + ou un autre navigateur s'il vous plaît.",
     success: 'Téléchargement réussit',
     fail: 'Téléchargement echoué',
     preview: 'Aperçu',
@@ -130,8 +130,8 @@ export default {
     },
     error: {
       onlyImg: 'Image uniquement',
-      outOfSize: 'L\'image sélectionnée dépasse la taille maximum: ',
-      lowestPx: 'L\'image sélectionnée est trop petite. Dimensions attendues: '
+      outOfSize: "L'image sélectionnée dépasse la taille maximum: ",
+      lowestPx: "L'image sélectionnée est trop petite. Dimensions attendues: "
     }
   },
   nl: {

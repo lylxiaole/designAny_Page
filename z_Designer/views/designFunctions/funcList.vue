@@ -1,20 +1,33 @@
 <template>
-  <div style="height:100%;width:100%" @click="onClickBlankArea">
-    <el-row style="height: 50px; width: 100%;border-bottom: 1px solid rgb(223, 223, 223);">
+  <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
+    <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
       <el-row style="margin: 3px 15px">
-        <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="请输入内容"></el-input>
+        <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="Please Input"></el-input>
       </el-row>
     </el-row>
-    <el-row style="overflow: hidden; width: 100%; bottom: 0px;height:calc(100% - 50px)">
-      <div style="overflow: auto; width: 100%; height: 100%; " @contextmenu.prevent="onTreeRightClick">
-        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
-          @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
-          @node-drop="handleDrop" @current-change="onCurrentNodeChange" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false"
-          draggable highlight-current>
-          <template #default="{ data}">
-            <div v-if="data.type==='func'">
-              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
-                @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
+    <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 50px)">
+      <div style="overflow: auto; width: 100%; height: 100%" @contextmenu.prevent="onTreeRightClick">
+        <el-tree
+          node-key="id"
+          @node-contextmenu="onTreeNodeRightClick"
+          :data="treeData"
+          default-expand-all
+          @node-drag-start="handleDragStart"
+          @node-drag-enter="handleDragEnter"
+          @node-drag-leave="handleDragLeave"
+          @node-drag-over="handleDragOver"
+          @node-drag-end="handleDragEnd"
+          @node-drop="handleDrop"
+          @current-change="onCurrentNodeChange"
+          :allow-drop="allowDrop"
+          :allow-drag="allowDrag"
+          :expand-on-click-node="false"
+          draggable
+          highlight-current
+        >
+          <template #default="{ data }">
+            <div v-if="data.type === 'func'">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id" @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <div>
                     <span class="icon iconfont">&#xe627;</span>
@@ -22,9 +35,8 @@
                 </template>
               </btreeNode>
             </div>
-            <div v-if="data.type==='group'">
-              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1;" :nodeKey="data.id"
-                @onValueChanged="(id,title)=>onNodeNameChanged(id,title,data)" @onSureNodeName="(id,title)=>onSureNodeName(id,title,data)">
+            <div v-if="data.type === 'group'">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id" @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <span class="icon iconfont">&#xe626;</span>
                 </template>
@@ -34,8 +46,7 @@
         </el-tree>
 
         <v-contextmenu ref="ctxMenu">
-          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
-            @click="onRightMenuChoose(menu)">
+          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px" @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
           </v-contextmenu-item>
@@ -50,16 +61,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { JSFuncEntity, JSFuncGroupDC } from '@common/apis/designJSFunc'
-import {
-  UpdateNodesSort,
-  AddFuncGroup,
-  DeleteFuncGroup,
-  UpdateFuncGroup,
-  GetGroupFuncsAll,
-  AddOrUpdateFunc,
-  AddOrUpdateFunTreeInfo,
-  DeleteFunc
-} from '@common/apis/designJSFunc'
+import { UpdateNodesSort, AddFuncGroup, DeleteFuncGroup, UpdateFuncGroup, GetGroupFuncsAll, AddOrUpdateFunc, AddOrUpdateFunTreeInfo, DeleteFunc } from '@common/apis/designJSFunc'
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 
 class TreeNodeDC {
@@ -73,12 +75,12 @@ class TreeNodeDC {
 }
 
 enum rightMenus {
-  addPage = '新建函数',
-  addGroup = '新建分组',
-  saveAs = '另存为',
-  rename = '重命名',
-  edit = '编辑',
-  delete = '删除'
+  addPage = 'New Func',
+  addGroup = 'New Group',
+  saveAs = 'Save As',
+  rename = 'Rename',
+  edit = 'Edit',
+  delete = 'Delete'
 }
 
 @Options({

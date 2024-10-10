@@ -1,7 +1,6 @@
- 
 <template>
   <div>
-    <el-input size="small" v-model="currentValue" @change="onValueChanged" placeholder="请输入" />
+    <el-input size="small" v-model="currentValue" @change="onValueChanged" placeholder="Please Input" />
   </div>
 </template>
 
@@ -21,7 +20,4 @@ export default class textControl extends propertyCellBase<Text_Setting> {
 }
 </script>
 
-
-
-<style scoped>
-</style>
+<style scoped></style>

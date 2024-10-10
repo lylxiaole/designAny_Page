@@ -2,26 +2,26 @@
   <div v-if="currentApplication">
     <div style="box-sizing: border-box; width: 500px; margin: 0px auto">
       <el-row class="detailrow">
-        <el-col :span="12" class="flexHorilanLayout" style="text-align: right">应用名称:</el-col>
+        <el-col :span="12" class="flexHorilanLayout" style="text-align: right">{{ $t('menu.appName') }}:</el-col>
         <el-col :span="12" class="flexHorilanLayout" style="text-align: left; padding-left: 20px">{{ appName }}</el-col>
       </el-row>
       <el-row class="detailrow">
-        <el-col :span="12" class="flexHorilanLayout" style="text-align: right">应用类型:</el-col>
+        <el-col :span="12" class="flexHorilanLayout" style="text-align: right">{{ $t('menu.appType') }}:</el-col>
         <el-col :span="12" class="flexHorilanLayout" style="text-align: left; padding-left: 20px">{{ appType }}</el-col>
       </el-row>
 
       <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="deleteAppInfo">删除</el-button>
+        <el-button type="primary" @click="deleteAppInfo">{{ $t('opts.delete') }}</el-button>
       </el-row>
       <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="editAppInfo">编辑</el-button>
+        <el-button type="primary" @click="editAppInfo">{{ $t('opts.edit') }}</el-button>
       </el-row>
 
       <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="startDesignApp">设计应用</el-button>
+        <el-button type="primary" @click="startDesignApp">{{ $t('opts.designApp') }}</el-button>
       </el-row>
       <el-row class="detailrow flexHorilanLayout">
-        <el-button type="primary" @click="startDesignApp">进入应用</el-button>
+        <el-button type="primary" @click="startDesignApp">{{ $t('opts.viewApp') }}</el-button>
       </el-row>
     </div>
     <appEditDialog ref="appEditDialog" @onSure="onAppChanged" />
@@ -35,6 +35,7 @@ import ComponentBase from '@common/views/ComponentBase'
 import { applicationType } from '@common/apis/designApplication'
 import appEditDialog from './appEditDialog.vue'
 import { DeleteApplication } from '@common/apis/designApplication'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 @Options({ components: { appEditDialog } })
 export default class index extends ComponentBase {
@@ -59,10 +60,10 @@ export default class index extends ComponentBase {
         return '报表'
         break
       case applicationType.webSystem:
-        return '网页程序'
+        return 'PC App'
         break
       case applicationType.H5App:
-        return 'H5 App'
+        return 'Mobile App'
         break
       default:
         return ''
@@ -80,8 +81,23 @@ export default class index extends ComponentBase {
     ;(this.$refs.appEditDialog as appEditDialog).editAppHandle(this.currentApplication)
   }
   private async deleteAppInfo() {
-    await DeleteApplication(this.currentApplication)
-    this.onAppChanged()
+    try {
+      let res = await ElMessageBox.prompt('Please input application name to confirm', 'Tip', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel'
+      })
+      const { value } = res
+      if (!value || value !== this.currentApplication.name) {
+        throw 'input error'
+      }
+      await DeleteApplication(this.currentApplication)
+      this.onAppChanged()
+    } catch (error: any) {
+      ElMessage({
+        type: 'info',
+        message: error || error.message
+      })
+    }
   }
 
   @Emit('onAppChanged')

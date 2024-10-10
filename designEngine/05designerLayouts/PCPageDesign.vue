@@ -113,7 +113,7 @@ export default class PCPageDesign extends EnginePage {
     return false
   }
   private listenOnDragMove(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, el: Element, dragdata?: DragItemData<any>): boolean {
-    // window.console.log('listenOnDragMove:', dragdata)
+    window.console.log('listenOnDragMove:', dragdata)
     if (!dragdata) {
       return true
     }

@@ -1,12 +1,12 @@
 <template>
   <div style="height:100%;width：100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
-    <el-row style="height:3rem;" class="middleAlign">
-      <el-button style="height:25px" @click="addTableHandle" size="small" type="primary">添加表</el-button>
+    <el-row style="height: 3rem" class="middleAlign">
+      <el-button style="height: 25px" @click="addTableHandle" size="small" type="primary">添加表</el-button>
     </el-row>
-    <el-row style="height:calc(100% - 3rem);overflow-y:auto;display:block">
+    <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
       <div v-for="table in allTables" :key="table.tableId" :style="dbItemStyle(table)" class="applicationItem" @click="selectTable(table)">
-        {{table.tableName}}
-        <el-button size="small" style="margin-left:35px" @click="(e) => deleteTable(e,table)">删除</el-button>
+        {{ table.tableName }}
+        <el-button size="small" style="margin-left: 35px" @click="(e) => deleteTable(e, table)">删除</el-button>
       </div>
     </el-row>
     <!-- ********************************************************** -->
@@ -22,14 +22,14 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="onCancelHandle">取 消</el-button>
-          <el-button type="primary" @click="onSureHandle">确定</el-button>
+          <el-button type="primary" @click="onSureHandle">Sure</el-button>
         </span>
       </template>
     </el-dialog>
   </div>
 </template>
 
-<script lang="ts"  >
+<script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'

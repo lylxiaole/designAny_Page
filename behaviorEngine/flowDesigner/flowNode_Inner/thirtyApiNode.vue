@@ -1,9 +1,8 @@
 <template>
-  <el-row style="width:100%;height:100%">
+  <el-row style="width: 100%; height: 100%">
     <el-col>选择接口:</el-col>
     <el-col>
-      <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allApisTree" :render-after-expand="true"
-        @check-change="onCurrentNodeChange" default-expand-all check-strictly />
+      <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allApisTree" :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
     </el-col>
   </el-row>
 </template>
@@ -99,11 +98,9 @@ export default class thirtyApiNode extends Vue {
       this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, 'body'), name: 'body参数' })
     }
 
-    this.actObj.outParam = { key: makeParamKey(this.actObj.id, '输出'), name: '输出' }
+    this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: 'output' }
   }
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
