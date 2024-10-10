@@ -1,14 +1,14 @@
 <template>
-  <el-row style="height:100%;background:#FFF">
-    <div style="width:100%;height:30px;justify-content:left;overflow:hidden;" class="flexHorilanLayout">
-      <div style="background:#18aeb7;width:6px;height:26px;"></div>
-      <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">当前页面所有行为</span>
+  <el-row style="height: 100%; background: #fff">
+    <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
+      <div style="background: #18aeb7; width: 6px; height: 26px"></div>
+      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">All Behaviors In Page</span>
     </div>
-    <el-table ref="tableComp" :data="allBehaviors" style="width:100%" height="calc(100% - 30px)">
+    <el-table ref="tableComp" :data="allBehaviors" style="width: 100%" height="calc(100% - 30px)">
       <el-table-column fixed type="index" width="50" />
       <el-table-column type="selection" width="55" />
-      <el-table-column prop="name" label="行为名称" />
-      <el-table-column prop="description" label="描述" />
+      <el-table-column prop="name" label="Behavior Name" />
+      <el-table-column prop="description" label="Desc" />
     </el-table>
   </el-row>
 </template>
@@ -36,5 +36,4 @@ export default class behaviorListInPage extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

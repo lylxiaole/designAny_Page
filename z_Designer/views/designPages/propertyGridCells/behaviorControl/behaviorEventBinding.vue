@@ -1,33 +1,59 @@
 <template>
-  <el-row style="height:100%;background:#FFF">
+  <el-row style="height: 100%; width: 100%; background: #fff">
     <el-col :span="6">
-      <el-menu @select="onSelectedEvent" style="height:100%;overflow-y:auto;overflow-x:hidden;border:1px solid #ccc;padding:0px 2px" mode="vertical"
-        size="small">
-        <el-menu-item v-for="(event,index) in designerLayoutEvents" :index="index" :key="event.eventName">
-          <span>{{event.eventName}}</span>
+      <el-menu @select="onSelectedEvent" style="height: 100%; overflow-y: auto; overflow-x: hidden; border: 1px solid #ccc; padding: 0px 2px" mode="vertical" size="small">
+        <el-menu-item v-for="(event, index) in designerLayoutEvents" :index="index" :key="event.eventName">
+          <span>{{ event.eventName }}</span>
         </el-menu-item>
       </el-menu>
     </el-col>
     <el-col :span="18">
-      <div style="width:100%;height:30px;justify-content:left;overflow:hidden;" class="flexHorilanLayout">
-        <div style="background:#18aeb7;width:6px;height:26px;"></div>
-        <span style="margin-left:9px;float:left;fontSize:18px;fontWeight:600">事件行为列表</span>
-        <el-button class="behavior-list-header-button" style="width:104px;height:30px;background:rgba(245,166,35,1);color:rgba(255,255,255,1);"
-          @click="toBehaviorList">
-          引用行为
-        </el-button>
+      <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
+        <div style="background: #18aeb7; width: 6px; height: 26px"></div>
+        <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">Behavior List</span>
+        <el-button class="behavior-list-header-button" style="width: 140px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1); margin-left: 10px" @click="toBehaviorList">Rerfence Behavior</el-button>
       </div>
-      <el-table :data="currentSelectedBehaviors" style="width:100%" height="calc(100% - 30px)">
-        <el-table-column fixed type="index" width="50" />
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="name" label="行为名称" />
-        <el-table-column prop="workRange" label="作用范围" />
-        <el-table-column prop="description" label="描述" />
-        <el-table-column label="操作" width="420px">
-          <template #default="{row}">
-            <el-button @click="()=>{moveUpBehavior(row.id)}" type="link"> 上移</el-button>
-            <el-button @click="()=>{moveDownBehavior(row.id)}" type="link"> 下移</el-button>
-            <el-button @click="()=>{removeBehavior(row.id)}" type="link"> 移除</el-button>
+      <el-table :data="currentSelectedBehaviors" style="width: 100%" height="calc(100% - 30px)">
+        <el-table-column fixed type="index" width="30" />
+        <el-table-column type="selection" width="30" />
+        <el-table-column prop="name" label="Name" />
+        <!-- <el-table-column prop="workRange" label="Work Range" /> -->
+        <el-table-column prop="description" label="Desc" />
+        <el-table-column label="Options" width="250px">
+          <template #default="{ row }">
+            <el-button
+              link
+              type="primary"
+              @click="
+                () => {
+                  moveUpBehavior(row.id)
+                }
+              "
+            >
+              Move Up
+            </el-button>
+            <el-button
+              @click="
+                () => {
+                  moveDownBehavior(row.id)
+                }
+              "
+              link
+              type="primary"
+            >
+              Move Down
+            </el-button>
+            <el-button
+              @click="
+                () => {
+                  removeBehavior(row.id)
+                }
+              "
+              link
+              type="primary"
+            >
+              Remove
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -182,5 +208,4 @@ export default class behaviorEventBinding extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

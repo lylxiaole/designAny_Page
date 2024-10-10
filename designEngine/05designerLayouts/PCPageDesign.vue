@@ -196,7 +196,6 @@ export default class PCPageDesign extends EnginePage {
     this.chooseComps([newcopyComp])
     e.stopPropagation()
   }
-
   // ******************************************************
   private listenOnClick(e: Event, target: any) {
     this.chooseComps([])

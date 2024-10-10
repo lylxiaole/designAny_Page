@@ -4,7 +4,7 @@
       行为绑定
     </el-button>
     <!-- ************************************************************ -->
-    <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为绑定" style="height: 600px" width="800px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+    <el-dialog ref="previewPopup" class="bhaviorDialog" title="行为绑定" style="height: 600px" width="900px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
       <el-row style="height: 480px; width: 100%; background: #fff">
         <behaviorEventBinding v-show="currentComp === 'eventBinding'" :designerLayoutEvents="designerLayoutEvents" :currentData="currentData" :currentPageBehaviors="currentPageBehaviors" @onList="onOpenBehaviorList" />
         <behaviorListInPage v-show="currentComp === 'allBehaviorList'" ref="behaviorList" :currentPage="page" />
