@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }" oncontextmenu="self.event.returnValue=false" style="border-radius: 0px"></div>
+  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }" oncontextmenu="self.event.returnValue=false" class="container" style="border-radius: 0px"></div>
 </template>
 
 <script lang="ts">
@@ -16,20 +16,6 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
 import { toRaw } from 'vue'
-
-enum stackType {
-  propChanged = 'propChanged',
-  addChild = 'addChild',
-  removeChild = 'removeChild'
-}
-
-class changeStack {
-  type: stackType
-  layoutId: string
-  propField: string | undefined
-  childId: string | undefined
-  val: any
-}
 
 @DPageAttr(paltform.webpc, 'design')
 @Options({})
@@ -63,10 +49,7 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
   }
-  protected override loadCompleted(): void {
-    super.loadCompleted()
-    this.startListenEngineChange(this)
-  }
+
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineComponent> {
     if (!compCon) {
       debugger
@@ -114,7 +97,7 @@ export default class PCPageDesign extends EnginePage {
       case DragItemTypeEnum.drop_system_component:
         {
           let compVue = findSystemCompByCode(compInfo.compCode)
-          dropcomp = await this.insertComponentLayout(compVue, compInfo, dragdata.type)
+          dropcomp = await this.insertComponentLayout(compVue, null)
         }
         break
       default:
@@ -200,7 +183,7 @@ export default class PCPageDesign extends EnginePage {
       compData.id = getUuid()
     }
     let compclass = findSystemCompByCode(compData.meta.compCode)
-    let newcopyComp = await this.insertComponentLayout(compclass, compData.meta, null, compData)
+    let newcopyComp = await this.insertComponentLayout(compclass, compData)
 
     let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
     //定位
@@ -213,151 +196,7 @@ export default class PCPageDesign extends EnginePage {
     this.chooseComps([newcopyComp])
     e.stopPropagation()
   }
-  // *******************************监听数据变化,可用于撤销，前进,保存*********************
-  private changeStack_left: changeStack[] = []
-  private changeStack_right: changeStack[] = []
-  private changeFromStack: boolean = false
-  private propOldValCache: any[] = []
 
-  private cacheOldVal(layoutId, fieldId, val) {
-    val = deepClone(val)
-    let cacheval = this.propOldValCache.find((o) => o.layoutId === layoutId && o.fieldId === fieldId)
-    if (!cacheval) {
-      this.propOldValCache.push({ layoutId: layoutId, fieldId: fieldId, val: val })
-    } else {
-      cacheval.val = val
-    }
-  }
-  private getCacheOldVal(layoutId, fieldId) {
-    let cacheval = this.propOldValCache.find((o) => o.layoutId === layoutId && o.fieldId === fieldId)
-    if (!cacheval) {
-      throw '出问题了'
-    } else {
-      return cacheval.val
-    }
-  }
-  private async startListenEngineChange(layout: EngineLayout) {
-    await this.$nextTick()
-    for (let index = 0; index < layout.properties.length; index++) {
-      const property = layout.properties[index]
-      let oldVal = layout[property.field]
-      this.cacheOldVal(layout.Id, property.field, oldVal)
-      layout.$watch(
-        property.field,
-        (newval) => {
-          let oldVal = this.getCacheOldVal(layout.Id, property.field)
-          newval = deepClone(newval)
-          this.whileLayoutPropertyValChanged(layout.Id, property.field, oldVal, newval)
-          this.cacheOldVal(layout.Id, property.field, newval)
-        },
-        { deep: true }
-      )
-    }
-
-    layout.$on('onLYLRemoveChild', this.whileLayoutRemoveChild)
-    layout.$on('onLYLAddChild', this.whileLayoutAddChild)
-
-    if (layout.children && layout.children.length > 0) {
-      for (let index = 0; index < layout.children.length; index++) {
-        const childrenLayout = layout.children[index]
-        await this.startListenEngineChange(childrenLayout)
-      }
-    }
-  }
-
-  private whileLayoutPropertyValChanged(layoutId, field, oldval, newval) {
-    this.isNeedSave = true
-    if (this.changeFromStack) {
-      return
-    }
-    // console.log('whileLayoutPropertyValChanged:', layoutId, field, oldval, newval)
-    this.changeStack_left.unshift({ type: stackType.propChanged, childId: undefined, layoutId: layoutId, propField: field, val: { oldval: oldval, newval: newval } })
-    if (this.changeStack_left.length > 100) {
-      this.changeStack_left.splice(99, this.changeStack_left.length - 100)
-    }
-  }
-  private whileLayoutRemoveChild(layoutId, childId, childData) {
-    this.isNeedSave = true
-    if (this.changeFromStack) {
-      return
-    }
-    // console.log('whileLayoutRemoveChild:', layoutId, childId, childData)
-    this.changeStack_left.unshift({ type: stackType.removeChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
-    if (this.changeStack_left.length > 100) {
-      this.changeStack_left.splice(99, this.changeStack_left.length - 100)
-    }
-  }
-  private whileLayoutAddChild(layoutId, childId, childData) {
-    this.isNeedSave = true
-    if (this.changeFromStack) {
-      return
-    }
-    // console.log('whileLayoutAddChild:', layoutId, childId, childData)
-    this.changeStack_left.unshift({ type: stackType.addChild, childId: childId, layoutId: layoutId, propField: undefined, val: childData })
-
-    if (this.changeStack_left.length > 100) {
-      this.changeStack_left.splice(99, this.changeStack_left.length - 100)
-    }
-  }
-
-  public get canToPreStack() {
-    if (this.changeStack_left && this.changeStack_left.length > 0) {
-      return true
-    } else {
-      return false
-    }
-  }
-  public get canToNextStack() {
-    if (this.changeStack_right && this.changeStack_right.length > 0) {
-      return true
-    } else {
-      return false
-    }
-  }
-  public async toPreStack() {
-    if (this.changeStack_left && this.changeStack_left.length > 0) {
-      this.changeFromStack = true
-      try {
-        let stack = this.changeStack_left[0]
-        let findLayout = this.findLayoutRecursion(stack.layoutId, [this])
-        if (stack.type === stackType.propChanged) {
-          findLayout[stack.propField] = stack.val.oldval
-        } else if (stack.type === stackType.addChild) {
-          await findLayout.removeChildRecursion(stack.childId)
-        } else if (stack.type === stackType.removeChild) {
-          await findLayout.loadChildrenData([stack.val])
-        }
-        this.changeStack_left.splice(0, 1)
-        this.changeStack_right.unshift(stack)
-        console.log(`toPreStack--- --left stack legth:${this.changeStack_left.length},right stack legth:${this.changeStack_right.length}`)
-      } catch (error) {}
-
-      await this.$nextTick()
-      this.changeFromStack = false
-    }
-  }
-  public async toNextStack() {
-    if (this.changeStack_right && this.changeStack_right.length > 0) {
-      this.changeFromStack = true
-      try {
-        let stack = this.changeStack_right[0]
-        let findLayout = this.findLayoutRecursion(stack.layoutId, [this])
-        if (stack.type === stackType.propChanged) {
-          findLayout[stack.propField] = stack.val.newval
-        } else if (stack.type === stackType.addChild) {
-          await findLayout.loadChildrenData([stack.val])
-        } else if (stack.type === stackType.removeChild) {
-          await findLayout.removeChildRecursion(stack.childId)
-        }
-
-        this.changeStack_right.splice(0, 1)
-        this.changeStack_left.unshift(stack)
-        console.log(`toNextStack--- --left stack legth:${this.changeStack_left.length},right stack legth:${this.changeStack_right.length}`)
-      } catch (error) {}
-      await this.$nextTick()
-      this.changeFromStack = false
-    }
-  }
   // ******************************************************
   private listenOnClick(e: Event, target: any) {
     this.chooseComps([])
@@ -386,10 +225,13 @@ export default class PCPageDesign extends EnginePage {
 </script>
 
 <style lang="less" scoped>
-// .container {
-//   padding: 0px;
-//   background: transparent;
-//   border: none;
-//   border-radius: 0px;
-// }
+.container {
+  padding: 0px;
+  background: transparent;
+  border: none;
+  border-radius: 0px;
+}
+.container:focus-visible {
+  outline: none;
+}
 </style>

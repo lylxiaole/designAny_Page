@@ -1,82 +1,46 @@
 <template>
   <div style="height:100%;width：100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
-    <el-row style="height:3rem;" class="middleAlign">
-      <el-button style="height:25px" @click="addAppHandle" size="small" type="primary">添加应用</el-button>
+    <el-row style="height: 3rem" class="middleAlign">
+      <el-button style="height: 25px" @click="addAppHandle" size="small" type="primary">添加应用</el-button>
     </el-row>
-    <el-row style="height:calc(100% - 3rem);overflow-y:auto;display:block">
+    <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
       <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem" @click="selectAppliction(app)">
-        {{app.name}}
+        {{ app.name }}
       </div>
     </el-row>
     <!-- ********************************************************** -->
-    <el-dialog title="提示" v-model="dialogVisible" width="30%" center>
-      <el-form ref="currentFrom" :inline="true" :model="applicationForm" class="demo-form-inline">
-        <el-form-item label="应用名称">
-          <el-input v-model="applicationForm.name" placeholder="应用名称"></el-input>
-        </el-form-item>
-        <el-form-item label="应用类型">
-          <el-select v-model="applicationForm.type" placeholder="请选择应用类型">
-            <!-- <el-option label="看板" :value="0"></el-option>
-            <el-option label="报表" :value="1"></el-option> -->
-            <el-option label="网页程序" :value="2"></el-option>
-            <el-option label="H5 App" :value="2"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="onCancelHandle">取 消</el-button>
-          <el-button type="primary" @click="onSureHandle">确定</el-button>
-        </span>
-      </template>
-    </el-dialog>
+    <appEditDialog ref="appEditDialog" @onSure="refreshAppList" />
   </div>
 </template>
 
-<script lang="ts"  >
+<script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
-
 import ComponentBase from '@common/views/ComponentBase'
-import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication } from '@common/apis/designApplication'
+import { GetApplicationList, AddApplication, DeleteApplication, UpdateApplication, ApplicationDC } from '@common/apis/designApplication'
+import appEditDialog from './appEditDialog.vue'
 
-@Options({})
+@Options({ components: { appEditDialog } })
 export default class applicationList extends ComponentBase {
-  private allApps: any = []
-  private currentApplication: any = null
+  private allApps: ApplicationDC[] = []
+  private currentApplication: ApplicationDC = null
   mounted() {
-    this.getAppList()
+    this.refreshAppList()
   }
 
-  private async getAppList() {
+  public async refreshAppList() {
     this.allApps = await GetApplicationList()
   }
-  // ************添加应用***********************************************************
-  private dialogVisible: boolean = false
-  @Ref('applicationForm')
-  private applicationForm: any = {
-    name: '',
-    type: 0
-  }
-  private async addAppHandle() {
-    this.dialogVisible = true
-  }
-  private async onSureHandle() {
-    let valid = await (this.$refs.currentFrom as any).validate()
-    if (!valid) {
-      return false
+  public async refreshChoose() {
+    if (!this.currentApplication) {
+      return
     }
-    try {
-      let requdata: any = { name: this.applicationForm.name.trim() }
-      let issuccess = await AddApplication(requdata)
-      await this.getAppList()
-    } catch (error) {
-    } finally {
-      this.dialogVisible = false
-    }
+
+    let find = this.allApps.find((o) => o.id === this.currentApplication.id)
+    this.selectAppliction(find)
   }
-  private async onCancelHandle() {
-    this.dialogVisible = false
+  private addAppHandle() {
+    ;(this.$refs.appEditDialog as appEditDialog).addAppHandle()
   }
   // ***********************************************************************
   private applicationItemStyle(app) {
@@ -90,6 +54,7 @@ export default class applicationList extends ComponentBase {
     this.currentApplication = app
     this.onCurrentApplicationChanged(app)
   }
+
   @Emit('onCurrentApplicationChanged')
   private onCurrentApplicationChanged(app: any) {}
 }

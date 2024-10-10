@@ -1,8 +1,8 @@
 <template>
-  <div style="height: 100%; width: 100%" @click="onClickBlankArea">
+  <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
     <el-row style="height: 35px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
       <el-row style="margin: 3px 15px">
-        <el-input size="small" style="margin-bottom: 8px" v-model="seachVal" placeholder="请输入内容"></el-input>
+        <!-- <el-input size="small" style="margin-bottom: 8px" v-model="seachVal" placeholder="请输入内容"></el-input> -->
       </el-row>
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 35px)">
@@ -281,7 +281,6 @@ export default class index extends ComponentBase {
     } else if (data.type === 'group') {
       this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
     }
-
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
   private onTreeRightClick(e: any) {

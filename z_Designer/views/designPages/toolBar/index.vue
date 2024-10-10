@@ -2,7 +2,7 @@
   <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgb(61, 61, 61)" :style="{ height: height + 'px', width: '100%' }">
     <div :style="{ height: height + 'px', width: '200px' }" style="display: flex; min-width: 200px">
       <div style="padding: 9px; line-height: 0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }" />
-      <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">看板</div>
+      <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">{{ application ? application.name : '' }}</div>
     </div>
     <!-- *************************************************************************** -->
     <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'保存' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
@@ -47,6 +47,7 @@ import componentListControl from './ComponentListControl.vue'
 import optionBtn from './optionBtn.vue'
 
 import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon } from '@/assets/designIcons'
+import { ApplicationDC } from '@common/apis/designApplication'
 
 @Options({
   components: {
@@ -73,6 +74,9 @@ export default class quickActionBar extends Vue {
     }
   })
   public needSave: boolean
+
+  @Prop()
+  public application: ApplicationDC
 
   private get pageScale(): number {
     if (!this.currentPage) {

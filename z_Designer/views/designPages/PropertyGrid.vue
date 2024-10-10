@@ -92,7 +92,7 @@ export default class PropertyGrid extends Vue {
   /**当前所有布局的共有属性列表 */
   private propertyGroups: PropertyGroupInfo[] = []
   private get propertyDataCache(): propertyInfo[] {
-    let findgroup = this.propertyGroups.find((o) => o.groupName === this.selectGropName)
+    let findgroup = this.propertyGroups?.find((o) => o.groupName === this.selectGropName)
     if (!findgroup) {
       return []
     } else {

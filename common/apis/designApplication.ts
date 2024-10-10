@@ -36,11 +36,11 @@ export async function AddApplication(data: ApplicationDC) {
 }
 export async function DeleteApplication(data: ApplicationDC) {
   let url = apiAddr() + 'api/designApplication/DeleteApplication'
-  const resp = await ajaxGet(url)
+  const resp = await ajaxPost(url, data)
   return resp.data
 }
 export async function UpdateApplication(data: ApplicationDC) {
   let url = apiAddr() + 'api/designApplication/UpdateApplication'
-  const resp = await ajaxGet(url)
+  const resp = await ajaxPost(url, data)
   return resp.data
 }

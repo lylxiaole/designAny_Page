@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-row style="height:50px">
-      <el-button style="position:absolute;right:80px" link type="primary" size="small" @click="onAddNew">新增</el-button>
+    <el-row style="height: 50px; line-height: 50px">
+      <el-button style="margin-left: 20px" link type="primary" @click="onAddNew">新增</el-button>
     </el-row>
-    <el-row style="height:calc(100% - 50px)">
+    <el-row style="height: calc(100% - 50px)">
       <el-table :data="allData" style="width: 100%">
         <el-table-column prop="desc" label="描述" />
         <el-table-column prop="key" label="键" />
         <el-table-column prop="value" label="值" />
         <el-table-column fixed="right" label="操作" width="120">
-          <template #default="{ row  }">
+          <template #default="{ row }">
             <el-button link type="primary" size="small" @click="onEdit(row)">编辑</el-button>
             <el-button link type="primary" size="small" @click="onDelete(row)">删除</el-button>
           </template>
@@ -59,5 +59,4 @@ export default class index extends PageBase {
 }
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

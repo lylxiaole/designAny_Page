@@ -423,7 +423,8 @@ export default class DesignEvents {
     if (!DesignEvents.copyComp) {
       return
     }
-    // window.console.log('onPaste_Event')
+
+    window.console.log('onPaste_Event')
     let compData = deepClone(await DesignEvents.copyComp.getSaveData())
 
     if (DesignEvents.isCut) {
@@ -441,13 +442,13 @@ export default class DesignEvents {
     for (let index = 0; index < findchildren.length; index++) {
       const element = findchildren[index]
       if ((element as any).insertComponentLayout) {
-        newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData.meta, null, compData)
+        newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData)
         break
       }
     }
     // 如果没选中容器类的子组件, 就把当前组件复制到当前页面
     if (!newcopyComp) {
-      newcopyComp = await this._vueComp.insertComponentLayout(compclass, compData.meta, null, compData)
+      newcopyComp = await this._vueComp.insertComponentLayout(compclass, compData)
     }
     newcopyComp.loadData(compData)
     e.stopPropagation()

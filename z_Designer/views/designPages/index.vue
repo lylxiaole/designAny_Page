@@ -1,7 +1,7 @@
 <template>
   <el-row style="height: 100%; width: 100%">
     <el-row style="height: 60px; width: 100%">
-      <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
+      <toolBar :application="application" :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
     </el-row>
     <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
       <el-col style="width: 250px; height: 100%; float: left">
@@ -114,17 +114,19 @@ export default class index extends PageBase {
     if (!engine) {
       this.openPageEngines.push(pageengine)
     }
-    window.console.log('openPage:', pageengine)
     this.currentOpenPageId = page.id
     // **********************
   }
   //关闭页面
-  private closePage(pageId: string) {
-    window.console.log('closePage:', pageId)
+  private async closePage(pageId: string) {
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
       ;(this.openPageEngines[engineIndex] as PCPageDesign).closeDesign()
       this.openPageEngines.splice(engineIndex, 1)
+    }
+
+    if (this.currentOpenPageId === pageId && this.openPageEngines.length > 0) {
+      this.currentOpenPageId = this.openPageEngines[0].Id
     }
   }
   private isHaveOpened(pageId: string) {
@@ -149,7 +151,6 @@ export default class index extends PageBase {
     }
 
     let designLayout: any = typeof PCPageDesign
-
     switch (res.type) {
       case pageType.pcPage:
         designLayout = findPageByPaltform(paltform.webpc, 'design')
@@ -160,7 +161,6 @@ export default class index extends PageBase {
       default:
         break
     }
-
     /************************渲染页面 */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
     await (vueComp as PCPageDesign).loadPageByData(pageId, pageData)
@@ -195,7 +195,7 @@ export default class index extends PageBase {
   private onSettingBehavior() {
     ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine)
   }
-  // *************右侧属性窗*******************************************************
+  // *************右侧属性窗**********************************************
   private activeName: string = 'first'
   // ********************************************************************
   private _onKeyDown = (e: any) => {
