@@ -43,10 +43,10 @@ import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
 import TopBar from './TopBar/index.vue'
 // ****************************************
-@DCompnentAttr(paltform.webpc, '基础组件', '导航栏模板', 'navigation001', null)
+@DCompnentAttr(paltform.webpc, 'Basic', 'Classic navigation bar', 'navigation001', null)
 @Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
-  @DPropAttr(new AppPagesChoose_Setting('页面清单', PropertyGroupName.data, true))
+  @DPropAttr(new AppPagesChoose_Setting('Page List', PropertyGroupName.data, true))
   private selectedPages: any[] = []
   mounted() {
     this.width = '50%'

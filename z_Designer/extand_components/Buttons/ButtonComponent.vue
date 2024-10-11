@@ -19,15 +19,15 @@ import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, '基础组件', '普通按钮', 'ButtonComponent_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'Normal Button', 'ButtonComponent_001', null)
 @Options({
   components: {}
 })
 export default class ButtonComponent extends EngineComponent {
-  @DPropAttr(new Text_Setting('按钮文本', PropertyGroupName.data, true))
-  private btnText: any = '新增按钮'
+  @DPropAttr(new Text_Setting('Button Text', PropertyGroupName.data, true))
+  private btnText: any = 'New Button'
 
-  @DPropAttr(new UploadFile_Setting('按钮图标', PropertyGroupName.data, true, null, 1, 'image'))
+  @DPropAttr(new UploadFile_Setting('Button Icon', PropertyGroupName.data, true, null, 1, 'image'))
   private btnIcon: any[] = []
 
   private get btnIconUrl() {
@@ -41,7 +41,7 @@ export default class ButtonComponent extends EngineComponent {
   mounted() {
     this.width = '10%'
     this.height = '4%'
-    this.findPropertyByName(PropertyGroupName.style, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BackgroundImage').canSetting = false
   }
 
   private onClick(e) {
@@ -49,7 +49,7 @@ export default class ButtonComponent extends EngineComponent {
     this.onClickEvent()
   }
 
-  @DEventAttr({ eventName: '点击', description: '', inParams: [], hasOutParam: false })
+  @DEventAttr({ eventName: 'OnClick', description: '', inParams: [], hasOutParam: false })
   private onClickEvent() {}
 }
 </script>

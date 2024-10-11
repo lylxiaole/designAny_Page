@@ -5,25 +5,25 @@
       <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">{{ application ? application.name : '' }}</div>
     </div>
     <!-- *************************************************************************** -->
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'Save' + (needSave ? '*' : '')" :icon="saveIcon" @click="savePage" />
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'Save' + (needSave ? '*' : '')" :enableIcon="saveIcon" @click="savePage" />
 
-    <optionBtn v-if="currentPage && currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :icon="chexiaoIcon" :label="'前一步'" @mouseup="topre" />
-    <optionBtn v-if="currentPage && currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :icon="fanchexiaoIcon" :label="'后一步'" @mouseup="tonext" />
+    <optionBtn v-if="currentPage" :enable="currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="'Revoke'" @mouseup="topre" />
+    <optionBtn v-if="currentPage" :enable="currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="'Decide'" @mouseup="tonext" />
 
-    <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="previewIcon" label="Preview" @mouseup="onPreView" />
+    <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :enableIcon="previewIcon" label="Preview" @mouseup="onPreView" />
 
-    <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
-      <template #content>
-        <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
-          <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
-        </div>
-      </template>
-      <optionBtn :style="{ height: height + 'px' }" style="margin-left: 30px; width: 80px" :icon="componentsIcon" label="Components" />
-    </el-tooltip>
-
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :icon="behaviorIcon" label="Behaviors" @click="onSettingBehavior" />
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
+      <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+        <template #content>
+          <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
+            <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
+          </div>
+        </template>
+        <optionBtn :style="{ height: height + 'px' }" style="margin-left: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
+      </el-tooltip>
+      <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-left: 30px" :enableIcon="behaviorIcon" label="Behaviors" @click="onSettingBehavior" />
+
       <!-- *************************************************************************** -->
       <div :style="{ width: '150px' }" style="margin-right: 15px" class="iconitem themeHover">
         <div class="flexHorilanLayout" style="width: 100%; height: 50%">
@@ -32,7 +32,7 @@
         <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px', width: '80px' }" :icon="quitIcon" label="Exit" @click="onQuit" />
+      <optionBtn :style="{ height: height + 'px', width: '80px' }" :enableIcon="quitIcon" label="Exit" @click="onQuit" />
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface
 import componentListControl from './ComponentListControl.vue'
 import optionBtn from './optionBtn.vue'
 
-import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon } from '@/assets/designIcons'
+import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon } from '@/assets/designIcons'
 import { ApplicationDC } from '@common/apis/designApplication'
 
 @Options({
@@ -61,6 +61,8 @@ export default class quickActionBar extends Vue {
   private behaviorIcon: any = behaviorIcon
   private chexiaoIcon: any = chexiaoIcon
   private fanchexiaoIcon: any = fanchexiaoIcon
+  private fanchexiaodisableIcon: any = fanchexiaodisableIcon
+  private chexiaodisableIcon: any = chexiaodisableIcon
 
   @Prop() private height: number
   /**当前的布局页面属性，外部通过绑定传递进来 */

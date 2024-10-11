@@ -70,7 +70,7 @@ const routes: IRouteClass[] = [
     name: 'designPages',
     hidden: true,
     meta: {
-      title: '应用设计'
+      title: 'APP Design'
     },
     component: () => require('./views/designPages/index.vue')
   },
@@ -80,7 +80,7 @@ const routes: IRouteClass[] = [
     name: 'viewPages',
     hidden: true,
     meta: {
-      title: '应用预览'
+      title: 'APP View'
     },
     component: () => require('./views/previewPages/index.vue')
   },
@@ -89,7 +89,7 @@ const routes: IRouteClass[] = [
     name: 'login',
     hidden: true,
     meta: {
-      title: '登录'
+      title: 'Sign In'
     },
     component: () => require('./views/user/login.vue')
   },
@@ -98,7 +98,7 @@ const routes: IRouteClass[] = [
     name: 'register',
     hidden: true,
     meta: {
-      title: '注册'
+      title: 'Sign Up'
     },
     component: () => require('./views/user/register.vue')
   }

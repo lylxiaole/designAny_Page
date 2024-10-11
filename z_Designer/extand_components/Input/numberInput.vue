@@ -13,7 +13,7 @@ import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Set
 
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, '基础组件', '数字输入框', 'numberInput_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'NumberInput', 'numberInput_001', null)
 @Options({})
 export default class numberInput extends EngineComponent {
   isShowIndex: boolean = false
@@ -25,7 +25,7 @@ export default class numberInput extends EngineComponent {
     this.background = 'white'
   }
 
-  @DPropAttr(new Number_Setting('值', PropertyGroupName.data, true))
+  @DPropAttr(new Number_Setting('Value', PropertyGroupName.data, true))
   private currentVal: number = 0
 }
 </script>

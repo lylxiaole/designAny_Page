@@ -27,7 +27,7 @@ import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Set
 
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, '基础组件', '二维码组件', 'NPQrCode_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'NPQrCode', 'NPQrCode_001', null)
 @Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'
@@ -40,8 +40,8 @@ export default class NPQrCode extends EngineComponent {
     this.width = '10%'
     this.height = '10%'
 
-    this.findPropertyByName(PropertyGroupName.style, '背景图片').canSetting = false
-    this.findPropertyByName(PropertyGroupName.style, '背景色').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BackgroundImage').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BackgroundColor').canSetting = false
     this.initQrCode()
   }
   beforeUnmount() {}
@@ -50,30 +50,30 @@ export default class NPQrCode extends EngineComponent {
     // this.initQrCode()
   }
 
-  @DPropAttr(new Text_Setting('内容', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting('Code Text', PropertyGroupName.data, true))
   private codeValue: string = '123456789'
 
-  @DPropAttr(new Number_Setting('版本', PropertyGroupName.data, true, null))
+  @DPropAttr(new Number_Setting('Code Version', PropertyGroupName.data, true, null))
   private codeVersion: number = 0
 
-  @DPropAttr(new Text_Setting('纠错等级', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting('Code ErrorCorrection Level', PropertyGroupName.data, true))
   private codeErrorCorrectionLevel: string = 'M'
 
-  @DPropAttr(new Number_Setting('遮罩符号', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting('Code MaskPattern', PropertyGroupName.style, true, null))
   private codeMaskPattern: number = -1
 
-  @DPropAttr(new Number_Setting('二维码外边距', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting('CodeText Margin', PropertyGroupName.style, true, null))
   private codeMargin: number = 4
 
-  @DPropAttr(new Number_Setting('二维码宽度', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting('Code Width', PropertyGroupName.style, true, null))
   private codeWidth: number = 0
-  @DPropAttr(new Number_Setting('比例因子', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting('Code Scale', PropertyGroupName.style, true, null))
   private codeScale: number = 0
 
-  @DPropAttr(new Color_Setting('内容颜色', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting('CodeText Color', PropertyGroupName.style, true, null))
   private codeDarkColor: string = '#000000'
 
-  @DPropAttr(new Color_Setting('留白颜色', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting('CodeText White Color', PropertyGroupName.style, true, null))
   private codeLightColor: string = '#ffffff'
 
   private initQrCode() {

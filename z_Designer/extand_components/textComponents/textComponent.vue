@@ -31,7 +31,7 @@ import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentIn
 import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, '基础组件', '拓展文本组件', 'TextComponent_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'Text', 'TextComponent_001', null)
 @Options({})
 export default class TextComponent extends EngineComponent {
   isShowIndex: boolean = false
@@ -43,25 +43,25 @@ export default class TextComponent extends EngineComponent {
     this.background = 'white'
   }
 
-  @DPropAttr(new Enum_Setting('粗细', PropertyGroupName.style, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
+  @DPropAttr(new Enum_Setting('FontWeight', PropertyGroupName.style, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
   private fontWeight: string = 'normal'
 
-  @DPropAttr(new Enum_Setting('倾斜', PropertyGroupName.style, true, null, true, ['oblique', 'normal']))
+  @DPropAttr(new Enum_Setting('Font Style', PropertyGroupName.style, true, null, true, ['oblique', 'normal']))
   private fontStyle: string = 'normal'
 
-  @DPropAttr(new Enum_Setting('垂直对齐', PropertyGroupName.style, true, null, true, ['top', 'middle', 'bottom']))
+  @DPropAttr(new Enum_Setting('Vertical Align', PropertyGroupName.style, true, null, true, ['top', 'middle', 'bottom']))
   private verticalAlign: string = 'middle'
 
-  @DPropAttr(new Text_Setting('文本', PropertyGroupName.style, true))
-  private CurrentText: string = '哈哈哈'
+  @DPropAttr(new Text_Setting('Text', PropertyGroupName.style, true))
+  private CurrentText: string = 'Hellow World'
 
-  @DPropAttr(new Enum_Setting('自动换行', PropertyGroupName.style, true, null, true, ['nowrap', 'wrap']))
+  @DPropAttr(new Enum_Setting('WhiteSpace', PropertyGroupName.style, true, null, true, ['nowrap', 'wrap']))
   private space: string = 'wrap'
 
-  @DPropAttr(new Enum_Setting('水平对齐', PropertyGroupName.style, true, null, true, ['left', 'center', 'right']))
+  @DPropAttr(new Enum_Setting('TextAlign', PropertyGroupName.style, true, null, true, ['left', 'center', 'right']))
   private Horienten: string = 'center'
 
-  @DPropAttr(new Boolean_Setting('是否显示边框', PropertyGroupName.style, true))
+  @DPropAttr(new Boolean_Setting('ShowBorder', PropertyGroupName.style, true))
   private isShowBorder: boolean = false
 }
 </script>

@@ -23,7 +23,7 @@ import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Set
 
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, '基础组件', '文本输入框', 'textInput_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'TextInput', 'textInput_001', null)
 @Options({})
 export default class textInput extends EngineComponent {
   isShowIndex: boolean = false
@@ -40,16 +40,16 @@ export default class textInput extends EngineComponent {
     debugger
   }
 
-  @DPropAttr(new Text_Setting('值', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting('Value', PropertyGroupName.data, true))
   private currentText: string = ''
 
-  @DPropAttr(new Text_Setting('提示语', PropertyGroupName.data, true))
-  private placeholder: string = 'Please Input一个值'
+  @DPropAttr(new Text_Setting('Placeholder', PropertyGroupName.data, true))
+  private placeholder: string = 'Please Input A Value'
 
-  @DPropAttr(new Boolean_Setting('只读', PropertyGroupName.data, true))
+  @DPropAttr(new Boolean_Setting('Readonly', PropertyGroupName.data, true))
   private readonly: boolean = false
 
-  @DPropAttr(new Enum_Setting('文本类型', PropertyGroupName.data, true, null, true, ['text', 'password']))
+  @DPropAttr(new Enum_Setting('Text Type', PropertyGroupName.data, true, null, true, ['text', 'password']))
   private type: string = 'text'
 }
 </script>

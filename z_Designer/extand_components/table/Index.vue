@@ -38,7 +38,7 @@ import 'vxe-table/lib/style.css'
 import './tableThemeStyle.scss'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.webpc, '基础组件', '表格', 'Table_001', null)
+@DCompnentAttr(paltform.webpc, 'Basic', 'Classic Table', 'Table_001', null)
 @Options({
   components: {
     VxeTable,
@@ -48,45 +48,45 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 })
 export default class Index extends EngineComponent {
   // ************** 属性************************
-  @DPropAttr(new JsonContent_Setting('数据', PropertyGroupName.data, true, null))
+  @DPropAttr(new JsonContent_Setting('Table Data', PropertyGroupName.data, true, null))
   private tableData: any[] = []
 
-  @DPropAttr(new TableColumn_Setting('列设置', PropertyGroupName.data, true, null))
+  @DPropAttr(new TableColumn_Setting('Columns', PropertyGroupName.data, true, null))
   private tableColumns: any[] = []
 
-  @DPropAttr(new Color_Setting('表头背景色', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting('Headers Color', PropertyGroupName.style, true, null))
   private headerBackground: string = '#cdcdcd'
 
-  @DPropAttr(new Color_Setting('表头字体颜色', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting('Header FontColor', PropertyGroupName.style, true, null))
   private headerFontColor: string = '#000000'
 
-  @DPropAttr(new Color_Setting('表身背景色', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting('Cell Color', PropertyGroupName.style, true, null))
   private cellBackground: string = '#cdcdcd'
 
-  @DPropAttr(new Color_Setting('表身字体颜色', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting('Cell FontColor', PropertyGroupName.style, true, null))
   private cellFontColor: string = '#000000'
 
-  @DPropAttr(new Boolean_Setting('是否有分页', PropertyGroupName.data, true, null))
+  @DPropAttr(new Boolean_Setting('ShowPager', PropertyGroupName.data, true, null))
   private isShowPager: boolean = true
 
-  @DPropAttr(new Number_Setting('当前页', PropertyGroupName.data, true, null))
+  @DPropAttr(new Number_Setting('PageIndex', PropertyGroupName.data, true, null))
   private pageIndex: number = 1
-  @DPropAttr(new Number_Setting('页大小', PropertyGroupName.data, true, null))
+  @DPropAttr(new Number_Setting('PageSize', PropertyGroupName.data, true, null))
   private pageSize: number = 50
-  @DPropAttr(new Number_Setting('数据总条数', PropertyGroupName.data, false, null))
+  @DPropAttr(new Number_Setting('Data TotalCount', PropertyGroupName.data, false, null))
   private dataTotalCount: number = 0
 
   @DEventAttr({
-    eventName: '分页变化',
+    eventName: 'onPageChange',
     inParams: [
-      { key: 'pageSize', name: '页大小' },
-      { key: 'currentPage', name: '当前页' }
+      { key: 'pageSize', name: 'PageSize' },
+      { key: 'currentPage', name: 'PageIndex' }
     ],
     hasOutParam: false
   })
   private onPageChange(pageSize, currentPage) {}
 
-  @DMethodAttr({ methodName: '获取选择行', hasOutParam: true })
+  @DMethodAttr({ methodName: 'GetSelectedRows', hasOutParam: true })
   private getSelectedRows() {
     let findradioCol = this.tableColumns.find((o) => o.type === 'radio')
 
@@ -106,7 +106,7 @@ export default class Index extends EngineComponent {
   mounted() {
     this.width = '70%'
     this.height = '50%'
-    this.findPropertyByName(PropertyGroupName.style, '背景图片').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BackgroundImage').canSetting = false
   }
 }
 </script>

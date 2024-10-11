@@ -16,13 +16,13 @@ import { shallowRef } from 'vue'
 import elementResizeDetectorMaker from 'element-resize-detector'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, '基础组件', '普通EChart', 'EchartNormal_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'Normal EChart', 'EchartNormal_001', null)
 @Options({})
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})
   private resizeListener: any = null
 
-  @DPropAttr(new JsonContent_Setting('Option设置', PropertyGroupName.data, true))
+  @DPropAttr(new JsonContent_Setting('Option Setting', PropertyGroupName.data, true))
   private option: any = {
     grid: {
       width: '100%',
