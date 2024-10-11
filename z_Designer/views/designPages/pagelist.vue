@@ -393,7 +393,7 @@ export default class index extends ComponentBase {
         break
     }
 
-    let res = await AddPage({ name: '新建页面', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index, type: pType } as any)
+    let res = await AddPage({ name: 'NewPage', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index, type: pType } as any)
 
     let newnode: TreeNodeDC = {
       id: res.id,

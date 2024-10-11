@@ -9,7 +9,7 @@
           <!-- <el-option label="看板" :value="0"></el-option>
             <el-option label="报表" :value="1"></el-option> -->
           <el-option label="PC App" :value="2"></el-option>
-          <el-option label="H5 App" :value="3"></el-option>
+          <el-option label="H5 App(Coding)" disabled="true" :value="3"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
