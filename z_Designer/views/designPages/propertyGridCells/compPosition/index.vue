@@ -3,20 +3,20 @@
     <el-collapse v-model="activeNames">
       <el-collapse-item name="1">
         <el-row style="position: relative">
-          <span class="normaltext" style="float: left; width: 32px">Width:</span>
+          <span class="normaltext" style="float: left; width: 48px">Width:</span>
           <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.width" placeholder="Please Input" />
         </el-row>
         <el-row style="position: relative; margin-top: 2px">
-          <span class="normaltext" style="float: left; width: 32px">Height:</span>
+          <span class="normaltext" style="float: left; width: 48px">Height:</span>
           <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.height" placeholder="Please Input" />
         </el-row>
         <!-- ************************************************************************** -->
         <el-row style="position: relative; margin-top: 2px">
-          <span class="normaltext" style="float: left; width: 32px">Left:</span>
+          <span class="normaltext" style="float: left; width: 48px">Left:</span>
           <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.x" placeholder="Please Input" />
         </el-row>
         <el-row style="position: relative; margin-top: 2px">
-          <span class="normaltext" style="float: left; width: 32px">Top:</span>
+          <span class="normaltext" style="float: left; width: 48px">Top:</span>
           <el-input size="small" type="text" style="float: left; width: 90px" v-model="currentValue.y" placeholder="Please Input" />
         </el-row>
       </el-collapse-item>
@@ -44,7 +44,7 @@ export default class index extends propertyCellBase<CompPosition_Setting> {
 
 <style lang="less" scoped>
 .normaltext {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.65);
 }

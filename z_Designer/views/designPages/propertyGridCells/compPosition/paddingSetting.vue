@@ -3,20 +3,20 @@
     <el-collapse v-model="activeNames">
       <el-collapse-item name="1">
         <el-row style="position: relative">
-          <span class="normaltext" style="float: left; width: 32px">Left:</span>
+          <span class="normaltext" style="float: left; width: 48px">Left:</span>
           <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.left" :min="0" :max="9999999"></el-input-number>
         </el-row>
         <el-row style="position: relative; margin-top: 2px">
-          <span class="normaltext" style="float: left; width: 32px">Right:</span>
+          <span class="normaltext" style="float: left; width: 48px">Right:</span>
           <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.right" :min="0" :max="9999999"></el-input-number>
         </el-row>
         <!-- ************************************************************************** -->
         <el-row style="position: relative; margin-top: 2px">
-          <span class="normaltext" style="float: left; width: 32px">Top:</span>
+          <span class="normaltext" style="float: left; width: 48px">Top:</span>
           <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.top" :min="0" :max="9999999"></el-input-number>
         </el-row>
         <el-row style="position: relative; margin-top: 2px">
-          <span class="normaltext" style="float: left; width: 32px">Bottom:</span>
+          <span class="normaltext" style="float: left; width: 48px">Bottom:</span>
           <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.bottom" :min="0" :max="9999999"></el-input-number>
         </el-row>
       </el-collapse-item>
@@ -42,7 +42,7 @@ export default class paddingSetting extends propertyCellBase<Padding_Setting> {
 
 <style lang="less" scoped>
 .normaltext {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.65);
 }

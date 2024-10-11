@@ -50,7 +50,7 @@ export default class lylJSONEditor extends Vue {
   }
 
   public setValue(val) {
-    this.editor.setValue(val)
+    this.editor.setValue(JSON.stringify(val, null, '\t'))
   }
   public getValue() {
     return this.editor.getValue()

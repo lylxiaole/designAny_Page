@@ -7,15 +7,15 @@
     <!-- ************************************* -->
     <div style="width: 100%; height: calc(100% - 120px); overflow-y: auto">
       <el-row class="propertyGridRow" style="margin-top: 10px" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow" :key="propertyInfo.name" :disabled="propertyInfo.isEnable == false">
-        <el-col :span="8" style="margin-left: 16px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 0.65); line-height: 22px; font-size: 14px">
+        <el-col :span="6" style="margin-left: 16px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 0.65); font-size: 14px">
           {{ propertyInfo.name }}
         </el-col>
-        <el-col :span="12" style="margin-left: 4px">
+        <el-col :span="15" style="margin-left: 4px; height: 100%">
           <component :is="propertyInfo.comp" :property="propertyInfo.property" :application="application" :page="currentPage" :layouts="currentLayouts"></component>
         </el-col>
-        <el-col :span="2">
+        <!-- <el-col :span="2">
           <span>{{ propertyInfo.property.unit }}</span>
-        </el-col>
+        </el-col> -->
       </el-row>
     </div>
   </div>

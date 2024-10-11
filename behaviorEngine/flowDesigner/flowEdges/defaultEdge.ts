@@ -5,7 +5,6 @@ class defaultEdgeModel extends PolylineEdgeModel {
     const data = super.getData()
     ;(data as any).sourceAnchorId = this.sourceAnchorId
     ;(data as any).targetAnchorId = this.targetAnchorId
-
     return data
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <el-button @click="onClick" type="primary" :style="{ 'background-color': background, color: foreground }" style="width: 100%; height: 100%" class="verticalAlignCenter">
+  <el-button @click="onClick" type="primary" :style="{ 'background-color': background, color: foreground }" style="width: 100%; height: 100%">
     <template #icon>
       <img v-if="btnIconUrl" style="height: 100%" :src="btnIconUrl" />
     </template>
