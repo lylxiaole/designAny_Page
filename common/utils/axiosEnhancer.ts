@@ -83,8 +83,11 @@ axiosInstance.interceptors.response.use(
     if (response.data && response.data.success === false) {
       if (response.data.errCode === 401) {
         toLogin()
+        return
+      } else {
+        ElNotification.error('请求发生错误:' + response.data.errMsg)
+        return null
       }
-      return Promise.reject(new Error('请求发生错误:' + response.data.errMsg))
     } else {
       return response.data
     }
@@ -129,6 +132,7 @@ axiosInstance.interceptors.response.use(
 )
 
 function toLogin() {
+  debugger
   // todo:等做登陆时再放开.
   // alertWarning('尚未登录或者会话超时,即将重新登录...');
   // Store.clear();

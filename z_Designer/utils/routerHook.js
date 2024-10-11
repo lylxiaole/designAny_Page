@@ -50,18 +50,21 @@ async function hasTokenOption(to, from, next) {
     // remove token and go to login page to re-login
     await currentStore.dispatch('user/resetToken')
     Message.error(error || 'Has Error')
-    next(`/login?redirect=${encodeURIComponent(to.path)}`)
+    next({ path: `/login?redirect=${encodeURIComponent(to.path)}` })
     NProgress.done()
   }
 }
 async function noTokenOption(to, from, next) {
   /* has no token*/
+  console.log('noTokenOption:1')
   if (whiteList.indexOf(to.path) !== -1) {
+    console.log('noTokenOption:2')
     // in the free login whitelist, go directly
     next()
   } else {
+    console.log('noTokenOption:3')
     // other pages that do not have permission to access are redirected to the login page.
-    next(`/login?redirect=${encodeURIComponent(to.path)}`)
+    next({ path: `/login?redirect=${encodeURIComponent(to.path)}` })
     NProgress.done()
   }
 }

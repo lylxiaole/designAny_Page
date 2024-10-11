@@ -15,7 +15,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: getLocale().t('menu.myApps')
         },
-        component: () => require('./views/designApplications/index.vue')
+        component: async () => require('./views/designApplications/index.vue')
       },
       // {
       //   icon: 'icon-all-fill',
@@ -24,7 +24,7 @@ const routes: IRouteClass[] = [
       //   meta: {
       //     title: '我的接口'
       //   },
-      //   component: () => import('./views/designApis/index.vue')
+      //   component: async () => import('./views/designApis/index.vue')
       // },
       // {
       //   icon: 'icon-all-fill',
@@ -33,7 +33,7 @@ const routes: IRouteClass[] = [
       //   meta: {
       //     title: '我的数据库'
       //   },
-      //   component: () => import('./views/designDatabases/index.vue')
+      //   component: async () => import('./views/designDatabases/index.vue')
       // },
       {
         icon: 'icon-all-fill',
@@ -42,7 +42,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: getLocale().t('menu.HttpApi')
         },
-        component: () => require('./views/designThirtyApis/index.vue')
+        component: async () => require('./views/designThirtyApis/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -51,7 +51,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: getLocale().t('menu.Dictionarys')
         },
-        component: () => require('./views/designDictionary/index.vue')
+        component: async () => require('./views/designDictionary/index.vue')
       },
       {
         icon: 'icon-all-fill',
@@ -60,7 +60,7 @@ const routes: IRouteClass[] = [
         meta: {
           title: getLocale().t('menu.JSFuncs')
         },
-        component: () => require('./views/designFunctions/index.vue')
+        component: async () => require('./views/designFunctions/index.vue')
       }
     ]
   },
@@ -72,7 +72,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: 'APP Design'
     },
-    component: () => require('./views/designPages/index.vue')
+    component: async () => require('./views/designPages/index.vue')
   },
   {
     icon: 'icon-all-fill',
@@ -82,7 +82,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: 'APP View'
     },
-    component: () => require('./views/viewPage/index.vue')
+    component: async () => require('./views/viewPage/index.vue')
   },
   {
     path: '/login',
@@ -91,7 +91,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: 'Sign In'
     },
-    component: () => require('./views/user/login.vue')
+    component: async () => require('./views/user/login.vue')
   },
   {
     path: '/register',
@@ -100,7 +100,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: 'Sign Up'
     },
-    component: () => require('./views/user/register.vue')
+    component: async () => require('./views/user/register.vue')
   }
 ]
 

@@ -10,12 +10,15 @@ const flowNodeModulesFiles = require.context('./flowDesigner/flowNode_Inner', tr
 
 export async function init(apiAddr, getAllDictionary, getAllThirtyApis, getGroupFuncsAll) {
   behaviorContext.designerServerApiAddr = apiAddr
-  behaviorContext.getAllDictionary = getAllDictionary
-  behaviorContext.getAllThirtyApis = getAllThirtyApis
-  behaviorContext.getAllJSFuncs = getGroupFuncsAll
-  behaviorContext.allDictionary = await getAllDictionary()
-  behaviorContext.allThirtyApis = await getAllThirtyApis()
-  behaviorContext.allJSFuncs = await getGroupFuncsAll()
+
+  try {
+    behaviorContext.getAllDictionary = getAllDictionary
+    behaviorContext.getAllThirtyApis = getAllThirtyApis
+    behaviorContext.getAllJSFuncs = getGroupFuncsAll
+    behaviorContext.allDictionary = await getAllDictionary()
+    behaviorContext.allThirtyApis = await getAllThirtyApis()
+    behaviorContext.allJSFuncs = await getGroupFuncsAll()
+  } catch (error) {}
 
   actFuncModulesFiles.keys().reduce((modules, modulePath) => {
     const value = actFuncModulesFiles(modulePath)

@@ -357,7 +357,6 @@ function initConifg(distDir, projectDir, templateFile, devPort) {
   baseconfig.devServer.port = devPort
   baseconfig.output.path = path.resolve(currentDir, `dists/${distDir}`)
   baseconfig.resolve.modules.push(path.resolve(currentDir, projectDir))
-
   baseconfig.resolve.alias['@'] = path.resolve(currentDir, projectDir)
   return baseconfig
 }
