@@ -4,10 +4,8 @@
       <div class="title-container">
         <h3 class="title">DesignAny</h3>
       </div>
-      <div class="title-container">
-        <h5 class="title">Sign In</h5>
-      </div>
-      <el-form-item prop="username">
+
+      <el-form-item style="margin-top: 150px" prop="username">
         <span class="svg-container">
           <i class="el-icon-user" />
         </span>
@@ -25,6 +23,14 @@
       <el-button :loading="loading" type="primary" style="width: 65%; margin-bottom: 30px" @click.native.prevent="handleLogin">Sign In</el-button>
       <el-button type="text" style="width: 30%; margin-bottom: 30px" @click.native.prevent="handleLoginRegister">Sign Up</el-button>
     </el-form>
+
+    <div style="height: 2rem; z-index: 2; position: absolute; bottom: 2rem; width: 100%">
+      <div class="flexHorilanLayout" style="height: 1rem; font-size: 12px; color: #cdcdcd">Email&nbsp;&nbsp;&nbsp;742923150@qq.com</div>
+      <div class="flexHorilanLayout" style="height: 1rem; font-size: 12px; color: #cdcdcd">
+        Github&nbsp;&nbsp;&nbsp;
+        <a href="https://github.com/design-any/release">https://github.com/design-any/release</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,14 +43,14 @@ import { login } from '@common/apis/user'
 
 const validateUsername = (rule, value, callback) => {
   if (!validUsername(value)) {
-    callback(new Error('请输入合法的用户名'))
+    callback(new Error('Please enter a valid username'))
   } else {
     callback()
   }
 }
 const validatePassword = (rule, value, callback) => {
   if (value.length < 3) {
-    callback(new Error('密码最少3位'))
+    callback(new Error('Password must be at least 3 characters long'))
   } else {
     callback()
   }
@@ -135,6 +141,16 @@ $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
 
+.label {
+  width: 100%;
+  height: 50%;
+  opacity: 0.5;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #123633;
+}
+
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;
@@ -149,7 +165,7 @@ $cursor: #fff;
   }
   .el-input {
     display: inline-block;
-    height: 47px;
+    height: 35px;
     width: 85%;
 
     input {
@@ -159,7 +175,7 @@ $cursor: #fff;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
-      height: 47px;
+      height: 35px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
@@ -174,6 +190,12 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+    height: 35px;
+    .el-input__wrapper {
+      height: 35px;
+      padding: 0px 10px;
+      width: 100%;
+    }
   }
 }
 </style>
@@ -193,7 +215,7 @@ $light_gray: #eee;
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 80px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -220,7 +242,6 @@ $light_gray: #eee;
 
   .title-container {
     position: relative;
-
     .title {
       font-size: 26px;
       color: $light_gray;

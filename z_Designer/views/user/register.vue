@@ -124,9 +124,22 @@ export default class register extends PageBase {
 </script>
 
 <style lang="scss">
+/* 修复input 背景不协调 和光标变色 */
+/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
+
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
+
+.label {
+  width: 100%;
+  height: 50%;
+  opacity: 0.5;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #123633;
+}
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -136,9 +149,13 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  .el-input__wrapper {
+    box-shadow: none;
+    background-color: transparent;
+  }
   .el-input {
     display: inline-block;
-    height: 47px;
+    height: 35px;
     width: 85%;
 
     input {
@@ -148,7 +165,7 @@ $cursor: #fff;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
-      height: 47px;
+      height: 35px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
@@ -163,6 +180,12 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+    height: 35px;
+    .el-input__wrapper {
+      height: 35px;
+      padding: 0px 10px;
+      width: 100%;
+    }
   }
 }
 </style>
@@ -209,7 +232,6 @@ $light_gray: #eee;
 
   .title-container {
     position: relative;
-
     .title {
       font-size: 26px;
       color: $light_gray;
