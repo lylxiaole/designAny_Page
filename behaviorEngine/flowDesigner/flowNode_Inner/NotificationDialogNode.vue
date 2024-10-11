@@ -1,7 +1,7 @@
 <template>
-  <el-row style="width:100%;height:100%">
-    <el-row style="width:100%;height:50%">
-      <el-col :span="6">提示窗类型:</el-col>
+  <el-row style="width: 100%; height: 100%">
+    <el-row style="width: 100%; height: 50%">
+      <el-col :span="6">Notify Type:</el-col>
       <el-col :span="18">
         <el-select v-model="actObj.resourceFilter.type" placeholder="Select" size="small">
           <el-option key="success" label="success" value="success" />
@@ -10,8 +10,8 @@
         </el-select>
       </el-col>
     </el-row>
-    <el-row style="width:100%;height:50%">
-      <el-col :span="6">提示内容:</el-col>
+    <el-row style="width: 100%; height: 50%">
+      <el-col :span="6">Notify Content:</el-col>
       <el-col :span="18">
         <el-input v-model="actObj.resourceFilter.message" size="small" placeholder="Please input" />
       </el-col>
@@ -46,6 +46,4 @@ export default class NotificationDialogNode extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

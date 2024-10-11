@@ -1,7 +1,7 @@
 <template>
-  <div style="width:100;height:100%">
+  <div style="width: 100; height: 100%">
     <el-row>
-      <el-col :span="6">判断条件:</el-col>
+      <el-col :span="6">Judgment:</el-col>
       <el-col :span="18">
         <el-select v-model="actObj.resourceFilter.judeParam" placeholder="Select" size="small">
           <el-option key="等于" label="等于" value="===" />
@@ -13,7 +13,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">判断值:</el-col>
+      <el-col :span="6">JudgeValue:</el-col>
       <el-col :span="18">
         <el-input v-model="actObj.resourceFilter.judeVal" placeholder="Please input" />
       </el-col>
@@ -47,6 +47,4 @@ export default class oneParamJudeNode extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

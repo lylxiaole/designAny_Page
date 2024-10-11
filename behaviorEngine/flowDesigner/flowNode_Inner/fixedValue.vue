@@ -1,7 +1,7 @@
 <template>
-  <el-row style="width:100%;height:100%">
-    <el-row style="width:100%;height:50%">
-      <el-col :span="6">值类型:</el-col>
+  <el-row style="width: 100%; height: 100%">
+    <el-row style="width: 100%; height: 50%">
+      <el-col :span="6">ValueType:</el-col>
       <el-col :span="18">
         <el-select v-model="actObj.resourceFilter.type" placeholder="Select" size="small">
           <el-option key="bool" label="bool" value="bool" />
@@ -10,8 +10,8 @@
         </el-select>
       </el-col>
     </el-row>
-    <el-row style="width:100%;height:50%">
-      <el-col :span="6">值:</el-col>
+    <el-row style="width: 100%; height: 50%">
+      <el-col :span="6">Value:</el-col>
       <el-col :span="18">
         <el-input v-model="actObj.resourceFilter.value" placeholder="Please input" size="small" />
       </el-col>
@@ -45,6 +45,4 @@ export default class fixedValue extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

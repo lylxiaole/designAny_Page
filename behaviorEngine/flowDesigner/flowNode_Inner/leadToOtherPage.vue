@@ -1,9 +1,8 @@
 <template>
-  <el-row style="width:100%;height:100%">
-    <el-col :span="6">选择页面:</el-col>
+  <el-row style="width: 100%; height: 100%">
+    <el-col :span="6">Page:</el-col>
     <el-col :span="18">
-      <el-tree-select node-key="id" :check-on-click-node="false" v-model="actObj.resourceFilter.pageId" :data="allPageInfos"
-        :render-after-expand="true" @node-click="onCurrentNodeChange" />
+      <el-tree-select node-key="id" :check-on-click-node="false" v-model="actObj.resourceFilter.pageId" :data="allPageInfos" :render-after-expand="true" @node-click="onCurrentNodeChange" />
     </el-col>
   </el-row>
 </template>
@@ -49,6 +48,4 @@ export default class fixedValue extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

@@ -14,7 +14,7 @@
         <el-button style="width: 140px" type="primary" @click="startDesignApp">{{ $t('opts.designApp') }}</el-button>
       </el-row>
       <el-row class="detailrow flexHorilanLayout">
-        <el-button style="width: 140px" type="primary" @click="startDesignApp">{{ $t('opts.viewApp') }}</el-button>
+        <el-button style="width: 140px" type="primary" @click="startViewApp">{{ $t('opts.viewApp') }}</el-button>
       </el-row>
     </div>
   </div>
@@ -67,6 +67,9 @@ export default class index extends ComponentBase {
 
   private async startDesignApp() {
     this.$router.push({ path: '/designPages', query: { appId: this.currentApplication.id } })
+  }
+  private startViewApp() {
+    this.$router.push({ path: '/viewPages', query: { appId: this.currentApplication.id } })
   }
   // ****************************************
   private editAppInfo() {

@@ -1,6 +1,6 @@
 <template>
-  <el-row style="width:100%;height:100%">
-    <el-col>选择字典:</el-col>
+  <el-row style="width: 100%; height: 100%">
+    <el-col>Distionary:</el-col>
 
     <el-col>
       <el-select v-model="actObj.resourceFilter.dicKey" placeholder="Select" size="small">
@@ -47,6 +47,4 @@ export default class dictionaryNode extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

@@ -1,13 +1,13 @@
 <template>
   <div style="box-sizing: border-box; width: 100%; height: 100%; background-color: #cdcdcd">
     <div style="height: 100%; width: 100%">
-      <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
+      <!-- <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
         <el-row style="margin: 3px 15px">
           <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="Please Input内容"></el-input>
         </el-row>
-      </el-row>
-      <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 50px)">
-        <div style="overflow: auto; width: 100%; height: 100%">
+      </el-row> -->
+      <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: 100%">
+        <div style="overflow: auto; width: 100%; height: 100%; background: white">
           <el-tree node-key="id" :data="treeData" @node-drag-start="handleDragStart" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="true" draggable highlight-current default-expand-all>
             <template #default="{ data }">
               <div draggable="true" v-if="data.type === 'page'">

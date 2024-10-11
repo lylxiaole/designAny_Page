@@ -82,7 +82,7 @@ const routes: IRouteClass[] = [
     meta: {
       title: 'APP View'
     },
-    component: () => require('./views/previewPages/index.vue')
+    component: () => require('./views/viewPage/index.vue')
   },
   {
     path: '/login',

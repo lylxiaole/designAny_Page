@@ -1,6 +1,6 @@
 <template style="height: 100%">
-  <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 600px" width="800px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-row style="height: calc(100% - 50px); background: #fff">
+  <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 700px" width="1100px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+    <el-row style="height: calc(100% - 50px); width: 100%; background: #fff">
       <el-col :span="6" style="border-right: 1px solid #cdcdcd">
         <!-- //资源列表 -->
         <resource-tree ref="resourceTree" />

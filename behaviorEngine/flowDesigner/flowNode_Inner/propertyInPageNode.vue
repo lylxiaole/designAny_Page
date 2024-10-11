@@ -1,13 +1,13 @@
 <template>
   <el-row style="width: 100%; height: 100%">
     <el-row style="width: 100%; height: 50%">
-      <el-col :span="6">选择布局:</el-col>
+      <el-col :span="6">Layout:</el-col>
       <el-col :span="18">
         <el-tree-select node-key="id" size="small" :check-on-click-node="true" check-strictly v-model="currentLayoutId" :data="allayouts" :render-after-expand="true" @check-change="onLayoutChange" default-expand-all />
       </el-col>
     </el-row>
     <el-row style="width: 100%; height: 50%">
-      <el-col :span="6">选择属性:</el-col>
+      <el-col :span="6">Property:</el-col>
       <el-col :span="18">
         <el-select v-model="currentPropField" placeholder="Select" size="small">
           <el-option v-for="dprop in allProps" :key="dprop.field" :label="dprop.name" :value="dprop.field" />

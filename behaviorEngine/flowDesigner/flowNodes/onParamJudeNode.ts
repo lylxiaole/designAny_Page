@@ -44,7 +44,7 @@ class NodeModel extends VueHtmlNodeModel {
         x: x - width / 2 - anchorSize / 2,
         y: y,
         id: actObj.id + '_' + anchorType.justIn,
-        name: '无输入',
+        name: 'NoInput',
         edgeAddable: false,
         type: anchorType.justIn
       })
@@ -54,14 +54,14 @@ class NodeModel extends VueHtmlNodeModel {
       x: x + width / 2 - anchorSize,
       y: y - height / 4 - anchorSize,
       id: actObj.id + '_yes',
-      name: '通过',
+      name: 'Pass',
       type: anchorType.justOut
     })
     anchors.push({
       x: x + width / 2 - anchorSize,
       y: y + height / 4 - anchorSize,
       id: actObj.id + '_no',
-      name: '不通过',
+      name: 'NotPass',
       type: anchorType.justOut
     })
     return anchors

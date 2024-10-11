@@ -1,6 +1,6 @@
 <template>
   <el-row style="width: 100%; height: 100%">
-    <el-col>选择函数:</el-col>
+    <el-col>Func:</el-col>
     <el-col>
       <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allFuncsTree" :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
     </el-col>
@@ -14,7 +14,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
-import { actFuncBase, resourceFuncAttr, funcCode, funcStack, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'

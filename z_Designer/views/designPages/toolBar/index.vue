@@ -20,9 +20,9 @@
             <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn :style="{ height: height + 'px' }" style="margin-left: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
+        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
       </el-tooltip>
-      <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-left: 30px" :enableIcon="behaviorIcon" label="Behaviors" @click="onSettingBehavior" />
+      <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon" label="Behaviors" @click="onSettingBehavior" />
 
       <!-- *************************************************************************** -->
       <div :style="{ width: '150px' }" style="margin-right: 15px" class="iconitem themeHover">
@@ -32,7 +32,7 @@
         <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px', width: '80px' }" :enableIcon="quitIcon" label="Exit" @click="onQuit" />
+      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Exit" @click="onQuit" />
     </div>
   </div>
 </template>

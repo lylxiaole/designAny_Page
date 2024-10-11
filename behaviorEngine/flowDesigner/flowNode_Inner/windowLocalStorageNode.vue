@@ -1,6 +1,6 @@
 <template>
-  <el-row style="width:100%;height:100%">
-    <el-col :span="6">键:</el-col>
+  <el-row style="width: 100%; height: 100%">
+    <el-col :span="6">Key:</el-col>
     <el-col :span="18">
       <el-input v-model="actObj.resourceFilter.key" placeholder="Please input" size="small" />
     </el-col>
@@ -33,6 +33,4 @@ export default class windowLocalStorageNode extends Vue {
 }
 </script>
 
-
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

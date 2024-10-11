@@ -1,6 +1,6 @@
 <template>
   <el-row style="width: 100%; height: 100%">
-    <el-col>选择接口:</el-col>
+    <el-col>HttpApi:</el-col>
     <el-col>
       <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allApisTree" :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
     </el-col>

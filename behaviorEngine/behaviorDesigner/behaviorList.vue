@@ -2,8 +2,8 @@
   <el-row v-if="currentPage" style="height: 100%; background: #fff">
     <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
       <div style="background: #18aeb7; width: 6px; height: 26px"></div>
-      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">行为列表</span>
-      <el-button class="behavior-list-header-button" style="width: 104px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1)" @click="addBehavior">Add Behavior</el-button>
+      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">Behavior List</span>
+      <el-button class="behavior-list-header-button" style="width: 104px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1); margin-left: 10px" @click="addBehavior">Add Behavior</el-button>
     </div>
 
     <div style="height: calc(100% - 30px); width: 100%">

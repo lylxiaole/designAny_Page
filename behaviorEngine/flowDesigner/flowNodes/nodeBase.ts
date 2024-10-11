@@ -175,7 +175,7 @@ class VueHtmlNodeModel extends HtmlResize.model {
         x: x - width / 2 - anchorSize / 2,
         y: y,
         id: actObj.id + '_' + anchorType.justIn,
-        name: '无输入',
+        name: 'NoInput',
         edgeAddable: false,
         type: anchorType.justIn
       })
@@ -195,7 +195,7 @@ class VueHtmlNodeModel extends HtmlResize.model {
         x: x + width / 2 - anchorSize,
         y: y - anchorSize / 2,
         id: makeParamKey(actObj.id, 'output'),
-        name: '无输出',
+        name: 'NoOutput',
         type: anchorType.justOut
       })
     }
