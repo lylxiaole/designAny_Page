@@ -2,7 +2,10 @@
   <div class="login-container">
     <el-form ref="loginFormControl" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
       <div class="title-container">
-        <h3 class="title">Sign In</h3>
+        <h3 class="title">DesignAny</h3>
+      </div>
+      <div class="title-container">
+        <h5 class="title">Sign In</h5>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -10,7 +13,6 @@
         </span>
         <el-input ref="username" v-model="loginForm.username" placeholder="Username" name="username" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
-
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
