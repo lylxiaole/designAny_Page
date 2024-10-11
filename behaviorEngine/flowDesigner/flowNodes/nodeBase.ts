@@ -43,10 +43,10 @@ class VueHtmlNode extends HtmlResize.view {
     let textX_move = 0
     if (anchorData.type === anchorType.justOut || anchorData.type === anchorType.outParam) {
       isConnected = this.props.model.outgoing.edges.find((o) => o.sourceAnchorId === anchorData.id) != null
-      textX_move = (8 * name.length) / 2
+      textX_move = (2 * name.length) / 2
     } else {
       isConnected = this.props.model.incoming.edges.find((o) => o.targetAnchorId === anchorData.id) != null
-      textX_move = (-8 * name.length) / 2
+      textX_move = (-2 * name.length) / 2
     }
 
     let color = '#000000'
