@@ -28,7 +28,7 @@ import JsBarcode from 'jsbarcode'
 const codeFormats = ['CODE128', 'CODE128A', 'CODE128B', 'CODE128C', 'UPC', 'EAN2', 'EAN5', 'EAN8', 'EAN13', 'CODE39', 'ITF14', 'MSI', 'MSI10', 'MSI11', 'MSI1010', 'MSI1110', 'pharmacode', 'codabar']
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'NpBarCode', 'NpBarCode_001', '')
+@DCompnentAttr(paltform.universal, 'Basic', 'BarCode', 'NpBarCode_001', require('../compIcons/barcode.png'))
 @Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}
@@ -37,8 +37,8 @@ export default class NpBarCode extends EngineComponent {
     this.width = '10%'
     this.height = '10%'
 
-    this.findPropertyByName(PropertyGroupName.style, 'BackgroundImage').canSetting = false
-    this.findPropertyByName(PropertyGroupName.style, 'BackgroundColor').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BgColor').canSetting = false
     this.initBarCode()
   }
 

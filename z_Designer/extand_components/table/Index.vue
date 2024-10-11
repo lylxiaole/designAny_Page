@@ -38,7 +38,7 @@ import 'vxe-table/lib/style.css'
 import './tableThemeStyle.scss'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.webpc, 'Basic', 'Classic Table', 'Table_001', null)
+@DCompnentAttr(paltform.webpc, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
 @Options({
   components: {
     VxeTable,
@@ -106,7 +106,7 @@ export default class Index extends EngineComponent {
   mounted() {
     this.width = '70%'
     this.height = '50%'
-    this.findPropertyByName(PropertyGroupName.style, 'BackgroundImage').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
   }
 }
 </script>

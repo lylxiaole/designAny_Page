@@ -43,7 +43,7 @@ import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
 import TopBar from './TopBar/index.vue'
 // ****************************************
-@DCompnentAttr(paltform.webpc, 'Basic', 'Classic navigation bar', 'navigation001', null)
+@DCompnentAttr(paltform.webpc, 'Basic', 'Classic navigation bar', 'navigation001', require('../../compIcons/navigationbar.png'))
 @Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
   @DPropAttr(new AppPagesChoose_Setting('Page List', PropertyGroupName.data, true))

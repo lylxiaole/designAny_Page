@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small" style="width: 82px; height: 30px; background: rgba(24, 183, 101, 1); border-radius: 2px; border: 1px solid rgba(12, 155, 81, 1); border-color: rgba(24, 183, 101, 1)">
+    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small" style="width: 82px; height: 24px; background: rgba(24, 183, 101, 1); border-radius: 2px; border: 1px solid rgba(12, 155, 81, 1); border-color: rgba(24, 183, 101, 1)">
       <img v-if="imageUrl" v-lazy="imageUrl" :width="15 + 'px'" :height="15 + 'px'" />
       <span>Upload File</span>
     </el-button>

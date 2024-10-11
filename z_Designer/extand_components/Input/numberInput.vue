@@ -13,7 +13,7 @@ import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Set
 
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'NumberInput', 'numberInput_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'NumberInput', 'numberInput_001', require('../compIcons/number-input.png'))
 @Options({})
 export default class numberInput extends EngineComponent {
   isShowIndex: boolean = false

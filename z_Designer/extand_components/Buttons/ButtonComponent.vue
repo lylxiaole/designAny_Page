@@ -19,7 +19,7 @@ import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Normal Button', 'ButtonComponent_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'Classic Button', 'ButtonComponent_001', require('../compIcons/anniu2.png'))
 @Options({
   components: {}
 })
@@ -41,7 +41,7 @@ export default class ButtonComponent extends EngineComponent {
   mounted() {
     this.width = '10%'
     this.height = '4%'
-    this.findPropertyByName(PropertyGroupName.style, 'BackgroundImage').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
   }
 
   private onClick(e) {

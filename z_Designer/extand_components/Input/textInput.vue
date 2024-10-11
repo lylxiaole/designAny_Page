@@ -23,7 +23,7 @@ import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Set
 
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'TextInput', 'textInput_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'TextInput', 'textInput_001', require('../compIcons/textinput.png'))
 @Options({})
 export default class textInput extends EngineComponent {
   isShowIndex: boolean = false

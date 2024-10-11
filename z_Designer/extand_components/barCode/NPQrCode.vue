@@ -27,7 +27,7 @@ import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Set
 
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'NPQrCode', 'NPQrCode_001', null)
+@DCompnentAttr(paltform.universal, 'Basic', 'QrCode', 'NPQrCode_001', require('../compIcons/qrcode.png'))
 @Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'
@@ -40,8 +40,8 @@ export default class NPQrCode extends EngineComponent {
     this.width = '10%'
     this.height = '10%'
 
-    this.findPropertyByName(PropertyGroupName.style, 'BackgroundImage').canSetting = false
-    this.findPropertyByName(PropertyGroupName.style, 'BackgroundColor').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
+    this.findPropertyByName(PropertyGroupName.style, 'BgColor').canSetting = false
     this.initQrCode()
   }
   beforeUnmount() {}
