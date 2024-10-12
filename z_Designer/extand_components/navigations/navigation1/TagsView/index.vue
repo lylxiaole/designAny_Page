@@ -1,12 +1,12 @@
 <template>
-  <div id="tags-view-container" class="tags-view-container" style="overflow-y:hidden">
+  <div id="tags-view-container" class="tags-view-container" style="overflow-y: hidden">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
-      <!-- <router-link v-for="tag in visitedViews" ref="tag" :key="tag.path" :class="isActive(tag) ? 'active' : ''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" class="tags-view-item"
-        @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''" @contextmenu.prevent="openMenu(tag, $event)">
-        {{ $t(tag.title) }}
-        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link> -->
+      <!-- :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" -->
+
+      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.id" :class="isActive(tag) ? 'active' : ''" class="tags-view-item" @contextmenu.prevent="openMenu(tag, $event)" @mouseup="selectMenu(tag)">
+        {{ getTagName(tag) }}
+        <el-icon @click.prevent.stop="closeSelectedTag(tag)"><Close /></el-icon>
+      </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <!-- <li @click="refreshSelectedTag(selectedTag)">刷新</li>
@@ -20,9 +20,10 @@
 <script>
 import ScrollPane from './ScrollPane'
 import path from 'path'
+import { Close } from '@element-plus/icons-vue'
 
 export default {
-  components: { ScrollPane },
+  components: { ScrollPane, Close },
   data() {
     return {
       visible: false,
@@ -32,9 +33,17 @@ export default {
       affixTags: []
     }
   },
+  props: {
+    currentPageId: {
+      default: null
+    },
+    allPages: {
+      default: []
+    }
+  },
   computed: {
     visitedViews() {
-      return []
+      return this.allPages
     },
     routes() {
       return []
@@ -54,12 +63,13 @@ export default {
     this.addTags()
   },
   methods: {
-    isActive(route) {
-      return route.path === this.$route.path
+    isActive(page) {
+      return page.id === this.currentPageId
     },
-    isAffix(tag) {
-      return tag.meta && tag.meta.affix
+    getTagName(page) {
+      return page.properties.find((o) => o.field === 'name').value
     },
+
     filterAffixTags(routes, basePath = '/') {
       let tags = []
       routes.forEach((route) => {
@@ -81,15 +91,7 @@ export default {
       })
       return tags
     },
-    initTags() {
-      const affixTags = (this.affixTags = this.filterAffixTags(this.routes))
-      for (const tag of affixTags) {
-        // Must have tag name
-        if (tag.name) {
-          this.$store.dispatch('system/addVisitedView', tag)
-        }
-      }
-    },
+    initTags() {},
     addTags() {
       return false
     },
@@ -119,11 +121,7 @@ export default {
       })
     },
     closeSelectedTag(view) {
-      this.$store.dispatch('system/delView', view).then(({ visitedViews }) => {
-        if (this.isActive(view)) {
-          this.toLastView(visitedViews, view)
-        }
-      })
+      this.$emit('closeSelectedTag', view)
     },
     closeOthersTags() {
       this.$router.push(this.selectedTag)
@@ -170,7 +168,15 @@ export default {
       this.top = e.clientY
       this.visible = true
       this.selectedTag = tag
+
+      this.$emit('selectedTag', tag)
     },
+    selectMenu(tag) {
+      this.selectedTag = tag
+
+      this.$emit('selectedTag', tag)
+    },
+
     closeMenu() {
       this.visible = false
     },
@@ -183,22 +189,25 @@ export default {
 
 <style lang="scss" scoped>
 .tags-view-container {
-  height: 34px;
   width: 100%;
+
+  :deep() .el-scrollbar__view {
+    height: 100%;
+  }
 
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
       position: relative;
       cursor: pointer;
-      height: 30px;
-      line-height: 30px;
-      color: var(--lyl_topBarTagNA);
-      background: var(--lyl_topBarBgColor);
-      padding: 0 8px;
+      height: 100%;
+      height: 100%;
+      color: var(--el-menu-text-color);
+      background: var(--el-menu-bg-color);
+      padding: 8px 8px 8px 8px;
       font-size: 12px;
       margin-left: 5px;
-      margin-top: 4px;
+      margin-top: 15px;
       border-radius: 8px 8px 0 0;
       &:first-of-type {
         margin-left: 15px;
@@ -207,9 +216,9 @@ export default {
         margin-right: 15px;
       }
       &.active {
-        background-color: var(--lyl_topBarTagTagBgColor);
+        background-color: var(--el-menu-active-color);
         color: #fff;
-        border-color: var(--lyl_topBarTagTagBgColor);
+        border-color: var(--el-menu-active-color);
         &::before {
           content: '';
           background: #fff;

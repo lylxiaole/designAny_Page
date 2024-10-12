@@ -1,27 +1,33 @@
 <template>
-  <div style="overflow: hidden">
-    <div class="main-container" style="height: 100%; overflow: hidden; margin-left: 0px">
+  <div
+    style="overflow: hidden"
+    :style="{
+      '--el-menu-bg-color': sidebarBg,
+      '--el-menu-text-color': menuColor,
+      '--el-menu-hover-bg-color': menuHoverBg,
+      '--el-menu-active-color': menuActiveColor,
+      '--el-menu-sub-item-height': menuItemHeight + 'px',
+      '--el-menu-item-height': menuItemHeight + 'px'
+    }"
+  >
+    <div class="main-container" :style="{ 'background-color': background }" style="height: 100%; overflow: hidden; margin-left: 0px">
       <el-row class="toprow">
         <!-- 放logo和文字的 -->
-        <el-col :span="4" style="height: 60px; line-height: 60px; padding-left: 32px"></el-col>
+        <el-col :span="4" style="height: 45px; line-height: 45px"></el-col>
         <!-- 小标签 -->
-        <el-col :span="13" style="height: 60px">
-          <Navbar style="width: 100%; height: 60px" />
+        <el-col :span="13" style="height: 45px">
+          <Navbar :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag" style="width: 100%; height: 100%" />
         </el-col>
 
-        <el-col :span="7" style="height: 60px">
+        <el-col :span="7" style="height: 45px">
           <TopBar style="width: 100%; height: 100%; padding-top: 10px; box-sizing: border-box"></TopBar>
         </el-col>
       </el-row>
 
-      <el-row style="height: calc(100% - 60px); width: 100%; overflow: hidden; padding: 10px; box-sizing: border-box">
-        <div style="height: 100%; width: 240px; overflow: hidden; padding: 10px; box-sizing: border-box; overflow-y: auto">
+      <el-row style="height: calc(100% - 45px); width: 100%; overflow: hidden; box-sizing: border-box">
+        <div style="height: 100%; width: 240px; overflow: hidden; box-sizing: border-box; overflow-y: auto">
           <!-- 左边菜单栏 :style="{ width: isCollapse ? '64px' : '240px' }"-->
-          <Sidebar
-            :allPages="selectedPages"
-            @linkClick="linkClick"
-            :style="{ '--el-menu-bg-color': sidebarBg, '--el-menu-text-color': menuColor, '--el-menu-hover-bg-color': menuHoverBg, '--el-menu-active-color': menuActiveColor, '--el-menu-sub-item-height': menuItemHeight + 'px', '--el-menu-item-height': menuItemHeight + 'px' }"
-          />
+          <Sidebar :allPages="selectedPages" @linkClick="linkClick" />
         </div>
         <!-- **********页面显示区域****************** -->
         <div style="height: 100%; width: calc(100% - 240px); overflow: hidden" ref="renderArea"></div>
@@ -33,14 +39,15 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+
 // *******************************
-import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
+import { EngineLayout, EngineComponent, SaveInfo, EnginePage } from '@design-any/interface/dist/LayoutInterface'
+
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
-import { DPropAttr, PropertyGroupName, AppPagesChoose_Setting, Color_Setting, Number_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { DPropAttr, PropertyGroupName, AppPagesChoose_Setting, Color_Setting, Number_Setting, Boolean_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@design-any/interface/dist/utils'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
-
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
 // *******************************
@@ -68,27 +75,65 @@ export default class index extends EngineComponent {
 
   @DPropAttr(new AppPagesChoose_Setting('PageList', PropertyGroupName.data, true))
   private selectedPages: any[] = []
+  // ******************************************************
+
   mounted() {
     this.width = '50%'
     this.height = '50%'
     this.background = 'white'
   }
+  private allPageViews: EnginePage[] = []
+  private allPages: SaveInfo[] = []
+  private currentPageId: string = ''
 
   private async linkClick(pageId) {
-    let detail = await this.applicationContext.getPageDetailById(pageId)
+    let detail: SaveInfo = this.allPages.find((o) => o.id === pageId)
     let findpageengine = findPageByPaltform(paltform.webpc, 'preview')
-
     let { virtualDom, vueComp } = designDrawDomVirtual(findpageengine, false, { applicationContext: this.applicationContext })
-    await (vueComp as any).loadPageByData(pageId, detail)
-    ;(vueComp as any).left = 0
-    ;(vueComp as any).top = 0
-    await this.$nextTick()
-    $(this.$refs.renderArea).html('')
-    $(this.$refs.renderArea).append(virtualDom)
-    ;(vueComp as any).$once('onLYLLeadToOtherPage', (pageId) => {
-      // this.currentOpenEngin.destorymethod()
-      // this.openPage(pageId)
-    })
+
+    if (!detail) {
+      detail = await this.applicationContext.getPageDetailById(pageId)
+      this.allPages.push(detail)
+      this.allPageViews.push(vueComp as EnginePage)
+      await (vueComp as any).loadPageByData(pageId, detail)
+      ;(vueComp as any).left = 0
+      ;(vueComp as any).top = 0
+      await this.$nextTick()
+      $(this.$refs.renderArea).html('')
+      $(this.$refs.renderArea).append(virtualDom)
+      ;(vueComp as any).$on('onLYLLeadToOtherPage', (pageId) => {
+        // this.currentOpenEngin.destorymethod()
+        // this.openPage(pageId)
+        this.linkClick(pageId)
+      })
+    } else {
+      let pageView = this.allPageViews.find((o) => o.Id === pageId)
+      $(this.$refs.renderArea).html('')
+      $(this.$refs.renderArea).append(pageView.$el)
+    }
+
+    this.currentPageId = pageId
+  }
+
+  private closeSelectedTag(page) {
+    let findIndex = this.allPages.findIndex((o) => o.id === page.id)
+    if (this.currentPageId === page.id) {
+      let nextOpenPageIndex = 0
+
+      nextOpenPageIndex = findIndex - 1
+      let nextOpenpage = this.allPages[nextOpenPageIndex]
+      if (nextOpenpage) {
+        this.linkClick(nextOpenpage.id)
+      } else {
+        $(this.$refs.renderArea).html('')
+      }
+    }
+    this.allPages.splice(findIndex, 1)
+    this.allPageViews.splice(findIndex, 1)
+  }
+
+  private selectedTag(page) {
+    this.linkClick(page.id)
   }
   // **************************************************
 }

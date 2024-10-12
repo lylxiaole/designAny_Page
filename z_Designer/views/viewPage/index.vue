@@ -6,14 +6,12 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+
 import PageBase from '@common/views/PageBase'
 import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
-
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
-
 import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
-
 import { MobilePagePreview, PCPagePreview } from '@designEngine/index'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import paltform from '@design-any/interface/dist/enums/paltform'

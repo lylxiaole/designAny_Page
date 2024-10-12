@@ -1,22 +1,38 @@
 <template>
   <div class="navbar flexHorilanLayout">
     <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
-    <tags-view style="width:calc(100% - 20px);" id="breadcrumb-container" class="breadcrumb-container" />
+    <tags-view style="width: 100%; height: 100%" :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag" id="breadcrumb-container" class="breadcrumb-container" />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import TagsView from './TagsView/index.vue'
+import { EngineLayout, EngineComponent, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 
 @Options({
   components: {
     TagsView
   }
 })
-export default class Navbar extends Vue {}
+export default class Navbar extends Vue {
+  @Prop({
+    default: () => {
+      return []
+    }
+  })
+  private allPages: SaveInfo[]
+
+  @Prop()
+  private currentPageId: string
+
+  @Emit('closeSelectedTag')
+  private closeSelectedTag(page) {}
+
+  @Emit('selectedTag')
+  private selectedTag(page) {}
+}
 </script>
 
 <style lang="scss" scoped>
