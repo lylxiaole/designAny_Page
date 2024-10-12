@@ -14,7 +14,8 @@ import sidebarItem from './SidebarItem.vue'
 
 @Options({ components: { sidebarItem } })
 export default class index extends Vue {
-  private activeMenu: string = null
+  @Prop()
+  private activeMenu: string
 
   @Prop()
   private allPages: any[]

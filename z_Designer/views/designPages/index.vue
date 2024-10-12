@@ -10,7 +10,7 @@
       <el-col class="designArea" style="width: calc(100% - 500px); height: 100%; float: left">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="card" style="width: 100%; height: 100%">
           <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id">
-            <div style="width: 100%; height: 100%; overflow: auto; border: 1px solid var(--el-border-color-light); box-sizing: border-box" :ref="page.Id"></div>
+            <div style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box" :ref="page.Id"></div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -214,6 +214,7 @@ export default class index extends PageBase {
   height: 42px;
   padding: 0px;
 }
+
 .designcontainer {
   height: calc(100% - 42px);
 }

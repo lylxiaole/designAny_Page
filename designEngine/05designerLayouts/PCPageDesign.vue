@@ -1,5 +1,10 @@
 <template>
-  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }" oncontextmenu="self.event.returnValue=false" class="container" style="border-radius: 0px"></div>
+  <div
+    :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }"
+    oncontextmenu="self.event.returnValue=false"
+    class="container"
+    style="border-radius: 0px; border: 1px solid var(--el-border-color-light); box-sizing: border-box"
+  ></div>
 </template>
 
 <script lang="ts">

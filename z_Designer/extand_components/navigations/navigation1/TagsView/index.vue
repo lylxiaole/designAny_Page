@@ -192,7 +192,11 @@ export default {
   width: 100%;
 
   :deep() .el-scrollbar__view {
-    height: 100%;
+    height: 45px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    align-items: flex-end;
   }
 
   .tags-view-wrapper {
@@ -200,7 +204,6 @@ export default {
       display: inline-block;
       position: relative;
       cursor: pointer;
-      height: 100%;
       height: 100%;
       color: var(--el-menu-text-color);
       background: var(--el-menu-bg-color);

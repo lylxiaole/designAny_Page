@@ -52,9 +52,6 @@ export default class TextComponent extends EngineComponent {
   @DPropAttr(new Enum_Setting('VerticalAlign', PropertyGroupName.style, true, null, true, ['top', 'middle', 'bottom']))
   private verticalAlign: string = 'middle'
 
-  @DPropAttr(new Text_Setting('Text', PropertyGroupName.style, true))
-  private CurrentText: string = 'Hellow World'
-
   @DPropAttr(new Enum_Setting('WhiteSpace', PropertyGroupName.style, true, null, true, ['nowrap', 'wrap']))
   private space: string = 'wrap'
 
@@ -63,6 +60,9 @@ export default class TextComponent extends EngineComponent {
 
   @DPropAttr(new Boolean_Setting('ShowBorder', PropertyGroupName.style, true))
   private isShowBorder: boolean = false
+
+  @DPropAttr(new Text_Setting('Text', PropertyGroupName.data, true))
+  private CurrentText: string = 'Hellow World'
 }
 </script>
 

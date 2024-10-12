@@ -21,7 +21,7 @@
         <el-table-column prop="type" label="Column Type" width="150">
           <template #default="scope">
             <el-select v-model="scope.row.type" placeholder="Select" size="small" style="width: 100%">
-              <el-option key="0" label="Text" value="" />
+              <el-option key="0" label="Text" value="text" />
               <el-option key="1" label="Index" value="seq" />
               <el-option key="2" label="Check Box" value="checkbox" />
               <el-option key="3" label="Radio Box" value="radio" />
@@ -87,6 +87,7 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     newRow.key = getUuid()
     newRow.title = 'New Params'
     newRow.isShow = true
+    newRow.type = 'text'
     this.localData.push(newRow)
   }
   private rowdelete(key: string) {

@@ -7,7 +7,7 @@
     <!-- ************************************* -->
     <div style="width: 100%; height: calc(100% - 120px); overflow-y: auto">
       <el-row class="propertyGridRow" style="margin-top: 10px" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow" :key="propertyInfo.name" :disabled="propertyInfo.isEnable == false">
-        <el-col :span="6" style="margin-left: 16px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 0.65); font-size: 14px">
+        <el-col :span="6" style="margin-left: 16px; font-size: 13px; font-weight: 400; color: rgba(0, 0, 0, 0.65); font-size: 14px; word-wrap: break-word; word-break: break-all">
           {{ propertyInfo.name }}
         </el-col>
         <el-col :span="15" style="margin-left: 4px; height: 100%">

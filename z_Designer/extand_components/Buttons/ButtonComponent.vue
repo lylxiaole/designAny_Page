@@ -27,7 +27,7 @@ export default class ButtonComponent extends EngineComponent {
   @DPropAttr(new Text_Setting('Button Text', PropertyGroupName.data, true))
   private btnText: any = 'New Button'
 
-  @DPropAttr(new UploadFile_Setting('Button Icon', PropertyGroupName.data, true, null, 1, 'image'))
+  @DPropAttr(new UploadFile_Setting('Button Icon', PropertyGroupName.style, true, null, 1, 'image'))
   private btnIcon: any[] = []
 
   private get btnIconUrl() {

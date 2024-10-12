@@ -13,13 +13,13 @@
     <div class="main-container" :style="{ 'background-color': background }" style="height: 100%; overflow: hidden; margin-left: 0px">
       <el-row class="toprow">
         <!-- 放logo和文字的 -->
-        <el-col :span="4" style="height: 45px; line-height: 45px"></el-col>
+        <el-col :span="4" :style="{ height: containerHeaderHeight }"></el-col>
         <!-- 小标签 -->
-        <el-col :span="13" style="height: 45px">
+        <el-col :span="13" :style="{ height: containerHeaderHeight }">
           <Navbar :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag" style="width: 100%; height: 100%" />
         </el-col>
 
-        <el-col :span="7" style="height: 45px">
+        <el-col :span="7" :style="{ height: containerHeaderHeight }">
           <TopBar style="width: 100%; height: 100%; padding-top: 10px; box-sizing: border-box"></TopBar>
         </el-col>
       </el-row>
@@ -27,7 +27,7 @@
       <el-row style="height: calc(100% - 45px); width: 100%; overflow: hidden; box-sizing: border-box">
         <div style="height: 100%; width: 240px; overflow: hidden; box-sizing: border-box; overflow-y: auto">
           <!-- 左边菜单栏 :style="{ width: isCollapse ? '64px' : '240px' }"-->
-          <Sidebar :allPages="selectedPages" @linkClick="linkClick" />
+          <Sidebar :allPages="selectedPages" v-model:activeMenu="currentPageId" @linkClick="linkClick" />
         </div>
         <!-- **********页面显示区域****************** -->
         <div style="height: 100%; width: calc(100% - 240px); overflow: hidden" ref="renderArea"></div>
@@ -73,6 +73,9 @@ export default class index extends EngineComponent {
   @DPropAttr(new Number_Setting('MenuItemHeight', PropertyGroupName.style, true, 'px'))
   private menuItemHeight: number = 44
 
+  @DPropAttr(new Number_Setting('ContainerHeaderHeight', PropertyGroupName.style, true, 'px'))
+  private containerHeaderHeight: number = 45
+  // ******************************************************
   @DPropAttr(new AppPagesChoose_Setting('PageList', PropertyGroupName.data, true))
   private selectedPages: any[] = []
   // ******************************************************

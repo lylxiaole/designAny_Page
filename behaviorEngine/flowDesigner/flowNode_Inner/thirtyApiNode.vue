@@ -82,20 +82,20 @@ export default class thirtyApiNode extends Vue {
     this.actObj.inputParams = []
     for (let index = 0; index < nodedata.apidata.headers.length; index++) {
       const header = nodedata.apidata.headers[index]
-      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, header.key + '&header'), name: '请求头:' + header.name })
+      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, header.key + '&header'), name: 'Header:' + header.name })
     }
     for (let index = 0; index < nodedata.apidata.inParams.length; index++) {
       const inparam = nodedata.apidata.inParams[index]
-      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, inparam.key + '&param'), name: '链接参数:' + inparam.name })
+      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, inparam.key + '&param'), name: 'UrlParam:' + inparam.name })
     }
     //除了Get请求，其它的都需要使用body
     if (nodedata.apidata.requestType !== 'Get' && nodedata.apidata.bodyIsParam) {
       for (let index = 0; index < nodedata.apidata.bodyContent.length; index++) {
         const body = nodedata.apidata.bodyContent[index]
-        this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, body.key + '&body'), name: 'body参数:' + body.name })
+        this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, body.key + '&body'), name: 'BodyParam:' + body.name })
       }
     } else if (nodedata.apidata.requestType !== 'Get' && !nodedata.apidata.bodyIsParam) {
-      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, 'body'), name: 'body参数' })
+      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, 'body'), name: 'BodyParam' })
     }
 
     this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: 'output' }
