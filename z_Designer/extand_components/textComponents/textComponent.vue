@@ -46,10 +46,10 @@ export default class TextComponent extends EngineComponent {
   @DPropAttr(new Enum_Setting('FontWeight', PropertyGroupName.style, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
   private fontWeight: string = 'normal'
 
-  @DPropAttr(new Enum_Setting('Font Style', PropertyGroupName.style, true, null, true, ['oblique', 'normal']))
+  @DPropAttr(new Enum_Setting('FontStyle', PropertyGroupName.style, true, null, true, ['oblique', 'normal']))
   private fontStyle: string = 'normal'
 
-  @DPropAttr(new Enum_Setting('Vertical Align', PropertyGroupName.style, true, null, true, ['top', 'middle', 'bottom']))
+  @DPropAttr(new Enum_Setting('VerticalAlign', PropertyGroupName.style, true, null, true, ['top', 'middle', 'bottom']))
   private verticalAlign: string = 'middle'
 
   @DPropAttr(new Text_Setting('Text', PropertyGroupName.style, true))
