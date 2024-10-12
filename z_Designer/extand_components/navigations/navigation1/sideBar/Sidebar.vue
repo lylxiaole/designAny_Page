@@ -1,13 +1,9 @@
- 
 <template>
-  <div style="height:100%;width:100%">
-    <el-menu :default-active="activeMenu" :collapse="false" class="secondMenu" background-color="transparent" :unique-opened="false"
-      active-text-color="#FFFFFF" :collapse-transition="false" mode="vertical">
-      <template v-for="page in allPages" :key="page.id">
-        <sidebar-item :item="page" @linkClick="linkClick" />
-      </template>
-    </el-menu>
-  </div>
+  <el-menu :default-active="activeMenu" style="height: 100%; width: 100%" :collapse="false" class="secondMenu" :unique-opened="false" :collapse-transition="false" mode="vertical">
+    <template v-for="page in allPages" :key="page.id">
+      <sidebar-item :item="page" @linkClick="linkClick" />
+    </template>
+  </el-menu>
 </template>
 
 <script lang="ts">
@@ -30,7 +26,8 @@ export default class index extends Vue {
 }
 </script>
 
-
-
-<style scoped>
+<style lang="less" scoped>
+.el-menu {
+  border-right: none;
+}
 </style>

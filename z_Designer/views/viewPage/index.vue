@@ -38,7 +38,7 @@ export default class index extends PageBase {
 
   mounted() {
     this.applicationId = this.$route.query.appId as string
-    debugger
+
     this.initApplication()
   }
   // ***********加载数据*************************

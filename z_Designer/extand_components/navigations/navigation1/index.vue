@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper" style="overflow: hidden">
+  <div style="overflow: hidden">
     <div class="main-container" style="height: 100%; overflow: hidden; margin-left: 0px">
       <el-row class="toprow">
         <!-- 放logo和文字的 -->
@@ -17,8 +17,13 @@
       <el-row style="height: calc(100% - 60px); width: 100%; overflow: hidden; padding: 10px; box-sizing: border-box">
         <div style="height: 100%; width: 240px; overflow: hidden; padding: 10px; box-sizing: border-box; overflow-y: auto">
           <!-- 左边菜单栏 :style="{ width: isCollapse ? '64px' : '240px' }"-->
-          <Sidebar :allPages="selectedPages" @linkClick="linkClick" />
+          <Sidebar
+            :allPages="selectedPages"
+            @linkClick="linkClick"
+            :style="{ '--el-menu-bg-color': sidebarBg, '--el-menu-text-color': menuColor, '--el-menu-hover-bg-color': menuHoverBg, '--el-menu-active-color': menuActiveColor, '--el-menu-sub-item-height': menuItemHeight + 'px', '--el-menu-item-height': menuItemHeight + 'px' }"
+          />
         </div>
+        <!-- **********页面显示区域****************** -->
         <div style="height: 100%; width: calc(100% - 240px); overflow: hidden" ref="renderArea"></div>
       </el-row>
     </div>
@@ -32,7 +37,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
-import { DPropAttr, PropertyGroupName, AppPagesChoose_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { DPropAttr, PropertyGroupName, AppPagesChoose_Setting, Color_Setting, Number_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@design-any/interface/dist/utils'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 
@@ -46,7 +51,22 @@ import TopBar from './TopBar/index.vue'
 @DCompnentAttr(paltform.webpc, 'Basic', 'Classic navigation bar', 'navigation001', require('../../compIcons/navigationbar.png'))
 @Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
-  @DPropAttr(new AppPagesChoose_Setting('Page List', PropertyGroupName.data, true))
+  @DPropAttr(new Color_Setting('SidebarBg', PropertyGroupName.style, true))
+  private sidebarBg: string = '#000000'
+
+  @DPropAttr(new Color_Setting('MenuColor', PropertyGroupName.style, true))
+  private menuColor: string = 'white'
+
+  @DPropAttr(new Color_Setting('MenuHoverBg', PropertyGroupName.style, true))
+  private menuHoverBg: string = 'gray'
+
+  @DPropAttr(new Color_Setting('MenuActiveColor', PropertyGroupName.style, true))
+  private menuActiveColor: string = 'gray'
+
+  @DPropAttr(new Number_Setting('MenuItemHeight', PropertyGroupName.style, true, 'px'))
+  private menuItemHeight: number = 44
+
+  @DPropAttr(new AppPagesChoose_Setting('PageList', PropertyGroupName.data, true))
   private selectedPages: any[] = []
   mounted() {
     this.width = '50%'
@@ -70,9 +90,8 @@ export default class index extends EngineComponent {
       // this.openPage(pageId)
     })
   }
-
   // **************************************************
 }
 </script>
 
-<style scoped></style>
+<style lang="less" scoped></style>

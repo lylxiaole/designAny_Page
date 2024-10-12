@@ -1,7 +1,7 @@
 <template>
   <div v-if="hasOneShowingChild(item)">
     <div @click.stop="linkClick(item.id)">
-      <el-menu-item :index="item.id" :title="item.label" style="padding-left: 40px">
+      <el-menu-item :index="item.id" :title="item.label" class="lylmenuItem" style="padding-left: 40px">
         <item :icon="item.icon" :title="item.label" />
       </el-menu-item>
     </div>
@@ -11,7 +11,7 @@
     <template #title>
       <item :icon="item.icon" :title="item.label" />
     </template>
-    <sidebar-item v-for="child in item.children" :key="child.id" @linkClick="linkClick" :is-nest="true" :item="child" class="nest-menu" />
+    <sidebar-item v-for="child in item.children" :key="child.id" @linkClick="linkClick" :is-nest="true" :item="child" />
   </el-sub-menu>
 </template>
 
