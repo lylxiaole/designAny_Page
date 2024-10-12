@@ -83,7 +83,6 @@ export default class DesignEvents {
     }
     return this._dragHelper.IsCanDrag(this._vueComp.$el)
   }
-
   constructor(vueComp: EnginePage) {
     this._vueComp = vueComp
     this.eventsOptions = new optionsClass()
@@ -103,7 +102,6 @@ export default class DesignEvents {
     //
     this.captureEvent()
   }
-
   /**开始捕捉鼠标键盘 */
   protected captureEvent() {
     if (this.eventsOptions.isCaptureEvent == true) {

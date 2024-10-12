@@ -149,7 +149,7 @@ export default class PCPageDesign extends EnginePage {
     }
 
     let selectedChildren = this.selectedChildren
-    this.chooseComps([])
+    this.cancelCompSelected(this.children)
     for (let index = 0; index < selectedChildren.length; index++) {
       const comp = selectedChildren[index]
       this.removeChildRecursion(comp.Id)
@@ -197,14 +197,13 @@ export default class PCPageDesign extends EnginePage {
     let persenttop = (selfPosition.top + 5) / $(this.$el).height()
     newcopyComp.top = (persenttop * 100).toFixed(1) + '%'
 
-    this.chooseComps([newcopyComp])
+    this.chooseComp(newcopyComp)
     e.stopPropagation()
   }
   // ******************************************************
   private listenOnClick(e: Event, target: any) {
-    this.chooseComps([])
+    this.cancelCompSelected(this.children)
   }
-
   private listenOnPreStep(e: Event) {
     e.preventDefault()
     if (this.canToPreStack) {
@@ -219,7 +218,6 @@ export default class PCPageDesign extends EnginePage {
     }
     e.stopPropagation()
   }
-
   // ******************************************************
   public closeDesign() {
     this.destorymethod()

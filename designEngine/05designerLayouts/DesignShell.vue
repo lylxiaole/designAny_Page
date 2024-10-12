@@ -129,8 +129,14 @@ export default class DesignShell extends Vue {
   }
   private onCompClick(e) {
     e.stopPropagation()
-    ;(this.component.parentLayout as any).chooseComps([this.component])
-    $(this.$el).focus()
+    var ctrlKey = e.ctrlKey || e.metaKey
+    if (ctrlKey) {
+      ;(this.component.parentLayout as any).MulitChooseComp(this.component)
+      $(this.$el).focus()
+    } else {
+      ;(this.component.parentLayout as any).chooseComp(this.component)
+      $(this.$el).focus()
+    }
   }
   public addComponent(comp: any) {
     if (this.component != null) {
