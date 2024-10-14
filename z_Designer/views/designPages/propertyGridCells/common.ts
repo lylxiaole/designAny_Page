@@ -3,6 +3,7 @@ import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { PropertyTypeEnum, PropertySetting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
+import { deepClone } from '@common/utils'
 
 var cellControls = []
 
@@ -39,6 +40,7 @@ export default class propertyCellBase<T> extends Vue {
     }
     return this.property as any as T
   }
+
   protected get currentLayouts(): EngineLayout[] {
     if (!this.layouts) {
       return null
@@ -51,18 +53,28 @@ export default class propertyCellBase<T> extends Vue {
     }
     return newlayouts_extra
   }
+
   /**获取当前属性值 */
   protected get currentValue(): any {
     let field = this.property.field
     return this.currentLayouts[0][field]
+    // return this.currentLayouts[0][field]
   }
   /**设置当前属性值 */
   protected set currentValue(val: any) {
     let field = this.property.field
+    this.currentLayouts[0][field] = val
+  }
+
+  @Watch('currentValue', { deep: true })
+  private onCurrentValChanged(newval, oldval) {
+    let field = this.property.field
     for (let index = 0; index < this.currentLayouts.length; index++) {
+      if (index === 0) {
+        continue
+      }
       const element = this.currentLayouts[index]
-      console.log('set currentValue:', element, field, val)
-      element[field] = val
+      element[field] = deepClone(newval)
     }
   }
 }

@@ -13,9 +13,6 @@
         <el-col :span="15" style="margin-left: 4px; height: 100%">
           <component :is="propertyInfo.comp" :property="propertyInfo.property" :application="application" :page="currentPage" :layouts="currentLayouts"></component>
         </el-col>
-        <!-- <el-col :span="2">
-          <span>{{ propertyInfo.property.unit }}</span>
-        </el-col> -->
       </el-row>
     </div>
   </div>
@@ -24,7 +21,7 @@
 <script lang="ts">
 import { Options, prop, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
-import { PropertySetting, PropertyTypeEnum } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { PropertySetting, PropertyTypeEnum, PropertyGroupName } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import propertyCellBase, { getCellControl } from './propertyGridCells/common'
 import { ApplicationDC } from '@common/apis/designApplication'
@@ -77,17 +74,6 @@ export default class PropertyGrid extends Vue {
   @Prop()
   private currentLayouts: EngineLayout[] | EngineLayout
 
-  private columns = [
-    {
-      title: '属性名',
-      dataIndex: 'propertyName'
-    },
-    {
-      title: '属性值',
-      className: 'propertyVal'
-    }
-  ]
-
   private selectGropName: string = ''
   /**当前所有布局的共有属性列表 */
   private propertyGroups: PropertyGroupInfo[] = []
@@ -128,6 +114,7 @@ export default class PropertyGrid extends Vue {
       this.propertyGroups = null
       return
     }
+
     //当前选中的Layouts
     var newlayouts_extra: EngineLayout[] = [] //临时变量
     if (newlayouts instanceof EngineLayout) {
@@ -135,11 +122,17 @@ export default class PropertyGrid extends Vue {
     } else {
       newlayouts_extra = newlayouts as EngineLayout[]
     }
+
+    console.log('watchCurrentLayoutsChanged', newlayouts_extra)
     //当前选中的Layouts的properties
     var property_extra: PropertySetting[] = [] //临时变量
     /**用第一个布局的属性列表当作临时属性列表 */
     if (newlayouts_extra.length > 0) {
       Object.assign(property_extra, newlayouts_extra[0].properties)
+    }
+    //筛选出可以合并设置的属性
+    if (newlayouts_extra.length > 1) {
+      property_extra = property_extra.filter((o) => o.groupName === PropertyGroupName.style && o.propertyName !== 'Position')
     }
 
     /**找出所有布局容器中公有的属性 */
@@ -147,7 +140,8 @@ export default class PropertyGrid extends Vue {
       let findlayout = newlayouts_extra[i]
       let findlayoutProps = findlayout.properties
       property_extra.filter((o) => {
-        var findproperty = findlayoutProps.filter((p) => p.groupName == o.groupName && p.propertyName == o.propertyName)[0]
+        var findproperty = findlayoutProps.find((p) => p.groupName === o.groupName && p.propertyName === o.propertyName)
+
         if (!findproperty) {
           property_extra.splice(property_extra.indexOf(o), 1)
         }
@@ -166,18 +160,15 @@ export default class PropertyGrid extends Vue {
       var propertyinfox = new propertyInfo()
       propertyinfox.name = o.propertyName
       propertyinfox.property = o
-      // propertyinfox.property = deepClone(o)
       propertyinfox.comp = getCellControl(o.type)
       findgroup.children.push(propertyinfox)
     })
-
     this.propertyGroups = propertyGroups
   }
 
   mounted() {}
 
   changeActivekey(groupname: string) {
-    let groupName = groupname
     this.selectGropName = groupname
   }
 }
