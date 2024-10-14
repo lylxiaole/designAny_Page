@@ -3,7 +3,6 @@
     <el-radio-group @change="changeActivekey" v-model="selectGropName" size="small" class="flexHorilanLayout" style="box-sizing: border-box; height: 35px; border: 1px solid var(--el-border-color-light); width: 100%">
       <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :value="group.groupName" style="text-align: center; text-overflow: ellipsis; white-space: nowrap">{{ group.groupName }}</el-radio-button>
     </el-radio-group>
-    <!-- ******************************** -->
     <!-- ************************************* -->
     <div style="width: 100%; height: calc(100% - 120px); overflow-y: auto">
       <el-row class="propertyGridRow" style="margin-top: 10px" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow" :key="propertyInfo.name" :disabled="propertyInfo.isEnable == false">
