@@ -1,14 +1,11 @@
 <template>
-  <el-row style="border:1px solid #cdcdcd;width:100%;height:100%;box-sizing:border-box;background:#fff;position:relative;padding:5px"
-    class="topnodediv verticalAlignCenter flexHorilanLayout">
-
-    <el-row style="height:25px;width:100%;font-size:14px;font-weight:600;" class="verticalAlignCenter flexHorilanLayout">
-      {{actObj?actObj.name:''}}
+  <el-row style="border: 1px solid #cdcdcd; width: 100%; height: 100%; box-sizing: border-box; background: #fff; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
+    <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
+      {{ actObj ? actObj.name : '' }}
     </el-row>
     <!-- **************************************************** -->
-    <div style="width:100%;height:calc(100% - 25px);box-sizing:border-box;padding:0px 20px" ref="renderContainer"></div>
+    <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 20px" ref="renderContainer"></div>
     <!-- **************************************************** -->
-
   </el-row>
 </template>
 
@@ -94,7 +91,6 @@ export default class nodeBase extends Vue {
   }
 }
 </script>
-
 
 <style lang="less" scoped>
 .topnodediv {
