@@ -1,7 +1,7 @@
 <template>
   <el-row style="width: 100%; height: 100%">
     <el-select v-model="actObj.resourceFilter.dicKey" placeholder="Select" size="small">
-      <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.desc" :value="dic.key" />
+      <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.key" :value="dic.key" />
     </el-select>
   </el-row>
 </template>
