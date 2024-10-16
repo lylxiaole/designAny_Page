@@ -4,7 +4,7 @@
       {{ actObj ? actObj.name : '' }}
     </el-row>
     <!-- **************************************************** -->
-    <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 20px" ref="renderContainer"></div>
+    <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
     <!-- **************************************************** -->
   </el-row>
 </template>

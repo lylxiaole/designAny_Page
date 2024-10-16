@@ -46,9 +46,8 @@ class VueHtmlNode extends HtmlResize.view {
       textX_move = (2 * name.length) / 2
     } else {
       isConnected = this.props.model.incoming.edges.find((o) => o.targetAnchorId === anchorData.id) != null
-      textX_move = (-2 * name.length) / 2
+      textX_move = (-8 * name.length) / 2
     }
-
     let color = '#000000'
     if (isConnected) {
       color = 'green'
@@ -58,7 +57,7 @@ class VueHtmlNode extends HtmlResize.view {
     let fontSize = 8
     //********************* */
     let rect = { x: x, y: y, width: anchorSize, height: anchorSize, fill: color, stroke: color, strokeDasharray: '3 3' }
-    let text = { x: x + textX_move, y: y + fontSize, fontSize: fontSize, fill: 'black', textAnchor: 'left' }
+    let text = { x: x + textX_move, y: y + fontSize, fontSize: fontSize, fill: 'black', textAnchor: 'right' }
     return lfh('g', {}, [lfh('rect', rect, []), lfh('text', text, [name])])
   }
   setHtml(rootEl) {

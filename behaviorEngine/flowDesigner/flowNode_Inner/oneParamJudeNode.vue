@@ -1,6 +1,6 @@
 <template>
-  <div style="width: 100; height: 100%">
-    <el-row>
+  <div style="width: 100%; height: 100%">
+    <el-row style="width: 100%; height: 50%">
       <el-col :span="6">Judgment:</el-col>
       <el-col :span="18">
         <el-select v-model="actObj.resourceFilter.judeParam" placeholder="Select" size="small">
@@ -12,7 +12,7 @@
         </el-select>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row style="width: 100%; height: 50%">
       <el-col :span="6">JudgeValue:</el-col>
       <el-col :span="18">
         <el-input v-model="actObj.resourceFilter.judeVal" placeholder="Please input" />
