@@ -16,15 +16,12 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 @Options({
   components: {}
 })
-export default class Index extends EngineComponent {}
-</script>
-
-<style lang="less" scoped>
-.el-button {
-  padding: 6px;
-  /deep/.el-icon {
-    height: 100% !important;
-    width: auto !important;
+export default class Index extends EngineComponent {
+  mounted() {
+    this.width = '60px'
+    this.height = '60px'
   }
 }
-</style>
+</script>
+
+<style lang="less" scoped></style>

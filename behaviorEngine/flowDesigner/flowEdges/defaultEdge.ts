@@ -1,13 +1,25 @@
 import { PolylineEdge, PolylineEdgeModel } from '@logicflow/core'
 
+class defaultEdgeViewModel extends PolylineEdge {}
+
 class defaultEdgeModel extends PolylineEdgeModel {
   getData() {
     const data = super.getData()
     ;(data as any).sourceAnchorId = this.sourceAnchorId
     ;(data as any).targetAnchorId = this.targetAnchorId
+
     return data
   }
-
+  updatePoints() {
+    super.updatePoints()
+    super.resetTextPosition()
+  }
+  getTextPosition() {
+    const { endPoint, startPoint } = super.getData()
+    let x = startPoint.x + (endPoint.x - startPoint.x) / 2
+    let y = startPoint.y + (endPoint.y - startPoint.y) / 2
+    return { x: x, y: y }
+  }
   setAttributes() {
     this.offset = 20
   }
@@ -67,6 +79,6 @@ class defaultEdgeModel extends PolylineEdgeModel {
 
 export default {
   type: 'defaultEdge',
-  view: PolylineEdge,
+  view: defaultEdgeViewModel,
   model: defaultEdgeModel
 }
