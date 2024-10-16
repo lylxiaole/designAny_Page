@@ -1,8 +1,8 @@
-import { PolylineEdge, PolylineEdgeModel } from '@logicflow/core'
+import { BezierEdge, BezierEdgeModel } from '@logicflow/core'
 
-class defaultEdgeViewModel extends PolylineEdge {}
+class defaultEdgeView extends BezierEdge {}
 
-class defaultEdgeModel extends PolylineEdgeModel {
+class defaultEdgeModel extends BezierEdgeModel {
   getData() {
     const data = super.getData()
     ;(data as any).sourceAnchorId = this.sourceAnchorId
@@ -79,6 +79,6 @@ class defaultEdgeModel extends PolylineEdgeModel {
 
 export default {
   type: 'defaultEdge',
-  view: defaultEdgeViewModel,
+  view: defaultEdgeView,
   model: defaultEdgeModel
 }
