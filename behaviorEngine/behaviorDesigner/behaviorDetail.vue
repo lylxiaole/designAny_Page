@@ -1,14 +1,14 @@
 <template style="height: 100%">
-  <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 700px" width="1100px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+  <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 88%" width="95%" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-row style="height: calc(100% - 50px); width: 100%; background: #fff">
-      <el-col :span="6" style="border-right: 1px solid #cdcdcd">
+      <div style="border-right: 1px solid #cdcdcd; width: 250px; float: left; box-sizing: border-box">
         <!-- //资源列表 -->
         <resource-tree ref="resourceTree" />
-      </el-col>
-      <el-col :span="18" style="border-right: 1px solid #cdcdcd">
+      </div>
+      <div style="border-right: 1px solid #cdcdcd; width: calc(100% - 250px); float: left; box-sizing: border-box">
         <!-- 流程图 -->
         <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" @onCurrentSelectChanged="onCurrentSelectChanged" />
-      </el-col>
+      </div>
     </el-row>
     <template #footer>
       <el-row class="dialog-footer" style="height: 50px">

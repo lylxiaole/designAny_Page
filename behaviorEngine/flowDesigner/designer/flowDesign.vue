@@ -1,6 +1,12 @@
 <template>
-  <div style="box-sizing: border-box; width: 100%; height: 100%; background-color: #cdcdcd" class="sql" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-    <div ref="flowarea"></div>
+  <div style="box-sizing: border-box; width: 100%; height: 100%; background-color: #cdcdcd; position: relative" class="sql" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+    <div style="box-sizing: border-box; width: calc(100% - 250px); height: 100%; background-color: #cdcdcd; float: left">
+      <div ref="flowarea"></div>
+    </div>
+
+    <div style="box-sizing: border-box; width: 250px; height: 100%; background-color: #cdcdcd; float: left">
+      <flowNodeInfo :currentSelected="currentSelected" />
+    </div>
   </div>
 </template>
 
@@ -10,18 +16,19 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import LogicFlow from '@logicflow/core'
+import LogicFlow, { GraphConfigData } from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-
 import funcNormalNode from '../flowNodes/funcNormalNode'
 import onParamJudeNode from '../flowNodes/onParamJudeNode'
 import defaultEdge from '../flowEdges/defaultEdge'
+import flowNodeInfo from './flowNodeInfo.vue'
 
 @Options({
-  components: {}
+  components: { flowNodeInfo }
 })
 export default class flowDesign extends ComponentBase {
   private currentFlow: LogicFlow
+  private currentSelected: GraphConfigData = null
 
   private silentConfig = {
     stopScrollGraph: true,
@@ -170,6 +177,8 @@ export default class flowDesign extends ComponentBase {
     this.currentFlow.on('connection:not-allowed', this.onEdgeConnectNotAllowed)
     this.currentFlow.on('anchor:dragstart', this.onAnchorDragStart)
     this.currentFlow.on('anchor:dragend', this.onAnchorDragEnd)
+    this.currentFlow.on('node:click', this.onNodeClick)
+    this.currentFlow.on('edge:click', this.onEdgeClick)
   }
   // ****************流程图事件****************************
   private async onEdgeConnectNotAllowed(msg) {
@@ -195,6 +204,14 @@ export default class flowDesign extends ComponentBase {
       }
     })
   }
+
+  private onNodeClick({ data, e, position }) {
+    this.currentSelected = data
+  }
+  private onEdgeClick({ data, e, position }) {
+    this.currentSelected = data
+  }
+
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
   private onDrop(event) {
