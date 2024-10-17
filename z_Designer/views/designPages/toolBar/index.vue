@@ -7,8 +7,8 @@
     <!-- *************************************************************************** -->
     <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'Save' + (needSave ? '*' : '')" :enableIcon="saveIcon" @click="savePage" />
 
-    <optionBtn v-if="currentPage" :enable="currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="'Revoke'" @mouseup="topre" />
-    <optionBtn v-if="currentPage" :enable="currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="'Decide'" @mouseup="tonext" />
+    <optionBtn v-if="currentPage" :enable="currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="'Undo'" @mouseup="topre" />
+    <optionBtn v-if="currentPage" :enable="currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="'Redo'" @mouseup="tonext" />
 
     <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :enableIcon="previewIcon" label="Preview" @mouseup="onPreView" />
 

@@ -23,13 +23,9 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { ref, toRaw } from '@vue/reactivity'
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
-
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
-
 import flowDesign from '../flowDesigner/flowDesign.vue'
 import resourceTree from '../flowDesigner/resourceTree.vue'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
@@ -68,7 +64,6 @@ export default class behaviorDeatilSetting extends Vue {
   private onCancel() {
     this.windowVisible = false
   }
-
   // *****************************************************
 }
 </script>

@@ -20,7 +20,7 @@ import defaultEdge from './flowEdges/defaultEdge'
 @Options({
   components: {}
 })
-export default class index extends ComponentBase {
+export default class flowDesign extends ComponentBase {
   private currentFlow: LogicFlow
 
   private silentConfig = {
@@ -28,7 +28,6 @@ export default class index extends ComponentBase {
     stopMoveGraph: false,
     stopZoomGraph: false,
     hideAnchors: false,
-
     edgeTextEdit: true,
     edgeTextDraggable: true
   }
@@ -222,4 +221,3 @@ export default class index extends ComponentBase {
 <style lang="less">
 @import './flowDesigner.less';
 </style>
-./flowNodes/oneParamJudeNode
