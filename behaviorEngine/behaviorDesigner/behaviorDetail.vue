@@ -7,7 +7,7 @@
       </el-col>
       <el-col :span="18" style="border-right: 1px solid #cdcdcd">
         <!-- 流程图 -->
-        <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" />
+        <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" @onCurrentSelectChanged="onCurrentSelectChanged" />
       </el-col>
     </el-row>
     <template #footer>
@@ -26,8 +26,8 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
-import flowDesign from '../flowDesigner/flowDesign.vue'
-import resourceTree from '../flowDesigner/resourceTree.vue'
+import flowDesign from '../flowDesigner/designer/flowDesign.vue'
+import resourceTree from '../flowDesigner/designer/resourceTree.vue'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @Options({
@@ -49,9 +49,6 @@ export default class behaviorDeatilSetting extends Vue {
     ;(this.$refs.resourceTree as resourceTree).init(page)
   }
 
-  private onFlowCreated(flow) {
-    ;(this.$refs.resourceTree as resourceTree).setCurrentFlow(flow)
-  }
   private onClose() {
     this.windowVisible = false
   }
@@ -64,6 +61,11 @@ export default class behaviorDeatilSetting extends Vue {
   private onCancel() {
     this.windowVisible = false
   }
+  // *****************************************************
+  private onFlowCreated(flow) {
+    ;(this.$refs.resourceTree as resourceTree).setCurrentFlow(flow)
+  }
+  private onCurrentSelectChanged(nodeOrEndge) {}
   // *****************************************************
 }
 </script>

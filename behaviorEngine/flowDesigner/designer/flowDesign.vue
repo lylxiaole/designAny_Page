@@ -13,9 +13,9 @@ import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 
-import funcNormalNode from './flowNodes/funcNormalNode'
-import onParamJudeNode from './flowNodes/onParamJudeNode'
-import defaultEdge from './flowEdges/defaultEdge'
+import funcNormalNode from '../flowNodes/funcNormalNode'
+import onParamJudeNode from '../flowNodes/onParamJudeNode'
+import defaultEdge from '../flowEdges/defaultEdge'
 
 @Options({
   components: {}
@@ -167,7 +167,6 @@ export default class flowDesign extends ComponentBase {
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
-
     this.currentFlow.on('connection:not-allowed', this.onEdgeConnectNotAllowed)
     this.currentFlow.on('anchor:dragstart', this.onAnchorDragStart)
     this.currentFlow.on('anchor:dragend', this.onAnchorDragEnd)
@@ -215,9 +214,12 @@ export default class flowDesign extends ComponentBase {
   // ************************************************************
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
+
+  @Emit('onCurrentSelectChanged')
+  private onCurrentSelectChanged(nodeOrEndge) {}
 }
 </script>
 
 <style lang="less">
-@import './flowDesigner.less';
+@import '../flowDesigner.less';
 </style>

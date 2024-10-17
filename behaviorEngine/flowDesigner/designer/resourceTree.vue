@@ -32,7 +32,7 @@ import { object_group, actionObj } from '@design-any/interface/dist/bahaviorEngi
 import { EnginePage, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
 import LogicFlow from '@logicflow/core'
-import { findFlowNode, flowNodeType, anchorType } from './flowTypes'
+import { findFlowNode, flowNodeType, anchorType } from '../flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
