@@ -1,11 +1,11 @@
 <template>
-  <div style="box-sizing: border-box; width: 100%; height: 100%; background-color: #cdcdcd; position: relative" class="sql" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-    <div style="box-sizing: border-box; width: calc(100% - 250px); height: 100%; background-color: #cdcdcd; float: left">
+  <div style="box-sizing: border-box; width: 100%; height: 100%; position: relative" class="sql" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+    <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <div ref="flowarea"></div>
     </div>
 
-    <div style="box-sizing: border-box; width: 250px; height: 100%; background-color: #cdcdcd; float: left">
-      <flowNodeInfo :currentSelected="currentSelected" />
+    <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
+      <flowNodeInfo :currentSelected="currentSelected" :currentFlow="currentFlow" />
     </div>
   </div>
 </template>

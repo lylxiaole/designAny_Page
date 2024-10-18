@@ -5,7 +5,7 @@
         <!-- //资源列表 -->
         <resource-tree ref="resourceTree" />
       </div>
-      <div style="border-right: 1px solid #cdcdcd; width: calc(100% - 250px); float: left; box-sizing: border-box">
+      <div style="width: calc(100% - 250px); float: left; box-sizing: border-box">
         <!-- 流程图 -->
         <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" @onCurrentSelectChanged="onCurrentSelectChanged" />
       </div>
