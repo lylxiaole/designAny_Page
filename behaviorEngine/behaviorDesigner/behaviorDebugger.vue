@@ -1,7 +1,7 @@
 <template style="height: 100%">
   <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 88%" width="95%" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-row style="height: calc(100% - 50px); width: 100%; background: #fff">
-      <div style="width: calc(100% - 250px); float: left; box-sizing: border-box">
+      <div style="width: 100%; box-sizing: border-box">
         <!-- 流程图 -->
         <flowDebugger ref="flowDebugger" />
       </div>
@@ -35,13 +35,14 @@ export default class behaviorDebugger extends Vue {
   currentSettingBehavior: behavior = null
   // ****************************************************
   private windowVisible: boolean = false
+
   public async show(behav: behavior, page: EnginePage) {
     this.currentSettingBehavior = behav
     this.currentPage = page
     behaviorContext.currentDesignPage = page
     this.windowVisible = true
     await this.$nextTick()
-    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav)
+    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentPage)
   }
 
   private onClose() {

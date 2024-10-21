@@ -18,18 +18,23 @@ import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import flowNodeInfo from './flowNodeInfo.vue'
-
 import funcNormalNode from '../flowNodes/funcNormalNode'
 import onParamJudeNode from '../flowNodes/onParamJudeNode'
 import defaultEdge from '../flowEdges/defaultEdge'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
+import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 @Options({
   components: { flowNodeInfo }
 })
 export default class flowDebugger extends ComponentBase {
   private currentFlow: LogicFlow
+  private currentFactory: factory
 
+  // ********初始化**************************************
+  mounted() {}
+  // ****************************************************
   private silentConfig = {
     isSilentMode: true,
     stopScrollGraph: true,
@@ -39,10 +44,7 @@ export default class flowDebugger extends ComponentBase {
     edgeTextEdit: true,
     edgeTextDraggable: true
   }
-  // ********初始化**************************************
-  mounted() {}
-
-  public async setFlowData(behav: behavior) {
+  public async setFlowData(behav: behavior, currentPage: EnginePage) {
     let flowdata = behav.flowData
 
     if (!flowdata) {
@@ -68,6 +70,8 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
+
+    this.currentFactory = new factory(currentPage, currentPage, behav)
   }
   // ************************************************************
   @Emit('onFlowCreated')
