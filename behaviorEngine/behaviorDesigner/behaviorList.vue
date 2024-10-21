@@ -12,6 +12,7 @@
         <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">Name</el-col>
         <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">Options</el-col>
       </el-row>
+
       <div style="height: calc(100% - 35px); overflow-y: auto">
         <el-row v-for="(beha, index) in allBehaviors" :key="beha.id" style="margin-top: 4px">
           <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="2">
@@ -21,6 +22,7 @@
             <editableText v-model:value="beha.name" />
           </el-col>
           <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
+            <!-- ****************************** -->
             <el-button
               @click="
                 () => {
@@ -31,6 +33,7 @@
             >
               Edit
             </el-button>
+            <!-- ****************************** -->
             <el-button
               @click="
                 () => {
@@ -41,6 +44,7 @@
             >
               Delete
             </el-button>
+            <!-- ****************************** -->
           </el-col>
         </el-row>
       </div>

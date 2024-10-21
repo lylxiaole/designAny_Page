@@ -1,14 +1,9 @@
 <template style="height: 100%">
   <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 88%" width="95%" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-row style="height: calc(100% - 50px); width: 100%; background: #fff">
-      <div style="border-right: 1px solid #cdcdcd; width: 250px; float: left; box-sizing: border-box">
-        <!-- //资源列表 -->
-        <resource-tree ref="resourceTree" />
-      </div>
-      <!-- ******************************************** -->
       <div style="width: calc(100% - 250px); float: left; box-sizing: border-box">
         <!-- 流程图 -->
-        <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" @onCurrentSelectChanged="onCurrentSelectChanged" />
+        <flowDebugger ref="flowDebugger" />
       </div>
       <!-- ******************************************** -->
     </el-row>
@@ -28,12 +23,11 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
-import flowDesign from '../flowDesigner/designer/flowDesign.vue'
-import resourceTree from '../flowDesigner/designer/resourceTree.vue'
+import flowDebugger from '../flowDesigner/debugger/flowDebugger.vue'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @Options({
-  components: { flowDesign, resourceTree }
+  components: { flowDebugger }
 })
 export default class behaviorDebugger extends Vue {
   currentPage: EnginePage = null
@@ -47,28 +41,18 @@ export default class behaviorDebugger extends Vue {
     behaviorContext.currentDesignPage = page
     this.windowVisible = true
     await this.$nextTick()
-    ;(this.$refs.flowDesign as flowDesign).setFlowData(behav.flowData)
-    ;(this.$refs.resourceTree as resourceTree).init(page)
+    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav.flowData)
   }
 
   private onClose() {
     this.windowVisible = false
   }
   private onConfirm() {
-    let data = (this.$refs.flowDesign as flowDesign).getFlowData()
-    this.currentSettingBehavior.actObjs = data.allObjs
-    this.currentSettingBehavior.flowData = data.flowData
     this.windowVisible = false
   }
   private onCancel() {
     this.windowVisible = false
   }
-  // *****************************************************
-  private onFlowCreated(flow) {
-    ;(this.$refs.resourceTree as resourceTree).setCurrentFlow(flow)
-  }
-  private onCurrentSelectChanged(nodeOrEndge) {}
-  // *****************************************************
 }
 </script>
 

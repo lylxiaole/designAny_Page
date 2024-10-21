@@ -1,6 +1,11 @@
 <template>
   <div style="box-sizing: border-box; width: 100%; height: 100%; background-color: #cdcdcd" class="sql">
-    <div ref="flowarea"></div>
+    <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
+      <div ref="flowarea"></div>
+    </div>
+    <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
+      <flowNodeInfo />
+    </div>
   </div>
 </template>
 
@@ -12,13 +17,14 @@ import { getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
+import flowNodeInfo from './flowNodeInfo.vue'
 
 import funcNormalNode from '../flowNodes/funcNormalNode'
 import onParamJudeNode from '../flowNodes/onParamJudeNode'
 import defaultEdge from '../flowEdges/defaultEdge'
 
 @Options({
-  components: {}
+  components: { flowNodeInfo }
 })
 export default class flowDebugger extends ComponentBase {
   private currentFlow: LogicFlow
@@ -60,7 +66,6 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
   }
-
   // ************************************************************
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
