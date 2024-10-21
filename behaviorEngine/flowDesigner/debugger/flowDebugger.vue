@@ -22,6 +22,7 @@ import flowNodeInfo from './flowNodeInfo.vue'
 import funcNormalNode from '../flowNodes/funcNormalNode'
 import onParamJudeNode from '../flowNodes/onParamJudeNode'
 import defaultEdge from '../flowEdges/defaultEdge'
+import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 @Options({
   components: { flowNodeInfo }
@@ -41,7 +42,9 @@ export default class flowDebugger extends ComponentBase {
   // ********初始化**************************************
   mounted() {}
 
-  public async setFlowData(flowdata: any) {
+  public async setFlowData(behav: behavior) {
+    let flowdata = behav.flowData
+
     if (!flowdata) {
       flowdata = {
         nodes: [],

@@ -5,8 +5,8 @@
         <!-- 流程图 -->
         <flowDebugger ref="flowDebugger" />
       </div>
-      <!-- ******************************************** -->
     </el-row>
+    <!-- ******************************************** -->
     <template #footer>
       <el-row class="dialog-footer" style="height: 50px">
         <div class="steps-action">
@@ -41,7 +41,7 @@ export default class behaviorDebugger extends Vue {
     behaviorContext.currentDesignPage = page
     this.windowVisible = true
     await this.$nextTick()
-    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav.flowData)
+    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav)
   }
 
   private onClose() {
