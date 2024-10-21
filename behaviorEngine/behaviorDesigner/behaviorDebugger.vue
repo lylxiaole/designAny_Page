@@ -5,10 +5,12 @@
         <!-- //资源列表 -->
         <resource-tree ref="resourceTree" />
       </div>
+      <!-- ******************************************** -->
       <div style="width: calc(100% - 250px); float: left; box-sizing: border-box">
         <!-- 流程图 -->
         <flowDesign ref="flowDesign" @onFlowCreated="onFlowCreated" @onCurrentSelectChanged="onCurrentSelectChanged" />
       </div>
+      <!-- ******************************************** -->
     </el-row>
     <template #footer>
       <el-row class="dialog-footer" style="height: 50px">
@@ -33,7 +35,7 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 @Options({
   components: { flowDesign, resourceTree }
 })
-export default class behaviorDeatilSetting extends Vue {
+export default class behaviorDebugger extends Vue {
   currentPage: EnginePage = null
   /**当前正在设置的行为 */
   currentSettingBehavior: behavior = null

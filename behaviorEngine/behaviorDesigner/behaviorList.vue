@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <behaviorDetail ref="behaviorDetail" />
+    <behaviorSetting ref="behaviorSetting" />
   </el-row>
 </template>
 
@@ -57,11 +57,10 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
-import behaviorDetail from './behaviorDetail.vue'
+import behaviorSetting from './behaviorSetting.vue'
 import editableText from '@common/components/Text/editableText.vue'
-import { toRaw } from 'vue'
 @Options({
-  components: { behaviorDetail: behaviorDetail, editableText }
+  components: { behaviorSetting, editableText }
 })
 export default class behaviorList extends Vue {
   @Prop({
@@ -90,7 +89,7 @@ export default class behaviorList extends Vue {
 
   //编辑，跳转到行为细节详情
   private editBehavior(record: behavior) {
-    ;(this.$refs.behaviorDetail as any).show(record, this.currentPage)
+    ;(this.$refs.behaviorSetting as any).show(record, this.currentPage)
   }
 
   private deleteBehavior(record: behavior) {

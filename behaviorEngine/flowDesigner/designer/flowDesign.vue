@@ -3,7 +3,6 @@
     <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <div ref="flowarea"></div>
     </div>
-
     <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
       <flowNodeInfo :currentSelected="currentSelected" :currentFlow="currentFlow" />
     </div>
@@ -211,7 +210,6 @@ export default class flowDesign extends ComponentBase {
   private onEdgeClick({ data, e, position }) {
     this.currentSelected = data
   }
-
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
   private onDrop(event) {
@@ -231,7 +229,6 @@ export default class flowDesign extends ComponentBase {
   // ************************************************************
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
-
   @Emit('onCurrentSelectChanged')
   private onCurrentSelectChanged(nodeOrEndge) {}
 }
