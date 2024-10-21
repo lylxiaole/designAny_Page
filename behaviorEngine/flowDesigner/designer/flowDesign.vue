@@ -145,7 +145,7 @@ export default class flowDesign extends ComponentBase {
           {
             keys: ['delete'],
             callback: () => {
-              const r = window.confirm('Sure要删除吗？')
+              const r = window.confirm('Sure Delete？')
               if (r) {
                 const elements = this.currentFlow.getSelectElements(true)
                 this.currentFlow.clearSelectElements()

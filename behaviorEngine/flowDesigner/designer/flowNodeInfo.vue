@@ -1,20 +1,33 @@
 <template style="height: 100%; width: 100%">
-  <el-row style="width: 100%">
-    <!-- ********************************************************* -->
-    <el-row v-if="inParams" style="width: 100%">
-      <div class="title">InpParams</div>
-      <div v-if="inParams.length < 1" class="content">No InParams,Just for Connect</div>
-      <div v-else class="content" v-for="param in inParams" :key="param.key">{{ param.name }}({{ param.refOutParamId ? 'connected' : 'disconnected' }})</div>
+  <el-row v-if="selectedNodeType === 'node'" style="width: 100%">
+    <el-row v-if="inParams && inParams.length > 0" style="width: 100%">
+      <div class="title">InpParams:</div>
+      <div class="content" v-for="param in inParams" :key="param.key">{{ param.name }}({{ param.refOutParamId ? 'connected' : 'disconnected' }})</div>
     </el-row>
-    <el-row v-if="inParams && outParam" style="width: 100%">
-      <div class="title">OutParam</div>
+    <el-row v-else style="width: 100%">
+      <div class="title">InpParams:</div>
+      <div class="content">No InParams,Just for Connect</div>
+    </el-row>
+
+    <el-row v-if="outParam" style="width: 100%">
+      <div class="title">OutParam:</div>
       <div class="content">{{ outParam.name }}</div>
     </el-row>
-    <el-row v-if="inParams && !outParam" style="width: 100%">
-      <div class="title">OutParam</div>
+    <el-row v-if="!outParam" style="width: 100%">
+      <div class="title">OutParam:</div>
       <div class="content">No OutParam,Just for Connect</div>
     </el-row>
-    <!-- ********************************************************* -->
+  </el-row>
+  <!-- ********************************************************* -->
+  <el-row v-if="selectedNodeType === 'edge'">
+    <el-row v-if="edgeFilter" style="width: 100%">
+      <div class="title">Filter:</div>
+      <div class="content">{{ edgeFilter }}</div>
+    </el-row>
+    <el-row v-else style="width: 100%">
+      <div class="title">Filter:</div>
+      <div class="content">No Filter</div>
+    </el-row>
   </el-row>
 </template>
 
@@ -40,7 +53,17 @@ export default class flowNodeInfo extends Vue {
     }
   })
   private currentSelected: NodeConfig | EdgeConfig
-
+  //
+  private get selectedNodeType() {
+    if (this.currentFlow && this.currentSelected && this.currentSelected.properties && this.currentSelected.properties.actObj) {
+      return 'node'
+    } else if (this.currentFlow && this.currentSelected && this.currentSelected.text && (this.currentSelected as any).text.value) {
+      return 'edge'
+    } else {
+      return 'edge'
+    }
+  }
+  //流程节点-入参
   private get inParams(): any[] {
     if (!this.currentFlow) {
       return []
@@ -50,11 +73,24 @@ export default class flowNodeInfo extends Vue {
     }
     return (this.currentSelected.properties.actObj as any).inputParams
   }
+  //流程节点-出参
   private get outParam(): any[] {
     if (!this.currentSelected || !this.currentSelected.properties.actObj) {
       return []
     }
     return (this.currentSelected.properties.actObj as any).outParam
+  }
+  //流程连线-filter条件
+  private get edgeFilter(): string {
+    if (!this.currentSelected || !(this.currentSelected as any).pointsList) {
+      return null
+    }
+
+    if ((this.currentSelected as any).text) {
+      return (this.currentSelected as any).text.value
+    } else {
+      return null
+    }
   }
 
   @Watch('currentSelected')
@@ -62,14 +98,12 @@ export default class flowNodeInfo extends Vue {
     if (!val) {
       return
     }
-
     if (val.properties.actObj) {
       //流程节点
     } else {
       //线
     }
-
-    debugger
+    // debugger
   }
 }
 </script>
