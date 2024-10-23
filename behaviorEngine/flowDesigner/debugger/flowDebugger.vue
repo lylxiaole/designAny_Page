@@ -4,7 +4,7 @@
       <div ref="flowarea"></div>
     </div>
     <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
-      <flowNodeInfo />
+      <flowNodeDebuggerInfo ref="flowNodeDebuggerInfo" />
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ import { getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-import flowNodeInfo from './flowNodeInfo.vue'
+import flowNodeDebuggerInfo from './flowNodeDebuggerInfo.vue'
 import funcNormalNode from '../flowNodes/funcNormalNode'
 import onParamJudeNode from '../flowNodes/onParamJudeNode'
 import defaultEdge from '../flowEdges/defaultEdge'
@@ -26,7 +26,7 @@ import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 @Options({
-  components: { flowNodeInfo }
+  components: { flowNodeDebuggerInfo }
 })
 export default class flowDebugger extends ComponentBase {
   private currentFlow: LogicFlow
@@ -70,8 +70,9 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
-
+    //  *********************************************
     this.currentFactory = new factory(currentPage, currentPage, behav)
+    ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
   }
   // ************************************************************
   @Emit('onFlowCreated')

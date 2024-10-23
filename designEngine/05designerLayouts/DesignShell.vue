@@ -131,7 +131,7 @@ export default class DesignShell extends Vue {
     e.stopPropagation()
     var ctrlKey = e.ctrlKey || e.metaKey
     if (ctrlKey) {
-      ;(this.component.parentLayout as any).MulitChooseComp(this.component)
+      ;(this.component.parentLayout as any).mulitChooseComp(this.component)
       $(this.$el).focus()
     } else {
       ;(this.component.parentLayout as any).chooseComp(this.component)
