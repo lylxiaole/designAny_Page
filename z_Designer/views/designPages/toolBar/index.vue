@@ -6,12 +6,9 @@
     </div>
     <!-- *************************************************************************** -->
     <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'Save' + (needSave ? '*' : '')" :enableIcon="saveIcon" @click="savePage" />
-
     <optionBtn v-if="currentPage" :enable="currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="'Undo'" @mouseup="topre" />
     <optionBtn v-if="currentPage" :enable="currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="'Redo'" @mouseup="tonext" />
-
     <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :enableIcon="previewIcon" label="Preview" @mouseup="onPreView" />
-
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
       <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
@@ -23,7 +20,6 @@
         <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
       </el-tooltip>
       <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon" label="Behaviors" @click="onSettingBehavior" />
-
       <!-- *************************************************************************** -->
       <div :style="{ width: '150px' }" style="margin-right: 15px" class="iconitem themeHover">
         <div class="flexHorilanLayout" style="width: 100%; height: 50%">
@@ -118,7 +114,6 @@ export default class quickActionBar extends Vue {
   }
   //************导入插件********************************************************
   private leadinPlugin() {}
-
   /*************定制化控制项************************************************************************ */
   private async onQuit() {
     this.$router.push('/designApplications')

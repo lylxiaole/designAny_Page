@@ -52,6 +52,7 @@ export class propertiesInPageMethod implements actFuncBase {
   currentPage: EnginePage
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
+    debugger
     let { layoutId, propField } = this.currentActObj.resourceFilter
     let targetLayout: EngineLayout = null
     if (this.currentPage.Id === layoutId) {

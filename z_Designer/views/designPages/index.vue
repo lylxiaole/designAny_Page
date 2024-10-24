@@ -191,7 +191,6 @@ export default class index extends PageBase {
   private onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }
-
   private onSettingBehavior() {
     ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine)
   }

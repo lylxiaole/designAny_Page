@@ -30,7 +30,6 @@ export default class flowNodeDebuggerInfo extends Vue {
   private currentFactory: factory
 
   public startDebugger(val: factory) {
-    debugger
     this.currentFactory = val
     this.currentFactory.startDebugAction()
   }

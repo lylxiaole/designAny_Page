@@ -74,7 +74,7 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorSetting from './behaviorSetting.vue'
-import behaviorDebugger from './behaviorDebugger.vue'
+import behaviorDebugger from '../behaviorDebugger/behaviorDebugger.vue'
 
 import editableText from '@common/components/Text/editableText.vue'
 @Options({
