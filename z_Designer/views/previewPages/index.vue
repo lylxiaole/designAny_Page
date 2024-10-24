@@ -2,11 +2,11 @@
   <el-dialog ref="previewPopup" class="bhaviorDialog" style="height: 100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
       <!-- ********************************************************************* -->
-      <el-button @click="onClose" style="background: red; position: absolute; right: 0px; top: 0px">Exit</el-button>
+      <el-button @click="onClose" style="background: red; position: absolute; right: 0px; top: 0px; z-index: 99">Exit</el-button>
       <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
       <!-- ********************************************************************* -->
-      <el-button style="background: green; position: absolute; right: 0px; top: 48%" @click="onOpenDrawer">Behavior Debugger</el-button>
-      <el-drawer v-model="drawerShow" title="Behavior Debugger" size="70%" :with-header="true">
+      <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 99" @click="onOpenDrawer">Behavior Debugger</el-button>
+      <el-drawer v-model="drawerShow" title="Behavior Debugger" size="90%" :with-header="true">
         <el-row style="width: 100%; height: 100%">
           <div style="width: 220px; height: 100%; float: left">
             <behaviorList :currentPage="currentOpenEngin" />
@@ -130,6 +130,7 @@ export default class index extends PageBase {
     })
 
     this.currentOpenEngin.$on('onExcuteBehavior', (behav: behavior, page: EnginePage) => {
+      debugger
       ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, page)
     })
   }
@@ -144,7 +145,7 @@ export default class index extends PageBase {
     this.windowVisible = false
   }
   // *****************************************************************************
-  private drawerShow: boolean = false
+  private drawerShow: boolean = true
   private onOpenDrawer() {
     this.drawerShow = true
   }
