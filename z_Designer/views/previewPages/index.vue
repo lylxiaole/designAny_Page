@@ -40,6 +40,7 @@ import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@com
 
 import behaviorList from '@behaviorEngine/behaviorDebugger/behaviorList.vue'
 import flowDebugger from '@behaviorEngine/behaviorDebugger/flowDebugger.vue'
+import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 @Options({
   components: {
@@ -117,14 +118,19 @@ export default class index extends PageBase {
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
+
     this.currentOpenEngin = vueComp as any
     await this.$nextTick()
     $(this.$refs.renderArea).html('')
-
     $(this.$refs.renderArea).append(virtualDom)
-    ;(vueComp as any).$once('onLYLLeadToOtherPage', (pageId) => {
+
+    this.currentOpenEngin.$once('onLYLLeadToOtherPage', (pageId) => {
       this.currentOpenEngin.destorymethod()
       this.openPage(pageId)
+    })
+
+    this.currentOpenEngin.$on('onExcuteBehavior', (behav: behavior, page: EnginePage) => {
+      ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, page)
     })
   }
   // *****************************************************************************
