@@ -18,9 +18,9 @@ import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import flowNodeDebuggerInfo from './flowNodeDebuggerInfo.vue'
-import funcNormalNode from '../flowNodes/funcNormalNode'
-import onParamJudeNode from '../flowNodes/onParamJudeNode'
-import defaultEdge from '../flowEdges/defaultEdge'
+import funcNormalNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalNode'
+import onParamJudeNode from '@behaviorEngine/flowDesigner/flowNodes/onParamJudeNode'
+import defaultEdge from '@behaviorEngine/flowDesigner/flowEdges/defaultEdge'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
@@ -81,5 +81,5 @@ export default class flowDebugger extends ComponentBase {
 </script>
 
 <style lang="less">
-@import '../flowDesigner.less';
+@import '../flowDesigner/flowDesigner.less';
 </style>

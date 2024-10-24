@@ -26,17 +26,6 @@
             <el-button
               @click="
                 () => {
-                  debugBehavior(beha)
-                }
-              "
-              type="link"
-            >
-              Debug
-            </el-button>
-            <!-- ****************************** -->
-            <el-button
-              @click="
-                () => {
                   editBehavior(beha)
                 }
               "
@@ -62,7 +51,6 @@
     </div>
 
     <behaviorSetting ref="behaviorSetting" />
-    <behaviorDebugger ref="behaviorDebugger" />
   </el-row>
 </template>
 
@@ -74,11 +62,10 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorSetting from './behaviorSetting.vue'
-import behaviorDebugger from '../behaviorDebugger/behaviorDebugger.vue'
 
 import editableText from '@common/components/Text/editableText.vue'
 @Options({
-  components: { behaviorDebugger, behaviorSetting, editableText }
+  components: { behaviorSetting, editableText }
 })
 export default class behaviorList extends Vue {
   @Prop({
@@ -113,10 +100,6 @@ export default class behaviorList extends Vue {
   private deleteBehavior(record: behavior) {
     let index = this.allBehaviors.findIndex((o) => o.id === record.id)
     this.allBehaviors.splice(index, 1)
-  }
-
-  private debugBehavior(record: behavior) {
-    ;(this.$refs.behaviorDebugger as any).show(record, this.currentPage)
   }
 }
 </script>

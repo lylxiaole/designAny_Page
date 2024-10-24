@@ -1,8 +1,22 @@
 <template>
   <el-dialog ref="previewPopup" class="bhaviorDialog" style="height: 100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
+      <!-- ********************************************************************* -->
+      <el-button @click="onClose" style="background: red; position: absolute; right: 0px; top: 0px">Exit</el-button>
       <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
-      <el-button @click="onClose" style="background: red; position: absolute; left: 0px; top: 0px">Exit</el-button>
+      <!-- ********************************************************************* -->
+      <el-button style="background: green; position: absolute; right: 0px; top: 48%" @click="onOpenDrawer">Behavior Debugger</el-button>
+      <el-drawer v-model="drawerShow" title="Behavior Debugger" size="70%" :with-header="true">
+        <el-row style="width: 100%; height: 100%">
+          <div style="width: 220px; height: 100%; float: left">
+            <behaviorList :currentPage="currentOpenEngin" />
+          </div>
+          <div style="width: calc(100% - 220px); height: 100%; float: left">
+            <flowDebugger ref="flowDebugger" />
+          </div>
+        </el-row>
+      </el-drawer>
+      <!-- ********************************************************************* -->
     </el-row>
   </el-dialog>
 </template>
@@ -22,13 +36,17 @@ import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDo
 import paltform from '@design-any/interface/dist/enums/paltform'
 import applicationContext from '@designEngine/01designerContext/context'
 
-import { behaviorList } from '@behaviorEngine/index'
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
+
+import behaviorList from '@behaviorEngine/behaviorDebugger/behaviorList.vue'
+import flowDebugger from '@behaviorEngine/behaviorDebugger/flowDebugger.vue'
+
 @Options({
   components: {
     mobilePagePreview: MobilePagePreview,
     pCPagePreview: PCPagePreview,
-    behaviorList: behaviorList
+    behaviorList: behaviorList,
+    flowDebugger: flowDebugger
   }
 })
 export default class index extends PageBase {
@@ -47,8 +65,7 @@ export default class index extends PageBase {
     this.applicationId = appId
     await this.initApplication()
   }
-
-  // ***********加载数据*************************
+  // ***********加载数据**********************************************************
   private async initApplication() {
     this.allPageSimples = []
     this.application = await GetApplication(this.applicationId)
@@ -60,7 +77,6 @@ export default class index extends PageBase {
     }
     this.openPage(defaultPage.id)
   }
-
   private organizePages(pageTree: any[]) {
     for (let index = 0; index < pageTree.length; index++) {
       const treenode = pageTree[index]
@@ -72,7 +88,7 @@ export default class index extends PageBase {
       }
     }
   }
-  // ************************************
+  // *****************************************************************************
   private async openPage(pageId: string) {
     let cachePageData = this.openedPageData.find((o) => o.id === pageId)
     if (!cachePageData) {
@@ -111,8 +127,7 @@ export default class index extends PageBase {
       this.openPage(pageId)
     })
   }
-
-  // ************************************
+  // *****************************************************************************
   private onClose() {
     try {
       this.openedPageData = []
@@ -121,6 +136,11 @@ export default class index extends PageBase {
       }
     } catch (error) {}
     this.windowVisible = false
+  }
+  // *****************************************************************************
+  private drawerShow: boolean = false
+  private onOpenDrawer() {
+    this.drawerShow = true
   }
 }
 </script>
