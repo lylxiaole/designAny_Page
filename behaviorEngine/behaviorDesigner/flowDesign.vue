@@ -22,6 +22,10 @@ import onParamJudeNode from '../flowDesigner/flowNodes/onParamJudeNode'
 import defaultEdge from '../flowDesigner/flowEdges/defaultEdge'
 import flowNodeInfo from './flowNodeInfo.vue'
 
+import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
+
 @Options({
   components: { flowNodeInfo }
 })
@@ -127,7 +131,10 @@ export default class flowDesign extends ComponentBase {
     return { allObjs: allObjs, flowData: graphData }
   }
 
-  public async setFlowData(flowdata: any) {
+  public async setFlowData(behav: behavior, page: EnginePage) {
+    let flowdata = behav.flowData
+    behaviorContext.currentDesignPage = page
+
     if (!flowdata) {
       flowdata = {
         nodes: [],

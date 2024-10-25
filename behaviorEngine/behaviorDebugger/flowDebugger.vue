@@ -24,6 +24,7 @@ import defaultEdge from '@behaviorEngine/flowDesigner/flowEdges/defaultEdge'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @Options({
   components: { flowNodeDebuggerInfo }
@@ -46,7 +47,7 @@ export default class flowDebugger extends ComponentBase {
   }
   public async setFlowData(behav: behavior, currentPage: EnginePage) {
     let flowdata = behav.flowData
-
+    behaviorContext.currentDesignPage = currentPage
     if (!flowdata) {
       flowdata = {
         nodes: [],

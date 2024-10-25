@@ -30,7 +30,6 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import flowDesign from '../behaviorDesigner/flowDesign.vue'
 import resourceTree from '../behaviorDesigner/resourceTree.vue'
-import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @Options({
   components: { flowDesign, resourceTree }
@@ -44,10 +43,9 @@ export default class behaviorSetting extends Vue {
   public async show(behav: behavior, page: EnginePage) {
     this.currentSettingBehavior = behav
     this.currentPage = page
-    behaviorContext.currentDesignPage = page
     this.windowVisible = true
     await this.$nextTick()
-    ;(this.$refs.flowDesign as flowDesign).setFlowData(behav.flowData)
+    ;(this.$refs.flowDesign as flowDesign).setFlowData(behav, page)
     ;(this.$refs.resourceTree as resourceTree).init(page)
   }
 
