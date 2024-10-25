@@ -6,7 +6,7 @@
       <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
       <!-- ********************************************************************* -->
       <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 99" @click="onOpenDrawer">Behavior Debugger</el-button>
-      <el-drawer v-model="drawerShow" title="Behavior Debugger" size="90%" :with-header="true">
+      <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
         <el-row style="width: 100%; height: 100%">
           <div style="width: 220px; height: 100%; float: left">
             <behaviorList :currentPage="currentOpenEngin" @onBehaviorChanged="onBehaviorChanged" />
@@ -146,8 +146,6 @@ export default class index extends PageBase {
   }
 
   private onBehaviorChanged(behav: behavior) {
-    let xx = this.currentOpenEngin
-    debugger
     ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngin)
   }
 }
@@ -160,5 +158,16 @@ export default class index extends PageBase {
 
 .el-dialog__body {
   padding: 0px !important;
+}
+
+.el-drawer {
+  .el-drawer__header {
+    background-color: green;
+    margin-bottom: 0px;
+    height: 50px;
+    .el-drawer__title {
+      color: white;
+    }
+  }
 }
 </style>
