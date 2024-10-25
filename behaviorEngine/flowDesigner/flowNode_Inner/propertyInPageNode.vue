@@ -39,7 +39,6 @@ export default class propertyInPageNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-
   // ***********布局*******************************
   private currentLayoutId: string = null
   private get currentLayout(): EngineLayout {

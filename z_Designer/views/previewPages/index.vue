@@ -9,7 +9,7 @@
       <el-drawer v-model="drawerShow" title="Behavior Debugger" size="90%" :with-header="true">
         <el-row style="width: 100%; height: 100%">
           <div style="width: 220px; height: 100%; float: left">
-            <behaviorList :currentPage="currentOpenEngin" />
+            <behaviorList :currentPage="currentOpenEngin" @onBehaviorChanged="onBehaviorChanged" />
           </div>
           <div style="width: calc(100% - 220px); height: 100%; float: left">
             <flowDebugger ref="flowDebugger" />
@@ -112,7 +112,7 @@ export default class index extends PageBase {
       default:
         break
     }
-    /************************渲染页面 */
+    /************************渲染页面************************ */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false, { applicationContext: applicationContext })
     await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail)
     ;(vueComp as any).name = cachePageData.name
@@ -127,11 +127,6 @@ export default class index extends PageBase {
     this.currentOpenEngin.$once('onLYLLeadToOtherPage', (pageId) => {
       this.currentOpenEngin.destorymethod()
       this.openPage(pageId)
-    })
-
-    this.currentOpenEngin.$on('onExcuteBehavior', (behav: behavior, page: EnginePage) => {
-      debugger
-      ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, page)
     })
   }
   // *****************************************************************************
@@ -148,6 +143,12 @@ export default class index extends PageBase {
   private drawerShow: boolean = true
   private onOpenDrawer() {
     this.drawerShow = true
+  }
+
+  private onBehaviorChanged(behav: behavior) {
+    let xx = this.currentOpenEngin
+    debugger
+    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngin)
   }
 }
 </script>

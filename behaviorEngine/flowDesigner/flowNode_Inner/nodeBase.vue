@@ -80,6 +80,7 @@ export default class nodeBase extends Vue {
     //
     this.actObj = newActObj
     let flowNodeVue = findFlowNodeInner(this.funcCode)
+
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
     let app = createApp({
       render: () => r

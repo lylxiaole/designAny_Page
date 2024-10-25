@@ -6,10 +6,9 @@
     </div>
 
     <div style="height: calc(100% - 30px); width: 100%; overflow-y: auto">
-      <el-checkbox-group v-model="checkedBehaviors" @change="handleCheckedCitiesChange">
-        <el-checkbox v-for="beha in allBehaviors" :key="beha.id" :label="beha.name">{{ beha.name }}</el-checkbox>
-      </el-checkbox-group>
-
+      <el-radio-group v-model="checkedBehaviorId" @change="onSelectBehavior">
+        <el-radio v-for="beha in allBehaviors" :key="beha.id" :label="beha.id">{{ beha.name }}</el-radio>
+      </el-radio-group>
       <!-- <el-row v-for="(beha, index) in allBehaviors" :key="beha.id" style="margin-top: 4px">
         <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="2">
           <span>{{ index + 1 }}</span>
@@ -40,7 +39,7 @@ export default class behaviorList extends Vue {
   })
   currentPage: EnginePage
 
-  private checkedBehaviors: string[] = []
+  private checkedBehaviorId: string = ''
 
   private get allBehaviors(): behavior[] {
     if (!this.currentPage) {
@@ -48,6 +47,14 @@ export default class behaviorList extends Vue {
     }
     return this.currentPage.behaviors
   }
+
+  private onSelectBehavior(id) {
+    let selectedb = this.allBehaviors.find((o) => o.id === id)
+    this.onBehaviorChanged(selectedb)
+  }
+
+  @Emit('onBehaviorChanged')
+  private onBehaviorChanged(behav: behavior) {}
 }
 </script>
 

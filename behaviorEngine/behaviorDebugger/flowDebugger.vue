@@ -70,11 +70,12 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
-    //  *********************************************
+    // **********************************************
     this.currentFactory = new factory(currentPage, currentPage, behav)
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
+    // **********************************************
   }
-  // ************************************************************
+
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
 }

@@ -37,7 +37,6 @@ class VueHtmlNode extends HtmlResize.view {
     // 找到actObj
     const { actObj } = this.props.model.getProperties()
     const { x, y, type, name } = anchorData
-    console.log('anchorData:', anchorData, this.props.model)
 
     let isConnected = false
     let textX_move = 0
