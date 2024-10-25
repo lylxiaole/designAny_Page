@@ -35,7 +35,6 @@ export default class flowNodeDebuggerInfo extends Vue {
   }
 
   private nextStep() {
-    console.log('nextStep')
     if (!this.currentFactory) {
       return
     }
