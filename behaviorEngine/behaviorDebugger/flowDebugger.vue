@@ -32,7 +32,6 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class flowDebugger extends ComponentBase {
   private currentFlow: LogicFlow
   private currentFactory: factory
-
   // ********初始化**************************************
   mounted() {}
   // ****************************************************
@@ -63,7 +62,7 @@ export default class flowDebugger extends ComponentBase {
       },
       ...this.silentConfig
     })
-
+    // **********************************************
     this.currentFlow.register(onParamJudeNode)
     this.currentFlow.register(funcNormalNode)
     this.currentFlow.register(defaultEdge)
@@ -74,7 +73,6 @@ export default class flowDebugger extends ComponentBase {
     // **********************************************
     this.currentFactory = new factory(currentPage, currentPage, behav)
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
-    // **********************************************
   }
 
   @Emit('onFlowCreated')

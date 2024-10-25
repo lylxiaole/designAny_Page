@@ -230,7 +230,7 @@ export default class flowDesign extends ComponentBase {
   private onDragLeave() {
     this.isDragOver = false
   }
-  // ************************************************************
+  // ******************************************************
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
   @Emit('onCurrentSelectChanged')
