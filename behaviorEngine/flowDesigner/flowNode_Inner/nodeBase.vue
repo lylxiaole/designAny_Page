@@ -5,7 +5,7 @@
 
       {{ actObj && actObj.excuted ? '已执行' : '未执行' }}
       {{ actObj && actObj.excuted && actObj.excutedSuccess ? '执行成功' : '执行失败' }}
-      {{ actObj && actObj.excuted && actObj.excutedSuccess && actObj.excutedMsg ? actObj.excutedMsg : '' }}
+      {{ actObj && !actObj.excutedSuccess ? actObj.excutedMsg : '' }}
     </el-row>
     <!-- **************************************************** -->
     <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
