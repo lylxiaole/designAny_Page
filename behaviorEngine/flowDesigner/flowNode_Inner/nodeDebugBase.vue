@@ -1,11 +1,14 @@
 <template>
   <el-row style="border: 1px solid #cdcdcd; width: 100%; height: 100%; box-sizing: border-box; background: #fff; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
+    <div style="width: 100%; height: 25px" class="verticalAlignCenter flexHorilanLayout">
+      <img width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/待执行.png')" />
+    </div>
+
     <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
       {{ actObj ? actObj.name : '' }}
-
-      {{ actObj && actObj.excuted ? '已执行' : '未执行' }}
+      <!-- {{ actObj && actObj.excuted ? '已执行' : '未执行' }}
       {{ actObj && actObj.excuted && actObj.excutedSuccess ? '执行成功' : '执行失败' }}
-      {{ actObj && !actObj.excutedSuccess ? actObj.excutedMsg : '' }}
+      {{ actObj && !actObj.excutedSuccess ? actObj.excutedMsg : '' }} -->
     </el-row>
     <!-- **************************************************** -->
     <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
@@ -33,7 +36,6 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class nodeBase extends Vue {
   @Prop()
   private nodeModel: HtmlNodeModel
-
   @Prop()
   private funcCode: funcCode
 
@@ -45,7 +47,6 @@ export default class nodeBase extends Vue {
     var inparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.inParam || o.type === anchorType.justIn)
     return inparamsAnchors
   }
-
   public get inParamHeight() {
     if (!this.inParamAnchors || this.inParamAnchors.length < 1) {
       return '0px'
@@ -53,7 +54,6 @@ export default class nodeBase extends Vue {
       return 100 / this.inParamAnchors.length + '%'
     }
   }
-
   public get outParamAnchors(): any[] {
     if (!this.nodeModel) {
       return []
@@ -62,7 +62,6 @@ export default class nodeBase extends Vue {
     var outparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.outParam || o.type === anchorType.justOut)
     return outparamsAnchors
   }
-
   public get outParamHeight() {
     if (!this.outParamAnchors || this.outParamAnchors.length < 1) {
       return '0px'
@@ -71,13 +70,40 @@ export default class nodeBase extends Vue {
     }
   }
 
-  private actObj: actionObj = null
-  private onActObjChanged(val) {
-    this.nodeModel.setProperties({ actObj: val })
-    this.nodeModel.updateAnchor()
-    this.$forceUpdate()
+  public get isExcuted(): boolean {
+    if (!this.actObj) {
+      return false
+    }
+    return this.actObj.excuted
+  }
+  public get excutedSuccess(): boolean {
+    if (!this.actObj) {
+      return false
+    }
+
+    if (!this.isExcuted) {
+      return null
+    }
+
+    return this.actObj.excutedSuccess
+  }
+  public get excutedMsg(): string {
+    if (!this.actObj) {
+      return null
+    }
+
+    if (!this.isExcuted) {
+      return null
+    }
+
+    if (this.excutedSuccess === false) {
+      return this.actObj.excutedMsg
+    } else {
+      return null
+    }
   }
 
+  private actObj: actionObj = null
   mounted() {
     let { actObj } = this.nodeModel.getProperties()
     let newActObj = deepClone(actObj)
@@ -93,6 +119,11 @@ export default class nodeBase extends Vue {
     app.mount(this.$refs.renderContainer as any)
     //
     this.$watch('actObj', this.onActObjChanged, { deep: true })
+  }
+  private onActObjChanged(val) {
+    this.nodeModel.setProperties({ actObj: val })
+    this.nodeModel.updateAnchor()
+    this.$forceUpdate()
   }
 }
 </script>
