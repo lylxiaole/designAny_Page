@@ -18,9 +18,12 @@ import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import flowNodeDebuggerInfo from './flowNodeDebuggerInfo.vue'
+
 import funcNormalDebugNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalDebugNode'
 import onParamJudeDebugNode from '@behaviorEngine/flowDesigner/flowNodes/onParamJudeDebugNode'
+
 import defaultEdge from '@behaviorEngine/flowDesigner/flowEdges/defaultEdge'
+
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
@@ -47,6 +50,9 @@ export default class flowDebugger extends ComponentBase {
   public async setFlowData(behav: behavior, currentPage: EnginePage) {
     let flowdata = behav.flowData
     behaviorContext.currentDesignPage = currentPage
+    this.currentFactory = new factory(currentPage, currentPage, behav)
+    this.clearBahaviorStatus(behav)
+    // **********************************************
     if (!flowdata) {
       flowdata = {
         nodes: [],
@@ -67,12 +73,21 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.register(onParamJudeDebugNode)
     this.currentFlow.register(defaultEdge)
     this.currentFlow.setDefaultEdgeType('defaultEdge')
+
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
     // **********************************************
-    this.currentFactory = new factory(currentPage, currentPage, behav)
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
+  }
+
+  private clearBahaviorStatus(behav: behavior) {
+    for (let index = 0; index < behav.actObjs.length; index++) {
+      const element = behav.actObjs[index]
+      element.excuted = false
+      element.excutedMsg = null
+      element.excutedSuccess = false
+    }
   }
 
   @Emit('onFlowCreated')

@@ -16,8 +16,13 @@ class NodeView extends VueHtmlNode {
     super(props)
     this.isMounted = false
     let { actObj } = props.model.getProperties()
+    actObj.excuted = false
+    actObj.excutedMsg = null
+    actObj.excutedSuccess = false
+    props.model.setProperty('actObj', actObj)
     //找到actObj的funcCode
     let funcCode = actObj.funcCode
+    console.log('funcNormalDebugNode:')
     //绘制节点
     this.r = h(nodeDebugBase as any, {
       funcCode: funcCode,
