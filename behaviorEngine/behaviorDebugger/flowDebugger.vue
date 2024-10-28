@@ -18,8 +18,8 @@ import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import flowNodeDebuggerInfo from './flowNodeDebuggerInfo.vue'
-import funcNormalNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalNode'
-import onParamJudeNode from '@behaviorEngine/flowDesigner/flowNodes/onParamJudeNode'
+import funcNormalDebugNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalDebugNode'
+import onParamJudeDebugNode from '@behaviorEngine/flowDesigner/flowNodes/onParamJudeDebugNode'
 import defaultEdge from '@behaviorEngine/flowDesigner/flowEdges/defaultEdge'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory'
@@ -63,8 +63,8 @@ export default class flowDebugger extends ComponentBase {
       ...this.silentConfig
     })
     // **********************************************
-    this.currentFlow.register(onParamJudeNode)
-    this.currentFlow.register(funcNormalNode)
+    this.currentFlow.register(funcNormalDebugNode)
+    this.currentFlow.register(onParamJudeDebugNode)
     this.currentFlow.register(defaultEdge)
     this.currentFlow.setDefaultEdgeType('defaultEdge')
     this.currentFlow.render(flowdata)

@@ -11,9 +11,9 @@ import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 const anchorSize = 10
 //一般性的流程节点
 class VueHtmlNode extends HtmlResize.view {
-  private isMounted: boolean = false
-  private r: any
-  private app: any
+  protected isMounted: boolean = false
+  protected r: any
+  protected app: any
   constructor(props) {
     super(props)
     this.isMounted = false
