@@ -1,11 +1,11 @@
 <template>
-  <div style="border: 1px solid #cdcdcd; width: 100%; height: 100%; position: relative">
+  <div style="border: 1px solid #cdcdcd; background: #fff; width: 100%; height: 100%; position: relative; box-sizing: border-box">
     <div style="width: 100%; height: 20px" class="verticalAlignCenter flexHorilanLayout">
       <img v-if="isExcuted" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
       <img v-else width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/待执行.png')" />
     </div>
 
-    <el-row style="width: 100%; height: calc(100% - 20px); box-sizing: border-box; background: #fff; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
+    <el-row style="width: 100%; height: calc(100% - 20px); box-sizing: border-box; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
       <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
         {{ actObj ? actObj.name : '' }}
         <!-- {{ actObj && actObj.excuted ? '已执行' : '未执行' }}
@@ -14,7 +14,6 @@
       </el-row>
       <!-- **************************************************** -->
       <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
-      <!-- **************************************************** -->
     </el-row>
   </div>
 </template>

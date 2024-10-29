@@ -1589,7 +1589,7 @@
 
 "@logicflow/core@1.2.10":
   version "1.2.10"
-  resolved "https://registry.npmmirror.com/@logicflow/core/-/core-1.2.10.tgz#d167759e59c5ce3f0df94f5456f0f293569935db"
+  resolved "https://registry.yarnpkg.com/@logicflow/core/-/core-1.2.10.tgz#d167759e59c5ce3f0df94f5456f0f293569935db"
   integrity sha512-F2lEL4DchqCFOyB+8mLdCQOjJiF7a0pBP7u7N6bkbQ4ljPQW44QiYkCWNpVv1AwaSS6MlZuJ+wV51qNZUd2qXA==
   dependencies:
     "@types/mousetrap" "^1.6.4"
