@@ -84,6 +84,7 @@ export default class flowDebugger extends ComponentBase {
   private onActObjExcuted(actobj: actionObj) {
     let node = this.currentFlow.getNodeModelById(actobj.id)
     // node.properties.actObj.excuted = true
+
     node.setProperty('actObj', actobj)
   }
 

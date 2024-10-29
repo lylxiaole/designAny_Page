@@ -79,7 +79,6 @@ class VueHtmlNode extends HtmlResize.view {
 class VueHtmlNodeModel extends HtmlResize.model {
   initNodeData(data) {
     super.initNodeData(data)
-
     this.width = 260
     this.height = 120
     this.maxWidth = 800

@@ -19,6 +19,7 @@ class NodeView extends VueHtmlNode {
     super(props)
     this.isMounted = false
     let { actObj } = props.model.getProperties()
+
     actObj.excuted = false
     actObj.excutedMsg = null
     actObj.excutedSuccess = false
