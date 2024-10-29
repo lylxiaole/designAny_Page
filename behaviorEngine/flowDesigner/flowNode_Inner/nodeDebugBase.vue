@@ -1,19 +1,22 @@
 <template>
-  <el-row style="border: 1px solid #cdcdcd; width: 100%; height: 100%; box-sizing: border-box; background: #fff; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
-    <div style="width: 100%; height: 25px" class="verticalAlignCenter flexHorilanLayout">
-      <img width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/待执行.png')" />
+  <div style="border: 1px solid #cdcdcd; width: 100%; height: 100%; position: relative">
+    <div style="width: 100%; height: 20px" class="verticalAlignCenter flexHorilanLayout">
+      <img v-if="isExcuted" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
+      <img v-else width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/待执行.png')" />
     </div>
 
-    <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
-      {{ actObj ? actObj.name : '' }}
-      <!-- {{ actObj && actObj.excuted ? '已执行' : '未执行' }}
+    <el-row style="width: 100%; height: calc(100% - 20px); box-sizing: border-box; background: #fff; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
+      <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
+        {{ actObj ? actObj.name : '' }}
+        <!-- {{ actObj && actObj.excuted ? '已执行' : '未执行' }}
       {{ actObj && actObj.excuted && actObj.excutedSuccess ? '执行成功' : '执行失败' }}
       {{ actObj && !actObj.excutedSuccess ? actObj.excutedMsg : '' }} -->
+      </el-row>
+      <!-- **************************************************** -->
+      <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
+      <!-- **************************************************** -->
     </el-row>
-    <!-- **************************************************** -->
-    <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
-    <!-- **************************************************** -->
-  </el-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -38,6 +41,16 @@ export default class nodeBase extends Vue {
   private nodeModel: HtmlNodeModel
   @Prop()
   private funcCode: funcCode
+  @Prop()
+  private actObj: actionObj
+
+  @Watch('actObj', { deep: true })
+  private onactObjchanged(val: actionObj) {
+    debugger
+    this.nodeModel.setProperties({ actObj: val })
+    this.nodeModel.updateAnchor()
+    this.$forceUpdate()
+  }
 
   public get inParamAnchors(): any[] {
     if (!this.nodeModel) {
@@ -103,27 +116,14 @@ export default class nodeBase extends Vue {
     }
   }
 
-  private actObj: actionObj = null
   mounted() {
-    let { actObj } = this.nodeModel.getProperties()
-    let newActObj = deepClone(actObj)
-    //
-    this.actObj = newActObj
     let flowNodeVue = findFlowNodeInner(this.funcCode)
-
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
     let app = createApp({
       render: () => r
     })
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)
-    //
-    this.$watch('actObj', this.onActObjChanged, { deep: true })
-  }
-  private onActObjChanged(val) {
-    this.nodeModel.setProperties({ actObj: val })
-    this.nodeModel.updateAnchor()
-    this.$forceUpdate()
   }
 }
 </script>

@@ -29,9 +29,17 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class nodeBase extends Vue {
   @Prop()
   private nodeModel: HtmlNodeModel
-
   @Prop()
   private funcCode: funcCode
+  @Prop()
+  private actObj: actionObj
+
+  @Watch('actObj', { deep: true })
+  private onactObjchanged(val: actionObj) {
+    this.nodeModel.setProperties({ actObj: val })
+    this.nodeModel.updateAnchor()
+    this.$forceUpdate()
+  }
 
   public get inParamAnchors(): any[] {
     if (!this.nodeModel) {
@@ -41,7 +49,6 @@ export default class nodeBase extends Vue {
     var inparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.inParam || o.type === anchorType.justIn)
     return inparamsAnchors
   }
-
   public get inParamHeight() {
     if (!this.inParamAnchors || this.inParamAnchors.length < 1) {
       return '0px'
@@ -49,7 +56,6 @@ export default class nodeBase extends Vue {
       return 100 / this.inParamAnchors.length + '%'
     }
   }
-
   public get outParamAnchors(): any[] {
     if (!this.nodeModel) {
       return []
@@ -58,7 +64,6 @@ export default class nodeBase extends Vue {
     var outparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.outParam || o.type === anchorType.justOut)
     return outparamsAnchors
   }
-
   public get outParamHeight() {
     if (!this.outParamAnchors || this.outParamAnchors.length < 1) {
       return '0px'
@@ -67,18 +72,7 @@ export default class nodeBase extends Vue {
     }
   }
 
-  private actObj: actionObj = null
-  private onActObjChanged(val) {
-    this.nodeModel.setProperties({ actObj: val })
-    this.nodeModel.updateAnchor()
-    this.$forceUpdate()
-  }
-
   mounted() {
-    let { actObj } = this.nodeModel.getProperties()
-    let newActObj = deepClone(actObj)
-    //
-    this.actObj = newActObj
     let flowNodeVue = findFlowNodeInner(this.funcCode)
 
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
@@ -87,8 +81,6 @@ export default class nodeBase extends Vue {
     })
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)
-    //
-    this.$watch('actObj', this.onActObjChanged, { deep: true })
   }
 }
 </script>

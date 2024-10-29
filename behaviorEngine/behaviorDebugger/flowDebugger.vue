@@ -59,7 +59,6 @@ export default class flowDebugger extends ComponentBase {
         edges: []
       }
     }
-
     this.currentFlow = new LogicFlow({
       container: this.$refs.flowarea as any,
       grid: true,
@@ -79,6 +78,13 @@ export default class flowDebugger extends ComponentBase {
     this.onFlowCreated(this.currentFlow)
     // **********************************************
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
+    this.currentFactory.onActObjExcuted = this.onActObjExcuted
+  }
+
+  private onActObjExcuted(actobj: actionObj) {
+    let node = this.currentFlow.getNodeModelById(actobj.id)
+    // node.properties.actObj.excuted = true
+    node.setProperty('actObj', actobj)
   }
 
   private clearBahaviorStatus(behav: behavior) {
