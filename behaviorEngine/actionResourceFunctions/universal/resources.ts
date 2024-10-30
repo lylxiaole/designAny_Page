@@ -52,7 +52,7 @@ export class thirtyApis implements actFuncBase {
         header[key] = inParam.val
       }
     }
-
+    debugger
     let url = ''
     if (apiInfo.hostIsDictionary) {
       let dic = behaviorContext.allDictionary.find((o) => o.key === apiInfo.host)

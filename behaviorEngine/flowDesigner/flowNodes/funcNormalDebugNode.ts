@@ -14,34 +14,28 @@ class NodeView extends VueHtmlNode {
   protected isMounted: boolean = false
   protected r: any
   protected app: any
-  protected actObj: actionObj
 
   constructor(props) {
     super(props)
     this.isMounted = false
+
+    //绘制节点
+    this.r = h(nodeDebugBase as any, {
+      nodeModel: props.model
+    })
+    this.app = createApp({
+      render: () => this.r
+    })
+    this.app.use(ElementPlus)
+
     let { actObj } = props.model.getProperties()
-    props.model.setActObj = (actObj) => {
-      this.r.component.props.actObj = actObj
-    }
     actObj.excuted = false
     actObj.excutedMsg = null
     actObj.excutedSuccess = false
 
-    this.actObj = actObj
-    //找到actObj的funcCode
-    let funcCode = actObj.funcCode
-    //绘制节点
-    this.r = h(nodeDebugBase as any, {
-      funcCode: funcCode,
-      nodeModel: props.model,
-      actObj: this.actObj
-    })
-
-    this.app = createApp({
-      render: () => this.r
-    })
-
-    this.app.use(ElementPlus)
+    props.model.setActObj = (newactObj) => {
+      this.r.component.proxy.actObj = newactObj
+    }
   }
 }
 

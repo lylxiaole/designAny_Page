@@ -1,13 +1,14 @@
 <template>
   <div style="border: 1px solid #cdcdcd; background: #fff; width: 100%; height: 100%; position: relative; box-sizing: border-box">
-    <div style="width: 100%; height: 20px" class="verticalAlignCenter flexHorilanLayout">
+    <div style="width: 100%; height: 15px" class="verticalAlignCenter flexHorilanLayout">
       <img v-if="!isExcuted" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/待执行.png')" />
       <img v-if="isExcuted && excutedSuccess === true" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
       <img v-if="isExcuted && excutedSuccess === false" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行失败.png')" />
-      <span v-if="isExcuted && excutedSuccess === false && excutedMsg" style="color: red">{{ excutedMsg }}</span>
     </div>
-
-    <el-row style="width: 100%; height: calc(100% - 20px); box-sizing: border-box; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
+    <!-- ********************************************** -->
+    <div v-if="isExcuted && excutedSuccess === false && excutedMsg" style="width: 100%; height: 15px; color: red" class="verticalAlignCenter flexHorilanLayout">{{ excutedMsg }}</div>
+    <!-- ********************************************** -->
+    <el-row style="width: 100%; height: calc(100% - 30px); box-sizing: border-box; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
       <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
         {{ actObj ? actObj.name : '' }}
       </el-row>
@@ -37,13 +38,10 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class nodeBase extends Vue {
   @Prop()
   private nodeModel: HtmlNodeModel
-  @Prop()
-  private funcCode: funcCode
-  @Prop()
-  private actObj: actionObj
 
-  @Watch('actObj', { deep: true })
+  private actObj: actionObj = null
   private onactObjchanged(val: actionObj) {
+    debugger
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()
     this.$forceUpdate()
@@ -114,13 +112,21 @@ export default class nodeBase extends Vue {
   }
 
   mounted() {
-    let flowNodeVue = findFlowNodeInner(this.funcCode)
+    let { actObj } = this.nodeModel.getProperties()
+    let funcCode = actObj.funcCode
+    this.actObj = deepClone(actObj)
+    let flowNodeVue = findFlowNodeInner(funcCode)
+
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
     let app = createApp({
       render: () => r
     })
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)
+
+    this.$nextTick(() => {
+      this.$watch('actObj', this.onactObjchanged, { deep: true })
+    })
   }
 }
 </script>

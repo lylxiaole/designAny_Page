@@ -2,16 +2,15 @@
   <div style="box-sizing: border-box; width: 100%; height: 100%" class="sql">
     <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <!-- ***************************** -->
-      <el-row style="width: 100%; height: 60px" class="flexHorilanLayout verticalAlignCenter">
+      <el-row style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
         <el-button type="primary">Add Breakpoint</el-button>
         <el-button type="primary" @click="nextStep">Next Step</el-button>
         <el-button type="primary">Next Point</el-button>
       </el-row>
       <!-- ***************************** -->
-      <div style="width: 100%; height: calc(100% - 60px)" ref="flowarea"></div>
+      <div style="width: 100%; height: calc(100% - 40px)" ref="flowarea"></div>
       <!-- ***************************** -->
     </div>
-
     <!-- ***************************** -->
     <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
       <flowNodeDebuggerInfo ref="flowNodeDebuggerInfo" />
@@ -98,6 +97,7 @@ export default class flowDebugger extends ComponentBase {
   }
   private onActObjExcuted(actobj: actionObj) {
     let node = this.currentFlow.getNodeModelById(actobj.id)
+
     node.setActObj(actobj)
   }
 

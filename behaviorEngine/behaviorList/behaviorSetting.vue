@@ -56,6 +56,7 @@ export default class behaviorSetting extends Vue {
     let data = (this.$refs.flowDesign as flowDesign).getFlowData()
     this.currentSettingBehavior.actObjs = data.allObjs
     this.currentSettingBehavior.flowData = data.flowData
+    debugger
     this.windowVisible = false
   }
   private onCancel() {

@@ -1,7 +1,7 @@
 import { HtmlNode, HtmlNodeModel, h as lfh } from '@logicflow/core'
 import { createApp, h, VNode, render, ref } from 'vue'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
-import { getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 import ElementPlus from 'element-plus'
 import nodeBase from '../flowNode_Inner/nodeBase.vue'
 import { HtmlResize } from '@logicflow/extension'
@@ -15,20 +15,14 @@ class VueHtmlNode extends HtmlResize.view {
   protected isMounted: boolean = false
   protected r: any
   protected app: any
-  protected actObj: actionObj
 
   constructor(props) {
     super(props)
     this.isMounted = false
-    let { actObj } = props.model.getProperties()
-    this.actObj = actObj
     //找到actObj的funcCode
-    let funcCode = actObj.funcCode
     //绘制节点
     this.r = h(nodeBase as any, {
-      funcCode: funcCode,
-      nodeModel: props.model,
-      actObj: this.actObj
+      nodeModel: props.model
     })
 
     this.app = createApp({

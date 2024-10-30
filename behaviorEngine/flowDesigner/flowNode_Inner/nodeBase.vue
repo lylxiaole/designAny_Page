@@ -29,12 +29,8 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class nodeBase extends Vue {
   @Prop()
   private nodeModel: HtmlNodeModel
-  @Prop()
-  private funcCode: funcCode
-  @Prop()
-  private actObj: actionObj
 
-  @Watch('actObj', { deep: true })
+  private actObj: actionObj = null
   private onactObjchanged(val: actionObj) {
     debugger
     this.nodeModel.setProperties({ actObj: val })
@@ -74,7 +70,10 @@ export default class nodeBase extends Vue {
   }
 
   mounted() {
-    let flowNodeVue = findFlowNodeInner(this.funcCode)
+    let { actObj } = this.nodeModel.getProperties()
+    let funcCode = actObj.funcCode
+    this.actObj = deepClone(actObj)
+    let flowNodeVue = findFlowNodeInner(funcCode)
 
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
     let app = createApp({
@@ -82,6 +81,10 @@ export default class nodeBase extends Vue {
     })
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)
+
+    this.$nextTick(() => {
+      this.$watch('actObj', this.onactObjchanged, { deep: true })
+    })
   }
 }
 </script>
