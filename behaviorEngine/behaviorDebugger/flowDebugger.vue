@@ -83,7 +83,7 @@ export default class flowDebugger extends ComponentBase {
 
   private onActObjExcuted(actobj: actionObj) {
     let node = this.currentFlow.getNodeModelById(actobj.id)
-    node.setProperty('actObj', actobj)
+    node.setActObj(actobj)
   }
 
   private clearBahaviorStatus(behav: behavior) {

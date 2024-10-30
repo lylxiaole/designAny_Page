@@ -7,6 +7,7 @@ import { VueHtmlNodeModel, VueHtmlNode } from './nodeBase'
 import nodeDebugBase from '../flowNode_Inner/nodeDebugBase.vue'
 import ElementPlus from 'element-plus'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
+import { debug } from 'webpack'
 
 //一般性的流程节点
 class NodeView extends VueHtmlNode {
@@ -19,7 +20,9 @@ class NodeView extends VueHtmlNode {
     super(props)
     this.isMounted = false
     let { actObj } = props.model.getProperties()
-
+    props.model.setActObj = (actObj) => {
+      this.r.component.props.actObj = actObj
+    }
     actObj.excuted = false
     actObj.excutedMsg = null
     actObj.excutedSuccess = false

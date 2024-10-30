@@ -45,7 +45,6 @@ export default class nodeBase extends Vue {
 
   @Watch('actObj', { deep: true })
   private onactObjchanged(val: actionObj) {
-    debugger
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()
     this.$forceUpdate()
