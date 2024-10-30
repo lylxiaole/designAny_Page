@@ -1,8 +1,18 @@
 <template>
-  <div style="box-sizing: border-box; width: 100%; height: 100%; background-color: #cdcdcd" class="sql">
+  <div style="box-sizing: border-box; width: 100%; height: 100%" class="sql">
     <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
-      <div ref="flowarea"></div>
+      <!-- ***************************** -->
+      <el-row style="width: 100%; height: 60px" class="flexHorilanLayout verticalAlignCenter">
+        <el-button type="primary">Add Breakpoint</el-button>
+        <el-button type="primary" @click="nextStep">Next Step</el-button>
+        <el-button type="primary">Next Point</el-button>
+      </el-row>
+      <!-- ***************************** -->
+      <div style="width: 100%; height: calc(100% - 60px)" ref="flowarea"></div>
+      <!-- ***************************** -->
     </div>
+
+    <!-- ***************************** -->
     <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
       <flowNodeDebuggerInfo ref="flowNodeDebuggerInfo" />
     </div>
@@ -51,7 +61,13 @@ export default class flowDebugger extends ComponentBase {
     let flowdata = behav.flowData
     behaviorContext.currentDesignPage = currentPage
     this.currentFactory = new factory(currentPage, currentPage, behav)
-    this.clearBahaviorStatus(behav)
+    // **********清除行为运行状态**************************************
+    for (let index = 0; index < behav.actObjs.length; index++) {
+      const element = behav.actObjs[index]
+      element.excuted = false
+      element.excutedMsg = null
+      element.excutedSuccess = false
+    }
     // **********************************************
     if (!flowdata) {
       flowdata = {
@@ -80,19 +96,16 @@ export default class flowDebugger extends ComponentBase {
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
     this.currentFactory.onActObjExcuted = this.onActObjExcuted
   }
-
   private onActObjExcuted(actobj: actionObj) {
     let node = this.currentFlow.getNodeModelById(actobj.id)
     node.setActObj(actobj)
   }
 
-  private clearBahaviorStatus(behav: behavior) {
-    for (let index = 0; index < behav.actObjs.length; index++) {
-      const element = behav.actObjs[index]
-      element.excuted = false
-      element.excutedMsg = null
-      element.excutedSuccess = false
+  private nextStep() {
+    if (!this.currentFactory) {
+      return
     }
+    this.currentFactory.excuteNextStep()
   }
 
   @Emit('onFlowCreated')

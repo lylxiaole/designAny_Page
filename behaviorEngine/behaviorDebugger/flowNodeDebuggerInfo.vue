@@ -1,18 +1,6 @@
 <template>
   <el-row style="height: 100%; width: 100%">
     <!-- ********************************************************* -->
-    <el-row style="width: 100%; height: 60px">
-      <el-col :span="6">
-        <el-button type="primary">Add Breakpoint</el-button>
-      </el-col>
-      <el-col :span="6">
-        <el-button type="primary" @click="nextStep">Next Step</el-button>
-      </el-col>
-      <el-col :span="6">
-        <el-button type="primary">Next Point</el-button>
-      </el-col>
-    </el-row>
-    <!-- ********************************************************* -->
     <el-row style="width: 100%; height: calc(100% - 60px)"></el-row>
   </el-row>
 </template>
@@ -32,13 +20,6 @@ export default class flowNodeDebuggerInfo extends Vue {
   public startDebugger(val: factory) {
     this.currentFactory = val
     this.currentFactory.startDebugAction()
-  }
-
-  private nextStep() {
-    if (!this.currentFactory) {
-      return
-    }
-    this.currentFactory.excuteNextStep()
   }
 }
 </script>
