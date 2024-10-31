@@ -3,9 +3,9 @@
     <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <!-- ***************************** -->
       <el-row v-if="currentFactory" style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
-        <el-button type="primary">Add Breakpoint</el-button>
+        <!-- <el-button type="primary">Add Breakpoint</el-button> -->
         <el-button type="primary" @click="nextStep">Next Step</el-button>
-        <el-button type="primary">Next Point</el-button>
+        <!-- <el-button type="primary">Next Point</el-button> -->
       </el-row>
       <!-- ***************************** -->
       <div style="width: 100%; height: calc(100% - 40px)" ref="flowarea"></div>

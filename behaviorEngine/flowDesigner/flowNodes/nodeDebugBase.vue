@@ -113,11 +113,19 @@ export default class nodeBase extends Vue {
   mounted() {
     let { actObj } = this.nodeModel.getProperties()
     let funcCode = actObj.funcCode
-    // *******************
-    let cloneobj = deepClone(actObj)
+    // ********clear***********
+    let cloneobj = deepClone(actObj) as actionObj
     cloneobj.excuted = false
     cloneobj.excutedMsg = null
     cloneobj.excutedSuccess = false
+    for (let index = 0; index < cloneobj.inputParams.length; index++) {
+      const element = cloneobj.inputParams[index]
+      element.val = null
+    }
+    if (cloneobj.outParam) {
+      cloneobj.outParam.val = null
+    }
+    // *******************
     this.actObj = cloneobj
     this.onactObjchanged(this.actObj)
     // *******************
