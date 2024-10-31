@@ -2,7 +2,7 @@
   <div style="box-sizing: border-box; width: 100%; height: 100%" class="sql">
     <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <!-- ***************************** -->
-      <el-row style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
+      <el-row v-if="currentFactory" style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
         <el-button type="primary">Add Breakpoint</el-button>
         <el-button type="primary" @click="nextStep">Next Step</el-button>
         <el-button type="primary">Next Point</el-button>
@@ -13,7 +13,7 @@
     </div>
     <!-- ***************************** -->
     <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
-      <flowNodeDebuggerInfo ref="flowNodeDebuggerInfo" />
+      <flowNodeDebuggerInfo ref="flowNodeDebuggerInfo" :currentSelected="currentSelected" />
     </div>
   </div>
 </template>
@@ -22,9 +22,9 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import LogicFlow from '@logicflow/core'
+import LogicFlow, { EdgeConfig, GraphConfigData, NodeConfig } from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import flowNodeDebuggerInfo from './flowNodeDebuggerInfo.vue'
 
@@ -42,8 +42,10 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
   components: { flowNodeDebuggerInfo }
 })
 export default class flowDebugger extends ComponentBase {
-  private currentFlow: LogicFlow
-  private currentFactory: factory
+  private currentFlow: LogicFlow = null
+  private currentFactory: factory = null
+  private currentSelected: NodeConfig | EdgeConfig = null
+
   // ********初始化**************************************
   mounted() {}
   // ****************************************************
@@ -87,6 +89,8 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.register(onParamJudeDebugNode)
     this.currentFlow.register(defaultEdge)
     this.currentFlow.setDefaultEdgeType('defaultEdge')
+    this.currentFlow.on('node:click', this.onNodeClick)
+    this.currentFlow.on('edge:click', this.onEdgeClick)
 
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
@@ -97,7 +101,6 @@ export default class flowDebugger extends ComponentBase {
   }
   private onActObjExcuted(actobj: actionObj) {
     let node = this.currentFlow.getNodeModelById(actobj.id)
-
     node.setActObj(actobj)
   }
 
@@ -106,6 +109,12 @@ export default class flowDebugger extends ComponentBase {
       return
     }
     this.currentFactory.excuteNextStep()
+  }
+  private onNodeClick({ data, e, position }) {
+    this.currentSelected = data
+  }
+  private onEdgeClick({ data, e, position }) {
+    this.currentSelected = data
   }
 
   @Emit('onFlowCreated')

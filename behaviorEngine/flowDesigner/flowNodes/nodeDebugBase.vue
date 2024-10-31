@@ -41,7 +41,6 @@ export default class nodeBase extends Vue {
 
   private actObj: actionObj = null
   private onactObjchanged(val: actionObj) {
-    debugger
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()
     this.$forceUpdate()
@@ -114,16 +113,22 @@ export default class nodeBase extends Vue {
   mounted() {
     let { actObj } = this.nodeModel.getProperties()
     let funcCode = actObj.funcCode
-    this.actObj = deepClone(actObj)
+    // *******************
+    let cloneobj = deepClone(actObj)
+    cloneobj.excuted = false
+    cloneobj.excutedMsg = null
+    cloneobj.excutedSuccess = false
+    this.actObj = cloneobj
+    this.onactObjchanged(this.actObj)
+    // *******************
     let flowNodeVue = findFlowNodeInner(funcCode)
-
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
     let app = createApp({
       render: () => r
     })
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)
-
+    // *******************
     this.$nextTick(() => {
       this.$watch('actObj', this.onactObjchanged, { deep: true })
     })

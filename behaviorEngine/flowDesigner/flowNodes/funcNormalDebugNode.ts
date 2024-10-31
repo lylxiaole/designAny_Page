@@ -4,7 +4,7 @@ import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { getUuid } from '@common/utils'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import { VueHtmlNodeModel, VueHtmlNode } from './nodeBase'
-import nodeDebugBase from '../flowNode_Inner/nodeDebugBase.vue'
+import nodeDebugBase from './nodeDebugBase.vue'
 import ElementPlus from 'element-plus'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { debug } from 'webpack'
@@ -27,11 +27,6 @@ class NodeView extends VueHtmlNode {
       render: () => this.r
     })
     this.app.use(ElementPlus)
-
-    let { actObj } = props.model.getProperties()
-    actObj.excuted = false
-    actObj.excutedMsg = null
-    actObj.excutedSuccess = false
 
     props.model.setActObj = (newactObj) => {
       this.r.component.proxy.actObj = newactObj
