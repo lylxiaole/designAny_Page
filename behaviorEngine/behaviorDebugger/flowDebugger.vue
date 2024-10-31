@@ -5,6 +5,7 @@
       <el-row v-if="currentFactory" style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
         <!-- <el-button type="primary">Add Breakpoint</el-button> -->
         <el-button type="primary" @click="nextStep">Next Step</el-button>
+        <el-button type="primary" @click="onReDo">ReDo</el-button>
         <!-- <el-button type="primary">Next Point</el-button> -->
       </el-row>
       <!-- ***************************** -->
@@ -45,7 +46,7 @@ export default class flowDebugger extends ComponentBase {
   private currentFlow: LogicFlow = null
   private currentFactory: factory = null
   private currentSelected: NodeConfig | EdgeConfig = null
-
+  private orginBehav: behavior = null
   // ********初始化**************************************
   mounted() {}
   // ****************************************************
@@ -59,6 +60,8 @@ export default class flowDebugger extends ComponentBase {
     edgeTextDraggable: true
   }
   public async setFlowData(behav: behavior, currentPage: EnginePage) {
+    this.orginBehav = deepClone(behav)
+
     let flowdata = behav.flowData
     behaviorContext.currentDesignPage = currentPage
     this.currentFactory = new factory(currentPage, currentPage, behav)
@@ -103,20 +106,23 @@ export default class flowDebugger extends ComponentBase {
     let node = this.currentFlow.getNodeModelById(actobj.id)
     node.setActObj(actobj)
   }
-
+  // *************************************
   private nextStep() {
     if (!this.currentFactory) {
       return
     }
     this.currentFactory.excuteNextStep()
   }
+  private onReDo() {
+    this.setFlowData(this.orginBehav, behaviorContext.currentDesignPage)
+  }
+  // *************************************
   private onNodeClick({ data, e, position }) {
     this.currentSelected = data
   }
   private onEdgeClick({ data, e, position }) {
     this.currentSelected = data
   }
-
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
 }

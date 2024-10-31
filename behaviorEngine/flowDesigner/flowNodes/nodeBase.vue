@@ -32,7 +32,6 @@ export default class nodeBase extends Vue {
 
   private actObj: actionObj = null
   private onactObjchanged(val: actionObj) {
-    debugger
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()
     this.$forceUpdate()

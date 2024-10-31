@@ -2,29 +2,34 @@
   <el-row v-if="selectedNodeType === 'node'" style="width: 100%">
     <el-row v-if="actObj" style="width: 100%">
       <div class="title">State:</div>
-      <div class="content">{{ isExcuted ? 'Excuted' : 'No Excuted' }}</div>
+      <div class="content">{{ isExcuted ? 'Excuted' : 'Waiting Excute' }}</div>
 
       <div v-if="isExcuted" class="title">Excute Result:</div>
-      <div v-if="isExcuted" class="content">{{ isExcuted && excutedSuccess === true ? 'Success' : 'Faild' }}</div>
+
+      <div v-if="isExcuted" class="content verticalAlignCenter">
+        <img v-if="isExcuted && excutedSuccess === true" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
+        <img v-if="isExcuted && excutedSuccess === false" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行失败.png')" />
+        &nbsp;{{ isExcuted && excutedSuccess === true ? 'Success' : 'Faild' }}
+      </div>
 
       <div v-if="isExcuted && excutedSuccess === false && excutedMsg" class="title">Excute ErrorMsg:{{ isExcuted ? 'Excuted' : 'No Excuted' }}</div>
       <div v-if="isExcuted && excutedSuccess === false && excutedMsg" class="content">{{ isExcuted && excutedSuccess === false && excutedMsg ? excutedMsg : 'None' }}</div>
     </el-row>
     <!-- ********************************************************* -->
-    <el-row v-if="inParams && inParams.length > 0" style="width: 100%">
+    <el-row v-if="isExcuted && inParams && inParams.length > 0" style="width: 100%">
       <div class="title">InpParams:</div>
       <div class="content" v-for="param in inParams" :key="param.key">{{ param.name }}:{{ param.val }}</div>
     </el-row>
-    <el-row v-else style="width: 100%">
+    <el-row v-if="isExcuted && (!inParams || inParams.length < 1)" style="width: 100%">
       <div class="title">InpParams:</div>
       <div class="content">No InParams,Just for Connect</div>
     </el-row>
-
-    <el-row v-if="outParam" style="width: 100%">
+    <!-- ********************************************************* -->
+    <el-row v-if="isExcuted && outParam" style="width: 100%">
       <div class="title">OutParam:</div>
       <div class="content">{{ outParam.name }}:{{ outParam.val }}</div>
     </el-row>
-    <el-row v-if="!outParam" style="width: 100%">
+    <el-row v-if="isExcuted && !outParam" style="width: 100%">
       <div class="title">OutParam:</div>
       <div class="content">No OutParam,Just for Connect</div>
     </el-row>
@@ -34,7 +39,10 @@
     <el-row v-if="edgeFilter" style="width: 100%">
       <div class="title">Filter:</div>
       <div class="content">{{ edgeFilter }}</div>
+      <div class="title">Filter value:</div>
+      <div class="content">{{ edgeFilterVal }}</div>
     </el-row>
+    <!-- ********************************************************* -->
     <el-row v-else style="width: 100%">
       <div class="title">Filter:</div>
       <div class="content">No Filter</div>
@@ -142,6 +150,20 @@ export default class flowNodeDebuggerInfo extends Vue {
     } else {
       return null
     }
+  }
+
+  private get edgeFilterVal(): any {
+    if (!this.currentSelected || !(this.currentSelected as any).pointsList) {
+      return null
+    }
+
+    if (!(this.currentSelected as any).text) {
+      return null
+    }
+
+    let filterTxt = (this.currentSelected as any).text.value
+    let edge = this.currentSelected as EdgeConfig
+    return this.currentFactory.debugCuteFilter(filterTxt, edge.sourceNodeId)
   }
 
   @Watch('currentSelected')

@@ -31,6 +31,7 @@ export class thirtyApis implements actFuncBase {
   currentBehavior: behavior
 
   async excute(inparams: object_InParam[]) {
+    debugger
     //
     let apiInfo = this.currentActObj.resourceFilter.apiInfo
     let header = {}
@@ -52,7 +53,7 @@ export class thirtyApis implements actFuncBase {
         header[key] = inParam.val
       }
     }
-    debugger
+
     let url = ''
     if (apiInfo.hostIsDictionary) {
       let dic = behaviorContext.allDictionary.find((o) => o.key === apiInfo.host)
@@ -72,12 +73,12 @@ export class thirtyApis implements actFuncBase {
       //设置请求体(即传输的数据)
       data: body
     })
-
+    debugger
     return response.data
   }
 }
 
-@resourceFuncAttr('Single condition judgment', '', funcGroup.universalTool, funcCode.oneParamJude, funcStack.universal, [{ key: getUuid(), name: 'imParam' }], { key: getUuid(), name: 'output' }, true)
+@resourceFuncAttr('Single condition judgment', '', funcGroup.universalTool, funcCode.oneParamJude, funcStack.universal, [{ key: getUuid(), name: 'inParam' }], { key: getUuid(), name: 'output' }, true)
 export class oneParamJude implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

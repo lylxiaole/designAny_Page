@@ -5,7 +5,7 @@
       <el-button @click="onClose" style="background: red; position: absolute; right: 0px; top: 0px; z-index: 99">Exit</el-button>
       <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
       <!-- ********************************************************************* -->
-      <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 99" @click="onOpenDrawer">Behavior Debugger</el-button>
+      <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 99" @click="onOpenDrawer">Behaviors</el-button>
       <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
         <el-row style="width: 100%; height: 100%">
           <div style="width: 220px; height: 100%; float: left">
