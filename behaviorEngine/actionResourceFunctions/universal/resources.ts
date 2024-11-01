@@ -31,7 +31,6 @@ export class thirtyApis implements actFuncBase {
   currentBehavior: behavior
 
   async excute(inparams: object_InParam[]) {
-    debugger
     //
     let apiInfo = this.currentActObj.resourceFilter.apiInfo
     let header = {}
@@ -73,7 +72,7 @@ export class thirtyApis implements actFuncBase {
       //设置请求体(即传输的数据)
       data: body
     })
-    debugger
+
     return response.data
   }
 }

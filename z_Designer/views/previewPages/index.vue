@@ -56,7 +56,6 @@ export default class index extends PageBase {
   private applicationId: string = null
   private application: ApplicationDC = null
   private allPageSimples: any[] = []
-  private openedPageData: any[] = []
   private currentOpenEngin: EnginePage = null
 
   mounted() {}
@@ -91,15 +90,12 @@ export default class index extends PageBase {
   }
   // *****************************************************************************
   private async openPage(pageId: string) {
-    let cachePageData = this.openedPageData.find((o) => o.id === pageId)
-    if (!cachePageData) {
-      cachePageData = await GetPageDetail(pageId)
-      if (cachePageData.designDetail) {
-        let pageDataJson = utils.strUnZip(cachePageData.designDetail)
-        cachePageData.designDetail = utils.deserialize(pageDataJson)
-      }
-      this.openedPageData.push(cachePageData)
+    let cachePageData = await GetPageDetail(pageId)
+    if (cachePageData.designDetail) {
+      let pageDataJson = utils.strUnZip(cachePageData.designDetail)
+      cachePageData.designDetail = utils.deserialize(pageDataJson)
     }
+
     await this.$nextTick()
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
