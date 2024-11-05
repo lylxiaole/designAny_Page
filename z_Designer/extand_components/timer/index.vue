@@ -21,6 +21,7 @@ export default class Index extends EngineComponent {
     this.width = '60px'
     this.height = '60px'
   }
+  unmounted() {}
 }
 </script>
 

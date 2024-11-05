@@ -7,16 +7,11 @@
 
     <div style="height: calc(100% - 30px); width: 100%; overflow-y: auto">
       <el-radio-group v-model="checkedBehaviorId" @change="onSelectBehavior">
-        <el-radio v-for="beha in allBehaviors" :key="beha.id" :label="beha.id">{{ beha.name }}</el-radio>
+        <el-radio v-for="beha in allBehaviors" :key="beha.id" :label="beha.id">
+          {{ beha.name }}
+          <el-button v-if="checkedBehaviorId === beha.id" size="small">Edit</el-button>
+        </el-radio>
       </el-radio-group>
-      <!-- <el-row v-for="(beha, index) in allBehaviors" :key="beha.id" style="margin-top: 4px">
-        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="2">
-          <span>{{ index + 1 }}</span>
-        </el-col>
-        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
-          <span>{{ beha.name }}</span>
-        </el-col>
-      </el-row> -->
     </div>
   </el-row>
 </template>

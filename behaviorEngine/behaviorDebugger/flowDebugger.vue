@@ -83,7 +83,29 @@ export default class flowDebugger extends ComponentBase {
       container: this.$refs.flowarea as any,
       grid: true,
       keyboard: {
-        enabled: true
+        enabled: true,
+        shortcuts: [
+          {
+            keys: ['delete'],
+            callback: () => {
+              const r = window.confirm('Sure Delete？')
+              if (r) {
+                const elements = this.currentFlow.getSelectElements(true)
+                this.currentFlow.clearSelectElements()
+                elements.edges.forEach((edge) => this.currentFlow.deleteEdge(edge.id))
+                elements.nodes.forEach((node) => this.currentFlow.deleteNode(node.id))
+              }
+            }
+          },
+          {
+            keys: ['backspace'],
+            callback: () => {}
+          },
+          {
+            keys: ['ctrl+v', 'ctrl+c'],
+            callback: (e) => {}
+          }
+        ]
       },
       ...this.silentConfig
     })

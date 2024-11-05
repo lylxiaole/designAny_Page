@@ -14,6 +14,8 @@
       </el-row>
       <!-- **************************************************** -->
       <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
+      <!-- **************************************************** -->
+      <div style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px" class="mengban"></div>
     </el-row>
   </div>
 </template>
