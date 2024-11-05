@@ -9,7 +9,7 @@
       <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
         <el-row style="width: 100%; height: 100%">
           <div style="width: 220px; height: 100%; float: left">
-            <behaviorList :currentPage="currentOpenEngin" @onBehaviorChanged="onBehaviorChanged" />
+            <behaviorList :currentPage="currentOpenEngine" @onBehaviorChanged="onBehaviorChanged" />
           </div>
           <div style="width: calc(100% - 220px); height: 100%; float: left">
             <flowDebugger ref="flowDebugger" />
@@ -56,7 +56,8 @@ export default class index extends PageBase {
   private applicationId: string = null
   private application: ApplicationDC = null
   private allPageSimples: any[] = []
-  private currentOpenEngin: EnginePage = null
+  private currentOpenEngine: EnginePage = null
+  private currentEngineData: SaveInfo = null
 
   mounted() {}
   public async show(appId: string) {
@@ -65,7 +66,7 @@ export default class index extends PageBase {
     this.applicationId = appId
     await this.initApplication()
   }
-  // ***********加载数据**********************************************************
+  // ***********加载数据******************************
   private async initApplication() {
     this.allPageSimples = []
     this.application = await GetApplication(this.applicationId)
@@ -77,6 +78,7 @@ export default class index extends PageBase {
     }
     this.openPage(defaultPage.id)
   }
+  // ***********组织全局页面树资源*********************
   private organizePages(pageTree: any[]) {
     for (let index = 0; index < pageTree.length; index++) {
       const treenode = pageTree[index]
@@ -88,7 +90,7 @@ export default class index extends PageBase {
       }
     }
   }
-  // *****************************************************************************
+  // ***********打开页面的方法**************************
   private async openPage(pageId: string) {
     let cachePageData = await GetPageDetail(pageId)
     if (cachePageData.designDetail) {
@@ -96,6 +98,7 @@ export default class index extends PageBase {
       cachePageData.designDetail = utils.deserialize(pageDataJson)
     }
 
+    debugger
     await this.$nextTick()
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
@@ -115,34 +118,33 @@ export default class index extends PageBase {
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
 
-    this.currentOpenEngin = vueComp as any
+    this.currentOpenEngine = vueComp as any
     await this.$nextTick()
     $(this.$refs.renderArea).html('')
     $(this.$refs.renderArea).append(virtualDom)
 
-    this.currentOpenEngin.$once('onLYLLeadToOtherPage', (pageId) => {
-      this.currentOpenEngin.destorymethod()
+    this.currentOpenEngine.$once('onLYLLeadToOtherPage', (pageId) => {
+      this.currentOpenEngine.destorymethod()
       this.openPage(pageId)
     })
   }
-  // *****************************************************************************
+  // *************关闭预览*****************************
   private onClose() {
     try {
       this.openedPageData = []
-      if (this.currentOpenEngin) {
-        this.currentOpenEngin.destorymethod()
+      if (this.currentOpenEngine) {
+        this.currentOpenEngine.destorymethod()
       }
     } catch (error) {}
     this.windowVisible = false
   }
-  // *****************************************************************************
-  private drawerShow: boolean = true
+  // ************右侧行为调试窗************************************
+  private drawerShow: boolean = false
   private onOpenDrawer() {
     this.drawerShow = true
   }
-
   private onBehaviorChanged(behav: behavior) {
-    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngin)
+    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngine)
   }
 }
 </script>

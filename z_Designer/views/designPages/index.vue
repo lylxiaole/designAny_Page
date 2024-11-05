@@ -39,7 +39,7 @@ import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist/L
 import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
-import previewPage from '@/views/previewPages/index.vue'
+import previewPage from '@/views/previewDialog/index.vue'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import * as utils from '@design-any/interface/dist/utils'
