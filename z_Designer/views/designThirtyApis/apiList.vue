@@ -2,6 +2,7 @@
   <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
     <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
       <el-row style="margin: 3px 15px">
+        <el-button @click="addFromSwagger">Add From Swagger</el-button>
         <!-- <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="Please Input内容"></el-input> -->
       </el-row>
     </el-row>
@@ -210,7 +211,6 @@ export default class apiList extends ComponentBase {
     }
     return data
   }
-
   private onCurrentNodeChange(nodedata, node) {
     if (nodedata && nodedata.type === 'api') {
       this.onChooseApi(nodedata.id)
@@ -440,6 +440,10 @@ export default class apiList extends ComponentBase {
   }
   private onClickBlankArea() {
     ;(this.$refs.ctxMenu as any).hide()
+  }
+  // ***********读取swagger*********************************************
+  private async addFromSwagger() {
+    alert('正在开发')
   }
   // **************对外事件*****************************************************
   @Emit('onChooseApi')
