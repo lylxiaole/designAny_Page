@@ -9,7 +9,7 @@
       <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
         <el-row style="width: 100%; height: 100%">
           <div style="width: 220px; height: 100%; float: left">
-            <behaviorList :currentPage="currentOpenEngine" @onBehaviorChanged="onBehaviorChanged" />
+            <behaviorList :currentPage="currentOpenEngine" @onBehaviorChanged="onBehaviorChanged" @onEditBehavior="onEditBehavior" />
           </div>
           <div style="width: calc(100% - 220px); height: 100%; float: left">
             <flowDebugger ref="flowDebugger" />
@@ -17,6 +17,7 @@
         </el-row>
       </el-drawer>
       <!-- ********************************************************************* -->
+      <behaviorSetting ref="behaviorSetting" />
     </el-row>
   </el-dialog>
 </template>
@@ -40,6 +41,8 @@ import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@com
 
 import behaviorList from '@behaviorEngine/behaviorDebugger/behaviorList.vue'
 import flowDebugger from '@behaviorEngine/behaviorDebugger/flowDebugger.vue'
+import behaviorSetting from '@behaviorEngine/behaviorList/behaviorSetting.vue'
+
 import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 @Options({
@@ -47,7 +50,8 @@ import { action, actionDetail, behavior, paramType, param } from '@design-any/in
     mobilePagePreview: MobilePagePreview,
     pCPagePreview: PCPagePreview,
     behaviorList: behaviorList,
-    flowDebugger: flowDebugger
+    flowDebugger: flowDebugger,
+    behaviorSetting: behaviorSetting
   }
 })
 export default class index extends PageBase {
@@ -98,7 +102,6 @@ export default class index extends PageBase {
       cachePageData.designDetail = utils.deserialize(pageDataJson)
     }
 
-    debugger
     await this.$nextTick()
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
@@ -138,7 +141,7 @@ export default class index extends PageBase {
     } catch (error) {}
     this.windowVisible = false
   }
-  // ************右侧行为调试窗************************************
+  // ************行为调试窗************************************
   private drawerShow: boolean = false
   private onOpenDrawer() {
     this.drawerShow = true
@@ -146,6 +149,11 @@ export default class index extends PageBase {
   private onBehaviorChanged(behav: behavior) {
     ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngine)
   }
+  //重新编辑行为
+  private onEditBehavior(behav: behavior) {
+    ;(this.$refs.behaviorSetting as behaviorSetting).show(behav, this.currentOpenEngine)
+  }
+  // *************行为编辑功能*************************************
 }
 </script>
 

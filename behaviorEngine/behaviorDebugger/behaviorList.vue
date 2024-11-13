@@ -9,7 +9,7 @@
       <el-radio-group v-model="checkedBehaviorId" @change="onSelectBehavior">
         <el-radio v-for="beha in allBehaviors" :key="beha.id" :label="beha.id">
           {{ beha.name }}
-          <el-button v-if="checkedBehaviorId === beha.id" size="small">Edit</el-button>
+          <el-button v-if="checkedBehaviorId === beha.id" size="small" @click="onEditBehavior(beha)">Edit</el-button>
         </el-radio>
       </el-radio-group>
     </div>
@@ -47,6 +47,9 @@ export default class behaviorList extends Vue {
     let selectedb = this.allBehaviors.find((o) => o.id === id)
     this.onBehaviorChanged(selectedb)
   }
+
+  @Emit('onEditBehavior')
+  private onEditBehavior(beha) {}
 
   @Emit('onBehaviorChanged')
   private onBehaviorChanged(behav: behavior) {}

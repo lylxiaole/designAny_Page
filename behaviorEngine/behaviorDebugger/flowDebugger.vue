@@ -47,9 +47,8 @@ export default class flowDebugger extends ComponentBase {
   private currentFactory: factory = null
   private currentSelected: NodeConfig | EdgeConfig = null
   private orginBehav: behavior = null
-  // ********初始化**************************************
   mounted() {}
-  // ****************************************************
+  // ********初始化**************************************
   private silentConfig = {
     isSilentMode: true,
     stopScrollGraph: true,
@@ -124,11 +123,13 @@ export default class flowDebugger extends ComponentBase {
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
     this.currentFactory.onActObjExcuted = this.onActObjExcuted
   }
+  @Emit('onFlowCreated')
+  private onFlowCreated(flow) {}
+  // ***********调试功能**************************
   private onActObjExcuted(actobj: actionObj) {
     let node = this.currentFlow.getNodeModelById(actobj.id)
     node.setActObj(actobj)
   }
-  // *************************************
   private nextStep() {
     if (!this.currentFactory) {
       return
@@ -138,15 +139,12 @@ export default class flowDebugger extends ComponentBase {
   private onReDo() {
     this.setFlowData(this.orginBehav, behaviorContext.currentDesignPage)
   }
-  // *************************************
   private onNodeClick({ data, e, position }) {
     this.currentSelected = data
   }
   private onEdgeClick({ data, e, position }) {
     this.currentSelected = data
   }
-  @Emit('onFlowCreated')
-  private onFlowCreated(flow) {}
 }
 </script>
 
