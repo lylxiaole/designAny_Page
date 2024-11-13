@@ -6,6 +6,8 @@
         <!-- <el-button type="primary">Add Breakpoint</el-button> -->
         <el-button type="primary" @click="nextStep">Next Step</el-button>
         <el-button type="primary" @click="onReDo">ReDo</el-button>
+
+        <el-button type="primary" @click="onEditBehavior(orginBehav)">Edit Behavior</el-button>
         <!-- <el-button type="primary">Next Point</el-button> -->
       </el-row>
       <!-- ***************************** -->
@@ -145,6 +147,9 @@ export default class flowDebugger extends ComponentBase {
   private onEdgeClick({ data, e, position }) {
     this.currentSelected = data
   }
+
+  @Emit('onEditBehavior')
+  private onEditBehavior(beha) {}
 }
 </script>
 

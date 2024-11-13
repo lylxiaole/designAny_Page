@@ -9,7 +9,6 @@
       <el-radio-group v-model="checkedBehaviorId" @change="onSelectBehavior">
         <el-radio v-for="beha in allBehaviors" :key="beha.id" :label="beha.id">
           {{ beha.name }}
-          <el-button v-if="checkedBehaviorId === beha.id" size="small" @click="onEditBehavior(beha)">Edit</el-button>
         </el-radio>
       </el-radio-group>
     </div>
@@ -21,12 +20,14 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
-import { deepClone, getUuid } from '@common/utils'
 
 @Options({
   components: {}
 })
 export default class behaviorList extends Vue {
+  private checkedBehaviorId: string = ''
+  private allBehaviors: behavior[] = []
+
   @Prop({
     default: () => {
       return null
@@ -34,15 +35,15 @@ export default class behaviorList extends Vue {
   })
   currentPage: EnginePage
 
-  private checkedBehaviorId: string = ''
-
-  private get allBehaviors(): behavior[] {
-    if (!this.currentPage) {
-      return []
+  @Watch('currentPage', { immediate: true })
+  private oncurrentPageChanged(val) {
+    this.checkedBehaviorId = ''
+    if (!val) {
+      this.allBehaviors = []
+    } else {
+      this.allBehaviors = val.behaviors
     }
-    return this.currentPage.behaviors
   }
-
   private onSelectBehavior(id) {
     let selectedb = this.allBehaviors.find((o) => o.id === id)
     this.onBehaviorChanged(selectedb)

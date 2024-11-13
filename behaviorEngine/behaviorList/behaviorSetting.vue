@@ -56,8 +56,8 @@ export default class behaviorSetting extends Vue {
     let data = (this.$refs.flowDesign as flowDesign).getFlowData()
     this.currentSettingBehavior.actObjs = data.allObjs
     this.currentSettingBehavior.flowData = data.flowData
-
     this.windowVisible = false
+    this.onSureBehavior(this.currentSettingBehavior)
   }
   private onCancel() {
     this.windowVisible = false
@@ -68,6 +68,9 @@ export default class behaviorSetting extends Vue {
   }
   private onCurrentSelectChanged(nodeOrEndge) {}
   // *****************************************************
+
+  @Emit('onSureBehavior')
+  private onSureBehavior(behav: behavior) {}
 }
 </script>
 

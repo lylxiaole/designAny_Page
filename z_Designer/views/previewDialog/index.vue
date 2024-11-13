@@ -9,15 +9,15 @@
       <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
         <el-row style="width: 100%; height: 100%">
           <div style="width: 220px; height: 100%; float: left">
-            <behaviorList :currentPage="currentOpenEngine" @onBehaviorChanged="onBehaviorChanged" @onEditBehavior="onEditBehavior" />
+            <behaviorList :currentPage="currentOpenEngine" @onBehaviorChanged="onBehaviorChanged" />
           </div>
           <div style="width: calc(100% - 220px); height: 100%; float: left">
-            <flowDebugger ref="flowDebugger" />
+            <flowDebugger ref="flowDebugger" @onEditBehavior="onEditBehavior" />
           </div>
         </el-row>
       </el-drawer>
       <!-- ********************************************************************* -->
-      <behaviorSetting ref="behaviorSetting" />
+      <behaviorSetting ref="behaviorSetting" @onSureBehavior="onSureBehavior" />
     </el-row>
   </el-dialog>
 </template>
@@ -37,13 +37,14 @@ import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDo
 import paltform from '@design-any/interface/dist/enums/paltform'
 import applicationContext from '@designEngine/01designerContext/context'
 
-import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
+import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType, SavePageDetail } from '@common/apis/designPage'
 
 import behaviorList from '@behaviorEngine/behaviorDebugger/behaviorList.vue'
 import flowDebugger from '@behaviorEngine/behaviorDebugger/flowDebugger.vue'
 import behaviorSetting from '@behaviorEngine/behaviorList/behaviorSetting.vue'
 
 import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
+import { deepClone } from '@common/utils'
 
 @Options({
   components: {
@@ -61,7 +62,6 @@ export default class index extends PageBase {
   private application: ApplicationDC = null
   private allPageSimples: any[] = []
   private currentOpenEngine: EnginePage = null
-  private currentEngineData: SaveInfo = null
 
   mounted() {}
   public async show(appId: string) {
@@ -96,12 +96,23 @@ export default class index extends PageBase {
   }
   // ***********打开页面的方法**************************
   private async openPage(pageId: string) {
+    /************************渲染页面************************ */
+    let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    this.currentOpenEngine = vueComp as any
+    this.currentOpenEngine.$once('onLYLLeadToOtherPage', (pageId) => {
+      this.currentOpenEngine.destorymethod()
+      this.openPage(pageId)
+    })
+
+    await this.openPage_drawVueCom(virtualDom, vueComp)
+  }
+
+  private async openPage_getVueComp(pageId: string) {
     let cachePageData = await GetPageDetail(pageId)
     if (cachePageData.designDetail) {
       let pageDataJson = utils.strUnZip(cachePageData.designDetail)
       cachePageData.designDetail = utils.deserialize(pageDataJson)
     }
-
     await this.$nextTick()
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
@@ -120,16 +131,12 @@ export default class index extends PageBase {
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
-
-    this.currentOpenEngine = vueComp as any
+    return { virtualDom, vueComp }
+  }
+  private async openPage_drawVueCom(virtualDom: Element, vueComp: Vue) {
     await this.$nextTick()
     $(this.$refs.renderArea).html('')
     $(this.$refs.renderArea).append(virtualDom)
-
-    this.currentOpenEngine.$once('onLYLLeadToOtherPage', (pageId) => {
-      this.currentOpenEngine.destorymethod()
-      this.openPage(pageId)
-    })
   }
   // *************关闭预览*****************************
   private onClose() {
@@ -149,11 +156,37 @@ export default class index extends PageBase {
   private onBehaviorChanged(behav: behavior) {
     ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngine)
   }
+
   //重新编辑行为
-  private onEditBehavior(behav: behavior) {
-    ;(this.$refs.behaviorSetting as behaviorSetting).show(behav, this.currentOpenEngine)
+  private async onEditBehavior(behav: behavior) {
+    try {
+      let { virtualDom, vueComp } = await this.openPage_getVueComp(this.currentOpenEngine.Id)
+      let pageengin = vueComp as EnginePage
+      // **************************
+      let findOrgain = pageengin.behaviors.find((o) => o.id === behav.id)
+      ;(this.$refs.behaviorSetting as behaviorSetting).show(deepClone(findOrgain), this.currentOpenEngine)
+      // **************************
+      pageengin.destorymethod()
+    } catch (error) {}
   }
   // *************行为编辑功能*************************************
+  private async onSureBehavior(behav: behavior) {
+    let { virtualDom, vueComp } = await this.openPage_getVueComp(this.currentOpenEngine.Id)
+    let pageengin = vueComp as EnginePage
+    // **************************
+    let findbehaviorIndex = pageengin.behaviors.findIndex((o) => o.id === behav.id)
+    pageengin.behaviors.splice(findbehaviorIndex, 1, deepClone(behav))
+    let data = await pageengin.getSaveData()
+    var saveinfoStr = utils.serialize(data)
+    saveinfoStr = utils.strZip(saveinfoStr)
+    await SavePageDetail({ appId: this.applicationId, id: pageengin.Id, designDetail: saveinfoStr } as any)
+    // **************************
+    pageengin.destorymethod()
+    // **************************
+    findbehaviorIndex = this.currentOpenEngine.behaviors.findIndex((o) => o.id === behav.id)
+    this.currentOpenEngine.behaviors.splice(findbehaviorIndex, 1, deepClone(behav))
+    this.onBehaviorChanged(deepClone(behav))
+  }
 }
 </script>
 
