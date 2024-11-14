@@ -2,7 +2,7 @@
   <div style="box-sizing: border-box; width: 100%; height: 100%" class="sql">
     <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <!-- ***************************** -->
-      <el-row v-if="currentFactory" style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
+      <el-row v-show="currentFactory" style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
         <!-- <el-button type="primary">Add Breakpoint</el-button> -->
         <el-button type="primary" @click="nextStep">Next Step</el-button>
         <el-button type="primary" @click="onReDo">ReDo</el-button>
@@ -15,7 +15,7 @@
       <!-- ***************************** -->
     </div>
     <!-- ***************************** -->
-    <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
+    <div v-show="currentFactory" style="box-sizing: border-box; width: 250px; height: 100%; float: left">
       <flowNodeDebuggerInfo ref="flowNodeDebuggerInfo" :currentSelected="currentSelected" />
     </div>
   </div>
@@ -68,6 +68,7 @@ export default class flowDebugger extends ComponentBase {
     if (!behav) {
       this.orginBehav = null
       this.currentFactory = null
+      this.currentSelected = null
       return
     }
 
