@@ -61,9 +61,13 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { ThirtyApiDC, ThirtyAPIGroupDC } from '@common/apis/designThirtyApi'
+import { ThirtyApiDC, ThirtyAPIGroupDC, AddOrUpdateAPI } from '@common/apis/designThirtyApi'
 import { AddApiGroup, DeleteApiGroup, UpdateApiGroup, GetGroupApisAll, AddOrUpdateAPITreeInfo, DeleteAPI, UpdateNodesSort, GetApiDetail } from '@common/apis/designThirtyApi'
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { AddOrUpdate as AddOrUpdateDictionary } from '@common/apis/designDictionary'
+
+import axios from 'axios'
 
 class TreeNodeDC {
   id: string
@@ -76,7 +80,7 @@ class TreeNodeDC {
 }
 
 enum rightMenus {
-  addPage = 'New Api',
+  addApi = 'New Api',
   addGroup = 'New Group',
   saveAs = 'Save As',
   rename = 'Rename',
@@ -316,7 +320,7 @@ export default class apiList extends ComponentBase {
     if (data.type === 'api') {
       this.rightMenus = [rightMenus.saveAs, rightMenus.delete]
     } else if (data.type === 'group') {
-      this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
+      this.rightMenus = [rightMenus.addApi, rightMenus.addGroup, rightMenus.delete]
     }
 
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
@@ -333,7 +337,7 @@ export default class apiList extends ComponentBase {
   private getMenuIconByRightMenus(rm: rightMenus): string {
     let iconString
     switch (rm) {
-      case rightMenus.addPage:
+      case rightMenus.addApi:
         iconString = '&#xe625;'
         break
       case rightMenus.addGroup: {
@@ -363,8 +367,8 @@ export default class apiList extends ComponentBase {
   private async onRightMenuChoose(menuName: string) {
     //window.console.log('onRightMenuChoose:', menuName)
     switch (menuName) {
-      case rightMenus.addPage:
-        this.addPage()
+      case rightMenus.addApi:
+        this.addApi()
         break
       case rightMenus.addGroup:
         this.addGroup()
@@ -404,7 +408,7 @@ export default class apiList extends ComponentBase {
       this.treeData.push(newnode)
     }
   }
-  private async addPage() {
+  private async addApi() {
     //parentGroupId 必定有值,因为页面必须添加到分组底下
     let parentGroupId = this.currentRightClickNode.id
     let datadc = this.searchNodeById(parentGroupId, this.treeData)
@@ -443,7 +447,175 @@ export default class apiList extends ComponentBase {
   }
   // ***********读取swagger*********************************************
   private async addFromSwagger() {
-    alert('正在开发')
+    ElMessageBox.prompt('Please input swagger json url', 'Tip', {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      inputPattern: /((http|https):\/\/[^\s]*)/,
+      inputErrorMessage: 'Invalid url'
+    })
+      .then(({ value }) => {
+        try {
+          this.readApisFromSwagger(value)
+        } catch (error: any) {
+          ElMessage({
+            type: 'error',
+            message: error.meaasge
+          })
+        }
+      })
+      .catch(() => {})
+  }
+
+  private async readApisFromSwagger(url: string) {
+    let res = await axios.get(url)
+    let swaggerJson = res.data
+
+    let info = swaggerJson.info.title + swaggerJson.info.version
+    // *********添加API顶级分组******************************
+    let apigroup = await AddApiGroup({ groupName: info, parentGroupId: null, index: 0 } as any)
+    let newnode: TreeNodeDC = {
+      id: apigroup.id,
+      desc: '',
+      parentGroupId: apigroup.parentGroupId,
+      label: apigroup.groupName,
+      type: 'group',
+      index: apigroup.index,
+      children: []
+    }
+    this.treeData.push(newnode)
+    // *********添加API二级分组******************************
+    for (let index = 0; index < swaggerJson.tags.length; index++) {
+      const tag = swaggerJson.tags[index]
+      let childgroup = await AddApiGroup({ groupName: tag.name, parentGroupId: apigroup.id, index: 0 } as any)
+      let newnode: TreeNodeDC = {
+        id: childgroup.id,
+        desc: '',
+        parentGroupId: childgroup.parentGroupId,
+        label: childgroup.groupName,
+        type: 'group',
+        index: childgroup.index,
+        children: []
+      }
+      let nodedata = this.searchNodeById(apigroup.id, this.treeData)
+      nodedata.children.push(newnode)
+    }
+    // ********添加服务地址字典**********************
+    let serverAddrDcitionary = null
+    for (let index = 0; index < swaggerJson.servers.length; index++) {
+      const element = swaggerJson.servers[index]
+      let apiDicKey = info + 'apiAddr' + index
+      await this.addServerAddrDictionary(apiDicKey, element.url)
+      serverAddrDcitionary = apiDicKey
+    }
+    // ********添加Api**********************
+    let pathkeys = Object.keys(swaggerJson.paths)
+
+    for (let index = 0; index < pathkeys.length; index++) {
+      const pathkey = pathkeys[index]
+      let path = swaggerJson.paths[pathkey]
+      let parentName = null
+      let requesttype = null
+      let pathInfo = null
+      if (path.post) {
+        requesttype = 'Post'
+        parentName = path.post.tags[0]
+        pathInfo = path.post
+      } else if (path.get) {
+        requesttype = 'Get'
+        parentName = path.get.tags[0]
+        pathInfo = path.get
+      } else if (path.put) {
+        requesttype = 'Put'
+        parentName = path.put.tags[0]
+        pathInfo = path.put
+      } else if (path.delete) {
+        requesttype = 'Delete'
+        parentName = path.delete.tags[0]
+        pathInfo = path.delete
+      } else if (path.update) {
+        requesttype = 'Update'
+        parentName = path.update.tags[0]
+        pathInfo = path.update
+      }
+
+      let parentGroupId = null
+      if (parentName) {
+        let topgroup = this.searchNodeById(apigroup.id, this.treeData)
+        let parentGroup = topgroup.children.find((o) => o.label === parentName)
+        if (!parentGroup) {
+          let childgroup = await AddApiGroup({ groupName: parentName, parentGroupId: apigroup.id, index: 0 } as any)
+          let newnode: TreeNodeDC = {
+            id: childgroup.id,
+            desc: '',
+            parentGroupId: childgroup.parentGroupId,
+            label: childgroup.groupName,
+            type: 'group',
+            index: childgroup.index,
+            children: []
+          }
+          topgroup.children.push(newnode)
+          parentGroup = newnode
+        }
+
+        parentGroupId = parentGroup.id
+      }
+
+      let apiInfo = await AddOrUpdateAPITreeInfo({ name: pathkey, groupId: parentGroupId, index: index, desc: pathInfo.summary } as any)
+      let newnode: TreeNodeDC = {
+        id: apiInfo.id,
+        parentGroupId: apiInfo.groupId,
+        label: apiInfo.name,
+        type: 'api',
+        index: apiInfo.index,
+        desc: '',
+        children: null
+      }
+      let parentGroup = this.searchNodeById(parentGroupId, this.treeData)
+      parentGroup.children.push(newnode)
+
+      let apicontent = this.getApiContent(requesttype, pathInfo, apiInfo, serverAddrDcitionary, swaggerJson.components.schemas)
+      await AddOrUpdateAPI(apicontent)
+    }
+  }
+
+  private async addServerAddrDictionary(key, value) {
+    await AddOrUpdateDictionary({
+      key: key,
+      value: value
+    } as any)
+  }
+  private getApiContent(type, swaggerInfo, apiInfo, serverAddrDcitionary, allObjs) {
+    apiInfo.requestType = type
+    apiInfo.hostIsDictionary = true
+    apiInfo.host = serverAddrDcitionary
+    apiInfo.path = apiInfo.name
+
+    if (swaggerInfo.requestBody) {
+      let bodyparamsRef: string = swaggerInfo.requestBody.content['text/json'].schema.$ref
+      if (bodyparamsRef) {
+        apiInfo.bodyIsParam = true
+        apiInfo.bodyContent = []
+        bodyparamsRef = bodyparamsRef.substring(bodyparamsRef.lastIndexOf('/') + 1, bodyparamsRef.length)
+        let requestParam = allObjs[bodyparamsRef]
+        let propertkeys = Object.keys(requestParam.properties)
+        for (let index = 0; index < propertkeys.length; index++) {
+          const propertykey = propertkeys[index]
+          let property = requestParam.properties[propertykey]
+          apiInfo.bodyContent.push({ key: propertykey, name: property.description })
+        }
+      } else {
+        apiInfo.bodyIsParam = false
+      }
+    }
+
+    if (swaggerInfo.parameters) {
+      apiInfo.inParams = []
+      for (let index = 0; index < swaggerInfo.parameters.length; index++) {
+        const param = swaggerInfo.parameters[index]
+        apiInfo.inParams.push({ key: param.name, name: param.description })
+      }
+    }
+    return apiInfo
   }
   // **************对外事件*****************************************************
   @Emit('onChooseApi')

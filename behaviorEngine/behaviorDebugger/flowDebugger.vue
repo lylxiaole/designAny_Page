@@ -61,11 +61,21 @@ export default class flowDebugger extends ComponentBase {
     edgeTextDraggable: true
   }
   public async setFlowData(behav: behavior, currentPage: EnginePage) {
-    this.orginBehav = deepClone(behav)
+    if (this.currentFlow) {
+      this.currentFlow.clearData()
+      this.currentFlow = null
+    }
+    if (!behav) {
+      this.orginBehav = null
+      this.currentFactory = null
+      return
+    }
 
+    this.orginBehav = deepClone(behav)
     let flowdata = behav.flowData
     behaviorContext.currentDesignPage = currentPage
     this.currentFactory = new factory(currentPage, currentPage, behav)
+
     // **********清除行为运行状态**************************************
     for (let index = 0; index < behav.actObjs.length; index++) {
       const element = behav.actObjs[index]
@@ -129,8 +139,12 @@ export default class flowDebugger extends ComponentBase {
   private onFlowCreated(flow) {}
   // ***********调试功能**************************
   private onActObjExcuted(actobj: actionObj) {
-    let node = this.currentFlow.getNodeModelById(actobj.id)
-    node.setActObj(actobj)
+    try {
+      let node = this.currentFlow.getNodeModelById(actobj.id)
+      node.setActObj(actobj)
+    } catch (error) {
+      debugger
+    }
   }
   private nextStep() {
     if (!this.currentFactory) {

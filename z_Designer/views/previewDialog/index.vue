@@ -141,7 +141,6 @@ export default class index extends PageBase {
   // *************关闭预览*****************************
   private onClose() {
     try {
-      this.openedPageData = []
       if (this.currentOpenEngine) {
         this.currentOpenEngine.destorymethod()
       }
@@ -154,7 +153,9 @@ export default class index extends PageBase {
     this.drawerShow = true
   }
   private onBehaviorChanged(behav: behavior) {
-    ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngine)
+    if (this.$refs.flowDebugger) {
+      ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngine)
+    }
   }
 
   //重新编辑行为

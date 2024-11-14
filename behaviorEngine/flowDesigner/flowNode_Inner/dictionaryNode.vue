@@ -1,6 +1,6 @@
 <template>
   <el-row style="width: 100%; height: 100%">
-    <el-select v-model="actObj.resourceFilter.dicKey" placeholder="Select" size="small">
+    <el-select v-model="selectKey" placeholder="Select" size="small">
       <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.key" :value="dic.key" />
     </el-select>
   </el-row>
@@ -25,6 +25,7 @@ import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
   components: {}
 })
 export default class dictionaryNode extends Vue {
+  @Prop()
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
@@ -33,7 +34,24 @@ export default class dictionaryNode extends Vue {
     this.loadAllData()
   }
 
-  private selectKey: string = null
+  private get selectKey(): string {
+    if (this.actObj && this.actObj.resourceFilter) {
+      return this.actObj.resourceFilter.dicKey
+    } else {
+      return null
+    }
+  }
+
+  private set selectKey(val: string) {
+    if (!this.actObj) {
+      return
+    }
+    if (!this.actObj.resourceFilter) {
+      this.actObj.resourceFilter = {}
+    }
+    this.actObj.resourceFilter.dicKey = val
+  }
+
   private allDictionary: any[] = []
 
   private loadAllData() {

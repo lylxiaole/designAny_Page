@@ -24,14 +24,12 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
-
 import { AddOrUpdate } from '@common/apis/designDictionary'
 import { Emit } from 'vue-property-decorator'
 
 @Options({ components: {} })
 export default class addOrUpdateDialog extends PageBase {
   private windowVisible: boolean = false
-
   private dictionary: any = {}
 
   mounted() {}
@@ -39,10 +37,8 @@ export default class addOrUpdateDialog extends PageBase {
     if (data) {
       this.dictionary = data
     }
-
     this.windowVisible = true
   }
-
   // ************************************
   private onCancel() {
     this.windowVisible = false

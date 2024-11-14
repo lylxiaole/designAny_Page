@@ -37,12 +37,13 @@ export default class behaviorList extends Vue {
 
   @Watch('currentPage', { immediate: true })
   private oncurrentPageChanged(val) {
-    this.checkedBehaviorId = ''
     if (!val) {
       this.allBehaviors = []
     } else {
       this.allBehaviors = val.behaviors
     }
+    this.checkedBehaviorId = ''
+    this.onSelectBehavior(this.checkedBehaviorId)
   }
   private onSelectBehavior(id) {
     let selectedb = this.allBehaviors.find((o) => o.id === id)

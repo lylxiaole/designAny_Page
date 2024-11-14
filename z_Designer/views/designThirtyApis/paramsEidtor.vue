@@ -10,7 +10,7 @@
       <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="4">Options</el-col>
     </el-row>
     <div style="height: calc(100% - 70px); overflow-y: auto; border: 1px solid #cdcdcd">
-      <el-row v-for="(param, index) in params" :key="param.field" style="margin-top: 4px">
+      <el-row v-for="(param, index) in params" :key="param.key" style="margin-top: 4px">
         <el-col style="display: flex; border: 1px solid #cdcdcd" class="flexHorilanLayout verticalAlignCenter" :span="2">
           <span>{{ index + 1 }}</span>
         </el-col>
