@@ -12,7 +12,7 @@ import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/anniu2.png'))
+@DCompnentAttr(paltform.universal, 'Basic', 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/sibianxing.png'))
 @Options({
   components: {}
 })

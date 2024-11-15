@@ -1,5 +1,5 @@
 <template>
-  <el-button @click="onClick" type="primary" :style="{ 'background-color': background, color: foreground }" style="width: 100%; height: 100%">
+  <el-button @click="onClick" type="primary" :style="{ 'background-color': background, color: foreground, 'border-color': borderColor }" style="width: 100%; height: 100%">
     <template #icon>
       <img v-if="btnIconUrl" style="height: 100%" :src="btnIconUrl" />
     </template>
@@ -14,7 +14,7 @@ import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
-import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { PropertyGroupName, UploadFile_Setting, Text_Setting, Color_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import paltform from '@design-any/interface/dist/enums/paltform'
@@ -26,6 +26,9 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 export default class ButtonComponent extends EngineComponent {
   @DPropAttr(new Text_Setting('Button Text', PropertyGroupName.data, true))
   private btnText: any = 'New Button'
+
+  @DPropAttr(new Color_Setting('Border Color', PropertyGroupName.style, true))
+  private borderColor: any = '#cdcdcd'
 
   @DPropAttr(new UploadFile_Setting('Button Icon', PropertyGroupName.style, true, null, 1, 'image'))
   private btnIcon: any[] = []

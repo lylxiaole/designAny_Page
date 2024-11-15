@@ -34,9 +34,6 @@ import paltform from '@design-any/interface/dist/enums/paltform'
 @DCompnentAttr(paltform.universal, 'Basic', 'Text', 'TextComponent_001', require('../compIcons/text.png'))
 @Options({})
 export default class TextComponent extends EngineComponent {
-  isShowIndex: boolean = false
-  isShowInput: boolean = false
-
   mounted() {
     this.width = '10%'
     this.height = '4%'

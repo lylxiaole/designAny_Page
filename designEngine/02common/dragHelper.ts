@@ -25,8 +25,6 @@ export default class dragHelper {
   private onDragOutEventCallback: onDragOutEventType
   private onDragEnterEventCallback: onDragEnterEventType
   public currentScaleSize: number = 1
-  public static dragStartX: number = NaN
-  public static dragStartY: number = NaN
   public static dragClone: Element
   public static currentDragX: number = NaN
   public static currentDragY: number = NaN
@@ -62,8 +60,8 @@ export default class dragHelper {
 
       let containeroffset = $(this._container).offset()
       let scalesize = this.currentScaleSize
-      let offsetX = (e.clientX - containeroffset.left) / scalesize - dragHelper.dragStartX
-      let offsetY = (e.clientY - containeroffset.top) / scalesize - dragHelper.dragStartY
+      let offsetX = (e.clientX - containeroffset.left) / scalesize
+      let offsetY = (e.clientY - containeroffset.top) / scalesize
 
       let res = await this.onDropEventCallback(dragHelper.dragClone, this._container, offsetX, offsetY)
       if (res === false) {
@@ -80,18 +78,19 @@ export default class dragHelper {
 
       let containeroffset = $(this._container).offset()
       let scalesize = this.currentScaleSize
-      let offsetX = (e.clientX - containeroffset.left) / scalesize - dragHelper.dragStartX
-      let offsetY = (e.clientY - containeroffset.top) / scalesize - dragHelper.dragStartY
+      let offsetX = (e.clientX - containeroffset.left) / scalesize
+      let offsetY = (e.clientY - containeroffset.top) / scalesize
 
+      // console.log("$(this._container).on('dragover'", offsetY, dragHelper.dragStartY)
       if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
-        dragHelper.currentDragX = e.clientX
-        dragHelper.currentDragY = e.clientY
+        dragHelper.currentDragX = offsetX
+        dragHelper.currentDragY = offsetY
       }
 
-      let xchanged = (e.clientX - dragHelper.currentDragX) / scalesize
-      let ychanged = (e.clientY - dragHelper.currentDragY) / scalesize
-      dragHelper.currentDragX = e.clientX
-      dragHelper.currentDragY = e.clientY
+      let xchanged = (offsetX - dragHelper.currentDragX) / scalesize
+      let ychanged = (offsetY - dragHelper.currentDragY) / scalesize
+      dragHelper.currentDragX = offsetX
+      dragHelper.currentDragY = offsetY
 
       if (!this.onDragMoveEventCallback) {
         return
@@ -170,8 +169,11 @@ export default class dragHelper {
       dragHelper.dragClone = e.delegateTarget
 
       let scalesize = this.currentScaleSize
-      dragHelper.dragStartX = e.offsetX * scalesize
-      dragHelper.dragStartY = e.offsetY * scalesize
+
+      let containeroffset = $(this._container).offset()
+      let dragStartX = (e.clientX - containeroffset.left) * scalesize
+      let dragStartY = (e.clientY - containeroffset.top) * scalesize
+
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)
       }
