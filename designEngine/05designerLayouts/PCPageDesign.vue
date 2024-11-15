@@ -136,6 +136,7 @@ export default class PCPageDesign extends EnginePage {
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
       // 在容器内拖拽组件大小
       let shell = this.allShells.find((o) => o.component.Id === compInfo.compId)
+      console.log('changeComponentSize:', mouseleft, mousetop)
       this.changeComponentSize(xchanged, ychanged, mouseleft, mousetop, compInfo.compId, shell.$el, compInfo.position)
       return false
     }
