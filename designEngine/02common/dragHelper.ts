@@ -12,7 +12,7 @@ type onDragEventType = (el: Element, sourceContainer: Element) => void
 type onDropEventType = (el: Element, targetContainer: Element, x: number, y: number) => Promise<boolean>
 type onDragOverEventType = (el: Element, targetContainer: Element) => boolean
 type onDragEndEventType = (el: Element) => void
-type onDragMoveEventType = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop) => boolean
+type onDragMoveEventType = (el: Element, targetContainer: Element, xchanged, ychanged, mouseLeft, mouseTop, dragStartXtoTargetLeft, dragStartYtoTargetTop) => boolean
 type onDragOutEventType = (el: Element, targetContainer: Element) => boolean
 type onDragEnterEventType = (el: Element, targetContainer: Element) => boolean
 
@@ -28,6 +28,8 @@ export default class dragHelper {
   public static dragClone: Element
   public static currentDragX: number = NaN
   public static currentDragY: number = NaN
+  public static dragStartXtoTargetLeft: number = NaN
+  public static dragStartYtoTargetTop: number = NaN
 
   get dragCloneElement(): Element {
     return dragHelper.dragClone
@@ -96,7 +98,7 @@ export default class dragHelper {
       }
 
       // window.console.log('dragover:', e)
-      let res = this.onDragMoveEventCallback(dragHelper.dragClone, this._container, xchanged, ychanged, offsetX, offsetY)
+      let res = this.onDragMoveEventCallback(dragHelper.dragClone, this._container, xchanged, ychanged, offsetX, offsetY, dragHelper.dragStartXtoTargetLeft, dragHelper.dragStartYtoTargetTop)
       if (res === false) {
         e.stopPropagation()
       }
@@ -173,6 +175,10 @@ export default class dragHelper {
       let dragStartX = (e.clientX - containeroffset.left) * scalesize
       let dragStartY = (e.clientY - containeroffset.top) * scalesize
 
+      dragHelper.dragStartXtoTargetLeft = (dragStartX - $(e.delegateTarget).position().left) * scalesize
+      dragHelper.dragStartYtoTargetTop = (dragStartY - $(e.delegateTarget).position().top) * scalesize
+
+      // console.log('dragstart:', dragXtoTargetLeft, dragYtoTargetTop)
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)
       }

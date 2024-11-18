@@ -176,7 +176,7 @@ export default class DesignEvents {
     // this._dragHelper.dragCancel()
     // return true
   }
-  private pri_onDragMove = (el: Element, targetContainer: Element, xchanged, ychanged, currentDragLeft, currentDragTop): boolean => {
+  private pri_onDragMove = (el: Element, targetContainer: Element, xchanged, ychanged, mouseLeft, mouseTop, dragStartXtoTargetLeft, dragStartYtoTargetTop): boolean => {
     if (this.canDrop == false || !this.onDragMove_Event) {
       return true
     }
@@ -184,7 +184,7 @@ export default class DesignEvents {
       return true
     }
     var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
-    let iscontinue = this.onDragMove_Event(xchanged, ychanged, currentDragLeft, currentDragTop, el, dragdata)
+    let iscontinue = this.onDragMove_Event(xchanged, ychanged, mouseLeft, mouseTop, dragStartXtoTargetLeft, dragStartYtoTargetTop, el, dragdata)
 
     return iscontinue
   }
@@ -502,5 +502,5 @@ export default class DesignEvents {
   onDragOut_Event: (el: Element, targetContainer: Element) => boolean
   onDrag_Event: (el: Element, dragdata: DragItemData<any>) => void
   onDrop_Event: (el: Element, targetContainer: Element, screenLeft: number, screenTop: number, dragdata?: DragItemData<any>) => Promise<boolean>
-  onDragMove_Event: (xChange: number, yChange: number, left: number, top: number, el: Element, dragdata?: DragItemData<any>) => boolean
+  onDragMove_Event: (xChange: number, yChange: number, left: number, top: number, dragStartXtoTargetLeft: number, dragStartYtoTargetTop: number, el: Element, dragdata?: DragItemData<any>) => boolean
 }

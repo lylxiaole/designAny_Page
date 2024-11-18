@@ -117,7 +117,7 @@ export default class PCPageDesign extends EnginePage {
     }
     return false
   }
-  private listenOnDragMove(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, el: Element, dragdata?: DragItemData<any>): boolean {
+  private listenOnDragMove(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, dragStartXtoTargetLeft: number, dragStartYtoTargetTop: number, el: Element, dragdata?: DragItemData<any>): boolean {
     if (!dragdata) {
       return true
     }
@@ -131,7 +131,7 @@ export default class PCPageDesign extends EnginePage {
     }
     // console.log('-------------------------', left, $(this.$el).offset().left)
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      this.changeComponentPosition(xchanged, ychanged, mouseleft, mousetop, compInfo.compId)
+      this.changeComponentPosition(xchanged, ychanged, mouseleft, mousetop, dragStartXtoTargetLeft, dragStartYtoTargetTop, compInfo.compId)
       return false
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
       // 在容器内拖拽组件大小
