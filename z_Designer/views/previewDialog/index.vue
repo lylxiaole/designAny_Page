@@ -99,6 +99,7 @@ export default class index extends PageBase {
     /************************渲染页面************************ */
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
     this.currentOpenEngine = vueComp as any
+
     this.currentOpenEngine.$once('onLYLLeadToOtherPage', (pageId) => {
       this.currentOpenEngine.destorymethod()
       this.openPage(pageId)

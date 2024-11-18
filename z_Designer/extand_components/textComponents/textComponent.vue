@@ -58,7 +58,7 @@ export default class TextComponent extends EngineComponent {
   @DPropAttr(new Boolean_Setting('ShowBorder', PropertyGroupName.style, true))
   private isShowBorder: boolean = false
 
-  @DPropAttr(new Text_Setting('Text', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting('Text', PropertyGroupName.data, true, null))
   private CurrentText: string = 'Hellow World'
 }
 </script>

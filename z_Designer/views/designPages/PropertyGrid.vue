@@ -122,7 +122,6 @@ export default class PropertyGrid extends Vue {
       newlayouts_extra = newlayouts as EngineLayout[]
     }
 
-    console.log('watchCurrentLayoutsChanged', newlayouts_extra)
     //当前选中的Layouts的properties
     var property_extra: PropertySetting[] = [] //临时变量
     /**用第一个布局的属性列表当作临时属性列表 */

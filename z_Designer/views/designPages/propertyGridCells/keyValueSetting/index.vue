@@ -10,12 +10,12 @@
             <el-input style="margin-bottom: 5px" size="small" v-model="col.value" />
           </el-col>
           <el-col :span="4">
-            <el-icon size="small" type="minus-circle" @click="removeComp(i, col)" v-if="removeVisible" />
+            <el-icon size="small" style="cursor: pointer; margin-top: 4px" @click="removeComp(i, col)"><Delete /></el-icon>
           </el-col>
         </el-row>
       </li>
     </ul>
-    <el-button type="link" @click="addComp" v-if="addVisible">Add New</el-button>
+    <el-button type="link" @click="addComp">Add New</el-button>
   </div>
 </template>
 
@@ -31,8 +31,6 @@ import { PropertyTypeEnum, KeyValue_Setting } from '@design-any/interface/dist/L
 @CellSettingAttr(PropertyTypeEnum.keyValueSetting)
 @Options({})
 export default class index extends propertyCellBase<KeyValue_Setting> {
-  public addVisible: boolean = true
-  public removeVisible: boolean = true
   mounted() {}
   private removeComp(index: number, obj: object) {
     this.currentValue.splice(index, 1)

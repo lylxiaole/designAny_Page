@@ -11,6 +11,8 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 

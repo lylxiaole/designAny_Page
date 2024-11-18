@@ -1,6 +1,6 @@
 <template>
-  <div style="height: 100%; width: 100%">
-    <el-select v-model="selectedVal" placeholder="Select" style="width: 100%; height: 100%">
+  <div style="width: 100%; height: 100%">
+    <el-select v-if="keyValueList" v-model="selectedVal" placeholder="" :multiple="multiple" :teleported="false" style="width: 100%; height: 100%">
       <el-option v-for="item in keyValueList" :key="item.value" :label="item.key" :value="item.value" />
     </el-select>
   </div>
@@ -21,7 +21,10 @@ export default class SingleSelect extends EngineComponent {
   @DPropAttr(new KeyValue_Setting('Selections', PropertyGroupName.data, true, null))
   private keyValueList: any[] = []
 
-  @DPropAttr(new KeyValue_Setting('SelectedVal', PropertyGroupName.data, false, null))
+  @DPropAttr(new Boolean_Setting('Multiple', PropertyGroupName.data, true, null))
+  private multiple: boolean = false
+
+  @DPropAttr(new Text_Setting('SelectedVal', PropertyGroupName.data, true, null))
   private selectedVal: any = null
 
   mounted() {

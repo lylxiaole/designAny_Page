@@ -41,7 +41,6 @@ export default class dragHelper {
     this._container = container
     this.currentScaleSize = 1
   }
-
   /*********container操作********************************************************* */
   public IsCanDrop(): boolean {
     var candrop = $(this._container).attr(dragEnums.canDrop)
