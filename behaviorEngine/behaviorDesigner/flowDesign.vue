@@ -1,6 +1,6 @@
 <template>
-  <div style="box-sizing: border-box; width: 100%; height: 100%; position: relative" class="sql" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-    <div style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
+  <div style="box-sizing: border-box; width: 100%; height: 100%; position: relative" class="sql">
+    <div @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave" @mousemove="onMouseMove" style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <div ref="flowarea"></div>
     </div>
     <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
@@ -13,14 +13,17 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { getUuid } from '@common/utils'
+import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import LogicFlow, { GraphConfigData } from '@logicflow/core'
+import LogicFlow, { GraphConfigData, NodeConfig } from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import funcNormalNode from '../flowDesigner/flowNodes/funcNormalNode'
 import onParamJudeNode from '../flowDesigner/flowNodes/onParamJudeNode'
 import defaultEdge from '../flowDesigner/flowEdges/defaultEdge'
 import flowNodeInfo from './flowNodeInfo.vue'
+import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
+
+import { findFlowNode, flowNodeType, anchorType } from '../flowDesigner/flowTypes'
 
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
@@ -32,6 +35,8 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 export default class flowDesign extends ComponentBase {
   private currentFlow: LogicFlow
   private currentSelected: GraphConfigData = null
+  private isCopyState: boolean = false
+  private currentMousePoint: any = { x: 0, y: 0 }
 
   private silentConfig = {
     stopScrollGraph: true,
@@ -134,6 +139,7 @@ export default class flowDesign extends ComponentBase {
   public async setFlowData(behav: behavior, page: EnginePage) {
     let flowdata = behav.flowData
     behaviorContext.currentDesignPage = page
+    this.isCopyState = false
 
     if (!flowdata) {
       flowdata = {
@@ -165,8 +171,19 @@ export default class flowDesign extends ComponentBase {
             callback: () => {}
           },
           {
-            keys: ['ctrl+v', 'ctrl+c'],
-            callback: (e) => {}
+            keys: ['ctrl+c'],
+            callback: (e) => {
+              this.isCopyState = true
+            }
+          },
+          {
+            keys: ['ctrl+v'],
+            callback: (e) => {
+              if (this.isCopyState && this.currentSelected) {
+                this.isCopyState = false
+                this.onCopySelectedItem(e)
+              }
+            }
           }
         ]
       },
@@ -214,6 +231,39 @@ export default class flowDesign extends ComponentBase {
   private onEdgeClick({ data, e, position }) {
     this.currentSelected = data
   }
+  private onCopySelectedItem(event) {
+    if (!(this.currentSelected as any).properties.actObj) {
+      return
+    }
+
+    let newObj = deepClone((this.currentSelected as any).properties.actObj)
+    newObj.id = getUuid()
+
+    if (newObj.inputParams) {
+      for (let index = 0; index < newObj.inputParams.length; index++) {
+        const element = newObj.inputParams[index]
+        element.key = makeParamKey(newObj.id, element.name)
+      }
+    }
+
+    if (newObj.outParam) {
+      newObj.outParam.key = makeParamKey(newObj.id, 'output')
+    }
+    // ********************
+    let flowNode = findFlowNode(newObj.funcCode)
+
+    let position = this.currentFlow.dnd.clientToLocalPoint(this.currentMousePoint)
+
+    let dragData: NodeConfig = {
+      id: newObj.id,
+      type: flowNode,
+      properties: { actObj: newObj },
+      x: position.x,
+      y: position.y
+    }
+
+    this.currentFlow.addNode(dragData as any).updateAnchor()
+  }
   // ****************拖拽行为******************************
   private isDragOver: boolean = false
   private onDrop(event) {
@@ -229,6 +279,10 @@ export default class flowDesign extends ComponentBase {
   }
   private onDragLeave() {
     this.isDragOver = false
+  }
+
+  private onMouseMove(event) {
+    this.currentMousePoint = { x: event.x, y: event.y }
   }
   // ******************************************************
   @Emit('onFlowCreated')

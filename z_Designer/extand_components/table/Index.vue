@@ -13,7 +13,7 @@
       :cell-style="{ backgroundColor: cellBackground, color: cellFontColor, 'border-color': 'black' }"
     >
       <template v-for="columnconfig in tableColumns" :key="columnconfig.key">
-        <VxeColumn v-if="columnconfig.isShow" :type="columnconfig.type" :title="columnconfig.title" :field="columnconfig.field"></VxeColumn>
+        <VxeColumn v-if="columnconfig.isShow" :type="columnconfig.type" :title="columnconfig.title" :width="columnconfig.width" :field="columnconfig.field"></VxeColumn>
       </template>
     </VxeTable>
 

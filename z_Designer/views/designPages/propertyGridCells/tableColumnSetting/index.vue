@@ -6,19 +6,25 @@
 
     <el-dialog :maskClosable="false" title="Edit" v-model="windowVisible" :destroyOnClose="true" width="900px">
       <el-table size="small" :data="localData" :pagination="false" style="height: 450px" width="100%">
-        <el-table-column prop="title" label="Column Name" width="150">
+        <el-table-column prop="title" label="Column Name" width="120">
           <template #default="scope">
             <el-input v-model="scope.row.title" size="small"></el-input>
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column prop="field" label="Filed" width="150">
+        <el-table-column prop="field" label="Filed" width="120">
           <template #default="scope">
             <el-input v-model="scope.row.field" size="small"></el-input>
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column prop="type" label="Column Type" width="150">
+        <el-table-column prop="width" label="Width" width="120">
+          <template #default="scope">
+            <el-input v-model="scope.row.width" size="small"></el-input>
+          </template>
+        </el-table-column>
+        <!-- ********************* -->
+        <el-table-column prop="type" label="Column Type" width="120">
           <template #default="scope">
             <el-select v-model="scope.row.type" placeholder="Select" size="small" style="width: 100%">
               <el-option key="0" label="Text" value="text" />
@@ -29,9 +35,8 @@
             </el-select>
           </template>
         </el-table-column>
-
         <!-- ********************* -->
-        <el-table-column prop="isShow" label="Display" width="150">
+        <el-table-column prop="isShow" label="Display" width="80">
           <template #default="scope">
             <el-switch v-model="scope.row.isShow" size="small"></el-switch>
           </template>
@@ -40,6 +45,8 @@
         <el-table-column fixed="right" label="Options">
           <template #default="scope">
             <el-button size="small" @click="() => rowdelete(scope.row.key)">Delete</el-button>
+            <el-button size="small" @click="() => rowMoveUp(scope.row.key)">Move Up</el-button>
+            <el-button size="small" @click="() => rowMoveDown(scope.row.key)">Move Down</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -62,6 +69,7 @@ import { CellSettingAttr } from '../common'
 import { getUuid, deepClone } from '@common/utils'
 
 class columnConfig {
+  public width: string
   public key: string
   public type: string
   public title: string
@@ -85,6 +93,7 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
   private async newParam() {
     var newRow = new columnConfig()
     newRow.key = getUuid()
+    newRow.width = 'auto'
     newRow.title = 'New Params'
     newRow.isShow = true
     newRow.type = 'text'
@@ -92,12 +101,36 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
   }
   private rowdelete(key: string) {
     const newData = deepClone(this.localData)
-    const target = newData.filter((item) => key === item.key)[0]
+    const target = newData.find((item) => key === item.key)
     if (target) {
       const index = newData.indexOf(target)
       newData.splice(index, 1)
       this.localData = newData
     }
+  }
+
+  private rowMoveUp(key: string) {
+    let targetIndex = this.localData.findIndex((item) => key === item.key)
+    if (targetIndex === 0) {
+      return
+    }
+    let newIndex = targetIndex - 1
+    this.swapArrayElements(this.localData, targetIndex, newIndex)
+  }
+
+  private rowMoveDown(key: string) {
+    let targetIndex = this.localData.findIndex((item) => key === item.key)
+    if (targetIndex === this.localData.length - 1) {
+      return
+    }
+    let newIndex = targetIndex + 1
+    this.swapArrayElements(this.localData, targetIndex, newIndex)
+  }
+
+  private swapArrayElements(arr, indexA, indexB) {
+    const temp = arr[indexA]
+    arr[indexA] = arr[indexB]
+    arr[indexB] = temp
   }
   // ***********************************
   private modalSure() {
