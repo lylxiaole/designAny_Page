@@ -77,19 +77,26 @@ export default class thirtyApiNode extends Vue {
     this.currentSelectId = this.actObj.resourceFilter.apiInfo.id
 
     this.actObj.inputParams = []
-    for (let index = 0; index < nodedata.apidata.headers.length; index++) {
-      const header = nodedata.apidata.headers[index]
-      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, header.key + '&header'), name: 'Header:' + header.name })
+
+    if (nodedata.apidata.headers) {
+      for (let index = 0; index < nodedata.apidata.headers.length; index++) {
+        const header = nodedata.apidata.headers[index]
+        this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, header.key + '&header'), name: 'Header-' + header.name })
+      }
     }
-    for (let index = 0; index < nodedata.apidata.inParams.length; index++) {
-      const inparam = nodedata.apidata.inParams[index]
-      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, inparam.key + '&param'), name: 'UrlParam:' + inparam.name })
+
+    if (nodedata.apidata.inParams) {
+      for (let index = 0; index < nodedata.apidata.inParams.length; index++) {
+        const inparam = nodedata.apidata.inParams[index]
+        this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, inparam.key + '&param'), name: 'UrlParam-' + inparam.name })
+      }
     }
+
     //除了Get请求，其它的都需要使用body
     if (nodedata.apidata.requestType !== 'Get' && nodedata.apidata.bodyIsParam) {
       for (let index = 0; index < nodedata.apidata.bodyContent.length; index++) {
         const body = nodedata.apidata.bodyContent[index]
-        this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, body.key + '&body'), name: 'BodyParam:' + body.name })
+        this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, body.key + '&body'), name: 'BodyParam-' + body.name })
       }
     } else if (nodedata.apidata.requestType !== 'Get' && !nodedata.apidata.bodyIsParam) {
       this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, 'body'), name: 'BodyParam' })

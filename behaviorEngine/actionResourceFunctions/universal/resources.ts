@@ -104,11 +104,11 @@ export class fixedValue implements actFuncBase {
     let value = this.currentActObj.resourceFilter.value
 
     if (type === 'bool') {
-      return Boolean(value)
+      return value ? Boolean(value) : false
     } else if (type === 'string') {
-      return value.toString()
+      return value ? value.toString() : ''
     } else if (type === 'number') {
-      return parseFloat(value)
+      return value ? parseFloat(value) : 0
     }
   }
 }

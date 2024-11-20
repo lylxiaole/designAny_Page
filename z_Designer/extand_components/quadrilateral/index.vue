@@ -37,6 +37,7 @@ export default class QuadrilateralComponent extends EngineComponent {
   mounted() {
     this.width = '10%'
     this.height = '4%'
+    this.background = 'white'
   }
 }
 </script>

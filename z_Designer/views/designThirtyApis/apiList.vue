@@ -601,7 +601,7 @@ export default class apiList extends ComponentBase {
         for (let index = 0; index < propertkeys.length; index++) {
           const propertykey = propertkeys[index]
           let property = requestParam.properties[propertykey]
-          apiInfo.bodyContent.push({ key: propertykey, name: property.description })
+          apiInfo.bodyContent.push({ key: propertykey, name: property.description ? property.description : propertykey })
         }
       } else {
         apiInfo.bodyIsParam = false
@@ -612,7 +612,7 @@ export default class apiList extends ComponentBase {
       apiInfo.inParams = []
       for (let index = 0; index < swaggerInfo.parameters.length; index++) {
         const param = swaggerInfo.parameters[index]
-        apiInfo.inParams.push({ key: param.name, name: param.description })
+        apiInfo.inParams.push({ key: param.name, name: param.description ? param.description : param.name })
       }
     }
     return apiInfo

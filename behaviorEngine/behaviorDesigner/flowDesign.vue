@@ -157,13 +157,10 @@ export default class flowDesign extends ComponentBase {
           {
             keys: ['delete'],
             callback: () => {
-              const r = window.confirm('Sure Delete？')
-              if (r) {
-                const elements = this.currentFlow.getSelectElements(true)
-                this.currentFlow.clearSelectElements()
-                elements.edges.forEach((edge) => this.currentFlow.deleteEdge(edge.id))
-                elements.nodes.forEach((node) => this.currentFlow.deleteNode(node.id))
-              }
+              const elements = this.currentFlow.getSelectElements(true)
+              this.currentFlow.clearSelectElements()
+              elements.edges.forEach((edge) => this.currentFlow.deleteEdge(edge.id))
+              elements.nodes.forEach((node) => this.currentFlow.deleteNode(node.id))
             }
           },
           {

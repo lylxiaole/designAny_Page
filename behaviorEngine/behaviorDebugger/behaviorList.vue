@@ -58,4 +58,8 @@ export default class behaviorList extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-radio {
+  width: 100%;
+}
+</style>

@@ -1,52 +1,73 @@
 <template>
-  <el-row v-if="selectedNodeType === 'node'" style="width: 100%">
-    <el-row v-if="actObj" style="width: 100%">
+  <el-row v-if="selectedNodeType === 'node'" style="width: 100%; height: 100%">
+    <div v-if="actObj" style="width: 100%; height: 60px">
       <div class="title">State:</div>
       <div class="content">{{ isExcuted ? 'Excuted' : 'Waiting Excute' }}</div>
-
+    </div>
+    <!-- ********************************************************* -->
+    <div v-if="isExcuted" style="width: 100%; height: 60px">
       <div v-if="isExcuted" class="title">Excute Result:</div>
-
       <div v-if="isExcuted" class="content verticalAlignCenter">
         <img v-if="isExcuted && excutedSuccess === true" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
         <img v-if="isExcuted && excutedSuccess === false" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行失败.png')" />
         &nbsp;{{ isExcuted && excutedSuccess === true ? 'Success' : 'Faild' }}
       </div>
-
-      <div v-if="isExcuted && excutedSuccess === false && excutedMsg" class="title">Excute ErrorMsg:{{ isExcuted ? 'Excuted' : 'No Excuted' }}</div>
-      <div v-if="isExcuted && excutedSuccess === false && excutedMsg" class="content">{{ isExcuted && excutedSuccess === false && excutedMsg ? excutedMsg : 'None' }}</div>
-    </el-row>
+    </div>
     <!-- ********************************************************* -->
-    <el-row v-if="isExcuted && inParams && inParams.length > 0" style="width: 100%">
+    <div v-if="isExcuted && excutedSuccess === false && excutedMsg" style="width: 100%; height: 80px">
+      <div class="title">Excute ErrorMsg:{{ isExcuted ? 'Excuted' : 'No Excuted' }}</div>
+      <div class="content">{{ isExcuted && excutedSuccess === false && excutedMsg ? excutedMsg : 'None' }}</div>
+    </div>
+    <!-- ********************************************************* -->
+    <div v-if="isExcuted && inParams && inParams.length > 0" style="width: 100%; height: 300px">
       <div class="title">InpParams:</div>
-      <div class="content" v-for="param in inParams" :key="param.key">{{ param.name }}:{{ param.val }}</div>
-    </el-row>
-    <el-row v-if="isExcuted && (!inParams || inParams.length < 1)" style="width: 100%">
+      <div class="content">
+        <el-collapse>
+          <el-collapse-item v-for="param in inParams" :key="param.key" :title="param.name" :icon="CaretRight">
+            <div>{{ param.val ? param.val : 'None' }}</div>
+          </el-collapse-item>
+        </el-collapse>
+      </div>
+    </div>
+    <div v-if="isExcuted && (!inParams || inParams.length < 1)" style="width: 100%">
       <div class="title">InpParams:</div>
       <div class="content">No InParams,Just for Connect</div>
-    </el-row>
+    </div>
     <!-- ********************************************************* -->
-    <el-row v-if="isExcuted && outParam" style="width: 100%">
+    <div v-if="isExcuted && outParam" style="width: 100%; height: 300px">
       <div class="title">OutParam:</div>
-      <div class="content">{{ outParam.name }}:{{ outParam.val }}</div>
-    </el-row>
-    <el-row v-if="isExcuted && !outParam" style="width: 100%">
+      <div class="content">
+        <el-collapse>
+          <el-collapse-item :title="outParam.name" :icon="CaretRight">
+            <div>{{ outParam.val ? outParam.val : 'None' }}</div>
+          </el-collapse-item>
+        </el-collapse>
+        <!-- <div class="paramName">{{ outParam.name }}:</div>
+        <div class="paramVal">
+          {{ outParam.val ? outParam.val : 'None' }}
+        </div> -->
+      </div>
+    </div>
+    <div v-if="isExcuted && !outParam" style="width: 100%">
       <div class="title">OutParam:</div>
       <div class="content">No OutParam,Just for Connect</div>
-    </el-row>
+    </div>
   </el-row>
   <!-- ********************************************************* -->
   <el-row v-if="selectedNodeType === 'edge'">
-    <el-row v-if="edgeFilter" style="width: 100%">
+    <div v-if="edgeFilter" style="width: 100%">
       <div class="title">Filter:</div>
       <div class="content">{{ edgeFilter }}</div>
+    </div>
+    <div v-if="edgeFilter" style="width: 100%">
       <div class="title">Filter value:</div>
       <div class="content">{{ edgeFilterVal }}</div>
-    </el-row>
+    </div>
     <!-- ********************************************************* -->
-    <el-row v-else style="width: 100%">
+    <div v-else style="width: 100%">
       <div class="title">Filter:</div>
       <div class="content">No Filter</div>
-    </el-row>
+    </div>
   </el-row>
 </template>
 
@@ -56,6 +77,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import LogicFlow, { EdgeConfig, GraphConfigData, NodeConfig } from '@logicflow/core'
 import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
+// import lylJSONEditor from '@common/components/commonComponents/lylJSONEditor.vue'
 
 @Options({
   components: {}
@@ -184,6 +206,7 @@ export default class flowNodeDebuggerInfo extends Vue {
 <style lang="less" scoped>
 .title {
   width: 100%;
+  height: 35px;
   box-sizing: border-box;
   padding: 8px;
   font-weight: 500;
@@ -191,9 +214,26 @@ export default class flowNodeDebuggerInfo extends Vue {
 }
 .content {
   width: 100%;
+  height: calc(100% - 35px);
+  overflow-y: auto;
   box-sizing: border-box;
   padding-left: 16px;
   font-weight: 400;
+  font-size: 12px;
+  /deep/ .el-collapse-item {
+    border: none;
+  }
+  /deep/.el-collapse-item__header {
+    height: 30px;
+    border: none;
+  }
+}
+
+.paramName {
+  font-size: 15px;
+  font-weight: 500;
+}
+.paramVal {
   font-size: 12px;
 }
 </style>
