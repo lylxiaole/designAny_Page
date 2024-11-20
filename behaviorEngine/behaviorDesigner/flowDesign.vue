@@ -133,11 +133,24 @@ export default class flowDesign extends ComponentBase {
       allObjs.push(targetActObj)
     }
 
+    // ******将flowData中的actObj剔除，为了数据压缩****************
+    for (let index = 0; index < graphData.nodes.length; index++) {
+      const element = graphData.nodes[index]
+      element.properties.actObj = null
+    }
+    // ***********************************************
     return { allObjs: allObjs, flowData: graphData }
   }
 
   public async setFlowData(behav: behavior, page: EnginePage) {
     let flowdata = behav.flowData
+    // ******将行为中的actObj赋值到flowData，为了数据压缩****************
+    for (let index = 0; index < behav.actObjs.length; index++) {
+      const actObj = behav.actObjs[index]
+      let findFlowNode = flowdata.nodes.find((o) => o.id === actObj.id)
+      findFlowNode.properties.actObj = actObj
+    }
+    // **********************
     behaviorContext.currentDesignPage = page
     this.isCopyState = false
 
@@ -277,7 +290,6 @@ export default class flowDesign extends ComponentBase {
   private onDragLeave() {
     this.isDragOver = false
   }
-
   private onMouseMove(event) {
     this.currentMousePoint = { x: event.x, y: event.y }
   }

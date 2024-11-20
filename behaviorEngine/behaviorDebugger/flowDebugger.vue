@@ -74,6 +74,13 @@ export default class flowDebugger extends ComponentBase {
 
     this.orginBehav = deepClone(behav)
     let flowdata = behav.flowData
+    // *****************************************
+    for (let index = 0; index < behav.actObjs.length; index++) {
+      const actObj = behav.actObjs[index]
+      let findFlowNode = behav.flowData.nodes.find((o) => o.id === actObj.id)
+      findFlowNode.properties.actObj = actObj
+    }
+    // *****************************************
     behaviorContext.currentDesignPage = currentPage
     this.currentFactory = new factory(currentPage, currentPage, behav)
 
@@ -99,15 +106,7 @@ export default class flowDebugger extends ComponentBase {
         shortcuts: [
           {
             keys: ['delete'],
-            callback: () => {
-              const r = window.confirm('Sure Delete？')
-              if (r) {
-                const elements = this.currentFlow.getSelectElements(true)
-                this.currentFlow.clearSelectElements()
-                elements.edges.forEach((edge) => this.currentFlow.deleteEdge(edge.id))
-                elements.nodes.forEach((node) => this.currentFlow.deleteNode(node.id))
-              }
-            }
+            callback: () => {}
           },
           {
             keys: ['backspace'],

@@ -5,15 +5,21 @@
       ref="table"
       stripe
       border
-      style="overflow-y: auto"
-      :style="{ height: isShowPager ? 'calc(100% - 38px)' : '100%', 'background-color': cellBackground }"
+      :height="tableHeight"
+      :style="{ 'background-color': cellBackground }"
       :row-config="{ isCurrent: true, isHover: true }"
       :column-config="{ resizable: true }"
       :header-cell-style="{ backgroundColor: headerBackground, color: headerFontColor }"
       :cell-style="{ backgroundColor: cellBackground, color: cellFontColor, 'border-color': 'black' }"
     >
-      <template v-for="columnconfig in tableColumns" :key="columnconfig.key">
-        <VxeColumn v-if="columnconfig.isShow" :type="columnconfig.type" :title="columnconfig.title" :width="columnconfig.width" :field="columnconfig.field"></VxeColumn>
+      <template v-for="col in tableColumns" :key="col.key">
+        <VxeColumn v-if="col.isShow && col.type === 'image'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field">
+          <template #default="{ row }">
+            <VxeImage width="100%" :src="row[col.field]"></VxeImage>
+          </template>
+        </VxeColumn>
+
+        <VxeColumn v-if="col.isShow && col.type !== 'image'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field"></VxeColumn>
       </template>
     </VxeTable>
 
@@ -31,6 +37,8 @@ import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
 
 import { VxeTable, VxeColumn, VxeColgroup, VxePager } from 'vxe-table'
+import { VxeImage } from 'vxe-pc-ui'
+
 // 导入主题变量，也可以重写主题变量
 import 'vxe-table/styles/cssvar.scss'
 import 'vxe-table/lib/style.css'
@@ -38,12 +46,15 @@ import 'vxe-table/lib/style.css'
 import './tableThemeStyle.scss'
 import paltform from '@design-any/interface/dist/enums/paltform'
 
+import elementResizeDetectorMaker from 'element-resize-detector'
+
 @DCompnentAttr(paltform.webpc, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
 @Options({
   components: {
     VxeTable,
     VxeColumn,
-    VxePager
+    VxePager,
+    VxeImage
   }
 })
 export default class Index extends EngineComponent {
@@ -89,7 +100,6 @@ export default class Index extends EngineComponent {
   @DMethodAttr({ methodName: 'GetSelectedRows', hasOutParam: true })
   private getSelectedRows() {
     let findradioCol = this.tableColumns.find((o) => o.type === 'radio')
-
     let findcheckCol = this.tableColumns.find((o) => o.type === 'checkbox')
     if (findradioCol) {
       let row = (this.$refs.table as any).getRadioRecord(true)
@@ -103,10 +113,30 @@ export default class Index extends EngineComponent {
     }
   }
 
+  // *********************************************************
+  private resizeListener: any = null
+  private tableHeight: number = 0
   mounted() {
     this.width = '70%'
     this.height = '50%'
     this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
+
+    this.resizeListener = elementResizeDetectorMaker()
+    this.resizeListener.listenTo(this.$el, () => {
+      this.tableHeight = this.cuteTableHeight()
+    })
+  }
+
+  unmounted() {
+    this.resizeListener.uninstall(this.$el)
+  }
+
+  private cuteTableHeight() {
+    if (!this.isShowPager) {
+      return $(this.$el).height()
+    }
+
+    return $(this.$el).height() - 38
   }
 }
 </script>

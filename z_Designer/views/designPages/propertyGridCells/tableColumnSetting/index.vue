@@ -32,6 +32,8 @@
               <el-option key="2" label="Check Box" value="checkbox" />
               <el-option key="3" label="Radio Box" value="radio" />
               <el-option key="4" label="Expander" value="expand" />
+              <el-option key="5" label="Image" value="image" />
+              <el-option key="6" label="template" value="template" />
             </el-select>
           </template>
         </el-table-column>
@@ -42,11 +44,20 @@
           </template>
         </el-table-column>
         <!-- ********************* -->
+        <el-table-column prop="template" label="Column Template" width="80">
+          <template #default="scope">
+            <el-button v-if="scope.row.type === 'template'" size="small" @click="() => settingColTemplate(scope.row.key)">Setting</el-button>
+          </template>
+        </el-table-column>
+        <!-- ********************* -->
         <el-table-column fixed="right" label="Options">
           <template #default="scope">
-            <el-button size="small" @click="() => rowdelete(scope.row.key)">Delete</el-button>
+            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowMoveDown(scope.row.key)"><Download /></el-icon>
+            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowMoveUp(scope.row.key)"><Upload /></el-icon>
+            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowdelete(scope.row.key)"><Delete /></el-icon>
+            <!-- <el-button size="small" @click="() => rowdelete(scope.row.key)">Delete</el-button>
             <el-button size="small" @click="() => rowMoveUp(scope.row.key)">Move Up</el-button>
-            <el-button size="small" @click="() => rowMoveDown(scope.row.key)">Move Down</el-button>
+            <el-button size="small" @click="() => rowMoveDown(scope.row.key)">Move Down</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -108,7 +119,6 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
       this.localData = newData
     }
   }
-
   private rowMoveUp(key: string) {
     let targetIndex = this.localData.findIndex((item) => key === item.key)
     if (targetIndex === 0) {
@@ -117,7 +127,6 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     let newIndex = targetIndex - 1
     this.swapArrayElements(this.localData, targetIndex, newIndex)
   }
-
   private rowMoveDown(key: string) {
     let targetIndex = this.localData.findIndex((item) => key === item.key)
     if (targetIndex === this.localData.length - 1) {
@@ -126,12 +135,13 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     let newIndex = targetIndex + 1
     this.swapArrayElements(this.localData, targetIndex, newIndex)
   }
-
   private swapArrayElements(arr, indexA, indexB) {
     const temp = arr[indexA]
     arr[indexA] = arr[indexB]
     arr[indexB] = temp
   }
+
+  private settingColTemplate(key: string) {}
   // ***********************************
   private modalSure() {
     //window.console.log('确认提交')

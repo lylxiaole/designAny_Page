@@ -1,7 +1,6 @@
- 
- <template>
+<template>
   <div>
-    <el-select v-model="currentValue" size="small" style="width:120px">
+    <el-select v-model="currentValue" :teleported="false" size="small" style="width: 120px">
       <el-option v-for="item in allOptions" :key="item" :label="item" :value="item" />
     </el-select>
   </div>
@@ -27,7 +26,4 @@ export default class index extends propertyCellBase<Enum_Setting> {
 }
 </script>
 
-
-
-<style scoped>
-</style> 
+<style scoped></style>
