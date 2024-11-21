@@ -6,10 +6,10 @@
       </el-row>
       <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
         <el-col class="designArea" style="width: calc(100% - 250px); height: 100%; float: left">
-          <div style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box" :ref="page.Id"></div>
+          <div style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box"></div>
         </el-col>
         <el-col style="width: 250px; height: 100%; float: left">
-          <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
+          <PropertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
         </el-col>
       </el-row>
 
@@ -25,10 +25,10 @@ import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
-import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage, SaveInfo, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
 
-import { MobilePagePreview, PCPagePreview } from '@designEngine/index'
+import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
@@ -54,8 +54,20 @@ export default class index extends PageBase {
     this.windowVisible = false
   }
 
-  private show() {
+  public show() {
     this.windowVisible = true
+  }
+
+  private needSave(pageId: string): boolean {
+    return false
+  }
+
+  protected get selectedComps(): EngineLayout[] {
+    return []
+  }
+
+  private get currentShowEngine(): PCPageDesign {
+    return null
   }
 }
 </script>

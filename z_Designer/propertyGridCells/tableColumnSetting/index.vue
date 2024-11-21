@@ -66,6 +66,8 @@
         </div>
       </template>
     </el-dialog>
+    <!-- ************************************************************** -->
+    <tableColumnTemplateDesign ref="tableColumnTemplateDesign" />
   </div>
 </template>
 
@@ -75,7 +77,7 @@ import propertyCellBase from '../common'
 import { PropertyTypeEnum, TableColumn_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { CellSettingAttr } from '../common'
 import { getUuid, deepClone } from '@common/utils'
-
+import tableColumnTemplateDesign from './tableColumnTemplateDesign/index.vue'
 class columnConfig {
   public width: string
   public key: string
@@ -86,7 +88,7 @@ class columnConfig {
 }
 
 @CellSettingAttr(PropertyTypeEnum.tableColumn)
-@Options({})
+@Options({ components: { tableColumnTemplateDesign } })
 export default class index extends propertyCellBase<TableColumn_Setting> {
   public windowVisible: boolean = false
   private localData: columnConfig[] = []
@@ -138,7 +140,9 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     arr[indexB] = temp
   }
 
-  private settingColTemplate(key: string) {}
+  private settingColTemplate(key: string) {
+    ;(this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show()
+  }
   // ***********************************
   private modalSure() {
     //window.console.log('确认提交')

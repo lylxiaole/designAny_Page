@@ -26,8 +26,8 @@
         <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Sure" @click="onQuit" />
-      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Cancel" @click="onQuit" />
+      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Sure" @click="onSure" />
+      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Cancel" @click="onCancel" />
     </div>
   </div>
 </template>
@@ -115,21 +115,9 @@ export default class toolBar extends Vue {
   //************导入插件********************************************************
   private leadinPlugin() {}
   /*************定制化控制项************************************************************************ */
-  private async onQuit() {
-    this.$router.push('/designApplications')
-  }
+  private async onSure() {}
+  private async onCancel() {}
   /*************对外公布事件************************************************************************ */
-  @Emit('onSave')
-  private onSave(pageId: string) {}
-
-  @Emit('onLeadIn')
-  private onLeadIn() {}
-
-  @Emit('onLeadOut')
-  private onLeadOut() {}
-
-  @Emit('onRevert')
-  private onRevert() {}
 
   @Emit('onSettingBehavior')
   private onSettingBehavior() {}

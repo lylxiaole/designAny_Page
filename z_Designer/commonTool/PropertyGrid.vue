@@ -52,12 +52,6 @@ class propertyFilterInfo {
   groupName: string
   propertyName: string
 }
-/**加载所有propertyGrid Cell组件 */
-const modulesFiles = require.context('@/propertyGridCells', true, /\.(vue)$/)
-modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath)
-  return modules
-}, {})
 
 // *****************************************
 @Options({
@@ -164,7 +158,14 @@ export default class PropertyGrid extends Vue {
     this.propertyGroups = propertyGroups
   }
 
-  mounted() {}
+  mounted() {
+    /**加载所有propertyGrid Cell组件 */
+    const modulesFiles = require.context('@/propertyGridCells', true, /\.(vue)$/)
+    modulesFiles.keys().reduce((modules, modulePath) => {
+      const value = modulesFiles(modulePath)
+      return modules
+    }, {})
+  }
 
   changeActivekey(groupname: string) {
     this.selectGropName = groupname
