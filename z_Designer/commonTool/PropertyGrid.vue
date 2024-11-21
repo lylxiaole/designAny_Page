@@ -22,7 +22,7 @@ import { Options, prop, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import { PropertySetting, PropertyTypeEnum, PropertyGroupName } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
-import propertyCellBase, { getCellControl } from './propertyGridCells/common'
+import propertyCellBase, { getCellControl } from '@/propertyGridCells/common'
 import { ApplicationDC } from '@common/apis/designApplication'
 
 class PropertyGroupInfo {
@@ -53,7 +53,7 @@ class propertyFilterInfo {
   propertyName: string
 }
 /**加载所有propertyGrid Cell组件 */
-const modulesFiles = require.context('./propertyGridCells', true, /\.(vue)$/)
+const modulesFiles = require.context('@/propertyGridCells', true, /\.(vue)$/)
 modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath)
   return modules

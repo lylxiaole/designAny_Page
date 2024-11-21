@@ -37,8 +37,8 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
-import componentListControl from './ComponentListControl.vue'
-import optionBtn from './optionBtn.vue'
+import componentListControl from '@/commonTool/ComponentListControl.vue'
+import optionBtn from '@/commonTool/optionBtn.vue'
 import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon } from '@/assets/designIcons'
 import { ApplicationDC, applicationType } from '@common/apis/designApplication'
 import platform from '@design-any/interface/dist/enums/platform'
@@ -49,7 +49,7 @@ import platform from '@design-any/interface/dist/enums/platform'
     optionBtn
   }
 })
-export default class quickActionBar extends Vue {
+export default class tooBar extends Vue {
   private saveIcon: any = saveIcon
   private componentsIcon: any = componentsIcon
   private quitIcon: any = quitIcon

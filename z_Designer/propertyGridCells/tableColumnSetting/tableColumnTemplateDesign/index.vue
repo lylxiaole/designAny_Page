@@ -5,22 +5,14 @@
         <toolBar :application="application" :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
       </el-row>
       <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
-        <el-col style="width: 250px; height: 100%; float: left">
-          <pagelist :currentApplication="application" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
-        </el-col>
-        <el-col class="designArea" style="width: calc(100% - 500px); height: 100%; float: left">
-          <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="card" style="width: 100%; height: 100%">
-            <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id">
-              <div style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box" :ref="page.Id"></div>
-            </el-tab-pane>
-          </el-tabs>
+        <el-col class="designArea" style="width: calc(100% - 250px); height: 100%; float: left">
+          <div style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box" :ref="page.Id"></div>
         </el-col>
         <el-col style="width: 250px; height: 100%; float: left">
           <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
         </el-col>
       </el-row>
 
-      <previewPage ref="previewPage" />
       <behaviorSettingDialog ref="behaviorSettingDialog" />
     </el-row>
   </el-dialog>
@@ -46,17 +38,24 @@ import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType, SavePageDet
 import behaviorList from '@behaviorEngine/behaviorDebugger/behaviorList.vue'
 import flowDebugger from '@behaviorEngine/behaviorDebugger/flowDebugger.vue'
 import behaviorSetting from '@behaviorEngine/behaviorList/behaviorSetting.vue'
-
 import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { deepClone } from '@common/utils'
 
+import behaviorSettingDialog from '@/commonTool/behaviorSettingDialog.vue'
+import toolBar from './toolBar.vue'
+import PropertyGrid from '@/commonTool/PropertyGrid.vue'
+
 @Options({
-  components: {}
+  components: { toolBar, behaviorSettingDialog, PropertyGrid }
 })
-export default class columnTemplateSetting extends PageBase {
+export default class index extends PageBase {
   private windowVisible: boolean = false
   private onClose() {
     this.windowVisible = false
+  }
+
+  private show() {
+    this.windowVisible = true
   }
 }
 </script>

@@ -31,22 +31,23 @@ import PageBase from '@common/views/PageBase'
 
 import { pageType, DesignPageDC, GetPageDetail, SavePageDetail } from '@common/apis/designPage'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
-import pagelist from './pagelist.vue'
-import PropertyGrid from './PropertyGrid.vue'
-import toolBar from './toolBar/index.vue'
+
 import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 
-import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
-import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import { behaviorList, behaviorContext } from '@behaviorEngine/index'
-import previewPage from '@/views/previewDialog/index.vue'
+import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
+import applicationContext from '@designEngine/01designerContext/context'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import * as utils from '@design-any/interface/dist/utils'
 import platform from '@design-any/interface/dist/enums/platform'
-import behaviorSettingDialog from './toolBar/behaviorSettingDialog.vue'
-import applicationContext from '@designEngine/01designerContext/context'
+import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 
+import previewPage from '@/views/previewDialog/index.vue'
+import behaviorSettingDialog from '@/commonTool/behaviorSettingDialog.vue'
+import PropertyGrid from '@/commonTool/PropertyGrid.vue'
+import pagelist from '@/commonTool/pagelist.vue'
+import toolBar from './tooBar.vue'
 @Options({
   components: {
     pagelist: pagelist,
