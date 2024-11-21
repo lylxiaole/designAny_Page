@@ -37,7 +37,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
-import componentListControl from '@/commonTool/ComponentListControl.vue'
+import componentListControl from '@/commonTool/componentListControl.vue'
 import optionBtn from '@/commonTool/optionBtn.vue'
 import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon } from '@/assets/designIcons'
 import { ApplicationDC, applicationType } from '@common/apis/designApplication'

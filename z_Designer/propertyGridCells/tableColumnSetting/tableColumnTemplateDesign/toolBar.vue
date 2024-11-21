@@ -2,7 +2,7 @@
   <div ref="miandiv" class="verticalAlignCenter" style="position: relative; background: rgb(61, 61, 61)" :style="{ height: height + 'px', width: '100%' }">
     <div :style="{ height: height + 'px' }" style="display: flex; min-width: 200px">
       <!-- <div style="padding: 9px; line-height: 0px" class="themeBackground" :style="{ height: height + 'px', width: height + 'px', left: '0px' }" /> -->
-      <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">{{ application ? application.name : '' }}</div>
+      <div class="verticalAlignCenter" style="color: #fff; font-size: 20px; font-family: PingFangSC-Semibold, PingFang SC; font-weight: 600; margin-left: 8px">Column Design</div>
     </div>
     <!-- *************************************************************************** -->
     <optionBtn v-if="currentPage" :enable="currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'" :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="'Undo'" @mouseup="topre" />
@@ -36,7 +36,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
-import componentListControl from '@/commonTool/ComponentListControl.vue'
+import componentListControl from '@/commonTool/componentListControl.vue'
 import optionBtn from '@/commonTool/optionBtn.vue'
 import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon } from '@/assets/designIcons'
 import { ApplicationDC, applicationType } from '@common/apis/designApplication'
@@ -69,13 +69,6 @@ export default class toolBar extends Vue {
     }
   })
   public needSave: boolean
-
-  @Prop({
-    default: () => {
-      return {}
-    }
-  })
-  public application: ApplicationDC
 
   private get pageScale(): number {
     if (!this.currentPage) {

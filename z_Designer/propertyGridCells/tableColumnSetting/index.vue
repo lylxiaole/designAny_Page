@@ -75,6 +75,8 @@
 import { Options, Vue } from 'vue-class-component'
 import propertyCellBase from '../common'
 import { PropertyTypeEnum, TableColumn_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { SaveInfo } from '@design-any/interface/dist/LayoutInterface/EngineLayout'
+
 import { CellSettingAttr } from '../common'
 import { getUuid, deepClone } from '@common/utils'
 import tableColumnTemplateDesign from './tableColumnTemplateDesign/index.vue'
@@ -85,6 +87,7 @@ class columnConfig {
   public title: string
   public field: string
   public isShow: boolean
+  public template: SaveInfo
 }
 
 @CellSettingAttr(PropertyTypeEnum.tableColumn)
@@ -141,7 +144,8 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
   }
 
   private settingColTemplate(key: string) {
-    ;(this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show()
+    let target = this.localData.find((item) => key === item.key)
+    ;(this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(target.template)
   }
   // ***********************************
   private modalSure() {
