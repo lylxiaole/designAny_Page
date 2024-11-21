@@ -21,9 +21,9 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'TextInput', 'textInput_001', require('../compIcons/textinput.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'TextInput', 'textInput_001', require('../compIcons/textinput.png'))
 @Options({})
 export default class textInput extends EngineComponent {
   isShowIndex: boolean = false

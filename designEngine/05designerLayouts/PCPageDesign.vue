@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { deepClone, getUuid } from '@common/utils'
 import DesignShell from './DesignShell.vue'
@@ -17,12 +16,11 @@ import DesignEvents, { DragItemData, DragItemTypeEnum } from './DesignEvents'
 import { EnginePage, EngineLayout, EngineComponent, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
 import { findSystemCompByCode } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
-import { toRaw } from 'vue'
 
-@DPageAttr(paltform.webpc, 'design')
+@DPageAttr(platform.webpc, 'design')
 @Options({})
 export default class PCPageDesign extends EnginePage {
   private get backgroundCute(): string {

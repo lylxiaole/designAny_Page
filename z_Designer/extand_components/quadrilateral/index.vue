@@ -10,9 +10,9 @@ import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentIn
 import { PropertyGroupName, Number_Setting, Boolean_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/sibianxing.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/sibianxing.png'))
 @Options({
   components: {}
 })

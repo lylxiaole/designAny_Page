@@ -44,7 +44,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent, SaveInfo, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 import { DPropAttr, PropertyGroupName, AppPagesChoose_Setting, Color_Setting, Number_Setting, Boolean_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@design-any/interface/dist/utils'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
@@ -55,7 +55,7 @@ import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
 import TopBar from './TopBar/index.vue'
 // ****************************************
-@DCompnentAttr(paltform.webpc, 'Basic', 'Classic navigation bar', 'navigation001', require('../../compIcons/navigationbar.png'))
+@DCompnentAttr(platform.webpc, 'Basic', 'Classic navigation bar', 'navigation001', require('../../compIcons/navigationbar.png'))
 @Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
   @DPropAttr(new Color_Setting('SidebarBg', PropertyGroupName.style, true))
@@ -91,7 +91,7 @@ export default class index extends EngineComponent {
 
   private async linkClick(pageId) {
     let detail: SaveInfo = this.allPages.find((o) => o.id === pageId)
-    let findpageengine = findPageByPaltform(paltform.webpc, 'preview')
+    let findpageengine = findPageByPaltform(platform.webpc, 'preview')
     let { virtualDom, vueComp } = designDrawDomVirtual(findpageengine, false, { applicationContext: this.applicationContext })
 
     if (!detail) {

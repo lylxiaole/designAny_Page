@@ -10,9 +10,9 @@ import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentIn
 import { PropertyGroupName, UploadFile_Setting, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Timer', 'Timer001', require('../compIcons/anniu2.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Timer', 'Timer001', require('../compIcons/anniu2.png'))
 @Options({
   components: {}
 })

@@ -44,11 +44,11 @@ import 'vxe-table/styles/cssvar.scss'
 import 'vxe-table/lib/style.css'
 //自定义修改主题
 import './tableThemeStyle.scss'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
 import elementResizeDetectorMaker from 'element-resize-detector'
 
-@DCompnentAttr(paltform.webpc, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
+@DCompnentAttr(platform.webpc, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
 @Options({
   components: {
     VxeTable,

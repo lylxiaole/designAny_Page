@@ -30,10 +30,9 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { getUuid, deepClone, serialize } from '@common/utils'
 import dragHelper from '@designEngine/02common/dragHelper'
 // 所有系统组件
-
 import { DragItemData, DragItemTypeEnum } from '@designEngine/05designerLayouts/DesignEvents'
-
 import { DCompInfo, getAllComponents } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
+import platform from '@design-any/interface/dist/enums/platform'
 
 class ComponentGroupInfo {
   constructor(_groupName: string) {
@@ -46,33 +45,29 @@ class ComponentGroupInfo {
 
 @Options({})
 export default class ComponentListControl extends Vue {
+  @Prop()
+  public platform: platform
+
   private get systemComponents(): ComponentGroupInfo[] {
     var res: ComponentGroupInfo[] = []
-    if (!this.systemCompGroups || !this.sys_limitGroupNames) {
+    if (!this.systemCompGroups) {
       return res
     }
 
     for (let index = 0; index < this.systemCompGroups.length; index++) {
       const element = deepClone(this.systemCompGroups[index]) as ComponentGroupInfo
-      if (this.sys_limitGroupNames.indexOf(element.groupName) < 0) {
-        element.components = element.components.filter((comp) => this.sys_limitCompCodes.indexOf(comp.compCode) < 0)
-        res.push(element)
-      }
+
+      // element.components =
+      res.push(element)
     }
     return res
   }
   private systemCompGroups: ComponentGroupInfo[] = []
-
-  @Prop()
-  private sys_limitGroupNames: string[]
-  @Prop()
-  private sys_limitCompCodes: string[]
   ///////////////////////
   private dragHelpers: dragHelper[] = []
   private dragType: DragItemTypeEnum = DragItemTypeEnum.drop_system_component
   private dataSource: DCompInfo[] = []
   private compGroupName: string = ''
-  private defaultSelectedKeys: any[] = []
 
   mounted() {
     this.cuteSystemComponents()
@@ -81,7 +76,6 @@ export default class ComponentListControl extends Vue {
   beforeUnmount() {
     this.clearDrags()
   }
-
   changeActivekey(key: any) {
     this.renderStyle()
   }
@@ -91,7 +85,6 @@ export default class ComponentListControl extends Vue {
       $(this.$el).find('.ant-collapse-content').css('border', 'none')
     })
   }
-
   /**开发时:可拖拽下的子节点要满足这些条件
    * 1.class="mydragItem"
    * 2.属性compGroupName=""用来标识组件的分组名
@@ -145,7 +138,9 @@ export default class ComponentListControl extends Vue {
   }
   /**计算系统自带组件的分组 */
   private async cuteSystemComponents() {
-    getAllComponents().filter((element) => {
+    let allComps = getAllComponents(this.platform)
+
+    allComps.filter((element) => {
       let findgroup = this.systemCompGroups.filter((o) => o.groupName == element.groupName)
       if (findgroup.length < 1) {
         let newgroup = new ComponentGroupInfo(element.groupName)
@@ -154,6 +149,7 @@ export default class ComponentListControl extends Vue {
       let group = this.systemCompGroups.filter((o) => o.groupName == element.groupName)[0]
       group.components.push(element)
     })
+
     //window.console.info('this.systemComponents', this.systemComponents)
     let defaultSelectedKey = this.systemCompGroups[0].groupName
     // this.systemCompsActiveKey.push(defaultSelectedKey)

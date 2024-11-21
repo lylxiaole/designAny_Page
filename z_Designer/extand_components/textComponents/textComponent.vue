@@ -29,9 +29,9 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
 import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Text', 'TextComponent_001', require('../compIcons/text.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Text', 'TextComponent_001', require('../compIcons/text.png'))
 @Options({})
 export default class TextComponent extends EngineComponent {
   mounted() {

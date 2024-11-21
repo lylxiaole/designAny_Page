@@ -14,9 +14,9 @@ import { DPropAttr, PropertyGroupName, JsonContent_Setting, Text_Setting } from 
 import * as echarts from 'echarts'
 import { shallowRef } from 'vue'
 import elementResizeDetectorMaker from 'element-resize-detector'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Classic EChart', 'EchartNormal_001', require('../compIcons/linechart.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Classic EChart', 'EchartNormal_001', require('../compIcons/linechart.png'))
 @Options({})
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})

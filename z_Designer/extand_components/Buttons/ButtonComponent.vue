@@ -19,9 +19,9 @@ import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentIn
 import { PropertyGroupName, UploadFile_Setting, Text_Setting, Color_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Classic Button', 'ButtonComponent_001', require('../compIcons/anniu2.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Classic Button', 'ButtonComponent_001', require('../compIcons/anniu2.png'))
 @Options({
   components: {}
 })

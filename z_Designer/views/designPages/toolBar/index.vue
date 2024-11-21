@@ -14,7 +14,7 @@
       <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
         <template #content>
           <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
-            <componentListControl :sys_limitGroupNames="[]" :sys_limitCompCodes="[]" style="width: 100%; height: 100%" />
+            <componentListControl :platform="platform" style="width: 100%; height: 100%" />
           </div>
         </template>
         <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
@@ -39,9 +39,9 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import componentListControl from './ComponentListControl.vue'
 import optionBtn from './optionBtn.vue'
-
 import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon } from '@/assets/designIcons'
-import { ApplicationDC } from '@common/apis/designApplication'
+import { ApplicationDC, applicationType } from '@common/apis/designApplication'
+import platform from '@design-any/interface/dist/enums/platform'
 
 @Options({
   components: {
@@ -71,7 +71,11 @@ export default class quickActionBar extends Vue {
   })
   public needSave: boolean
 
-  @Prop()
+  @Prop({
+    default: () => {
+      return {}
+    }
+  })
   public application: ApplicationDC
 
   private get pageScale(): number {
@@ -86,6 +90,20 @@ export default class quickActionBar extends Vue {
     }
     var valchange = val - this.currentPage.currentScaleSize
     this.currentPage.scaleSize(valchange)
+  }
+
+  private get platform(): platform {
+    if (!this.application) {
+      return
+    }
+
+    if (this.application.type === applicationType.webSystem) {
+      return platform.webpc
+    } else if (this.application.type === applicationType.H5App) {
+      return platform.webapp
+    } else {
+      return platform.webpc
+    }
   }
 
   created() {}

@@ -1,6 +1,28 @@
 <template>
   <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
-    <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block"></el-row>
+    <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
+      <el-row style="height: 60px; width: 100%">
+        <toolBar :application="application" :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
+      </el-row>
+      <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
+        <el-col style="width: 250px; height: 100%; float: left">
+          <pagelist :currentApplication="application" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
+        </el-col>
+        <el-col class="designArea" style="width: calc(100% - 500px); height: 100%; float: left">
+          <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="card" style="width: 100%; height: 100%">
+            <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id">
+              <div style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box" :ref="page.Id"></div>
+            </el-tab-pane>
+          </el-tabs>
+        </el-col>
+        <el-col style="width: 250px; height: 100%; float: left">
+          <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
+        </el-col>
+      </el-row>
+
+      <previewPage ref="previewPage" />
+      <behaviorSettingDialog ref="behaviorSettingDialog" />
+    </el-row>
   </el-dialog>
 </template>
 
@@ -16,7 +38,7 @@ import * as utils from '@design-any/interface/dist/utils'
 
 import { MobilePagePreview, PCPagePreview } from '@designEngine/index'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
 
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType, SavePageDetail } from '@common/apis/designPage'

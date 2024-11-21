@@ -26,9 +26,9 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import JsBarcode from 'jsbarcode'
 const codeFormats = ['CODE128', 'CODE128A', 'CODE128B', 'CODE128C', 'UPC', 'EAN2', 'EAN5', 'EAN8', 'EAN13', 'CODE39', 'ITF14', 'MSI', 'MSI10', 'MSI11', 'MSI1010', 'MSI1110', 'pharmacode', 'codabar']
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'BarCode', 'NpBarCode_001', require('../compIcons/barcode.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'BarCode', 'NpBarCode_001', require('../compIcons/barcode.png'))
 @Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}

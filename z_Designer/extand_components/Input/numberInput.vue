@@ -11,9 +11,9 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'NumberInput', 'numberInput_001', require('../compIcons/number-input.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'NumberInput', 'numberInput_001', require('../compIcons/number-input.png'))
 @Options({})
 export default class numberInput extends EngineComponent {
   isShowIndex: boolean = false

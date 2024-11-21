@@ -13,9 +13,9 @@ import { EngineLayout, EngineComponent } from '@design-any/interface/dist/Layout
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
 import { DPropAttr, PropertyGroupName, KeyValue_Setting, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(paltform.universal, 'Basic', 'Single Selection', 'SingleSelection_001', require('../compIcons/xialadanxuan.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Single Selection', 'SingleSelection_001', require('../compIcons/xialadanxuan.png'))
 @Options({})
 export default class SingleSelect extends EngineComponent {
   @DPropAttr(new KeyValue_Setting('Selections', PropertyGroupName.data, true, null))

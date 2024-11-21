@@ -1,8 +1,5 @@
- 
 <template>
-  <div>
-
-  </div>
+  <div></div>
 </template>
 
 <script lang="ts">
@@ -11,16 +8,9 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompType, DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
-import {
-  DPropAttr,
-  PropertyGroupName,
-  Number_Setting,
-  Text_Setting,
-  Boolean_Setting,
-  Enum_Setting
-} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@common/utils'
-import paltform from '@design-any/interface/dist/enums/paltform'
+import platform from '@design-any/interface/dist/enums/platform'
 
 @Options({})
 export default class pageContent extends EngineComponent {
@@ -28,7 +18,4 @@ export default class pageContent extends EngineComponent {
 }
 </script>
 
-
-
-<style scoped>
-</style>
+<style scoped></style>
