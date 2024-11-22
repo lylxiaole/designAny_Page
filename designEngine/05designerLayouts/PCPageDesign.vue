@@ -1,10 +1,5 @@
 <template>
-  <div
-    :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }"
-    oncontextmenu="self.event.returnValue=false"
-    class="container"
-    style="border-radius: 0px; border: 1px solid var(--el-border-color-light); box-sizing: border-box"
-  ></div>
+  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }" oncontextmenu="self.event.returnValue=false" class="container" style="border-radius: 0px; box-sizing: border-box"></div>
 </template>
 
 <script lang="ts">
@@ -49,7 +44,10 @@ export default class PCPageDesign extends EnginePage {
     this.designEvets.onPreStep_Event = this.listenOnPreStep
     this.designEvets.onNextStep_Event = this.listenOnNextStep
 
-    this.designEvets.onChangedScale_Event = this.listenOnChangedScale_Event
+    this.designEvets.onChangedScale_Event = (e) => {
+      this.scaleSize(e)
+      return false
+    }
     this.designEvets.onDragSelf_Event = this.listenOnDragSelf_Event
   }
 
@@ -73,12 +71,8 @@ export default class PCPageDesign extends EnginePage {
     $(this.$el).append(virtualDom)
     return resComp
   }
+
   /**********************************监听设计事件 ******************************/
-  private listenOnChangedScale_Event(sizechange: number): boolean {
-    this.scaleSize(sizechange)
-    this.designEvets.setCurrentScaleSize(sizechange)
-    return false
-  }
   private listenOnDragSelf_Event(xmove: number, ymove: number) {
     this.left += xmove
     this.top += ymove
@@ -107,10 +101,10 @@ export default class PCPageDesign extends EnginePage {
         break
     }
     if (dropcomp) {
-      let persentleft = screenLeft / $(this.$el).width()
+      let persentleft = screenLeft / this.currentScaleSize / $(this.$el).width()
       dropcomp.left = (persentleft * 100).toFixed(1) + '%'
 
-      let persenttop = screenTop / $(this.$el).height()
+      let persenttop = screenTop / this.currentScaleSize / $(this.$el).height()
       dropcomp.top = (persenttop * 100).toFixed(1) + '%'
     }
     return false

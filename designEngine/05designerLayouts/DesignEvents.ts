@@ -33,17 +33,6 @@ export default class DesignEvents {
   private _vueComp: EngineContainer
   public static isDraging: boolean = false
 
-  private currentScaleSize: number = 1
-
-  public setCurrentScaleSize(sizechange: number) {
-    var newsize = this.currentScaleSize + sizechange
-    if (newsize < 0.01) {
-      return
-    }
-
-    this._dragHelper.currentScaleSize = newsize
-    this.currentScaleSize = newsize
-  }
   public static copyComp: EngineLayout
   public static isCut: boolean = false
 

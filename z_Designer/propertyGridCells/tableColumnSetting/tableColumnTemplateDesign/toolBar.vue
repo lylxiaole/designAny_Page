@@ -26,7 +26,7 @@
         <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Sure" @click="onSure" />
+      <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" label="Save" :enableIcon="saveIcon" @click="onSave" />
       <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Cancel" @click="onCancel" />
     </div>
   </div>
@@ -91,7 +91,6 @@ export default class toolBar extends Vue {
   created() {}
 
   public topre() {
-    console.log('topre')
     this.currentPage.toPreStack()
   }
 
@@ -107,11 +106,12 @@ export default class toolBar extends Vue {
   }
   //************导入插件********************************************************
   private leadinPlugin() {}
-  /*************定制化控制项************************************************************************ */
-  private async onSure() {}
+  /*************定制化控制项**************************************************** */
+  @Emit('onSave')
+  private async onSave() {}
+  @Emit('onCancel')
   private async onCancel() {}
-  /*************对外公布事件************************************************************************ */
-
+  /*************对外公布事件**************************************************** */
   @Emit('onSettingBehavior')
   private onSettingBehavior() {}
 }

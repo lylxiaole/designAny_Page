@@ -33,7 +33,7 @@
               <el-option key="3" label="Radio Box" value="radio" />
               <el-option key="4" label="Expander" value="expand" />
               <el-option key="5" label="Image" value="image" />
-              <el-option key="6" label="template" value="template" />
+              <el-option key="6" label="Template" value="template" />
             </el-select>
           </template>
         </el-table-column>
@@ -67,7 +67,7 @@
       </template>
     </el-dialog>
     <!-- ************************************************************** -->
-    <tableColumnTemplateDesign ref="tableColumnTemplateDesign" />
+    <tableColumnTemplateDesign ref="tableColumnTemplateDesign" @onSure="onTableColumnTemplateDesignSure" />
   </div>
 </template>
 
@@ -142,16 +142,22 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     arr[indexA] = arr[indexB]
     arr[indexB] = temp
   }
-
   private settingColTemplate(key: string) {
     let target = this.localData.find((item) => key === item.key)
-    ;(this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(target.template)
+    ;(this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(key, target.template)
   }
+
+  private onTableColumnTemplateDesignSure(columnKey: string, data: SaveInfo) {
+    let target = this.localData.find((item) => columnKey === item.key)
+    target.template = data
+  }
+
   // ***********************************
   private modalSure() {
     //window.console.log('确认提交')
     this.windowVisible = false
     this.currentValue = deepClone(this.localData)
+    debugger
     this.localData = []
   }
   private modalCancel() {

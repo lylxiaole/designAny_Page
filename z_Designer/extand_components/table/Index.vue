@@ -19,7 +19,13 @@
           </template>
         </VxeColumn>
 
-        <VxeColumn v-if="col.isShow && col.type !== 'image'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field"></VxeColumn>
+        <VxeColumn v-else-if="col.isShow && col.type === 'template'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field">
+          <template #default="{ row }">
+            <TableCellView :bingdingData="col.template" :rowData="row" />
+          </template>
+        </VxeColumn>
+
+        <VxeColumn v-else-if="col.isShow" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field"></VxeColumn>
       </template>
     </VxeTable>
 
@@ -35,7 +41,7 @@ import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentIn
 import { DPropAttr, Number_Setting, PropertyGroupName, TableColumn_Setting, JsonContent_Setting, Boolean_Setting, Color_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
-
+import TableCellView from './TableCellView.vue'
 import { VxeTable, VxeColumn, VxeColgroup, VxePager } from 'vxe-table'
 import { VxeImage } from 'vxe-pc-ui'
 
@@ -47,6 +53,7 @@ import './tableThemeStyle.scss'
 import platform from '@design-any/interface/dist/enums/platform'
 
 import elementResizeDetectorMaker from 'element-resize-detector'
+import { Watch } from 'vue-property-decorator'
 
 @DCompnentAttr(platform.webpc, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
 @Options({
@@ -54,7 +61,8 @@ import elementResizeDetectorMaker from 'element-resize-detector'
     VxeTable,
     VxeColumn,
     VxePager,
-    VxeImage
+    VxeImage,
+    TableCellView
   }
 })
 export default class Index extends EngineComponent {
@@ -82,8 +90,10 @@ export default class Index extends EngineComponent {
 
   @DPropAttr(new Number_Setting('PageIndex', PropertyGroupName.data, true, null))
   private pageIndex: number = 1
+
   @DPropAttr(new Number_Setting('PageSize', PropertyGroupName.data, true, null))
   private pageSize: number = 50
+
   @DPropAttr(new Number_Setting('Data TotalCount', PropertyGroupName.data, false, null))
   private dataTotalCount: number = 0
 
@@ -112,10 +122,10 @@ export default class Index extends EngineComponent {
       return [row]
     }
   }
-
   // *********************************************************
   private resizeListener: any = null
   private tableHeight: number = 0
+
   mounted() {
     this.width = '70%'
     this.height = '50%'
@@ -135,7 +145,6 @@ export default class Index extends EngineComponent {
     if (!this.isShowPager) {
       return $(this.$el).height()
     }
-
     return $(this.$el).height() - 38
   }
 }

@@ -31,13 +31,14 @@ export default class PCPagePreview extends EnginePage {
     let { virtualDom, vueComp } = designDrawDomVirtual(ViewShell, false, { applicationContext: applicationContext })
     // this._dragHelper.makeDomCanDrag(shell.$el)
     this.allShells.push(vueComp as ViewShell)
+
     let resComp = (vueComp as ViewShell).addComponent(compCon)
+
     resComp.$once('onLYLDestroyed', () => {
       let findIndex = this.allShells.findIndex((o) => o == vueComp)
       this.allShells.splice(findIndex, 1)
       ;(vueComp as ViewShell).destorymethod()
     })
-
     // ;(vueComp as ViewShell).startListenItemDrag()
     $(this.$el).append(virtualDom)
     return resComp

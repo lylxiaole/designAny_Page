@@ -60,10 +60,8 @@ export default class dragHelper {
       }
 
       let containeroffset = $(this._container).offset()
-      let scalesize = this.currentScaleSize
-      let offsetX = (e.clientX - containeroffset.left) / scalesize
-      let offsetY = (e.clientY - containeroffset.top) / scalesize
-
+      let offsetX = e.clientX - containeroffset.left
+      let offsetY = e.clientY - containeroffset.top
       let res = await this.onDropEventCallback(dragHelper.dragClone, this._container, offsetX, offsetY)
       if (res === false) {
         e.stopPropagation()
@@ -78,9 +76,8 @@ export default class dragHelper {
       e.preventDefault()
 
       let containeroffset = $(this._container).offset()
-      let scalesize = this.currentScaleSize
-      let offsetX = (e.clientX - containeroffset.left) / scalesize
-      let offsetY = (e.clientY - containeroffset.top) / scalesize
+      let offsetX = e.clientX - containeroffset.left
+      let offsetY = e.clientY - containeroffset.top
 
       // console.log("$(this._container).on('dragover'", offsetY, dragHelper.dragStartY)
       if (isNaN(dragHelper.currentDragX) || isNaN(dragHelper.currentDragY)) {
@@ -88,8 +85,8 @@ export default class dragHelper {
         dragHelper.currentDragY = offsetY
       }
 
-      let xchanged = (offsetX - dragHelper.currentDragX) / scalesize
-      let ychanged = (offsetY - dragHelper.currentDragY) / scalesize
+      let xchanged = offsetX - dragHelper.currentDragX
+      let ychanged = offsetY - dragHelper.currentDragY
       dragHelper.currentDragX = offsetX
       dragHelper.currentDragY = offsetY
 
@@ -169,15 +166,12 @@ export default class dragHelper {
       e.stopPropagation()
       dragHelper.dragClone = e.delegateTarget
 
-      let scalesize = this.currentScaleSize
-
       let containeroffset = $(this._container).offset()
-      let dragStartX = (e.clientX - containeroffset.left) * scalesize
-      let dragStartY = (e.clientY - containeroffset.top) * scalesize
+      let dragStartX = e.clientX - containeroffset.left
+      let dragStartY = e.clientY - containeroffset.top
 
-      dragHelper.dragStartXtoTargetLeft = (dragStartX - $(e.delegateTarget).position().left) * scalesize
-      dragHelper.dragStartYtoTargetTop = (dragStartY - $(e.delegateTarget).position().top) * scalesize
-
+      dragHelper.dragStartXtoTargetLeft = dragStartX - $(e.delegateTarget).position().left
+      dragHelper.dragStartYtoTargetTop = dragStartY - $(e.delegateTarget).position().top
       // console.log('dragstart:', dragXtoTargetLeft, dragYtoTargetTop)
       if (this.onDragEventCallback) {
         this.onDragEventCallback(e.target, this._container)

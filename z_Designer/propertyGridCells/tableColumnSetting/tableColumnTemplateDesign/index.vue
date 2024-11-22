@@ -1,8 +1,8 @@
 <template>
-  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 80%" width="90%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block" oncontextmenu="self.event.returnValue=false;self.event.preventDefault()">
       <el-row style="height: 60px; width: 100%">
-        <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
+        <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onCancel="onClose" @onSettingBehavior="onSettingBehavior"></toolBar>
       </el-row>
       <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
         <el-col style="width: calc(100% - 250px); height: 100%; float: left">
@@ -20,6 +20,8 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
+
 import PageBase from '@common/views/PageBase'
 import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
@@ -47,10 +49,12 @@ import PropertyGrid from '@/commonTool/propertyGrid.vue'
 export default class index extends PageBase {
   private windowVisible: boolean = false
   private currentShowEngine: PCPageDesign = null
+  private columnKey: string = null
+
   protected get selectedComps(): EngineLayout[] {
     if (this.currentShowEngine) {
       var findchilds = this.currentShowEngine.findSelectedLayoutsRecursion(this.currentShowEngine.children)
-      // window.console.log('pppppppppppppppp',findchilds)
+      window.console.log('pppppppppppppppp', findchilds)
       if (findchilds.length > 0) {
         return findchilds
       } else {
@@ -62,11 +66,13 @@ export default class index extends PageBase {
   }
 
   private onClose() {
+    this.currentShowEngine.destorymethod()
     this.windowVisible = false
   }
 
-  public async show(data: SaveInfo) {
+  public async show(columnKey: string, data: SaveInfo) {
     this.windowVisible = true
+    this.columnKey = columnKey
     await this.$nextTick()
 
     if (!data) {
@@ -82,17 +88,34 @@ export default class index extends PageBase {
     ;(vueComp as PCPageDesign).left = 0
     ;(vueComp as PCPageDesign).top = 0
     if (!data.properties) {
-      ;(vueComp as PCPageDesign).width = '100px'
-      ;(vueComp as PCPageDesign).height = '60px'
+      ;(vueComp as PCPageDesign).width = '400px'
+      ;(vueComp as PCPageDesign).height = '300px'
     }
 
     this.currentShowEngine = vueComp as PCPageDesign
     $(this.$refs.designArea).append(virtualDom)
+    await this.$nextTick()
+    //Sacale
+    let scale = $(this.$refs.designArea).width() / $(this.currentShowEngine.$el).width()
+
+    this.currentShowEngine.scaleSize(scale)
   }
 
   private needSave(pageId: string): boolean {
     return false
   }
+
+  private async onSaveCurrentPage() {
+    let data = await this.currentShowEngine.getSaveData()
+
+    this.onSure(this.columnKey, data)
+
+    this.currentShowEngine.destorymethod()
+    this.windowVisible = false
+  }
+
+  @Emit('onSure')
+  private async onSure(columnKey: string, data: SaveInfo) {}
 }
 </script>
 
