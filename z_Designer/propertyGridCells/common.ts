@@ -24,15 +24,18 @@ export function getCellControl(propertySettingType: PropertyTypeEnum): typeof pr
 export default class propertyCellBase<T> extends Vue {
   @Prop()
   private property: PropertySetting
+
   /**当前的布局页面 */
   @Prop()
   protected page: EnginePage
+
   /**当前需要设置的布局类 */
   @Prop()
   protected layouts: EngineLayout[] | EngineLayout
 
   @Prop()
   protected application: ApplicationDC
+
   /**当前属性类型,包含属性的配置（请查看PropertyType类型的子类） */
   protected get currentProperty(): T {
     if (!this.property) {

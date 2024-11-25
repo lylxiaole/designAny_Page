@@ -103,7 +103,6 @@ export default class PCPageDesign extends EnginePage {
     if (dropcomp) {
       let persentleft = screenLeft / this.currentScaleSize / $(this.$el).width()
       dropcomp.left = (persentleft * 100).toFixed(1) + '%'
-
       let persenttop = screenTop / this.currentScaleSize / $(this.$el).height()
       dropcomp.top = (persenttop * 100).toFixed(1) + '%'
     }
@@ -121,13 +120,14 @@ export default class PCPageDesign extends EnginePage {
     if (!dragComp) {
       return false
     }
-    // console.log('-------------------------', left, $(this.$el).offset().left)
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
+      console.log('-------------------------changeComponentPosition:', this.Id)
       this.changeComponentPosition(xchanged, ychanged, mouseleft, mousetop, dragStartXtoTargetLeft, dragStartYtoTargetTop, compInfo.compId)
       return false
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
       // 在容器内拖拽组件大小
       let shell = this.allShells.find((o) => o.component.Id === compInfo.compId)
+      console.log('-------------------------changeComponentPosition:', this.Id)
       // console.log('changeComponentSize:', mouseleft, mousetop)
       this.changeComponentSize(xchanged, ychanged, mouseleft, mousetop, compInfo.compId, shell.$el, compInfo.position)
       return false
@@ -184,10 +184,10 @@ export default class PCPageDesign extends EnginePage {
 
     let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
     //定位
-    let persentleft = (selfPosition.left + 5) / $(this.$el).width()
+    let persentleft = (selfPosition.left + 5 / this.currentScaleSize) / $(this.$el).width() / this.currentScaleSize
     newcopyComp.left = (persentleft * 100).toFixed(1) + '%'
 
-    let persenttop = (selfPosition.top + 5) / $(this.$el).height()
+    let persenttop = (selfPosition.top + 5 / this.currentScaleSize) / $(this.$el).height() / this.currentScaleSize
     newcopyComp.top = (persenttop * 100).toFixed(1) + '%'
 
     this.chooseComp(newcopyComp)

@@ -142,9 +142,9 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     arr[indexA] = arr[indexB]
     arr[indexB] = temp
   }
-  private settingColTemplate(key: string) {
+  private async settingColTemplate(key: string) {
     let target = this.localData.find((item) => key === item.key)
-    ;(this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(key, target.template)
+    await (this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(key, target.template, this.page)
   }
 
   private onTableColumnTemplateDesignSure(columnKey: string, data: SaveInfo) {
@@ -157,7 +157,7 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
     //window.console.log('确认提交')
     this.windowVisible = false
     this.currentValue = deepClone(this.localData)
-    debugger
+
     this.localData = []
   }
   private modalCancel() {

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 80%" width="90%" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 80%" width="90%" top="0px" v-model="windowVisible" :before-close="onDialogBeforeClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block" oncontextmenu="self.event.returnValue=false;self.event.preventDefault()">
       <el-row style="height: 60px; width: 100%">
         <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onCancel="onClose" @onSettingBehavior="onSettingBehavior"></toolBar>
@@ -29,7 +29,7 @@ import { EnginePage, SaveInfo, EngineLayout } from '@design-any/interface/dist/L
 import * as utils from '@design-any/interface/dist/utils'
 
 import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
-import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
+import { designDrawDomVirtual, designDrawDomReal } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType, SavePageDetail } from '@common/apis/designPage'
@@ -54,7 +54,7 @@ export default class index extends PageBase {
   protected get selectedComps(): EngineLayout[] {
     if (this.currentShowEngine) {
       var findchilds = this.currentShowEngine.findSelectedLayoutsRecursion(this.currentShowEngine.children)
-      window.console.log('pppppppppppppppp', findchilds)
+      // window.console.log('pppppppppppppppp', findchilds)
       if (findchilds.length > 0) {
         return findchilds
       } else {
@@ -66,11 +66,17 @@ export default class index extends PageBase {
   }
 
   private onClose() {
-    this.currentShowEngine.destorymethod()
     this.windowVisible = false
+    if (this.currentShowEngine) {
+      this.currentShowEngine.destorymethod()
+      this.currentShowEngine = null
+    }
   }
 
-  public async show(columnKey: string, data: SaveInfo) {
+  private onDialogBeforeClose() {}
+
+  public async show(columnKey: string, data: SaveInfo, parentPage: EnginePage) {
+    data = deepClone(data)
     this.windowVisible = true
     this.columnKey = columnKey
     await this.$nextTick()
@@ -83,15 +89,16 @@ export default class index extends PageBase {
 
     let designLayout: PCPageDesign = findPageByPaltform(platform.webpc, 'design')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
+
     await (vueComp as PCPageDesign).loadPageByData(data.id, data)
     ;(vueComp as PCPageDesign).name = ''
     ;(vueComp as PCPageDesign).left = 0
     ;(vueComp as PCPageDesign).top = 0
     if (!data.properties) {
-      ;(vueComp as PCPageDesign).width = '400px'
-      ;(vueComp as PCPageDesign).height = '300px'
+      ;(vueComp as PCPageDesign).width = '200px'
+      ;(vueComp as PCPageDesign).height = '80px'
     }
-
+    ;(vueComp as PCPageDesign).parentLayout = parentPage
     this.currentShowEngine = vueComp as PCPageDesign
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
@@ -103,6 +110,10 @@ export default class index extends PageBase {
 
   private needSave(pageId: string): boolean {
     return false
+  }
+  // ***********************************************
+  private onSettingBehavior() {
+    ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine)
   }
 
   private async onSaveCurrentPage() {

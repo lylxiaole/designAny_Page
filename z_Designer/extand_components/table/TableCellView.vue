@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%" class="flexHorilanLayout verticalAlignCenter"></div>
 </template>
 
 <script lang="ts">
