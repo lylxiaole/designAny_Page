@@ -23,7 +23,8 @@ import { deepClone, getUuid } from '@common/utils'
 //事件行为绑定组件
 @Options({})
 export default class behaviorListInPage extends Vue {
-  @Prop() currentPage: EnginePage
+  @Prop()
+  currentPage: EnginePage
 
   private get allBehaviors(): behavior[] {
     return this.currentPage.behaviors

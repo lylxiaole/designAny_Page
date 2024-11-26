@@ -49,8 +49,14 @@ import PropertyGrid from '@/commonTool/propertyGrid.vue'
 export default class index extends PageBase {
   private windowVisible: boolean = false
   private currentShowEngine: PCPageDesign = null
-  private columnKey: string = null
 
+  private get topPage(): EnginePage {
+    if (!this.currentShowEngine) {
+      return null
+    }
+    return this.currentShowEngine.topLayout as EnginePage
+  }
+  private columnKey: string = null
   protected get selectedComps(): EngineLayout[] {
     if (this.currentShowEngine) {
       var findchilds = this.currentShowEngine.findSelectedLayoutsRecursion(this.currentShowEngine.children)
@@ -64,7 +70,6 @@ export default class index extends PageBase {
       return null
     }
   }
-
   private onClose() {
     this.windowVisible = false
     if (this.currentShowEngine) {
@@ -72,10 +77,9 @@ export default class index extends PageBase {
       this.currentShowEngine = null
     }
   }
-
   private onDialogBeforeClose() {}
 
-  public async show(columnKey: string, data: SaveInfo, parentPage: EnginePage) {
+  public async show(columnKey: string, data: SaveInfo, parentLayout: EngineLayout) {
     data = deepClone(data)
     this.windowVisible = true
     this.columnKey = columnKey
@@ -98,7 +102,7 @@ export default class index extends PageBase {
       ;(vueComp as PCPageDesign).width = '200px'
       ;(vueComp as PCPageDesign).height = '80px'
     }
-    ;(vueComp as PCPageDesign).parentLayout = parentPage
+    ;(vueComp as PCPageDesign).parentLayout = parentLayout
     this.currentShowEngine = vueComp as PCPageDesign
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
@@ -118,9 +122,7 @@ export default class index extends PageBase {
 
   private async onSaveCurrentPage() {
     let data = await this.currentShowEngine.getSaveData()
-
     this.onSure(this.columnKey, data)
-
     this.currentShowEngine.destorymethod()
     this.windowVisible = false
   }

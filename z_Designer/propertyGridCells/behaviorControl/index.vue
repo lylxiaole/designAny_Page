@@ -55,6 +55,7 @@ export default class index extends propertyCellBase<Behavior_Setting> {
   private currentData: LayoutEventBehaviors[] = []
 
   private windowVisible: boolean = false
+
   private startEdit() {
     if (!this.currentLayouts) {
       return
@@ -101,7 +102,6 @@ export default class index extends propertyCellBase<Behavior_Setting> {
   private onBackUp() {
     this.currentComp = 'eventBinding'
   }
-
   private onSureReference() {
     let res = (this.$refs.behaviorList as any).getSelectedBehaviors() as behavior[]
 

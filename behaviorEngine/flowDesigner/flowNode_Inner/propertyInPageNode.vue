@@ -45,10 +45,13 @@ export default class propertyInPageNode extends Vue {
     if (!this.currentLayoutId) {
       return null
     }
+
     return this.currentPage.findLayoutRecursion(this.currentLayoutId, [this.currentPage])
   }
   private get allayouts(): any[] {
-    return this.orgnizeTree([this.currentPage])
+    let x = this.orgnizeTree([this.currentPage])
+
+    return x
   }
   private orgnizeTree(allayouts: EngineLayout[]): any[] {
     let trees: any[] = []
@@ -58,13 +61,13 @@ export default class propertyInPageNode extends Vue {
         let childrenTree = this.orgnizeTree(layout.children)
         trees.push({
           id: layout.Id,
-          label: '当前页面',
+          label: 'Current Page',
           children: childrenTree
         })
       } else {
         trees.push({
           id: layout.Id,
-          label: layout.name ? layout.name : '未命名控件'
+          label: layout.name ? layout.name : 'No LayoutName'
         })
       }
     }
