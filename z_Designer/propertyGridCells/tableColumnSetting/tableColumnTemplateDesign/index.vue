@@ -102,7 +102,7 @@ export default class index extends PageBase {
       ;(vueComp as PCPageDesign).width = '200px'
       ;(vueComp as PCPageDesign).height = '80px'
     }
-    ;(vueComp as PCPageDesign).parentLayout = parentLayout
+    // ;(vueComp as PCPageDesign).parentLayout = parentLayout
     this.currentShowEngine = vueComp as PCPageDesign
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
