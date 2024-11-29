@@ -193,7 +193,16 @@ export default class index extends PageBase {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }
   private onSettingBehavior() {
-    ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine)
+    let paltform = null
+    if (this.application.type === applicationType.webSystem) {
+      paltform = platform.webpc
+    } else if (this.application.type === applicationType.H5App) {
+      paltform = platform.webapp
+    } else {
+      paltform = platform.webpc
+    }
+
+    ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine, paltform)
   }
   // *************右侧属性窗**********************************************
   private activeName: string = 'first'

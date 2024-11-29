@@ -2,13 +2,13 @@ import { getUuid } from '@common/utils'
 import { EngineLayout, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
-import funcStack from '@design-any/interface/dist/enums/funcStack'
+import platform from '@design-any/interface/dist/enums/platform'
 
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { isPromise } from '@vue/shared'
 import { ElNotification } from 'element-plus'
-
-@resourceFuncAttr('Component Method', '', funcGroup.pageOption, funcCode.methodsInPage, funcStack.webpc, [], { key: getUuid(), name: 'output' })
+// *************************************************************************
+@resourceFuncAttr('Layout Method', '', funcGroup.resoucesInPage, funcCode.methodsInPage, platform.universal, [], null)
 export class methodsInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
@@ -45,7 +45,7 @@ export class methodsInPageMethod implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Component Property', '', funcGroup.pageOption, funcCode.propertiesInPage, funcStack.webpc, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
+@resourceFuncAttr('Layout Property', '', funcGroup.resoucesInPage, funcCode.propertiesInPage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
 export class propertiesInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -68,46 +68,3 @@ export class propertiesInPageMethod implements actFuncBase {
   }
 }
 // *************************************************************************
-@resourceFuncAttr('MessageBox', '', funcGroup.pageOption, funcCode.notificationDialog, funcStack.universal, [], null)
-export class NotificationError implements actFuncBase {
-  currentActObj: actionObj
-  currentLayout: EngineLayout
-  currentPage: EnginePage
-  currentBehavior: behavior
-  async excute(inparams: object_InParam[]) {
-    let msg = this.currentActObj.resourceFilter.message
-    let type = this.currentActObj.resourceFilter.type
-
-    if (type === 'success') {
-      ElNotification.success({
-        title: 'success',
-        message: msg,
-        onClose: () => {}
-      })
-    } else if (type === 'error') {
-      ElNotification.error({
-        title: 'error',
-        message: msg,
-        onClose: () => {}
-      })
-    } else {
-      ElNotification.info({
-        title: 'info',
-        message: msg,
-        onClose: () => {}
-      })
-    }
-  }
-}
-
-@resourceFuncAttr('Page jump', '', funcGroup.pageOption, funcCode.leadToOtherPage, funcStack.universal, [], null)
-export class leadToPage implements actFuncBase {
-  currentActObj: actionObj
-  currentLayout: EngineLayout
-  currentPage: EnginePage
-  currentBehavior: behavior
-  async excute(inparams: object_InParam[]) {
-    let newpageId = this.currentActObj.resourceFilter.pageId
-    this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
-  }
-}

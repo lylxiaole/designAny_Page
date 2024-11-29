@@ -21,7 +21,7 @@
 
         <VxeColumn v-else-if="col.isShow && col.type === 'template'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field">
           <template #default="{ row }">
-            <TableCellView :bingdingData="col.template" :rowData="row" />
+            <TableCellView :parentLayout="this" :bingdingData="col.template" :rowData="row" />
           </template>
         </VxeColumn>
 

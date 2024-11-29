@@ -7,9 +7,9 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
 import excuteJS from '@common/components/commonComponents/funcstrExcute'
 import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/designJSFunc'
-import funcStack from '@design-any/interface/dist/enums/funcStack'
+import platform from '@design-any/interface/dist/enums/platform'
 
-@resourceFuncAttr('Dictionary', '', funcGroup.universalTool, funcCode.dictionary, funcStack.universal, [], { key: getUuid(), name: 'output' })
+@resourceFuncAttr('Dictionary', '', funcGroup.universalTool, funcCode.dictionary, platform.universal, [], { key: getUuid(), name: 'output' })
 export class dictionarys implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -23,7 +23,7 @@ export class dictionarys implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Http Api', '', funcGroup.universalTool, funcCode.thirtyApi, funcStack.universal, [], { key: getUuid(), name: 'output' })
+@resourceFuncAttr('Http Api', '', funcGroup.universalTool, funcCode.thirtyApi, platform.universal, [], { key: getUuid(), name: 'output' })
 export class thirtyApis implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -77,7 +77,7 @@ export class thirtyApis implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Single condition judgment', '', funcGroup.universalTool, funcCode.oneParamJude, funcStack.universal, [{ key: getUuid(), name: 'inParam' }], { key: getUuid(), name: 'output' }, true)
+@resourceFuncAttr('Single condition judgment', '', funcGroup.universalTool, funcCode.oneParamJude, platform.universal, [{ key: getUuid(), name: 'inParam' }], { key: getUuid(), name: 'output' }, true)
 export class oneParamJude implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -93,7 +93,7 @@ export class oneParamJude implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Fixed Value', '', funcGroup.universalTool, funcCode.fixedVal, funcStack.universal, [], { key: getUuid(), name: 'output' })
+@resourceFuncAttr('Fixed Value', '', funcGroup.universalTool, funcCode.fixedVal, platform.universal, [], { key: getUuid(), name: 'output' })
 export class fixedValue implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -113,7 +113,7 @@ export class fixedValue implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('JS Func', '', funcGroup.universalTool, funcCode.jsFunction, funcStack.universal, [], null)
+@resourceFuncAttr('JS Func', '', funcGroup.universalTool, funcCode.jsFunction, platform.universal, [], null)
 export class jsFunction implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

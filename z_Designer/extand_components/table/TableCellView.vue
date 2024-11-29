@@ -24,6 +24,9 @@ export default class TableCellView extends PageBase {
 
   @Prop({ default: () => null })
   public rowData: any
+
+  @Prop({ default: () => null })
+  public parentLayout: EngineLayout
   // *******************************************
   private currentPageEngine: PCPageDesign
   created() {}
@@ -48,6 +51,7 @@ export default class TableCellView extends PageBase {
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
     $(this.$el).append(virtualDom)
+    ;(vueComp as PCPageDesign).parentLayout = this.parentLayout
     // *****************************
     this.currentPageEngine = vueComp as PCPageDesign
   }

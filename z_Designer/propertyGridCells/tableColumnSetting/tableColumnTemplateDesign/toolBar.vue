@@ -85,7 +85,7 @@ export default class toolBar extends Vue {
   }
 
   private get platform(): platform {
-    return platform.tableCell
+    return platform.compContent
   }
 
   created() {}

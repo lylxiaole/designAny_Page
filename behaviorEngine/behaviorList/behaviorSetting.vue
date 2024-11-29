@@ -30,6 +30,7 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import flowDesign from '../behaviorDesigner/flowDesign.vue'
 import resourceTree from '../behaviorDesigner/resourceTree.vue'
+import platform from '@design-any/interface/dist/enums/platform'
 
 @Options({
   components: { flowDesign, resourceTree }
@@ -40,13 +41,13 @@ export default class behaviorSetting extends Vue {
   currentSettingBehavior: behavior = null
   // ****************************************************
   private windowVisible: boolean = false
-  public async show(behav: behavior, page: EnginePage) {
+  public async show(behav: behavior, page: EnginePage, platform: platform) {
     this.currentSettingBehavior = behav
     this.currentPage = page
     this.windowVisible = true
     await this.$nextTick()
     ;(this.$refs.flowDesign as flowDesign).setFlowData(behav, page)
-    ;(this.$refs.resourceTree as resourceTree).init(page)
+    ;(this.$refs.resourceTree as resourceTree).init(page, platform)
   }
 
   private onClose() {

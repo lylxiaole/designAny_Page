@@ -3,8 +3,9 @@ import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInter
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import funcStack from '@design-any/interface/dist/enums/funcStack'
-@resourceFuncAttr('String Cache', '', funcGroup.storages, funcCode.windowLocalStorage, funcStack.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
+import platform from '@design-any/interface/dist/enums/platform'
+
+@resourceFuncAttr('String Cache', '', funcGroup.storages, funcCode.windowLocalStorage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
 export class windowLocalStorage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

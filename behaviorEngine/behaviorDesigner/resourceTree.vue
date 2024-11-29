@@ -34,6 +34,7 @@ import { deepClone, getUuid } from '@common/utils'
 import LogicFlow from '@logicflow/core'
 import { findFlowNode, flowNodeType, anchorType } from '../flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
+import platform from '@design-any/interface/dist/enums/platform'
 
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
@@ -57,9 +58,10 @@ export default class index extends ComponentBase {
 
   currentPage: EnginePage
 
-  public async init(page: EnginePage) {
+  public async init(page: EnginePage, platform: platform) {
     this.currentPage = page
-    this.objGroup = getFuncObjsTree()
+
+    this.objGroup = getFuncObjsTree(platform)
   }
 
   mounted() {}

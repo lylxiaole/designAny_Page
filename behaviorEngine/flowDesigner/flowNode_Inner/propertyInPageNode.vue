@@ -45,33 +45,32 @@ export default class propertyInPageNode extends Vue {
     if (!this.currentLayoutId) {
       return null
     }
-
     return this.currentPage.findLayoutRecursion(this.currentLayoutId, [this.currentPage])
   }
-  private get allayouts(): any[] {
-    let x = this.orgnizeTree([this.currentPage])
 
-    return x
+  private get allayouts(): any[] {
+    let trees: any[] = []
+    let topNode = {
+      id: this.currentPage.Id,
+      label: 'Current Page',
+      children: []
+    }
+
+    let children = this.orgnizeTree(this.currentPage.children)
+    topNode.children = children
+    trees.push(topNode)
+    return trees
   }
+
   private orgnizeTree(allayouts: EngineLayout[]): any[] {
     let trees: any[] = []
     for (let index = 0; index < allayouts.length; index++) {
       const layout = allayouts[index]
-      if (!layout.parentLayout) {
-        let childrenTree = this.orgnizeTree(layout.children)
-        trees.push({
-          id: layout.Id,
-          label: 'Current Page',
-          children: childrenTree
-        })
-      } else {
-        trees.push({
-          id: layout.Id,
-          label: layout.name ? layout.name : 'No LayoutName'
-        })
-      }
+      trees.push({
+        id: layout.Id,
+        label: layout.name ? layout.name : 'No LayoutName'
+      })
     }
-
     return trees
   }
   private onLayoutChange(nodedata, node, e: Event) {

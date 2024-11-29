@@ -62,6 +62,7 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
 import behaviorSetting from './behaviorSetting.vue'
+import platform from '@design-any/interface/dist/enums/platform'
 
 import editableText from '@common/components/Text/editableText.vue'
 @Options({
@@ -74,6 +75,9 @@ export default class behaviorList extends Vue {
     }
   })
   currentPage: EnginePage
+
+  @Prop()
+  private platform: platform
 
   private get allBehaviors(): behavior[] {
     if (!this.currentPage) {
@@ -94,7 +98,7 @@ export default class behaviorList extends Vue {
 
   //编辑，跳转到行为细节详情
   private editBehavior(record: behavior) {
-    ;(this.$refs.behaviorSetting as any).show(record, this.currentPage)
+    ;(this.$refs.behaviorSetting as behaviorSetting).show(record, this.currentPage, this.platform)
   }
 
   private deleteBehavior(record: behavior) {
