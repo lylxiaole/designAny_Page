@@ -26,17 +26,12 @@ import PageBase from '@common/views/PageBase'
 import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage, SaveInfo, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
-import * as utils from '@design-any/interface/dist/utils'
 
 import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
 import { designDrawDomVirtual, designDrawDomReal } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
-import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType, SavePageDetail } from '@common/apis/designPage'
-import behaviorList from '@behaviorEngine/behaviorDebugger/behaviorList.vue'
-import flowDebugger from '@behaviorEngine/behaviorDebugger/flowDebugger.vue'
-import behaviorSetting from '@behaviorEngine/behaviorList/behaviorSetting.vue'
-import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
+
 import { deepClone, getUuid } from '@common/utils'
 
 import behaviorSettingDialog from '@/commonTool/behaviorSettingDialog.vue'
@@ -56,6 +51,7 @@ export default class index extends PageBase {
     }
     return this.currentShowEngine.topLayout as EnginePage
   }
+
   private columnKey: string = null
   protected get selectedComps(): EngineLayout[] {
     if (this.currentShowEngine) {
@@ -70,6 +66,7 @@ export default class index extends PageBase {
       return null
     }
   }
+
   private onClose() {
     this.windowVisible = false
     if (this.currentShowEngine) {
@@ -77,6 +74,7 @@ export default class index extends PageBase {
       this.currentShowEngine = null
     }
   }
+
   private onDialogBeforeClose() {}
 
   public async show(columnKey: string, data: SaveInfo, parentLayout: EngineLayout) {
@@ -106,7 +104,7 @@ export default class index extends PageBase {
     this.currentShowEngine = vueComp as PCPageDesign
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
-    //Sacale
+    //Scale
     let scale = $(this.$refs.designArea).width() / $(this.currentShowEngine.$el).width()
     this.currentShowEngine.scaleSize(scale)
   }

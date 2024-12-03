@@ -25,7 +25,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
-import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
+import { ApplicationDC, GetApplication, applicationType } from '@common/apis/designApplication'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
@@ -161,12 +161,21 @@ export default class index extends PageBase {
 
   //重新编辑行为
   private async onEditBehavior(behav: behavior) {
+    let paltform = null
+    if (this.application.type === applicationType.webSystem) {
+      paltform = platform.webpc
+    } else if (this.application.type === applicationType.H5App) {
+      paltform = platform.webapp
+    } else {
+      paltform = platform.webpc
+    }
+
     try {
       let { virtualDom, vueComp } = await this.openPage_getVueComp(this.currentOpenEngine.Id)
       let pageengin = vueComp as EnginePage
       // **************************
       let findOrgain = pageengin.behaviors.find((o) => o.id === behav.id)
-      ;(this.$refs.behaviorSetting as behaviorSetting).show(deepClone(findOrgain), this.currentOpenEngine)
+      ;(this.$refs.behaviorSetting as behaviorSetting).show(deepClone(findOrgain), this.currentOpenEngine, paltform)
       // **************************
       pageengin.destorymethod()
     } catch (error) {}

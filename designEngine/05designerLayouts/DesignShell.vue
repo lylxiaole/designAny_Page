@@ -112,10 +112,6 @@ export default class DesignShell extends Vue {
     this.local_dragHelper = new dragHelper(this.$el)
     this.local_dragHelper.makeContainerCannotDrop()
     this.local_dragHelper.makeDomCannotDrag(this.$el)
-    this.local_dragHelper.registerOnDragEnd((e) => {
-      ;(this.component.topLayout as EnginePage).clearHorRule()
-      ;(this.component.topLayout as EnginePage).clearVerRule()
-    })
   }
   destorymethod() {
     render(null, this.renderContainer)

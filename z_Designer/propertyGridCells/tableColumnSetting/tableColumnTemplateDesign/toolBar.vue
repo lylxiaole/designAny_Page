@@ -83,7 +83,6 @@ export default class toolBar extends Vue {
     var valchange = val - this.currentPage.currentScaleSize
     this.currentPage.scaleSize(valchange)
   }
-
   private get platform(): platform {
     return platform.compContent
   }
@@ -93,11 +92,9 @@ export default class toolBar extends Vue {
   public topre() {
     this.currentPage.toPreStack()
   }
-
   public tonext() {
     this.currentPage.toNextStack()
   }
-
   private getPopupContainer() {
     this.$nextTick(() => {
       $(this.$el).find('.ant-tooltip-inner').css('padding', '0px')

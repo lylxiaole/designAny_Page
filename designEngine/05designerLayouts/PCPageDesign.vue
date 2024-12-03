@@ -71,7 +71,6 @@ export default class PCPageDesign extends EnginePage {
     $(this.$el).append(virtualDom)
     return resComp
   }
-
   /**********************************监听设计事件 ******************************/
   private listenOnDragSelf_Event(xmove: number, ymove: number) {
     this.left += xmove
@@ -80,6 +79,9 @@ export default class PCPageDesign extends EnginePage {
   }
   private async listenOnDrop(el: Element, container: Element, screenLeft: number, screenTop: number, dragdata: DragItemData<any>): Promise<boolean> {
     // window.console.log('listenOnDrop:', dragdata)
+    this.clearHorRule()
+    this.clearVerRule()
+
     if (!dragdata) {
       return true
     }
@@ -134,7 +136,7 @@ export default class PCPageDesign extends EnginePage {
     }
     return true
   }
-  // **************************************************************************
+  // ******************************************************
   private listenOnDeleteKey(e: Event) {
     e.preventDefault()
     if (this.selectedChildren.length > 0) {
