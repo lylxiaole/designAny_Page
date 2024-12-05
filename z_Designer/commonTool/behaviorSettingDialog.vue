@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { behaviorList } from '@behaviorEngine/index'
+import behaviorList from './behaviorList.vue'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import platform from '@design-any/interface/dist/enums/platform'
 

@@ -1,8 +1,6 @@
 import behaviorContext from './01designerContext/context'
 export { behaviorContext }
 
-import behaviorList from './behaviorList/behaviorList.vue'
-export { behaviorList }
 //加载所有action 方法
 const actFuncModulesFiles = require.context('./actionResourceFunctions', true, /\.(ts|js)$/)
 //加载所有流程节点

@@ -7,17 +7,10 @@
       <!-- ********************************************************************* -->
       <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 99; color: white" @click="onOpenDrawer">Behaviors</el-button>
       <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
-        <el-row style="width: 100%; height: 100%">
-          <div style="width: 220px; height: 100%; float: left">
-            <behaviorList :currentPage="currentOpenEngine" @onBehaviorChanged="onBehaviorChanged" />
-          </div>
-          <div style="width: calc(100% - 220px); height: 100%; float: left">
-            <flowDebugger ref="flowDebugger" @onEditBehavior="onEditBehavior" />
-          </div>
-        </el-row>
+        <behaviorDebugger ref="behaviorDebugger" :currentPage="currentOpenEngine" @onEditBehavior="onEditBehavior" />
       </el-drawer>
       <!-- ********************************************************************* -->
-      <behaviorSetting ref="behaviorSetting" @onSureBehavior="onSureBehavior" />
+      <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
     </el-row>
   </el-dialog>
 </template>
@@ -39,9 +32,8 @@ import applicationContext from '@designEngine/01designerContext/context'
 
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType, SavePageDetail } from '@common/apis/designPage'
 
-import behaviorList from '@behaviorEngine/behaviorDebugger/behaviorList.vue'
-import flowDebugger from '@behaviorEngine/behaviorDebugger/flowDebugger.vue'
-import behaviorSetting from '@behaviorEngine/behaviorList/behaviorSetting.vue'
+import behaviorDesigner from '@behaviorEngine/behaviorDesigner/behaviorDesigner.vue'
+import behaviorDebugger from '@behaviorEngine/behaviorDebugger/behaviorDebugger.vue'
 
 import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { deepClone } from '@common/utils'
@@ -50,9 +42,9 @@ import { deepClone } from '@common/utils'
   components: {
     mobilePagePreview: MobilePagePreview,
     pCPagePreview: PCPagePreview,
-    behaviorList: behaviorList,
-    flowDebugger: flowDebugger,
-    behaviorSetting: behaviorSetting
+    behaviorDebugger: behaviorDebugger,
+
+    behaviorDesigner: behaviorDesigner
   }
 })
 export default class index extends PageBase {
@@ -153,11 +145,6 @@ export default class index extends PageBase {
   private onOpenDrawer() {
     this.drawerShow = true
   }
-  private onBehaviorChanged(behav: behavior) {
-    if (this.$refs.flowDebugger) {
-      ;(this.$refs.flowDebugger as flowDebugger).setFlowData(behav, this.currentOpenEngine)
-    }
-  }
 
   //重新编辑行为
   private async onEditBehavior(behav: behavior) {
@@ -175,7 +162,7 @@ export default class index extends PageBase {
       let pageengin = vueComp as EnginePage
       // **************************
       let findOrgain = pageengin.behaviors.find((o) => o.id === behav.id)
-      ;(this.$refs.behaviorSetting as behaviorSetting).show(deepClone(findOrgain), this.currentOpenEngine, paltform)
+      ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(findOrgain), this.currentOpenEngine, paltform)
       // **************************
       pageengin.destorymethod()
     } catch (error) {}
@@ -196,7 +183,10 @@ export default class index extends PageBase {
     // **************************
     findbehaviorIndex = this.currentOpenEngine.behaviors.findIndex((o) => o.id === behav.id)
     this.currentOpenEngine.behaviors.splice(findbehaviorIndex, 1, deepClone(behav))
-    this.onBehaviorChanged(deepClone(behav))
+
+    if (this.$refs.behaviorDebugger) {
+      ;(this.$refs.behaviorDebugger as behaviorDebugger).setFlowData(deepClone(behav), this.currentOpenEngine)
+    }
   }
 }
 </script>

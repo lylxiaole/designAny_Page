@@ -18,7 +18,6 @@ class NodeView extends VueHtmlNode {
   constructor(props) {
     super(props)
     this.isMounted = false
-
     //绘制节点
     this.r = h(nodeDebugBase as any, {
       nodeModel: props.model

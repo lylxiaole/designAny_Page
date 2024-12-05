@@ -34,7 +34,6 @@ export default class JSFunc extends Vue {
 
   mounted() {
     this.loadAllApis()
-
     if (this.actObj.resourceFilter.funcId) {
       this.currentSelectId = this.actObj.resourceFilter.funcId
     }

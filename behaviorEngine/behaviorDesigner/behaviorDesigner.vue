@@ -28,8 +28,8 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop, Ref } from 'vue-property-decorator'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
-import flowDesign from '../behaviorDesigner/flowDesign.vue'
-import resourceTree from '../behaviorDesigner/resourceTree.vue'
+import flowDesign from './flowDesign.vue'
+import resourceTree from './resourceTree.vue'
 import platform from '@design-any/interface/dist/enums/platform'
 
 @Options({

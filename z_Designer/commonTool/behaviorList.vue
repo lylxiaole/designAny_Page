@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <behaviorSetting ref="behaviorSetting" />
+    <behaviorDesigner ref="behaviorDesigner" />
   </el-row>
 </template>
 
@@ -61,12 +61,12 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
-import behaviorSetting from './behaviorSetting.vue'
+import behaviorDesigner from '@behaviorEngine/behaviorDesigner/behaviorDesigner.vue'
 import platform from '@design-any/interface/dist/enums/platform'
 
 import editableText from '@common/components/Text/editableText.vue'
 @Options({
-  components: { behaviorSetting, editableText }
+  components: { behaviorDesigner, editableText }
 })
 export default class behaviorList extends Vue {
   @Prop({
@@ -98,7 +98,7 @@ export default class behaviorList extends Vue {
 
   //编辑，跳转到行为细节详情
   private editBehavior(record: behavior) {
-    ;(this.$refs.behaviorSetting as behaviorSetting).show(record, this.currentPage, this.platform)
+    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(record, this.currentPage, this.platform)
   }
 
   private deleteBehavior(record: behavior) {

@@ -50,9 +50,6 @@ export default class behaviorList extends Vue {
     this.onBehaviorChanged(selectedb)
   }
 
-  @Emit('onEditBehavior')
-  private onEditBehavior(beha) {}
-
   @Emit('onBehaviorChanged')
   private onBehaviorChanged(behav: behavior) {}
 }
