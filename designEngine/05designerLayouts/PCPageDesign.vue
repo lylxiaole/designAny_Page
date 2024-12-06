@@ -123,13 +123,13 @@ export default class PCPageDesign extends EnginePage {
       return false
     }
     if (dragdata.type == DragItemTypeEnum.dragmove_component_inpage) {
-      console.log('-------------------------changeComponentPosition:', this.Id)
+      // console.log('-------------------------changeComponentPosition:', this.Id)
       this.changeComponentPosition(xchanged, ychanged, mouseleft, mousetop, dragStartXtoTargetLeft, dragStartYtoTargetTop, compInfo.compId)
       return false
     } else if (dragdata.type == DragItemTypeEnum.drag_component_size) {
       // 在容器内拖拽组件大小
       let shell = this.allShells.find((o) => o.component.Id === compInfo.compId)
-      console.log('-------------------------changeComponentPosition:', this.Id)
+      // console.log('-------------------------changeComponentPosition:', this.Id)
       // console.log('changeComponentSize:', mouseleft, mousetop)
       this.changeComponentSize(xchanged, ychanged, mouseleft, mousetop, compInfo.compId, shell.$el, compInfo.position)
       return false
@@ -159,7 +159,7 @@ export default class PCPageDesign extends EnginePage {
     }
   }
   private listenOnCopy(e) {
-    window.console.log('listenOnCopy:', e)
+    // window.console.log('listenOnCopy:', e)
     if (this.selectedChildren && this.selectedChildren.length > 0) {
       DesignEvents.copyComp = this.selectedChildren[0] as EngineLayout
       // this.$message.success('组件已复制', 2)

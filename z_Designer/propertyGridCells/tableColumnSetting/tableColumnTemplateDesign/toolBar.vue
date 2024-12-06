@@ -17,7 +17,15 @@
         </template>
         <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
       </el-tooltip>
-      <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon" label="Behaviors" @click="onSettingBehavior" />
+
+      <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" append-to="body" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+        <template #content>
+          <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
+            <behaviorList :platform="platform" :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
+          </div>
+        </template>
+        <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon" label="Behaviors" />
+      </el-tooltip>
       <!-- *************************************************************************** -->
       <div :style="{ width: '150px' }" style="margin-right: 15px" class="iconitem themeHover">
         <div class="flexHorilanLayout" style="width: 100%; height: 50%">
@@ -29,6 +37,7 @@
       <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" label="Save" :enableIcon="saveIcon" @click="onSave" />
       <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Cancel" @click="onCancel" />
     </div>
+    <behaviorDesigner ref="behaviorDesigner" />
   </div>
 </template>
 
@@ -41,11 +50,16 @@ import optionBtn from '@/commonTool/optionBtn.vue'
 import { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon } from '@/assets/designIcons'
 import { ApplicationDC, applicationType } from '@common/apis/designApplication'
 import platform from '@design-any/interface/dist/enums/platform'
+import behaviorList from '@/commonTool/behaviorList.vue'
+import behaviorDesigner from '@behaviorEngine/behaviorDesigner/behaviorDesigner.vue'
+import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 @Options({
   components: {
     componentListControl,
-    optionBtn
+    optionBtn,
+    behaviorList,
+    behaviorDesigner
   }
 })
 export default class toolBar extends Vue {
@@ -101,6 +115,10 @@ export default class toolBar extends Vue {
     })
     return this.$refs.miandiv
   }
+
+  private onDesignBehavior(behav: behavior) {
+    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage, this.platform)
+  }
   //************导入插件********************************************************
   private leadinPlugin() {}
   /*************定制化控制项**************************************************** */
@@ -108,9 +126,6 @@ export default class toolBar extends Vue {
   private async onSave() {}
   @Emit('onCancel')
   private async onCancel() {}
-  /*************对外公布事件**************************************************** */
-  @Emit('onSettingBehavior')
-  private onSettingBehavior() {}
 }
 </script>
 

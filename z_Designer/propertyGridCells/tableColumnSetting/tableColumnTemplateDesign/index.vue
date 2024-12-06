@@ -2,7 +2,7 @@
   <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 80%" width="90%" top="0px" v-model="windowVisible" :before-close="onDialogBeforeClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block" oncontextmenu="self.event.returnValue=false;self.event.preventDefault()">
       <el-row style="height: 60px; width: 100%">
-        <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onCancel="onClose" @onSettingBehavior="onSettingBehavior"></toolBar>
+        <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onCancel="onClose"></toolBar>
       </el-row>
       <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
         <el-col style="width: calc(100% - 250px); height: 100%; float: left">
@@ -12,8 +12,6 @@
           <PropertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
         </el-col>
       </el-row>
-
-      <behaviorSettingDialog ref="behaviorSettingDialog" />
     </el-row>
   </el-dialog>
 </template>
@@ -34,12 +32,11 @@ import applicationContext from '@designEngine/01designerContext/context'
 
 import { deepClone, getUuid } from '@common/utils'
 
-import behaviorSettingDialog from '@/commonTool/behaviorSettingDialog.vue'
 import toolBar from './toolBar.vue'
 import PropertyGrid from '@/commonTool/propertyGrid.vue'
 
 @Options({
-  components: { toolBar, behaviorSettingDialog, PropertyGrid }
+  components: { toolBar, PropertyGrid }
 })
 export default class index extends PageBase {
   private windowVisible: boolean = false
@@ -113,9 +110,6 @@ export default class index extends PageBase {
     return false
   }
   // ***********************************************
-  private onSettingBehavior() {
-    ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine, platform.compContent)
-  }
 
   private async onSaveCurrentPage() {
     let data = await this.currentShowEngine.getSaveData()

@@ -26,7 +26,7 @@
             <el-button
               @click="
                 () => {
-                  editBehavior(beha)
+                  onDesignBehavior(beha)
                 }
               "
               type="link"
@@ -49,8 +49,6 @@
         </el-row>
       </div>
     </div>
-
-    <behaviorDesigner ref="behaviorDesigner" />
   </el-row>
 </template>
 
@@ -61,12 +59,11 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { deepClone, getUuid } from '@common/utils'
-import behaviorDesigner from '@behaviorEngine/behaviorDesigner/behaviorDesigner.vue'
 import platform from '@design-any/interface/dist/enums/platform'
 
 import editableText from '@common/components/Text/editableText.vue'
 @Options({
-  components: { behaviorDesigner, editableText }
+  components: { editableText }
 })
 export default class behaviorList extends Vue {
   @Prop({
@@ -96,15 +93,14 @@ export default class behaviorList extends Vue {
     this.allBehaviors.unshift(newbeh)
   }
 
-  //编辑，跳转到行为细节详情
-  private editBehavior(record: behavior) {
-    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(record, this.currentPage, this.platform)
-  }
-
   private deleteBehavior(record: behavior) {
     let index = this.allBehaviors.findIndex((o) => o.id === record.id)
     this.allBehaviors.splice(index, 1)
   }
+
+  //编辑，跳转到行为细节详情
+  @Emit('onDesignBehavior')
+  private onDesignBehavior(record: behavior) {}
 }
 </script>
 

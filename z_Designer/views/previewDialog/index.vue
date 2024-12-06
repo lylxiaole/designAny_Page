@@ -43,7 +43,6 @@ import { deepClone } from '@common/utils'
     mobilePagePreview: MobilePagePreview,
     pCPagePreview: PCPagePreview,
     behaviorDebugger: behaviorDebugger,
-
     behaviorDesigner: behaviorDesigner
   }
 })
@@ -99,7 +98,6 @@ export default class index extends PageBase {
 
     await this.openPage_drawVueCom(virtualDom, vueComp)
   }
-
   private async openPage_getVueComp(pageId: string) {
     let cachePageData = await GetPageDetail(pageId)
     if (cachePageData.designDetail) {

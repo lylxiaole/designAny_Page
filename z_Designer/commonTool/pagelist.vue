@@ -61,7 +61,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { DesignPageGroupDC, DesignPageDC, TreeNodeDC, GetApplicationPages, ChangeGroupGroup, ChangePageGroup, AddPage, AddGroup, SetDefaultPage, UpdatePageName, UpdateGroupName, UpdateNodesSort, DeletePage, DeleteGroup, pageType } from '@common/apis/designPage'
-import { behaviorList, behaviorContext } from '@behaviorEngine/index'
+import { behaviorContext } from '@behaviorEngine/index'
 
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'

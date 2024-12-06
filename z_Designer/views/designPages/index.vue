@@ -20,7 +20,6 @@
     </el-row>
 
     <previewPage ref="previewPage" />
-    <behaviorSettingDialog ref="behaviorSettingDialog" />
   </el-row>
 </template>
 
@@ -34,7 +33,6 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 
 import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 
-import { behaviorList, behaviorContext } from '@behaviorEngine/index'
 import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
 import applicationContext from '@designEngine/01designerContext/context'
 
@@ -44,7 +42,6 @@ import platform from '@design-any/interface/dist/enums/platform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 
 import previewPage from '@/views/previewDialog/index.vue'
-import behaviorSettingDialog from '@/commonTool/behaviorSettingDialog.vue'
 import propertyGrid from '@/commonTool/propertyGrid.vue'
 import pagelist from '@/commonTool/pagelist.vue'
 import toolBar from './tooBar.vue'
@@ -57,9 +54,7 @@ import toolBar from './tooBar.vue'
     mobilePagePreview: MobilePagePreview,
     pCPageDesign: PCPageDesign,
     pCPagePreview: PCPagePreview,
-    behaviorList: behaviorList,
-    previewPage: previewPage,
-    behaviorSettingDialog: behaviorSettingDialog
+    previewPage: previewPage
   }
 })
 export default class index extends PageBase {
@@ -192,18 +187,7 @@ export default class index extends PageBase {
   private onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }
-  private onSettingBehavior() {
-    let paltform = null
-    if (this.application.type === applicationType.webSystem) {
-      paltform = platform.webpc
-    } else if (this.application.type === applicationType.H5App) {
-      paltform = platform.webapp
-    } else {
-      paltform = platform.webpc
-    }
 
-    ;(this.$refs.behaviorSettingDialog as behaviorSettingDialog).show(this.currentShowEngine, paltform)
-  }
   // *************右侧属性窗**********************************************
   private activeName: string = 'first'
   // ********************************************************************

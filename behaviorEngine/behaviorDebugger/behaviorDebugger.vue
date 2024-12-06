@@ -13,7 +13,6 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { deepClone, getUuid } from '@common/utils'
 
 import behaviorList from './behaviorList.vue'
 import flowDebugger from './flowDebugger.vue'
@@ -38,7 +37,6 @@ export default class behaviorDebugger extends ComponentBase {
   }
 
   private async onBehaviorChanged(behav: behavior) {
-    debugger
     await this.setFlowData(behav, this.currentPage)
   }
 
