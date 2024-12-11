@@ -67,4 +67,15 @@ export class propertiesInPageMethod implements actFuncBase {
     return targetLayout[propField]
   }
 }
+
+@resourceFuncAttr('Layout Behavior', '', funcGroup.resoucesInPage, funcCode.behaviorsInPage, platform.universal, [], null)
+export class behaviorsInPageMethod implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute(inparams: object_InParam[]) {
+    let { behaviorId } = this.currentActObj.resourceFilter
+  }
+}
 // *************************************************************************

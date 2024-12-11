@@ -9,18 +9,18 @@
     <optionBtn v-if="currentPage" :enable="currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'" :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="'Redo'" @mouseup="tonext" />
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
-      <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+      <el-tooltip placement="bottom" effect="light" popper-class="designtooltip" style="background: transparen" :overlayStyle="{ maxWidth: '20000px' }">
         <template #content>
-          <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
+          <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
             <componentListControl :platform="platform" style="width: 100%; height: 100%" />
           </div>
         </template>
         <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
       </el-tooltip>
 
-      <el-tooltip placement="bottom" effect="light" overlayClassName="nptooltip" style="background: transparen" append-to="body" :overlayStyle="{ maxWidth: '20000px', background: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,1)' }">
+      <el-tooltip placement="bottom" effect="light" popper-class="designtooltip" style="background: transparen" append-to="body" :overlayStyle="{ maxWidth: '20000px' }">
         <template #content>
-          <div style="width: 467px; height: 357px; background-color: #ffffff; background: #ffffff">
+          <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
             <behaviorList :platform="platform" :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
           </div>
         </template>

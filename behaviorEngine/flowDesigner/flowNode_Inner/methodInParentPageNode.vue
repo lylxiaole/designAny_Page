@@ -47,18 +47,18 @@ export default class propertyInPageNode extends Vue {
       return null
     }
 
-    return this.currentPage.topLayout.findLayoutRecursion(this.currentLayoutId, [this.currentPage.topLayout])
+    return this.currentPage.parentLayout.findLayoutRecursion(this.currentLayoutId, [this.currentPage.parentLayout])
   }
 
   private get allayouts(): any[] {
     let trees: any[] = []
     let topNode = {
-      id: this.currentPage.topLayout.Id,
+      id: this.currentPage.parentLayout.Id,
       label: 'Current Page',
       children: []
     }
 
-    let children = this.orgnizeTree(this.currentPage.topLayout.children)
+    let children = this.orgnizeTree(this.currentPage.parentLayout.children)
     topNode.children = children
     trees.push(topNode)
     return trees

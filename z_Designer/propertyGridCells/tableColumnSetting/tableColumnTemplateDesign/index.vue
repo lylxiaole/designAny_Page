@@ -42,11 +42,11 @@ export default class index extends PageBase {
   private windowVisible: boolean = false
   private currentShowEngine: PCPageDesign = null
 
-  private get topPage(): EnginePage {
+  private get parentPage(): EnginePage {
     if (!this.currentShowEngine) {
       return null
     }
-    return this.currentShowEngine.topLayout as EnginePage
+    return this.currentShowEngine.parentLayout as EnginePage
   }
 
   private columnKey: string = null

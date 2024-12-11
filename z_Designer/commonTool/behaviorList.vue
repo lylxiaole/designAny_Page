@@ -1,5 +1,5 @@
 <template style="height: 100%; width: 100%">
-  <el-row v-if="currentPage" style="height: 100%; background: #fff">
+  <el-row v-if="currentPage" style="height: 100%; width: 100%">
     <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
       <div style="background: #18aeb7; width: 6px; height: 26px"></div>
       <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">Behavior List</span>

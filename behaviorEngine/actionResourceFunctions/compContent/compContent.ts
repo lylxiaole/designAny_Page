@@ -25,11 +25,11 @@ export class methodsInParentPage implements actFuncBase {
     let { layoutId, methodField } = this.currentActObj.resourceFilter
     let targetLayout: EngineLayout = null
 
-    let topPage = this.currentPage.topLayout as EnginePage
-    if (topPage.Id === layoutId) {
-      targetLayout = topPage
+    let parentPage = this.currentPage.parentLayout as EnginePage
+    if (parentPage.Id === layoutId) {
+      targetLayout = parentPage
     } else {
-      targetLayout = topPage.findLayoutRecursion(layoutId, topPage.children)
+      targetLayout = parentPage.findLayoutRecursion(layoutId, parentPage.children)
     }
 
     if (!targetLayout) {
@@ -57,12 +57,12 @@ export class propertiesInParentPage implements actFuncBase {
     let { layoutId, propField } = this.currentActObj.resourceFilter
     let targetLayout: EngineLayout = null
 
-    let topPage = this.currentPage.topLayout as EnginePage
+    let parentPage = this.currentPage.parentLayout as EnginePage
 
-    if (topPage.Id === layoutId) {
-      targetLayout = topPage
+    if (parentPage.Id === layoutId) {
+      targetLayout = parentPage
     } else {
-      targetLayout = topPage.findLayoutRecursion(layoutId, topPage.children)
+      targetLayout = parentPage.findLayoutRecursion(layoutId, parentPage.children)
     }
 
     if (inparams[0]) {
@@ -73,25 +73,13 @@ export class propertiesInParentPage implements actFuncBase {
   }
 }
 
-// @resourceFuncAttr('Parent Layout Behavior', '', funcGroup.resoucesInParentPage, funcCode.behaviorsInParentPage, platform.universal, [], null)
-// export class behaviorsInParentPage implements actFuncBase {
-//   currentActObj: actionObj
-//   currentLayout: EngineLayout
-//   currentPage: EnginePage
-//   currentBehavior: behavior
-//   async excute(inparams: object_InParam[]) {
-//     let { layoutId, propField } = this.currentActObj.resourceFilter
-//     let targetLayout: EngineLayout = null
-//     if (this.currentPage.Id === layoutId) {
-//       targetLayout = this.currentPage
-//     } else {
-//       targetLayout = this.currentPage.findLayoutRecursion(layoutId, this.currentPage.children)
-//     }
-
-//     if (inparams[0]) {
-//       targetLayout[propField] = inparams[0].val
-//     }
-
-//     return targetLayout[propField]
-//   }
-// }
+@resourceFuncAttr('Parent Layout Behavior', '', funcGroup.resoucesInParentPage, funcCode.behaviorsInParentPage, platform.compContent, [], null)
+export class behaviorsInParentPage implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute(inparams: object_InParam[]) {
+    let { behaviorId } = this.currentActObj.resourceFilter
+  }
+}

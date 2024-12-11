@@ -144,7 +144,7 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
   }
   private async settingColTemplate(key: string) {
     let target = this.localData.find((item) => key === item.key)
-    await (this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(key, target.template, this.currentLayouts[0])
+    await (this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(key, target.template, this.page)
   }
   private onTableColumnTemplateDesignSure(columnKey: string, data: SaveInfo) {
     let target = this.localData.find((item) => columnKey === item.key)
