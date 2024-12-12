@@ -70,7 +70,7 @@ export default class behaviorInParentPageNode extends Vue {
       for (let jndex = 0; jndex < behavior.inParams.length; jndex++) {
         const inparam = behavior.inParams[jndex]
         inparams.push({
-          key: makeParamKey(this.actObj.id, inparam.name),
+          key: makeParamKey(this.actObj.id, inparam.key),
           name: inparam.name
         } as any)
       }

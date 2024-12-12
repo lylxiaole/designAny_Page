@@ -42,6 +42,7 @@ export default class nodeDebugBase extends Vue {
   private nodeModel: HtmlNodeModel
 
   private actObj: actionObj = null
+
   private onactObjchanged(val: actionObj) {
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()
