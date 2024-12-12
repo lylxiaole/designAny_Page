@@ -16,6 +16,7 @@ import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDo
 import applicationContext from '../../../designEngine/01designerContext/context'
 import PageBase from '@common/views/PageBase'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
+import { toRaw } from 'vue'
 
 @Options({})
 export default class TableCellView extends PageBase {
@@ -52,7 +53,7 @@ export default class TableCellView extends PageBase {
     ;(vueComp as any).top = 0
     $(this.$el).append(virtualDom)
     ;(vueComp as PCPageDesign).parentLayout = this.parentLayout
-    ;(vueComp as PCPageDesign).pageContext = [{ key: 'tableRow', name: 'Current Row Data', val: this.rowData }]
+    ;(vueComp as PCPageDesign).pageContext = [{ key: 'tableRow', name: 'Current Row Data', val: toRaw(this.rowData) }]
 
     // *****************************
     this.currentPageEngine = vueComp as PCPageDesign
