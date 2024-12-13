@@ -37,7 +37,7 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 @Options({
   components: {}
 })
-export default class nodeDebugBase extends Vue {
+export default class nodeDebugUI extends Vue {
   @Prop()
   private nodeModel: HtmlNodeModel
 

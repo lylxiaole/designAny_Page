@@ -26,11 +26,12 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 @Options({
   components: {}
 })
-export default class nodeBase extends Vue {
+export default class nodeDesignUI extends Vue {
   @Prop()
   private nodeModel: HtmlNodeModel
 
   private actObj: actionObj = null
+
   private onactObjchanged(val: actionObj) {
     this.nodeModel.setProperties({ actObj: val })
     this.nodeModel.updateAnchor()
@@ -71,13 +72,16 @@ export default class nodeBase extends Vue {
   mounted() {
     let { actObj } = this.nodeModel.getProperties()
     let funcCode = actObj.funcCode
+
     this.actObj = deepClone(actObj)
     let flowNodeVue = findFlowNodeInner(funcCode)
 
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
+
     let app = createApp({
       render: () => r
     })
+
     app.use(ElementPlus)
     app.mount(this.$refs.renderContainer as any)
 

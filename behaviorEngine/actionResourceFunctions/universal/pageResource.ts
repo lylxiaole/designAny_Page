@@ -79,3 +79,13 @@ export class behaviorsInPageMethod implements actFuncBase {
   }
 }
 // *************************************************************************
+@resourceFuncAttr('Behavior Inparam', '', funcGroup.currentBehaviorInparam, funcCode.behaviorInparam, platform.universal, [], null)
+export class behaviorInparamMethod implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute(inparams: object_InParam[]) {
+    let { inparamKey } = this.currentActObj.resourceFilter
+  }
+}

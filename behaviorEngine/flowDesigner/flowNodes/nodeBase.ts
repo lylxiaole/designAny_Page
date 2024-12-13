@@ -3,7 +3,6 @@ import { createApp, h, VNode, render, ref } from 'vue'
 import { findFlowNodeInner, anchorType } from '../flowTypes'
 import { deepClone, getUuid } from '@common/utils'
 import ElementPlus from 'element-plus'
-import nodeBase from './nodeBase.vue'
 import { HtmlResize } from '@logicflow/extension'
 import '@logicflow/extension/lib/style/index.css'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
@@ -19,17 +18,6 @@ class VueHtmlNode extends HtmlResize.view {
   constructor(props) {
     super(props)
     this.isMounted = false
-    //找到actObj的funcCode
-    //绘制节点
-    this.r = h(nodeBase as any, {
-      nodeModel: props.model
-    })
-
-    this.app = createApp({
-      render: () => this.r
-    })
-
-    this.app.use(ElementPlus)
   }
 
   getAnchorShape(anchorData) {
@@ -199,7 +187,6 @@ class VueHtmlNodeModel extends HtmlResize.model {
     // }
     return anchors
   }
-
   updateAnchor() {
     this.incoming.edges.forEach((egde) => {
       // 调用自定义的更新方案
@@ -211,7 +198,6 @@ class VueHtmlNodeModel extends HtmlResize.model {
 
     this.setAttributes()
   }
-
   setIsShowAnchor(flag?: boolean) {
     super.setIsShowAnchor(true)
   }
