@@ -71,7 +71,7 @@ export default class behaviorList extends Vue {
     newbeh.name = 'New Behavior'
     newbeh.workRange = 'page'
     newbeh.variables = []
-    newbeh.inparam = {}
+    newbeh.inParams = []
     this.allBehaviors.unshift(newbeh)
   }
 
