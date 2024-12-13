@@ -101,7 +101,7 @@ export default class index extends PageBase {
     this.currentShowEngine = vueComp as PCPageDesign
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
-    ;(vueComp as PCPageDesign).pageContext = [{ key: 'tableRow', name: 'Current Row Data' }]
+    ;(vueComp as PCPageDesign).pageContext = [{ key: 'tableCurrentRow', name: 'Current Row Data' }]
 
     //Scale
     let scale = $(this.$refs.designArea).width() / $(this.currentShowEngine.$el).width()

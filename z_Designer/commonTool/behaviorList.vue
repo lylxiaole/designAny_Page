@@ -23,27 +23,9 @@
           </el-col>
           <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
             <!-- ****************************** -->
-            <el-button
-              @click="
-                () => {
-                  onDesignBehavior(beha)
-                }
-              "
-              type="link"
-            >
-              Edit
-            </el-button>
+            <el-button size="small" @click="onDesignBehavior(beha)" type="link">Edit</el-button>
             <!-- ****************************** -->
-            <el-button
-              @click="
-                () => {
-                  deleteBehavior(beha)
-                }
-              "
-              type="link"
-            >
-              Delete
-            </el-button>
+            <el-button size="small" @click="deleteBehavior(beha)" type="link">Delete</el-button>
             <!-- ****************************** -->
           </el-col>
         </el-row>
