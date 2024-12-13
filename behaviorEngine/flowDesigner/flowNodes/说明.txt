@@ -1,0 +1,29 @@
+                     
+                     
+                     LogicFlow                                                  
+                         |
+                         |
+                         |
+                         | 
+
+              funcNormalDebugNode.ts         nodeDebugUI.vue                  
+              onParamJudeDebugNode.ts                                     
+nodeBase.ts->                           ->                       ->      flowNode_Inner
+
+              funcNormalDesignNode.ts        nodeDesignUI.vue
+              onParamJudeDesignNode.ts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
