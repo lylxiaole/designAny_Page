@@ -86,6 +86,6 @@ export class behaviorInparamMethod implements actFuncBase {
   currentPage: EnginePage
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
-    let { inparamKey } = this.currentActObj.resourceFilter
+    let { behaviorName } = this.currentActObj.resourceFilter
   }
 }

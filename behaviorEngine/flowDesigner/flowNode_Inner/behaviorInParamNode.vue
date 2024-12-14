@@ -1,10 +1,8 @@
 <template>
   <el-row style="width: 100%; height: 100%">
-    <el-col :span="6">Behavior:</el-col>
+    <el-col :span="6">Behavior Name:</el-col>
     <el-col :span="18">
-      <el-select v-model="currentBehaviorId" placeholder="Select" size="small">
-        <el-option v-for="behavior in allBehaviors" :key="behavior.id" :label="behavior.name" :value="behavior.id" />
-      </el-select>
+      <el-input v-model="actObj.resourceFilter.behaviorName" placeholder="Please Input Behavior Name" size="small" />
     </el-col>
   </el-row>
 </template>
@@ -32,12 +30,7 @@ export default class behaviorInPageNode extends Vue {
   @Prop()
   private currentPage: EnginePage
 
-  // *************方法*****************************
-  private currentBehaviorId: string = null
-
-  mounted() {
-    this.currentBehaviorId = this.actObj.resourceFilter.behaviorId
-  }
+  mounted() {}
 }
 </script>
 
