@@ -62,9 +62,9 @@ export default class index extends ComponentBase {
     this.currentPage = page
     this.objGroup = getFuncObjsTree(platform)
   }
-
+  // **************************************************************
   mounted() {}
-  // **********资源树操作**************************************************************
+  // **********资源树操作*******************************************
   private seachVal: string = ''
   private treeData: TreeNodeDC[] = []
   @Watch('objGroup', { deep: true, immediate: true })
