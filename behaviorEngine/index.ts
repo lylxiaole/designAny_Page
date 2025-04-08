@@ -15,6 +15,7 @@ export async function init(apiAddr, getAllDictionary, getAllThirtyApis, getGroup
     behaviorContext.getAllJSFuncs = getGroupFuncsAll
     behaviorContext.allDictionary = await getAllDictionary()
     behaviorContext.allThirtyApis = await getAllThirtyApis()
+
     behaviorContext.allJSFuncs = await getGroupFuncsAll()
   } catch (error) {}
 

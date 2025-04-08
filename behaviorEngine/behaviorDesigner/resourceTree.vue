@@ -3,7 +3,8 @@
     <div style="height: 100%; width: 100%">
       <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: 100%">
         <div style="overflow: auto; width: 100%; height: 100%; background: white">
-          <el-tree node-key="id" :data="treeData" @node-drag-start="handleDragStart" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="true" draggable highlight-current default-expand-all>
+          <el-tree node-key="id" :data="treeData" @node-drag-start="handleDragStart" :allow-drop="allowDrop" :allow-drag="allowDrag"
+            :expand-on-click-node="true" draggable highlight-current default-expand-all>
             <template #default="{ data }">
               <div draggable="true" v-if="data.type === 'page'">
                 <span class="icon iconfont">&#xe627;</span>
@@ -57,10 +58,8 @@ export default class index extends ComponentBase {
   }
 
   currentPage: EnginePage
-
   public async init(page: EnginePage, platform: platform) {
     this.currentPage = page
-
     this.objGroup = getFuncObjsTree(platform)
   }
 

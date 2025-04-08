@@ -1,6 +1,7 @@
 <template>
   <el-row style="width: 100%; height: 100%">
-    <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allApisTree" :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
+    <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allApisTree" :render-after-expand="true"
+      @check-change="onCurrentNodeChange" default-expand-all check-strictly />
   </el-row>
 </template>
 
@@ -75,7 +76,6 @@ export default class thirtyApiNode extends Vue {
 
     this.actObj.resourceFilter.apiInfo = nodedata.apidata
     this.currentSelectId = this.actObj.resourceFilter.apiInfo.id
-
     this.actObj.inputParams = []
 
     if (nodedata.apidata.headers) {
