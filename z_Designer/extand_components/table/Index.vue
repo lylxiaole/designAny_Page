@@ -1,17 +1,9 @@
 <template>
   <div style="width: 100%; height: 100%">
-    <VxeTable
-      :data="tableData"
-      ref="table"
-      stripe
-      border
-      :height="tableHeight"
-      :style="{ 'background-color': cellBackground }"
-      :row-config="{ isCurrent: true, isHover: true }"
-      :column-config="{ resizable: true }"
+    <VxeTable :data="tableData" ref="table" stripe border :height="tableHeight" :style="{ 'background-color': cellBackground }"
+      :row-config="{ isCurrent: true, isHover: true }" :column-config="{ resizable: true }"
       :header-cell-style="{ backgroundColor: headerBackground, color: headerFontColor }"
-      :cell-style="{ backgroundColor: cellBackground, color: cellFontColor, 'border-color': 'black' }"
-    >
+      :cell-style="{ backgroundColor: cellBackground, color: cellFontColor, 'border-color': 'black' }">
       <template v-for="col in tableColumns" :key="col.key">
         <VxeColumn v-if="col.isShow && col.type === 'image'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field">
           <template #default="{ row }">
@@ -19,7 +11,8 @@
           </template>
         </VxeColumn>
 
-        <VxeColumn v-else-if="col.isShow && col.type === 'template'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field">
+        <VxeColumn v-else-if="col.isShow && col.type === 'template'" align="center" :type="col.type" :title="col.title" :width="col.width"
+          :field="col.field">
           <template #default="{ row }">
             <TableCellView :parentLayout="this" :bingdingData="col.template" :rowData="row" />
           </template>
@@ -29,7 +22,8 @@
       </template>
     </VxeTable>
 
-    <VxePager v-if="isShowPager" style="height: 38px" size="small" v-model:currentPage="pageIndex" v-model:pageSize="pageSize" :total="dataTotalCount" @page-change="onPageChange"></VxePager>
+    <VxePager v-if="isShowPager" style="height: 38px" size="small" v-model:currentPage="pageIndex" v-model:pageSize="pageSize" :total="dataTotalCount"
+      @page-change="onPageChange"></VxePager>
   </div>
 </template>
 
@@ -38,7 +32,15 @@ import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
-import { DPropAttr, Number_Setting, PropertyGroupName, TableColumn_Setting, JsonContent_Setting, Boolean_Setting, Color_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import {
+  DPropAttr,
+  Number_Setting,
+  PropertyGroupName,
+  TableColumn_Setting,
+  JsonContent_Setting,
+  Boolean_Setting,
+  Color_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
 import TableCellView from './TableCellView.vue'
@@ -54,6 +56,8 @@ import platform from '@design-any/interface/dist/enums/platform'
 
 import elementResizeDetectorMaker from 'element-resize-detector'
 import { Watch } from 'vue-property-decorator'
+import { toRaw } from 'vue'
+import { deepClone } from '@common/utils'
 
 @DCompnentAttr(platform.webpc, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
 @Options({
@@ -107,7 +111,7 @@ export default class Index extends EngineComponent {
   })
   private onPageChange(pageSize, currentPage) {}
 
-  @DMethodAttr({ methodName: 'GetSelectedRows', hasOutParam: true })
+  @DMethodAttr({ methodName: 'GetSelectedRows', hasOutParam: true, inParams: [] })
   private getSelectedRows() {
     let findradioCol = this.tableColumns.find((o) => o.type === 'radio')
     let findcheckCol = this.tableColumns.find((o) => o.type === 'checkbox')
@@ -121,6 +125,12 @@ export default class Index extends EngineComponent {
       let row = (this.$refs.table as any).getCurrentRecord()
       return [row]
     }
+  }
+
+  @DMethodAttr({ methodName: 'Reload Data', hasOutParam: false, inParams: [{ name: 'tableData', key: 'tableData' }] })
+  private async reloadData(data: any[]) {
+    await (this.$refs.table as any).reloadData([])
+    await (this.$refs.table as any).reloadData(data)
   }
   // *********************************************************
   private resizeListener: any = null
