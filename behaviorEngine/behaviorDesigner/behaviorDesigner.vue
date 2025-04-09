@@ -1,5 +1,6 @@
 <template style="height: 100%">
-  <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 88%" width="95%" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+  <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Binding" style="height: 88%" width="95%" v-model="windowVisible" append-to-body
+    :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-row style="height: calc(100% - 50px); width: 100%; background: #fff">
       <div style="border-right: 1px solid #cdcdcd; width: 250px; float: left; box-sizing: border-box">
         <!-- //资源列表 -->

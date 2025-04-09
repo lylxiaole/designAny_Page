@@ -73,12 +73,12 @@ export default class behaviorList extends Vue {
     newbeh.workRange = this.workRange
     newbeh.variables = []
     newbeh.inParams = []
-    this.allBehaviors.unshift(newbeh)
+    this.currentPage.topPage.behaviors.unshift(newbeh)
   }
 
   private deleteBehavior(record: behavior) {
-    let index = this.allBehaviors.findIndex((o) => o.id === record.id && o.workRange === this.workRange)
-    this.allBehaviors.splice(index, 1)
+    let index = this.currentPage.topPage.behaviors.findIndex((o) => o.id === record.id && o.workRange === this.workRange)
+    this.currentPage.topPage.behaviors.splice(index, 1)
   }
 
   //编辑，跳转到行为细节详情
