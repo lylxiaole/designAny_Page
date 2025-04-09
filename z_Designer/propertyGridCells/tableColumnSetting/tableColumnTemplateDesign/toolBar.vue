@@ -27,7 +27,7 @@
         :overlayStyle="{ maxWidth: '20000px' }">
         <template #content>
           <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
-            <behaviorList :platform="platform" :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
+            <behaviorList workRange="component" :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
           </div>
         </template>
         <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
@@ -137,7 +137,6 @@ export default class toolBar extends Vue {
   private onDesignBehavior(behav: behavior) {
     ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage, this.platform)
   }
-
   /*************定制化控制项**************************************************** */
   @Emit('onSave')
   private async onSave() {}
