@@ -1,12 +1,17 @@
 <template>
-  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 80%" width="90%" top="0px" v-model="windowVisible" :before-close="onDialogBeforeClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
-    <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block" oncontextmenu="self.event.returnValue=false;self.event.preventDefault()">
+  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 80%" width="90%" top="0px" v-model="windowVisible"
+    :before-close="onDialogBeforeClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+    <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block"
+      oncontextmenu="self.event.returnValue=false;self.event.preventDefault()">
       <el-row style="height: 60px; width: 100%">
-        <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onCancel="onClose"></toolBar>
+        <toolBar :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60"
+          @onSave="onSaveCurrentPage" @onCancel="onClose"></toolBar>
       </el-row>
       <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
         <el-col style="width: calc(100% - 250px); height: 100%; float: left">
-          <div ref="designArea" style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box; background-color: #cdcdcd"></div>
+          <div ref="designArea"
+            style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box; background-color: #cdcdcd">
+          </div>
         </el-col>
         <el-col style="width: 250px; height: 100%; float: left">
           <PropertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
@@ -66,6 +71,7 @@ export default class index extends PageBase {
 
   private onClose() {
     this.windowVisible = false
+
     if (this.currentShowEngine) {
       this.currentShowEngine.destorymethod()
       this.currentShowEngine = null
@@ -86,10 +92,10 @@ export default class index extends PageBase {
       } as any
     }
 
-    let designLayout: PCPageDesign = findPageByPaltform(platform.webpc, 'design')
+    let designLayout: PCPageDesign = findPageByPaltform('design')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
 
-    await (vueComp as PCPageDesign).loadPageByData(data.id, data)
+    await (vueComp as PCPageDesign).loadPageByData(data.id, data, platform.tableCell)
     ;(vueComp as PCPageDesign).name = ''
     ;(vueComp as PCPageDesign).left = 0
     ;(vueComp as PCPageDesign).top = 0
@@ -99,10 +105,10 @@ export default class index extends PageBase {
     }
     ;(vueComp as PCPageDesign).parentLayout = parentLayout
     this.currentShowEngine = vueComp as PCPageDesign
+
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
     ;(vueComp as PCPageDesign).pageContext = [{ key: 'tableCurrentRow', name: 'Current Row Data' }]
-
     //Scale
     let scale = $(this.$refs.designArea).width() / $(this.currentShowEngine.$el).width()
     this.currentShowEngine.scaleSize(scale)
@@ -112,7 +118,6 @@ export default class index extends PageBase {
     return false
   }
   // ***********************************************
-
   private async onSaveCurrentPage() {
     let data = await this.currentShowEngine.getSaveData()
     this.onSure(this.columnKey, data)

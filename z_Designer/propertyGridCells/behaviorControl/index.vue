@@ -1,12 +1,16 @@
 <template>
   <div>
-    <el-button type="primary" class="themeButton" style="width: 118px; height: 34px; background: rgba(0, 103, 138, 0.1); border-color: rgba(0, 103, 138, 0.1); border-radius: 4px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 1); line-height: 12px" @click="startEdit" size="small">
+    <el-button type="primary" class="themeButton"
+      style="width: 118px; height: 34px; background: rgba(0, 103, 138, 0.1); border-color: rgba(0, 103, 138, 0.1); border-radius: 4px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 1); line-height: 12px"
+      @click="startEdit" size="small">
       Behavior Binding
     </el-button>
     <!-- ************************************************************ -->
-    <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Bindings" style="height: 600px" width="900px" v-model="windowVisible" append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+    <el-dialog ref="previewPopup" class="bhaviorDialog" title="Behavior Bindings" style="height: 600px" width="900px" v-model="windowVisible"
+      append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
       <el-row style="height: 480px; width: 100%; background: #fff">
-        <behaviorEventBinding v-show="currentComp === 'eventBinding'" :designerLayoutEvents="designerLayoutEvents" :currentData="currentData" :currentPageBehaviors="currentPageBehaviors" @onList="onOpenBehaviorList" />
+        <behaviorEventBinding v-show="currentComp === 'eventBinding'" :designerLayoutEvents="designerLayoutEvents" :currentData="currentData"
+          :currentPageBehaviors="currentPageBehaviors" @onList="onOpenBehaviorList" />
         <behaviorListInPage v-show="currentComp === 'allBehaviorList'" ref="behaviorList" :currentPage="page" />
       </el-row>
       <!-- ************************************************************ -->
@@ -71,7 +75,7 @@ export default class index extends propertyCellBase<Behavior_Setting> {
   private loadBaseData() {
     this.currentComp = 'eventBinding'
     // 当前选中控件已经绑定的行为列表
-    this.currentPageBehaviors = deepClone(this.page.behaviors)
+    this.currentPageBehaviors = deepClone(this.page.topPage.behaviors)
     // 当前选中控件的事件列表
     this.designerLayoutEvents = deepClone(this.currentLayouts[0].designerEvents)
     //当前选中控件的事件已绑定的行为

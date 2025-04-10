@@ -17,13 +17,13 @@ import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDo
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
 
-import { behaviorList } from '@behaviorEngine/index'
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
+import { pageEmitter } from '@common/utils/eventBus'
+
 @Options({
   components: {
     mobilePagePreview: MobilePagePreview,
-    pCPagePreview: PCPagePreview,
-    behaviorList: behaviorList
+    pCPagePreview: PCPagePreview
   }
 })
 export default class index extends PageBase {
@@ -36,6 +36,9 @@ export default class index extends PageBase {
 
   mounted() {
     this.applicationId = this.$route.query.appId as string
+
+    pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+    pageEmitter.on('onPopupPage', this.onPopupPage)
 
     this.initApplication()
   }
@@ -79,30 +82,34 @@ export default class index extends PageBase {
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
       case pageType.pcPage:
-        designLayout = findPageByPaltform(platform.webpc, 'preview')
+        designLayout = findPageByPaltform('preview')
         break
       case pageType.mobilePage:
-        designLayout = findPageByPaltform(platform.webapp, 'preview')
+        designLayout = findPageByPaltform('preview')
         break
       default:
         break
     }
     /************************渲染页面 */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false, { applicationContext: applicationContext })
-    await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail)
+    await (vueComp as EnginePage).loadPageByData(pageId, cachePageData.designDetail, platform.page)
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
     this.currentOpenEngin = vueComp as any
     await this.$nextTick()
     $(this.$refs.renderArea).html('')
-
     $(this.$refs.renderArea).append(virtualDom)
-    ;(vueComp as any).$once('onLYLLeadToOtherPage', (pageId) => {
-      this.currentOpenEngin.destorymethod()
-      this.openPage(pageId)
-    })
   }
+
+  private onLYLLeadToOtherPage(pageId: string) {
+    if (this.currentOpenEngin) {
+      this.currentOpenEngin.destorymethod()
+      this.currentOpenEngin = null
+      this.openPage(pageId)
+    }
+  }
+  private onPopupPage(pageId: string) {}
 }
 </script>
 

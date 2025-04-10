@@ -8,7 +8,7 @@ import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEn
 import { isPromise } from '@vue/shared'
 import { toRaw } from 'vue'
 
-@resourceFuncAttr('Parent Layout Method', '', funcGroup.resoucesInParentPage, funcCode.methodsInParentPage, platform.compContent, [], null)
+@resourceFuncAttr('Parent Layout Method', '', funcGroup.resoucesInParentPage, funcCode.methodsInParentPage, platform.tableCell, [], null)
 export class methodsInParentPage implements actFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
@@ -48,7 +48,7 @@ export class methodsInParentPage implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Parent Layout Property', '', funcGroup.resoucesInParentPage, funcCode.propertiesInParentPage, platform.compContent, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
+@resourceFuncAttr('Parent Layout Property', '', funcGroup.resoucesInParentPage, funcCode.propertiesInParentPage, platform.tableCell, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
 export class propertiesInParentPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -74,7 +74,7 @@ export class propertiesInParentPage implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Parent Layout Behavior', '', funcGroup.resoucesInParentPage, funcCode.behaviorsInParentPage, platform.compContent, [], null)
+@resourceFuncAttr('Parent Layout Behavior', '', funcGroup.resoucesInParentPage, funcCode.behaviorsInParentPage, platform.tableCell, [], null)
 export class behaviorsInParentPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -85,7 +85,7 @@ export class behaviorsInParentPage implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Page Context', '', funcGroup.resoucesInPage, funcCode.pageContext, platform.compContent, [], null)
+@resourceFuncAttr('Page Context', '', funcGroup.resoucesInPage, funcCode.pageContext, platform.tableCell, [], null)
 export class pageContext implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

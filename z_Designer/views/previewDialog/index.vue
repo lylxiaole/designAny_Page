@@ -13,6 +13,7 @@
       </el-drawer>
       <!-- ********************************************************************* -->
       <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
+      <pageDialogBox ref="pageDialogBox" />
     </el-row>
   </el-dialog>
 </template>
@@ -39,13 +40,16 @@ import behaviorDebugger from '@behaviorEngine/behaviorDebugger/behaviorDebugger.
 
 import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { deepClone } from '@common/utils'
+import { pageEmitter } from '@common/utils/eventBus'
+import pageDialogBox from '@/commonTool/pageDialogBox.vue'
 
 @Options({
   components: {
     mobilePagePreview: MobilePagePreview,
     pCPagePreview: PCPagePreview,
     behaviorDebugger: behaviorDebugger,
-    behaviorDesigner: behaviorDesigner
+    behaviorDesigner: behaviorDesigner,
+    pageDialogBox: pageDialogBox
   }
 })
 export default class index extends PageBase {
@@ -61,7 +65,22 @@ export default class index extends PageBase {
     this.windowVisible = true
     await this.$nextTick()
     this.applicationId = appId
+    pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+    pageEmitter.on('onPopupPage', this.onPopupPage)
     await this.initApplication()
+  }
+
+  private onLYLLeadToOtherPage(pageId: string) {
+    if (this.currentOpenEngine) {
+      this.currentOpenEngine.destorymethod()
+      this.currentOpenEngine = null
+      this.openPage(pageId)
+    }
+  }
+  private async onPopupPage(pageId: string) {
+    let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    debugger
+    ;(this.$refs.pageDialogBox as any).show(virtualDom, vueComp)
   }
   // ***********加载数据******************************
   private async initApplication() {
@@ -89,15 +108,9 @@ export default class index extends PageBase {
   }
   // ***********打开页面的方法**************************
   private async openPage(pageId: string) {
-    /************************渲染页面************************ */
+    /************************渲染页面*******************/
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
     this.currentOpenEngine = vueComp as any
-
-    this.currentOpenEngine.$once('onLYLLeadToOtherPage', (pageId) => {
-      this.currentOpenEngine.destorymethod()
-      this.openPage(pageId)
-    })
-
     await this.openPage_drawVueCom(virtualDom, vueComp)
   }
   private async openPage_getVueComp(pageId: string) {
@@ -111,17 +124,17 @@ export default class index extends PageBase {
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
       case pageType.pcPage:
-        designLayout = findPageByPaltform(platform.webpc, 'preview')
+        designLayout = findPageByPaltform('preview')
         break
       case pageType.mobilePage:
-        designLayout = findPageByPaltform(platform.webapp, 'preview')
+        designLayout = findPageByPaltform('preview')
         break
       default:
         break
     }
     /************************渲染页面************************ */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false, { applicationContext: applicationContext })
-    await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail)
+    await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail, platform.page)
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
@@ -141,34 +154,24 @@ export default class index extends PageBase {
     } catch (error) {}
     this.windowVisible = false
   }
-  // ************行为调试窗************************************
+  // ************行为调试窗***************************
   private drawerShow: boolean = false
   private onOpenDrawer() {
     this.drawerShow = true
   }
-
-  //重新编辑行为
+  // *************重新编辑行为***********************
   private async onEditBehavior(behav: behavior) {
-    let paltform = null
-    if (this.application.type === applicationType.webSystem) {
-      paltform = platform.webpc
-    } else if (this.application.type === applicationType.H5App) {
-      paltform = platform.webapp
-    } else {
-      paltform = platform.webpc
-    }
-
     try {
       let { virtualDom, vueComp } = await this.openPage_getVueComp(this.currentOpenEngine.Id)
       let pageengin = vueComp as EnginePage
       // **************************
       let findOrgain = pageengin.behaviors.find((o) => o.id === behav.id)
-      ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(findOrgain), this.currentOpenEngine, paltform)
+      ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(findOrgain), this.currentOpenEngine, behav.platform)
       // **************************
       pageengin.destorymethod()
     } catch (error) {}
   }
-  // *************行为编辑功能*************************************
+  // *************行为编辑功能************************
   private async onSureBehavior(behav: behavior) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(this.currentOpenEngine.Id)
     let pageengin = vueComp as EnginePage

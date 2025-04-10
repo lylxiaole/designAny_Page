@@ -1,7 +1,8 @@
 <template>
   <el-row style="height: 100%; width: 100%; background: #fff">
     <el-col :span="6">
-      <el-menu @select="onSelectedEvent" style="height: 100%; overflow-y: auto; overflow-x: hidden; border: 1px solid #ccc; padding: 0px 2px" mode="vertical" size="small">
+      <el-menu @select="onSelectedEvent" style="height: 100%; overflow-y: auto; overflow-x: hidden; border: 1px solid #ccc; padding: 0px 2px"
+        mode="vertical" size="small">
         <el-menu-item v-for="(event, index) in designerLayoutEvents" :index="index" :key="event.eventName">
           <span>{{ event.eventName }}</span>
         </el-menu-item>
@@ -11,47 +12,36 @@
       <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
         <div style="background: #18aeb7; width: 6px; height: 26px"></div>
         <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">Behavior List</span>
-        <el-button class="behavior-list-header-button" style="width: 140px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1); margin-left: 10px" @click="toBehaviorList">Rerfence Behavior</el-button>
+        <el-button class="behavior-list-header-button"
+          style="width: 140px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1); margin-left: 10px"
+          @click="toBehaviorList">Rerfence Behavior</el-button>
       </div>
       <el-table :data="currentSelectedBehaviors" style="width: 100%" height="calc(100% - 30px)">
         <el-table-column fixed type="index" width="30" />
         <el-table-column type="selection" width="30" />
         <el-table-column prop="name" label="Name" />
-        <!-- <el-table-column prop="workRange" label="Work Range" /> -->
         <el-table-column prop="description" label="Desc" />
         <el-table-column label="Options" width="250px">
           <template #default="{ row }">
-            <el-button
-              link
-              type="primary"
-              @click="
+            <el-button link type="primary" @click="
                 () => {
                   moveUpBehavior(row.id)
                 }
-              "
-            >
+              ">
               Move Up
             </el-button>
-            <el-button
-              @click="
+            <el-button @click="
                 () => {
                   moveDownBehavior(row.id)
                 }
-              "
-              link
-              type="primary"
-            >
+              " link type="primary">
               Move Down
             </el-button>
-            <el-button
-              @click="
+            <el-button @click="
                 () => {
                   removeBehavior(row.id)
                 }
-              "
-              link
-              type="primary"
-            >
+              " link type="primary">
               Remove
             </el-button>
           </template>
@@ -89,7 +79,6 @@ export default class behaviorEventBinding extends Vue {
   private onSelectedEvent(index, indexPath, item, routeResult) {
     this.selectedEventName = this.designerLayoutEvents[index].eventName
   }
-
   private get currentSelectedBehaviors(): behavior[] {
     if (this.selectedEventName === null) {
       return null
@@ -112,7 +101,6 @@ export default class behaviorEventBinding extends Vue {
     })
     return res
   }
-
   private set currentSelectedBehaviors(val: behavior[]) {
     if (this.selectedEventName === null) {
       return
@@ -136,7 +124,6 @@ export default class behaviorEventBinding extends Vue {
 
     eventbehaviors.behaviorIds = delteIds.concat(addedIds)
   }
-
   // **********************************
   //行为顺序向上移动
   private moveUpBehavior(behaviorId: string) {
@@ -153,7 +140,6 @@ export default class behaviorEventBinding extends Vue {
     event.behaviorIds[findindex - 1] = behaviorId
     this.currentSelectedBehaviors = this.currentSelectedBehaviors
   }
-
   //行为顺序向下移动
   private moveDownBehavior(behaviorId: string) {
     let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
@@ -169,14 +155,13 @@ export default class behaviorEventBinding extends Vue {
     event.behaviorIds[findindex + 1] = behaviorId
     this.currentSelectedBehaviors = this.currentSelectedBehaviors
   }
-
   //删除行为
   private removeBehavior(behaviorId: string) {
     let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
     if (!event) {
       return
     }
-    debugger
+
     let findindex = event.behaviorIds.findIndex((o) => o == behaviorId)
     if (findindex >= 0) {
       event.behaviorIds.splice(findindex, 1)

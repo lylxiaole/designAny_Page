@@ -56,28 +56,25 @@ export default class behaviorList extends Vue {
   })
   currentPage: EnginePage
 
-  @Prop()
-  private workRange: string
-
   private get allBehaviors(): behavior[] {
     if (!this.currentPage) {
       return []
     }
-    return this.currentPage.topPage.behaviors.filter((o) => o.workRange === this.workRange)
+    return this.currentPage.topPage.behaviors.filter((o) => o.platform === this.currentPage.platform)
   }
 
   private addBehavior() {
     let newbeh = new behavior()
     newbeh.id = getUuid()
     newbeh.name = 'New Behavior'
-    newbeh.workRange = this.workRange
+    newbeh.platform = this.currentPage.platform
     newbeh.variables = []
     newbeh.inParams = []
     this.currentPage.topPage.behaviors.unshift(newbeh)
   }
 
   private deleteBehavior(record: behavior) {
-    let index = this.currentPage.topPage.behaviors.findIndex((o) => o.id === record.id && o.workRange === this.workRange)
+    let index = this.currentPage.topPage.behaviors.findIndex((o) => o.id === record.id && o.platform === this.currentPage.platform)
     this.currentPage.topPage.behaviors.splice(index, 1)
   }
 

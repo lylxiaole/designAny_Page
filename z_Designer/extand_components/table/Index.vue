@@ -59,7 +59,7 @@ import { Watch } from 'vue-property-decorator'
 import { toRaw } from 'vue'
 import { deepClone } from '@common/utils'
 
-@DCompnentAttr(platform.webpc, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
+@DCompnentAttr(platform.page, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
 @Options({
   components: {
     VxeTable,

@@ -153,17 +153,17 @@ export default class index extends PageBase {
     let designLayout: any = typeof PCPageDesign
     switch (res.type) {
       case pageType.pcPage:
-        designLayout = findPageByPaltform(platform.webpc, 'design')
+        designLayout = findPageByPaltform('design')
         break
       case pageType.mobilePage:
-        designLayout = findPageByPaltform(platform.webapp, 'design')
+        designLayout = findPageByPaltform('design')
         break
       default:
         break
     }
     /************************渲染页面 */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
-    await (vueComp as PCPageDesign).loadPageByData(pageId, pageData)
+    await (vueComp as PCPageDesign).loadPageByData(pageId, pageData, platform.page)
     ;(vueComp as any).name = res.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0

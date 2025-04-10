@@ -1,5 +1,6 @@
 <template>
-  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }" oncontextmenu="self.event.returnValue=false" class="container" style="border-radius: 0px; box-sizing: border-box"></div>
+  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }"
+    oncontextmenu="self.event.returnValue=false" class="container" style="border-radius: 0px; box-sizing: border-box"></div>
 </template>
 
 <script lang="ts">
@@ -15,7 +16,7 @@ import platform from '@design-any/interface/dist/enums/platform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
 
-@DPageAttr(platform.webpc, 'design')
+@DPageAttr('design')
 @Options({})
 export default class PCPageDesign extends EnginePage {
   private get backgroundCute(): string {
@@ -110,7 +111,16 @@ export default class PCPageDesign extends EnginePage {
     }
     return false
   }
-  private listenOnDragMove(xchanged: number, ychanged: number, mouseleft: number, mousetop: number, dragStartXtoTargetLeft: number, dragStartYtoTargetTop: number, el: Element, dragdata?: DragItemData<any>): boolean {
+  private listenOnDragMove(
+    xchanged: number,
+    ychanged: number,
+    mouseleft: number,
+    mousetop: number,
+    dragStartXtoTargetLeft: number,
+    dragStartYtoTargetTop: number,
+    el: Element,
+    dragdata?: DragItemData<any>
+  ): boolean {
     if (!dragdata) {
       return true
     }

@@ -32,7 +32,7 @@
         :overlayStyle="{ maxWidth: '20000px', background: '#e0e4ea', backgroundColor: '#e0e4ea' }">
         <template #content>
           <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
-            <behaviorList workRange="page" :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
+            <behaviorList :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
           </div>
         </template>
         <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
@@ -130,17 +130,10 @@ export default class tooBar extends Vue {
   }
 
   private get platform(): platform {
-    if (!this.application) {
+    if (!this.currentPage) {
       return
     }
-
-    if (this.application.type === applicationType.webSystem) {
-      return platform.webpc
-    } else if (this.application.type === applicationType.H5App) {
-      return platform.webapp
-    } else {
-      return platform.webpc
-    }
+    return this.currentPage.platform
   }
 
   created() {}

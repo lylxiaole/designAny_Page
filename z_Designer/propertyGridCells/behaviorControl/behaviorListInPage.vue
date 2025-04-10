@@ -27,7 +27,11 @@ export default class behaviorListInPage extends Vue {
   currentPage: EnginePage
 
   private get allBehaviors(): behavior[] {
-    return this.currentPage.behaviors
+    if (!this.currentPage) {
+      return []
+    }
+
+    return this.currentPage.topPage.behaviors.filter((o) => o.platform === this.currentPage.platform)
   }
 
   public getSelectedBehaviors() {

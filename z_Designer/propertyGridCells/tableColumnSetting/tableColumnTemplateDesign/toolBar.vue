@@ -27,7 +27,7 @@
         :overlayStyle="{ maxWidth: '20000px' }">
         <template #content>
           <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
-            <behaviorList workRange="component" :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
+            <behaviorList :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
           </div>
         </template>
         <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
@@ -42,8 +42,8 @@
         <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" label="Save" :enableIcon="saveIcon" @click="onSave" />
-      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Cancel" @click="onCancel" />
+      <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" label="Save" :enableIcon="saveIcon" @click.stop="onSave" />
+      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Cancel" @click.stop="onCancel" />
     </div>
     <behaviorDesigner ref="behaviorDesigner" />
   </div>
@@ -116,7 +116,10 @@ export default class toolBar extends Vue {
     this.currentPage.scaleSize(valchange)
   }
   private get platform(): platform {
-    return platform.compContent
+    if (!this.currentPage) {
+      return
+    }
+    return this.currentPage.platform
   }
 
   created() {}
@@ -139,9 +142,9 @@ export default class toolBar extends Vue {
   }
   /*************定制化控制项**************************************************** */
   @Emit('onSave')
-  private async onSave() {}
+  private onSave() {}
   @Emit('onCancel')
-  private async onCancel() {}
+  private onCancel() {}
 }
 </script>
 

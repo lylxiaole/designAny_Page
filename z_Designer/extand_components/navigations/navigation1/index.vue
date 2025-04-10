@@ -1,22 +1,20 @@
 <template>
-  <div
-    style="overflow: hidden"
-    :style="{
+  <div style="overflow: hidden" :style="{
       '--el-menu-bg-color': sidebarBg,
       '--el-menu-text-color': menuColor,
       '--el-menu-hover-bg-color': menuHoverBg,
       '--el-menu-active-color': menuActiveColor,
       '--el-menu-sub-item-height': menuItemHeight + 'px',
       '--el-menu-item-height': menuItemHeight + 'px'
-    }"
-  >
+    }">
     <div class="main-container" :style="{ 'background-color': background }" style="height: 100%; overflow: hidden; margin-left: 0px">
       <el-row class="toprow">
         <!-- 放logo和文字的 -->
         <el-col :span="4" :style="{ height: containerHeaderHeight }"></el-col>
         <!-- 小标签 -->
         <el-col :span="13" :style="{ height: containerHeaderHeight }">
-          <Navbar :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag" style="width: 100%; height: 100%" />
+          <Navbar :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag"
+            style="width: 100%; height: 100%" />
         </el-col>
 
         <el-col :span="7" :style="{ height: containerHeaderHeight }">
@@ -45,17 +43,25 @@ import { EngineLayout, EngineComponent, SaveInfo, EnginePage } from '@design-any
 
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 import platform from '@design-any/interface/dist/enums/platform'
-import { DPropAttr, PropertyGroupName, AppPagesChoose_Setting, Color_Setting, Number_Setting, Boolean_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import {
+  DPropAttr,
+  PropertyGroupName,
+  AppPagesChoose_Setting,
+  Color_Setting,
+  Number_Setting,
+  Boolean_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { getUuid, deepClone } from '@design-any/interface/dist/utils'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
+import { pageEmitter } from '@common/utils/eventBus'
 
 // *******************************
 import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
 import TopBar from './TopBar/index.vue'
 // ****************************************
-@DCompnentAttr(platform.webpc, 'Basic', 'Classic navigation bar', 'navigation001', require('../../compIcons/navigationbar.png'))
+@DCompnentAttr(platform.page, 'Basic', 'Classic navigation bar', 'navigation001', require('../../compIcons/navigationbar.png'))
 @Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
   @DPropAttr(new Color_Setting('SidebarBg', PropertyGroupName.style, true))
@@ -91,19 +97,22 @@ export default class index extends EngineComponent {
 
   private async linkClick(pageId) {
     let detail: SaveInfo = this.allPages.find((o) => o.id === pageId)
-    let findpageengine = findPageByPaltform(platform.webpc, 'preview')
+    let findpageengine = findPageByPaltform('preview')
     let { virtualDom, vueComp } = designDrawDomVirtual(findpageengine, false, { applicationContext: this.applicationContext })
 
     if (!detail) {
       detail = await this.applicationContext.getPageDetailById(pageId)
       this.allPages.push(detail)
       this.allPageViews.push(vueComp as EnginePage)
-      await (vueComp as any).loadPageByData(pageId, detail)
+      await (vueComp as EnginePage).loadPageByData(pageId, detail, platform.page)
       ;(vueComp as any).left = 0
       ;(vueComp as any).top = 0
       await this.$nextTick()
       $(this.$refs.renderArea).html('')
       $(this.$refs.renderArea).append(virtualDom)
+
+      pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+      pageEmitter.on('onPopupPage', this.onPopupPage)
       ;(vueComp as any).$on('onLYLLeadToOtherPage', (pageId) => {
         // this.currentOpenEngin.destorymethod()
         // this.openPage(pageId)
@@ -139,6 +148,10 @@ export default class index extends EngineComponent {
     this.linkClick(page.id)
   }
   // **************************************************
+  private onLYLLeadToOtherPage(pageId: string) {
+    this.linkClick(pageId)
+  }
+  private onPopupPage(pageId: string) {}
 }
 </script>
 

@@ -9,7 +9,7 @@ import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DPageAttr(platform.webapp, 'preview')
+// @DPageAttr('preview')
 @Options({})
 export default class MobilePagePreview extends EnginePage {}
 </script>

@@ -6,9 +6,10 @@ import platform from '@design-any/interface/dist/enums/platform'
 
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { ElNotification } from 'element-plus'
+import { pageEmitter } from '@common/utils/eventBus'
 
 // *************************************************************************
-@resourceFuncAttr('MessageBox', '', funcGroup.universalTool, funcCode.notificationDialog, platform.webpc, [], null)
+@resourceFuncAttr('MessageBox', '', funcGroup.universalTool, funcCode.notificationDialog, platform.page, [], null)
 export class NotificationError implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -40,7 +41,7 @@ export class NotificationError implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Page jump', '', funcGroup.universalTool, funcCode.leadToOtherPage, platform.webpc, [], null)
+@resourceFuncAttr('Page jump', '', funcGroup.universalTool, funcCode.leadToOtherPage, platform.page, [], null)
 export class leadToPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -48,11 +49,13 @@ export class leadToPage implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
-    this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
+
+    pageEmitter.emit('onLYLLeadToOtherPage', newpageId)
+    // this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }
 
-@resourceFuncAttr('Page popup', '', funcGroup.universalTool, funcCode.leadToOtherPage, platform.webpc, [], null)
+@resourceFuncAttr('Page popup', '', funcGroup.universalTool, funcCode.pagePopup, platform.universal, [], null)
 export class pagePopup implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -60,7 +63,9 @@ export class pagePopup implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
+    debugger
+    pageEmitter.emit('onPopupPage', newpageId)
 
-    this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
+    // this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }

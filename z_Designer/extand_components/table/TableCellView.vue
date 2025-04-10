@@ -45,9 +45,9 @@ export default class TableCellView extends PageBase {
       return
     }
     // *****************************
-    let designLayout: PCPageDesign = findPageByPaltform(platform.webpc, 'preview')
+    let designLayout: PCPageDesign = findPageByPaltform('preview')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
-    await (vueComp as PCPageDesign).loadPageByData(val.id, val)
+    await (vueComp as PCPageDesign).loadPageByData(val.id, val, platform.tableCell)
     ;(vueComp as any).name = ''
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0

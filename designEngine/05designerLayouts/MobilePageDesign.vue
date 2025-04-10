@@ -9,7 +9,7 @@ import { EnginePage, EngineLayout, EngineComponent } from '@design-any/interface
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DPageAttr(platform.webapp, 'design')
+// @DPageAttr('design')
 @Options({})
 export default class MobilePageDesign extends EnginePage {
   //页面中包含的布局容器

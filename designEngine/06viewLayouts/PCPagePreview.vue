@@ -1,5 +1,6 @@
 <template>
-  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }" oncontextmenu="self.event.returnValue=false" style="border-radius: 0px"></div>
+  <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }"
+    oncontextmenu="self.event.returnValue=false" style="border-radius: 0px"></div>
 </template>
 
 <script lang="ts">
@@ -13,7 +14,7 @@ import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
 
-@DPageAttr(platform.webpc, 'preview')
+@DPageAttr('preview')
 @Options({})
 export default class PCPagePreview extends EnginePage {
   private get backgroundCute(): string {
