@@ -60,6 +60,7 @@ export default class behaviorList extends Vue {
     if (!this.currentPage) {
       return []
     }
+
     return this.currentPage.topPage.behaviors.filter((o) => o.platform === this.currentPage.platform)
   }
 

@@ -1,7 +1,7 @@
 <template>
-  <el-dialog ref="previewPopup" class="bhaviorDialog" top="0px" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false"
-    :close-on-press-escape="false" destroy-on-close>
-    <div class="renderContent" style="width:100%;height:100%"></div>
+  <el-dialog class="bhaviorDialog" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false"
+    destroy-on-close>
+    <div ref="renderContent" style="width:100%;height:100%"></div>
   </el-dialog>
 </template>
 
@@ -19,8 +19,10 @@ export default class pageDialog extends PageBase {
   public async show(virtualDom, vueComp) {
     this.windowVisible = true
     this.currentComp = vueComp
-    $(this.$el).find('.renderContent').html('')
-    $(this.$el).find('.renderContent').append(virtualDom)
+    await this.$nextTick()
+
+    $(this.$refs.renderContent).html('')
+    $(this.$refs.renderContent).append(virtualDom)
   }
   // *********************************
   private onClose() {}

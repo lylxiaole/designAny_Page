@@ -63,9 +63,8 @@ export class pagePopup implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
-    debugger
-    pageEmitter.emit('onPopupPage', newpageId)
 
+    pageEmitter.emit('onPopupPage', newpageId)
     // this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }
