@@ -68,6 +68,7 @@ export default class index extends PageBase {
     let cachePageData = this.openedPageData.find((o) => o.id === pageId)
     if (!cachePageData) {
       cachePageData = await GetPageDetail(pageId)
+
       if (cachePageData.designDetail) {
         let pageDataJson = utils.strUnZip(cachePageData.designDetail)
         cachePageData.designDetail = utils.deserialize(pageDataJson)

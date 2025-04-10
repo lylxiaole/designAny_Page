@@ -5,7 +5,6 @@ import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/
 import platform from '@design-any/interface/dist/enums/platform'
 
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import { isPromise } from '@vue/shared'
 import { ElNotification } from 'element-plus'
 
 // *************************************************************************
@@ -49,6 +48,19 @@ export class leadToPage implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
+    this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
+  }
+}
+
+@resourceFuncAttr('Page popup', '', funcGroup.universalTool, funcCode.leadToOtherPage, platform.webpc, [], null)
+export class pagePopup implements actFuncBase {
+  currentActObj: actionObj
+  currentLayout: EngineLayout
+  currentPage: EnginePage
+  currentBehavior: behavior
+  async excute(inparams: object_InParam[]) {
+    let newpageId = this.currentActObj.resourceFilter.pageId
+
     this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }

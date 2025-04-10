@@ -1,7 +1,8 @@
 <template>
   <el-row style="height: 100%; width: 100%">
     <el-row style="height: 60px; width: 100%">
-      <toolBar :application="application" :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')" :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
+      <toolBar :application="application" :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')"
+        :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
     </el-row>
     <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
       <el-col style="width: 250px; height: 100%; float: left">
@@ -10,7 +11,9 @@
       <el-col class="designArea" style="width: calc(100% - 500px); height: 100%; float: left">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="card" style="width: 100%; height: 100%">
           <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id">
-            <div style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box; background-color: #cdcdcd" :ref="page.Id"></div>
+            <div
+              style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box; background-color: #cdcdcd"
+              :ref="page.Id"></div>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -140,6 +143,7 @@ export default class index extends PageBase {
       return
     }
     let res = await GetPageDetail(pageId)
+
     let pageData: SaveInfo = null
     if (res.designDetail) {
       let pageDataJson = utils.strUnZip(res.designDetail)
