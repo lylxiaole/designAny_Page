@@ -1,7 +1,8 @@
 <template>
-  <el-dialog class="bhaviorDialog" v-model="windowVisible" :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false"
-    destroy-on-close>
-    <div ref="renderContent" style="width:100%;height:100%"></div>
+  <el-dialog class="xxx" style="padding:0px !important;" v-model="windowVisible" :style="{width:dialogWidth}" :before-close="onClose"
+    :close-on-click-modal="false" :close-on-press-escape="false" destroy-on-close>
+    <div ref="renderContent" style="width:100%;" :style="{height:dialogHeight }">
+    </div>
   </el-dialog>
 </template>
 
@@ -16,11 +17,16 @@ export default class pageDialog extends PageBase {
   private windowVisible: boolean = false
   private currentComp: any = null
   // *********************************
+  private dialogWidth: string = '0px'
+  private dialogHeight: string = '0px'
+  // *********************************
   public async show(virtualDom, vueComp) {
+    this.dialogWidth = vueComp.width
+    this.dialogHeight = vueComp.height
+
     this.windowVisible = true
     this.currentComp = vueComp
     await this.$nextTick()
-
     $(this.$refs.renderContent).html('')
     $(this.$refs.renderContent).append(virtualDom)
   }
@@ -30,22 +36,13 @@ export default class pageDialog extends PageBase {
 </script>
 
 <style lang="less">
-.el-dialog__header {
-  display: none !important;
-}
+.dialogbox {
+  .el-dialog__header {
+    display: none !important;
+  }
 
-.el-dialog__body {
-  padding: 0px !important;
-}
-
-.el-drawer {
-  .el-drawer__header {
-    background-color: green;
-    margin-bottom: 0px;
-    height: 50px;
-    .el-drawer__title {
-      color: white;
-    }
+  .el-dialog__body {
+    padding: 0px !important;
   }
 }
 </style>

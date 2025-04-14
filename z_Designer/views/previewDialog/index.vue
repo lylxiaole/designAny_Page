@@ -78,8 +78,7 @@ export default class index extends PageBase {
     }
   }
   private async onPopupPage(pageId: string) {
-    let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
-
+    let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId) 
     ;(this.$refs.pageDialogBox as any).show(virtualDom, vueComp)
   }
   // ***********加载数据******************************

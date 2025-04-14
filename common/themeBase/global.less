@@ -59,12 +59,23 @@ body {
   cursor: pointer;
 }
 .el-overlay {
-  .el-dialog {
-    --el-dialog-margin-top: 20px;
-    --el-dialog-padding-primary: 6px !important; //覆盖element PLUS
-    .el-dialog__headerbtn {
-      width: 34px;
-      height: 34px;
+  .el-overlay-dialog {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    flex-wrap: nowrap;
+    /* justify-content: center; */
+    align-items: center;
+    justify-content: center;
+
+    .el-dialog {
+      padding: 0px;
+      border-radius: 0px;
+      .el-dialog__headerbtn {
+        width: 34px;
+        height: 34px;
+      }
     }
   }
 }
