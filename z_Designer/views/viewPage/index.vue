@@ -1,6 +1,8 @@
 <template>
   <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
     <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
+    <pageDialogBox ref="pageDialogBox" />
+
   </el-row>
 </template>
 
@@ -19,11 +21,13 @@ import applicationContext from '@designEngine/01designerContext/context'
 
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
 import { pageEmitter } from '@common/utils/eventBus'
+import pageDialogBox from '@/commonTool/pageDialogBox.vue'
 
 @Options({
   components: {
     mobilePagePreview: MobilePagePreview,
-    pCPagePreview: PCPagePreview
+    pCPagePreview: PCPagePreview,
+    pageDialogBox: pageDialogBox
   }
 })
 export default class index extends PageBase {
@@ -66,8 +70,15 @@ export default class index extends PageBase {
       }
     }
   }
-  // ************************************
+
+  // ***********打开页面的方法**************************
   private async openPage(pageId: string) {
+    /************************渲染页面*******************/
+    let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    this.currentOpenEngin = vueComp as any
+    await this.openPage_drawVueCom(virtualDom, vueComp)
+  }
+  private async openPage_getVueComp(pageId: string) {
     let cachePageData = this.openedPageData.find((o) => o.id === pageId)
     if (!cachePageData) {
       cachePageData = await GetPageDetail(pageId)
@@ -78,6 +89,7 @@ export default class index extends PageBase {
       }
       this.openedPageData.push(cachePageData)
     }
+
     await this.$nextTick()
     let designLayout: EnginePage = null
     switch (cachePageData.type) {
@@ -90,13 +102,15 @@ export default class index extends PageBase {
       default:
         break
     }
-    /************************渲染页面 */
+    /************************渲染页面************************ */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false, { applicationContext: applicationContext })
-    await (vueComp as EnginePage).loadPageByData(pageId, cachePageData.designDetail, platform.page)
+    await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail, platform.page)
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
-    this.currentOpenEngin = vueComp as any
+    return { virtualDom, vueComp }
+  }
+  private async openPage_drawVueCom(virtualDom: Element, vueComp: Vue) {
     await this.$nextTick()
     $(this.$refs.renderArea).html('')
     $(this.$refs.renderArea).append(virtualDom)
@@ -109,7 +123,10 @@ export default class index extends PageBase {
       this.openPage(pageId)
     }
   }
-  private onPopupPage(pageId: string) {}
+  private async onPopupPage(pageId: string) {
+    let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    ;(this.$refs.pageDialogBox as any).show(virtualDom, vueComp)
+  }
 }
 </script>
 
