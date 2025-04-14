@@ -1,11 +1,9 @@
 export * from './05designerLayouts/DesignEvents'
 
-import MobilePageDesign from './05designerLayouts/PCPageDesign.vue'
-import MobilePagePreview from './06viewLayouts/MobilePagePreview.vue'
-
 import PCPageDesign from './05designerLayouts/PCPageDesign.vue'
 import PCPagePreview from './06viewLayouts/PCPagePreview.vue'
-export { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview }
+
+export { PCPageDesign, PCPagePreview }
 import applicationContext from './01designerContext/context'
 import { GetPageDetail } from '@common/apis/designPage'
 export { applicationContext }

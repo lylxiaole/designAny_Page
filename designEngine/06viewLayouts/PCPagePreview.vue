@@ -14,7 +14,7 @@ import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
 
-@DPageAttr('preview')
+@DPageAttr('pageView')
 @Options({})
 export default class PCPagePreview extends EnginePage {
   private get backgroundCute(): string {

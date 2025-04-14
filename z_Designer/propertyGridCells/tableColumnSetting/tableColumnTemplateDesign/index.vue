@@ -92,7 +92,7 @@ export default class index extends PageBase {
       } as any
     }
 
-    let designLayout: PCPageDesign = findPageByPaltform('design')
+    let designLayout: PCPageDesign = findPageByPaltform('pageDesign')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
 
     await (vueComp as PCPageDesign).loadPageByData(data.id, data, platform.tableCell)

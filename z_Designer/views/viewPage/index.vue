@@ -87,20 +87,21 @@ export default class index extends PageBase {
     }
 
     await this.$nextTick()
-    let designLayout: EnginePage = null
+    let designLayout: EnginePage = findPageByPaltform('pageView')
+    let currentPaltform: platform = null
     switch (cachePageData.type) {
       case pageType.pcPage:
-        designLayout = findPageByPaltform('preview')
+        currentPaltform = platform.page
         break
       case pageType.mobilePage:
-        designLayout = findPageByPaltform('preview')
+        currentPaltform = platform.page
         break
       default:
         break
     }
     /************************渲染页面************************ */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false, { applicationContext: applicationContext })
-    await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail, platform.page)
+    await (vueComp as any).loadPageByData(pageId, cachePageData.designDetail, currentPaltform)
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
@@ -111,6 +112,7 @@ export default class index extends PageBase {
     $(this.$refs.renderArea).html('')
     $(this.$refs.renderArea).append(virtualDom)
   }
+  // ************页面事件处理---来自行为*********************************
   private onLYLLeadToOtherPage(pageId: string) {
     if (this.currentOpenEngin) {
       this.currentOpenEngin.destorymethod()
@@ -120,6 +122,9 @@ export default class index extends PageBase {
   }
   private async onPopupPage(pageId: string) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    ;(vueComp as EnginePage).$on('OnClose', () => {
+      ;(this.$refs.pageDialogBox as any).close()
+    })
     ;(this.$refs.pageDialogBox as any).show(virtualDom, vueComp)
   }
 }

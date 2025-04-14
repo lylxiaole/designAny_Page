@@ -30,6 +30,11 @@ export default class pageDialog extends PageBase {
     $(this.$refs.renderContent).html('')
     $(this.$refs.renderContent).append(virtualDom)
   }
+  public async close() {
+    this.currentComp.destorymethod()
+    this.windowVisible = false
+  }
+
   // *********************************
   private onClose() {}
 }

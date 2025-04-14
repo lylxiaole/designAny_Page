@@ -153,10 +153,10 @@ export default class index extends PageBase {
     let designLayout: any = typeof PCPageDesign
     switch (res.type) {
       case pageType.pcPage:
-        designLayout = findPageByPaltform('design')
+        designLayout = findPageByPaltform('pageDesign')
         break
       case pageType.mobilePage:
-        designLayout = findPageByPaltform('design')
+        designLayout = findPageByPaltform('pageDesign')
         break
       default:
         break
@@ -175,7 +175,7 @@ export default class index extends PageBase {
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)
   }
-  // **********顶部操作栏**********************************************************
+  // **********顶部操作栏************************************************
   private async onSaveCurrentPage() {
     if (!this.currentShowEngine) {
       return
@@ -191,7 +191,6 @@ export default class index extends PageBase {
   private onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }
-
   // *************右侧属性窗**********************************************
   private activeName: string = 'first'
   // ********************************************************************

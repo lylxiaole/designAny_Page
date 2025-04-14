@@ -97,7 +97,7 @@ export default class index extends EngineComponent {
 
   private async linkClick(pageId) {
     let detail: SaveInfo = this.allPages.find((o) => o.id === pageId)
-    let findpageengine = findPageByPaltform('preview')
+    let findpageengine = findPageByPaltform('pageView')
     let { virtualDom, vueComp } = designDrawDomVirtual(findpageengine, false, { applicationContext: this.applicationContext })
 
     if (!detail) {

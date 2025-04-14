@@ -16,7 +16,7 @@ import platform from '@design-any/interface/dist/enums/platform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
 
-@DPageAttr('design')
+@DPageAttr('pageDesign')
 @Options({})
 export default class PCPageDesign extends EnginePage {
   private get backgroundCute(): string {
