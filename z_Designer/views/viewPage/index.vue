@@ -40,10 +40,8 @@ export default class index extends PageBase {
 
   mounted() {
     this.applicationId = this.$route.query.appId as string
-
     pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
     pageEmitter.on('onPopupPage', this.onPopupPage)
-
     this.initApplication()
   }
   // ***********加载数据*************************
@@ -58,7 +56,6 @@ export default class index extends PageBase {
     }
     this.openPage(defaultPage.id)
   }
-
   private organizePages(pageTree: any[]) {
     for (let index = 0; index < pageTree.length; index++) {
       const treenode = pageTree[index]
@@ -70,7 +67,6 @@ export default class index extends PageBase {
       }
     }
   }
-
   // ***********打开页面的方法**************************
   private async openPage(pageId: string) {
     /************************渲染页面*******************/
@@ -115,7 +111,6 @@ export default class index extends PageBase {
     $(this.$refs.renderArea).html('')
     $(this.$refs.renderArea).append(virtualDom)
   }
-
   private onLYLLeadToOtherPage(pageId: string) {
     if (this.currentOpenEngin) {
       this.currentOpenEngin.destorymethod()
