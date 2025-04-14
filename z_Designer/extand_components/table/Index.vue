@@ -14,7 +14,7 @@
         <VxeColumn v-else-if="col.isShow && col.type === 'template'" align="center" :type="col.type" :title="col.title" :width="col.width"
           :field="col.field">
           <template #default="{ row }">
-            <TableCellView :parentLayout="this" :bingdingData="col.template" :rowData="row" />
+            <TableCell :parentLayout="this" :bingdingData="col.template" :rowData="row" />
           </template>
         </VxeColumn>
 
@@ -43,7 +43,7 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
-import TableCellView from './TableCellView.vue'
+import TableCell from './TableCell.vue'
 import { VxeTable, VxeColumn, VxeColgroup, VxePager } from 'vxe-table'
 import { VxeImage } from 'vxe-pc-ui'
 
@@ -66,7 +66,7 @@ import { deepClone } from '@common/utils'
     VxeColumn,
     VxePager,
     VxeImage,
-    TableCellView
+    TableCell
   }
 })
 export default class Index extends EngineComponent {

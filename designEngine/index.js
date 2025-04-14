@@ -3,7 +3,10 @@ export * from './05designerLayouts/DesignEvents'
 import PCPageDesign from './05designerLayouts/PCPageDesign.vue'
 import PCPagePreview from './06viewLayouts/PCPagePreview.vue'
 
-export { PCPageDesign, PCPagePreview }
+import TableCellDesign from './05designerLayouts/TableCellDesign.vue'
+import TableCellView from './06viewLayouts/TableCellView.vue'
+
+export { PCPageDesign, PCPagePreview, TableCellView, TableCellDesign }
 import applicationContext from './01designerContext/context'
 import { GetPageDetail } from '@common/apis/designPage'
 export { applicationContext }

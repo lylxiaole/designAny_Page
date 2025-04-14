@@ -28,7 +28,7 @@ import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageIn
 import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
 
-import { MobilePagePreview, PCPagePreview } from '@designEngine/index'
+import { PCPagePreview } from '@designEngine/index'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
@@ -45,7 +45,6 @@ import pageDialogBox from '@/commonTool/pageDialogBox.vue'
 
 @Options({
   components: {
-    mobilePagePreview: MobilePagePreview,
     pCPagePreview: PCPagePreview,
     behaviorDebugger: behaviorDebugger,
     behaviorDesigner: behaviorDesigner,

@@ -36,7 +36,7 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 
 import { EnginePage, EngineLayout, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 
-import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
+import { PCPageDesign, PCPagePreview } from '@designEngine/index'
 import applicationContext from '@designEngine/01designerContext/context'
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
@@ -53,8 +53,7 @@ import toolBar from './tooBar.vue'
     pagelist: pagelist,
     toolBar: toolBar,
     propertyGrid: propertyGrid,
-    mobilePageDesign: MobilePageDesign,
-    mobilePagePreview: MobilePagePreview,
+
     pCPageDesign: PCPageDesign,
     pCPagePreview: PCPagePreview,
     previewPage: previewPage

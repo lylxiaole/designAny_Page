@@ -2,7 +2,6 @@
   <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
     <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
     <pageDialogBox ref="pageDialogBox" />
-
   </el-row>
 </template>
 
@@ -14,7 +13,7 @@ import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
-import { MobilePagePreview, PCPagePreview } from '@designEngine/index'
+import { PCPagePreview } from '@designEngine/index'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
@@ -25,7 +24,6 @@ import pageDialogBox from '@/commonTool/pageDialogBox.vue'
 
 @Options({
   components: {
-    mobilePagePreview: MobilePagePreview,
     pCPagePreview: PCPagePreview,
     pageDialogBox: pageDialogBox
   }

@@ -9,7 +9,7 @@ import { Prop, Watch } from 'vue-property-decorator'
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage, EngineLayout, EngineComponent, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import platform from '@design-any/interface/dist/enums/platform'
-import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
+import { TableCellView } from '@designEngine/index'
 
 import ViewShell from '../../../designEngine/06viewLayouts/ViewShell.vue'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
@@ -19,7 +19,7 @@ import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageIn
 import { toRaw } from 'vue'
 
 @Options({})
-export default class TableCellView extends PageBase {
+export default class TableCell extends PageBase {
   @Prop({ default: () => null })
   public bingdingData: SaveInfo
 
@@ -29,7 +29,7 @@ export default class TableCellView extends PageBase {
   @Prop({ default: () => null })
   public parentLayout: EngineLayout
   // *******************************************
-  private currentPageEngine: PCPageDesign
+  private currentPageEngine: TableCellView
   created() {}
   mounted() {}
 
@@ -45,17 +45,17 @@ export default class TableCellView extends PageBase {
       return
     }
     // *****************************
-    let designLayout: PCPageDesign = findPageByPaltform('pageView')
+    let designLayout: TableCellView = findPageByPaltform('tableCellView')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
-    await (vueComp as PCPageDesign).loadPageByData(val.id, val, platform.tableCell)
+    await (vueComp as TableCellView).loadPageByData(val.id, val, platform.tableCell)
     ;(vueComp as any).name = ''
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
     $(this.$el).append(virtualDom)
-    ;(vueComp as PCPageDesign).parentLayout = this.parentLayout
-    ;(vueComp as PCPageDesign).pageContext = [{ key: 'tableCurrentRow', name: 'Current Row Data', val: toRaw(this.rowData) }]
+    ;(vueComp as TableCellView).parentLayout = this.parentLayout
+    ;(vueComp as TableCellView).pageContext = [{ key: 'tableCurrentRow', name: 'Current Row Data', val: toRaw(this.rowData) }]
     // *****************************
-    this.currentPageEngine = vueComp as PCPageDesign
+    this.currentPageEngine = vueComp as TableCellView
   }
 }
 </script>

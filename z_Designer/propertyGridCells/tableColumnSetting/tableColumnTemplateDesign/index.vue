@@ -30,7 +30,7 @@ import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage, SaveInfo, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 
-import { MobilePageDesign, MobilePagePreview, PCPageDesign, PCPagePreview } from '@designEngine/index'
+import { TableCellDesign } from '@designEngine/index'
 import { designDrawDomVirtual, designDrawDomReal } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
@@ -45,7 +45,7 @@ import PropertyGrid from '@/commonTool/propertyGrid.vue'
 })
 export default class index extends PageBase {
   private windowVisible: boolean = false
-  private currentShowEngine: PCPageDesign = null
+  private currentShowEngine: TableCellDesign = null
 
   private get parentPage(): EnginePage {
     if (!this.currentShowEngine) {
@@ -92,23 +92,23 @@ export default class index extends PageBase {
       } as any
     }
 
-    let designLayout: PCPageDesign = findPageByPaltform('pageDesign')
+    let designLayout: TableCellDesign = findPageByPaltform('tableCellDesign')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
 
-    await (vueComp as PCPageDesign).loadPageByData(data.id, data, platform.tableCell)
-    ;(vueComp as PCPageDesign).name = ''
-    ;(vueComp as PCPageDesign).left = 0
-    ;(vueComp as PCPageDesign).top = 0
+    await (vueComp as TableCellDesign).loadPageByData(data.id, data, platform.tableCell)
+    ;(vueComp as TableCellDesign).name = ''
+    ;(vueComp as TableCellDesign).left = 0
+    ;(vueComp as TableCellDesign).top = 0
     if (!data.properties) {
-      ;(vueComp as PCPageDesign).width = '200px'
-      ;(vueComp as PCPageDesign).height = '80px'
+      ;(vueComp as TableCellDesign).width = '200px'
+      ;(vueComp as TableCellDesign).height = '80px'
     }
-    ;(vueComp as PCPageDesign).parentLayout = parentLayout
-    this.currentShowEngine = vueComp as PCPageDesign
+    ;(vueComp as TableCellDesign).parentLayout = parentLayout
+    this.currentShowEngine = vueComp as TableCellDesign
 
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
-    ;(vueComp as PCPageDesign).pageContext = [{ key: 'tableCurrentRow', name: 'Current Row Data' }]
+    ;(vueComp as TableCellDesign).pageContext = [{ key: 'tableCurrentRow', name: 'Current Row Data' }]
     //Scale
     let scale = $(this.$refs.designArea).width() / $(this.currentShowEngine.$el).width()
     this.currentShowEngine.scaleSize(scale)
