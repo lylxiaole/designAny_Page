@@ -21,6 +21,8 @@ import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr'
 @DPageAttr('dialogPageDesign')
 @Options({})
 export default class DialogPageDesign extends DesignPageBase {
+  public parentEngine: EnginePage = null
+
   protected get renderCompArea(): any {
     return this.$el
   }

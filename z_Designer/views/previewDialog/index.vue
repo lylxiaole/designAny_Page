@@ -3,17 +3,17 @@
     :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
       <!-- ********************************************************************* -->
-      <el-button @click="onClose" style="background: red; position: absolute; right: 0px; top: 0px; z-index: 99; color: white">Exit</el-button>
+      <el-button @click="onClose"
+        style="background: red; position: absolute; right: 0px; top: 0px; z-index: 9999999999; color: white">Exit</el-button>
       <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
       <!-- ********************************************************************* -->
-      <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 99; color: white"
+      <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 9999999999; color: white"
         @click="onOpenDrawer">Behaviors</el-button>
       <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
         <behaviorDebugger ref="behaviorDebugger" :currentPage="currentOpenEngine" @onEditBehavior="onEditBehavior" />
       </el-drawer>
       <!-- ********************************************************************* -->
       <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
-      <pageDialogBox ref="pageDialogBox" />
     </el-row>
   </el-dialog>
 </template>
@@ -41,14 +41,12 @@ import behaviorDebugger from '@behaviorEngine/behaviorDebugger/behaviorDebugger.
 import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { deepClone } from '@common/utils'
 import { pageEmitter } from '@common/utils/eventBus'
-import pageDialogBox from '@/commonTool/pageDialogBox.vue'
 
 @Options({
   components: {
     pCPagePreview: PCPagePreview,
     behaviorDebugger: behaviorDebugger,
-    behaviorDesigner: behaviorDesigner,
-    pageDialogBox: pageDialogBox
+    behaviorDesigner: behaviorDesigner
   }
 })
 export default class index extends PageBase {
@@ -64,9 +62,9 @@ export default class index extends PageBase {
     this.windowVisible = true
     await this.$nextTick()
     this.applicationId = appId
+    await this.initApplication()
     pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
     pageEmitter.on('onPopupPage', this.onPopupPage)
-    await this.initApplication()
   }
 
   // ***********初始化应用数据******************************
@@ -190,9 +188,16 @@ export default class index extends PageBase {
   }
   private async onPopupPage(pageId: string) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
-    $(this.$refs.renderArea).append(virtualDom)
+    //
     let page = vueComp as DialogPageView
-    page.show()
+    page.parentEngine = this.currentOpenEngine
+    this.currentOpenEngine = vueComp as any
+    //
+    $(this.$refs.renderArea).append(virtualDom)
+    //
+    page.$on('onLYLDestroyed', () => {
+      this.currentOpenEngine = page.parentEngine
+    })
   }
 }
 </script>

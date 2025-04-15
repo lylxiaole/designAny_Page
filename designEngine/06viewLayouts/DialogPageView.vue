@@ -26,20 +26,18 @@ import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr'
 @DPageAttr('dialogPageView')
 @Options({})
 export default class DialogPageView extends ViewPageBase {
+  public parentEngine: EnginePage = null
+
   private windowVisible: boolean = true
 
   protected get renderCompArea(): any {
     return this.$refs.renderContent
   }
 
-  public async show() {
-    this.windowVisible = true
-  }
   public async close() {
     this.windowVisible = false
   }
   private onClose() {
-    debugger
     this.destorymethod()
   }
 

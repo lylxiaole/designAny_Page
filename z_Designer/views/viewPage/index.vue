@@ -1,7 +1,6 @@
 <template>
   <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
     <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
-    <pageDialogBox ref="pageDialogBox" />
   </el-row>
 </template>
 
@@ -13,19 +12,19 @@ import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
-import { PCPagePreview } from '@designEngine/index'
+
+import { PCPagePreview, DialogPageDesign, DialogPageView } from '@designEngine/index'
+
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
 
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
 import { pageEmitter } from '@common/utils/eventBus'
-import pageDialogBox from '@/commonTool/pageDialogBox.vue'
 
 @Options({
   components: {
-    pCPagePreview: PCPagePreview,
-    pageDialogBox: pageDialogBox
+    pCPagePreview: PCPagePreview
   }
 })
 export default class index extends PageBase {
@@ -38,9 +37,10 @@ export default class index extends PageBase {
 
   mounted() {
     this.applicationId = this.$route.query.appId as string
-    pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
-    pageEmitter.on('onPopupPage', this.onPopupPage)
-    this.initApplication()
+    this.initApplication().then(() => {
+      pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+      pageEmitter.on('onPopupPage', this.onPopupPage)
+    })
   }
   // ***********加载数据*************************
   private async initApplication() {
@@ -120,10 +120,16 @@ export default class index extends PageBase {
   }
   private async onPopupPage(pageId: string) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
-    ;(vueComp as EnginePage).$on('OnClose', () => {
-      ;(this.$refs.pageDialogBox as any).close()
+    //
+    let page = vueComp as DialogPageView
+    page.parentEngine = this.currentOpenEngin
+    this.currentOpenEngin = vueComp as any
+    //
+    $(this.$refs.renderArea).append(virtualDom)
+    //
+    page.$on('onLYLDestroyed', () => {
+      this.currentOpenEngin = page.parentEngine
     })
-    ;(this.$refs.pageDialogBox as any).show(virtualDom, vueComp)
   }
 }
 </script>
