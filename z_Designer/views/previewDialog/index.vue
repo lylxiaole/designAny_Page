@@ -28,7 +28,7 @@ import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageIn
 import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
 
-import { PCPagePreview } from '@designEngine/index'
+import { PCPagePreview, DialogPageDesign, DialogPageView } from '@designEngine/index'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import platform from '@design-any/interface/dist/enums/platform'
 import applicationContext from '@designEngine/01designerContext/context'
@@ -106,15 +106,16 @@ export default class index extends PageBase {
       let pageDataJson = utils.strUnZip(cachePageData.designDetail)
       cachePageData.designDetail = utils.deserialize(pageDataJson)
     }
-    let designLayout: EnginePage = findPageByPaltform('pageView')
+    let designLayout: EnginePage = null
     await this.$nextTick()
-    let currentPaltform: platform = null
+    let currentPaltform: platform = platform.page
+
     switch (cachePageData.type) {
-      case pageType.pcPage:
-        currentPaltform = platform.page
+      case pageType.page:
+        designLayout = findPageByPaltform('pageView')
         break
-      case pageType.mobilePage:
-        currentPaltform = platform.page
+      case pageType.dialogPage:
+        designLayout = findPageByPaltform('dialogPageView')
         break
       default:
         break
@@ -179,7 +180,6 @@ export default class index extends PageBase {
       ;(this.$refs.behaviorDebugger as behaviorDebugger).setFlowData(deepClone(behav), this.currentOpenEngine)
     }
   }
-
   // ************页面事件处理---来自行为*********************************
   private onLYLLeadToOtherPage(pageId: string) {
     if (this.currentOpenEngine) {
@@ -190,11 +190,9 @@ export default class index extends PageBase {
   }
   private async onPopupPage(pageId: string) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
-
-    ;(vueComp as EnginePage).$on('OnClose', () => {
-      ;(this.$refs.pageDialogBox as any).close()
-    })
-    ;(this.$refs.pageDialogBox as any).show(virtualDom, vueComp)
+    $(this.$refs.renderArea).append(virtualDom)
+    let page = vueComp as DialogPageView
+    page.show()
   }
 }
 </script>

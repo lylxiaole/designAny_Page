@@ -22,6 +22,9 @@ export default class DesignPageBase extends EnginePage {
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
   private designEvets: DesignEvents = null
+  protected get renderCompArea(): any {
+    return null
+  }
 
   mounted() {
     this.designEvets = new DesignEvents(this)
@@ -62,7 +65,7 @@ export default class DesignPageBase extends EnginePage {
       ;(vueComp as DesignShell).destorymethod()
     })
     // ***************************************
-    $(this.$el).append(virtualDom)
+    $(this.renderCompArea).append(virtualDom)
     return resComp
   }
   /**********************************监听设计事件 ******************************/
@@ -97,9 +100,9 @@ export default class DesignPageBase extends EnginePage {
         break
     }
     if (dropcomp) {
-      let persentleft = screenLeft / this.currentScaleSize / $(this.$el).width()
+      let persentleft = screenLeft / this.currentScaleSize / $(this.renderCompArea).width()
       dropcomp.left = (persentleft * 100).toFixed(1) + '%'
-      let persenttop = screenTop / this.currentScaleSize / $(this.$el).height()
+      let persenttop = screenTop / this.currentScaleSize / $(this.renderCompArea).height()
       dropcomp.top = (persenttop * 100).toFixed(1) + '%'
     }
     return false
@@ -180,10 +183,10 @@ export default class DesignPageBase extends EnginePage {
 
     let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
     //定位
-    let persentleft = (selfPosition.left + 5 / this.currentScaleSize) / $(this.$el).width() / this.currentScaleSize
+    let persentleft = (selfPosition.left + 5 / this.currentScaleSize) / $(this.renderCompArea).width() / this.currentScaleSize
     newcopyComp.left = (persentleft * 100).toFixed(1) + '%'
 
-    let persenttop = (selfPosition.top + 5 / this.currentScaleSize) / $(this.$el).height() / this.currentScaleSize
+    let persenttop = (selfPosition.top + 5 / this.currentScaleSize) / $(this.renderCompArea).height() / this.currentScaleSize
     newcopyComp.top = (persenttop * 100).toFixed(1) + '%'
 
     this.chooseComp(newcopyComp)

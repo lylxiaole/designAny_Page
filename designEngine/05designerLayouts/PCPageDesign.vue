@@ -20,7 +20,11 @@ import DesignPageBase from './DesignPageBase'
 
 @DPageAttr('pageDesign')
 @Options({})
-export default class PCPageDesign extends DesignPageBase {}
+export default class PCPageDesign extends DesignPageBase {
+  protected get renderCompArea(): any {
+    return this.$el
+  }
+}
 </script>
 
 <style lang="less" scoped>

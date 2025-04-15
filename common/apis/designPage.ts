@@ -4,8 +4,8 @@ import dataContactBase from './dataContactBase'
 const apiAddr = () => getConfigByName('apiAddr')
 
 export enum pageType {
-  pcPage = 0,
-  mobilePage = 1
+  page = 0,
+  dialogPage = 1
 }
 export class DesignPageDC extends dataContactBase {
   appId: string

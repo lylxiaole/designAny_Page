@@ -85,14 +85,14 @@ export default class index extends PageBase {
     }
 
     await this.$nextTick()
-    let designLayout: EnginePage = findPageByPaltform('pageView')
-    let currentPaltform: platform = null
+    let designLayout: EnginePage = null
+    let currentPaltform: platform = platform.page
     switch (cachePageData.type) {
-      case pageType.pcPage:
-        currentPaltform = platform.page
+      case pageType.page:
+        designLayout = findPageByPaltform('pageView')
         break
-      case pageType.mobilePage:
-        currentPaltform = platform.page
+      case pageType.dialogPage:
+        designLayout = findPageByPaltform('dialogPageView')
         break
       default:
         break

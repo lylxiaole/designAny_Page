@@ -17,7 +17,11 @@ import ViewPageBase from './ViewPageBase'
 
 @DPageAttr('pageView')
 @Options({})
-export default class PCPagePreview extends ViewPageBase {}
+export default class PCPagePreview extends ViewPageBase {
+  protected get renderCompArea(): any {
+    return this.$el
+  }
+}
 </script>
 
 <style lang="less" scoped>

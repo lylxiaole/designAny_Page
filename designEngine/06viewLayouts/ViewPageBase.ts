@@ -18,8 +18,9 @@ export default class ViewPageBase extends EnginePage {
   }
   public allShells: ViewShell[] = []
 
-  created() {}
-  mounted() {}
+  protected get renderCompArea(): any {
+    return null
+  }
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineLayout> {
     let { virtualDom, vueComp } = designDrawDomVirtual(ViewShell, false, { applicationContext: applicationContext })
@@ -32,7 +33,7 @@ export default class ViewPageBase extends EnginePage {
       ;(vueComp as ViewShell).destorymethod()
     })
     // ;(vueComp as ViewShell).startListenItemDrag()
-    $(this.$el).append(virtualDom)
+    $(this.renderCompArea).append(virtualDom)
     return resComp
   }
 }

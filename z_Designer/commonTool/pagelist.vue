@@ -7,26 +7,13 @@
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 35px)">
       <div style="overflow: auto; width: 100%; height: 100%" @contextmenu.prevent="onTreeRightClick">
-        <el-tree
-          node-key="id"
-          @node-contextmenu="onTreeNodeRightClick"
-          :data="treeData"
-          default-expand-all
-          @node-drag-start="handleDragStart"
-          @node-drag-enter="handleDragEnter"
-          @node-drag-leave="handleDragLeave"
-          @node-drag-over="handleDragOver"
-          @node-drag-end="handleDragEnd"
-          @node-drop="handleDrop"
-          :allow-drop="allowDrop"
-          :allow-drag="allowDrag"
-          :expand-on-click-node="false"
-          draggable
-          highlight-current
-        >
+        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
+          @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
+          @node-drop="handleDrop" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false" draggable highlight-current>
           <template #default="{ data }">
             <div v-if="data.type === 'page'">
-              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id" @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
+                @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <div>
                     <span class="icon iconfont">&#xe627;</span>
@@ -36,7 +23,8 @@
               </btreeNode>
             </div>
             <div v-if="data.type === 'group'">
-              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id" @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
+                @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <span class="icon iconfont">&#xe626;</span>
                 </template>
@@ -46,7 +34,8 @@
         </el-tree>
 
         <v-contextmenu ref="ctxMenu">
-          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px" @click="onRightMenuChoose(menu)">
+          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
+            @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
           </v-contextmenu-item>
@@ -60,7 +49,23 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { DesignPageGroupDC, DesignPageDC, TreeNodeDC, GetApplicationPages, ChangeGroupGroup, ChangePageGroup, AddPage, AddGroup, SetDefaultPage, UpdatePageName, UpdateGroupName, UpdateNodesSort, DeletePage, DeleteGroup, pageType } from '@common/apis/designPage'
+import {
+  DesignPageGroupDC,
+  DesignPageDC,
+  TreeNodeDC,
+  GetApplicationPages,
+  ChangeGroupGroup,
+  ChangePageGroup,
+  AddPage,
+  AddGroup,
+  SetDefaultPage,
+  UpdatePageName,
+  UpdateGroupName,
+  UpdateNodesSort,
+  DeletePage,
+  DeleteGroup,
+  pageType
+} from '@common/apis/designPage'
 import { behaviorContext } from '@behaviorEngine/index'
 
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
@@ -68,6 +73,7 @@ import { applicationType, ApplicationDC, GetApplication } from '@common/apis/des
 
 enum rightMenus {
   addPage = 'New Page',
+  addDialogPage = 'New DialogPage',
   setDefault = 'As First Page',
   addGroup = 'New Group',
   saveAs = 'Save As',
@@ -279,7 +285,7 @@ export default class index extends ComponentBase {
     if (data.type === 'page') {
       this.rightMenus = [rightMenus.edit, rightMenus.setDefault, rightMenus.saveAs, rightMenus.delete]
     } else if (data.type === 'group') {
-      this.rightMenus = [rightMenus.addPage, rightMenus.addGroup, rightMenus.delete]
+      this.rightMenus = [rightMenus.addPage, rightMenus.addDialogPage, rightMenus.addGroup, rightMenus.delete]
     }
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
@@ -296,6 +302,9 @@ export default class index extends ComponentBase {
     let iconString
     switch (rm) {
       case rightMenus.addPage:
+        iconString = '&#xe625;'
+        break
+      case rightMenus.addDialogPage:
         iconString = '&#xe625;'
         break
       case rightMenus.addGroup: {
@@ -330,7 +339,10 @@ export default class index extends ComponentBase {
     //window.console.log('onRightMenuChoose:', menuName)
     switch (menuName) {
       case rightMenus.addPage:
-        this.addPage()
+        this.addPage(pageType.page)
+        break
+      case rightMenus.addDialogPage:
+        this.addPage(pageType.dialogPage)
         break
       case rightMenus.addGroup:
         this.addGroup()
@@ -376,17 +388,20 @@ export default class index extends ComponentBase {
       this.treeData.push(newnode)
     }
   }
-  private async addPage() {
+  private async addPage(pagetype: pageType) {
     //parentGroupId 必定有值,因为页面必须添加到分组底下
     let parentGroupId = this.currentRightClickNode.id
     let datadc = this.searchNodeById(parentGroupId, this.treeData)
     let index = this.cuteChildrenMaxIndex(datadc) + 1
-    let pType = pageType.pcPage
+    let pType = pagetype
+
     switch (this.currentApplication.type) {
       case applicationType.dashBoard:
       case applicationType.report:
+        break
+
       case applicationType.webSystem:
-        pType = pageType.pcPage
+        pType = pagetype
         break
 
       default:

@@ -53,7 +53,6 @@ import toolBar from './tooBar.vue'
     pagelist: pagelist,
     toolBar: toolBar,
     propertyGrid: propertyGrid,
-
     pCPageDesign: PCPageDesign,
     pCPagePreview: PCPagePreview,
     previewPage: previewPage
@@ -151,11 +150,11 @@ export default class index extends PageBase {
 
     let designLayout: any = typeof PCPageDesign
     switch (res.type) {
-      case pageType.pcPage:
+      case pageType.page:
         designLayout = findPageByPaltform('pageDesign')
         break
-      case pageType.mobilePage:
-        designLayout = findPageByPaltform('pageDesign')
+      case pageType.dialogPage:
+        designLayout = findPageByPaltform('dialogPageDesign')
         break
       default:
         break

@@ -21,6 +21,10 @@ import { param } from '@design-any/interface/dist/bahaviorEngine'
 @DPageAttr('tableCellDesign')
 @Options({})
 export default class TableCellDesign extends DesignPageBase {
+  protected get renderCompArea(): any {
+    return this.$el
+  }
+
   public pageContext: param[] = []
 }
 </script>

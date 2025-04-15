@@ -6,7 +6,10 @@ import PCPagePreview from './06viewLayouts/PCPagePreview.vue'
 import TableCellDesign from './05designerLayouts/TableCellDesign.vue'
 import TableCellView from './06viewLayouts/TableCellView.vue'
 
-export { PCPageDesign, PCPagePreview, TableCellView, TableCellDesign }
+import DialogPageDesign from './05designerLayouts/DialogPageDesign.vue'
+import DialogPageView from './06viewLayouts/DialogPageView.vue'
+
+export { PCPageDesign, PCPagePreview, TableCellView, TableCellDesign, DialogPageView, DialogPageDesign }
 import applicationContext from './01designerContext/context'
 import { GetPageDetail } from '@common/apis/designPage'
 export { applicationContext }

@@ -35,8 +35,20 @@ export default class fixedValue extends Vue {
   private allPageInfos: any[] = []
 
   mounted() {
-    this.allPageInfos = behaviorContext.getAllPageInfos()
+    let allPage = behaviorContext.getAllPageInfos()
+
+    this.allPageInfos = this.getPopupPages(deepClone(allPage))
     this.currentSelectId = this.actObj.resourceFilter.pageId
+  }
+
+  private getPopupPages(allPage: any[]) {
+    for (let index = 0; index < allPage.length; index++) {
+      const element = allPage[index]
+      if (element.type === 'group') {
+        element.children = element.children.filter((o) => o.pageType === 1 || o.page === 'group')
+      }
+    }
+    return allPage
   }
 
   private onCurrentNodeChange(nodedata, node, obj) {
