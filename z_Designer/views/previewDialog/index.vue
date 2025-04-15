@@ -91,8 +91,9 @@ export default class index extends PageBase {
     }
   }
   // ***********打开页面的方法**************************
-  private async openPage(pageId: string) {
+  private async openPage(pageId: string, inparamVal: any) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    ;(vueComp as PCPagePreview).setPageInParam(inparamVal)
     this.currentOpenEngine = vueComp as any
     await this.openPage_drawVueCom(virtualDom, vueComp)
   }
@@ -179,15 +180,16 @@ export default class index extends PageBase {
     }
   }
   // ************页面事件处理---来自行为*********************************
-  private onLYLLeadToOtherPage(pageId: string) {
+  private onLYLLeadToOtherPage(pageId: string, inparamVal: any) {
     if (this.currentOpenEngine) {
       this.currentOpenEngine.destorymethod()
       this.currentOpenEngine = null
-      this.openPage(pageId)
+      this.openPage(pageId, inparamVal)
     }
   }
-  private async onPopupPage(pageId: string) {
+  private async onPopupPage(pageId: string, inparamVal: any) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    ;(vueComp as PCPagePreview).setPageInParam(inparamVal)
     //
     let page = vueComp as DialogPageView
     page.parentEngine = this.currentOpenEngine

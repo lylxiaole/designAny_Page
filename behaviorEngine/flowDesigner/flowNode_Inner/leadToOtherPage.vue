@@ -36,11 +36,11 @@ export default class fixedValue extends Vue {
 
   mounted() {
     let allPage = behaviorContext.getAllPageInfos()
-    this.allPageInfos = this.getPopupPages(deepClone(allPage))
+    this.allPageInfos = this.filterPopupPages(deepClone(allPage))
     this.currentSelectId = this.actObj.resourceFilter.pageId
   }
 
-  private getPopupPages(allPage: any[]) {
+  private filterPopupPages(allPage: any[]) {
     for (let index = 0; index < allPage.length; index++) {
       const element = allPage[index]
       if (element.type === 'group') {
@@ -55,6 +55,27 @@ export default class fixedValue extends Vue {
     }
     this.currentSelectId = nodedata.id
     this.actObj.resourceFilter.pageId = nodedata.id
+  }
+
+  @Watch('currentSelectId')
+  private oncurrentSelectIdChanged(val) {
+    this.actObj.resourceFilter.pageId = val
+    if (!val) {
+      this.actObj.inputParams = []
+      this.actObj.outParam = null
+      return
+    }
+    // *******************************************
+    let inParam = this.currentPage.pageContext.find((o) => o.key === 'pageInParam')
+    let inparams = []
+    inparams.push({
+      key: makeParamKey(this.actObj.id, inParam.key),
+      name: 'pageInParam'
+    } as any)
+
+    this.actObj.inputParams = inparams
+    // *******************************************
+    this.actObj.outParam = null
   }
 }
 </script>

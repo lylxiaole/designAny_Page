@@ -16,9 +16,9 @@ import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { flowDesignNode } from '../flowTypes'
 import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
-import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
 
 @flowDesignNode(funcCode.behaviorInparam, flowNodeType.funcNormalNode)
 @Options({

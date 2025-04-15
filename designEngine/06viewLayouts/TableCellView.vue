@@ -19,10 +19,15 @@ import { param } from '@design-any/interface/dist/bahaviorEngine'
 @DPageAttr('tableCellView')
 @Options({})
 export default class TableCellView extends ViewPageBase {
+  public pageContext: param[] = [{ key: 'tableCurrentRow', name: 'Current Row Data' }]
+
+  public setCurrentRowData(val) {
+    this.pageContext.find((o) => o.key === 'tableCurrentRow').val = val
+  }
+
   protected get renderCompArea(): any {
     return this.$el
   }
-  public pageContext: param[] = []
 }
 </script>
 

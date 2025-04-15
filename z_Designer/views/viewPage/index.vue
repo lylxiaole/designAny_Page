@@ -21,6 +21,7 @@ import applicationContext from '@designEngine/01designerContext/context'
 
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
 import { pageEmitter } from '@common/utils/eventBus'
+import { valHooks } from 'jquery'
 
 @Options({
   components: {
@@ -66,9 +67,10 @@ export default class index extends PageBase {
     }
   }
   // ***********打开页面的方法**************************
-  private async openPage(pageId: string) {
+  private async openPage(pageId: string, inparamVal: any) {
     /************************渲染页面*******************/
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    ;(vueComp as PCPagePreview).setPageInParam(inparamVal)
     this.currentOpenEngin = vueComp as any
     await this.openPage_drawVueCom(virtualDom, vueComp)
   }
@@ -111,19 +113,21 @@ export default class index extends PageBase {
     $(this.$refs.renderArea).append(virtualDom)
   }
   // ************页面事件处理---来自行为*********************************
-  private onLYLLeadToOtherPage(pageId: string) {
+  private onLYLLeadToOtherPage(pageId: string, inparamVal: any) {
     if (this.currentOpenEngin) {
       this.currentOpenEngin.destorymethod()
       this.currentOpenEngin = null
-      this.openPage(pageId)
+      this.openPage(pageId, inparamVal)
     }
   }
-  private async onPopupPage(pageId: string) {
+  private async onPopupPage(pageId: string, inparamVal: any) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
+    ;(vueComp as PCPagePreview).setPageInParam(inparamVal)
     //
     let page = vueComp as DialogPageView
     page.parentEngine = this.currentOpenEngin
     this.currentOpenEngin = vueComp as any
+
     //
     $(this.$refs.renderArea).append(virtualDom)
     //

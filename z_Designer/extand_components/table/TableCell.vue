@@ -53,7 +53,7 @@ export default class TableCell extends PageBase {
     ;(vueComp as any).top = 0
     $(this.$el).append(virtualDom)
     ;(vueComp as TableCellView).parentLayout = this.parentLayout
-    ;(vueComp as TableCellView).pageContext = [{ key: 'tableCurrentRow', name: 'Current Row Data', val: toRaw(this.rowData) }]
+    ;(vueComp as TableCellView).setCurrentRowData(toRaw(this.rowData))
     // *****************************
     this.currentPageEngine = vueComp as TableCellView
   }

@@ -17,10 +17,13 @@ import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDo
 import applicationContext from '../01designerContext/context'
 
 import DesignPageBase from './DesignPageBase'
+import { param, paramType } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 @DPageAttr('pageDesign')
 @Options({})
 export default class PCPageDesign extends DesignPageBase {
+  public pageContext: param[] = [{ key: 'pageInParam', name: 'pageInParam' }]
+
   protected get renderCompArea(): any {
     return this.$el
   }

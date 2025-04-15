@@ -38,8 +38,8 @@ export default class pageContextNode extends Vue {
     }
 
     let res = []
-    for (let index = 0; index < this.currentPage.pageContext.length; index++) {
-      const context = this.currentPage.pageContext[index]
+    for (let index = 0; index < (this.currentPage as any).pageContext.length; index++) {
+      const context = (this.currentPage as any).pageContext[index]
       res.push({
         id: context.key,
         desc: context.name,
@@ -58,7 +58,7 @@ export default class pageContextNode extends Vue {
       return
     }
     // *******************************************
-    let context = this.currentPage.pageContext.find((o) => o.key === val)
+    let context = (this.currentPage as any).pageContext.find((o) => o.key === val)
     let inparams = []
     inparams.push({
       key: makeParamKey(this.actObj.id, context.key),

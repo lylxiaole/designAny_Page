@@ -19,6 +19,7 @@ export default class DesignPageBase extends EnginePage {
     }
     return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '")'
   }
+
   public allShells: DesignShell[] = []
   public isDesigning: boolean = true
   private designEvets: DesignEvents = null

@@ -22,12 +22,16 @@ import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDo
 import applicationContext from '../01designerContext/context'
 import ViewPageBase from './ViewPageBase'
 import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr'
+import { param, paramType } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 @DPageAttr('dialogPageView')
 @Options({})
 export default class DialogPageView extends ViewPageBase {
   public parentEngine: EnginePage = null
-
+  public pageContext: param[] = [{ key: 'pageInParam', name: 'pageInParam' }]
+  public setPageInParam(val) {
+    this.pageContext.find((o) => o.key === 'pageInParam').val = val
+  }
   private windowVisible: boolean = true
 
   protected get renderCompArea(): any {

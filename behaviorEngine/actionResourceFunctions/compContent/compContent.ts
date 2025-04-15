@@ -6,7 +6,6 @@ import platform from '@design-any/interface/dist/enums/platform'
 
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { isPromise } from '@vue/shared'
-import { toRaw } from 'vue'
 
 @resourceFuncAttr('Parent Layout Method', '', funcGroup.resoucesInParentPage, funcCode.methodsInParentPage, platform.tableCell, [], null)
 export class methodsInParentPage implements actFuncBase {
@@ -82,27 +81,5 @@ export class behaviorsInParentPage implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let { behaviorId } = this.currentActObj.resourceFilter
-  }
-}
-
-@resourceFuncAttr('Page Context', '', funcGroup.resoucesInPage, funcCode.pageContext, platform.tableCell, [], null)
-export class pageContext implements actFuncBase {
-  currentActObj: actionObj
-  currentLayout: EngineLayout
-  currentPage: EnginePage
-  currentBehavior: behavior
-  async excute(inparams: object_InParam[]) {
-    let { contextKey } = this.currentActObj.resourceFilter
-
-    let context = this.currentPage.pageContext.find((o) => o.key === contextKey)
-    if (!context) {
-      return null
-    }
-    if (inparams[0]) {
-      let val = inparams[0].val
-      context.val = toRaw(val)
-    }
-
-    return toRaw(context.val)
   }
 }
