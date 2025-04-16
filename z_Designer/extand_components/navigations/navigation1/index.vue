@@ -85,11 +85,12 @@ export default class index extends EngineComponent {
   @DPropAttr(new AppPagesChoose_Setting('PageList', PropertyGroupName.data, true))
   private selectedPages: any[] = []
   // ******************************************************
-
   mounted() {
     this.width = '50%'
     this.height = '50%'
     this.background = 'white'
+    pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+    pageEmitter.on('onPopupPage', this.onPopupPage)
   }
   private allPageViews: EnginePage[] = []
   private allPages: SaveInfo[] = []
@@ -110,14 +111,7 @@ export default class index extends EngineComponent {
       await this.$nextTick()
       $(this.$refs.renderArea).html('')
       $(this.$refs.renderArea).append(virtualDom)
-
-      pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
-      pageEmitter.on('onPopupPage', this.onPopupPage)
-      ;(vueComp as any).$on('onLYLLeadToOtherPage', (pageId) => {
-        // this.currentOpenEngin.destorymethod()
-        // this.openPage(pageId)
-        this.linkClick(pageId)
-      })
+      ;(vueComp as EnginePage).completedPageLoad()
     } else {
       let pageView = this.allPageViews.find((o) => o.Id === pageId)
       $(this.$refs.renderArea).html('')

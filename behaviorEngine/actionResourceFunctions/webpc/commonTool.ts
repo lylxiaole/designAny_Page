@@ -62,6 +62,7 @@ export class pagePopup implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
+
     pageEmitter.emit('onPopupPage', newpageId, inparams[0].val)
   }
 }
@@ -74,6 +75,7 @@ export class pageContext implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let { contextKey } = this.currentActObj.resourceFilter
+
     let context = this.currentPage.pageContext.find((o) => o.key === contextKey)
     if (!context) {
       return null

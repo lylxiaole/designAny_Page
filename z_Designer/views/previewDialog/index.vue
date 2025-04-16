@@ -63,6 +63,7 @@ export default class index extends PageBase {
     await this.$nextTick()
     this.applicationId = appId
     await this.initApplication()
+
     pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
     pageEmitter.on('onPopupPage', this.onPopupPage)
   }
@@ -139,6 +140,8 @@ export default class index extends PageBase {
         this.currentOpenEngine.destorymethod()
       }
     } catch (error) {}
+    pageEmitter.off('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+    pageEmitter.off('onPopupPage', this.onPopupPage)
     this.windowVisible = false
   }
   // ************行为调试窗***************************
@@ -179,7 +182,7 @@ export default class index extends PageBase {
       ;(this.$refs.behaviorDebugger as behaviorDebugger).setFlowData(deepClone(behav), this.currentOpenEngine)
     }
   }
-  // ************页面事件处理---来自行为*********************************
+  // ************页面事件处理---来自行为****************
   private onLYLLeadToOtherPage(pageId: string, inparamVal: any) {
     if (this.currentOpenEngine) {
       this.currentOpenEngine.destorymethod()

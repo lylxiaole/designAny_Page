@@ -43,6 +43,12 @@ export default class index extends PageBase {
       pageEmitter.on('onPopupPage', this.onPopupPage)
     })
   }
+
+  beforeUnmount() {
+    pageEmitter.off('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+    pageEmitter.off('onPopupPage', this.onPopupPage)
+  }
+
   // ***********加载数据*************************
   private async initApplication() {
     this.allPageSimples = []
