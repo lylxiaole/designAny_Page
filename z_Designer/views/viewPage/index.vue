@@ -73,6 +73,7 @@ export default class index extends PageBase {
     ;(vueComp as PCPagePreview).setPageInParam(inparamVal)
     this.currentOpenEngin = vueComp as any
     await this.openPage_drawVueCom(virtualDom, vueComp)
+    ;(vueComp as PCPagePreview).completedPageLoad()
   }
   private async openPage_getVueComp(pageId: string) {
     let cachePageData = this.openedPageData.find((o) => o.id === pageId)
@@ -127,9 +128,9 @@ export default class index extends PageBase {
     let page = vueComp as DialogPageView
     page.parentEngine = this.currentOpenEngin
     this.currentOpenEngin = vueComp as any
-
     //
     $(this.$refs.renderArea).append(virtualDom)
+    ;(vueComp as PCPagePreview).completedPageLoad()
     //
     page.$on('onLYLDestroyed', () => {
       this.currentOpenEngin = page.parentEngine

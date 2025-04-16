@@ -138,8 +138,8 @@ class VueHtmlNodeModel extends HtmlResize.model {
     } = this
     let inParams = actObj.inputParams
     let outParam = actObj.outParam
-
     const anchors = []
+
     // *********显示入参锚点********************************
     if (inParams && inParams.length > 0) {
       let agvHeight = height / inParams.length

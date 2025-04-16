@@ -96,6 +96,7 @@ export default class index extends PageBase {
     ;(vueComp as PCPagePreview).setPageInParam(inparamVal)
     this.currentOpenEngine = vueComp as any
     await this.openPage_drawVueCom(virtualDom, vueComp)
+    ;(vueComp as PCPagePreview).completedPageLoad()
   }
   /************************渲染页面*******************/
   private async openPage_getVueComp(pageId: string) {
@@ -108,7 +109,6 @@ export default class index extends PageBase {
     let designLayout: EnginePage = null
     await this.$nextTick()
     let currentPaltform: platform = platform.page
-
     switch (cachePageData.type) {
       case pageType.page:
         designLayout = findPageByPaltform('pageView')
@@ -196,6 +196,7 @@ export default class index extends PageBase {
     this.currentOpenEngine = vueComp as any
     //
     $(this.$refs.renderArea).append(virtualDom)
+    ;(vueComp as PCPagePreview).completedPageLoad()
     //
     page.$on('onLYLDestroyed', () => {
       this.currentOpenEngine = page.parentEngine

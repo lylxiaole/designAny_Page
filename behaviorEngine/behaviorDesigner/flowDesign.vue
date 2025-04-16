@@ -1,6 +1,7 @@
 <template>
   <div style="box-sizing: border-box; width: 100%; height: 100%; position: relative" class="sql">
-    <div @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave" @mousemove="onMouseMove" style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
+    <div @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave" @mousemove="onMouseMove"
+      style="border-right: 1px solid #cdcdcd; box-sizing: border-box; width: calc(100% - 250px); height: 100%; float: left">
       <div ref="flowarea"></div>
     </div>
     <div style="box-sizing: border-box; width: 250px; height: 100%; float: left">
@@ -132,7 +133,6 @@ export default class flowDesign extends ComponentBase {
       // *****************************************
       allObjs.push(targetActObj)
     }
-
     // ******将flowData中的actObj剔除，为了数据压缩****************
     for (let index = 0; index < graphData.nodes.length; index++) {
       const element = graphData.nodes[index]
@@ -141,7 +141,6 @@ export default class flowDesign extends ComponentBase {
     // ***********************************************
     return { allObjs: allObjs, flowData: graphData }
   }
-
   public async setFlowData(behav: behavior, page: EnginePage) {
     let flowdata = behav.flowData
     // ******将行为中的actObj赋值到flowData，为了数据压缩****************
@@ -212,7 +211,27 @@ export default class flowDesign extends ComponentBase {
     this.currentFlow.on('anchor:dragend', this.onAnchorDragEnd)
     this.currentFlow.on('node:click', this.onNodeClick)
     this.currentFlow.on('edge:click', this.onEdgeClick)
+
+    this.clearNoUseEdge(this.currentFlow)
   }
+  //清除无效连线
+  private clearNoUseEdge(flow: LogicFlow) {
+    let alledges = flow.getGraphRawData().edges
+
+    for (let index = 0; index < alledges.length; index++) {
+      const edge = alledges[index]
+
+      const sourceNodeModel = flow.getNodeModelById(edge.sourceNodeId)
+      const sourceAnchor = sourceNodeModel?.getDefaultAnchor().find((anchor) => anchor.id === edge.sourceAnchorId)
+      const targetNodeModel = flow.getNodeModelById(edge.targetNodeId)
+      const targetAnchor = targetNodeModel?.getDefaultAnchor().find((anchor) => anchor.id === edge.targetAnchorId)
+
+      if (!sourceAnchor || !targetAnchor) {
+        flow.deleteEdge(edge.id)
+      }
+    }
+  }
+
   // ****************流程图事件****************************
   private async onEdgeConnectNotAllowed(msg) {
     alert(msg.msg)

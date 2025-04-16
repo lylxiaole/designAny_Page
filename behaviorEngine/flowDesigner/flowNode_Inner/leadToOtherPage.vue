@@ -38,6 +38,7 @@ export default class fixedValue extends Vue {
     let allPage = behaviorContext.getAllPageInfos()
     this.allPageInfos = this.filterPopupPages(deepClone(allPage))
     this.currentSelectId = this.actObj.resourceFilter.pageId
+    this.cuteInparams(this.currentSelectId)
   }
 
   private filterPopupPages(allPage: any[]) {
@@ -55,10 +56,10 @@ export default class fixedValue extends Vue {
     }
     this.currentSelectId = nodedata.id
     this.actObj.resourceFilter.pageId = nodedata.id
+    this.cuteInparams(this.currentSelectId)
   }
 
-  @Watch('currentSelectId')
-  private oncurrentSelectIdChanged(val) {
+  private cuteInparams(val) {
     this.actObj.resourceFilter.pageId = val
     if (!val) {
       this.actObj.inputParams = []
@@ -66,10 +67,9 @@ export default class fixedValue extends Vue {
       return
     }
     // *******************************************
-    let inParam = this.currentPage.pageContext.find((o) => o.key === 'pageInParam')
     let inparams = []
     inparams.push({
-      key: makeParamKey(this.actObj.id, inParam.key),
+      key: makeParamKey(this.actObj.id, 'pageInParam'),
       name: 'pageInParam'
     } as any)
 

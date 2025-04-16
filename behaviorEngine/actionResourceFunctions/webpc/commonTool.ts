@@ -50,9 +50,7 @@ export class leadToPage implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
-
     pageEmitter.emit('onLYLLeadToOtherPage', newpageId, inparams[0].val)
-    // this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }
 
@@ -64,9 +62,7 @@ export class pagePopup implements actFuncBase {
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
     let newpageId = this.currentActObj.resourceFilter.pageId
-
     pageEmitter.emit('onPopupPage', newpageId, inparams[0].val)
-    // this.currentPage.$lylemit('onLYLLeadToOtherPage', newpageId)
   }
 }
 

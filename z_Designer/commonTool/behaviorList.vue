@@ -60,8 +60,14 @@ export default class behaviorList extends Vue {
     if (!this.currentPage) {
       return []
     }
-    return this.currentPage.topPage.behaviors
-    // return this.currentPage.topPage.behaviors.filter((o) => o.platform === this.currentPage.platform)
+
+    // for (let index = 0; index < this.currentPage.topPage.behaviors.length; index++) {
+    //   const element = this.currentPage.topPage.behaviors[index]
+    //   debugger
+    // }
+
+    // return this.currentPage.topPage.behaviors
+    return this.currentPage.topPage.behaviors.filter((o) => o.platform === this.currentPage.platform)
   }
 
   private addBehavior() {

@@ -131,10 +131,30 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
+    this.clearNoUseEdge(this.currentFlow)
     // **********************************************
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
     this.currentFactory.onActObjExcuted = this.onActObjExcuted
   }
+
+  //清除无效连线
+  private clearNoUseEdge(flow: LogicFlow) {
+    let alledges = flow.getGraphRawData().edges
+
+    for (let index = 0; index < alledges.length; index++) {
+      const edge = alledges[index]
+
+      const sourceNodeModel = flow.getNodeModelById(edge.sourceNodeId)
+      const sourceAnchor = sourceNodeModel?.getDefaultAnchor().find((anchor) => anchor.id === edge.sourceAnchorId)
+      const targetNodeModel = flow.getNodeModelById(edge.targetNodeId)
+      const targetAnchor = targetNodeModel?.getDefaultAnchor().find((anchor) => anchor.id === edge.targetAnchorId)
+
+      if (!sourceAnchor || !targetAnchor) {
+        flow.deleteEdge(edge.id)
+      }
+    }
+  }
+
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
   // ***********调试功能**************************
