@@ -9,8 +9,14 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
-import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
-
+import {
+  DPropAttr,
+  PropertyGroupName,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
 @DCompnentAttr(platform.universal, 'Basic', 'NumberInput', 'numberInput_001', require('../compIcons/number-input.png'))
