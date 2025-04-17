@@ -1,6 +1,6 @@
 <template>
   <div style="padding-left:4px">
-    <svg-icon v-if="icon" :icon-class="icon" />
+    <!-- <svg-icon v-if="icon" :icon-class="icon" /> -->
     <span v-if="title" class="title">{{title}}</span>
   </div>
 </template>

@@ -5,14 +5,13 @@
       :header-cell-style="{ backgroundColor: headerBackground, color: headerFontColor }"
       :cell-style="{ backgroundColor: cellBackground, color: cellFontColor, 'border-color': 'black' }">
       <template v-for="col in tableColumns" :key="col.key">
-        <VxeColumn v-if="col.isShow && col.type === 'image'" align="center" :type="col.type" :title="col.title" :width="col.width" :field="col.field">
+        <VxeColumn v-if="col.isShow && col.type === 'image'" align="center" :title="col.title" :width="col.width" :field="col.field">
           <template #default="{ row }">
             <VxeImage width="100%" :src="row[col.field]"></VxeImage>
           </template>
         </VxeColumn>
 
-        <VxeColumn v-else-if="col.isShow && col.type === 'template'" align="center" :type="col.type" :title="col.title" :width="col.width"
-          :field="col.field">
+        <VxeColumn v-else-if="col.isShow && col.type === 'template'" align="center" :title="col.title" :width="col.width" :field="col.field">
           <template #default="{ row }">
             <TableCell :parentLayout="this" :bingdingData="col.template" :rowData="row" />
           </template>
@@ -22,8 +21,8 @@
       </template>
     </VxeTable>
 
-    <VxePager v-if="isShowPager" style="height: 38px" size="small" v-model:currentPage="pageIndex" v-model:pageSize="pageSize" :total="dataTotalCount"
-      @page-change="onPageChange"></VxePager>
+    <vxe-pager v-if="isShowPager" style="height: 38px" size="small" v-model:currentPage="pageIndex" v-model:pageSize="pageSize"
+      :total="dataTotalCount" @page-change="onPageChange"></vxe-pager>
   </div>
 </template>
 
@@ -44,20 +43,18 @@ import {
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
 import TableCell from './TableCell.vue'
-import { VxeTable, VxeColumn, VxeColgroup, VxePager } from 'vxe-table'
-import { VxeImage } from 'vxe-pc-ui'
-
+import { VxeTable, VxeColumn } from 'vxe-table'
+import { VxeImage, VxePager } from 'vxe-pc-ui'
 // 导入主题变量，也可以重写主题变量
-import 'vxe-table/styles/cssvar.scss'
 import 'vxe-table/lib/style.css'
+import 'vxe-pc-ui/lib/style.css'
+
+import 'vxe-pc-ui/styles/cssvar.scss'
+import 'vxe-table/styles/cssvar.scss'
 //自定义修改主题
 import './tableThemeStyle.scss'
 import platform from '@design-any/interface/dist/enums/platform'
-
 import elementResizeDetectorMaker from 'element-resize-detector'
-import { Watch } from 'vue-property-decorator'
-import { toRaw } from 'vue'
-import { deepClone } from '@common/utils'
 
 @DCompnentAttr(platform.page, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
 @Options({

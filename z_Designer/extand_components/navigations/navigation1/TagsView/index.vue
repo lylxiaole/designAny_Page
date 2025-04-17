@@ -2,13 +2,13 @@
   <div id="tags-view-container" class="tags-view-container" style="overflow-y: hidden">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
       <!-- :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" -->
-      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.id" :class="isActive(tag) ? 'active' : ''" class="tags-view-item"
+      <div v-for="tag in visitedViews" ref="tag" :key="tag.id" :class="isActive(tag) ? 'active' : ''" class="tags-view-item"
         @contextmenu.prevent="openMenu(tag, $event)" @mouseup="selectMenu(tag)">
         {{ getTagName(tag) }}
         <el-icon @click.prevent.stop="closeSelectedTag(tag)">
           <Close />
         </el-icon>
-      </router-link>
+      </div>
     </scroll-pane>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <!-- <li @click="refreshSelectedTag(selectedTag)">刷新</li>
