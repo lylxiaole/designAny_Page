@@ -1,7 +1,8 @@
 <template>
   <div class="navbar flexHorilanLayout">
     <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
-    <tags-view style="width: 100%; height: 100%" :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag" id="breadcrumb-container" class="breadcrumb-container" />
+    <tags-view style="width: 100%; height: 100%" :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag"
+      @selectedTag="selectedTag" id="breadcrumb-container" class="breadcrumb-container" />
   </div>
 </template>
 
@@ -22,7 +23,7 @@ export default class Navbar extends Vue {
       return []
     }
   })
-  private allPages: SaveInfo[]
+  private allPages: any[]
 
   @Prop()
   private currentPageId: string

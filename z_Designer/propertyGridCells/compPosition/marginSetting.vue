@@ -4,20 +4,24 @@
       <el-collapse-item name="1">
         <el-row style="position: relative">
           <span class="normaltext" style="float: left; width: 48px">Left:</span>
-          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.left" :min="0" :max="9999999"></el-input-number>
+          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.left" :min="0"
+            :max="9999999"></el-input-number>
         </el-row>
         <el-row style="position: relative; margin-top: 2px">
           <span class="normaltext" style="float: left; width: 48px">Right:</span>
-          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.right" :min="0" :max="9999999"></el-input-number>
+          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.right" :min="0"
+            :max="9999999"></el-input-number>
         </el-row>
         <!-- ************************************************************************** -->
         <el-row style="position: relative; margin-top: 2px">
           <span class="normaltext" style="float: left; width: 48px">Top:</span>
-          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.top" :min="0" :max="9999999"></el-input-number>
+          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.top" :min="0"
+            :max="9999999"></el-input-number>
         </el-row>
         <el-row style="position: relative; margin-top: 2px">
           <span class="normaltext" style="float: left; width: 48px">Bottom:</span>
-          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.bottom" :min="0" :max="9999999"></el-input-number>
+          <el-input-number style="float: left; width: 90px" size="small" controls-position="right" :step="1" v-model="currentValue.bottom" :min="0"
+            :max="9999999"></el-input-number>
         </el-row>
       </el-collapse-item>
     </el-collapse>
@@ -36,7 +40,7 @@ import { PropertyTypeEnum, Margin_Setting } from '@design-any/interface/dist/Lay
   components: {}
 })
 export default class marginSetting extends propertyCellBase<Margin_Setting> {
-  private activeNames: string[] = []
+  private activeNames: string[] = ['1']
   mounted() {}
 }
 </script>

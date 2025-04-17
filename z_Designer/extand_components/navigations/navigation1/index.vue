@@ -13,7 +13,7 @@
         <el-col :span="4" :style="{ height: containerHeaderHeight }"></el-col>
         <!-- 小标签 -->
         <el-col :span="13" :style="{ height: containerHeaderHeight }">
-          <Navbar :allPages="allPages" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag"
+          <Navbar :allPages="allOpenedPageTags" :currentPageId="currentPageId" @closeSelectedTag="closeSelectedTag" @selectedTag="selectedTag"
             style="width: 100%; height: 100%" />
         </el-col>
 
@@ -37,7 +37,6 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
-
 // *******************************
 import { EngineLayout, EngineComponent, SaveInfo, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 
@@ -92,18 +91,39 @@ export default class index extends EngineComponent {
     pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
     pageEmitter.on('onPopupPage', this.onPopupPage)
   }
+
+  unmounted() {
+    pageEmitter.off('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
+    pageEmitter.off('onPopupPage', this.onPopupPage)
+  }
+
+  private get allOpenedPageTags() {
+    return this.roopGetAllPageTags(this.selectedPages)
+  }
+  private roopGetAllPageTags(pages: any[]) {
+    let res = []
+    for (let index = 0; index < pages.length; index++) {
+      const element = pages[index]
+      if (element.type === 'group') {
+        let finds = this.roopGetAllPageTags(element.children)
+        res = res.concat(finds)
+      } else if (this.allPageViews.find((o) => o.Id === element.id)) {
+        res.push(element)
+      }
+    }
+    return res
+  }
+
   private allPageViews: EnginePage[] = []
-  private allPages: SaveInfo[] = []
   private currentPageId: string = ''
 
   private async linkClick(pageId) {
-    let detail: SaveInfo = this.allPages.find((o) => o.id === pageId)
-    let findpageengine = findPageByPaltform('pageView')
-    let { virtualDom, vueComp } = designDrawDomVirtual(findpageengine, false, { applicationContext: this.applicationContext })
+    let cacheView: EnginePage = this.allPageViews.find((o) => o.Id === pageId)
 
-    if (!detail) {
-      detail = await this.applicationContext.getPageDetailById(pageId)
-      this.allPages.push(detail)
+    if (!cacheView) {
+      let findpageengine = findPageByPaltform('pageView')
+      let { virtualDom, vueComp } = designDrawDomVirtual(findpageengine, false, { applicationContext: this.applicationContext })
+      var detail = await this.applicationContext.getPageDetailById(pageId)
       this.allPageViews.push(vueComp as EnginePage)
       await (vueComp as EnginePage).loadPageByData(pageId, detail, platform.page)
       ;(vueComp as any).left = 0
@@ -116,25 +136,24 @@ export default class index extends EngineComponent {
       let pageView = this.allPageViews.find((o) => o.Id === pageId)
       $(this.$refs.renderArea).html('')
       $(this.$refs.renderArea).append(pageView.$el)
+      ;(pageView as EnginePage).completedPageLoad()
     }
-
     this.currentPageId = pageId
   }
 
   private closeSelectedTag(page) {
-    let findIndex = this.allPages.findIndex((o) => o.id === page.id)
+    let findIndex = this.allPageViews.findIndex((o) => o.Id === page.id)
     if (this.currentPageId === page.id) {
       let nextOpenPageIndex = 0
 
       nextOpenPageIndex = findIndex - 1
-      let nextOpenpage = this.allPages[nextOpenPageIndex]
+      let nextOpenpage = this.allPageViews[nextOpenPageIndex]
       if (nextOpenpage) {
-        this.linkClick(nextOpenpage.id)
+        this.linkClick(nextOpenpage.Id)
       } else {
         $(this.$refs.renderArea).html('')
       }
     }
-    this.allPages.splice(findIndex, 1)
     this.allPageViews.splice(findIndex, 1)
   }
 

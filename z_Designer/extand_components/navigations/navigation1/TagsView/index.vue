@@ -2,10 +2,12 @@
   <div id="tags-view-container" class="tags-view-container" style="overflow-y: hidden">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
       <!-- :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" -->
-
-      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.id" :class="isActive(tag) ? 'active' : ''" class="tags-view-item" @contextmenu.prevent="openMenu(tag, $event)" @mouseup="selectMenu(tag)">
+      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.id" :class="isActive(tag) ? 'active' : ''" class="tags-view-item"
+        @contextmenu.prevent="openMenu(tag, $event)" @mouseup="selectMenu(tag)">
         {{ getTagName(tag) }}
-        <el-icon @click.prevent.stop="closeSelectedTag(tag)"><Close /></el-icon>
+        <el-icon @click.prevent.stop="closeSelectedTag(tag)">
+          <Close />
+        </el-icon>
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
@@ -67,7 +69,7 @@ export default {
       return page.id === this.currentPageId
     },
     getTagName(page) {
-      return page.properties.find((o) => o.field === 'name').value
+      return page.label
     },
 
     filterAffixTags(routes, basePath = '/') {

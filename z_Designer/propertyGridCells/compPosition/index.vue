@@ -36,7 +36,7 @@ import { PropertyTypeEnum, CompPosition_Setting } from '@design-any/interface/di
   components: {}
 })
 export default class index extends propertyCellBase<CompPosition_Setting> {
-  private activeNames: string[] = []
+  private activeNames: string[] = ['1']
 
   mounted() {}
 }
