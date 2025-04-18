@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-row style="height: 50px; line-height: 50px">
-      <el-button style="margin-left: 20px" link type="primary" @click="onAddNew">Add New</el-button>
+    <el-row style="height: 50px; line-height: 50px;position:relative;width:100%">
+      <el-button style="position:absolute;right:80px;margin-top:20px" link type="primary" @click="onAddNew">Add New</el-button>
     </el-row>
     <el-row style="height: calc(100% - 50px)">
       <el-table :data="allData" style="width: 100%">
@@ -25,7 +25,7 @@
 import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
 import addOrUpdateDialog from './addOrUpdateDialog.vue'
-
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { DeleteDictionary, GetAll } from '@common/apis/designDictionary'
 
 @Options({
@@ -49,6 +49,15 @@ export default class index extends PageBase {
   }
 
   private async onDelete(row) {
+    try {
+      await ElMessageBox.confirm('Sure Delete?', 'Tip', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel'
+      })
+    } catch (error) {
+      return
+    }
+
     await DeleteDictionary(row)
     this.refreshList()
   }

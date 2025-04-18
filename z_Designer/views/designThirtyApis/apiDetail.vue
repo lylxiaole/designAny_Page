@@ -1,5 +1,8 @@
 <template>
   <div style="padding: 8px; width: 100%; height: 100%; box-sizing: border-box" class="">
+    <div style="height: 50px">
+      <el-button type="primary" style="margin-left:600px" @click="onSureHandle">Sure</el-button>
+    </div>
     <el-form :model="currentApi" label-width="150px" style="height: calc(100% - 50px); overflow-y: auto">
       <el-form-item label="Description">
         <el-input style="width: 500px" v-model="currentApi.desc" />
@@ -45,9 +48,7 @@
         <paramsEidtor v-show="currentApi.bodyIsParam" style="width: 500px" :params="currentApi.bodyContent" />
       </el-form-item>
     </el-form>
-    <div style="height: 50px">
-      <el-button type="primary" @click="onSureHandle">Sure</el-button>
-    </div>
+
   </div>
 </template>
 

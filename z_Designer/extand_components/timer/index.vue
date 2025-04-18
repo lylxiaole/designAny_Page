@@ -36,6 +36,8 @@ export default class Index extends EngineComponent {
     this.height = '60px'
     this.findPropertyInfo((o) => o.background).canSetting = false
     this.findPropertyInfo((o) => o.background_img).canSetting = false
+    this.findPropertyInfo((o) => o.foreground).canSetting = false
+    this.findPropertyInfo((o) => o.fontSize).canSetting = false
 
     if (this.tiimeout > 0) {
       this.interval = window.setInterval(() => {

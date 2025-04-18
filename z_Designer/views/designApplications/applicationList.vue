@@ -4,7 +4,8 @@
       <el-button style="height: 25px" @click="addAppHandle" size="small" type="primary">{{ $t('menu.addAppOpt') }}</el-button>
     </el-row>
     <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
-      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem verticalAlignCenter flexHorilanLayout" @click="selectAppliction(app)">
+      <div v-for="app in allApps" :key="app.id" :style="applicationItemStyle(app)" class="applicationItem verticalAlignCenter flexHorilanLayout"
+        @click="selectAppliction(app)">
         <div style="width: calc(100% - 96px); float: left">
           {{ app.name }}
         </div>
@@ -65,14 +66,11 @@ export default class applicationList extends ComponentBase {
   }
   private async deleteAppInfo() {
     try {
-      let res = await ElMessageBox.prompt('Please input application name to confirm', 'Tip', {
+      await ElMessageBox.confirm('Sure Delete?', 'Tip', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel'
       })
-      const { value } = res
-      if (!value || value !== this.currentApplication.name) {
-        throw 'input error'
-      }
+
       await DeleteApplication(this.currentApplication)
       await this.refreshAppList()
     } catch (error: any) {
