@@ -136,7 +136,8 @@ export default class Index extends EngineComponent {
   mounted() {
     this.width = '70%'
     this.height = '50%'
-    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
+
+    this.findPropertyInfo((o) => o.background_img).canSetting = false
 
     this.resizeListener = elementResizeDetectorMaker()
     this.resizeListener.listenTo(this.$el, () => {

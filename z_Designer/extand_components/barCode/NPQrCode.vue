@@ -1,18 +1,8 @@
 <template>
   <div>
-    <canvas
-      style="width: 100%"
-      :id="qrCodeId"
-      :qr-value="codeValue"
-      :qr-version="codeVersion"
-      :qr-ecl="codeErrorCorrectionLevel"
-      :qr-maskpattern="codeMaskPattern"
-      :qr-margin="codeMargin"
-      :qr-width="codeWidth"
-      :qr-scale="codeScale"
-      :qr-color-light="codeLightColor"
-      :qr-color-dark="codeDarkColor"
-    ></canvas>
+    <canvas style="width: 100%" :id="qrCodeId" :qr-value="codeValue" :qr-version="codeVersion" :qr-ecl="codeErrorCorrectionLevel"
+      :qr-maskpattern="codeMaskPattern" :qr-margin="codeMargin" :qr-width="codeWidth" :qr-scale="codeScale" :qr-color-light="codeLightColor"
+      :qr-color-dark="codeDarkColor"></canvas>
   </div>
 </template>
 
@@ -23,7 +13,15 @@ import QRCode from 'qrcode'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
-import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting, Color_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import {
+  DPropAttr,
+  PropertyGroupName,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting,
+  Color_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
 import platform from '@design-any/interface/dist/enums/platform'
 
@@ -39,9 +37,9 @@ export default class NPQrCode extends EngineComponent {
   mounted() {
     this.width = '10%'
     this.height = '10%'
+    this.findPropertyInfo((o) => o.background).canSetting = false
+    this.findPropertyInfo((o) => o.background_img).canSetting = false
 
-    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
-    this.findPropertyByName(PropertyGroupName.style, 'BgColor').canSetting = false
     this.initQrCode()
   }
   beforeUnmount() {}

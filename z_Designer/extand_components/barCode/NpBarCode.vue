@@ -1,18 +1,8 @@
 <template>
   <div>
-    <canvas
-      style="width: 100%"
-      ref="barcoderef"
-      :jsbarcode-value="vlaue"
-      :jsbarcode-width="codeWidth"
-      :jsbarcode-height="codeHeight"
-      :jsbarcode-displayvalue="codeDisplayValue"
-      :jsbarcode-format="codeFormat"
-      :jsbarcode-textalign="codeTextAlign"
-      :jsbarcode-textposition="codeTextPosition"
-      :jsbarcode-textmargin="codeTextMargin"
-      :jsbarcode-fontSize="codeFontSize"
-    ></canvas>
+    <canvas style="width: 100%" ref="barcoderef" :jsbarcode-value="vlaue" :jsbarcode-width="codeWidth" :jsbarcode-height="codeHeight"
+      :jsbarcode-displayvalue="codeDisplayValue" :jsbarcode-format="codeFormat" :jsbarcode-textalign="codeTextAlign"
+      :jsbarcode-textposition="codeTextPosition" :jsbarcode-textmargin="codeTextMargin" :jsbarcode-fontSize="codeFontSize"></canvas>
   </div>
 </template>
 
@@ -23,9 +13,35 @@ import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentIn
 
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 
-import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import {
+  DPropAttr,
+  PropertyGroupName,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import JsBarcode from 'jsbarcode'
-const codeFormats = ['CODE128', 'CODE128A', 'CODE128B', 'CODE128C', 'UPC', 'EAN2', 'EAN5', 'EAN8', 'EAN13', 'CODE39', 'ITF14', 'MSI', 'MSI10', 'MSI11', 'MSI1010', 'MSI1110', 'pharmacode', 'codabar']
+const codeFormats = [
+  'CODE128',
+  'CODE128A',
+  'CODE128B',
+  'CODE128C',
+  'UPC',
+  'EAN2',
+  'EAN5',
+  'EAN8',
+  'EAN13',
+  'CODE39',
+  'ITF14',
+  'MSI',
+  'MSI10',
+  'MSI11',
+  'MSI1010',
+  'MSI1110',
+  'pharmacode',
+  'codabar'
+]
 import platform from '@design-any/interface/dist/enums/platform'
 
 @DCompnentAttr(platform.universal, 'Basic', 'BarCode', 'NpBarCode_001', require('../compIcons/barcode.png'))
@@ -37,8 +53,8 @@ export default class NpBarCode extends EngineComponent {
     this.width = '10%'
     this.height = '10%'
 
-    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
-    this.findPropertyByName(PropertyGroupName.style, 'BgColor').canSetting = false
+    this.findPropertyInfo((o) => o.background).canSetting = false
+    this.findPropertyInfo((o) => o.background_img).canSetting = false
     this.initBarCode()
   }
 

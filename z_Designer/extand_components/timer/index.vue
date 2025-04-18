@@ -1,5 +1,7 @@
 <template>
-  <div>I am Timer</div>
+  <div>
+    <img style="height: 100%" :src="require('./clock.png')" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -7,10 +9,17 @@ import { Options, Vue } from 'vue-class-component'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
-import { PropertyGroupName, Number_Setting, UploadFile_Setting, Text_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import { PropertyGroupName, Number_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
+import { toRaw, toRef } from 'vue'
+import 'reflect-metadata'
+
+function lamdaProperty(o: EngineComponent): void {
+  debugger
+  return arguments[0]
+}
 
 @DCompnentAttr(platform.universal, 'Basic', 'Timer', 'Timer001', require('../compIcons/anniu2.png'))
 @Options({
@@ -25,6 +34,8 @@ export default class Index extends EngineComponent {
   mounted() {
     this.width = '60px'
     this.height = '60px'
+    this.findPropertyInfo((o) => o.background).canSetting = false
+    this.findPropertyInfo((o) => o.background_img).canSetting = false
 
     if (this.tiimeout > 0) {
       this.interval = window.setInterval(() => {
@@ -32,6 +43,7 @@ export default class Index extends EngineComponent {
       }, this.tiimeout * 1000)
     }
   }
+
   unmounted() {
     if (this.interval > -1) {
       window.clearInterval(this.interval)
