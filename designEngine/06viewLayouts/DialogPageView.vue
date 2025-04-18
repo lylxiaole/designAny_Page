@@ -1,11 +1,9 @@
 <template>
   <el-dialog style="padding:0px !important;" v-model="windowVisible" :style="{width:width}" @close="onClose" :close-on-click-modal="false"
     :close-on-press-escape="false" destroy-on-close>
-
     <div ref="renderContent"
       :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }"
       oncontextmenu="self.event.returnValue=false" class="container" style="border-radius: 0px; box-sizing: border-box"></div>
-
   </el-dialog>
 
 </template>

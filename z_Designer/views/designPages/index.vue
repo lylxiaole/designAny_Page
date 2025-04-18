@@ -2,7 +2,7 @@
   <el-row style="height: 100%; width: 100%">
     <el-row style="height: 60px; width: 100%">
       <toolBar :application="application" :currentPage="currentShowEngine" :needSave="needSave(currentShowEngine ? currentShowEngine.Id : '')"
-        :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView" @onSettingBehavior="onSettingBehavior"></toolBar>
+        :height="60" @onSave="onSaveCurrentPage" @onPreView="onPreView"></toolBar>
     </el-row>
     <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
       <el-col style="width: 250px; height: 100%; float: left">

@@ -22,8 +22,8 @@
     <div v-if="isExcuted && inParams && inParams.length > 0" style="width: 100%; height: 300px">
       <div class="title">InpParams:</div>
       <div class="content">
-        <el-collapse>
-          <el-collapse-item v-for="param in inParams" :key="param.key" :title="param.name" :icon="CaretRight">
+        <el-collapse :model-value="inParams.map(o=>o.name)">
+          <el-collapse-item v-for="param in inParams" :key="param.key" :name="param.name" :title="param.name" :icon="CaretRight">
             <div>{{ param.val ? param.val : 'None' }}</div>
           </el-collapse-item>
         </el-collapse>
@@ -37,8 +37,8 @@
     <div v-if="isExcuted && outParam" style="width: 100%; height: 300px">
       <div class="title">OutParam:</div>
       <div class="content">
-        <el-collapse>
-          <el-collapse-item :title="outParam.name" :icon="CaretRight">
+        <el-collapse :model-value="[outParam.name]">
+          <el-collapse-item :title="outParam.name" :name="outParam.name" :icon="CaretRight">
             <div>{{ outParam.val ? outParam.val : 'None' }}</div>
           </el-collapse-item>
         </el-collapse>

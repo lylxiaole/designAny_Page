@@ -1,14 +1,15 @@
 <template>
-  <el-dialog ref="previewPopup" class="bhaviorDialog" style="height: 100%" width="100%" top="0px" v-model="windowVisible" :before-close="onClose"
-    :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+  <el-dialog ref="previewPopup" class="bhaviorDialog" style="height: 100%;padding:0px" width="100%" top="0px" v-model="windowVisible"
+    :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
       <!-- ********************************************************************* -->
-      <el-button @click="onClose"
-        style="background: red; position: absolute; right: 0px; top: 0px; z-index: 9999999999; color: white">Exit</el-button>
-      <div ref="renderArea" style="width: 100%; height: 100%; overflow: hidden"></div>
+      <div style="height:50px;z-index:999999;position:relative;background:#cdcdcd" class="verticalAlignCenter flexHorilanLayout">
+        <el-button style="width: 80px; background: green;color: white" @click="onOpenDrawer">Behaviors</el-button>
+        <el-button @click="onClose" style="background: red;color: white">Exit</el-button>
+      </div>
       <!-- ********************************************************************* -->
-      <el-button style="width: 80px; background: green; position: absolute; right: 0px; top: 48%; z-index: 9999999999; color: white"
-        @click="onOpenDrawer">Behaviors</el-button>
+      <div ref="renderArea" style="width: 100%; height: calc(100% - 50px); overflow: hidden;position:absolute;top:50px"></div>
+      <!-- ********************************************************************* -->
       <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
         <behaviorDebugger ref="behaviorDebugger" :currentPage="currentOpenEngine" @onEditBehavior="onEditBehavior" />
       </el-drawer>
