@@ -18,7 +18,7 @@ import platform from '@design-any/interface/dist/enums/platform'
 })
 export default class Index extends EngineComponent {
   @DPropAttr(new Number_Setting('Tick', PropertyGroupName.data, true, 'second'))
-  private tiimeout: number = 0
+  private tiimeout: number = 1
 
   private interval: number = -1
 
@@ -26,12 +26,16 @@ export default class Index extends EngineComponent {
     this.width = '60px'
     this.height = '60px'
 
-    this.interval = window.setInterval(() => {
-      this.onTickTock()
-    }, this.tiimeout * 1000)
+    if (this.tiimeout > 0) {
+      this.interval = window.setInterval(() => {
+        this.onTickTock()
+      }, this.tiimeout * 1000)
+    }
   }
   unmounted() {
-    window.clearInterval(this.interval)
+    if (this.interval > -1) {
+      window.clearInterval(this.interval)
+    }
   }
 
   @DEventAttr({ eventName: 'onTickTock', description: '', inParams: [], hasOutParam: false })

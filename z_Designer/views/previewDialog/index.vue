@@ -10,7 +10,8 @@
       <!-- ********************************************************************* -->
       <div ref="renderArea" style="width: 100%; height: calc(100% - 50px); overflow: hidden;position:absolute;top:50px"></div>
       <!-- ********************************************************************* -->
-      <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" :with-header="true">
+      <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" style="height: calc(100% - 50px);top:50px"
+        :with-header="true">
         <behaviorDebugger ref="behaviorDebugger" :currentPage="currentOpenEngine" @onEditBehavior="onEditBehavior" />
       </el-drawer>
       <!-- ********************************************************************* -->
@@ -68,7 +69,6 @@ export default class index extends PageBase {
     pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
     pageEmitter.on('onPopupPage', this.onPopupPage)
   }
-
   // ***********初始化应用数据******************************
   private async initApplication() {
     this.allPageSimples = []
