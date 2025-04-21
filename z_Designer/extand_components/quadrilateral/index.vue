@@ -13,7 +13,7 @@ import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/矩形.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/矩形.png'))
 @Options({
   components: {}
 })

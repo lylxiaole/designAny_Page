@@ -7,13 +7,16 @@
         {{ application ? application.name : '' }}</div>
     </div>
     <!-- *************************************************************************** -->
-    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="'Save' + (needSave ? '*' : '')"
+    <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+S'" :label="$t('opts.save') + (needSave ? '*' : '')"
       :enableIcon="saveIcon" @click="savePage" />
+
     <optionBtn v-if="currentPage" :enable="currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'"
-      :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="'Undo'" @mouseup="topre" />
+      :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="$t('opts.undo')" @mouseup="topre" />
+
     <optionBtn v-if="currentPage" :enable="currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'"
-      :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="'Redo'" @mouseup="tonext" />
-    <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :enableIcon="previewIcon" label="Debugger"
+      :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="$t('opts.redo')" @mouseup="tonext" />
+
+    <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :enableIcon="previewIcon" :label="$t('opts.debugger')"
       @mouseup="onPreView" />
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
@@ -25,7 +28,7 @@
           </div>
         </template>
         <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon"
-          label="Components" />
+          :label="$t('opts.components')" />
       </el-tooltip>
 
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip" style="background: transparen" append-to="body"
@@ -36,7 +39,7 @@
           </div>
         </template>
         <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
-          label="Behaviors" />
+          :label="$t('opts.behaviors')" />
       </el-tooltip>
 
       <!-- *************************************************************************** -->
@@ -45,10 +48,10 @@
           <el-input-number v-model="pageScale" style="width: 100%" controls-position="right" size="small" :min="0.01" :step="0.01" :max="1000"
             :precision="2" />
         </div>
-        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
+        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">{{$t('opts.zoomTool')}}</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Exit" @click="onQuit" />
+      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" :label="$t('opts.exit')" @click="onQuit" />
     </div>
 
     <behaviorDesigner ref="behaviorDesigner" />

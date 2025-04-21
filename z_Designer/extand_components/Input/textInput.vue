@@ -23,7 +23,7 @@ import {
 
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'TextInput', 'textInput_001', require('../compIcons/文本输入框.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'TextInput', 'textInput_001', require('../compIcons/文本输入框.png'))
 @Options({})
 export default class textInput extends EngineComponent {
   isShowIndex: boolean = false

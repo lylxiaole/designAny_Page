@@ -5,6 +5,7 @@ import messages from './i18n'
 import 'moment/locale/zh-cn'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import en from 'element-plus/dist/locale/en'
+
 let i18nlocal = null
 
 export function initLocale() {

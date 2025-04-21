@@ -43,8 +43,9 @@ const codeFormats = [
   'codabar'
 ]
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.universal, 'Basic', 'BarCode', 'NpBarCode_001', require('../compIcons/条形码.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), getLocale().t('tip.barCode'), 'NpBarCode_001', require('../compIcons/条形码.png'))
 @Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}
@@ -62,31 +63,31 @@ export default class NpBarCode extends EngineComponent {
     // this.initBarCode()
   }
 
-  @DPropAttr(new Text_Setting('Code Text', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting(getLocale().t('tip.codeText'), PropertyGroupName.data, true))
   private vlaue: string = '123456789'
 
-  @DPropAttr(new Enum_Setting('Code Format', PropertyGroupName.data, true, null, true, codeFormats))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.codeFormat'), PropertyGroupName.data, true, null, true, codeFormats))
   private codeFormat: string = 'CODE128'
 
-  @DPropAttr(new Number_Setting('Code Width', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeWidth'), PropertyGroupName.style, true, null))
   private codeWidth: number = 2
 
-  @DPropAttr(new Number_Setting('Code Height', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeHeight'), PropertyGroupName.style, true, null))
   private codeHeight: number = 100
 
-  @DPropAttr(new Boolean_Setting('Display Text', PropertyGroupName.style, true, null))
+  @DPropAttr(new Boolean_Setting(getLocale().t('tip.displayText'), PropertyGroupName.style, true, null))
   private codeDisplayValue: boolean = true
 
-  @DPropAttr(new Enum_Setting('CodeText Align', PropertyGroupName.style, true, null, true, ['left', 'center', 'right']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.codeTextAlign'), PropertyGroupName.style, true, null, true, ['left', 'center', 'right']))
   private codeTextAlign: string = 'center'
 
-  @DPropAttr(new Enum_Setting('CodeText Position', PropertyGroupName.style, true, null, true, ['top', 'bottom']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.codeTextPosition'), PropertyGroupName.style, true, null, true, ['top', 'bottom']))
   private codeTextPosition: string = 'bottom'
 
-  @DPropAttr(new Number_Setting('CodeText Margin', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeTextMargin'), PropertyGroupName.style, true, null))
   private codeTextMargin: number = 2
 
-  @DPropAttr(new Number_Setting('Code FontSize', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeFontSize'), PropertyGroupName.style, true, null))
   private codeFontSize: number = 20
 
   private initBarCode() {

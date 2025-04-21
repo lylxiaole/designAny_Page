@@ -36,7 +36,7 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Text', 'TextComponent_001', require('../compIcons/文本.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Text', 'TextComponent_001', require('../compIcons/文本.png'))
 @Options({})
 export default class TextComponent extends EngineComponent {
   mounted() {

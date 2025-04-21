@@ -2,7 +2,7 @@
   <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
     <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
       <el-row style="margin: 3px 15px">
-        <el-button @click="addFromSwagger">Add From Swagger</el-button>
+        <el-button @click="addFromSwagger">{{$t('opts.addFromSwagger')}}</el-button>
         <!-- <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="Please Input内容"></el-input> -->
       </el-row>
     </el-row>
@@ -58,14 +58,14 @@ import {
   GetGroupApisAll,
   AddOrUpdateAPITreeInfo,
   DeleteAPI,
-  UpdateNodesSort,
-  GetApiDetail
+  UpdateNodesSort
 } from '@common/apis/designThirtyApi'
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { AddOrUpdate as AddOrUpdateDictionary } from '@common/apis/designDictionary'
-
 import axios from 'axios'
+
+import { getLocale } from '@common/baseConfigs'
 
 class TreeNodeDC {
   id: string
@@ -77,14 +77,14 @@ class TreeNodeDC {
   children: TreeNodeDC[] = []
 }
 
-enum rightMenus {
-  addApi = 'New Api',
-  addGroup = 'New Group',
-  saveAs = 'Save As',
-  rename = 'Rename',
-  edit = 'Edit',
-  delete = 'Delete'
-}
+// enum rightMenus {
+//   addApi = 'New Api',
+//   addGroup = 'New Group',
+//   saveAs = 'Save As',
+//   rename = 'Rename',
+//   edit = 'Edit',
+//   delete = 'Delete'
+// }
 
 @Options({
   components: {
@@ -316,9 +316,9 @@ export default class apiList extends ComponentBase {
     this.currentRightClickNode = data
     this.rightMenus = []
     if (data.type === 'api') {
-      this.rightMenus = [rightMenus.delete]
+      this.rightMenus = [getLocale().t('opts.delete')]
     } else if (data.type === 'group') {
-      this.rightMenus = [rightMenus.addApi, rightMenus.addGroup, rightMenus.delete]
+      this.rightMenus = [getLocale().t('opts.newApi'), getLocale().t('opts.newGroup'), getLocale().t('opts.delete')]
     }
 
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
@@ -329,31 +329,31 @@ export default class apiList extends ComponentBase {
     e.preventDefault()
     this.currentRightClickNode = null
     this.rightMenus = []
-    this.rightMenus = [rightMenus.addGroup]
+    this.rightMenus = [getLocale().t('opts.newGroup')]
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
-  private getMenuIconByRightMenus(rm: rightMenus): string {
+  private getMenuIconByRightMenus(rm: string): string {
     let iconString
     switch (rm) {
-      case rightMenus.addApi:
+      case getLocale().t('opts.newApi'):
         iconString = '&#xe625;'
         break
-      case rightMenus.addGroup: {
+      case getLocale().t('opts.newGroup'): {
         iconString = '&#xe626;'
         break
       }
-      case rightMenus.edit:
+      case getLocale().t('opts.edit'):
         iconString = '&#xe628;'
         break
-      case rightMenus.saveAs: {
+      case getLocale().t('opts.saveAs'): {
         iconString = '&#xe61a;'
         break
       }
-      case rightMenus.rename: {
+      case getLocale().t('opts.rename'): {
         iconString = '&#xe628;'
         break
       }
-      case rightMenus.delete: {
+      case getLocale().t('opts.delete'): {
         iconString = '&#xe62b;'
         break
       }
@@ -365,13 +365,13 @@ export default class apiList extends ComponentBase {
   private async onRightMenuChoose(menuName: string) {
     //window.console.log('onRightMenuChoose:', menuName)
     switch (menuName) {
-      case rightMenus.addApi:
+      case getLocale().t('opts.newApi'):
         this.addApi()
         break
-      case rightMenus.addGroup:
+      case getLocale().t('opts.newGroup'):
         this.addGroup()
         break
-      case rightMenus.delete:
+      case getLocale().t('opts.delete'):
         try {
           await ElMessageBox.confirm('Sure Delete?', 'Tip', {
             confirmButtonText: 'OK',
@@ -396,7 +396,7 @@ export default class apiList extends ComponentBase {
     } else {
       index = this.cuteGroupMaxIndex(this.treeData) + 1
     }
-    let res = await AddApiGroup({ groupName: '新建分组', parentGroupId: parentGroupId, index: index } as any)
+    let res = await AddApiGroup({ groupName: getLocale().t('opts.newGroup'), parentGroupId: parentGroupId, index: index } as any)
     let newnode: TreeNodeDC = {
       id: res.id,
       desc: '',
@@ -419,7 +419,7 @@ export default class apiList extends ComponentBase {
     let parentGroupId = this.currentRightClickNode.id
     let datadc = this.searchNodeById(parentGroupId, this.treeData)
     let index = this.cuteChildrenMaxIndex(datadc) + 1
-    let res = await AddOrUpdateAPITreeInfo({ name: '新建接口', groupId: parentGroupId, index: index, desc: '' } as any)
+    let res = await AddOrUpdateAPITreeInfo({ name: getLocale().t('opts.newApi'), groupId: parentGroupId, index: index, desc: '' } as any)
 
     let newnode: TreeNodeDC = {
       id: res.id,
@@ -453,9 +453,9 @@ export default class apiList extends ComponentBase {
   }
   // ***********读取swagger*********************************************
   private async addFromSwagger() {
-    ElMessageBox.prompt('Please input swagger json url', 'Tip', {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
+    ElMessageBox.prompt(getLocale().t('tip.swaggerUrl'), getLocale().t('tip.tip'), {
+      confirmButtonText: getLocale().t('opts.ok'),
+      cancelButtonText: getLocale().t('opts.cancel'),
       inputPattern: /((http|https):\/\/[^\s]*)/,
       inputErrorMessage: 'Invalid url'
     })

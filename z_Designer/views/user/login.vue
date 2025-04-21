@@ -16,12 +16,14 @@
           <span class="svg-container">
             <i class="el-icon-lock" />
           </span>
-          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="Password" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="Password" name="password"
+            tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width: 65%; margin-bottom: 30px" @click.native.prevent="handleLogin">Sign In</el-button>
-      <el-button type="text" style="width: 30%; margin-bottom: 30px" @click.native.prevent="handleLoginRegister">Sign Up</el-button>
+      <el-button :loading="loading" type="primary" style="width: 65%; margin-bottom: 30px"
+        @click.native.prevent="handleLogin">{{$t('user.signIn')}}</el-button>
+      <el-button type="text" style="width: 30%; margin-bottom: 30px" @click.native.prevent="handleLoginRegister">{{$t('user.signUp')}}</el-button>
     </el-form>
 
     <div style="height: 2rem; z-index: 2; position: absolute; bottom: 2rem; width: 100%">

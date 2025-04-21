@@ -17,7 +17,7 @@
                 <template #icon>
                   <div>
                     <span class="icon iconfont">&#xe627;</span>
-                    <span v-if="data.isDefault">【First Page】</span>
+                    <span v-if="data.isDefault">【{{$t('tip.firstPage')}}】</span>
                   </div>
                 </template>
               </btreeNode>
@@ -70,17 +70,7 @@ import { behaviorContext } from '@behaviorEngine/index'
 
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
-
-enum rightMenus {
-  addPage = 'New Page',
-  addDialogPage = 'New DialogPage',
-  setDefault = 'As First Page',
-  addGroup = 'New Group',
-  saveAs = 'Save As',
-  rename = 'Rename',
-  edit = 'Edit',
-  delete = 'Delete'
-}
+import { getLocale } from '@common/baseConfigs'
 
 @Options({
   components: {
@@ -233,7 +223,6 @@ export default class index extends ComponentBase {
     for (let index = 0; index < needOrderNodes.length; index++) {
       needOrderNodes[index].index = index
     }
-    window.console.log('needOrderNodes:', needOrderNodes)
     await UpdateNodesSort(needOrderNodes)
   }
   private allowDrop(draggingNode, dropNode, type) {
@@ -252,7 +241,6 @@ export default class index extends ComponentBase {
     }
   }
   private allowDrag(draggingNode) {
-    window.console.log('allowDrag', draggingNode)
     return true
   }
   /**当节点名称改变后 */
@@ -283,9 +271,14 @@ export default class index extends ComponentBase {
     this.currentRightClickNode = data
     this.rightMenus = []
     if (data.type === 'page') {
-      this.rightMenus = [rightMenus.edit, rightMenus.setDefault, rightMenus.saveAs, rightMenus.delete]
+      this.rightMenus = [getLocale().t('opts.edit'), getLocale().t('opts.setDefaultPage'), getLocale().t('opts.saveAs'), getLocale().t('opts.delete')]
     } else if (data.type === 'group') {
-      this.rightMenus = [rightMenus.addPage, rightMenus.addDialogPage, rightMenus.addGroup, rightMenus.delete]
+      this.rightMenus = [
+        getLocale().t('opts.addPge'),
+        getLocale().t('opts.addDialogPage'),
+        getLocale().t('opts.newGroup'),
+        getLocale().t('opts.delete')
+      ]
     }
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
@@ -295,38 +288,38 @@ export default class index extends ComponentBase {
     e.preventDefault()
     this.currentRightClickNode = null
     this.rightMenus = []
-    this.rightMenus = [rightMenus.addGroup]
+    this.rightMenus = [getLocale().t('opts.newGroup')]
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
-  private getMenuIconByRightMenus(rm: rightMenus): string {
+  private getMenuIconByRightMenus(rm: string): string {
     let iconString
     switch (rm) {
-      case rightMenus.addPage:
+      case getLocale().t('opts.addPge'):
         iconString = '&#xe625;'
         break
-      case rightMenus.addDialogPage:
+      case getLocale().t('opts.addDialogPage'):
         iconString = '&#xe625;'
         break
-      case rightMenus.addGroup: {
+      case getLocale().t('opts.newGroup'): {
         iconString = '&#xe626;'
         break
       }
-      case rightMenus.edit:
+      case getLocale().t('opts.edit'):
         iconString = '&#xe628;'
         break
-      case rightMenus.saveAs: {
+      case getLocale().t('opts.saveAs'): {
         iconString = '&#xe61a;'
         break
       }
-      case rightMenus.rename: {
+      case getLocale().t('opts.rename'): {
         iconString = '&#xe628;'
         break
       }
-      case rightMenus.delete: {
+      case getLocale().t('opts.delete'): {
         iconString = '&#xe62b;'
         break
       }
-      case rightMenus.setDefault: {
+      case getLocale().t('opts.setDefaultPage'): {
         iconString = '&#xe62b;'
         break
       }
@@ -338,23 +331,23 @@ export default class index extends ComponentBase {
   private async onRightMenuChoose(menuName: string) {
     //window.console.log('onRightMenuChoose:', menuName)
     switch (menuName) {
-      case rightMenus.addPage:
+      case getLocale().t('opts.addPge'):
         this.addPage(pageType.page)
         break
-      case rightMenus.addDialogPage:
+      case getLocale().t('opts.addDialogPage'):
         this.addPage(pageType.dialogPage)
         break
-      case rightMenus.addGroup:
+      case getLocale().t('opts.newGroup'):
         this.addGroup()
         break
-      case rightMenus.delete:
+      case getLocale().t('opts.delete'):
         this.deleteNode()
         this.onDeletePage(this.currentRightClickNode.id)
         break
-      case rightMenus.edit:
+      case getLocale().t('opts.edit'):
         this.onEditPage(this.currentRightClickNode.id)
         break
-      case rightMenus.setDefault:
+      case getLocale().t('opts.setDefaultPage'):
         this.setDefaultPage()
         break
       default:
@@ -370,7 +363,12 @@ export default class index extends ComponentBase {
     } else {
       index = this.cuteGroupMaxIndex(this.treeData) + 1
     }
-    let res = await AddGroup({ name: '新建分组', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index } as any)
+    let res = await AddGroup({
+      name: getLocale().t('opts.newGroup'),
+      appId: this.currentApplication.id,
+      parentGroupId: parentGroupId,
+      index: index
+    } as any)
     let newnode: TreeNodeDC = {
       id: res.id,
       parentGroupId: res.parentGroupId,
@@ -408,7 +406,13 @@ export default class index extends ComponentBase {
         break
     }
 
-    let res = await AddPage({ name: 'NewPage', appId: this.currentApplication.id, parentGroupId: parentGroupId, index: index, type: pType } as any)
+    let res = await AddPage({
+      name: getLocale().t('opts.addPge'),
+      appId: this.currentApplication.id,
+      parentGroupId: parentGroupId,
+      index: index,
+      type: pType
+    } as any)
 
     let newnode: TreeNodeDC = {
       id: res.id,

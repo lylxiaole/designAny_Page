@@ -1,22 +1,22 @@
 <template>
   <el-dialog title="Tip" v-model="dialogVisible" width="350px" center>
     <el-form ref="currentFrom" :inline="false" style="height: 200px" :model="applicationForm" class="demo-ruleForm">
-      <el-form-item label="Application Name" style="width: 300px">
+      <el-form-item :label="$t('menu.appName')" style="width: 300px">
         <el-input v-model="applicationForm.name" placeholder="Please Input"></el-input>
       </el-form-item>
-      <el-form-item label="Application Type" style="width: 300px">
+      <el-form-item :label="$t('menu.appType')" style="width: 300px">
         <el-select v-model="applicationForm.type" :disabled="isEdit" placeholder="Please Input">
           <!-- <el-option label="看板" :value="0"></el-option>
             <el-option label="报表" :value="1"></el-option> -->
-          <el-option label="PC App" :value="2"></el-option>
-          <el-option label="H5 App(Coding)" disabled="true" :value="3"></el-option>
+          <el-option label="Web" :value="2"></el-option>
+          <!-- <el-option label="H5 App(Coding)" disabled="true" :value="3"></el-option> -->
         </el-select>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="onCancelHandle">Cancel</el-button>
-        <el-button type="primary" @click="onSureHandle">Sure</el-button>
+        <el-button @click="onCancelHandle"> {{$t('user.cancel')}}</el-button>
+        <el-button type="primary" @click="onSureHandle">{{$t('user.sure')}}</el-button>
       </span>
     </template>
   </el-dialog>

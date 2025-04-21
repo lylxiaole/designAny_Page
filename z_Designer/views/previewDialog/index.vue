@@ -4,8 +4,8 @@
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block">
       <!-- ********************************************************************* -->
       <div style="height:50px;z-index:999999;position:relative;background:#cdcdcd" class="verticalAlignCenter flexHorilanLayout">
-        <el-button style="width: 80px; background: green;color: white" @click="onOpenDrawer">Behaviors</el-button>
-        <el-button @click="onClose" style="background: red;color: white">Exit</el-button>
+        <el-button style="width: 80px; background: green;color: white" @click="onOpenDrawer">{{$t('opts.behaviors')}}</el-button>
+        <el-button @click="onClose" style="background: red;color: white">{{$t('opts.exit')}}</el-button>
       </div>
       <!-- ********************************************************************* -->
       <div ref="renderArea" style="width: 100%; height: calc(100% - 50px); overflow: hidden;position:absolute;top:50px"></div>

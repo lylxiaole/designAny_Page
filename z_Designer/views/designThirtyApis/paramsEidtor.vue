@@ -2,13 +2,14 @@
   <div style="height: 100%; width: 100%; position: relative">
     <div style="height: 35px">
       <el-button class="paramvior-list-header-button"
-        style="width: 104px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1)" @click="addParam">Add New</el-button>
+        style="width: 104px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1)" @click="addParam">{{$t('opts.addNew')}}
+      </el-button>
     </div>
     <el-row style="height:35px;border:1px solid #cdcdcd">
-      <el-col style="display: flex" class="verticalAlignCenter" :span="4">Index</el-col>
-      <el-col style="display: flex" class="verticalAlignCenter" :span="8">Param Name</el-col>
-      <el-col style="display: flex" class="verticalAlignCenter" :span="8">Desc</el-col>
-      <el-col style="display: flex" class="verticalAlignCenter" :span="4">Options</el-col>
+      <el-col style="display: flex" class="verticalAlignCenter" :span="4">{{$t('tip.index')}}</el-col>
+      <el-col style="display: flex" class="verticalAlignCenter" :span="8">{{$t('tip.paramName')}}</el-col>
+      <el-col style="display: flex" class="verticalAlignCenter" :span="8">{{$t('tip.desc')}}</el-col>
+      <el-col style="display: flex" class="verticalAlignCenter" :span="4">{{$t('tip.options')}}</el-col>
     </el-row>
     <div style="height:calc(100% - 70px);overflow-y:auto;">
       <el-row v-for="(param, index) in params" :key="param.key" style="border:0px 1px 1px 1px;border-style:solid;border-color:#cdcdcd;  border-top-width: 0px;
@@ -24,7 +25,7 @@
         </el-col>
         <el-col style="display: flex;" class="verticalAlignCenter" :span="4">
           <el-button @click="()=> {deleteParam(param)}" type="link" style="width:60px;height:25px">
-            Delete
+            {{$t('opts.delete')}}
           </el-button>
         </el-col>
       </el-row>
@@ -37,6 +38,7 @@ import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
 import { Prop } from 'vue-property-decorator'
 import editableText from '@common/components/Text/editableText.vue'
+import { getLocale } from '@common/baseConfigs'
 
 @Options({
   components: { editableText }
@@ -49,7 +51,7 @@ export default class paramsEidtor extends PageBase {
 
   private addParam() {
     let index = this.params.length + 1
-    this.params.push({ key: 'param' + index, name: 'Param' + index })
+    this.params.push({ key: 'param' + index, name: getLocale().t('tip.param') + index })
   }
 
   private deleteParam(param) {

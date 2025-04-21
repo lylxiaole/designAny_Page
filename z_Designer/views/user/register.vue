@@ -3,14 +3,15 @@
     <!-- *********************************************************************************** -->
     <el-form v-show="isRegister" :rules="requestEmailRoules" ref="requestEmailForm" class="login-form" :model="requestEmailFormData">
       <div class="title-container">
-        <h3 class="title">Sign Up</h3>
+        <h3 class="title">{{$t('user.signUp')}}</h3>
       </div>
       <!-- ****用户名******************************************************************************* -->
       <el-form-item prop="username">
         <span class="svg-container">
           <i class="el-icon-user" />
         </span>
-        <el-input ref="username" v-model="requestEmailFormData.username" placeholder="Username" name="username" type="text" tabindex="1" autocomplete="on" />
+        <el-input ref="username" v-model="requestEmailFormData.username" placeholder="Username" name="username" type="text" tabindex="1"
+          autocomplete="on" />
       </el-form-item>
       <!-- ****邮箱******************************************************************************* -->
       <el-form-item prop="email">
@@ -26,20 +27,22 @@
         </span>
         <el-input ref="pwd" v-model="requestEmailFormData.pwd" placeholder="Password" name="pwd" type="text" tabindex="1" autocomplete="on" />
       </el-form-item>
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleRequestEmail">Validate Email</el-button>
+      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
+        @click.native.prevent="handleRequestEmail">{{$t('user.validateEmail')}}</el-button>
     </el-form>
     <!-- *********************************************************************************** -->
     <el-form v-show="!isRegister" :rules="checkEmailRoules" ref="checkEmailForm" class="login-form" :model="checkEmailFormData">
       <div class="title-container">
-        <h3 class="title">Validate Code</h3>
+        <h3 class="title">{{$t('user.validateEmail')}}</h3>
       </div>
       <el-form-item prop="checkingCode">
         <span class="svg-container">
           <i class="el-icon-user" />
         </span>
-        <el-input ref="checkingCode" v-model="checkEmailFormData.checkingCode" placeholder="Validate Code" name="checkingCode" type="text" tabindex="1" autocomplete="on" />
+        <el-input ref="checkingCode" v-model="checkEmailFormData.checkingCode" placeholder="Validate Code" name="checkingCode" type="text"
+          tabindex="1" autocomplete="on" />
       </el-form-item>
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleCheckEmail">Validate</el-button>
+      <el-button type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleCheckEmail">{{$t('user.validate')}}</el-button>
     </el-form>
   </div>
 </template>

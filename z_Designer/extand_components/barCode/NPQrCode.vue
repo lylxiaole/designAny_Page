@@ -25,7 +25,9 @@ import {
 
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'QrCode', 'NPQrCode_001', require('../compIcons/二维码.png'))
+import { getLocale } from '@common/baseConfigs'
+
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), getLocale().t('tip.qrCode'), 'NPQrCode_001', require('../compIcons/二维码.png'))
 @Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'
@@ -48,30 +50,31 @@ export default class NPQrCode extends EngineComponent {
     // this.initQrCode()
   }
 
-  @DPropAttr(new Text_Setting('Code Text', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting(getLocale().t('tip.codeText'), PropertyGroupName.data, true))
   private codeValue: string = '123456789'
 
-  @DPropAttr(new Number_Setting('Code Version', PropertyGroupName.data, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeVersion'), PropertyGroupName.data, true, null))
   private codeVersion: number = 0
 
-  @DPropAttr(new Text_Setting('Code ErrorCorrection Level', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting(getLocale().t('tip.codeErrorCorrectionLevel'), PropertyGroupName.data, true))
   private codeErrorCorrectionLevel: string = 'M'
 
-  @DPropAttr(new Number_Setting('Code MaskPattern', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeMaskPattern'), PropertyGroupName.style, true, null))
   private codeMaskPattern: number = -1
 
-  @DPropAttr(new Number_Setting('CodeText Margin', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeTextMargin'), PropertyGroupName.style, true, null))
   private codeMargin: number = 4
 
-  @DPropAttr(new Number_Setting('Code Width', PropertyGroupName.style, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeWidth'), PropertyGroupName.style, true, null))
   private codeWidth: number = 0
-  @DPropAttr(new Number_Setting('Code Scale', PropertyGroupName.style, true, null))
+
+  @DPropAttr(new Number_Setting(getLocale().t('tip.codeScale'), PropertyGroupName.style, true, null))
   private codeScale: number = 0
 
-  @DPropAttr(new Color_Setting('CodeText Color', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.codeTextColor'), PropertyGroupName.style, true, null))
   private codeDarkColor: string = '#000000'
 
-  @DPropAttr(new Color_Setting('CodeText White Color', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.codeTextWhiteColor'), PropertyGroupName.style, true, null))
   private codeLightColor: string = '#ffffff'
 
   private initQrCode() {

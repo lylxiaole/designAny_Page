@@ -60,7 +60,7 @@ import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
 import TopBar from './TopBar/index.vue'
 // ****************************************
-@DCompnentAttr(platform.page, 'Basic', 'Classic navigation bar', 'navigation001', require('../../compIcons/导航栏.png'))
+@DCompnentAttr(platform.page, getLocale().t('tip.basic'), 'Classic navigation bar', 'navigation001', require('../../compIcons/导航栏.png'))
 @Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
   @DPropAttr(new Color_Setting('SidebarBg', PropertyGroupName.style, true))

@@ -23,7 +23,7 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Single Selection', 'SingleSelection_001', require('../compIcons/下拉单选.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Single Selection', 'SingleSelection_001', require('../compIcons/下拉单选.png'))
 @Options({})
 export default class SingleSelect extends EngineComponent {
   @DPropAttr(new KeyValue_Setting('Selections', PropertyGroupName.data, true, null))

@@ -2,17 +2,17 @@
   <el-row v-if="currentPage" style="height: 100%; width: 100%">
     <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
       <div style="background: #18aeb7; width: 6px; height: 26px"></div>
-      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">Behavior List</span>
+      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">{{$t('tip.behaviorList')}}</span>
       <el-button class="behavior-list-header-button"
         style="width: 104px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1); margin-left: 10px"
-        @click="addBehavior">Add Behavior</el-button>
+        @click="addBehavior">{{$t('opts.addBehavior')}}</el-button>
     </div>
 
     <div style="height: calc(100% - 30px); width: 100%">
       <el-row style="height: 35px">
-        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="2">Index</el-col>
-        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">Name</el-col>
-        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">Options</el-col>
+        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="2">{{$t('tip.index')}}</el-col>
+        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">{{$t('tip.name')}}</el-col>
+        <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">{{$t('tip.options')}}</el-col>
       </el-row>
 
       <div style="height: calc(100% - 35px); overflow-y: auto">
@@ -25,9 +25,9 @@
           </el-col>
           <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
             <!-- ****************************** -->
-            <el-button size="small" @click="onDesignBehavior(beha)" type="link">Edit</el-button>
+            <el-button size="small" @click="onDesignBehavior(beha)" type="link">{{$t('opts.edit')}}</el-button>
             <!-- ****************************** -->
-            <el-button size="small" @click="deleteBehavior(beha)" type="link">Delete</el-button>
+            <el-button size="small" @click="deleteBehavior(beha)" type="link">{{$t('opts.delete')}}</el-button>
             <!-- ****************************** -->
           </el-col>
         </el-row>

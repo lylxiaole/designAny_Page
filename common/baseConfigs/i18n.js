@@ -1,11 +1,19 @@
 export default {
   'zh-cn': {
+    user: {},
     menu: {
       myApps: 'myApps'
     },
     opts: {}
   },
   en: {
+    user: {
+      signIn: 'Sign In',
+      signUp: 'Sign Up',
+      validateEmail: 'Validate Email',
+      validateCode: 'Validate Code',
+      validate: 'Validate'
+    },
     menu: {
       myApps: 'My Apps',
       HttpApi: 'Http Apis',
@@ -15,11 +23,84 @@ export default {
       appName: 'Application Name',
       appType: 'Application Type'
     },
+    tip: {
+      swaggerUrl: 'Please input swagger json url',
+      tip: 'Tip',
+      description: 'Description',
+      host: 'Host',
+      path: 'Path',
+      requestType: 'Request Type',
+      requestHeaders: 'Request Headers',
+      urlParams: 'Url Params',
+      bodyParams: 'Body Params',
+      saveSuccess: 'Save Success',
+      saveFailed: 'Save Failed',
+      index: 'Index',
+      paramName: 'Param Name',
+      name: 'Name',
+      desc: 'Desc',
+      options: 'Options',
+      param: 'Param',
+      behaviorList: 'Behavior List',
+      firstPage: 'First Page',
+      basic: 'Basic',
+      barCode: 'BarCode',
+      qrCode: 'QrCode',
+      codeText: 'Code Text',
+      codeFormat: 'Code Format',
+
+      codeWidth: 'Code Width',
+      codeHeight: 'Code Height',
+      displayText: 'Display Text',
+      codeTextAlign: 'CodeText Align',
+      codeTextPosition: 'CodeText Position',
+      codeTextMargin: 'CodeText Margin',
+      codeFontSize: 'Code FontSize',
+
+      codeVersion: 'Code Version',
+      codeErrorCorrectionLevel: 'Code ErrorCorrection Level',
+      codeMaskPattern: 'Code MaskPattern',
+      codeTextMargin: 'CodeText Margin',
+      codeScale: 'Code Scale',
+      codeTextColor: 'CodeText Color',
+      codeTextWhiteColor: 'CodeText White Color',
+
+      classicButton: 'Classic Button',
+      buttonText: 'Button Text',
+      borderColor: 'Border Color',
+      buttonIcon: 'Button Icon'
+    },
     opts: {
       delete: 'Delete',
       edit: 'Edit',
+      cancel: 'Cancel',
+      sure: 'Sure',
       designApp: 'Design',
-      viewApp: 'View'
+      viewApp: 'View',
+      save: 'Save',
+      undo: 'Undo',
+      redo: 'Redo',
+      debugger: 'Debugger',
+      components: 'Components',
+      behaviors: 'Behaviors',
+      zoomTool: 'Zoom Tool',
+      exit: 'Exit',
+      addFromSwagger: 'Add From Swagger',
+      newApi: 'New Api',
+      newGroup: 'New Group',
+      rename: 'Rename',
+      saveAs: 'Save As',
+      ok: 'OK',
+      cancel: 'Cancel',
+      useDictionary: 'Use Dictionary',
+      useText: 'Use Text',
+      splitParams: 'Split Params',
+      notSplit: 'Not Split',
+      addNew: 'Add New',
+      addBehavior: 'Add Behavior',
+      addPge: 'New Page',
+      addDialogPage: 'New Dialog Page',
+      setDefaultPage: 'Set Default Page'
     }
   }
 }

@@ -52,10 +52,10 @@ export default class index extends ComponentBase {
         return '报表'
         break
       case applicationType.webSystem:
-        return 'PC App'
+        return 'Web'
         break
       case applicationType.H5App:
-        return 'Mobile App'
+        return 'Report'
         break
       default:
         return ''

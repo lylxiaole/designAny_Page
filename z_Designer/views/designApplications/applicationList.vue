@@ -9,8 +9,8 @@
         <div style="width: calc(100% - 96px); float: left">
           {{ app.name }}
         </div>
-        <el-button style="margin-left: 8px; width: 40px; float: left" link type="primary" @click="editAppInfo">Edit</el-button>
-        <el-button style="margin-left: 8px; width: 40px; float: left" link type="primary" @click="deleteAppInfo">Delete</el-button>
+        <el-button style="margin-left: 8px; width: 40px; float: left" link type="primary" @click="editAppInfo">{{$t('opts.edit')}}</el-button>
+        <el-button style="margin-left: 8px; width: 40px; float: left" link type="primary" @click="deleteAppInfo">{{$t('opts.delete')}}</el-button>
       </div>
     </el-row>
     <!-- ********************************************************** -->

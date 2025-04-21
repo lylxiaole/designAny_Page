@@ -13,22 +13,14 @@ import { PropertyGroupName, Number_Setting } from '@design-any/interface/dist/La
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
-import { toRaw, toRef } from 'vue'
-import 'reflect-metadata'
 
-function lamdaProperty(o: EngineComponent): void {
-  debugger
-  return arguments[0]
-}
-
-@DCompnentAttr(platform.universal, 'Basic', 'Timer', 'Timer001', require('../compIcons/定时器.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Timer', 'Timer001', require('../compIcons/定时器.png'))
 @Options({
   components: {}
 })
 export default class Index extends EngineComponent {
   @DPropAttr(new Number_Setting('Tick', PropertyGroupName.data, true, 'second'))
   private tiimeout: number = 1
-
   private interval: number = -1
 
   mounted() {
@@ -39,7 +31,7 @@ export default class Index extends EngineComponent {
     this.findPropertyInfo((o) => o.foreground).canSetting = false
     this.findPropertyInfo((o) => o.fontSize).canSetting = false
 
-    if (this.tiimeout > 0) {
+    if (this.tiimeout > 0 && this.isDesigning === false) {
       this.interval = window.setInterval(() => {
         this.onTickTock()
       }, this.tiimeout * 1000)
