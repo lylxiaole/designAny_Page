@@ -24,7 +24,8 @@
             <componentListControl :platform="platform" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
+        <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon"
+          label="Components" />
       </el-tooltip>
 
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip" style="background: transparen" append-to="body"

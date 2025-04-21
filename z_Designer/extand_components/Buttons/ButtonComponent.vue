@@ -1,5 +1,6 @@
 <template>
-  <el-button @click="onClick" type="primary" :style="{ 'background-color': background, color: foreground, 'border-color': borderColor }" style="width: 100%; height: 100%">
+  <el-button @click.stop="onClick" type="primary" :style="{ 'background-color': background, color: foreground, 'border-color': borderColor }"
+    style="width: 100%; height: 100%">
     <template #icon>
       <img v-if="btnIconUrl" style="height: 100%" :src="btnIconUrl" />
     </template>
@@ -21,7 +22,7 @@ import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Classic Button', 'ButtonComponent_001', require('../compIcons/anniu2.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Classic Button', 'ButtonComponent_001', require('../compIcons/按钮.png'))
 @Options({
   components: {}
 })
@@ -46,7 +47,8 @@ export default class ButtonComponent extends EngineComponent {
   mounted() {
     this.width = '10%'
     this.height = '4%'
-    this.findPropertyByName(PropertyGroupName.style, 'BgImage').canSetting = false
+
+    this.findPropertyInfo((o) => o.background_img).canSetting = false
   }
 
   private onClick(e) {

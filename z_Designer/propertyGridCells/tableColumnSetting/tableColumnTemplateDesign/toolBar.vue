@@ -16,7 +16,7 @@
         :overlayStyle="{ maxWidth: '20000px' }">
         <template #content>
           <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
-            <componentListControl :platform="platform" style="width: 100%; height: 100%" />
+            <componentListControl v-if="currentPage" :platform="platform" style="width: 100%; height: 100%" />
           </div>
         </template>
         <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />

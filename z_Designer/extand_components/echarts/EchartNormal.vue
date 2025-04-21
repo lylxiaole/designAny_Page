@@ -16,7 +16,7 @@ import { shallowRef } from 'vue'
 import elementResizeDetectorMaker from 'element-resize-detector'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Classic EChart', 'EchartNormal_001', require('../compIcons/linechart.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Classic EChart', 'EchartNormal_001', require('../compIcons/折线图.png'))
 @Options({})
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})

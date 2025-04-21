@@ -1,8 +1,8 @@
 <template>
   <div style="height: 100%">
-    <div :style="{ backgroundColor: background, borderWidth: isShowBorder ? '1px' : '0px', borderStyle: 'solid', borderColor: '#000000' }" style="height: 100%; display: table; table-layout: fixed; width: 100%">
-      <span
-        :style="{
+    <div :style="{ backgroundColor: background, borderWidth: isShowBorder ? '1px' : '0px', borderStyle: 'solid', borderColor: '#000000' }"
+      style="height: 100%; display: table; table-layout: fixed; width: 100%">
+      <span :style="{
           height: '100%',
           width: '100%',
           'font-weight': fontWeight,
@@ -15,9 +15,7 @@
           overflow: 'hidden',
           display: 'table-cell',
           'white-space': space
-        }"
-        v-html="CurrentText"
-      ></span>
+        }" v-html="CurrentText"></span>
     </div>
   </div>
 </template>
@@ -28,10 +26,17 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
-import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import {
+  DPropAttr,
+  PropertyGroupName,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Text', 'TextComponent_001', require('../compIcons/text.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Text', 'TextComponent_001', require('../compIcons/文本.png'))
 @Options({})
 export default class TextComponent extends EngineComponent {
   mounted() {

@@ -56,7 +56,7 @@ import './tableThemeStyle.scss'
 import platform from '@design-any/interface/dist/enums/platform'
 import elementResizeDetectorMaker from 'element-resize-detector'
 
-@DCompnentAttr(platform.page, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/table.png'))
+@DCompnentAttr(platform.page, 'Basic', 'Classic Table', 'Table_001', require('../compIcons/基础表格.png'))
 @Options({
   components: {
     VxeTable,

@@ -12,10 +12,18 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
 
-import { DPropAttr, PropertyGroupName, KeyValue_Setting, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import {
+  DPropAttr,
+  PropertyGroupName,
+  KeyValue_Setting,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Single Selection', 'SingleSelection_001', require('../compIcons/xialadanxuan.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Single Selection', 'SingleSelection_001', require('../compIcons/下拉单选.png'))
 @Options({})
 export default class SingleSelect extends EngineComponent {
   @DPropAttr(new KeyValue_Setting('Selections', PropertyGroupName.data, true, null))

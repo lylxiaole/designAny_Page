@@ -21,7 +21,7 @@ function lamdaProperty(o: EngineComponent): void {
   return arguments[0]
 }
 
-@DCompnentAttr(platform.universal, 'Basic', 'Timer', 'Timer001', require('../compIcons/anniu2.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Timer', 'Timer001', require('../compIcons/定时器.png'))
 @Options({
   components: {}
 })

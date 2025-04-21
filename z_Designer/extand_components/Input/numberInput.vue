@@ -19,7 +19,7 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'NumberInput', 'numberInput_001', require('../compIcons/number-input.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'NumberInput', 'numberInput_001', require('../compIcons/数字输入框.png'))
 @Options({})
 export default class numberInput extends EngineComponent {
   isShowIndex: boolean = false

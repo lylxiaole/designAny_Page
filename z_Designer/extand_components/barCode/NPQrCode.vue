@@ -25,7 +25,7 @@ import {
 
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'QrCode', 'NPQrCode_001', require('../compIcons/qrcode.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'QrCode', 'NPQrCode_001', require('../compIcons/二维码.png'))
 @Options({})
 export default class NPQrCode extends EngineComponent {
   private qrCodeId: string = 'qrcode'

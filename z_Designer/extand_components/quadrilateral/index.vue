@@ -1,5 +1,6 @@
 <template>
-  <div style="width: 100%; height: 100%" :style="{ background: backgroundCute, 'border-radius': borderRadius + 'px', 'box-shadow': showBoxShadow ? boxShadow : 'none' }"></div>
+  <div style="width: 100%; height: 100%"
+    :style="{ background: backgroundCute, 'border-radius': borderRadius + 'px', 'box-shadow': showBoxShadow ? boxShadow : 'none' }"></div>
 </template>
 
 <script lang="ts">
@@ -12,7 +13,7 @@ import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/sibianxing.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/矩形.png'))
 @Options({
   components: {}
 })

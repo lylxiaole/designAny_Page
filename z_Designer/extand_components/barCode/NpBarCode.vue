@@ -44,7 +44,7 @@ const codeFormats = [
 ]
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'BarCode', 'NpBarCode_001', require('../compIcons/barcode.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'BarCode', 'NpBarCode_001', require('../compIcons/条形码.png'))
 @Options({})
 export default class NpBarCode extends EngineComponent {
   beforeMount() {}

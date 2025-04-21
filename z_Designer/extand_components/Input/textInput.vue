@@ -1,16 +1,9 @@
 <template>
   <div style="height: 100%; width: 100%">
-    <el-input
-      v-model="currentText"
-      :type="type"
-      :show-password="type === 'password'"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :style="{
+    <el-input v-model="currentText" :type="type" :show-password="type === 'password'" :placeholder="placeholder" :readonly="readonly" :style="{
         height: '100%',
         width: '100%'
-      }"
-    />
+      }" />
   </div>
 </template>
 
@@ -19,11 +12,18 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 import { DCompnentAttr } from '@design-any/interface/dist/LayoutAttr/ComponentInfo'
-import { DPropAttr, PropertyGroupName, Number_Setting, Text_Setting, Boolean_Setting, Enum_Setting } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
+import {
+  DPropAttr,
+  PropertyGroupName,
+  Number_Setting,
+  Text_Setting,
+  Boolean_Setting,
+  Enum_Setting
+} from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, 'Basic', 'TextInput', 'textInput_001', require('../compIcons/textinput.png'))
+@DCompnentAttr(platform.universal, 'Basic', 'TextInput', 'textInput_001', require('../compIcons/文本输入框.png'))
 @Options({})
 export default class textInput extends EngineComponent {
   isShowIndex: boolean = false
