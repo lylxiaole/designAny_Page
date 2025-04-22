@@ -59,29 +59,37 @@ import { pageEmitter } from '@common/utils/eventBus'
 import Sidebar from './sideBar/Sidebar.vue'
 import Navbar from './Navbar.vue'
 import TopBar from './TopBar/index.vue'
+import { getLocale } from '@common/baseConfigs'
+
 // ****************************************
-@DCompnentAttr(platform.page, getLocale().t('tip.basic'), 'Classic navigation bar', 'navigation001', require('../../compIcons/导航栏.png'))
+@DCompnentAttr(
+  platform.page,
+  getLocale().t('tip.basic'),
+  getLocale().t('tip.classicnavigationbar'),
+  'navigation001',
+  require('../../compIcons/导航栏.png')
+)
 @Options({ components: { Sidebar, Navbar, TopBar } })
 export default class index extends EngineComponent {
-  @DPropAttr(new Color_Setting('SidebarBg', PropertyGroupName.style, true))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.sidebarBg'), PropertyGroupName.style, true))
   private sidebarBg: string = '#000000'
 
-  @DPropAttr(new Color_Setting('MenuColor', PropertyGroupName.style, true))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.menuColor'), PropertyGroupName.style, true))
   private menuColor: string = 'white'
 
-  @DPropAttr(new Color_Setting('MenuHoverBg', PropertyGroupName.style, true))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.menuHoverBg'), PropertyGroupName.style, true))
   private menuHoverBg: string = 'gray'
 
-  @DPropAttr(new Color_Setting('MenuActiveColor', PropertyGroupName.style, true))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.menuActiveColor'), PropertyGroupName.style, true))
   private menuActiveColor: string = 'gray'
 
-  @DPropAttr(new Number_Setting('MenuItemHeight', PropertyGroupName.style, true, 'px'))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.menuItemHeight'), PropertyGroupName.style, true, 'px'))
   private menuItemHeight: number = 44
 
-  @DPropAttr(new Number_Setting('ContainerHeaderHeight', PropertyGroupName.style, true, 'px'))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.containerHeaderHeight'), PropertyGroupName.style, true, 'px'))
   private containerHeaderHeight: number = 45
   // ******************************************************
-  @DPropAttr(new AppPagesChoose_Setting('PageList', PropertyGroupName.data, true))
+  @DPropAttr(new AppPagesChoose_Setting(getLocale().t('tip.pageList'), PropertyGroupName.data, true))
   private selectedPages: any[] = []
   // ******************************************************
   mounted() {

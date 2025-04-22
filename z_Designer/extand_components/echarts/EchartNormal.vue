@@ -15,14 +15,21 @@ import * as echarts from 'echarts'
 import { shallowRef } from 'vue'
 import elementResizeDetectorMaker from 'element-resize-detector'
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Classic EChart', 'EchartNormal_001', require('../compIcons/折线图.png'))
+@DCompnentAttr(
+  platform.universal,
+  getLocale().t('tip.basic'),
+  getLocale().t('tip.classicEChart'),
+  'EchartNormal_001',
+  require('../compIcons/折线图.png')
+)
 @Options({})
 export default class EchartNormal extends EngineComponent {
   private myChart: any = shallowRef({})
   private resizeListener: any = null
 
-  @DPropAttr(new JsonContent_Setting('Option Setting', PropertyGroupName.data, true))
+  @DPropAttr(new JsonContent_Setting(getLocale().t('tip.optionSetting'), PropertyGroupName.data, true))
   private option: any = {
     grid: {
       width: '100%',

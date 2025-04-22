@@ -22,8 +22,15 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'TextInput', 'textInput_001', require('../compIcons/文本输入框.png'))
+@DCompnentAttr(
+  platform.universal,
+  getLocale().t('tip.basic'),
+  getLocale().t('tip.textInput'),
+  'textInput_001',
+  require('../compIcons/文本输入框.png')
+)
 @Options({})
 export default class textInput extends EngineComponent {
   isShowIndex: boolean = false
@@ -40,16 +47,16 @@ export default class textInput extends EngineComponent {
     debugger
   }
 
-  @DPropAttr(new Text_Setting('Value', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting(getLocale().t('tip.value'), PropertyGroupName.data, true))
   private currentText: string = ''
 
-  @DPropAttr(new Text_Setting('Placeholder', PropertyGroupName.data, true))
+  @DPropAttr(new Text_Setting(getLocale().t('tip.placeholder'), PropertyGroupName.data, true))
   private placeholder: string = 'Please Input A Value'
 
-  @DPropAttr(new Boolean_Setting('Readonly', PropertyGroupName.data, true))
+  @DPropAttr(new Boolean_Setting(getLocale().t('tip.readonly'), PropertyGroupName.data, true))
   private readonly: boolean = false
 
-  @DPropAttr(new Enum_Setting('Text Type', PropertyGroupName.data, true, null, true, ['text', 'password']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.textType'), PropertyGroupName.data, true, null, true, ['text', 'password']))
   private type: string = 'text'
 }
 </script>

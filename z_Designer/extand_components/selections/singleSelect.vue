@@ -22,17 +22,24 @@ import {
   Enum_Setting
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Single Selection', 'SingleSelection_001', require('../compIcons/下拉单选.png'))
+@DCompnentAttr(
+  platform.universal,
+  getLocale().t('tip.basic'),
+  getLocale().t('tip.singleSelection'),
+  'SingleSelection_001',
+  require('../compIcons/下拉单选.png')
+)
 @Options({})
 export default class SingleSelect extends EngineComponent {
-  @DPropAttr(new KeyValue_Setting('Selections', PropertyGroupName.data, true, null))
+  @DPropAttr(new KeyValue_Setting(getLocale().t('tip.selections'), PropertyGroupName.data, true, null))
   private keyValueList: any[] = []
 
-  @DPropAttr(new Boolean_Setting('Multiple', PropertyGroupName.data, true, null))
+  @DPropAttr(new Boolean_Setting(getLocale().t('tip.multiple'), PropertyGroupName.data, true, null))
   private multiple: boolean = false
 
-  @DPropAttr(new Text_Setting('SelectedVal', PropertyGroupName.data, true, null))
+  @DPropAttr(new Text_Setting(getLocale().t('tip.selectedVal'), PropertyGroupName.data, true, null))
   private selectedVal: any = null
 
   mounted() {

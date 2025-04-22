@@ -35,8 +35,9 @@ import {
   Enum_Setting
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Text', 'TextComponent_001', require('../compIcons/文本.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), getLocale().t('tip.text'), 'TextComponent_001', require('../compIcons/文本.png'))
 @Options({})
 export default class TextComponent extends EngineComponent {
   mounted() {
@@ -45,25 +46,25 @@ export default class TextComponent extends EngineComponent {
     this.background = 'white'
   }
 
-  @DPropAttr(new Enum_Setting('FontWeight', PropertyGroupName.style, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.fontWeight'), PropertyGroupName.style, true, null, true, ['normal', 'bold', 'bolder', 'lighter']))
   private fontWeight: string = 'normal'
 
-  @DPropAttr(new Enum_Setting('FontStyle', PropertyGroupName.style, true, null, true, ['oblique', 'normal']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.fontStyle'), PropertyGroupName.style, true, null, true, ['oblique', 'normal']))
   private fontStyle: string = 'normal'
 
-  @DPropAttr(new Enum_Setting('VerticalAlign', PropertyGroupName.style, true, null, true, ['top', 'middle', 'bottom']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.verticalAlign'), PropertyGroupName.style, true, null, true, ['top', 'middle', 'bottom']))
   private verticalAlign: string = 'middle'
 
-  @DPropAttr(new Enum_Setting('WhiteSpace', PropertyGroupName.style, true, null, true, ['nowrap', 'wrap']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.whiteSpace'), PropertyGroupName.style, true, null, true, ['nowrap', 'wrap']))
   private space: string = 'wrap'
 
-  @DPropAttr(new Enum_Setting('TextAlign', PropertyGroupName.style, true, null, true, ['left', 'center', 'right']))
+  @DPropAttr(new Enum_Setting(getLocale().t('tip.textAlign'), PropertyGroupName.style, true, null, true, ['left', 'center', 'right']))
   private Horienten: string = 'center'
 
-  @DPropAttr(new Boolean_Setting('ShowBorder', PropertyGroupName.style, true))
+  @DPropAttr(new Boolean_Setting(getLocale().t('tip.showBorder'), PropertyGroupName.style, true))
   private isShowBorder: boolean = false
 
-  @DPropAttr(new Text_Setting('Text', PropertyGroupName.data, true, null))
+  @DPropAttr(new Text_Setting(getLocale().t('tip.text'), PropertyGroupName.data, true, null))
   private CurrentText: string = 'Hellow World'
 }
 </script>

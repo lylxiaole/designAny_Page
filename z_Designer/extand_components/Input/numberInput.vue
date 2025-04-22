@@ -19,7 +19,15 @@ import {
 } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 
-@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'NumberInput', 'numberInput_001', require('../compIcons/数字输入框.png'))
+import { getLocale } from '@common/baseConfigs'
+
+@DCompnentAttr(
+  platform.universal,
+  getLocale().t('tip.basic'),
+  getLocale().t('tip.numberInput'),
+  'numberInput_001',
+  require('../compIcons/数字输入框.png')
+)
 @Options({})
 export default class numberInput extends EngineComponent {
   isShowIndex: boolean = false
@@ -31,7 +39,7 @@ export default class numberInput extends EngineComponent {
     this.background = 'white'
   }
 
-  @DPropAttr(new Number_Setting('Value', PropertyGroupName.data, true))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.value'), PropertyGroupName.data, true))
   private currentVal: number = 0
 }
 </script>

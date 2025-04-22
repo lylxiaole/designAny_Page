@@ -1241,10 +1241,10 @@
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz"
   integrity sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==
 
-"@design-any/interface@^0.0.659":
-  version "0.0.659"
-  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.659.tgz#c09c0e451aecc5359dbcc572cf805ed171ccff2f"
-  integrity sha512-CeaUNtUk6JZQASRLCLaT+ldKR5Kb5sLi5dASQkbck+kSonOjT/BR+scZZGGN3OwNiZa4dWO7ZMUde9AW6oaC6w==
+"@design-any/interface@^0.0.664":
+  version "0.0.664"
+  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.664.tgz#43dac1a7c9d513f03d04aad8f6f6d3d99ecced4f"
+  integrity sha512-zoZuPImDvjJo+/iXIysWsvaaNiSLWxsE+n2q3yNaeUHyregbroLaWKsXWv1bxNZT4+FEA4klRPcI0w7FWrBiXQ==
   dependencies:
     "@types/lodash" "^4.14.182"
     "@types/lodash-es" "^4.17.6"
@@ -1256,7 +1256,7 @@
     juery "^1.0.0"
     pako "^2.1.0"
     vue "^3.4.38"
-    vue-i18n "^11.1.3"
+    vue-i18n "^9.2.2"
     xe-utils "^3.5.30"
 
 "@discoveryjs/json-ext@^0.5.0":
@@ -1330,14 +1330,6 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@intlify/core-base@11.1.3":
-  version "11.1.3"
-  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-11.1.3.tgz#8625126383334ef69262e0a99659db3e63bfc80c"
-  integrity sha512-cMuHunYO7LE80azTitcvEbs1KJmtd6g7I5pxlApV3Jo547zdO3h31/0uXpqHc+Y3RKt1wo2y68RGSx77Z1klyA==
-  dependencies:
-    "@intlify/message-compiler" "11.1.3"
-    "@intlify/shared" "11.1.3"
-
 "@intlify/core-base@9.14.1":
   version "9.14.1"
   resolved "https://registry.npmmirror.com/@intlify/core-base/-/core-base-9.14.1.tgz"
@@ -1346,14 +1338,6 @@
     "@intlify/message-compiler" "9.14.1"
     "@intlify/shared" "9.14.1"
 
-"@intlify/message-compiler@11.1.3":
-  version "11.1.3"
-  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-11.1.3.tgz#61079227a263d01ab368c99ce26883e150cb4bdd"
-  integrity sha512-7rbqqpo2f5+tIcwZTAG/Ooy9C8NDVwfDkvSeDPWUPQW+Dyzfw2o9H103N5lKBxO7wxX9dgCDjQ8Umz73uYw3hw==
-  dependencies:
-    "@intlify/shared" "11.1.3"
-    source-map-js "^1.0.2"
-
 "@intlify/message-compiler@9.14.1":
   version "9.14.1"
   resolved "https://registry.npmmirror.com/@intlify/message-compiler/-/message-compiler-9.14.1.tgz"
@@ -1361,11 +1345,6 @@
   dependencies:
     "@intlify/shared" "9.14.1"
     source-map-js "^1.0.2"
-
-"@intlify/shared@11.1.3":
-  version "11.1.3"
-  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-11.1.3.tgz#1a4ed11a0efcaf95b56e0d01d0ee54d01bcd3019"
-  integrity sha512-pTFBgqa/99JRA2H1qfyqv97MKWJrYngXBA/I0elZcYxvJgcCw3mApAoPW3mJ7vx3j+Ti0FyKUFZ4hWxdjKaxvA==
 
 "@intlify/shared@9.14.1":
   version "9.14.1"
@@ -14187,15 +14166,6 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.npmmirror.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
-
-vue-i18n@^11.1.3:
-  version "11.1.3"
-  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-11.1.3.tgz#831f622ef0a73993e6f08d953e5a3bde9bae3484"
-  integrity sha512-Pcylh9z9S5+CJAqgbRZ3EKxFIBIrtY5YUppU722GIT65+Nukm0TCqiQegZnNLCZkXGthxe0cpqj0AoM51H+6Gw==
-  dependencies:
-    "@intlify/core-base" "11.1.3"
-    "@intlify/shared" "11.1.3"
-    "@vue/devtools-api" "^6.5.0"
 
 vue-i18n@^9.2.2:
   version "9.14.1"

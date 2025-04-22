@@ -13,13 +13,14 @@ import { PropertyGroupName, Number_Setting } from '@design-any/interface/dist/La
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Timer', 'Timer001', require('../compIcons/定时器.png'))
+@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), getLocale().t('tip.timer'), 'Timer001', require('../compIcons/定时器.png'))
 @Options({
   components: {}
 })
 export default class Index extends EngineComponent {
-  @DPropAttr(new Number_Setting('Tick', PropertyGroupName.data, true, 'second'))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.tick'), PropertyGroupName.data, true, 'second'))
   private tiimeout: number = 1
   private interval: number = -1
 
@@ -44,7 +45,7 @@ export default class Index extends EngineComponent {
     }
   }
 
-  @DEventAttr({ eventName: 'onTickTock', description: '', inParams: [], hasOutParam: false })
+  @DEventAttr({ eventName: getLocale().t('tip.onTickTock'), description: '', inParams: [], hasOutParam: false })
   private onTickTock() {}
 }
 </script>

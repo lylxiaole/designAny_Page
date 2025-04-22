@@ -4,8 +4,9 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@resourceFuncAttr('String Cache', '', funcGroup.storages, funcCode.windowLocalStorage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
+@resourceFuncAttr(getLocale().t('behav.StringCache'), '', funcGroup.storages, funcCode.windowLocalStorage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
 export class windowLocalStorage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

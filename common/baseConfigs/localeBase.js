@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { createI18n } from 'vue-i18n'
 
 import messages from './i18n'
@@ -17,6 +16,7 @@ export function initLocale() {
     fallbackLocale: zhCn,
     messages
   })
+  i18nlocal.global.locale = 'zh-cn'
   return i18nlocal
 }
 

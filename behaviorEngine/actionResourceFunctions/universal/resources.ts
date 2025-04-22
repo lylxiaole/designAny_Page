@@ -8,8 +8,9 @@ import axios from 'axios'
 import excuteJS from '@common/components/commonComponents/funcstrExcute'
 import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/designJSFunc'
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@resourceFuncAttr('Dictionary', '', funcGroup.universalTool, funcCode.dictionary, platform.universal, [], { key: getUuid(), name: 'output' })
+@resourceFuncAttr(getLocale().t('behav.Dictionary'), '', funcGroup.universalTool, funcCode.dictionary, platform.universal, [], { key: getUuid(), name: 'output' })
 export class dictionarys implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -23,7 +24,7 @@ export class dictionarys implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Http Api', '', funcGroup.universalTool, funcCode.thirtyApi, platform.universal, [], { key: getUuid(), name: 'output' })
+@resourceFuncAttr(getLocale().t('behav.HttpApi'), '', funcGroup.universalTool, funcCode.thirtyApi, platform.universal, [], { key: getUuid(), name: 'output' })
 export class thirtyApis implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -77,7 +78,7 @@ export class thirtyApis implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Single condition judgment', '', funcGroup.universalTool, funcCode.oneParamJude, platform.universal, [{ key: getUuid(), name: 'inParam' }], { key: getUuid(), name: 'output' }, true)
+@resourceFuncAttr(getLocale().t('behav.Singleconditionjudgment'), '', funcGroup.universalTool, funcCode.oneParamJude, platform.universal, [{ key: getUuid(), name: 'inParam' }], { key: getUuid(), name: 'output' }, true)
 export class oneParamJude implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -93,7 +94,7 @@ export class oneParamJude implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Fixed Value', '', funcGroup.universalTool, funcCode.fixedVal, platform.universal, [], { key: getUuid(), name: 'output' })
+@resourceFuncAttr(getLocale().t('behav.FixedValue'), '', funcGroup.universalTool, funcCode.fixedVal, platform.universal, [], { key: getUuid(), name: 'output' })
 export class fixedValue implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -113,7 +114,7 @@ export class fixedValue implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('JS Func', '', funcGroup.universalTool, funcCode.jsFunction, platform.universal, [], null)
+@resourceFuncAttr(getLocale().t('behav.JSFunc'), '', funcGroup.universalTool, funcCode.jsFunction, platform.universal, [], null)
 export class jsFunction implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

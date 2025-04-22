@@ -55,8 +55,9 @@ import 'vxe-table/styles/cssvar.scss'
 import './tableThemeStyle.scss'
 import platform from '@design-any/interface/dist/enums/platform'
 import elementResizeDetectorMaker from 'element-resize-detector'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.page, getLocale().t('tip.basic'), 'Classic Table', 'Table_001', require('../compIcons/基础表格.png'))
+@DCompnentAttr(platform.page, getLocale().t('tip.basic'), getLocale().t('tip.classicTable'), 'Table_001', require('../compIcons/基础表格.png'))
 @Options({
   components: {
     VxeTable,
@@ -68,34 +69,34 @@ import elementResizeDetectorMaker from 'element-resize-detector'
 })
 export default class Index extends EngineComponent {
   // ************** 属性************************
-  @DPropAttr(new JsonContent_Setting('Table Data', PropertyGroupName.data, true, null))
+  @DPropAttr(new JsonContent_Setting(getLocale().t('tip.tableData'), PropertyGroupName.data, true, null))
   private tableData: any[] = []
 
-  @DPropAttr(new TableColumn_Setting('Columns', PropertyGroupName.data, true, null))
+  @DPropAttr(new TableColumn_Setting(getLocale().t('tip.columns'), PropertyGroupName.data, true, null))
   private tableColumns: any[] = []
 
-  @DPropAttr(new Color_Setting('Headers Color', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.headersColor'), PropertyGroupName.style, true, null))
   private headerBackground: string = '#cdcdcd'
 
-  @DPropAttr(new Color_Setting('Header FontColor', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.headerFontColor'), PropertyGroupName.style, true, null))
   private headerFontColor: string = '#000000'
 
-  @DPropAttr(new Color_Setting('Cell Color', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.cellColor'), PropertyGroupName.style, true, null))
   private cellBackground: string = '#cdcdcd'
 
-  @DPropAttr(new Color_Setting('Cell FontColor', PropertyGroupName.style, true, null))
+  @DPropAttr(new Color_Setting(getLocale().t('tip.cellFontColor'), PropertyGroupName.style, true, null))
   private cellFontColor: string = '#000000'
 
-  @DPropAttr(new Boolean_Setting('ShowPager', PropertyGroupName.data, true, null))
+  @DPropAttr(new Boolean_Setting(getLocale().t('tip.showPager'), PropertyGroupName.data, true, null))
   private isShowPager: boolean = true
 
-  @DPropAttr(new Number_Setting('PageIndex', PropertyGroupName.data, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.pageIndex'), PropertyGroupName.data, true, null))
   private pageIndex: number = 1
 
-  @DPropAttr(new Number_Setting('PageSize', PropertyGroupName.data, true, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.pageSize'), PropertyGroupName.data, true, null))
   private pageSize: number = 50
 
-  @DPropAttr(new Number_Setting('Data TotalCount', PropertyGroupName.data, false, null))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.dataTotalCount'), PropertyGroupName.data, false, null))
   private dataTotalCount: number = 0
 
   @DEventAttr({
@@ -108,7 +109,7 @@ export default class Index extends EngineComponent {
   })
   private onPageChange(pageSize, currentPage) {}
 
-  @DMethodAttr({ methodName: 'GetSelectedRows', hasOutParam: true, inParams: [] })
+  @DMethodAttr({ methodName: getLocale().t('tip.getSelectedRows'), hasOutParam: true, inParams: [] })
   private getSelectedRows() {
     let findradioCol = this.tableColumns.find((o) => o.type === 'radio')
     let findcheckCol = this.tableColumns.find((o) => o.type === 'checkbox')
@@ -124,7 +125,7 @@ export default class Index extends EngineComponent {
     }
   }
 
-  @DMethodAttr({ methodName: 'Reload Data', hasOutParam: false, inParams: [{ name: 'tableData', key: 'tableData' }] })
+  @DMethodAttr({ methodName: getLocale().t('tip.reloadData'), hasOutParam: false, inParams: [{ name: 'tableData', key: 'tableData' }] })
   private async reloadData(data: any[]) {
     await (this.$refs.table as any).reloadData([])
     await (this.$refs.table as any).reloadData(data)

@@ -8,9 +8,10 @@ import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEn
 import { ElNotification } from 'element-plus'
 import { pageEmitter } from '@common/utils/eventBus'
 import { toRaw } from 'vue'
+import { getLocale } from '@common/baseConfigs'
 
 // *************************************************************************
-@resourceFuncAttr('MessageBox', '', funcGroup.universalTool, funcCode.notificationDialog, platform.page, [], null)
+@resourceFuncAttr(getLocale().t('behav.MessageBox'), '', funcGroup.universalTool, funcCode.notificationDialog, platform.page, [], null)
 export class NotificationError implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -42,7 +43,7 @@ export class NotificationError implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Page jump', '', funcGroup.universalTool, funcCode.leadToOtherPage, platform.page, [], null)
+@resourceFuncAttr(getLocale().t('behav.Pagejump'), '', funcGroup.universalTool, funcCode.leadToOtherPage, platform.page, [], null)
 export class leadToPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -54,7 +55,7 @@ export class leadToPage implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Page popup', '', funcGroup.universalTool, funcCode.pagePopup, platform.universal, [], null)
+@resourceFuncAttr(getLocale().t('behav.Pagepopup'), '', funcGroup.universalTool, funcCode.pagePopup, platform.universal, [], null)
 export class pagePopup implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -67,7 +68,7 @@ export class pagePopup implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Page Context', '', funcGroup.resoucesInPage, funcCode.pageContext, platform.universal, [], null)
+@resourceFuncAttr(getLocale().t('behav.PageContext'), '', funcGroup.resoucesInPage, funcCode.pageContext, platform.universal, [], null)
 export class pageContext implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

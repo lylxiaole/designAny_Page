@@ -6,9 +6,10 @@ import platform from '@design-any/interface/dist/enums/platform'
 
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { isPromise } from '@vue/shared'
-import { ElNotification } from 'element-plus'
+import { getLocale } from '@common/baseConfigs'
+
 // *************************************************************************
-@resourceFuncAttr('Layout Method', '', funcGroup.resoucesInPage, funcCode.methodsInPage, platform.universal, [], null)
+@resourceFuncAttr(getLocale().t('behav.LayoutMethod'), '', funcGroup.resoucesInPage, funcCode.methodsInPage, platform.universal, [], null)
 export class methodsInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
@@ -45,7 +46,7 @@ export class methodsInPageMethod implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Layout Property', '', funcGroup.resoucesInPage, funcCode.propertiesInPage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
+@resourceFuncAttr(getLocale().t('behav.LayoutProperty'), '', funcGroup.resoucesInPage, funcCode.propertiesInPage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
 export class propertiesInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -68,7 +69,7 @@ export class propertiesInPageMethod implements actFuncBase {
   }
 }
 
-@resourceFuncAttr('Layout Behavior', '', funcGroup.resoucesInPage, funcCode.behaviorsInPage, platform.universal, [], null)
+@resourceFuncAttr(getLocale().t('behav.LayoutBehavior'), '', funcGroup.resoucesInPage, funcCode.behaviorsInPage, platform.universal, [], null)
 export class behaviorsInPageMethod implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -79,7 +80,7 @@ export class behaviorsInPageMethod implements actFuncBase {
   }
 }
 // *************************************************************************
-@resourceFuncAttr('Behavior Inparam', '', funcGroup.currentBehaviorInparam, funcCode.behaviorInparam, platform.universal, [], null)
+@resourceFuncAttr(getLocale().t('behav.BehaviorInparam'), '', funcGroup.currentBehaviorInparam, funcCode.behaviorInparam, platform.universal, [], null)
 export class behaviorInparamMethod implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

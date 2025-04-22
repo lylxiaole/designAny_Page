@@ -12,8 +12,15 @@ import { PropertyGroupName, Number_Setting, Boolean_Setting } from '@design-any/
 import { DEventAttr } from '@design-any/interface/dist/LayoutAttr/EventInfo'
 import { DPropAttr } from '@design-any/interface/dist/LayoutAttr/PropertyInfo'
 import platform from '@design-any/interface/dist/enums/platform'
+import { getLocale } from '@common/baseConfigs'
 
-@DCompnentAttr(platform.universal, getLocale().t('tip.basic'), 'Quadrilateral', 'QuadrilateralComponent_001', require('../compIcons/矩形.png'))
+@DCompnentAttr(
+  platform.universal,
+  getLocale().t('tip.basic'),
+  getLocale().t('tip.quadrilateral'),
+  'QuadrilateralComponent_001',
+  require('../compIcons/矩形.png')
+)
 @Options({
   components: {}
 })
@@ -26,9 +33,9 @@ export default class QuadrilateralComponent extends EngineComponent {
     return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '")'
   }
 
-  @DPropAttr(new Number_Setting('BorderRadius', PropertyGroupName.style, true, 'px'))
+  @DPropAttr(new Number_Setting(getLocale().t('tip.borderRadius'), PropertyGroupName.style, true, 'px'))
   private borderRadius: number = 0
-  @DPropAttr(new Boolean_Setting('ShowBoxShadow', PropertyGroupName.style, true))
+  @DPropAttr(new Boolean_Setting(getLocale().t('tip.showBoxShadow'), PropertyGroupName.style, true))
   private showBoxShadow: boolean = false
 
   private get boxShadow(): string {

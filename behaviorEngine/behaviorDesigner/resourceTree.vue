@@ -38,6 +38,7 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 import platform from '@design-any/interface/dist/enums/platform'
 
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
+import { getLocale } from '@common/baseConfigs'
 
 class TreeNodeDC {
   id: string
@@ -81,7 +82,7 @@ export default class index extends ComponentBase {
       const group = groups[index]
       let treeNodeg = new TreeNodeDC()
       treeNodeg.id = group.key
-      treeNodeg.label = group.title
+      treeNodeg.label = this.getGroupNameI18n(group.title)
       treeNodeg.type = 'group'
       treeNodeg.children = []
 
@@ -127,6 +128,11 @@ export default class index extends ComponentBase {
       this.currentFlow.dnd.startDrag(dragData)
     }
   }
+
+  private getGroupNameI18n(grouplabel: string) {
+    return getLocale().t(grouplabel)
+  }
+
   private allowDrop(draggingNode, dropNode, type) {
     return false
   }
