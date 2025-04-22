@@ -10,7 +10,7 @@
       <div v-if="isExcuted" class="content verticalAlignCenter">
         <img v-if="isExcuted && excutedSuccess === true" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
         <img v-if="isExcuted && excutedSuccess === false" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行失败.png')" />
-        &nbsp;{{ isExcuted && excutedSuccess === true ?$t('tip.success') :$t('tip.ExFaildcuted') }}
+        &nbsp;{{ isExcuted && excutedSuccess === true ?$t('tip.Success') :$t('tip.Faild') }}
       </div>
     </div>
     <!-- ********************************************************* -->

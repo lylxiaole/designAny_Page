@@ -128,12 +128,13 @@ export default {
       State: '状态',
       WaitingExcute: '等待执行',
       ExcuteResult: '执行结果',
+
       Faild: '失败',
       ExcuteErrorMsg: '错误信息',
       Excuted: '已执行',
-      Excuted: '未执行',
       None: '无',
-      FilterValue: '筛选值'
+      FilterValue: '筛选值',
+      Success: '成功'
     },
     opts: {
       delete: '删除',
@@ -330,7 +331,8 @@ export default {
       Excuted: 'Excuted',
       Excuted: 'No Excuted',
       None: 'None',
-      FilterValue: 'Filter Value'
+      FilterValue: 'Filter Value',
+      Success: 'Success'
     },
     opts: {
       delete: 'Delete',
