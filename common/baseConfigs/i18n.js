@@ -113,7 +113,27 @@ export default {
       showBorder: '显示边框',
       tick: '计时时间',
       onTickTock: '计时触发',
-      onClick: '点击时'
+      onClick: '点击时',
+
+      InpParams: '入参',
+      NoInParamsJustforConnect: '无入参,仅连接',
+      OutParam: '出参',
+      NoOutParamJustforConnect: '无出参,仅连接',
+      Filter: '筛选条件',
+      NoFilter: '无筛选条件',
+      NextStep: '下一步',
+      ReDo: '重新调试',
+      EditBehavior: '编辑行为',
+
+      State: '状态',
+      WaitingExcute: '等待执行',
+      ExcuteResult: '执行结果',
+      Faild: '失败',
+      ExcuteErrorMsg: '错误信息',
+      Excuted: '已执行',
+      Excuted: '未执行',
+      None: '无',
+      FilterValue: '筛选值'
     },
     opts: {
       delete: '删除',
@@ -288,7 +308,29 @@ export default {
       showBorder: 'ShowBorder',
       tick: 'Tick',
       onTickTock: 'onTickTock',
-      onClick: 'OnClick'
+      onClick: 'OnClick',
+
+      InpParams: 'InpParams',
+      NoInParamsJustforConnect: 'No InParams,Just for Connect',
+      OutParam: 'OutParam',
+      NoOutParamJustforConnect: 'No OutParam,Just for Connect',
+      Filter: 'Filter',
+
+      NoFilter: 'No Filter',
+
+      NextStep: 'Next Step',
+      ReDo: 'ReDo',
+      EditBehavior: 'Edit Behavior',
+
+      State: 'State',
+      WaitingExcute: 'Waiting Excute',
+      ExcuteResult: 'Excute Result',
+      Faild: 'Faild',
+      ExcuteErrorMsg: 'Excute ErrorMsg',
+      Excuted: 'Excuted',
+      Excuted: 'No Excuted',
+      None: 'None',
+      FilterValue: 'Filter Value'
     },
     opts: {
       delete: 'Delete',

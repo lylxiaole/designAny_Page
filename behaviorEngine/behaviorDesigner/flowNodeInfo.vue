@@ -1,32 +1,32 @@
 <template style="height: 100%; width: 100%">
   <el-row v-if="selectedNodeType === 'node'" style="width: 100%">
     <el-row v-if="inParams && inParams.length > 0" style="width: 100%">
-      <div class="title">InpParams:</div>
+      <div class="title">{{$t('tip.InpParams')}}:</div>
       <div class="content" v-for="param in inParams" :key="param.key">{{ param.name }}({{ param.refOutParamId ? 'connected' : 'disconnected' }})</div>
     </el-row>
     <el-row v-else style="width: 100%">
-      <div class="title">InpParams:</div>
-      <div class="content">No InParams,Just for Connect</div>
+      <div class="title">{{$t('tip.InpParams')}}:</div>
+      <div class="content">{{$t('tip.NoInParamsJustforConnect')}} </div>
     </el-row>
 
     <el-row v-if="outParam" style="width: 100%">
-      <div class="title">OutParam:</div>
+      <div class="title">{{$t('tip.OutParam')}}:</div>
       <div class="content">{{ outParam.name }}</div>
     </el-row>
     <el-row v-if="!outParam" style="width: 100%">
-      <div class="title">OutParam:</div>
-      <div class="content">No OutParam,Just for Connect</div>
+      <div class="title">{{$t('tip.OutParam')}}:</div>
+      <div class="content">{{$t('tip.NoOutParamJustforConnect')}}</div>
     </el-row>
   </el-row>
   <!-- ********************************************************* -->
   <el-row v-if="selectedNodeType === 'edge'">
     <el-row v-if="edgeFilter" style="width: 100%">
-      <div class="title">Filter:</div>
+      <div class="title">{{$t('tip.Filter')}}:</div>
       <div class="content">{{ edgeFilter }}</div>
     </el-row>
     <el-row v-else style="width: 100%">
-      <div class="title">Filter:</div>
-      <div class="content">No Filter</div>
+      <div class="title">{{$t('tip.Filter')}}:</div>
+      <div class="content">{{$t('tip.NoFilter')}}</div>
     </el-row>
   </el-row>
 </template>

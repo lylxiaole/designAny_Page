@@ -4,9 +4,9 @@
       <!-- ***************************** -->
       <el-row v-show="currentFactory" style="width: 100%; height: 40px" class="flexHorilanLayout verticalAlignCenter">
         <!-- <el-button type="primary">Add Breakpoint</el-button> -->
-        <el-button type="primary" @click="nextStep">Next Step</el-button>
-        <el-button type="primary" @click="onReDo">ReDo</el-button>
-        <el-button type="primary" @click="onEditBehavior(orginBehav)">Edit Behavior</el-button>
+        <el-button type="primary" @click="nextStep">{{$t('tip.NextStep')}}</el-button>
+        <el-button type="primary" @click="onReDo">{{$t('tip.ReDo')}}</el-button>
+        <el-button type="primary" @click="onEditBehavior(orginBehav)">{{$t('tip.EditBehavior')}}</el-button>
         <!-- <el-button type="primary">Next Point</el-button> -->
       </el-row>
       <!-- ***************************** -->

@@ -15,8 +15,8 @@
     </el-row>
     <template #footer>
       <el-row class="dialog-footer verticalAlignCenter flexHorilanLayout" style="height: 50px">
-        <el-button @click="onCancel">Cancel</el-button>
-        <el-button :style="{ 'margin-left': '8px' }" type="primary" @click="onConfirm">Sure</el-button>
+        <el-button @click="onCancel">{{$t('opts.cancel')}}</el-button>
+        <el-button :style="{ 'margin-left': '8px' }" type="primary" @click="onConfirm">{{$t('opts.sure')}}</el-button>
       </el-row>
     </template>
   </el-dialog>

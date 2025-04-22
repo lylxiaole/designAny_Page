@@ -1,45 +1,45 @@
 <template>
   <el-row v-if="selectedNodeType === 'node'" style="width: 100%; height: 100%">
     <div v-if="actObj" style="width: 100%; height: 60px">
-      <div class="title">State:</div>
-      <div class="content">{{ isExcuted ? 'Excuted' : 'Waiting Excute' }}</div>
+      <div class="title">{{$t('tip.State')}}:</div>
+      <div class="content">{{ isExcuted ?$t('tip.Excuted') : $t('tip.WaitingExcute') }}</div>
     </div>
     <!-- ********************************************************* -->
     <div v-if="isExcuted" style="width: 100%; height: 60px">
-      <div v-if="isExcuted" class="title">Excute Result:</div>
+      <div v-if="isExcuted" class="title">{{$t('tip.ExcuteResult')}}:</div>
       <div v-if="isExcuted" class="content verticalAlignCenter">
         <img v-if="isExcuted && excutedSuccess === true" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
         <img v-if="isExcuted && excutedSuccess === false" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行失败.png')" />
-        &nbsp;{{ isExcuted && excutedSuccess === true ? 'Success' : 'Faild' }}
+        &nbsp;{{ isExcuted && excutedSuccess === true ?$t('tip.success') :$t('tip.ExFaildcuted') }}
       </div>
     </div>
     <!-- ********************************************************* -->
     <div v-if="isExcuted && excutedSuccess === false && excutedMsg" style="width: 100%; height: 80px">
-      <div class="title">Excute ErrorMsg:{{ isExcuted ? 'Excuted' : 'No Excuted' }}</div>
-      <div class="content">{{ isExcuted && excutedSuccess === false && excutedMsg ? excutedMsg : 'None' }}</div>
+      <div class="title">{{$t('tip.ExcuteErrorMsg')}}:{{ isExcuted ?$t('tip.Excuted'):$t('tip.Excuted')}}</div>
+      <div class="content">{{ isExcuted && excutedSuccess === false && excutedMsg ? excutedMsg :$t('tip.None')  }}</div>
     </div>
     <!-- ********************************************************* -->
     <div v-if="isExcuted && inParams && inParams.length > 0" style="width: 100%; height: 300px">
-      <div class="title">InpParams:</div>
+      <div class="title">{{$t('tip.InpParams')}}:</div>
       <div class="content">
         <el-collapse :model-value="inParams.map(o=>o.name)">
           <el-collapse-item v-for="param in inParams" :key="param.key" :name="param.name" :title="param.name" :icon="CaretRight">
-            <div>{{ param.val ? param.val : 'None' }}</div>
+            <div>{{ param.val ? param.val :$t('tip.None') }}</div>
           </el-collapse-item>
         </el-collapse>
       </div>
     </div>
     <div v-if="isExcuted && (!inParams || inParams.length < 1)" style="width: 100%">
-      <div class="title">InpParams:</div>
-      <div class="content">No InParams,Just for Connect</div>
+      <div class="title">{{$t('tip.InpParams')}}:</div>
+      <div class="content">{{$t('tip.NoInParamsJustforConnect')}}</div>
     </div>
     <!-- ********************************************************* -->
     <div v-if="isExcuted && outParam" style="width: 100%; height: 300px">
-      <div class="title">OutParam:</div>
+      <div class="title">{{$t('tip.OutParam')}}:</div>
       <div class="content">
         <el-collapse :model-value="[outParam.name]">
           <el-collapse-item :title="outParam.name" :name="outParam.name" :icon="CaretRight">
-            <div>{{ outParam.val ? outParam.val : 'None' }}</div>
+            <div>{{ outParam.val ? outParam.val : $t('tip.None') }}</div>
           </el-collapse-item>
         </el-collapse>
         <!-- <div class="paramName">{{ outParam.name }}:</div>
@@ -49,24 +49,24 @@
       </div>
     </div>
     <div v-if="isExcuted && !outParam" style="width: 100%">
-      <div class="title">OutParam:</div>
-      <div class="content">No OutParam,Just for Connect</div>
+      <div class="title">{{$t('tip.OutParam')}}:</div>
+      <div class="content">{{$t('tip.NoOutParamJustforConnect')}}</div>
     </div>
   </el-row>
   <!-- ********************************************************* -->
   <el-row v-if="selectedNodeType === 'edge'">
     <div v-if="edgeFilter" style="width: 100%">
-      <div class="title">Filter:</div>
+      <div class="title">{{$t('tip.Filter')}}:</div>
       <div class="content">{{ edgeFilter }}</div>
     </div>
     <div v-if="edgeFilter" style="width: 100%">
-      <div class="title">Filter value:</div>
+      <div class="title">{{$t('tip.FilterValue')}}:</div>
       <div class="content">{{ edgeFilterVal }}</div>
     </div>
     <!-- ********************************************************* -->
     <div v-else style="width: 100%">
-      <div class="title">Filter:</div>
-      <div class="content">No Filter</div>
+      <div class="title">{{$t('tip.Filter')}}:</div>
+      <div class="content">{{$t('tip.NoFilter')}}</div>
     </div>
   </el-row>
 </template>
