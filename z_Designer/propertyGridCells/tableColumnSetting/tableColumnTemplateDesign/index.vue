@@ -28,7 +28,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
 import { ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
-import { EnginePage, SaveInfo, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage, SaveInfo, EngineLayout, EngineComponent } from '@design-any/interface/dist/LayoutInterface'
 
 import { TableCellDesign } from '@designEngine/index'
 import { designDrawDomVirtual, designDrawDomReal } from '@design-any/interface/dist/utils/drawVueDom'
@@ -80,7 +80,7 @@ export default class index extends PageBase {
 
   private onDialogBeforeClose() {}
 
-  public async show(columnKey: string, data: SaveInfo, parentLayout: EngineLayout) {
+  public async show(columnKey: string, data: SaveInfo, parentLayout: EngineComponent, parentPage: EnginePage) {
     data = deepClone(data)
     this.windowVisible = true
     this.columnKey = columnKey
@@ -103,9 +103,10 @@ export default class index extends PageBase {
       ;(vueComp as TableCellDesign).width = '200px'
       ;(vueComp as TableCellDesign).height = '80px'
     }
-    ;(vueComp as TableCellDesign).parentLayout = parentLayout
+    //
+    parentLayout.addDynamicLayout(vueComp as TableCellDesign)
+    //
     this.currentShowEngine = vueComp as TableCellDesign
-
     $(this.$refs.designArea).append(virtualDom)
     await this.$nextTick()
     //Scale

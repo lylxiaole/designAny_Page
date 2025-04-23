@@ -10,8 +10,8 @@
       <!-- ********************************************************************* -->
       <div ref="renderArea" style="width: 100%; height: calc(100% - 50px); overflow: hidden;position:absolute;top:50px"></div>
       <!-- ********************************************************************* -->
-      <el-drawer v-model="drawerShow" title="Behavior Debugger" custom-class="lyldrawer" size="90%" style="height: calc(100% - 50px);top:50px"
-        :with-header="true">
+      <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" custom-class="lyldrawer" size="90%"
+        style="height: calc(100% - 50px);top:50px" :with-header="true">
         <behaviorDebugger ref="behaviorDebugger" :currentPage="currentOpenEngine" @onEditBehavior="onEditBehavior" />
       </el-drawer>
       <!-- ********************************************************************* -->
@@ -79,7 +79,7 @@ export default class index extends PageBase {
     if (!defaultPage) {
       alert('找不到默认页，需要先设定一个默认页面。')
     }
-    this.openPage(defaultPage.id)
+    this.openPage(defaultPage.id, null)
   }
   private organizePages(pageTree: any[]) {
     for (let index = 0; index < pageTree.length; index++) {

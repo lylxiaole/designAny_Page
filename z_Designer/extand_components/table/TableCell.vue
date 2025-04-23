@@ -7,7 +7,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Prop, Watch } from 'vue-property-decorator'
 
 import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
-import { EnginePage, EngineLayout, EngineComponent, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
+import { EngineComponent, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import platform from '@design-any/interface/dist/enums/platform'
 import { TableCellView } from '@designEngine/index'
 
@@ -27,9 +27,10 @@ export default class TableCell extends PageBase {
   public rowData: any
 
   @Prop({ default: () => null })
-  public parentLayout: EngineLayout
+  public parentLayout: EngineComponent
   // *******************************************
   private currentPageEngine: TableCellView
+
   created() {}
   mounted() {}
 
@@ -52,7 +53,7 @@ export default class TableCell extends PageBase {
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
     $(this.$el).append(virtualDom)
-    ;(vueComp as TableCellView).parentLayout = this.parentLayout
+    this.parentLayout.addDynamicLayout(vueComp as TableCellView)
     ;(vueComp as TableCellView).setCurrentRowData(toRaw(this.rowData))
     ;(vueComp as TableCellView).completedPageLoad()
     // *****************************

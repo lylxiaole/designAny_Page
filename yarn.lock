@@ -1241,10 +1241,10 @@
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz"
   integrity sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==
 
-"@design-any/interface@^0.0.667":
-  version "0.0.667"
-  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.667.tgz#e03c1ed62e6b51d3157309c3ae4622357c285646"
-  integrity sha512-W+sdpCDdwnoazyK+l4XgZbbv3eC/i7Og5LTmHpdE1/b3XysEfHSDxN8cDqsOV6EzTdF9RWcAGQ7glXootcnk6w==
+"@design-any/interface@^0.0.670":
+  version "0.0.670"
+  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.670.tgz#9811b899c551732971340f2fc1b2d631b7d2e2c2"
+  integrity sha512-1g2EzQc9O9VAb2jKMGmdlUjlIULSWdtixdTURE8JGiBerNTW3mNNo/8aviE0oMfIkLS7aUbQkhrttYstKXHaqA==
   dependencies:
     "@types/lodash" "^4.14.182"
     "@types/lodash-es" "^4.17.6"

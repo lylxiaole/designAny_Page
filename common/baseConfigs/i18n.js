@@ -132,10 +132,12 @@ export default {
       Faild: '失败',
       ExcuteErrorMsg: '错误信息',
       Excuted: '已执行',
+      NoExcuted: '未执行',
       None: '无',
       FilterValue: '筛选值',
       Success: '成功',
-      BehaviorBinding: '行为绑定'
+      BehaviorBinding: '行为绑定',
+      BehaviorDebugger: '行为调试'
     },
     opts: {
       delete: '删除',
@@ -330,11 +332,12 @@ export default {
       Faild: 'Faild',
       ExcuteErrorMsg: 'Excute ErrorMsg',
       Excuted: 'Excuted',
-      Excuted: 'No Excuted',
+      NoExcuted: 'No Excuted',
       None: 'None',
       FilterValue: 'Filter Value',
       Success: 'Success',
-      BehaviorBinding: 'Behavior Binding'
+      BehaviorBinding: 'Behavior Binding',
+      BehaviorDebugger: 'Behavior Debugger'
     },
     opts: {
       delete: 'Delete',

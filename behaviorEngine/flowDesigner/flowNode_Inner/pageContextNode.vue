@@ -59,6 +59,10 @@ export default class pageContextNode extends Vue {
     }
     // *******************************************
     let context = (this.currentPage as any).pageContext.find((o) => o.key === val)
+
+    if (!context) {
+      return
+    }
     let inparams = []
     inparams.push({
       key: makeParamKey(this.actObj.id, context.key),

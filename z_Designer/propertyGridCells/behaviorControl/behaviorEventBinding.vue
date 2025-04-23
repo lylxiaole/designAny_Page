@@ -83,6 +83,7 @@ export default class behaviorEventBinding extends Vue {
     this.selectedEventField = this.designerLayoutEvents[index].eventField
     this.selectedEventName = this.designerLayoutEvents[index].eventName
   }
+
   private get currentSelectedBehaviors(): behavior[] {
     if (this.selectedEventField === null) {
       return null

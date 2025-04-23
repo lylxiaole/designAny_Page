@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-button type="primary" class="themeButton" style="width: 118px; height: 34px; background: rgba(124, 225, 170, 0.1); border-color: rgba(124, 225, 170, 0.1); border-radius: 4px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 1); line-height: 12px" @click="startEditTable" size="small">
+    <el-button type="primary" class="themeButton"
+      style="width: 118px; height: 34px; background: rgba(124, 225, 170, 0.1); border-color: rgba(124, 225, 170, 0.1); border-radius: 4px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 1); line-height: 12px"
+      @click="startEditTable" size="small">
       Setting Columns
     </el-button>
 
@@ -52,9 +54,15 @@
         <!-- ********************* -->
         <el-table-column fixed="right" label="Options">
           <template #default="scope">
-            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowMoveDown(scope.row.key)"><Download /></el-icon>
-            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowMoveUp(scope.row.key)"><Upload /></el-icon>
-            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowdelete(scope.row.key)"><Delete /></el-icon>
+            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowMoveDown(scope.row.key)">
+              <Download />
+            </el-icon>
+            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowMoveUp(scope.row.key)">
+              <Upload />
+            </el-icon>
+            <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowdelete(scope.row.key)">
+              <Delete />
+            </el-icon>
           </template>
         </el-table-column>
       </el-table>
@@ -144,7 +152,7 @@ export default class index extends propertyCellBase<TableColumn_Setting> {
   }
   private async settingColTemplate(key: string) {
     let target = this.localData.find((item) => key === item.key)
-    await (this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(key, target.template, this.page)
+    await (this.$refs.tableColumnTemplateDesign as tableColumnTemplateDesign).show(key, target.template, this.currentLayouts[0] as any, this.page)
   }
   private onTableColumnTemplateDesignSure(columnKey: string, data: SaveInfo) {
     let target = this.localData.find((item) => columnKey === item.key)

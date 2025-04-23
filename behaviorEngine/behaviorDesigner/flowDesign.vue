@@ -231,7 +231,6 @@ export default class flowDesign extends ComponentBase {
       }
     }
   }
-
   // ****************流程图事件****************************
   private async onEdgeConnectNotAllowed(msg) {
     alert(msg.msg)

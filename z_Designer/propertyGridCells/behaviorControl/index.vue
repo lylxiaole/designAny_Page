@@ -7,7 +7,7 @@
     </el-button>
     <!-- ************************************************************ -->
     <el-dialog ref="previewPopup" class="bhaviorDialog" :title="$t('tip.BehaviorBinding')" style="height: 600px" width="900px" v-model="windowVisible"
-      append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false">
+      append-to-body :before-close="onClose" :close-on-click-modal="false" :close-on-press-escape="false" destroy-on-close>
       <el-row style="height: 480px; width: 100%; background: #fff">
         <behaviorEventBinding v-show="currentComp === 'eventBinding'" :designerLayoutEvents="designerLayoutEvents" :currentData="currentData"
           :currentPageBehaviors="currentPageBehaviors" @onList="onOpenBehaviorList" />
@@ -17,15 +17,15 @@
       <template #footer>
         <el-row v-if="currentComp === 'eventBinding'" class="dialog-footer">
           <div class="steps-action">
-            <el-button @click="onCancel">Cancel</el-button>
-            <el-button :style="{ 'margin-left': ' 8px' }" type="primary" @click="onConfirm">Sure</el-button>
+            <el-button @click="onCancel">{{$t('opts.cancel')}}</el-button>
+            <el-button :style="{ 'margin-left': ' 8px' }" type="primary" @click="onConfirm">{{$t('opts.sure')}}</el-button>
           </div>
         </el-row>
         <!-- ************************************************************* -->
         <el-row v-if="currentComp === 'allBehaviorList'" class="dialog-footer">
           <div class="steps-action">
-            <el-button @click="onBackUp">Cancel</el-button>
-            <el-button :style="{ 'margin-left': ' 8px' }" type="primary" @click="onSureReference">Sure</el-button>
+            <el-button @click="onBackUp">{{$t('opts.cancel')}}</el-button>
+            <el-button :style="{ 'margin-left': ' 8px' }" type="primary" @click="onSureReference">{{$t('opts.sure')}}</el-button>
           </div>
         </el-row>
       </template>
