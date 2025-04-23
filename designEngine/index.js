@@ -12,9 +12,9 @@ import DialogPageView from './06viewLayouts/DialogPageView.vue'
 export { PCPageDesign, PCPagePreview, TableCellView, TableCellDesign, DialogPageView, DialogPageDesign }
 import applicationContext from './01designerContext/context'
 import { GetPageDetail } from '@common/apis/designPage'
-export { applicationContext }
 import * as utils from '@design-any/interface/dist/utils'
 
+export { applicationContext }
 /**加载所有设计器组件 */
 const modulesFiles = require.context('./', true, /\.(vue|ts)$/)
 

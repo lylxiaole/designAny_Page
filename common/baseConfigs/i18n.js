@@ -134,7 +134,8 @@ export default {
       Excuted: '已执行',
       None: '无',
       FilterValue: '筛选值',
-      Success: '成功'
+      Success: '成功',
+      BehaviorBinding: '行为绑定'
     },
     opts: {
       delete: '删除',
@@ -332,7 +333,8 @@ export default {
       Excuted: 'No Excuted',
       None: 'None',
       FilterValue: 'Filter Value',
-      Success: 'Success'
+      Success: 'Success',
+      BehaviorBinding: 'Behavior Binding'
     },
     opts: {
       delete: 'Delete',

@@ -34,12 +34,12 @@ import { GetGroupApisAll } from '@common/apis/designThirtyApi'
 import { GetGroupFuncsAll } from '@common/apis/designJSFunc'
 import { init as behaviorEngineInit } from '@behaviorEngine/index'
 behaviorEngineInit(apiAddr(), GetAll, GetGroupApisAll, GetGroupFuncsAll)
-// *****************************************************
+// **************************************************
 import App from './views/App.vue'
 // ***************************************************
 import contextmenu from 'v-contextmenu'
 import 'v-contextmenu/dist/themes/default.css'
-// *********************************************************
+// ***************************************************
 var currentApp = createApp(App)
 currentApp.use(ElementPlus)
 currentApp.use(VXETable)
