@@ -64,6 +64,7 @@ export enum behaviorPageType {
 
 export class behaviorListData {
   prePage: behaviorPageType
+  eventField: string
   selectedEventName: string
   eventBehavior: LayoutEventBehaviors
 }
@@ -75,21 +76,24 @@ export default class behaviorEventBinding extends Vue {
   @Prop() currentData: LayoutEventBehaviors[]
   @Prop() currentPageBehaviors: behavior[]
   // **********************************
+  private selectedEventField: string = ''
   private selectedEventName: string = ''
+
   private onSelectedEvent(index, indexPath, item, routeResult) {
+    this.selectedEventField = this.designerLayoutEvents[index].eventField
     this.selectedEventName = this.designerLayoutEvents[index].eventName
   }
   private get currentSelectedBehaviors(): behavior[] {
-    if (this.selectedEventName === null) {
+    if (this.selectedEventField === null) {
       return null
     }
-    let event = this.designerLayoutEvents.filter((o) => o.eventName == this.selectedEventName)[0]
+    let event = this.designerLayoutEvents.filter((o) => o.eventField == this.selectedEventField)[0]
     if (!event) {
       return null
     }
     let behaviorIds: string[] = []
-    if (this.currentData.find((o) => o.eventName == event.eventName)) {
-      behaviorIds = this.currentData.find((o) => o.eventName == event.eventName).behaviorIds
+    if (this.currentData.find((o) => o.eventField == event.eventField)) {
+      behaviorIds = this.currentData.find((o) => o.eventField == event.eventField).behaviorIds
     }
 
     let res: behavior[] = []
@@ -102,20 +106,21 @@ export default class behaviorEventBinding extends Vue {
     return res
   }
   private set currentSelectedBehaviors(val: behavior[]) {
-    if (this.selectedEventName === null) {
+    if (this.selectedEventField === null) {
       return
     }
-    let event = this.designerLayoutEvents.filter((o) => o.eventName == this.selectedEventName)[0]
+    let event = this.designerLayoutEvents.filter((o) => o.eventField == this.selectedEventField)[0]
     if (!event) {
       return
     }
-    let eventbehaviors = this.currentData.find((o) => o.eventName == event.eventName)
+    let eventbehaviors = this.currentData.find((o) => o.eventField == event.eventField)
     if (!eventbehaviors) {
       let neweventbeh = new LayoutEventBehaviors()
       neweventbeh.eventName = event.eventName
+      neweventbeh.eventField = event.eventField
       neweventbeh.behaviorIds = []
       this.currentData.push(neweventbeh)
-      eventbehaviors = this.currentData.find((o) => o.eventName == event.eventName)
+      eventbehaviors = this.currentData.find((o) => o.eventField == event.eventField)
     }
 
     let selectedIds = val.map((o) => o.id)
@@ -127,7 +132,7 @@ export default class behaviorEventBinding extends Vue {
   // **********************************
   //行为顺序向上移动
   private moveUpBehavior(behaviorId: string) {
-    let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
+    let event = this.currentData.filter((o) => o.eventField == this.selectedEventField)[0]
     if (!event) {
       return
     }
@@ -142,7 +147,7 @@ export default class behaviorEventBinding extends Vue {
   }
   //行为顺序向下移动
   private moveDownBehavior(behaviorId: string) {
-    let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
+    let event = this.currentData.filter((o) => o.eventField == this.selectedEventField)[0]
     if (!event) {
       return
     }
@@ -157,7 +162,7 @@ export default class behaviorEventBinding extends Vue {
   }
   //删除行为
   private removeBehavior(behaviorId: string) {
-    let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
+    let event = this.currentData.filter((o) => o.eventField == this.selectedEventField)[0]
     if (!event) {
       return
     }
@@ -171,16 +176,19 @@ export default class behaviorEventBinding extends Vue {
 
   //编辑，跳转到行为列表
   private toBehaviorList() {
+    //
     let back: behaviorListData = new behaviorListData()
     back.prePage = behaviorPageType.binding
     back.selectedEventName = this.selectedEventName
+    back.eventField = this.selectedEventField
     // window.console.log('toBehaviorList')
-    let event = this.currentData.filter((o) => o.eventName == this.selectedEventName)[0]
+    let event = this.currentData.filter((o) => o.eventField == this.selectedEventField)[0]
     if (event) {
       back.eventBehavior = deepClone(event)
     } else {
       let neweventbeh = new LayoutEventBehaviors()
       neweventbeh.eventName = this.selectedEventName
+      neweventbeh.eventField = this.selectedEventField
       neweventbeh.behaviorIds = []
       this.currentData.push(neweventbeh)
       back.eventBehavior = deepClone(neweventbeh)
