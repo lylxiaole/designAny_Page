@@ -130,7 +130,13 @@ export default {
       SettingColumns: '列设置',
       Setting: '设置',
       DynamicBehavior: '动态行为',
-      PageBehavior: '页面行为'
+      PageBehavior: '页面行为',
+
+      RerfenceBehavior: '引用行为',
+      MoveUp: '上移',
+      MoveDown: '下移',
+      Remove: '删除',
+      AllBehaviorsInPage: '页面行为列表'
     },
     opts: {
       delete: '删除',
@@ -325,7 +331,14 @@ export default {
       SettingColumns: 'Setting Columns',
       Setting: 'Setting',
       DynamicBehavior: 'Dynamic Behavior',
-      PageBehavior: 'PageBehavior'
+      PageBehavior: 'PageBehavior',
+
+      RerfenceBehavior: 'Rerfence Behavior',
+      MoveUp: 'Move Up',
+      MoveDown: 'Move Down',
+      Remove: 'Remove',
+
+      AllBehaviorsInPage: 'All Behaviors In Page'
     },
     opts: {
       delete: 'Delete',

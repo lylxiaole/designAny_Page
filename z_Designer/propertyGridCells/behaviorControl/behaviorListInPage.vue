@@ -2,13 +2,13 @@
   <el-row style="height: 100%; background: #fff">
     <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
       <div style="background: #18aeb7; width: 6px; height: 26px"></div>
-      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">All Behaviors In Page</span>
+      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">{{$t('tip.AllBehaviorsInPage')}} </span>
     </div>
     <el-table ref="tableComp" :data="allBehaviors" style="width: 100%" height="calc(100% - 30px)">
       <el-table-column fixed type="index" width="50" />
       <el-table-column type="selection" width="55" />
-      <el-table-column prop="name" label="Behavior Name" />
-      <el-table-column prop="description" label="Desc" />
+      <el-table-column prop="name" :label="$t('tip.name')" />
+      <el-table-column prop="description" :label="$t('tip.desc')" />
     </el-table>
   </el-row>
 </template>

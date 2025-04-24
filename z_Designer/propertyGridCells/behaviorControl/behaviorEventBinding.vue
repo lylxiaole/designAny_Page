@@ -11,38 +11,38 @@
     <el-col :span="18">
       <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
         <div style="background: #18aeb7; width: 6px; height: 26px"></div>
-        <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">Behavior List</span>
+        <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">{{$t('tip.behaviorList')}}</span>
         <el-button class="behavior-list-header-button"
           style="width: 140px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1); margin-left: 10px"
-          @click="toBehaviorList">Rerfence Behavior</el-button>
+          @click="toBehaviorList">{{$t('tip.RerfenceBehavior')}} </el-button>
       </div>
       <el-table :data="currentSelectedBehaviors" style="width: 100%" height="calc(100% - 30px)">
         <el-table-column fixed type="index" width="30" />
         <el-table-column type="selection" width="30" />
-        <el-table-column prop="name" label="Name" />
-        <el-table-column prop="description" label="Desc" />
-        <el-table-column label="Options" width="250px">
+        <el-table-column prop="name" :label="$t('tip.name')" />
+        <el-table-column prop="description" :label="$t('tip.desc')" />
+        <el-table-column width="250px" :label="$t('tip.options')">
           <template #default="{ row }">
             <el-button link type="primary" @click="
                 () => {
                   moveUpBehavior(row.id)
                 }
               ">
-              Move Up
+              {{$t('tip.MoveUp')}}
             </el-button>
             <el-button @click="
                 () => {
                   moveDownBehavior(row.id)
                 }
               " link type="primary">
-              Move Down
+              {{$t('tip.MoveDown')}}
             </el-button>
             <el-button @click="
                 () => {
                   removeBehavior(row.id)
                 }
               " link type="primary">
-              Remove
+              {{$t('tip.Remove')}}
             </el-button>
           </template>
         </el-table-column>
