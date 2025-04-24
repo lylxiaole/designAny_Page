@@ -2,7 +2,7 @@ import NProgress from 'nprogress' // progress bar
 import { ElMessage } from 'element-plus'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
-const whiteList = ['/login', '/auth-redirect', '/register'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect', '/register', '/viewPages'] // no redirect whitelist
 let currentRouter = null
 let currentStore = null
 // ***********************路由钩子处理*************************************

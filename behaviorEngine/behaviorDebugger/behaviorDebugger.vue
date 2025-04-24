@@ -17,7 +17,7 @@ import ComponentBase from '@common/views/ComponentBase'
 import behaviorList from './behaviorList.vue'
 import flowDebugger from './flowDebugger.vue'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
 
 @Options({
   components: { behaviorList, flowDebugger }
@@ -36,8 +36,8 @@ export default class behaviorDebugger extends ComponentBase {
     }
   }
 
-  private async onBehaviorChanged(behav: behavior) {
-    await this.setFlowData(behav, this.currentPage)
+  private async onBehaviorChanged(behav: behavior, container: EngineContainer) {
+    await this.setFlowData(behav, container as any)
   }
 
   @Emit('onEditBehavior')

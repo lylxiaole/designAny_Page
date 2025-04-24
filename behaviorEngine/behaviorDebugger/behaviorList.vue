@@ -1,15 +1,20 @@
 <template style="height: 100%; width: 100%">
   <el-row v-if="currentPage" style="height: 100%; background: #fff">
-    <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
-      <div style="background: #18aeb7; width: 6px; height: 26px"></div>
-      <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">{{$t('tip.behaviorList')}}</span>
-    </div>
 
     <div style="height: calc(100% - 30px); width: 100%; overflow-y: auto">
-      <el-radio-group v-model="checkedBehaviorId" @change="onSelectBehavior">
-        <el-radio v-for="beha in allBehaviors" :key="beha.id" :label="beha.id">
-          {{ beha.name }}
-        </el-radio>
+      <el-radio-group v-model="checkedBehaviorId" style="width:100%;display:block">
+        <div v-for="behag in allBehaviors()" :key="behag.groupName">
+          <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
+            <div style="background: #18aeb7; width: 6px; height: 26px"></div>
+            <span style="margin-left: 9px; float: left;font-size: 18px; font-weight: 600">{{behag.groupName}}</span>
+          </div>
+          <div style="padding-left:8px">
+            <el-radio v-for="(behav,index) in behag.behavLayouts" :key="index" :label="index+'&'+behav.behavior.id"
+              :model-value="index+'&'+behav.behavior.id" @change="(e)=>{onSelectBehavior(e,behag,index)}">
+              {{ behav.behavior.name }}
+            </el-radio>
+          </div>
+        </div>
       </el-radio-group>
     </div>
   </el-row>
@@ -19,15 +24,31 @@
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage, EngineContainer } from '@design-any/interface/dist/LayoutInterface'
+import { platform } from '@design-any/interface/dist'
+import { getLocale } from '@common/baseConfigs'
+
+class bgroup {
+  groupName: string
+  behavLayouts: behavLayout[]
+}
+class behavLayout {
+  layout: EngineContainer
+  behavior: behavior
+}
 
 @Options({
   components: {}
 })
 export default class behaviorList extends Vue {
   private checkedBehaviorId: string = ''
-  private allBehaviors: behavior[] = []
-
+  private allBehaviors(): bgroup[] {
+    if (!this.currentPage) {
+      return []
+    }
+    return this.cuteBehaviorGroup(this.currentPage)
+  }
+  // ********************************************
   @Prop({
     default: () => {
       return null
@@ -37,21 +58,44 @@ export default class behaviorList extends Vue {
 
   @Watch('currentPage', { immediate: true })
   private oncurrentPageChanged(val) {
-    if (!val) {
-      this.allBehaviors = []
-    } else {
-      this.allBehaviors = val.behaviors
-    }
     this.checkedBehaviorId = ''
-    this.onSelectBehavior(this.checkedBehaviorId)
+    this.onBehaviorChanged(null, null)
   }
-  private onSelectBehavior(id) {
-    let selectedb = this.allBehaviors.find((o) => o.id === id)
-    this.onBehaviorChanged(selectedb)
+
+  private cuteBehaviorGroup(page: EnginePage): bgroup[] {
+    let res: bgroup[] = []
+    //1*****
+    let pagegroup: bgroup = { groupName: getLocale().t('tip.PageBehavior'), behavLayouts: [] }
+    let pageBahaviors = this.currentPage.behaviors.filter((o) => o.platform === platform.page)
+    for (let index = 0; index < pageBahaviors.length; index++) {
+      const element = pageBahaviors[index]
+      pagegroup.behavLayouts.push({ layout: page, behavior: element })
+    }
+    res.push(pagegroup)
+    //2******
+    let dynamicLayoutBehaviors = this.currentPage.behaviors.filter((o) => o.platform === platform.dynamicLayout)
+    let dynamicGroup: bgroup = { groupName: getLocale().t('tip.DynamicBehavior'), behavLayouts: [] }
+
+    for (let index = 0; index < dynamicLayoutBehaviors.length; index++) {
+      const dynamicLayoutBehavior = dynamicLayoutBehaviors[index]
+      let dynamicpages = page.findDynamicLayoutsRecursion(dynamicLayoutBehavior.id)
+      dynamicpages.filter((o) => {
+        dynamicGroup.behavLayouts.push({ layout: o, behavior: dynamicLayoutBehavior })
+      })
+    }
+    res.push(dynamicGroup)
+    //
+    return res
+  }
+  // ********************************************
+  private onSelectBehavior(id: string, group: bgroup, behaviorIndex: number) {
+    let behavLayout = group.behavLayouts[behaviorIndex]
+    let findb = this.currentPage.behaviors.find((o) => o.id === behavLayout.behavior.id)
+    this.onBehaviorChanged(findb, behavLayout.layout)
   }
 
   @Emit('onBehaviorChanged')
-  private onBehaviorChanged(behav: behavior) {}
+  private onBehaviorChanged(behav: behavior, container: EngineContainer) {}
 }
 </script>
 

@@ -41,7 +41,6 @@ export default {
       qrCode: '条形码',
       codeText: '码内容',
       codeFormat: '格式',
-
       codeWidth: '码宽',
       codeHeight: '码高',
       displayText: '显示文字',
@@ -49,7 +48,6 @@ export default {
       codeTextPosition: '文字位置',
       codeTextMargin: '文字外边距',
       codeFontSize: '文字大小',
-
       codeVersion: '码版',
       codeErrorCorrectionLevel: '码等级',
       codeMaskPattern: '码图案',
@@ -57,18 +55,15 @@ export default {
       codeScale: '缩放',
       codeTextColor: '颜色',
       codeTextWhiteColor: '留白颜色',
-
       classicButton: '经典按钮',
       buttonText: '按钮文字',
       borderColor: '边框颜色',
       buttonIcon: '按钮图标',
-
       optionSetting: 'Option设置',
       value: '值',
       placeholder: '提示',
       readonly: '只读',
       textType: '文字类型',
-
       sidebarBg: '侧边背景色',
       menuColor: '导航栏颜色',
       menuHoverBg: '导航栏鼠标覆盖颜色',
@@ -76,7 +71,6 @@ export default {
       menuItemHeight: '导航栏高度',
       containerHeaderHeight: '内容高度',
       pageList: '页面列表',
-
       classicEChart: '基础EChart', //
       numberInput: '数字输入框',
       textInput: '文本输入框',
@@ -88,7 +82,6 @@ export default {
       timer: '计时器',
       borderRadius: '边框圆角',
       showBoxShadow: '显示阴影',
-
       selections: '选项',
       multiple: '多选',
       selectedVal: '选择值',
@@ -104,7 +97,6 @@ export default {
       dataTotalCount: '数据总量',
       getSelectedRows: '获取选择行',
       reloadData: '重载数据',
-
       fontWeight: '字体粗细',
       fontStyle: '斜体',
       verticalAlign: '纵向布局',
@@ -114,7 +106,6 @@ export default {
       tick: '计时时间',
       onTickTock: '计时触发',
       onClick: '点击时',
-
       InpParams: '入参',
       NoInParamsJustforConnect: '无入参,仅连接',
       OutParam: '出参',
@@ -124,11 +115,9 @@ export default {
       NextStep: '下一步',
       ReDo: '重新调试',
       EditBehavior: '编辑行为',
-
       State: '状态',
       WaitingExcute: '等待执行',
       ExcuteResult: '执行结果',
-
       Faild: '失败',
       ExcuteErrorMsg: '错误信息',
       Excuted: '已执行',
@@ -137,7 +126,11 @@ export default {
       FilterValue: '筛选值',
       Success: '成功',
       BehaviorBinding: '行为绑定',
-      BehaviorDebugger: '行为调试'
+      BehaviorDebugger: '行为调试',
+      SettingColumns: '列设置',
+      Setting: '设置',
+      DynamicBehavior: '动态行为',
+      PageBehavior: '页面行为'
     },
     opts: {
       delete: '删除',
@@ -169,7 +162,10 @@ export default {
       addBehavior: '添加行为',
       addPge: '新页面',
       addDialogPage: '新弹窗',
-      setDefaultPage: '设为默认页'
+      setDefaultPage: '设为默认页',
+
+      Yes: '是',
+      No: '否'
     },
     behav: {
       ParentLayoutMethod: '父页面方法',
@@ -240,7 +236,6 @@ export default {
       qrCode: 'QrCode',
       codeText: 'Code Text',
       codeFormat: 'Code Format',
-
       codeWidth: 'Code Width',
       codeHeight: 'Code Height',
       displayText: 'Display Text',
@@ -248,7 +243,6 @@ export default {
       codeTextPosition: 'CodeText Position',
       codeTextMargin: 'CodeText Margin',
       codeFontSize: 'Code FontSize',
-
       codeVersion: 'Code Version',
       codeErrorCorrectionLevel: 'Code ErrorCorrection Level',
       codeMaskPattern: 'Code MaskPattern',
@@ -256,18 +250,15 @@ export default {
       codeScale: 'Code Scale',
       codeTextColor: 'CodeText Color',
       codeTextWhiteColor: 'CodeText White Color',
-
       classicButton: 'Classic Button',
       buttonText: 'Button Text',
       borderColor: 'Border Color',
       buttonIcon: 'Button Icon',
-
       optionSetting: 'Option Setting',
       value: 'Value',
       placeholder: 'Placeholder',
       readonly: 'Readonly',
       textType: 'Text Type',
-
       sidebarBg: 'SidebarBg',
       menuColor: 'MenuColor',
       menuHoverBg: 'MenuHoverBg',
@@ -275,7 +266,6 @@ export default {
       menuItemHeight: 'MenuItemHeight',
       containerHeaderHeight: 'ContainerHeaderHeight',
       pageList: 'PageList',
-
       classicEChart: 'Classic EChart', //
       numberInput: 'NumberInput',
       textInput: 'TextInput',
@@ -287,7 +277,6 @@ export default {
       timer: 'Timer',
       borderRadius: 'BorderRadius',
       showBoxShadow: 'ShowBoxShadow',
-
       selections: 'Selections',
       multiple: 'Multiple',
       selectedVal: 'SelectedVal',
@@ -303,7 +292,6 @@ export default {
       dataTotalCount: 'Data TotalCount',
       getSelectedRows: 'GetSelectedRows',
       reloadData: 'Reload Data',
-
       fontWeight: 'FontWeight',
       fontStyle: 'FontStyle',
       verticalAlign: 'VerticalAlign',
@@ -313,19 +301,15 @@ export default {
       tick: 'Tick',
       onTickTock: 'onTickTock',
       onClick: 'OnClick',
-
       InpParams: 'InpParams',
       NoInParamsJustforConnect: 'No InParams,Just for Connect',
       OutParam: 'OutParam',
       NoOutParamJustforConnect: 'No OutParam,Just for Connect',
       Filter: 'Filter',
-
       NoFilter: 'No Filter',
-
       NextStep: 'Next Step',
       ReDo: 'ReDo',
       EditBehavior: 'Edit Behavior',
-
       State: 'State',
       WaitingExcute: 'Waiting Excute',
       ExcuteResult: 'Excute Result',
@@ -337,7 +321,11 @@ export default {
       FilterValue: 'Filter Value',
       Success: 'Success',
       BehaviorBinding: 'Behavior Binding',
-      BehaviorDebugger: 'Behavior Debugger'
+      BehaviorDebugger: 'Behavior Debugger',
+      SettingColumns: 'Setting Columns',
+      Setting: 'Setting',
+      DynamicBehavior: 'Dynamic Behavior',
+      PageBehavior: 'PageBehavior'
     },
     opts: {
       delete: 'Delete',
@@ -369,7 +357,10 @@ export default {
       addBehavior: 'Add Behavior',
       addPge: 'New Page',
       addDialogPage: 'New Dialog Page',
-      setDefaultPage: 'Set Default Page'
+      setDefaultPage: 'Set Default Page',
+
+      Yes: 'Yes',
+      No: 'No'
     },
     behav: {
       ParentLayoutMethod: 'Parent Layout Method',

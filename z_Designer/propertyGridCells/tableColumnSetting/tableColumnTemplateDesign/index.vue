@@ -95,7 +95,7 @@ export default class index extends PageBase {
     let designLayout: TableCellDesign = findPageByPaltform('tableCellDesign')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
 
-    await (vueComp as TableCellDesign).loadPageByData(data.id, data, platform.tableCell)
+    await (vueComp as TableCellDesign).loadPageByData(data.id, data, platform.dynamicLayout)
     ;(vueComp as TableCellDesign).name = ''
     ;(vueComp as TableCellDesign).left = 0
     ;(vueComp as TableCellDesign).top = 0

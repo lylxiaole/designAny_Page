@@ -48,7 +48,7 @@ export default class TableCell extends PageBase {
     // *****************************
     let designLayout: TableCellView = findPageByPaltform('tableCellView')
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
-    await (vueComp as TableCellView).loadPageByData(val.id, val, platform.tableCell)
+    await (vueComp as TableCellView).loadPageByData(val.id, val, platform.dynamicLayout)
     ;(vueComp as any).name = ''
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0

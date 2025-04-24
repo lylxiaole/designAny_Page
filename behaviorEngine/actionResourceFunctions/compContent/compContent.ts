@@ -9,7 +9,7 @@ import { isPromise } from '@vue/shared'
 
 import { getLocale } from '@common/baseConfigs'
 
-@resourceFuncAttr(getLocale().t('behav.ParentLayoutMethod'), '', funcGroup.resoucesInParentPage, funcCode.methodsInParentPage, platform.tableCell, [], null)
+@resourceFuncAttr(getLocale().t('behav.ParentLayoutMethod'), '', funcGroup.resoucesInParentPage, funcCode.methodsInParentPage, platform.dynamicLayout, [], null)
 export class methodsInParentPage implements actFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
@@ -49,7 +49,7 @@ export class methodsInParentPage implements actFuncBase {
   }
 }
 
-@resourceFuncAttr(getLocale().t('behav.ParentLayoutProperty'), '', funcGroup.resoucesInParentPage, funcCode.propertiesInParentPage, platform.tableCell, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
+@resourceFuncAttr(getLocale().t('behav.ParentLayoutProperty'), '', funcGroup.resoucesInParentPage, funcCode.propertiesInParentPage, platform.dynamicLayout, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
 export class propertiesInParentPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
@@ -75,7 +75,7 @@ export class propertiesInParentPage implements actFuncBase {
   }
 }
 
-@resourceFuncAttr(getLocale().t('behav.ParentLayoutBehavior'), '', funcGroup.resoucesInParentPage, funcCode.behaviorsInParentPage, platform.tableCell, [], null)
+@resourceFuncAttr(getLocale().t('behav.ParentLayoutBehavior'), '', funcGroup.resoucesInParentPage, funcCode.behaviorsInParentPage, platform.dynamicLayout, [], null)
 export class behaviorsInParentPage implements actFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout

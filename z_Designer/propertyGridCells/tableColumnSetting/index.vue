@@ -3,7 +3,7 @@
     <el-button type="primary" class="themeButton"
       style="width: 118px; height: 34px; background: rgba(124, 225, 170, 0.1); border-color: rgba(124, 225, 170, 0.1); border-radius: 4px; font-size: 14px; font-weight: 400; color: rgba(0, 0, 0, 1); line-height: 12px"
       @click="startEditTable" size="small">
-      Setting Columns
+      {{$t('tip.SettingColumns')}}
     </el-button>
 
     <el-dialog :maskClosable="false" title="Edit" v-model="windowVisible" :destroyOnClose="true" width="900px">
@@ -48,7 +48,8 @@
         <!-- ********************* -->
         <el-table-column prop="template" label="Column Template" width="80">
           <template #default="scope">
-            <el-button v-if="scope.row.type === 'template'" size="small" @click="() => settingColTemplate(scope.row.key)">Setting</el-button>
+            <el-button v-if="scope.row.type === 'template'" size="small"
+              @click="() => settingColTemplate(scope.row.key)">{{$t('tip.Setting')}}</el-button>
           </template>
         </el-table-column>
         <!-- ********************* -->
@@ -68,9 +69,9 @@
       </el-table>
       <template #footer>
         <div class="dialog-footer">
-          <el-button style="float: left" type="primary" @click="newParam" size="small">Add New</el-button>
-          <el-button @click="modalCancel" size="small">Cancel</el-button>
-          <el-button type="primary" @click="modalSure" size="small">Sure</el-button>
+          <el-button style="float: left" type="primary" @click="newParam" size="small">{{$t('opts.addNew')}}</el-button>
+          <el-button @click="modalCancel" size="small">{{$t('opts.cancel')}}</el-button>
+          <el-button type="primary" @click="modalSure" size="small">{{$t('opts.sure')}}</el-button>
         </div>
       </template>
     </el-dialog>

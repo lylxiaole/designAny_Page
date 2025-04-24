@@ -1,5 +1,6 @@
 <template>
-  <el-switch v-model="currentValue" active-text="Yes" inactive-text="No" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+  <el-switch v-model="currentValue" :active-text="$t('opts.Yes')" :inactive-text="$t('opts.No')" active-color="#13ce66"
+    inactive-color="#ff4949"></el-switch>
 </template>
 
 <script lang="ts">

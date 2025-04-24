@@ -48,6 +48,7 @@ import previewPage from '@/views/previewDialog/index.vue'
 import propertyGrid from '@/commonTool/propertyGrid.vue'
 import pagelist from '@/commonTool/pagelist.vue'
 import toolBar from './tooBar.vue'
+
 @Options({
   components: {
     pagelist: pagelist,

@@ -6,7 +6,7 @@
         <!-- <el-button type="primary">Add Breakpoint</el-button> -->
         <el-button type="primary" @click="nextStep">{{$t('tip.NextStep')}}</el-button>
         <el-button type="primary" @click="onReDo">{{$t('tip.ReDo')}}</el-button>
-        <el-button type="primary" @click="onEditBehavior(orginBehav)">{{$t('tip.EditBehavior')}}</el-button>
+        <el-button type="primary" @click="editBehaviorClick">{{$t('tip.EditBehavior')}}</el-button>
         <!-- <el-button type="primary">Next Point</el-button> -->
       </el-row>
       <!-- ***************************** -->
@@ -68,6 +68,7 @@ export default class flowDebugger extends ComponentBase {
       this.orginBehav = null
       this.currentFactory = null
       this.currentSelected = null
+      ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
       return
     }
 
@@ -82,7 +83,7 @@ export default class flowDebugger extends ComponentBase {
     // *****************************************
     behaviorContext.currentDesignPage = currentPage
     this.currentFactory = new factory(currentPage, currentPage, behav)
-
+    ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
     // **********清除行为运行状态**************************************
     for (let index = 0; index < behav.actObjs.length; index++) {
       const element = behav.actObjs[index]
@@ -132,7 +133,6 @@ export default class flowDebugger extends ComponentBase {
     this.onFlowCreated(this.currentFlow)
     this.clearNoUseEdge(this.currentFlow)
     // **********************************************
-    ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
     this.currentFactory.onActObjExcuted = this.onActObjExcuted
   }
 
@@ -181,8 +181,12 @@ export default class flowDebugger extends ComponentBase {
     this.currentSelected = data
   }
 
+  private editBehaviorClick() {
+    this.onEditBehavior(this.orginBehav, this.currentFactory.currentPage)
+  }
+
   @Emit('onEditBehavior')
-  private onEditBehavior(beha) {}
+  private onEditBehavior(beha, page) {}
 }
 </script>
 

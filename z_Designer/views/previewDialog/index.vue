@@ -27,7 +27,7 @@ import { ApplicationDC, GetApplication, applicationType } from '@common/apis/des
 
 import { findPageByPaltform } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 
-import { EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
+import { EngineContainer, EnginePage, SaveInfo } from '@design-any/interface/dist/LayoutInterface'
 import * as utils from '@design-any/interface/dist/utils'
 
 import { PCPagePreview, DialogPageDesign, DialogPageView } from '@designEngine/index'
@@ -96,9 +96,10 @@ export default class index extends PageBase {
   private async openPage(pageId: string, inparamVal: any) {
     let { virtualDom, vueComp } = await this.openPage_getVueComp(pageId)
     ;(vueComp as PCPagePreview).setPageInParam(inparamVal)
-    this.currentOpenEngine = vueComp as any
+
     await this.openPage_drawVueCom(virtualDom, vueComp)
     ;(vueComp as PCPagePreview).completedPageLoad()
+    this.currentOpenEngine = vueComp as any
   }
   /************************渲染页面*******************/
   private async openPage_getVueComp(pageId: string) {
@@ -151,13 +152,13 @@ export default class index extends PageBase {
     this.drawerShow = true
   }
   // *************重新编辑行为***********************
-  private async onEditBehavior(behav: behavior) {
+  private async onEditBehavior(behav: behavior, container: EnginePage) {
     try {
       let { virtualDom, vueComp } = await this.openPage_getVueComp(this.currentOpenEngine.Id)
       let pageengin = vueComp as EnginePage
       // **************************
       let findOrgain = pageengin.behaviors.find((o) => o.id === behav.id)
-      ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(findOrgain), this.currentOpenEngine, behav.platform)
+      ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(findOrgain), container, behav.platform)
       // **************************
       pageengin.destorymethod()
     } catch (error) {}
@@ -197,10 +198,11 @@ export default class index extends PageBase {
     //
     let page = vueComp as DialogPageView
     page.parentEngine = this.currentOpenEngine
-    this.currentOpenEngine = vueComp as any
     //
     $(this.$refs.renderArea).append(virtualDom)
     ;(vueComp as PCPagePreview).completedPageLoad()
+    //
+    this.currentOpenEngine = vueComp as any
     //
     page.$on('onLYLDestroyed', () => {
       this.currentOpenEngine = page.parentEngine
