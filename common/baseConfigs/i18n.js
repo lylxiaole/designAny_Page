@@ -61,6 +61,7 @@ export default {
       buttonIcon: '按钮图标',
       optionSetting: 'Option设置',
       value: '值',
+      key: '键',
       placeholder: '提示',
       readonly: '只读',
       textType: '文字类型',
@@ -262,6 +263,7 @@ export default {
       buttonIcon: 'Button Icon',
       optionSetting: 'Option Setting',
       value: 'Value',
+      key: 'Key',
       placeholder: 'Placeholder',
       readonly: 'Readonly',
       textType: 'Text Type',
@@ -338,7 +340,8 @@ export default {
       MoveDown: 'Move Down',
       Remove: 'Remove',
 
-      AllBehaviorsInPage: 'All Behaviors In Page'
+      AllBehaviorsInPage: 'All Behaviors In Page',
+      SureDelete: 'Sure Delete'
     },
     opts: {
       delete: 'Delete',

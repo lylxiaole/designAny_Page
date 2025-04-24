@@ -1,21 +1,22 @@
 <template>
-  <el-dialog ref="previewPopup" style="height: 400px; width: 600px; top: 100px" v-model="windowVisible" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+  <el-dialog ref="previewPopup" style="height: 400px; width: 600px; top: 100px" v-model="windowVisible" :close-on-click-modal="false"
+    :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
     <el-form :model="dictionary" label-width="120px">
-      <el-form-item label="Desc">
+      <el-form-item :label="$t('tip.desc')">
         <el-input v-model="dictionary.desc" />
       </el-form-item>
-      <el-form-item label="Key">
+      <el-form-item :label="$t('tip.key')">
         <el-input v-model="dictionary.key" />
       </el-form-item>
-      <el-form-item label="Value">
+      <el-form-item :label="$t('tip.value')">
         <el-input v-model="dictionary.value" />
       </el-form-item>
     </el-form>
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="onCancel">Cancel</el-button>
-        <el-button type="primary" @click="onSure">Sure</el-button>
+        <el-button @click="onCancel">{{$t('opts.cancel')}}</el-button>
+        <el-button type="primary" @click="onSure">{{$t('opts.sure')}}</el-button>
       </span>
     </template>
   </el-dialog>
