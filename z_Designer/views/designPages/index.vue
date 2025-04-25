@@ -119,8 +119,9 @@ export default class index extends PageBase {
   private async closePage(pageId: string) {
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
-      ;(this.openPageEngines[engineIndex] as PCPageDesign).closeDesign()
+      let designengine = this.openPageEngines[engineIndex]
       this.openPageEngines.splice(engineIndex, 1)
+      ;(designengine as PCPageDesign).closeDesign()
     }
 
     if (this.currentOpenPageId === pageId && this.openPageEngines.length > 0) {

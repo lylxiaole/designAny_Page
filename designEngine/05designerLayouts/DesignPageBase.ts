@@ -150,7 +150,7 @@ export default class DesignPageBase extends EnginePage {
   }
   private listenOnCut(e) {
     if (this.selectedChildren && this.selectedChildren.length > 0) {
-      DesignEvents.copyComp = this.selectedChildren[0] as EngineLayout
+      DesignEvents.copyComps = this.selectedChildren
       // this.$message.success('组件已剪切', 2)
       DesignEvents.isCut = true
       e.stopPropagation()
@@ -159,38 +159,45 @@ export default class DesignPageBase extends EnginePage {
   private listenOnCopy(e) {
     // window.console.log('listenOnCopy:', e)
     if (this.selectedChildren && this.selectedChildren.length > 0) {
-      DesignEvents.copyComp = this.selectedChildren[0] as EngineLayout
+      DesignEvents.copyComps = this.selectedChildren
       // this.$message.success('组件已复制', 2)
       DesignEvents.isCut = false
       e.stopPropagation()
     }
   }
   private async listenOnPaste(e) {
-    if (!DesignEvents.copyComp) {
+    if (!DesignEvents.copyComps) {
       return
     }
-    // window.console.log('onPaste_Event')
-    let compData = deepClone(await DesignEvents.copyComp.getSaveData())
-    if (DesignEvents.isCut) {
-      //剪切--删除原有组件
-      let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
-      parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
-    } else {
-      //复制操作需要给组件新Id
-      compData.id = getUuid()
+
+    for (let index = 0; index < DesignEvents.copyComps.length; index++) {
+      const copyComp = DesignEvents.copyComps[index]
+
+      let compData = deepClone(await copyComp.getSaveData())
+      if (DesignEvents.isCut) {
+        //剪切--删除原有组件
+        let parentLayout = copyComp.parentLayout as EngineContainer
+        parentLayout.removeChildRecursion(copyComp.Id)
+      } else {
+        //复制操作需要给组件新Id
+        compData.id = getUuid()
+      }
+      let compclass = findSystemCompByCode(compData.meta.compCode)
+      let newcopyComp = await this.insertComponentLayout(compclass, compData)
+
+      let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
+      //定位
+      let persentleft = (selfPosition.left + 5 / this.currentScaleSize) / $(this.renderCompArea).width() / this.currentScaleSize
+      newcopyComp.left = (persentleft * 100).toFixed(1) + '%'
+
+      let persenttop = (selfPosition.top + 5 / this.currentScaleSize) / $(this.renderCompArea).height() / this.currentScaleSize
+      newcopyComp.top = (persenttop * 100).toFixed(1) + '%'
+
+      this.chooseComp(newcopyComp)
     }
-    let compclass = findSystemCompByCode(compData.meta.compCode)
-    let newcopyComp = await this.insertComponentLayout(compclass, compData)
 
-    let selfPosition = $(newcopyComp.$el).offsetParent().position() //offsetParent是因为DesignShell中的蒙版
-    //定位
-    let persentleft = (selfPosition.left + 5 / this.currentScaleSize) / $(this.renderCompArea).width() / this.currentScaleSize
-    newcopyComp.left = (persentleft * 100).toFixed(1) + '%'
+    // window.console.log('onPaste_Event')
 
-    let persenttop = (selfPosition.top + 5 / this.currentScaleSize) / $(this.renderCompArea).height() / this.currentScaleSize
-    newcopyComp.top = (persenttop * 100).toFixed(1) + '%'
-
-    this.chooseComp(newcopyComp)
     e.stopPropagation()
   }
   // ******************************************************

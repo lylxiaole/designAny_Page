@@ -33,7 +33,7 @@ export default class DesignEvents {
   private _vueComp: EngineContainer
   public static isDraging: boolean = false
 
-  public static copyComp: EngineLayout
+  public static copyComps: EngineLayout[]
   public static isCut: boolean = false
 
   //是否正在设计
@@ -174,7 +174,6 @@ export default class DesignEvents {
     }
     var dragdata = this._dragHelper.getDragItemInfo(el) as DragItemData<any>
     let iscontinue = this.onDragMove_Event(xchanged, ychanged, mouseLeft, mouseTop, dragStartXtoTargetLeft, dragStartYtoTargetTop, el, dragdata)
-
     return iscontinue
   }
   private pri_onDragEnd = (el: Element) => {
@@ -290,10 +289,10 @@ export default class DesignEvents {
       //ctrl+v
       //  e.preventDefault()
       this.onPaste_Event(e)
-    } else if (keyCode == 90 && ctrlKey == true && this.onPaste_Event) {
+    } else if (keyCode == 90 && ctrlKey == true && this.onPreStep_Event) {
       this.onPreStep_Event(e)
       //ctrl+z
-    } else if (keyCode == 89 && ctrlKey == true && this.onPaste_Event) {
+    } else if (keyCode == 89 && ctrlKey == true && this.onNextStep_Event) {
       //ctrl+y
       this.onNextStep_Event(e)
     }
@@ -392,7 +391,7 @@ export default class DesignEvents {
   onKeyDown_Event: (e: Event) => void
   onCut_Event(e: Event) {
     if (this._vueComp.selectedChildren && this._vueComp.selectedChildren.length > 0) {
-      DesignEvents.copyComp = this._vueComp.selectedChildren[0] as EngineLayout
+      DesignEvents.copyComps = this._vueComp.selectedChildren as EngineLayout[]
       // this.$message.success('组件已剪切', 2)
       DesignEvents.isCut = true
       e.stopPropagation()
@@ -400,44 +399,46 @@ export default class DesignEvents {
   }
   onCopy_Event(e: Event) {
     if (this._vueComp.selectedChildren && this._vueComp.selectedChildren.length > 0) {
-      DesignEvents.copyComp = this._vueComp.selectedChildren[0] as EngineLayout
+      DesignEvents.copyComps = this._vueComp.selectedChildren as EngineLayout[]
       // this.$message.success('组件已复制', 2)
       DesignEvents.isCut = false
       e.stopPropagation()
     }
   }
   async onPaste_Event(e: Event) {
-    if (!DesignEvents.copyComp) {
+    if (!DesignEvents.copyComps) {
       return
     }
 
-    window.console.log('onPaste_Event')
-    let compData = deepClone(await DesignEvents.copyComp.getSaveData())
-
-    if (DesignEvents.isCut) {
-      //剪切--删除原有组件
-      let parentLayout = DesignEvents.copyComp.parentLayout as EngineContainer
-      parentLayout.removeChildRecursion(DesignEvents.copyComp.Id)
-    } else {
-      //复制操作需要给组件新Id
-      compData.id = getUuid()
-    }
-    let compclass = findSystemCompByCode(compData.meta.compCode)
-    //如果选中了一些容器类的子组件,就把当前组件复制到其中
-    let findchildren = this._vueComp.findSelectedLayoutsRecursion(this._vueComp.children)
-    let newcopyComp: EngineLayout = null
-    for (let index = 0; index < findchildren.length; index++) {
-      const element = findchildren[index]
-      if ((element as any).insertComponentLayout) {
-        newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData)
-        break
+    for (let index = 0; index < DesignEvents.copyComps.length; index++) {
+      const copyComp = DesignEvents.copyComps[index]
+      let compData = deepClone(await copyComp.getSaveData())
+      if (DesignEvents.isCut) {
+        //剪切--删除原有组件
+        let parentLayout = copyComp.parentLayout as EngineContainer
+        parentLayout.removeChildRecursion(copyComp.Id)
+      } else {
+        //复制操作需要给组件新Id
+        compData.id = getUuid()
       }
+      let compclass = findSystemCompByCode(compData.meta.compCode)
+      //如果选中了一些容器类的子组件,就把当前组件复制到其中
+      let findchildren = this._vueComp.findSelectedLayoutsRecursion(this._vueComp.children)
+      let newcopyComp: EngineLayout = null
+      for (let index = 0; index < findchildren.length; index++) {
+        const element = findchildren[index]
+        if ((element as any).insertComponentLayout) {
+          newcopyComp = await (element as EngineContainer).insertComponentLayout(compclass, compData)
+          break
+        }
+      }
+      // 如果没选中容器类的子组件, 就把当前组件复制到当前页面
+      if (!newcopyComp) {
+        newcopyComp = await this._vueComp.insertComponentLayout(compclass, compData)
+      }
+      newcopyComp.loadData(compData)
     }
-    // 如果没选中容器类的子组件, 就把当前组件复制到当前页面
-    if (!newcopyComp) {
-      newcopyComp = await this._vueComp.insertComponentLayout(compclass, compData)
-    }
-    newcopyComp.loadData(compData)
+
     e.stopPropagation()
   }
   onDelete_Event(e: Event) {
