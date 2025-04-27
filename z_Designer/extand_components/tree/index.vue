@@ -1,6 +1,10 @@
 <template>
-  <div style="width: 100%; height: 100%">
-
+  <div style="width: 100%; height: 100%" :style="{ background: backgroundCute  }">
+    <el-input v-if="isShowFilter" style="height:30px" v-model="filterText" placeholder="" />
+    <div :style="{height:treeHeight}" style="overflow-y:auto">
+      <el-tree ref="treeRef" class="filter-tree" :data="treeData" :props="defaultProps" default-expand-all :filter-node-method="filterNode"
+        :expand-on-click-node="false" @current-change="onCurrentChange" />
+    </div>
   </div>
 </template>
 
@@ -23,12 +27,61 @@ import { DMethodAttr } from '@design-any/interface/dist/LayoutAttr/MethodInfo'
 
 import platform from '@design-any/interface/dist/enums/platform'
 import { getLocale } from '@common/baseConfigs'
+import { Watch } from 'vue-property-decorator'
+import { toRaw } from 'vue'
 
 @DCompnentAttr(platform.page, getLocale().t('tip.basic'), getLocale().t('tip.classicTree'), 'Tree_001', require('../compIcons/简单树.png'))
 @Options({
   components: {}
 })
-export default class Index extends EngineComponent {}
+export default class Index extends EngineComponent {
+  private get backgroundCute(): string {
+    if (!this.background_img || this.background_img.length < 1) {
+      return this.background
+    }
+    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '")'
+  }
+  // **********搜索功能************************
+  private filterText: string = ''
+  @Watch('filterText')
+  private onFilterTextChanged(val) {
+    ;(this.$refs.treeRef as any).filter(val)
+  }
+  private filterNode(value: string, data: any) {
+    if (!value) return true
+    return data.label.includes(value)
+  }
+  // ***********属性**************************
+  private defaultProps: any = {
+    children: 'children',
+    label: 'label'
+  }
+
+  @DPropAttr(new JsonContent_Setting(getLocale().t('tip.treeData'), PropertyGroupName.data, true, null))
+  private treeData: any[] = []
+
+  @DPropAttr(new Boolean_Setting(getLocale().t('tip.showFilter'), PropertyGroupName.data, true, null))
+  private isShowFilter: boolean = true
+  // ****************************
+  private get treeHeight() {
+    if (this.isShowFilter) {
+      return 'calc(100% - 30px)'
+    } else {
+      return '100%'
+    }
+  }
+
+  private onCurrentChange(nodeData, node) {
+    this.onNodeSelected(toRaw(nodeData))
+  }
+  // ****************************************************
+  @DEventAttr({
+    eventName: getLocale().t('tip.onNodeSelected'),
+    inParams: [{ key: 'nodeData', name: 'nodeData' }],
+    hasOutParam: false
+  })
+  private onNodeSelected(nodeData) {}
+}
 </script>
 
 <style lang="less" scoped></style>

@@ -3,7 +3,8 @@
     <el-row style="width: 100%; height: 50%">
       <el-col :span="6">Layout:</el-col>
       <el-col :span="18">
-        <el-tree-select node-key="id" size="small" :check-on-click-node="true" check-strictly v-model="currentLayoutId" :data="allayouts" :render-after-expand="true" @check-change="onLayoutChange" default-expand-all />
+        <el-tree-select node-key="id" size="small" :check-on-click-node="true" check-strictly v-model="currentLayoutId" :data="allayouts"
+          :render-after-expand="true" @check-change="onLayoutChange" default-expand-all />
       </el-col>
     </el-row>
     <el-row style="width: 100%; height: 50%">
@@ -35,6 +36,8 @@ import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
   components: {}
 })
 export default class propertyInPageNode extends Vue {
+  @Prop()
+  private i18n: any
   @Prop()
   private actObj: actionObj
   @Prop()

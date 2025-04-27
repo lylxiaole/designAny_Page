@@ -37,6 +37,8 @@ import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 })
 export default class propertyInPageNode extends Vue {
   @Prop()
+  private i18n: any
+  @Prop()
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage

@@ -2,7 +2,8 @@
   <el-row style="width: 100%; height: 100%">
     <el-col>Func:</el-col>
     <el-col>
-      <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allFuncsTree" :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
+      <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allFuncsTree"
+        :render-after-expand="true" @check-change="onCurrentNodeChange" default-expand-all check-strictly />
     </el-col>
   </el-row>
 </template>
@@ -27,6 +28,8 @@ import excuteJS from '@common/components/commonComponents/funcstrExcute'
   components: {}
 })
 export default class JSFunc extends Vue {
+  @Prop()
+  private i18n: any
   @Prop()
   private actObj: actionObj
   @Prop()

@@ -1,5 +1,6 @@
 <template>
-  <el-row style="border: 1px solid #cdcdcd; width: 100%; height: 100%; box-sizing: border-box; background: #fff; position: relative; padding: 5px" class="topnodediv verticalAlignCenter flexHorilanLayout">
+  <el-row style="border: 1px solid #cdcdcd; width: 100%; height: 100%; box-sizing: border-box; background: #fff; position: relative; padding: 5px"
+    class="topnodediv verticalAlignCenter flexHorilanLayout">
     <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
       {{ actObj ? actObj.name : '' }}
     </el-row>
@@ -22,6 +23,7 @@ import 'element-plus/dist/index.css'
 
 import { HtmlNode, HtmlNodeModel } from '@logicflow/core'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
+import { getLocale } from '@common/baseConfigs'
 
 @Options({
   components: {}
@@ -76,7 +78,7 @@ export default class nodeDesignUI extends Vue {
     this.actObj = deepClone(actObj)
     let flowNodeVue = findFlowNodeInner(funcCode)
 
-    let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage })
+    let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage, i18n: getLocale().t })
 
     let app = createApp({
       render: () => r

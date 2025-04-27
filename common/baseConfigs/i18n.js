@@ -87,12 +87,14 @@ export default {
       multiple: '多选',
       selectedVal: '选择值',
       tableData: '表格数据',
+      treeData: '树数据',
       columns: '列',
       headersColor: '表头颜色',
       headerFontColor: '表头字体色',
       cellColor: '单元格颜色',
       cellFontColor: '单元格字体色',
       showPager: '显示分页组件',
+      showFilter: '显示搜索框',
       pageIndex: '当前页',
       pageSize: '页数据量',
       dataTotalCount: '数据总量',
@@ -147,7 +149,8 @@ export default {
       Display: '显示',
       ColumnTemplate: '列模板',
       onPageChange: '分页变化',
-      classicTree: '简单树'
+      classicTree: '简单树',
+      onNodeSelected: '节点选中'
     },
     opts: {
       delete: '删除',
@@ -299,12 +302,14 @@ export default {
       multiple: 'Multiple',
       selectedVal: 'SelectedVal',
       tableData: 'Table Data',
+      treeData: 'Tree Data',
       columns: 'Columns',
       headersColor: 'Headers Color',
       headerFontColor: 'Header FontColor',
       cellColor: 'Cell Color',
       cellFontColor: 'Cell FontColor',
       showPager: 'ShowPager',
+      showFilter: 'ShowFilter',
       pageIndex: 'PageIndex',
       pageSize: 'PageSize',
       dataTotalCount: 'Data TotalCount',
@@ -360,7 +365,8 @@ export default {
       Display: 'Display',
       ColumnTemplate: 'Column Template',
       onPageChange: 'onPageChange',
-      classicTree: 'Classic Tree'
+      classicTree: 'Classic Tree',
+      onNodeSelected: 'onNodeSelected'
     },
     opts: {
       delete: 'Delete',

@@ -1,6 +1,6 @@
 <template>
   <el-row style="width: 100%; height: 100%">
-    <el-col :span="6">Behavior Name:</el-col>
+    <el-col :span="6">{{i18n('tip.paramName')}}:</el-col>
     <el-col :span="18">
       <el-input v-model="actObj.resourceFilter.behaviorName" placeholder="Please Input Behavior Name" size="small" />
     </el-col>
@@ -25,6 +25,9 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
   components: {}
 })
 export default class behaviorInPageNode extends Vue {
+  @Prop()
+  private i18n: any
+
   @Prop()
   private actObj: actionObj
   @Prop()

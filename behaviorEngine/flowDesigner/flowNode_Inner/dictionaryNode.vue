@@ -26,6 +26,8 @@ import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 })
 export default class dictionaryNode extends Vue {
   @Prop()
+  private i18n: any
+  @Prop()
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
