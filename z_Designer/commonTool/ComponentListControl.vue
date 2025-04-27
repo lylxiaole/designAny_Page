@@ -9,7 +9,9 @@
     </el-col>
     <el-col :span="17">
       <div style="display: flex; flex-wrap: wrap">
-        <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" draggable="true" :dragType="dragType" :compName="item.name" :compCode="item.compCode" :platform="item.platform" style="width: 50px; height: 55px; background-color: transparent; border: none; text-align: center">
+        <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" draggable="true" :dragType="dragType" :compName="item.name"
+          :compCode="item.compCode" :platform="item.platform"
+          style="width: 50px; height: 55px; background-color: transparent; border: none; text-align: center">
           <div>
             <div style="width: 100%; height: 35px; text-align: center">
               <el-image style="font-size: 30px" draggable="false" :src="item.icon" />
@@ -53,10 +55,8 @@ export default class ComponentListControl extends Vue {
     if (!this.systemCompGroups) {
       return res
     }
-
     for (let index = 0; index < this.systemCompGroups.length; index++) {
       const element = deepClone(this.systemCompGroups[index]) as ComponentGroupInfo
-
       // element.components =
       res.push(element)
     }

@@ -8,27 +8,27 @@
 
     <el-dialog :maskClosable="false" title="Edit" v-model="windowVisible" :destroyOnClose="true" width="900px">
       <el-table size="small" :data="localData" :pagination="false" style="height: 450px" width="100%">
-        <el-table-column prop="title" label="Column Name" width="120">
+        <el-table-column prop="title" :label="$t('tip.ColumnName')" width="120">
           <template #default="scope">
             <el-input v-model="scope.row.title" size="small"></el-input>
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column prop="field" label="Filed" width="120">
+        <el-table-column prop="field" :label="$t('tip.Filed')" width="120">
           <template #default="scope">
             <el-input v-model="scope.row.field" size="small"></el-input>
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column prop="width" label="Width" width="120">
+        <el-table-column prop="width" :label="$t('tip.Width')" width="120">
           <template #default="scope">
             <el-input v-model="scope.row.width" size="small"></el-input>
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column prop="type" label="Column Type" width="120">
+        <el-table-column prop="type" :label="$t('tip.ColumnType')" width="120">
           <template #default="scope">
-            <el-select v-model="scope.row.type" placeholder="Select" size="small" style="width: 100%">
+            <el-select v-model="scope.row.type" placeholder="" size="small" style="width: 100%">
               <el-option key="0" label="Text" value="text" />
               <el-option key="1" label="Index" value="seq" />
               <el-option key="2" label="Check Box" value="checkbox" />
@@ -40,20 +40,20 @@
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column prop="isShow" label="Display" width="80">
+        <el-table-column prop="isShow" :label="$t('tip.Display')" width="80">
           <template #default="scope">
             <el-switch v-model="scope.row.isShow" size="small"></el-switch>
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column prop="template" label="Column Template" width="80">
+        <el-table-column prop="template" :label="$t('tip.ColumnTemplate')" width="80">
           <template #default="scope">
             <el-button v-if="scope.row.type === 'template'" size="small"
               @click="() => settingColTemplate(scope.row.key)">{{$t('tip.Setting')}}</el-button>
           </template>
         </el-table-column>
         <!-- ********************* -->
-        <el-table-column fixed="right" label="Options">
+        <el-table-column fixed="right" :label="$t('tip.options')">
           <template #default="scope">
             <el-icon style="margin: 0px 5px; cursor: pointer" @click="() => rowMoveDown(scope.row.key)">
               <Download />

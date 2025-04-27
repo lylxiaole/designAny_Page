@@ -137,7 +137,17 @@ export default {
       MoveUp: '上移',
       MoveDown: '下移',
       Remove: '删除',
-      AllBehaviorsInPage: '页面行为列表'
+      AllBehaviorsInPage: '页面行为列表',
+
+      SureDelete: '确定删除',
+      ColumnName: '列名',
+      Filed: '列字段',
+      Width: '宽度',
+      ColumnType: '列类型',
+      Display: '显示',
+      ColumnTemplate: '列模板',
+      onPageChange: '分页变化',
+      classicTree: '简单树'
     },
     opts: {
       delete: '删除',
@@ -341,7 +351,16 @@ export default {
       Remove: 'Remove',
 
       AllBehaviorsInPage: 'All Behaviors In Page',
-      SureDelete: 'Sure Delete'
+      SureDelete: 'Sure Delete',
+
+      ColumnName: 'Column Name',
+      Filed: 'Filed',
+      Width: 'Width',
+      ColumnType: 'Column Type',
+      Display: 'Display',
+      ColumnTemplate: 'Column Template',
+      onPageChange: 'onPageChange',
+      classicTree: 'Classic Tree'
     },
     opts: {
       delete: 'Delete',

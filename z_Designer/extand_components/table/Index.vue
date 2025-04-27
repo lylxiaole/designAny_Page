@@ -100,7 +100,7 @@ export default class Index extends EngineComponent {
   private dataTotalCount: number = 0
 
   @DEventAttr({
-    eventName: 'onPageChange',
+    eventName: getLocale().t('tip.onPageChange'),
     inParams: [
       { key: 'pageSize', name: 'PageSize' },
       { key: 'currentPage', name: 'PageIndex' }

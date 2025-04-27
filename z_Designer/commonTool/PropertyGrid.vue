@@ -1,16 +1,21 @@
 <template>
   <div style="overflow: hidden">
-    <el-radio-group @change="changeActivekey" v-model="selectGropName" size="small" class="flexHorilanLayout" style="box-sizing: border-box; height: 35px; border: 1px solid var(--el-border-color-light); width: 100%">
-      <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :value="group.groupName" style="text-align: center; text-overflow: ellipsis; white-space: nowrap">{{ group.groupName }}</el-radio-button>
+    <el-radio-group @change="changeActivekey" v-model="selectGropName" size="small" class="flexHorilanLayout"
+      style="box-sizing: border-box; height: 35px; border: 1px solid var(--el-border-color-light); width: 100%">
+      <el-radio-button v-for="group in propertyGroups" :key="group.groupName" :value="group.groupName"
+        style="text-align: center; text-overflow: ellipsis; white-space: nowrap">{{ group.groupName }}</el-radio-button>
     </el-radio-group>
     <!-- ************************************* -->
-    <div style="width: 100%; height: calc(100% - 120px); overflow-y: auto">
-      <el-row class="propertyGridRow" style="margin-top: 10px" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow" :key="propertyInfo.name" :disabled="propertyInfo.isEnable == false">
-        <el-col :span="6" style="margin-left: 16px; font-size: 13px; font-weight: 400; color: rgba(0, 0, 0, 0.65); font-size: 14px; word-wrap: break-word; word-break: break-all">
+    <div style="width: 100%; height: calc(100% - 35px); overflow-y: auto">
+      <el-row class="propertyGridRow" style="margin-top: 10px" v-for="propertyInfo in propertyDataCache" v-show="propertyInfo.isShow"
+        :key="propertyInfo.name" :disabled="propertyInfo.isEnable == false">
+        <el-col :span="6"
+          style="margin-left: 16px; font-size: 13px; font-weight: 400; color: rgba(0, 0, 0, 0.65); font-size: 14px; word-wrap: break-word; word-break: break-all">
           {{ propertyInfo.name }}
         </el-col>
         <el-col :span="15" style="margin-left: 4px; height: 100%">
-          <component :is="propertyInfo.comp" :property="propertyInfo.property" :application="application" :page="currentPage" :layouts="currentLayouts"></component>
+          <component :is="propertyInfo.comp" :property="propertyInfo.property" :application="application" :page="currentPage"
+            :layouts="currentLayouts"></component>
         </el-col>
       </el-row>
     </div>
@@ -107,7 +112,6 @@ export default class PropertyGrid extends Vue {
       this.propertyGroups = null
       return
     }
-
     //当前选中的Layouts
     var newlayouts_extra: EngineLayout[] = [] //临时变量
     if (newlayouts instanceof EngineLayout) {
@@ -115,7 +119,6 @@ export default class PropertyGrid extends Vue {
     } else {
       newlayouts_extra = newlayouts as EngineLayout[]
     }
-
     //当前选中的Layouts的properties
     var property_extra: PropertySetting[] = [] //临时变量
     /**用第一个布局的属性列表当作临时属性列表 */
@@ -124,7 +127,8 @@ export default class PropertyGrid extends Vue {
     }
     //筛选出可以合并设置的属性
     if (newlayouts_extra.length > 1) {
-      property_extra = property_extra.filter((o) => o.groupName === PropertyGroupName.style && o.propertyName !== 'Position')
+      // property_extra = property_extra.filter((o) => o.groupName === PropertyGroupName.style && o.propertyName !== 'Position')
+      property_extra = []
     }
 
     /**找出所有布局容器中公有的属性 */
@@ -133,7 +137,6 @@ export default class PropertyGrid extends Vue {
       let findlayoutProps = findlayout.properties
       property_extra.filter((o) => {
         var findproperty = findlayoutProps.find((p) => p.groupName === o.groupName && p.propertyName === o.propertyName)
-
         if (!findproperty) {
           property_extra.splice(property_extra.indexOf(o), 1)
         }
