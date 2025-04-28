@@ -5,7 +5,8 @@ const apiAddr = () => getConfigByName('apiAddr')
 
 export enum pageType {
   page = 0,
-  dialogPage = 1
+  dialogPage = 1,
+  customPage = 2 //自定义页面
 }
 export class DesignPageDC extends dataContactBase {
   appId: string

@@ -5,8 +5,10 @@
     <!-- <script type="text/javascript" src="./configs.js"></script>
     <script type="text/javascript" src="./assets/jquery.min.js"></script>
     <script type="text/javascript" src="./assets/FileSaver.min.js"></script>
-    <script type="text/javascript" src="./assets/xlsx.core.min.js"></script>
-    <script type="text/javascript" src="./assets/tableExport.min.js"></script> -->
+     -->
+
+    <script type="text/javascript" src="./assets/designany.extands.min.js"></script>
+    <link href="./assets/designany.extands.min.css" rel="stylesheet" type="text/css" />
 
     <title>
         Design Any
@@ -18,19 +20,14 @@
     <% } %>
 
     <link title="toptheme" href="./assets/common.css" rel="stylesheet" type="text/css" />
-
-
 </head>
 
 <body>
     <div style="width: 100%;height: 100%;overflow: hidden;" id="app"></div>
-
     <!--导入 Webpack 输出的 JavaScript 文件-->
     <% for (var chunk in htmlWebpackPlugin.files.js) { %>
     <script type="text/javascript" src="./<%=htmlWebpackPlugin.files.js[chunk] %>"></script>
     <% } %>
-
-
 </body>
 
 </html>

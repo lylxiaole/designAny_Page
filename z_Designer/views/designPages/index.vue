@@ -158,6 +158,9 @@ export default class index extends PageBase {
       case pageType.dialogPage:
         designLayout = findPageByPaltform('dialogPageDesign')
         break
+      case pageType.customPage:
+        designLayout = findPageByPaltform('dialogPageDesign')
+        break
       default:
         break
     }

@@ -184,7 +184,7 @@ export default {
       addPge: '新页面',
       addDialogPage: '新弹窗',
       setDefaultPage: '设为默认页',
-
+      addCustomPage: '添加自定义页面',
       Yes: '是',
       No: '否'
     },
@@ -401,7 +401,7 @@ export default {
       addPge: 'New Page',
       addDialogPage: 'New Dialog Page',
       setDefaultPage: 'Set Default Page',
-
+      addCustomPage: 'Add Custom Page',
       Yes: 'Yes',
       No: 'No'
     },

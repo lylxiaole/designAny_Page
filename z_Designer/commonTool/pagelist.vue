@@ -276,6 +276,7 @@ export default class index extends ComponentBase {
       this.rightMenus = [
         getLocale().t('opts.addPge'),
         getLocale().t('opts.addDialogPage'),
+        getLocale().t('opts.addCustomPage'),
         getLocale().t('opts.newGroup'),
         getLocale().t('opts.delete')
       ]
@@ -298,6 +299,9 @@ export default class index extends ComponentBase {
         iconString = '&#xe625;'
         break
       case getLocale().t('opts.addDialogPage'):
+        iconString = '&#xe625;'
+        break
+      case getLocale().t('opts.addCustomPage'):
         iconString = '&#xe625;'
         break
       case getLocale().t('opts.newGroup'): {
@@ -336,6 +340,9 @@ export default class index extends ComponentBase {
         break
       case getLocale().t('opts.addDialogPage'):
         this.addPage(pageType.dialogPage)
+        break
+      case getLocale().t('opts.addCustomPage'):
+        this.addCustomPage()
         break
       case getLocale().t('opts.newGroup'):
         this.addGroup()
@@ -391,27 +398,13 @@ export default class index extends ComponentBase {
     let parentGroupId = this.currentRightClickNode.id
     let datadc = this.searchNodeById(parentGroupId, this.treeData)
     let index = this.cuteChildrenMaxIndex(datadc) + 1
-    let pType = pagetype
-
-    switch (this.currentApplication.type) {
-      case applicationType.dashBoard:
-      case applicationType.report:
-        break
-
-      case applicationType.webSystem:
-        pType = pagetype
-        break
-
-      default:
-        break
-    }
 
     let res = await AddPage({
       name: getLocale().t('opts.addPge'),
       appId: this.currentApplication.id,
       parentGroupId: parentGroupId,
       index: index,
-      type: pType
+      type: pagetype
     } as any)
 
     let newnode: TreeNodeDC = {
@@ -423,9 +416,11 @@ export default class index extends ComponentBase {
       index: res.index,
       children: []
     }
-
     datadc.children.push(newnode)
   }
+  //TODO
+  private async addCustomPage() {}
+
   private async setDefaultPage() {
     let pageId = this.currentRightClickNode.id
 
