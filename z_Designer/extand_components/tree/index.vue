@@ -3,7 +3,7 @@
     <el-input v-if="isShowFilter" style="height:30px" v-model="filterText" placeholder="" />
     <div :style="{height:treeHeight}" style="overflow-y:auto">
       <el-tree ref="treeRef" class="filter-tree" :data="treeData" :props="defaultProps" default-expand-all :filter-node-method="filterNode"
-        :expand-on-click-node="false" @current-change="onCurrentChange" />
+        :expand-on-click-node="false" @current-change="onCurrentChange" node-key="id" :current-node-key="currentNodeKey" highlight-current />
     </div>
   </div>
 </template>
@@ -62,6 +62,13 @@ export default class Index extends EngineComponent {
 
   @DPropAttr(new Boolean_Setting(getLocale().t('tip.showFilter'), PropertyGroupName.data, true, null))
   private isShowFilter: boolean = true
+
+  @DPropAttr(new JsonContent_Setting(getLocale().t('tip.currentSelectedNodes'), PropertyGroupName.data, false, null))
+  private get currentSelectedNodes() {
+    let x = (this.$refs.treeRef as any).getCurrentNode()
+    return [x]
+  }
+
   // ****************************
   private get treeHeight() {
     if (this.isShowFilter) {
@@ -71,7 +78,10 @@ export default class Index extends EngineComponent {
     }
   }
 
+  private currentNodeKey: string = null
+
   private onCurrentChange(nodeData, node) {
+    this.currentNodeKey = nodeData.id
     this.onNodeSelected(toRaw(nodeData))
   }
   // ****************************************************

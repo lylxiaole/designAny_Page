@@ -9,6 +9,7 @@ import excuteJS from '@common/components/commonComponents/funcstrExcute'
 import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/designJSFunc'
 import platform from '@design-any/interface/dist/enums/platform'
 import { getLocale } from '@common/baseConfigs'
+import { isArray } from 'element-plus/es/utils'
 
 @resourceFuncAttr(getLocale().t('behav.Dictionary'), '', funcGroup.universalTool, funcCode.dictionary, platform.universal, [], { key: getUuid(), name: 'output' })
 export class dictionarys implements actFuncBase {
@@ -47,7 +48,12 @@ export class thirtyApis implements actFuncBase {
         body = inParam.val
       } else if (inParam.key.indexOf('&param') > -1) {
         let key = inParam.key.split('&')[1]
-        urlParam[key] = inParam.val
+        //
+        if (Array.isArray(inParam.val)) {
+          urlParam[key] = inParam.val.toString()
+        } else {
+          urlParam[key] = inParam.val
+        }
       } else if (inParam.key.indexOf('&header') > -1) {
         let key = inParam.key.split('&')[1]
         header[key] = inParam.val

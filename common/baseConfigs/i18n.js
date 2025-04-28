@@ -150,7 +150,8 @@ export default {
       ColumnTemplate: '列模板',
       onPageChange: '分页变化',
       classicTree: '简单树',
-      onNodeSelected: '节点选中'
+      onNodeSelected: '节点选中',
+      currentSelectedNodes: '当前选项'
     },
     opts: {
       delete: '删除',
@@ -366,7 +367,8 @@ export default {
       ColumnTemplate: 'Column Template',
       onPageChange: 'onPageChange',
       classicTree: 'Classic Tree',
-      onNodeSelected: 'onNodeSelected'
+      onNodeSelected: 'onNodeSelected',
+      currentSelectedNodes: 'Current Selected Nodes'
     },
     opts: {
       delete: 'Delete',
