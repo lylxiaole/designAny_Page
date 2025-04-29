@@ -1,15 +1,17 @@
 <template>
   <div>
-    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small" style="width: 82px; height: 24px; background: rgba(24, 183, 101, 1); border-radius: 2px; border: 1px solid rgba(12, 155, 81, 1); border-color: rgba(24, 183, 101, 1)">
+    <el-button class="themeButton" type="primary" @click="showUploadModal" size="small"
+      style="width: 82px; height: 24px; background: rgba(24, 183, 101, 1); border-radius: 2px; border: 1px solid rgba(12, 155, 81, 1); border-color: rgba(24, 183, 101, 1)">
       <img v-if="imageUrl" v-lazy="imageUrl" :width="15 + 'px'" :height="15 + 'px'" />
       <span>Setting</span>
     </el-button>
 
-    <el-dialog ref="previewPopup" title="Upload File" class="bhaviorDialog" style="height: 400px; width: 600px" v-model="windowVisible" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+    <el-dialog ref="previewPopup" title="Upload File" class="bhaviorDialog" style="height: 400px; width: 600px" v-model="windowVisible"
+      :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
       <!-- :before-close="onClose" -->
-
       <div style="height: calc(100% - 70px)">
-        <el-upload :action="uploadServerAddr" v-model:file-list="currentFileList" :headers="httpHeaders" :before-upload="beforeUpload" :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
+        <el-upload :action="uploadServerAddr" v-model:file-list="currentFileList" :headers="httpHeaders" :before-upload="beforeUpload"
+          :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
           <!-- ****上传文件的按钮************************************ -->
           <template v-if="currentFileList.length < maxFileLength" #default>
             <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">

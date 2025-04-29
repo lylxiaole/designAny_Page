@@ -31,6 +31,7 @@ export default {
       index: '序号',
       paramName: '参数名称',
       name: '名称',
+      type: '类型',
       desc: '描述',
       options: '操作',
       param: '参数',
@@ -151,7 +152,14 @@ export default {
       onPageChange: '分页变化',
       classicTree: '简单树',
       onNodeSelected: '节点选中',
-      currentSelectedNodes: '当前选项'
+      currentSelectedNodes: '当前选项',
+
+      extendsList: '拓展列表',
+      leadinExtend: '导入拓展',
+      uploadFile: '上传文件',
+
+      customPage: '自定义页面',
+      extendComp: '拓展组件'
     },
     opts: {
       delete: '删除',
@@ -165,6 +173,7 @@ export default {
       redo: '重做',
       debugger: '调试',
       components: '组件',
+      extends: '拓展',
       behaviors: '行为',
       zoomTool: '缩放工具',
       exit: '退出',
@@ -247,6 +256,7 @@ export default {
       index: 'Index',
       paramName: 'Param Name',
       name: 'Name',
+      type: 'Type',
       desc: 'Desc',
       options: 'Options',
       param: 'Param',
@@ -368,7 +378,14 @@ export default {
       onPageChange: 'onPageChange',
       classicTree: 'Classic Tree',
       onNodeSelected: 'onNodeSelected',
-      currentSelectedNodes: 'Current Selected Nodes'
+      currentSelectedNodes: 'Current Selected Nodes',
+
+      extendsList: 'Extends List',
+      leadinExtend: 'Lead In Extend',
+      uploadFile: 'Upload File',
+
+      customPage: 'Custon Page',
+      extendComp: 'Extend Component'
     },
     opts: {
       delete: 'Delete',
@@ -383,6 +400,7 @@ export default {
       debugger: 'Debugger',
       components: 'Components',
       behaviors: 'Behaviors',
+      extends: 'Extends',
       zoomTool: 'Zoom Tool',
       exit: 'Exit',
       addFromSwagger: 'Add From Swagger',

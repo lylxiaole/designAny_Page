@@ -20,6 +20,18 @@
       @mouseup="onPreView" />
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
+
+      <el-tooltip placement="bottom" effect="light" popper-class="designtooltip"
+        :overlayStyle="{ maxWidth: '20000px', background: '#e0e4ea', backgroundColor: '#e0e4ea' }">
+        <template #content>
+          <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
+            <foreExtandsManage style="width: 100%; height: 100%" @onLeadInExtend="onLeadInExtend" />
+          </div>
+        </template>
+        <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon"
+          :label="$t('opts.extends')" />
+      </el-tooltip>
+
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip"
         :overlayStyle="{ maxWidth: '20000px', background: '#e0e4ea', backgroundColor: '#e0e4ea' }">
         <template #content>
@@ -55,6 +67,7 @@
     </div>
 
     <behaviorDesigner ref="behaviorDesigner" />
+    <addExtendsDialog ref="addExtendsDialog" />
   </div>
 </template>
 
@@ -63,6 +76,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { EnginePage, EngineComponent, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import componentListControl from '@/commonTool/componentListControl.vue'
+
 import optionBtn from '@/commonTool/optionBtn.vue'
 import {
   saveIcon,
@@ -81,12 +95,17 @@ import behaviorList from '@/commonTool/behaviorList.vue'
 import behaviorDesigner from '@behaviorEngine/behaviorDesigner/behaviorDesigner.vue'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
+import foreExtandsManage from '@/commonTool/foreExtendsManage/foreExtandsManage.vue'
+import addExtendsDialog from '@/commonTool/foreExtendsManage/addExtendsDialog.vue'
+
 @Options({
   components: {
     componentListControl,
     optionBtn,
     behaviorList,
-    behaviorDesigner
+    behaviorDesigner,
+    foreExtandsManage,
+    addExtendsDialog
   }
 })
 export default class tooBar extends Vue {
@@ -141,7 +160,6 @@ export default class tooBar extends Vue {
 
   created() {}
   public savePage() {
-    window.console.log('savePage:', this.currentPage)
     if (!this.currentPage) {
       return
     }
@@ -168,7 +186,9 @@ export default class tooBar extends Vue {
     ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage, this.platform)
   }
   //************导入插件********************************************************
-  private leadinPlugin() {}
+  private onLeadInExtend() {
+    ;(this.$refs.addExtendsDialog as any).show()
+  }
   /*************定制化控制项************************************************************************ */
   private async onQuit() {
     this.$router.push('/designApplications')
