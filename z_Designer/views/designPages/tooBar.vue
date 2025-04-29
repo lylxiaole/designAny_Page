@@ -25,10 +25,10 @@
         :overlayStyle="{ maxWidth: '20000px', background: '#e0e4ea', backgroundColor: '#e0e4ea' }">
         <template #content>
           <div style="width: 467px; height: 357px; background: #e0e4ea; padding: 5px 11px">
-            <foreExtandsManage style="width: 100%; height: 100%" @onLeadInExtend="onLeadInExtend" />
+            <foreExtandsManage ref="foreExtandsManage" style="width: 100%; height: 100%" @onLeadInExtend="onLeadInExtend" />
           </div>
         </template>
-        <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon"
+        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon"
           :label="$t('opts.extends')" />
       </el-tooltip>
 
@@ -67,7 +67,7 @@
     </div>
 
     <behaviorDesigner ref="behaviorDesigner" />
-    <addExtendsDialog ref="addExtendsDialog" />
+    <addExtendsDialog ref="addExtendsDialog" @onLeadInSuccess="onLeadInExtendsSuccess" />
   </div>
 </template>
 
@@ -189,6 +189,11 @@ export default class tooBar extends Vue {
   private onLeadInExtend() {
     ;(this.$refs.addExtendsDialog as any).show()
   }
+
+  private onLeadInExtendsSuccess() {
+    ;(this.$refs.foreExtandsManage as any)?.refreshdata()
+  }
+
   /*************定制化控制项************************************************************************ */
   private async onQuit() {
     this.$router.push('/designApplications')

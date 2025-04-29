@@ -22,11 +22,11 @@
               <span>{{ index + 1 }}</span>
             </el-col>
             <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
-              <editableText v-model:value="extandfile.name" />
+              <span>{{ extandfile.name }}</span>
             </el-col>
             <el-col style="display: flex" class="flexHorilanLayout verticalAlignCenter" :span="11">
               <!-- ****************************** -->
-              <el-button size="small" @click="deleteExtendFile(extandfile)" type="link">{{$t('opts.delete')}}</el-button>
+              <el-button size="small" @click="deleteExtendFile(extandfile.id)" type="link">{{$t('opts.delete')}}</el-button>
               <!-- ****************************** -->
             </el-col>
           </el-row>
@@ -42,6 +42,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { ExtandFile, addExtandFile, getAllExtandFiles, deleteExtandFile } from '@common/apis/designForeExtands'
 import uploadFile from './uploadFile.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 @Options({ components: { uploadFile } })
 export default class foreExtandsManage extends Vue {
@@ -51,8 +52,18 @@ export default class foreExtandsManage extends Vue {
     this.refreshdata()
   }
 
-  private async refreshdata() {
+  public async refreshdata() {
     this.allExtendsFiles = await getAllExtandFiles()
+  }
+
+  public async deleteExtendFile(id) {
+    try {
+      await deleteExtandFile(id)
+      await this.refreshdata()
+      ElMessage.success('插件删除成功,刷新页面后奏效！')
+    } catch (error: any) {
+      ElMessage.error(error.message)
+    }
   }
   // *********************************************************
 

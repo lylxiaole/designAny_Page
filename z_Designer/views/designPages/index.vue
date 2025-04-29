@@ -48,6 +48,7 @@ import previewPage from '@/views/previewDialog/index.vue'
 import propertyGrid from '@/commonTool/propertyGrid.vue'
 import pagelist from '@/commonTool/pagelist.vue'
 import toolBar from './tooBar.vue'
+import { loadExtends } from '@common/apis/designForeExtands'
 
 @Options({
   components: {
@@ -60,20 +61,24 @@ import toolBar from './tooBar.vue'
   }
 })
 export default class index extends PageBase {
-  // **********当前应用**********************************************************
+  // **********当前应用*******************
   private applicationId: string = null
   private application: ApplicationDC = null
   mounted() {
     this.applicationId = this.$route.query.appId as string
-    GetApplication(this.applicationId).then((res) => {
-      this.application = res
-    })
     $(window).on('keydown', this._onKeyDown)
+    this.initApplication()
   }
+
+  private async initApplication() {
+    await loadExtends()
+    this.application = await GetApplication(this.applicationId)
+  }
+
   unmounted() {
     $(window).off('keydown', this._onKeyDown)
   }
-  // **********当前应用的页面**********************************************************
+  // **********当前应用的页面*************
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
   //所有打开的页面的引擎

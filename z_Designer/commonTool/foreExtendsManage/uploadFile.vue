@@ -1,36 +1,18 @@
 <template>
-  <div>
-    <el-upload v-model:file-list="currentFileList" :headers="httpHeaders" :before-upload="beforeUpload" :on-success="handleUploadSuccess"
-      :on-error="handleUploadError" :accept="fileTypes" :limit="maxFileLength" list-type="picture-card">
-      <!-- ****上传文件的按钮************************************ -->
-      <template v-if="currentFileList.length < maxFileLength" #default>
-        <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">
-          <el-icon class="avatar-uploader-icon">
-            <Plus />
-          </el-icon>
+  <div style="width:100%;height:100%">
+    <el-upload :file-list="fileList" :on-change="onFileChanged" :on-success="handleUploadSuccess" :on-error="handleUploadError" :accept="fileTypes"
+      :limit="maxFileLength" list-type="text" :auto-upload="false" multiple>
+
+      <template #trigger>
+        <el-button type="primary">select file</el-button>
+      </template>
+
+      <template v-if="fileList.length >= maxFileLength" #tip>
+        <div class="el-upload__tip">
+          The maximum number of uploads has been reached
         </div>
       </template>
-      <template v-else #default>
-        <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">The maximum number of uploads has been reached</div>
-      </template>
-      <!-- ****已上传文件************************************ -->
-      <template #file="{ file }">
-        <div>
-          <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-          <span class="el-upload-list__item-actions">
-            <span class="el-upload-list__item-preview" @click="handlePreview(file)">
-              <el-icon class="avatar-uploader-icon">
-                <ZoomIn />
-              </el-icon>
-            </span>
-            <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-              <el-icon class="avatar-uploader-icon">
-                <Delete />
-              </el-icon>
-            </span>
-          </span>
-        </div>
-      </template>
+
     </el-upload>
   </div>
 </template>
@@ -44,14 +26,7 @@ import { getUuid, deepClone, BuildingFileUrlForShow } from '@common/utils'
 import { Delete, Plus, ZoomIn } from '@element-plus/icons-vue'
 
 import { getConfigByName } from '@common/baseConfigs'
-const apiAddr = () => getConfigByName('apiAddr')
-export class fileInfo {
-  uid: string = 'uid' // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
-  name: string
-  get url(): string {
-    return BuildingFileUrlForShow(this.uid)
-  }
-}
+
 @Options({
   components: {
     Plus,
@@ -60,35 +35,12 @@ export class fileInfo {
   }
 })
 export default class uploadFile extends Vue {
-  @Prop() private fileList: fileInfo[]
+  @Prop() private fileList: any[]
   @Prop() private maxFileLength: number
   @Prop() private fileType: string
-  @Prop() private upLoadSize: number
 
   @Emit('update:fileList')
-  UpdateFileList_Inner(flist: fileInfo[]) {}
-
-  get currentFileList(): fileInfo[] {
-    if (!this.fileList) {
-      return []
-    }
-    var files: fileInfo[] = []
-    this.fileList.filter((o) => {
-      var info = new fileInfo()
-      info.uid = o.uid
-      info.name = o.name
-      files.push(info)
-    })
-    return files
-  }
-
-  get uploadDisable(): boolean {
-    if (this.currentFileList.length < this.maxFileLength) {
-      return false
-    } else {
-      return true
-    }
-  }
+  UpdateFileList_Inner(flist: any[]) {}
 
   get fileTypes(): string {
     if (this.fileType == 'vectorgraph') {
@@ -121,20 +73,21 @@ export default class uploadFile extends Vue {
 
     filesclone.push(newfileinfo)
     this.UpdateFileList_Inner(filesclone)
-    window.console.log('handleUploadSuccess:', response)
   }
 
   handleUploadError(file: any) {
     window.console.log('handleUploadError:', file)
   }
-  beforeUpload(file: any, fileList: any[]) {
-    // window.console.log('beforeUpload:', file)
-    const isUpLoadSize = file.size / 1024 / 1024 < this.upLoadSize
-    if (!isUpLoadSize) {
-      alert('file must smaller than ' + this.upLoadSize + 'MB!')
-      return false
+  onFileChanged(file: any, fileList: any[]) {
+    let res = []
+    for (let index = 0; index < fileList.length; index++) {
+      const file = fileList[index]
+      let find = res.find((o) => o.size === file.size && o.name === file.name)
+      if (!find) {
+        res.push(file)
+      }
     }
-    return true
+    this.UpdateFileList_Inner(res)
   }
   // *****************************************************
 }

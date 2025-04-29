@@ -21,7 +21,8 @@ import applicationContext from '@designEngine/01designerContext/context'
 
 import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@common/apis/designPage'
 import { pageEmitter } from '@common/utils/eventBus'
-import { valHooks } from 'jquery'
+
+import { loadExtends } from '@common/apis/designForeExtands'
 
 @Options({
   components: {
@@ -48,9 +49,9 @@ export default class index extends PageBase {
     pageEmitter.off('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
     pageEmitter.off('onPopupPage', this.onPopupPage)
   }
-
   // ***********加载数据*************************
   private async initApplication() {
+    await loadExtends()
     this.allPageSimples = []
     this.application = await GetApplication(this.applicationId)
     let pageTree = await GetApplicationPages(this.application.id)
