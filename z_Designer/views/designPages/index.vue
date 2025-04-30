@@ -71,15 +71,13 @@ export default class index extends PageBase {
   }
 
   private async initApplication() {
-    window.setInterval(() => {
-      loadExtends()
+    await loadExtends()
 
-      console.log('Vue status:', {
-        version: (window as any).Vue?.version,
-        components: (window as any).dabc,
-        interface: (window as any).DesignAnyInterface
-      })
-    }, 3000)
+    console.log('Vue status:', {
+      version: (window as any).Vue?.version,
+      components: (window as any).DesignanyExtands,
+      interface: (window as any).DesignAnyInterface
+    })
 
     this.application = await GetApplication(this.applicationId)
   }
