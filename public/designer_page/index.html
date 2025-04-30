@@ -2,23 +2,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- <script type="text/javascript" src="./configs.js"></script>
-    <script type="text/javascript" src="./assets/jquery.min.js"></script>
-    <script type="text/javascript" src="./assets/FileSaver.min.js"></script>
-     -->
-
-    <!-- <script type="text/javascript" src="./assets/designany.extands.min.js"></script>
-    <link href="./assets/designany.extands.min.css" rel="stylesheet" type="text/css" /> -->
 
     <title>
         Design Any
     </title>
-    <script type="text/javascript" src="./configs.js"></script>
 
+
+    <script src="./assets/vue.js"></script>
+    <script src="./assets/designany.interface.min.js"></script>
+
+
+    <script type="text/javascript" src="./configs.js"></script>
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="./<%=htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" type="text/css" />
     <% } %>
-
     <link title="toptheme" href="./assets/common.css" rel="stylesheet" type="text/css" />
 </head>
 

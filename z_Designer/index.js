@@ -1,4 +1,10 @@
 import { createApp } from 'vue'
+// import { Vue } from 'vue'
+// window.Vue = Vue
+// import DesignAnyInterface from '@design-any/interface/dist/index'
+// window.DesignAnyInterface = DesignAnyInterface
+
+// **************************************************************************
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig, getLocale } from '@common/baseConfigs'
 import registerRouteHook from './utils/routerHook'

@@ -35,6 +35,22 @@ export async function deleteExtandFile(id: string): Promise<boolean> {
 }
 
 export async function loadExtends() {
+  if (!(window as any).Vue) {
+    console.error('Vue 3 must be loaded before the component library!')
+    return
+  }
+
+  if (!(window as any).Vue.defineComponent) {
+    console.error('Vue version incompatible. Required Vue 3.x')
+    return
+  }
+
+  if (!(window as any).DesignAnyInterface) {
+    console.error('DesignAnyInterface not found. Using fallback...')
+    return
+    ;(window as any).DesignAnyInterface = require('@design-any/interface')
+  }
+  // ******************************************
   let allfiles = await getAllExtandFiles()
 
   let filepaths = []
