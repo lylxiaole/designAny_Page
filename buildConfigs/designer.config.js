@@ -193,7 +193,9 @@ let baseconfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      'window.jQuery': 'jquery'
+      'window.jQuery': 'jquery',
+      'window.DesignAnyInterface': '@design-any/interface',
+      'window.Vue': 'vue'
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',

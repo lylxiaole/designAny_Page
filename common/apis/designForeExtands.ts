@@ -47,7 +47,7 @@ export async function loadExtends() {
       }
     })
   }
-
+  //
   for (let index = 0; index < filepaths.length; index++) {
     const path = apiAddr() + filepaths[index]
     if (filepaths[index].indexOf('.js') > -1) {
@@ -61,7 +61,6 @@ export async function loadExtends() {
     if (filepaths[index].indexOf('.css') > -1) {
       var link = document.createElement('link')
       link.href = path
-      link.type = 'text/css'
       link.rel = 'stylesheet'
       document.body.appendChild(link)
     }
