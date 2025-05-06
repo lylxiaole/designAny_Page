@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 8px; width: 100%; height: 100%; box-sizing: border-box" class="">
     <div style="height: 50px">
-      <el-button type="primary" style="margin-left:600px" @click="onSureHandle">{{$t('opts.sure')}} </el-button>
+      <!-- <el-button type="primary" style="margin-left:600px" @click="onSureHandle">{{$t('opts.sure')}} </el-button> -->
     </div>
     <el-form :model="currentApi" label-width="150px" style="height: calc(100% - 50px); overflow-y: auto">
       <el-form-item :label="$t('tip.description')">
@@ -73,7 +73,7 @@ export default class apiDetail extends ComponentBase {
 
   mounted() {}
 
-  private async onSureHandle() {
+  public async onSureHandle() {
     let x = this.currentApi
     let res = await AddOrUpdateAPI(x)
     if (res) {

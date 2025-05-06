@@ -1,12 +1,11 @@
 <template>
   <div style="padding: 8px; width: 100%; height: 100%; box-sizing: border-box" class="">
     <div style="height: 50px">
-      <el-button type="primary" style="margin-left:600px" @click="onSureHandle">{{$t('opts.sure')}}</el-button>
+      <!-- <el-button type="primary" style="margin-left:600px" @click="onSureHandle">{{$t('opts.sure')}}</el-button> -->
     </div>
     <div style="width: 100%; height: calc(100% - 50px)">
       <lylJSEditor ref="lylJSEditor" />
     </div>
-
   </div>
 </template>
 
@@ -34,7 +33,7 @@ export default class funcDetail extends ComponentBase {
 
   mounted() {}
 
-  private async onSureHandle() {
+  public async onSureHandle() {
     this.currentFunc.content = (this.$refs.lylJSEditor as lylJSEditor).getValue()
     try {
       let excutejs = new excuteJS(this.currentFunc.content)

@@ -1,8 +1,23 @@
 <template>
-  <div style="height: 100%; width: 100%; position: relative">
-    <apiList @onChooseApi="onChooseApi" style="width: 250px; height: 100%; float: left" />
-    <apiDetail v-if="currentApiContent" :currentApi="currentApiContent" ref="apiDetail" :allDictorys="allDictorys" style="width: calc(100% - 250px); height: 100%; float: left" />
-  </div>
+  <el-dialog v-model="dialogFormVisible" title="Http接口管理" style="width:95%;height:90%;margin: 0px;" append-to-body :destroyOnClose="true"
+    :close-on-click-modal="false" :close-on-press-escape="false">
+    <div style="height: calc(100% - 60px); width: 100%; position: relative">
+      <apiList @onChooseApi="onChooseApi" style="width: 350px; height: 100%; float: left" />
+      <apiDetail v-if="currentApiContent" :currentApi="currentApiContent" ref="apiDetail" :allDictorys="allDictorys"
+        style="width: calc(100% - 350px); height: 100%; float: left" />
+    </div>
+    <template #footer>
+      <div class="verticalAlignCenter flexHorilanLayout" style="width:100%;height:60px">
+        <el-button @click="dialogFormVisible = false">{{$t('opts.cancel')}}</el-button>
+        <!-- <el-button type="primary" @click="onSureUpload">
+          {{$t('opts.sure')}}
+        </el-button> -->
+        <el-button type="primary" @click="onSave">
+          {{$t('opts.save')}}
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -23,12 +38,15 @@ import { GetAll } from '@common/apis/designDictionary'
 export default class index extends PageBase {
   private currentApiContent: ThirtyApiDC = null
   private allDictorys: any[] = []
-  mounted() {
+  private dialogFormVisible: boolean = false
+  // **************************************************
+  public show() {
+    this.dialogFormVisible = true
     GetAll().then((res) => {
       this.allDictorys = res
     })
   }
-  activated() {}
+  // **************************************************
   private async onChooseApi(apiId) {
     if (!apiId) {
       this.currentApiContent = null
@@ -44,9 +62,10 @@ export default class index extends PageBase {
         this.currentApiContent.inParams = []
       }
     }
-
-    // await this.$nextTick()
-    // ;(this.$refs.apiDetail as apiDetail).setApiContent(this.currentApiContent)
+  }
+  /************************** */
+  private onSave() {
+    ;(this.$refs.apiDetail as any).onSureHandle()
   }
 }
 </script>

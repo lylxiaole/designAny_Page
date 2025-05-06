@@ -1,8 +1,10 @@
 <template>
   <div style="height:100%;width:100%;position:relative">
-    <apiList @onChooseApi="onChooseApi" style="width:250px;height:100%;float:left" />
+    <!-- <apiList @onChooseApi="onChooseApi" style="width:250px;height:100%;float:left" />
 
-    <apiDetail :currentApiContent="currentApiContent" style="width:calc(100% - 250px);height:100%;float:left" />
+    <apiDetail :currentApiContent="currentApiContent" style="width:calc(100% - 250px);height:100%;float:left" /> -->
+
+    正在开发......
   </div>
 </template>
 

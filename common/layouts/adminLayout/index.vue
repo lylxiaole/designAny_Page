@@ -7,7 +7,6 @@
       <div style="height:calc(100% - 30pt);width:100%;overflow:hidden">
         <app-main style="width:100%;height:100%;overflow:hidden" />
       </div>
-
     </div>
   </div>
 </template>

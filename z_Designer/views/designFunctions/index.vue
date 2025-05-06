@@ -1,9 +1,20 @@
 <template>
-  <div style="height:100%;width:100%;position:relative">
-    <funcList @onChooseFunc="onChooseFunc" style="width:250px;height:100%;float:left" />
-    <funcDetail v-show="currentFuncContent" :currentFunc="currentFuncContent" ref="funcDetail"
-      style="width:calc(100% - 250px);height:100%;float:left" />
-  </div>
+  <el-dialog v-model="dialogFormVisible" title="JS方法管理" style="width:95%;height:90%;margin: 0px;" append-to-body :destroyOnClose="true"
+    :close-on-click-modal="false" :close-on-press-escape="false">
+    <div style="height: calc(100% - 60px);width:100%;position:relative">
+      <funcList @onChooseFunc="onChooseFunc" style="width:350px;height:100%;float:left" />
+      <funcDetail v-show="currentFuncContent" :currentFunc="currentFuncContent" ref="funcDetail"
+        style="width:calc(100% - 350px);height:100%;float:left" />
+    </div>
+    <template #footer>
+      <div class="verticalAlignCenter flexHorilanLayout" style="width:100%;height:60px">
+        <el-button @click="dialogFormVisible = false">{{$t('opts.cancel')}}</el-button>
+        <el-button type="primary" @click="onSave">
+          {{$t('opts.save')}}
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -21,9 +32,16 @@ import funcDetail from './funcDetail.vue'
   }
 })
 export default class index extends PageBase {
-  private currentFuncContent: JSFuncEntity = null
+  private dialogFormVisible: boolean = false
+  // ****************************************************
   mounted() {}
   activated() {}
+
+  public show() {
+    this.dialogFormVisible = true
+  }
+  // ****************************************************
+  private currentFuncContent: JSFuncEntity = null
   private async onChooseFunc(funcId) {
     if (!funcId) {
       this.currentFuncContent = null
@@ -35,6 +53,11 @@ export default class index extends PageBase {
     }
 
     ;(this.$refs.funcDetail as funcDetail).setCurrentFunc(this.currentFuncContent)
+  }
+
+  /************************** */
+  private onSave() {
+    ;(this.$refs.funcDetail as any).onSureHandle()
   }
 }
 </script>

@@ -18,9 +18,17 @@
 
     <optionBtn :style="{ height: height + 'px', width: '80px' }" style="margin-left: 15px" :enableIcon="previewIcon" :label="$t('opts.debugger')"
       @mouseup="onPreView" />
-    <!-- *************************************************************************** -->
-    <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
 
+    <!-- *****************************  -->
+    <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
+      <!-- *****************************  -->
+      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 80px" @mouseup="openHttpApiM" :enableIcon="componentsIcon"
+        :label="'Http接口'" />
+      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" @mouseup="openDictionaryM" :enableIcon="componentsIcon"
+        :label="'字典'" />
+      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" @mouseup="openJSFuncM" :enableIcon="componentsIcon"
+        :label="'JS方法'" />
+      <!-- ***************************** -->
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip"
         :overlayStyle="{ maxWidth: '20000px', background: '#e0e4ea', backgroundColor: '#e0e4ea' }">
         <template #content>
@@ -31,7 +39,7 @@
         <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="componentsIcon"
           :label="$t('opts.plugins')" />
       </el-tooltip>
-
+      <!-- ***************************** -->
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip"
         :overlayStyle="{ maxWidth: '20000px', background: '#e0e4ea', backgroundColor: '#e0e4ea' }">
         <template #content>
@@ -42,7 +50,7 @@
         <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="componentsIcon"
           :label="$t('opts.components')" />
       </el-tooltip>
-
+      <!-- ***************************** -->
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip" style="background: transparen" append-to="body"
         :overlayStyle="{ maxWidth: '20000px', background: '#e0e4ea', backgroundColor: '#e0e4ea' }">
         <template #content>
@@ -53,8 +61,7 @@
         <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '60px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
           :label="$t('opts.behaviors')" />
       </el-tooltip>
-
-      <!-- *************************************************************************** -->
+      <!-- ********************************  -->
       <div :style="{ width: '150px' }" style="margin-right: 15px" class="iconitem themeHover">
         <div class="flexHorilanLayout" style="width: 100%; height: 50%">
           <el-input-number v-model="pageScale" style="width: 100%" controls-position="right" size="small" :min="0.01" :step="0.01" :max="1000"
@@ -62,12 +69,15 @@
         </div>
         <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">{{$t('opts.zoomTool')}}</div>
       </div>
-      <!-- *************************************************************************** -->
       <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" :label="$t('opts.exit')" @click="onQuit" />
     </div>
 
     <behaviorDesigner ref="behaviorDesigner" />
     <addExtendsDialog ref="addExtendsDialog" @onLeadInSuccess="onLeadInExtendsSuccess" />
+
+    <designFunctions ref="designFunctions" />
+    <designDictionary ref="designDictionary" />
+    <designThirtyApis ref="designThirtyApis" />
   </div>
 </template>
 
@@ -97,6 +107,11 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 
 import foreExtandsManage from '@/commonTool/foreExtendsManage/foreExtandsManage.vue'
 import addExtendsDialog from '@/commonTool/foreExtendsManage/addExtendsDialog.vue'
+// *************************************
+import designFunctions from '../designFunctions/index.vue'
+import designThirtyApis from '../designThirtyApis/index.vue'
+import designDictionary from '../designDictionary/index.vue'
+// *************************************
 
 @Options({
   components: {
@@ -105,7 +120,10 @@ import addExtendsDialog from '@/commonTool/foreExtendsManage/addExtendsDialog.vu
     behaviorList,
     behaviorDesigner,
     foreExtandsManage,
-    addExtendsDialog
+    addExtendsDialog,
+    designFunctions,
+    designDictionary,
+    designThirtyApis
   }
 })
 export default class tooBar extends Vue {
@@ -185,21 +203,28 @@ export default class tooBar extends Vue {
   private onDesignBehavior(behav: behavior) {
     ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage, this.platform)
   }
-  //************导入插件********************************************************
+  // ***********************************************************
+  private openHttpApiM() {
+    ;(this.$refs.designThirtyApis as designThirtyApis).show()
+  }
+  private openDictionaryM() {
+    ;(this.$refs.designDictionary as designDictionary).show()
+  }
+  private openJSFuncM() {
+    ;(this.$refs.designFunctions as designFunctions).show()
+  }
+  //************导入插件****************************************
   private onLeadInExtend() {
     ;(this.$refs.addExtendsDialog as any).show()
   }
-
   private onLeadInExtendsSuccess() {
     ;(this.$refs.foreExtandsManage as any)?.refreshdata()
   }
-
-  /*************定制化控制项************************************************************************ */
+  /*************定制化控制项*************************************/
   private async onQuit() {
     this.$router.push('/designApplications')
   }
-
-  /*************对外公布事件************************************************************************ */
+  /*************对外公布事件***********************************/
   @Emit('onSave')
   private onSave(pageId: string) {}
 

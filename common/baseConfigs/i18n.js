@@ -8,7 +8,7 @@ export default {
       validate: '验证'
     },
     menu: {
-      myApps: '程序',
+      myApps: '前端程序',
       HttpApi: 'HTTP接口',
       Dictionarys: '字典',
       JSFuncs: 'JS方法',

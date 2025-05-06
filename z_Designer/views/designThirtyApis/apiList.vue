@@ -77,15 +77,6 @@ class TreeNodeDC {
   children: TreeNodeDC[] = []
 }
 
-// enum rightMenus {
-//   addApi = 'New Api',
-//   addGroup = 'New Group',
-//   saveAs = 'Save As',
-//   rename = 'Rename',
-//   edit = 'Edit',
-//   delete = 'Delete'
-// }
-
 @Options({
   components: {
     btreeNode: btreeNode
@@ -333,7 +324,7 @@ export default class apiList extends ComponentBase {
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
   private getMenuIconByRightMenus(rm: string): string {
-    let iconString
+    let iconString = null
     switch (rm) {
       case getLocale().t('opts.newApi'):
         iconString = '&#xe625;'

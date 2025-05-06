@@ -90,6 +90,7 @@ export default class index extends Vue {
   width: 60pt;
   height: 30pt;
   line-height: 30pt;
+  padding: 0px 10px;
   float: left;
   color: white;
   cursor: pointer;

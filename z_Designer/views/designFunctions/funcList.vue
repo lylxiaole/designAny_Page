@@ -2,7 +2,7 @@
   <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
     <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
       <el-row style="margin: 3px 15px">
-        <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="Please Input"></el-input>
+        <!-- <el-input size="small" style="margin-bottom: 8px; height: 30px" v-model="seachVal" placeholder="Please Input"></el-input> -->
       </el-row>
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 50px)">
