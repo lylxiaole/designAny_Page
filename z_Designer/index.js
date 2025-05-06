@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-
 // **************************************************************************
 import _axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import initSystem, { getRoutes, getConfig, getLocale } from '@common/baseConfigs'

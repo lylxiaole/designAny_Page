@@ -26,6 +26,11 @@ export default class PCPagePreview extends ViewPageBase {
   protected get renderCompArea(): any {
     return this.$el
   }
+
+  public showCustomPage(comp: Vue) {
+    let { virtualDom, vueComp } = designDrawDomVirtual(comp, false, {})
+    $(this.renderCompArea).append(virtualDom)
+  }
 }
 </script>
 

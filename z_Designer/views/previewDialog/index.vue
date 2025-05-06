@@ -8,7 +8,9 @@
         <el-button @click.prevent="onClose" style="background: red;color: white">{{$t('opts.exit')}}</el-button>
       </div>
       <!-- ********************************************************************* -->
-      <div ref="renderArea" style="width: 100%; height: calc(100% - 50px); overflow: hidden;position:absolute;top:50px"></div>
+      <div style="width: 100%; height: calc(100% - 50px); overflow: hidden;position:absolute;top:50px">
+        <div ref="renderArea" :style="topConatinerSize" style="height: 100%; overflow:auto;"></div>
+      </div>
       <!-- ********************************************************************* -->
       <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" custom-class="lyldrawer" size="90%"
         style="height: calc(100% - 50px);top:50px" :with-header="true">
@@ -43,6 +45,7 @@ import behaviorDebugger from '@behaviorEngine/behaviorDebugger/behaviorDebugger.
 import { action, actionDetail, behavior, paramType, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { deepClone } from '@common/utils'
 import { pageEmitter } from '@common/utils/eventBus'
+import { findCustomPageByCode } from '@design-any/interface/dist/LayoutAttr/CustomPage'
 
 @Options({
   components: {
@@ -68,6 +71,16 @@ export default class index extends PageBase {
 
     pageEmitter.on('onLYLLeadToOtherPage', this.onLYLLeadToOtherPage)
     pageEmitter.on('onPopupPage', this.onPopupPage)
+  }
+
+  private get topConatinerSize() {
+    if (!this.application) {
+      return { width: '100%' }
+    } else if (this.application.type === applicationType.webSystem) {
+      return { width: '100%' }
+    } else if (this.application.type === applicationType.H5App) {
+      return { width: '430px' }
+    }
   }
   // ***********初始化应用数据******************************
   private async initApplication() {
@@ -105,10 +118,6 @@ export default class index extends PageBase {
   private async openPage_getVueComp(pageId: string) {
     let cachePageData = await GetPageDetail(pageId)
 
-    if (cachePageData.designDetail) {
-      let pageDataJson = utils.strUnZip(cachePageData.designDetail)
-      cachePageData.designDetail = utils.deserialize(pageDataJson)
-    }
     let designLayout: EnginePage = null
     await this.$nextTick()
     let currentPaltform: platform = platform.page
@@ -119,8 +128,16 @@ export default class index extends PageBase {
       case pageType.dialogPage:
         designLayout = findPageByPaltform('dialogPageView')
         break
+      case pageType.customPage:
+        designLayout = findPageByPaltform('pageView')
+        break
       default:
         break
+    }
+    //
+    if (cachePageData.designDetail) {
+      let pageDataJson = utils.strUnZip(cachePageData.designDetail)
+      cachePageData.designDetail = utils.deserialize(pageDataJson)
     }
     /************************渲染页面************************ */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, false, { applicationContext: applicationContext })
@@ -128,6 +145,11 @@ export default class index extends PageBase {
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
+    /************************在设计引擎上渲染自定义页面 */
+    if (cachePageData.type === pageType.customPage) {
+      let customPage = findCustomPageByCode(cachePageData.customPageCode)
+      ;(vueComp as PCPagePreview).showCustomPage(customPage)
+    }
     return { virtualDom, vueComp }
   }
   private async openPage_drawVueCom(virtualDom: Element, vueComp: Vue) {

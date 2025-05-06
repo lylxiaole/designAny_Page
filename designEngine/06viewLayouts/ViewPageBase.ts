@@ -8,8 +8,10 @@ import ViewShell from './ViewShell.vue'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
 
-@Options({})
+@Options()
 export default class ViewPageBase extends EnginePage {
+  private isDesigning: boolean = false
+
   private get backgroundCute(): string {
     if (!this.background_img || this.background_img.length < 1) {
       return this.background

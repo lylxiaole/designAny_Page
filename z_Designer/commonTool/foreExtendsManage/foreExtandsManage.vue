@@ -3,10 +3,10 @@
     <el-row style="height: 100%; width: 100%">
       <div style="width: 100%; height: 30px; justify-content: left; overflow: hidden" class="flexHorilanLayout">
         <div style="background: #18aeb7; width: 6px; height: 26px"></div>
-        <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">{{$t('tip.extendsList')}}</span>
+        <span style="margin-left: 9px; float: left; fontsize: 18px; fontweight: 600">{{$t('tip.pluginList')}}</span>
         <el-button class="behavior-list-header-button"
           style="width: 104px; height: 30px; background: rgba(245, 166, 35, 1); color: rgba(255, 255, 255, 1); margin-left: 10px"
-          @click="onLeadInExtend">{{$t('tip.leadinExtend')}}</el-button>
+          @click="onLeadInExtend">{{$t('tip.leadinPlugin')}}</el-button>
       </div>
 
       <div style="height: calc(100% - 30px); width: 100%">

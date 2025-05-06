@@ -9,6 +9,8 @@ import { DPageAttr } from '@design-any/interface/dist/LayoutAttr/PageInfo'
 import platform from '@design-any/interface/dist/enums/platform'
 import { designDrawDomVirtual } from '@design-any/interface/dist/utils/drawVueDom'
 import applicationContext from '../01designerContext/context'
+import { ElMessage } from 'element-plus'
+import { getLocale } from '@common/baseConfigs'
 
 @Options({})
 export default class DesignPageBase extends EnginePage {
@@ -51,7 +53,8 @@ export default class DesignPageBase extends EnginePage {
 
   protected override async renderComponent(compCon: EngineComponent): Promise<EngineComponent> {
     if (!compCon) {
-      debugger
+      ElMessage.error(getLocale().t('tip.cannotFindComp'))
+      return null
     }
     let { virtualDom, vueComp } = designDrawDomVirtual(DesignShell, true, { applicationContext: applicationContext })
     this.allShells.push(vueComp as DesignShell)

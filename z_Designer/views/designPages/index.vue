@@ -10,9 +10,10 @@
       </el-col>
       <el-col class="designArea" style="width: calc(100% - 500px); height: 100%; float: left">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="card" style="width: 100%; height: 100%">
-          <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id">
-            <div
-              style="width: 100%; height: 100%; overflow: scroll; border: 1px solid var(--el-border-color-light); box-sizing: border-box; background-color: #cdcdcd"
+          <el-tab-pane v-for="page in openPageEngines" :key="page.Id" :label="page.name + (needSave(page.Id) ? '*' : '')" :name="page.Id"
+            class="verticalAlignCenter flexHorilanLayout" style="width:100%;height:100%;">
+            <div :style="topConatinerSize"
+              style="height:100%;overflow: auto; border: 1px solid var(--el-border-color-light);box-sizing:border-box;background-color: #cdcdcd"
               :ref="page.Id"></div>
           </el-tab-pane>
         </el-tabs>
@@ -21,7 +22,7 @@
         <propertyGrid ref="propertyGrid" :application="application" :currentPage="currentShowEngine" :currentLayouts="selectedComps" />
       </el-col>
     </el-row>
-
+    <!-- ****************************** -->
     <previewPage ref="previewPage" />
   </el-row>
 </template>
@@ -50,6 +51,9 @@ import pagelist from '@/commonTool/pagelist.vue'
 import toolBar from './tooBar.vue'
 import { loadExtends } from '@common/apis/designForeExtands'
 
+import { findCustomPageByCode } from '@design-any/interface/dist/LayoutAttr/CustomPage'
+import { CustomPageBase } from '@design-any/interface/dist/LayoutInterface/CustomPageBase'
+
 @Options({
   components: {
     pagelist: pagelist,
@@ -65,14 +69,13 @@ export default class index extends PageBase {
   private applicationId: string = null
   private application: ApplicationDC = null
   mounted() {
-    this.applicationId = this.$route.query.appId as string
+    this.applicationId = (this as any).$route.query.appId as string
     $(window).on('keydown', this._onKeyDown)
     this.initApplication()
   }
 
   private async initApplication() {
     await loadExtends()
-
     console.log('Vue status:', {
       version: (window as any).Vue?.version,
       components: (window as any).DesignanyExtands,
@@ -85,6 +88,17 @@ export default class index extends PageBase {
   unmounted() {
     $(window).off('keydown', this._onKeyDown)
   }
+
+  private get topConatinerSize() {
+    if (!this.application) {
+      return { width: '100%' }
+    } else if (this.application.type === applicationType.webSystem) {
+      return { width: '100%' }
+    } else if (this.application.type === applicationType.H5App) {
+      return { width: '430px' }
+    }
+  }
+
   // **********当前应用的页面*************
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
@@ -125,7 +139,6 @@ export default class index extends PageBase {
       this.openPageEngines.push(pageengine)
     }
     this.currentOpenPageId = page.id
-    // **********************
   }
   //关闭页面
   private async closePage(pageId: string) {
@@ -155,13 +168,7 @@ export default class index extends PageBase {
       return
     }
     let res = await GetPageDetail(pageId)
-
-    let pageData: SaveInfo = null
-    if (res.designDetail) {
-      let pageDataJson = utils.strUnZip(res.designDetail)
-      pageData = utils.deserialize(pageDataJson)
-    }
-
+    //
     let designLayout: any = typeof PCPageDesign
     switch (res.type) {
       case pageType.page:
@@ -171,12 +178,19 @@ export default class index extends PageBase {
         designLayout = findPageByPaltform('dialogPageDesign')
         break
       case pageType.customPage:
-        designLayout = findPageByPaltform('dialogPageDesign')
+        designLayout = findPageByPaltform('pageDesign')
         break
       default:
         break
     }
-    /************************渲染页面 */
+    //
+    let pageData: SaveInfo = null
+
+    if (res.designDetail) {
+      let pageDataJson = utils.strUnZip(res.designDetail)
+      pageData = utils.deserialize(pageDataJson)
+    }
+    /************************渲染基本设计引擎页面 */
     let { virtualDom, vueComp } = designDrawDomVirtual(designLayout, true, { applicationContext: applicationContext })
     await (vueComp as PCPageDesign).loadPageByData(pageId, pageData, platform.page)
     ;(vueComp as any).name = res.name
@@ -186,6 +200,11 @@ export default class index extends PageBase {
     this.$forceUpdate()
     await this.$nextTick()
     $(this.$refs[pageId][0]).append(virtualDom)
+    /************************在设计引擎上渲染自定义页面 */
+    if (res.type === pageType.customPage) {
+      let customPage = findCustomPageByCode(res.customPageCode)
+      ;(vueComp as PCPageDesign).showCustomPage(customPage)
+    }
   }
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)
@@ -237,6 +256,7 @@ export default class index extends PageBase {
   padding: 0px;
   height: calc(100% - 39px) !important;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /deep/.designArea .el-tabs__header {

@@ -41,6 +41,8 @@
           </v-contextmenu-item>
         </v-contextmenu>
       </div>
+      <!-- ************************************** -->
+      <pluginPageChooser ref="pluginPageChooser" @onSelectCustomPages="onSelectCustomPages" />
     </el-row>
   </div>
 </template>
@@ -72,9 +74,12 @@ import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { applicationType, ApplicationDC, GetApplication } from '@common/apis/designApplication'
 import { getLocale } from '@common/baseConfigs'
 
+import pluginPageChooser from './foreExtendsManage/pluginPageChooser.vue'
+
 @Options({
   components: {
-    btreeNode: btreeNode
+    btreeNode: btreeNode,
+    pluginPageChooser: pluginPageChooser
   }
 })
 export default class index extends ComponentBase {
@@ -342,7 +347,7 @@ export default class index extends ComponentBase {
         this.addPage(pageType.dialogPage)
         break
       case getLocale().t('opts.addCustomPage'):
-        this.addCustomPage()
+        this.addCustomPage(pageType.customPage)
         break
       case getLocale().t('opts.newGroup'):
         this.addGroup()
@@ -418,9 +423,40 @@ export default class index extends ComponentBase {
     }
     datadc.children.push(newnode)
   }
-  //TODO
-  private async addCustomPage() {}
 
+  private async addCustomPage(pagetype: pageType) {
+    ;(this.$refs.pluginPageChooser as any).show()
+  }
+  private async onSelectCustomPages(pages: any[]) {
+    for (let index = 0; index < pages.length; index++) {
+      let parentGroupId = this.currentRightClickNode.id
+      let datadc = this.searchNodeById(parentGroupId, this.treeData)
+      let childindex = this.cuteChildrenMaxIndex(datadc) + 1
+
+      const p = pages[index]
+
+      let res = await AddPage({
+        name: p.name,
+        appId: this.currentApplication.id,
+        parentGroupId: parentGroupId,
+        index: childindex,
+        customPageCode: p.code,
+        type: pageType.customPage
+      } as any)
+
+      let newnode: TreeNodeDC = {
+        id: res.id,
+        isDefault: false,
+        parentGroupId: res.parentGroupId,
+        label: res.name,
+        type: 'page',
+        index: res.index,
+        children: []
+      }
+      datadc.children.push(newnode)
+    }
+  }
+  // *****************************************************
   private async setDefaultPage() {
     let pageId = this.currentRightClickNode.id
 
@@ -448,7 +484,7 @@ export default class index extends ComponentBase {
   private onClickBlankArea() {
     ;(this.$refs.ctxMenu as any).hide()
   }
-  // **************对外事件*****************************************************
+  // **************对外事件********************************
   @Emit('onEditPage')
   private async onEditPage(pageId: string) {}
   @Emit('onDeletePage')

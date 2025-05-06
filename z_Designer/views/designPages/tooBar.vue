@@ -28,8 +28,8 @@
             <foreExtandsManage ref="foreExtandsManage" style="width: 100%; height: 100%" @onLeadInExtend="onLeadInExtend" />
           </div>
         </template>
-        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon"
-          :label="$t('opts.extends')" />
+        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="componentsIcon"
+          :label="$t('opts.plugins')" />
       </el-tooltip>
 
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip"
@@ -39,7 +39,7 @@
             <componentListControl :platform="platform" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon"
+        <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="componentsIcon"
           :label="$t('opts.components')" />
       </el-tooltip>
 
@@ -50,7 +50,7 @@
             <behaviorList :currentPage="currentPage" @onDesignBehavior="onDesignBehavior" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
+        <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '60px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
           :label="$t('opts.behaviors')" />
       </el-tooltip>
 

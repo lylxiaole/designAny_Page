@@ -15,6 +15,7 @@ export class DesignPageDC extends dataContactBase {
   name: string
   parentGroupId: string
   designDetail: string
+  customPageCode: string //当type是自定义页面时,这个字段存储自定义页面的code
 }
 export class DesignPageGroupDC extends dataContactBase {
   appId: string

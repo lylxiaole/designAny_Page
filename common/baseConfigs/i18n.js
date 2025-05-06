@@ -31,6 +31,7 @@ export default {
       index: '序号',
       paramName: '参数名称',
       name: '名称',
+      code: '编码',
       type: '类型',
       desc: '描述',
       options: '操作',
@@ -154,12 +155,14 @@ export default {
       onNodeSelected: '节点选中',
       currentSelectedNodes: '当前选项',
 
-      extendsList: '拓展列表',
-      leadinExtend: '导入拓展',
+      pluginList: '插件列表',
+      leadinPlugin: '导入插件',
       uploadFile: '上传文件',
 
       customPage: '自定义页面',
-      extendComp: '拓展组件'
+      extendComp: '拓展组件',
+
+      cannotFindComp: '组件丢失了,可能是删除插件导致的。'
     },
     opts: {
       delete: '删除',
@@ -173,7 +176,7 @@ export default {
       redo: '重做',
       debugger: '调试',
       components: '组件',
-      extends: '拓展',
+      plugins: '插件',
       behaviors: '行为',
       zoomTool: '缩放工具',
       exit: '退出',
@@ -191,9 +194,10 @@ export default {
       addNew: '新增',
       addBehavior: '添加行为',
       addPge: '新页面',
+      customPage: '自定义页面',
       addDialogPage: '新弹窗',
       setDefaultPage: '设为默认页',
-      addCustomPage: '添加自定义页面',
+      addCustomPage: '引用插件页面',
       Yes: '是',
       No: '否'
     },
@@ -256,6 +260,7 @@ export default {
       index: 'Index',
       paramName: 'Param Name',
       name: 'Name',
+      code: 'Code',
       type: 'Type',
       desc: 'Desc',
       options: 'Options',
@@ -380,12 +385,13 @@ export default {
       onNodeSelected: 'onNodeSelected',
       currentSelectedNodes: 'Current Selected Nodes',
 
-      extendsList: 'Extends List',
-      leadinExtend: 'Lead In Extend',
+      pluginList: 'Plugin List',
+      leadinPlugin: 'Lead In Plugin',
       uploadFile: 'Upload File',
 
       customPage: 'Custon Page',
-      extendComp: 'Extend Component'
+      extendComp: 'Extend Component',
+      cannotFindComp: 'The component is missing, possibly due to the deletion of the plugin.'
     },
     opts: {
       delete: 'Delete',
@@ -400,7 +406,7 @@ export default {
       debugger: 'Debugger',
       components: 'Components',
       behaviors: 'Behaviors',
-      extends: 'Extends',
+      plugins: 'Plugins',
       zoomTool: 'Zoom Tool',
       exit: 'Exit',
       addFromSwagger: 'Add From Swagger',
@@ -417,9 +423,10 @@ export default {
       addNew: 'Add New',
       addBehavior: 'Add Behavior',
       addPge: 'New Page',
+      customPage: 'Custom Page',
       addDialogPage: 'New Dialog Page',
       setDefaultPage: 'Set Default Page',
-      addCustomPage: 'Add Custom Page',
+      addCustomPage: 'Reference plugin page',
       Yes: 'Yes',
       No: 'No'
     },

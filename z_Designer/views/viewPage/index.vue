@@ -23,6 +23,7 @@ import { DesignPageDC, GetApplicationPages, GetPageDetail, pageType } from '@com
 import { pageEmitter } from '@common/utils/eventBus'
 
 import { loadExtends } from '@common/apis/designForeExtands'
+import { findCustomPageByCode } from '@design-any/interface/dist/LayoutAttr/CustomPage'
 
 @Options({
   components: {
@@ -104,6 +105,9 @@ export default class index extends PageBase {
       case pageType.dialogPage:
         designLayout = findPageByPaltform('dialogPageView')
         break
+      case pageType.customPage:
+        designLayout = findPageByPaltform('pageView')
+        break
       default:
         break
     }
@@ -113,6 +117,11 @@ export default class index extends PageBase {
     ;(vueComp as any).name = cachePageData.name
     ;(vueComp as any).left = 0
     ;(vueComp as any).top = 0
+    /************************在设计引擎上渲染自定义页面 */
+    if (cachePageData.type === pageType.customPage) {
+      let customPage = findCustomPageByCode(cachePageData.customPageCode)
+      ;(vueComp as PCPagePreview).showCustomPage(customPage)
+    }
     return { virtualDom, vueComp }
   }
   private async openPage_drawVueCom(virtualDom: Element, vueComp: Vue) {
