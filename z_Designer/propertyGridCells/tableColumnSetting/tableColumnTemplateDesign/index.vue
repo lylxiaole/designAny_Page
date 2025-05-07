@@ -1,6 +1,7 @@
 <template>
-  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 80%" width="90%" top="0px" v-model="windowVisible"
-    :before-close="onDialogBeforeClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body destroy-on-close>
+  <el-dialog ref="previewPopup" class="columnTemplateSettingDialog" style="height: 90%;margin:0px;padding:0px" width="90%" top="0px"
+    v-model="windowVisible" :before-close="onDialogBeforeClose" :close-on-click-modal="false" :close-on-press-escape="false" fullscreen append-to-body
+    destroy-on-close>
     <el-row style="height: 100%; width: 100%; display: block; position: relative; display: block"
       oncontextmenu="self.event.returnValue=false;self.event.preventDefault()">
       <el-row style="height: 60px; width: 100%">

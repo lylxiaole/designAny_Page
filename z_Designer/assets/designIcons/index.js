@@ -1,5 +1,5 @@
 import saveIcon from './save.svg?inline'
-import componentsIcon from './components.svg?inline'
+import pluginsIcon from './plugins.svg?inline'
 import previewIcon from './preview.svg?inline'
 import quitIcon from './quit.svg?inline'
 import behaviorIcon from './behavior.svg?inline'
@@ -9,4 +9,9 @@ import chexiaodisableIcon from './chexiaodisable.svg?inline'
 import fanchexiaoIcon from './fanchexiao.svg?inline'
 import fanchexiaodisableIcon from './fanchexiaodisable.svg?inline'
 
-export { saveIcon, componentsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon }
+import keyvalueIcon from './键值对.svg?inline'
+import httpserverIcon from './httpserver.svg?inline'
+import javascriptlineIcon from './javascript-line.svg?inline'
+import compsIcon from './comps.svg?inline'
+
+export { saveIcon, pluginsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon, keyvalueIcon, compsIcon, httpserverIcon, javascriptlineIcon }

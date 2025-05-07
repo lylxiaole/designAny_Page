@@ -78,10 +78,29 @@ export default class apiDetail extends ComponentBase {
     let res = await AddOrUpdateAPI(x)
     if (res) {
       alert(getLocale().t('tip.saveSuccess'))
+      this.onNeedSaveChange(false)
     } else {
       alert(getLocale().t('tip.saveFailed'))
     }
   }
+  // ********************************************
+  @Watch('currentApi', { deep: true })
+  private onCurrentFuncChange(newVal: ThirtyApiDC, oldVal: ThirtyApiDC) {
+    if (!oldVal) {
+      return
+    }
+    if (oldVal.id !== newVal.id) {
+      this.onNeedSaveChange(false)
+      return
+    }
+    this.onNeedSaveChange(true)
+  }
+
+  @Prop({ type: Boolean, default: false })
+  private needSave: boolean
+
+  @Emit('update:needSave')
+  private onNeedSaveChange(val) {}
 }
 </script>
 

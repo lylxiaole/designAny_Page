@@ -4,7 +4,7 @@
       <!-- <el-button type="primary" style="margin-left:600px" @click="onSureHandle">{{$t('opts.sure')}}</el-button> -->
     </div>
     <div style="width: 100%; height: calc(100% - 50px)">
-      <lylJSEditor ref="lylJSEditor" />
+      <lylJSEditor ref="lylJSEditor" @onValueChanged="onValueChanged" />
     </div>
   </div>
 </template>
@@ -31,7 +31,10 @@ export default class funcDetail extends ComponentBase {
     }
   }
 
-  mounted() {}
+  private onValueChanged(val) {
+    this.currentFunc.content = val
+    this.onNeedSaveChange(true)
+  }
 
   public async onSureHandle() {
     this.currentFunc.content = (this.$refs.lylJSEditor as lylJSEditor).getValue()
@@ -46,10 +49,17 @@ export default class funcDetail extends ComponentBase {
     let res = await AddOrUpdateFunc(this.currentFunc)
     if (res) {
       alert('保存成功')
+      this.onNeedSaveChange(false)
     } else {
       alert('保存失败')
     }
   }
+
+  @Prop({ type: Boolean, default: false })
+  private needSave: boolean
+
+  @Emit('update:needSave')
+  private onNeedSaveChange(val) {}
 }
 </script>
 

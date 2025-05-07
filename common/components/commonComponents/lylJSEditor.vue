@@ -42,22 +42,31 @@ export default class lylJSEditor extends Vue {
       enableSnippets: true,
       enableLiveAutocompletion: true
     })
+    // ******************************
+  }
+
+  private onEditorChange(val) {
+    this.onValueChanged(this.editor.getValue())
   }
 
   unmounted() {
+    this.editor.off('change', this.onEditorChange)
     this.editor.destroy()
     this.editor.container.remove()
   }
 
   public setValue(val) {
+    this.editor.off('change', this.onEditorChange)
+
     this.editor.setValue(val)
+    this.editor.on('change', this.onEditorChange)
   }
   public getValue() {
     return this.editor.getValue()
   }
 
-  @Emit('getEditorInstance')
-  private getEditorInstance(val) {}
+  @Emit('onValueChanged')
+  private onValueChanged(val) {}
 }
 </script>
  

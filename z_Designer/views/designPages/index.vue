@@ -98,7 +98,6 @@ export default class index extends PageBase {
       return { width: '430px' }
     }
   }
-
   // **********当前应用的页面*************
   //当前打开进行设计的页面
   private currentOpenPageId: string = null

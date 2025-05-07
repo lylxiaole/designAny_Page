@@ -7,9 +7,9 @@
     </div>
     <!-- *************************************************************************** -->
     <optionBtn v-if="currentPage" :enable="currentPage.canToPreStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Z'"
-      :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="'Undo'" @mouseup="topre" />
+      :enableIcon="chexiaoIcon" :disableIcon="chexiaodisableIcon" :label="$t('opts.undo')" @mouseup="topre" />
     <optionBtn v-if="currentPage" :enable="currentPage.canToNextStack" :style="{ height: height + 'px' }" :tooltiptext="'Crtl+Y'"
-      :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="'Redo'" @mouseup="tonext" />
+      :enableIcon="fanchexiaoIcon" :disableIcon="fanchexiaodisableIcon" :label="$t('opts.redo')" @mouseup="tonext" />
     <!-- *************************************************************************** -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip" style="background: transparen"
@@ -19,7 +19,8 @@
             <componentListControl v-if="currentPage" :platform="platform" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="componentsIcon" label="Components" />
+        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 30px; width: 80px" :enableIcon="compsIcon"
+          :label="$t('opts.components')" />
       </el-tooltip>
 
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip" style="background: transparen" append-to="body"
@@ -30,7 +31,7 @@
           </div>
         </template>
         <optionBtn v-if="currentPage" :style="{ height: height + 'px', width: '80px' }" style="margin-right: 30px" :enableIcon="behaviorIcon"
-          label="Behaviors" />
+          :label="$t('opts.behaviors')" />
       </el-tooltip>
       <!-- *************************************************************************** -->
       <div :style="{ width: '150px' }" style="margin-right: 15px" class="iconitem themeHover">
@@ -38,11 +39,11 @@
           <el-input-number v-model="pageScale" style="width: 100%" controls-position="right" size="small" :min="0.01" :step="0.01" :max="1000"
             :precision="2" />
         </div>
-        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">Zoom Tool</div>
+        <div class="flexHorilanLayout verticalAlignCenter" style="color: white; width: 100%; height: 50%">{{$t('opts.zoomTool')}}</div>
       </div>
       <!-- *************************************************************************** -->
-      <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" label="Save" :enableIcon="saveIcon" @click.stop="onSave" />
-      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" label="Cancel" @click.stop="onCancel" />
+      <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" :label="$t('opts.save')" :enableIcon="saveIcon" @click.stop="onSave" />
+      <optionBtn :style="{ height: height + 'px', width: '50px' }" :enableIcon="quitIcon" :label="$t('opts.exit')" @click.stop="onCancel" />
     </div>
     <behaviorDesigner ref="behaviorDesigner" />
   </div>
@@ -56,7 +57,7 @@ import componentListControl from '@/commonTool/componentListControl.vue'
 import optionBtn from '@/commonTool/optionBtn.vue'
 import {
   saveIcon,
-  componentsIcon,
+  compsIcon,
   quitIcon,
   previewIcon,
   behaviorIcon,
@@ -81,7 +82,7 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 })
 export default class toolBar extends Vue {
   private saveIcon: any = saveIcon
-  private componentsIcon: any = componentsIcon
+  private compsIcon: any = compsIcon
   private quitIcon: any = quitIcon
   private previewIcon: any = previewIcon
   private behaviorIcon: any = behaviorIcon

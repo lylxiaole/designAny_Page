@@ -10,7 +10,7 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 @Options({})
 export default class App extends Vue {
   mounted() {
-    $(this.$el)[0].addEventListener('mousewheel', this._onMouseWheel, { passive: false })
+    window.addEventListener('mousewheel', this._onMouseWheel, { passive: false })
   }
   /**禁用滚轮+ctrl 对浏览器进行缩放 */
   private _onMouseWheel(e: any) {

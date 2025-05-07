@@ -22,11 +22,11 @@
     <!-- *****************************  -->
     <div :style="{ height: height + 'px' }" style="right: 8px; position: absolute" class="verticalAlignCenter">
       <!-- *****************************  -->
-      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 80px" @mouseup="openHttpApiM" :enableIcon="componentsIcon"
+      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 80px" @mouseup="openHttpApiM" :enableIcon="httpserverIcon"
         :label="'Http接口'" />
-      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" @mouseup="openDictionaryM" :enableIcon="componentsIcon"
+      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" @mouseup="openDictionaryM" :enableIcon="keyvalueIcon"
         :label="'字典'" />
-      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" @mouseup="openJSFuncM" :enableIcon="componentsIcon"
+      <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" @mouseup="openJSFuncM" :enableIcon="javascriptlineIcon"
         :label="'JS方法'" />
       <!-- ***************************** -->
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip"
@@ -36,8 +36,7 @@
             <foreExtandsManage ref="foreExtandsManage" style="width: 100%; height: 100%" @onLeadInExtend="onLeadInExtend" />
           </div>
         </template>
-        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="componentsIcon"
-          :label="$t('opts.plugins')" />
+        <optionBtn :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="pluginsIcon" :label="$t('opts.plugins')" />
       </el-tooltip>
       <!-- ***************************** -->
       <el-tooltip placement="bottom" effect="light" popper-class="designtooltip"
@@ -47,7 +46,7 @@
             <componentListControl :platform="platform" style="width: 100%; height: 100%" />
           </div>
         </template>
-        <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="componentsIcon"
+        <optionBtn v-if="currentPage" :style="{ height: height + 'px' }" style="margin-right: 10px; width: 60px" :enableIcon="compsIcon"
           :label="$t('opts.components')" />
       </el-tooltip>
       <!-- ***************************** -->
@@ -90,14 +89,18 @@ import componentListControl from '@/commonTool/componentListControl.vue'
 import optionBtn from '@/commonTool/optionBtn.vue'
 import {
   saveIcon,
-  componentsIcon,
+  pluginsIcon,
   quitIcon,
   previewIcon,
   behaviorIcon,
   chexiaoIcon,
   fanchexiaoIcon,
   fanchexiaodisableIcon,
-  chexiaodisableIcon
+  chexiaodisableIcon,
+  keyvalueIcon,
+  compsIcon,
+  httpserverIcon,
+  javascriptlineIcon
 } from '@/assets/designIcons'
 import { ApplicationDC, applicationType } from '@common/apis/designApplication'
 import platform from '@design-any/interface/dist/enums/platform'
@@ -128,7 +131,7 @@ import designDictionary from '../designDictionary/index.vue'
 })
 export default class tooBar extends Vue {
   private saveIcon: any = saveIcon
-  private componentsIcon: any = componentsIcon
+  private pluginsIcon: any = pluginsIcon
   private quitIcon: any = quitIcon
   private previewIcon: any = previewIcon
   private behaviorIcon: any = behaviorIcon
@@ -136,6 +139,11 @@ export default class tooBar extends Vue {
   private fanchexiaoIcon: any = fanchexiaoIcon
   private fanchexiaodisableIcon: any = fanchexiaodisableIcon
   private chexiaodisableIcon: any = chexiaodisableIcon
+
+  private keyvalueIcon: any = keyvalueIcon
+  private compsIcon: any = compsIcon
+  private httpserverIcon: any = httpserverIcon
+  private javascriptlineIcon: any = javascriptlineIcon
 
   @Prop() private height: number
   /**当前的布局页面属性，外部通过绑定传递进来 */
