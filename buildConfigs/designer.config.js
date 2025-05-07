@@ -82,7 +82,6 @@ let baseconfig = {
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'stylus-loader'],
         include: currentDir
       },
-
       {
         //模块化的css,自定义的全局样式请加:global
         test: /\.module\.css$/,
@@ -194,11 +193,13 @@ let baseconfig = {
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
-
       'window.DesignAnyInterface': '@design-any/interface',
       DesignAnyInterface: '@design-any/interface',
       'window.Vue': 'vue',
       Vue: 'vue'
+    }),
+    new webpack.DefinePlugin({
+      __VUE_PROD_DEVTOOLS__: JSON.stringify(false) // 禁用生产环境DevTools
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -257,7 +258,6 @@ let baseconfig = {
     }),
     new VueLoaderPlugin()
   ],
-
   resolve: {
     modules: [
       // 寻找模块的根目录，array 类型，默认以 node_modules 为根目录

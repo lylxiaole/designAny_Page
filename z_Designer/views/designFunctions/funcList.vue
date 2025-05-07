@@ -306,6 +306,7 @@ export default class funcList extends ComponentBase {
   // ***************右键弹窗**************************************
   private currentRightClickNode: any = null
   private onTreeNodeRightClick(e: any, data: any) {
+    debugger
     // window.console.log('右击菜单树节点', data)
     e.stopPropagation()
     e.preventDefault()

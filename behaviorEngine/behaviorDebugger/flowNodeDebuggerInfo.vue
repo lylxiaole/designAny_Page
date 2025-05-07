@@ -24,7 +24,7 @@
       <div class="content">
         <el-collapse :model-value="inParams.map(o=>o.name)">
           <el-collapse-item v-for="param in inParams" :key="param.key" :name="param.name" :title="param.name" :icon="CaretRight">
-            <div>{{ param.val ? param.val :$t('tip.None') }}</div>
+            <div>{{ (param.val===null||param.val===undefined) ?$t('tip.None'): param.val }}</div>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -39,7 +39,7 @@
       <div class="content">
         <el-collapse :model-value="[outParam.name]">
           <el-collapse-item :title="outParam.name" :name="outParam.name" :icon="CaretRight">
-            <div>{{ outParam.val ? outParam.val : $t('tip.None') }}</div>
+            <div>{{ (outParam.val===null||outParam.val===undefined) ?$t('tip.None'): outParam.val}}</div>
           </el-collapse-item>
         </el-collapse>
         <!-- <div class="paramName">{{ outParam.name }}:</div>

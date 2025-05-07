@@ -15,8 +15,8 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="onCancelHandle"> {{$t('user.cancel')}}</el-button>
-        <el-button type="primary" @click="onSureHandle">{{$t('user.sure')}}</el-button>
+        <el-button @click="onCancelHandle"> {{$t('opts.cancel')}}</el-button>
+        <el-button type="primary" @click="onSureHandle">{{$t('opts.sure')}}</el-button>
       </span>
     </template>
   </el-dialog>
