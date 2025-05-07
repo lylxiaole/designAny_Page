@@ -16,7 +16,13 @@
                 @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <div>
-                    <span class="icon iconfont">&#xe627;</span>
+                    <el-image v-if="data.pageType===0" draggable="false" style="width: 20px; height: 20px" fit="contain"
+                      :src="normalPageIcon"></el-image>
+                    <el-image v-else-if="data.pageType===1" draggable="false" style="width: 20px; height: 20px" fit="contain"
+                      :src="dialogPageIcon"></el-image>
+                    <el-image v-else-if="data.pageType===2" draggable="false" style="width: 20px; height: 20px" fit="contain"
+                      :src="customPageIcon"></el-image>
+                    <!-- <span class="icon iconfont">&#xe627;</span> -->
                     <span v-if="data.isDefault">【{{$t('tip.firstPage')}}】</span>
                   </div>
                 </template>
@@ -76,6 +82,8 @@ import { getLocale } from '@common/baseConfigs'
 
 import pluginPageChooser from './foreExtendsManage/pluginPageChooser.vue'
 
+import { normalPageIcon, customPageIcon, dialogPageIcon } from '@/assets/designIcons'
+
 @Options({
   components: {
     btreeNode: btreeNode,
@@ -83,6 +91,10 @@ import pluginPageChooser from './foreExtendsManage/pluginPageChooser.vue'
   }
 })
 export default class index extends ComponentBase {
+  private normalPageIcon = normalPageIcon
+  private customPageIcon = customPageIcon
+  private dialogPageIcon = dialogPageIcon
+
   private seachVal: string = ''
   private rightMenus: string[] = []
   private treeData: TreeNodeDC[] = []
@@ -100,6 +112,7 @@ export default class index extends ComponentBase {
       return this.treeData
     }
   }
+
   // *********pageGroups管理**************************************************
   private searchNodeById(id: string, parentNodes: TreeNodeDC[]): TreeNodeDC {
     for (let index = 0; index < parentNodes.length; index++) {
