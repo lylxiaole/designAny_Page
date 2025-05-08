@@ -15,7 +15,7 @@
     </div>
     <!-- ********************************************************* -->
     <div v-if="isExcuted && excutedSuccess === false && excutedMsg" style="width: 100%; height: 80px">
-      <div class="title">{{$t('tip.ExcuteErrorMsg')}}:{{ isExcuted ?$t('tip.Excuted'):$t('tip.Excuted')}}</div>
+      <div class="title">{{$t('tip.ExcuteErrorMsg')}}</div>
       <div class="content">{{ isExcuted && excutedSuccess === false && excutedMsg ? excutedMsg :$t('tip.None')  }}</div>
     </div>
     <!-- ********************************************************* -->
