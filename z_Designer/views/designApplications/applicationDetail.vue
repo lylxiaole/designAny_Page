@@ -69,7 +69,7 @@ export default class index extends ComponentBase {
     this.$router.push({ path: '/designPages', query: { appId: this.currentApplication.id } })
   }
   private startViewApp() {
-    this.$router.push({ path: '/viewPages', query: { appId: this.currentApplication.id } })
+    window.open('/#/viewPages?appId=' + this.currentApplication.id)
   }
   // ****************************************
   private editAppInfo() {

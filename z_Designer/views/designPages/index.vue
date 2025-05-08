@@ -52,7 +52,8 @@ import toolBar from './tooBar.vue'
 import { loadExtends } from '@common/apis/designForeExtands'
 
 import { findCustomPageByCode } from '@design-any/interface/dist/LayoutAttr/CustomPage'
-import { CustomPageBase } from '@design-any/interface/dist/LayoutInterface/CustomPageBase'
+
+import websocketChat, { websocketMsgTemp, msgType } from '@common/utils/websocketChat'
 
 @Options({
   components: {
@@ -66,14 +67,18 @@ import { CustomPageBase } from '@design-any/interface/dist/LayoutInterface/Custo
 })
 export default class index extends PageBase {
   // **********当前应用*******************
+
+  private websock: websocketChat = null
+
   private applicationId: string = null
   private application: ApplicationDC = null
   mounted() {
     this.applicationId = (this as any).$route.query.appId as string
     $(window).on('keydown', this._onKeyDown)
     this.initApplication()
+    this.websock = websocketChat.Initlize()
+    this.websock.listenOnMessgae(this.onWebsockMsg)
   }
-
   private async initApplication() {
     await loadExtends()
     console.log('Vue status:', {
@@ -84,11 +89,9 @@ export default class index extends PageBase {
 
     this.application = await GetApplication(this.applicationId)
   }
-
   unmounted() {
     $(window).off('keydown', this._onKeyDown)
   }
-
   private get topConatinerSize() {
     if (!this.application) {
       return { width: '100%' }
@@ -98,7 +101,7 @@ export default class index extends PageBase {
       return { width: '430px' }
     }
   }
-  // **********当前应用的页面*************
+  // **********当前应用的页面*************************************
   //当前打开进行设计的页面
   private currentOpenPageId: string = null
   //所有打开的页面的引擎
@@ -108,7 +111,7 @@ export default class index extends PageBase {
     let findengine = this.openPageEngines.find((o) => o.Id === this.currentOpenPageId)
     return findengine
   }
-  // **********是否需要保存*******************************
+  // **********是否需要保存***************************************
   private needSave(pageId: string): boolean {
     let page = this.openPageEngines.find((o) => o.Id === pageId)
     if (!page) {
@@ -116,7 +119,7 @@ export default class index extends PageBase {
     }
     return page.isNeedSave
   }
-  // *****************************************
+  // *********************************************************
   //当前选择的组件列表
   protected get selectedComps(): EngineLayout[] {
     if (this.currentShowEngine) {
@@ -160,7 +163,7 @@ export default class index extends PageBase {
       return false
     }
   }
-  // **********左侧页面列表操作**************************************************
+  // **********左侧页面列表操作**************************************
   private async onEditPage(pageId: string) {
     if (this.isHaveOpened(pageId)) {
       this.currentOpenPageId = pageId
@@ -208,7 +211,7 @@ export default class index extends PageBase {
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)
   }
-  // **********顶部操作栏************************************************
+  // **********顶部操作栏*****************************************
   private async onSaveCurrentPage() {
     if (!this.currentShowEngine) {
       return
@@ -224,9 +227,9 @@ export default class index extends PageBase {
   private onPreView() {
     ;(this.$refs.previewPage as any).show(this.applicationId)
   }
-  // *************右侧属性窗**********************************************
+  // *************右侧属性窗***************************************
   private activeName: string = 'first'
-  // ********************************************************************
+  // **********ctrl+S保存******************************************
   private _onKeyDown = (e: any) => {
     var keyCode = e.keyCode || e.which || e.charCode
     var ctrlKey = e.ctrlKey || e.metaKey
@@ -235,6 +238,8 @@ export default class index extends PageBase {
       this.onSaveCurrentPage()
     }
   }
+  // *************************************************************
+  private onWebsockMsg = (msg: websocketMsgTemp<any>) => {}
 }
 </script>
 
