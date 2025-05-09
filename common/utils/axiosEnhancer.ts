@@ -132,7 +132,6 @@ axiosInstance.interceptors.response.use(
 )
 
 function toLogin() {
-  debugger
   // todo:等做登陆时再放开.
   // alertWarning('尚未登录或者会话超时,即将重新登录...');
   // Store.clear();

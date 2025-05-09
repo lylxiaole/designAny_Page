@@ -30,7 +30,7 @@
       <div class="flexHorilanLayout" style="height: 1rem; font-size: 12px; color: #cdcdcd">Email&nbsp;&nbsp;&nbsp;742923150@qq.com</div>
       <div class="flexHorilanLayout" style="height: 1rem; font-size: 12px; color: #cdcdcd">
         Github&nbsp;&nbsp;&nbsp;
-        <a href="https://github.com/design-any/release">https://github.com/design-any/release</a>
+        <a href="https://github.com/design-any/DesignAny-LowCode-Publish">https://github.com/design-any/DesignAny-LowCode-Publish</a>
       </div>
     </div>
   </div>

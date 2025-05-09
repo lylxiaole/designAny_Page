@@ -455,6 +455,7 @@ export default class index extends ComponentBase {
       parentGroupId: res.parentGroupId,
       label: res.name,
       type: 'page',
+      pageType: pagetype,
       index: res.index,
       children: []
     }
@@ -486,6 +487,7 @@ export default class index extends ComponentBase {
         isDefault: false,
         parentGroupId: res.parentGroupId,
         label: res.name,
+        pageType: pageType.customPage,
         type: 'page',
         index: res.index,
         children: []

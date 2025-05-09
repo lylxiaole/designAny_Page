@@ -30,6 +30,7 @@ export class TreeNodeDC {
   parentGroupId: string
   label: string
   type: string
+  pageType: number
   index: number
   isDefault: boolean
   children: TreeNodeDC[] = []
