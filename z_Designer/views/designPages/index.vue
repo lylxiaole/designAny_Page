@@ -67,8 +67,7 @@ import websocketChat, { websocketMsgTemp, msgType } from '@common/utils/websocke
 })
 export default class index extends PageBase {
   // **********当前应用*******************
-
-  private websock: websocketChat = null
+  private websock: websocketChat = new websocketChat()
 
   private applicationId: string = null
   private application: ApplicationDC = null
@@ -76,8 +75,8 @@ export default class index extends PageBase {
     this.applicationId = (this as any).$route.query.appId as string
     $(window).on('keydown', this._onKeyDown)
     this.initApplication()
-    this.websock = websocketChat.Initlize()
-    this.websock.listenOnMessgae(this.onWebsockMsg)
+    //
+    websocketChat.Initlize()
   }
   private async initApplication() {
     await loadExtends()
@@ -144,6 +143,7 @@ export default class index extends PageBase {
   }
   //关闭页面
   private async closePage(pageId: string) {
+    this.sendClosePageMsg(pageId)
     let engineIndex = this.openPageEngines.findIndex((o) => o.Id === pageId)
     if (engineIndex > -1) {
       let designengine = this.openPageEngines[engineIndex]
@@ -169,6 +169,9 @@ export default class index extends PageBase {
       this.currentOpenPageId = pageId
       return
     }
+
+    this.sendEditingPageMsg(pageId)
+
     let res = await GetPageDetail(pageId)
     //
     let designLayout: any = typeof PCPageDesign
@@ -238,8 +241,13 @@ export default class index extends PageBase {
       this.onSaveCurrentPage()
     }
   }
-  // *************************************************************
-  private onWebsockMsg = (msg: websocketMsgTemp<any>) => {}
+  // ***************websocket消息**********************************************
+  private sendEditingPageMsg(pageId: string) {
+    this.websock.sendMessageToServer(pageId, msgType.user_editingPage)
+  }
+  private sendClosePageMsg(pageId: string) {
+    this.websock.sendMessageToServer(pageId, msgType.user_closePage)
+  }
 }
 </script>
 

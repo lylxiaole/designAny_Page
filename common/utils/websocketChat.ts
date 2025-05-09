@@ -1,83 +1,11 @@
-import W3CWebSocket from 'websocket'
-
 import { getConfigByName } from '@common/baseConfigs'
 const websockAddr = () => getConfigByName('websocketAddr')
+import { getStore } from '@common/baseConfigs'
 
 export enum msgType {
-  //  ********system message 0-999****************************************************
-  /// <summary>
-  /// 当自己的设备上线
-  /// </summary>
-  system_onMachineOnline = 0,
-  /// <summary>
-  /// 当自己的设备下线
-  /// </summary>
-  system_onMachineDownline = 1,
-  /// <summary>
-  /// 当获取到自己在线的设备
-  /// </summary>
-  system_onGetMyMachine = 2,
-  /// <summary>
-  /// 客户端不在线
-  /// </summary>
-  system_clientNotOnline = 3,
-  /// <summary>
-  /// 开始直播
-  /// </summary>
-  system_startPlay = 50,
-  /// <summary>
-  /// 直播服务端创建offer成功
-  /// </summary>
-  system_onPlayServerOfferCreated = 51,
-  /// <summary>
-  /// 直播端创建answer给服务端
-  /// </summary>
-  system_setPlayServerAnswer = 52,
-  /// <summary>
-  /// 直播服务端创建了icecandidate
-  /// </summary>
-  system_onPlayServerIcecandidate = 53,
-  /// <summary>
-  /// 直播端创建了icecandidate
-  /// </summary>
-  system_onPlayerIcecandidate = 54,
-  /// <summary>
-  /// 观看直播
-  /// </summary>
-  system_onWatchPlay = 60,
-  /// <summary>
-  /// 观看者offer创建成功
-  /// </summary>
-  system_onWatcherOfferCreated = 61,
-  /// </summary>
-  system_onWatcherIcecandidate = 62,
-  /// <summary>
-  /// 直播端创建answer给服务端
-  /// </summary>
-  system_setWatcherAnswer = 63,
-  //  ********machine message 1000-9999****************************************************
-  client_onRequestConnect = 1000,
-  client_onAnswerRequestConnect = 1001,
-  client_onCutPeerConnection = 1002,
-  client_onCaller_CreateOffer = 1003,
-  client_onCallee_CreateAnswer = 1004,
-  client_onCaller_CreateIceCandite = 1005,
-  client_onCallee_CreateIceCandite = 1006,
-  client_onCaller_SetRemoteSdpCompleted = 1007,
-  client_onCallee_SetRemoteSdpCompleted = 1008,
-  client_onNameChange = 1050,
-  //  ********user message 10000-99999****************************************************
-  user_onPeerMessage = 10000,
-  user_onGroupMessage = 10001,
-  user_onRemoveFromGroup = 10002,
-  user_onNewRequest = 10003,
-  user_onDeleteFriend = 10004,
-  user_onAgreeJoinGroup = 10005,
-  user_onAgreeAddFriend = 10006,
-
-  user_onRequestConnect = 10050,
-  user_onRefuseConnect = 10051,
-  user_onAcceptConnect = 10052
+  user_editingPage = 1,
+  user_closePage = 2,
+  server_lockingPageChange = 100
 }
 export class websocketMsgTemp<T> {
   senderId: string = ''
@@ -91,44 +19,108 @@ export class websocketMsgTemp<T> {
 declare type onMessageCallback = (data: websocketMsgTemp<any>) => void
 
 export default class websocketChat {
-  private static websocketClient: W3CWebSocket.w3cwebsocket
-  private static currentMachineId: string
+  private static websocketClient: WebSocket | null
   private static _onmessageCallbacks: onMessageCallback[] = []
+  private static _socketAddress: string
 
   public static Initlize() {
     let token = window.localStorage.getItem('token')
     let websocketServerAddress = websockAddr()
 
     if (!websocketChat.websocketClient) {
-      websocketChat.websocketClient = new W3CWebSocket.w3cwebsocket(websocketServerAddress + token)
+      websocketChat.websocketClient = new WebSocket(websocketServerAddress + '?token=' + token)
       websocketChat.websocketClient.onmessage = websocketChat.onwebsocketMessage
-      websocketChat.websocketClient.onerror = function () {
+      websocketChat.websocketClient.onerror = () => {
+        websocketChat.startLoop()
         window.console.info('Connection Error')
       }
-      websocketChat.websocketClient.onopen = function () {
+      websocketChat.websocketClient.onopen = () => {
+        websocketChat.startLoop()
         window.console.info('WebSocket Client Connected')
+        // 开始订阅
+        // let data = {
+        //   requestHead: 'Logon',
+        //   message: {
+        //     token: getToken()
+        //   }
+        // }
+        // websocketChat.websocketClient?.send(JSON.stringify(data))
       }
-      websocketChat.websocketClient.onclose = function () {
+
+      websocketChat.websocketClient.onclose = () => {
+        websocketChat.startLoop()
         window.console.info('echo-protocol Client Closed')
       }
     }
-    return websocketChat.websocketClient
+  }
+
+  public static Close() {
+    if (!websocketChat.websocketClient) {
+      return
+    }
+    websocketChat._onmessageCallbacks = []
+    websocketChat.websocketClient.close()
   }
 
   private static onwebsocketMessage(e: any) {
     if (!e.data) {
       return
     }
-    var data = JSON.parse(e.data) as websocketMsgTemp<any>
+    // window.console.log('onwebsocketMessage:', e)
+    var data = JSON.parse(e.data)
     // window.console.log('**********消息回调个数:', websocketChat._onmessageCallbacks.length)
     websocketChat._onmessageCallbacks.forEach((o) => o(data))
   }
 
+  public static isStartLoop: boolean = false
+  public static threadSleep(millionSeconds: number) {
+    return new Promise((resolve, reject) => {
+      window.setTimeout(() => {
+        resolve(null)
+      }, millionSeconds)
+    })
+  }
+  public static async startLoop() {
+    if (websocketChat.isStartLoop === true) {
+      return
+    }
+    websocketChat.isStartLoop = true
+    while (websocketChat.isStartLoop) {
+      // console.log('startLoop')
+      let isok = true
+
+      try {
+        // websocketChat.websocketClient?.send('心跳')
+        if (websocketChat.websocketClient?.readyState !== websocketChat.websocketClient?.OPEN) {
+          console.log('websocket已经断开，开始重新创建..................')
+          try {
+            websocketChat.websocketClient?.close()
+          } catch (error) {}
+          isok = false
+        }
+      } catch (error) {
+        try {
+          console.log('主动关闭websocket')
+          isok = false
+          websocketChat.websocketClient?.close()
+        } catch (error) {}
+      }
+      await websocketChat.threadSleep(3000)
+      if (isok === false) {
+        websocketChat.websocketClient = null
+        websocketChat.isStartLoop = false
+        websocketChat.Initlize()
+        break
+      }
+
+      // console.log('websocket状态正常，继续运行循环检查................' + websocketChat.websocketClient.OPEN)
+    }
+  }
   // *******实例方法************************************************************************************
-  public sendMessageTo(receiverId: string, content: any, msgType: msgType) {
+  public sendMessageToServer(content: any, msgType: msgType) {
+    let machineId = getStore().state.app.machineId
     var message: any = new websocketMsgTemp<any>()
-    message.senderId = websocketChat.currentMachineId
-    message.receiverId = receiverId
+    message.senderId = machineId
     message.content = content
     message.msgType = msgType
     websocketChat.websocketClient.send(JSON.stringify(message))
@@ -146,4 +138,5 @@ export default class websocketChat {
       websocketChat._onmessageCallbacks.splice(index, 1)
     }
   }
+  // *********************************************************
 }

@@ -17,5 +17,6 @@ import compsIcon from './comps.svg?inline'
 import normalPageIcon from './页面.svg?inline'
 import dialogPageIcon from './弹窗页面.svg?inline'
 import customPageIcon from './自定义页面.svg?inline'
+import icondotIcon from './icon_dot.svg?inline'
 
-export { saveIcon, pluginsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon, keyvalueIcon, compsIcon, httpserverIcon, javascriptlineIcon, normalPageIcon, dialogPageIcon, customPageIcon }
+export { saveIcon, pluginsIcon, quitIcon, previewIcon, behaviorIcon, chexiaoIcon, fanchexiaoIcon, fanchexiaodisableIcon, chexiaodisableIcon, keyvalueIcon, compsIcon, httpserverIcon, javascriptlineIcon, normalPageIcon, dialogPageIcon, customPageIcon, icondotIcon }

@@ -1,7 +1,8 @@
 const appState = {
   namespaced: true,
   state: {
-    appCount: 0
+    appCount: 0,
+    machineId: null
   },
   mutations: {
     addAppCount(state, data) {

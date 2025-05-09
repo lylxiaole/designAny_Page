@@ -1,5 +1,6 @@
 import NProgress from 'nprogress' // progress bar
 import { ElMessage } from 'element-plus'
+import { autoLogin } from '@common/apis/user'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 const whiteList = ['/login', '/auth-redirect', '/register', '/viewPages'] // no redirect whitelist
@@ -35,11 +36,11 @@ async function hasTokenOption(to, from, next) {
     NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     return
   }
+
   // determine whether the user has obtained his permission roles through getInfo
-  if (currentStore.state.system.machineId) {
-    /**已经登录并且有用户信息，指定到其它路由 */
-    next()
-    return
+  if (!currentStore.state.app.machineId) {
+    let machineInfo = await autoLogin()
+    currentStore.state.app.machineId = machineInfo.machineId
   }
 
   try {

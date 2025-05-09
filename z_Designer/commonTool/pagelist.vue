@@ -15,14 +15,19 @@
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
                 @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
-                  <div>
+                  <div class="verticalAlignCenter">
+                    <el-image v-if="isLockingPage(data.id)" draggable="false" style="width: 8px; height: 8px" fit="contain"
+                      :src="icondotIcon"></el-image>
+
                     <el-image v-if="data.pageType===0" draggable="false" style="width: 20px; height: 20px" fit="contain"
                       :src="normalPageIcon"></el-image>
+
                     <el-image v-else-if="data.pageType===1" draggable="false" style="width: 20px; height: 20px" fit="contain"
                       :src="dialogPageIcon"></el-image>
+
                     <el-image v-else-if="data.pageType===2" draggable="false" style="width: 20px; height: 20px" fit="contain"
                       :src="customPageIcon"></el-image>
-                    <!-- <span class="icon iconfont">&#xe627;</span> -->
+
                     <span v-if="data.isDefault">【{{$t('tip.firstPage')}}】</span>
                   </div>
                 </template>
@@ -82,7 +87,9 @@ import { getLocale } from '@common/baseConfigs'
 
 import pluginPageChooser from './foreExtendsManage/pluginPageChooser.vue'
 
-import { normalPageIcon, customPageIcon, dialogPageIcon } from '@/assets/designIcons'
+import { normalPageIcon, customPageIcon, dialogPageIcon, icondotIcon } from '@/assets/designIcons'
+import websocketChat, { websocketMsgTemp, msgType } from '@common/utils/websocketChat'
+import { ElMessage } from 'element-plus'
 
 @Options({
   components: {
@@ -91,15 +98,25 @@ import { normalPageIcon, customPageIcon, dialogPageIcon } from '@/assets/designI
   }
 })
 export default class index extends ComponentBase {
+  private lockingPages: string[] = []
+  private websock: websocketChat = new websocketChat()
+
+  private isLockingPage = (pageId: string) => {
+    return this.lockingPages.indexOf(pageId) !== -1
+  }
+
+  // *********************************
   private normalPageIcon = normalPageIcon
   private customPageIcon = customPageIcon
   private dialogPageIcon = dialogPageIcon
+  private icondotIcon = icondotIcon
 
   private seachVal: string = ''
   private rightMenus: string[] = []
   private treeData: TreeNodeDC[] = []
   @Prop()
   private currentApplication: ApplicationDC
+
   @Watch('currentApplication', { deep: true })
   private async onApplicationChanged(application: ApplicationDC) {
     if (application) {
@@ -194,7 +211,9 @@ export default class index extends ComponentBase {
     }
     return data
   }
-  mounted() {}
+  mounted() {
+    this.websock.listenOnMessgae(this.onWebsockMsg)
+  }
   // ***************树********************************************
   private handleDragStart(node, ev) {
     // console.log('drag start', node)
@@ -370,6 +389,11 @@ export default class index extends ComponentBase {
         this.onDeletePage(this.currentRightClickNode.id)
         break
       case getLocale().t('opts.edit'):
+        if (this.isLockingPage(this.currentRightClickNode.id)) {
+          ElMessage.error('当前页面正在被其他人编辑，无法打开')
+          return
+        }
+
         this.onEditPage(this.currentRightClickNode.id)
         break
       case getLocale().t('opts.setDefaultPage'):
@@ -496,6 +520,13 @@ export default class index extends ComponentBase {
   }
   private onClickBlankArea() {
     ;(this.$refs.ctxMenu as any).hide()
+  }
+  // ****************************************************
+  private onWebsockMsg = (msg: websocketMsgTemp<any>) => {
+    if (msg.msgType === msgType.server_lockingPageChange) {
+      let pages = msg.content
+      this.lockingPages = pages
+    }
   }
   // **************对外事件********************************
   @Emit('onEditPage')
