@@ -385,6 +385,10 @@ export default class index extends ComponentBase {
         this.addGroup()
         break
       case getLocale().t('opts.delete'):
+        if (this.isLockingPage(this.currentRightClickNode.id)) {
+          ElMessage.error('当前页面正在被其他人编辑，无法删除')
+          return
+        }
         this.deleteNode()
         this.onDeletePage(this.currentRightClickNode.id)
         break
