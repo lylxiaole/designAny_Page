@@ -1,12 +1,15 @@
 <template>
   <el-row style="height: 357px">
+    <!-- **************************************************** -->
     <el-col :span="7">
       <div style="height: 357px; width: 124px; overflow-x: hidden; overflow-y: auto">
-        <div v-for="group in systemComponents" :key="group.groupName" class="compGroup verticalAlignCenter flexHorilanLayout" @click="onClick(group)">
+        <div v-for="group in systemComponents" :key="group.groupName" :class="{active:compGroupName===group.groupName}"
+          class="compGroup verticalAlignCenter flexHorilanLayout" @click="onClick(group)">
           {{ group.groupName }}
         </div>
       </div>
     </el-col>
+    <!-- **************************************************** -->
     <el-col :span="17">
       <div style="display: flex; flex-wrap: wrap">
         <div v-for="item in dataSource" :key="item.compCode" class="mydragItem" draggable="true" :dragType="dragType" :compName="item.name"
@@ -23,6 +26,7 @@
         </div>
       </div>
     </el-col>
+    <!-- **************************************************** -->
   </el-row>
 </template>
 
@@ -202,6 +206,10 @@ img {
   cursor: pointer;
   background-color: rgba(240, 242, 245, 1);
   color: rgba(40, 40, 40, 1);
+}
+
+.compGroup.compGroup.active {
+  background-color: #18aeb7;
 }
 
 .mydragItem.container {
