@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%"
+  <div style="width: 100%; height: 100%;background-size:cover;"
     :style="{ background: backgroundCute, 'border-radius': borderRadius + 'px', 'box-shadow': showBoxShadow ? boxShadow : 'none' }"></div>
 </template>
 
@@ -30,7 +30,7 @@ export default class QuadrilateralComponent extends EngineComponent {
     if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
-    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '")'
+    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '") no-repeat center center'
   }
 
   @DPropAttr(new Number_Setting(getLocale().t('tip.borderRadius'), PropertyGroupName.style, true, 'px'))

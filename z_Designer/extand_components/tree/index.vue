@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%" :style="{ background: backgroundCute  }">
+  <div style="width: 100%; height: 100%;background-size:cover;" :style="{ background: backgroundCute  }">
     <el-input v-if="isShowFilter" style="height:30px" v-model="filterText" placeholder="" />
     <div :style="{height:treeHeight}" style="overflow-y:auto">
       <el-tree ref="treeRef" class="filter-tree" :data="treeData" :props="defaultProps" default-expand-all :filter-node-method="filterNode"
@@ -39,7 +39,7 @@ export default class Index extends EngineComponent {
     if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
-    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '")'
+    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '") no-repeat center center'
   }
   // **********搜索功能************************
   private filterText: string = ''
