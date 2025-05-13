@@ -4,12 +4,12 @@
       :limit="maxFileLength" list-type="text" :auto-upload="false" multiple>
 
       <template #trigger>
-        <el-button type="primary">select file</el-button>
+        <el-button type="primary">选择文件</el-button>
       </template>
 
       <template v-if="fileList.length >= maxFileLength" #tip>
         <div class="el-upload__tip">
-          The maximum number of uploads has been reached
+          已经达到最大文件数量
         </div>
       </template>
 

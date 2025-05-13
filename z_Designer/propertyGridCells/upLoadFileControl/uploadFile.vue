@@ -3,7 +3,7 @@
     <el-button class="themeButton" type="primary" @click="showUploadModal" size="small"
       style="width: 82px; height: 24px; background: rgba(24, 183, 101, 1); border-radius: 2px; border: 1px solid rgba(12, 155, 81, 1); border-color: rgba(24, 183, 101, 1)">
       <img v-if="imageUrl" v-lazy="imageUrl" :width="15 + 'px'" :height="15 + 'px'" />
-      <span>Setting</span>
+      <span>{{$t('tip.Setting')}}</span>
     </el-button>
 
     <el-dialog ref="previewPopup" title="Upload File" class="bhaviorDialog" style="height: 400px; width: 600px" v-model="windowVisible"
@@ -21,7 +21,7 @@
             </div>
           </template>
           <template v-else #default>
-            <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">The maximum number of uploads has been reached</div>
+            <div style="height: 100%; width: 100%" class="flexHorilanLayout verticalAlignCenter">已经达到最大文件数量</div>
           </template>
           <!-- ****已上传文件************************************ -->
           <template #file="{ file }">
