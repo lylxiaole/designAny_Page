@@ -15,7 +15,7 @@
           <template #default="{ data }">
             <div v-if="data.type === 'api'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
-                @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <div>
                     <span class="icon iconfont">&#xe627;</span>
@@ -25,7 +25,7 @@
             </div>
             <div v-if="data.type === 'group'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
-                @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <span class="icon iconfont">&#xe626;</span>
                 </template>
@@ -279,13 +279,7 @@ export default class apiList extends ComponentBase {
     window.console.log('allowDrag', draggingNode)
     return true
   }
-  /**当节点名称改变后 */
-  private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {
-    // let find = this.searchNodeById(id, this.treeData)
-    // if (nodedata.type === 'api') {
-    // } else {
-    // }
-  }
+
   /**当确定节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
     let find = this.searchNodeById(id, this.treeData)

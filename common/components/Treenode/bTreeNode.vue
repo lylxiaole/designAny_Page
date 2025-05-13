@@ -37,7 +37,6 @@ export default class bTreeNode extends Vue {
   private onNodevalChanged(e: any) {
     // window.console.log(this.currentValue)
     this.updateValue_Inner(this.currentValue)
-    this.onValueChanged(this.nodeKey, this.currentValue)
     this.onSureNodeName(this.nodeKey, this.currentValue)
     this.isEdit = false
   }
@@ -53,9 +52,6 @@ export default class bTreeNode extends Vue {
       ;(this.$refs.currentInput as any).select()
     })
   }
-
-  @Emit('onValueChanged')
-  private onValueChanged(nodeKey: string, val: string) {}
 
   @Emit('onSureNodeName')
   private onSureNodeName(nodeKey: string, val: string) {}
