@@ -38,17 +38,11 @@ export default class bTreeNode extends Vue {
     // window.console.log(this.currentValue)
     this.updateValue_Inner(this.currentValue)
     this.onValueChanged(this.nodeKey, this.currentValue)
+    this.onSureNodeName(this.nodeKey, this.currentValue)
+    this.isEdit = false
   }
 
   private onTreeNodeBlur(e: any) {
-    if (!this.currentValue) {
-      // this.$confirm({
-      //   content: '不能为空'
-      // })
-      this.currentValue = this.oldValue
-    } else {
-      this.onSureNodeName(this.nodeKey, this.currentValue)
-    }
     this.isEdit = false
   }
 

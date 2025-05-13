@@ -7,27 +7,14 @@
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 50px)">
       <div style="overflow: auto; width: 100%; height: 100%" @contextmenu.prevent="onTreeRightClick">
-        <el-tree
-          node-key="id"
-          @node-contextmenu="onTreeNodeRightClick"
-          :data="treeData"
-          default-expand-all
-          @node-drag-start="handleDragStart"
-          @node-drag-enter="handleDragEnter"
-          @node-drag-leave="handleDragLeave"
-          @node-drag-over="handleDragOver"
-          @node-drag-end="handleDragEnd"
-          @node-drop="handleDrop"
-          @current-change="onCurrentNodeChange"
-          :allow-drop="allowDrop"
-          :allow-drag="allowDrag"
-          :expand-on-click-node="false"
-          draggable
-          highlight-current
-        >
+        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all @node-drag-start="handleDragStart"
+          @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd"
+          @node-drop="handleDrop" @current-change="onCurrentNodeChange" :allow-drop="allowDrop" :allow-drag="allowDrag" :expand-on-click-node="false"
+          draggable highlight-current>
           <template #default="{ data }">
             <div v-if="data.type === 'api'">
-              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id" @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <div>
                     <span class="icon iconfont">&#xe627;</span>
@@ -36,7 +23,8 @@
               </btreeNode>
             </div>
             <div v-if="data.type === 'group'">
-              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id" @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <span class="icon iconfont">&#xe626;</span>
                 </template>
@@ -46,7 +34,8 @@
         </el-tree>
 
         <v-contextmenu ref="ctxMenu">
-          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px" @click="onRightMenuChoose(menu)">
+          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
+            @click="onRightMenuChoose(menu)">
             <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
             <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
           </v-contextmenu-item>
@@ -61,7 +50,18 @@ import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { ApiContentDC, DesignedAPIDC, DesignedAPIGroupDC } from '@common/apis/designApi'
-import { AddApiGroup, DeleteApiGroup, UpdateApiGroup, GetGroupApisAll, AddAPI, DeleteAPI, UpdateAPI, UpdateNodesSort, UpdateSertAPIContent, GetApiSimpleInfo } from '@common/apis/designApi'
+import {
+  AddApiGroup,
+  DeleteApiGroup,
+  UpdateApiGroup,
+  GetGroupApisAll,
+  AddAPI,
+  DeleteAPI,
+  UpdateAPI,
+  UpdateNodesSort,
+  UpdateSertAPIContent,
+  GetApiSimpleInfo
+} from '@common/apis/designApi'
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 
 class TreeNodeDC {
@@ -286,13 +286,7 @@ export default class apiList extends ComponentBase {
     window.console.log('allowDrag', draggingNode)
     return true
   }
-  /**当节点名称改变后 */
-  private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {
-    let find = this.searchNodeById(id, this.treeData)
-    if (nodedata.type === 'api') {
-    } else {
-    }
-  }
+
   /**当Sure节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
     let find = this.searchNodeById(id, this.treeData)

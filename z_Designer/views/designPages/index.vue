@@ -6,7 +6,8 @@
     </el-row>
     <el-row style="height: calc(100% - 60px); width: 100%; display: block; position: relative; display: block">
       <el-col style="width: 250px; height: 100%; float: left">
-        <pagelist :currentApplication="application" @onEditPage="onEditPage" @onDeletePage="onDeletePage"></pagelist>
+        <pagelist :currentApplication="application" @onEditPage="onEditPage" @onDeletePage="onDeletePage" @onPageNameChanged="onPageNameChanged">
+        </pagelist>
       </el-col>
       <el-col class="designArea" style="width: calc(100% - 500px); height: 100%; float: left">
         <el-tabs v-model="currentOpenPageId" @tab-remove="closePage" closable type="card" style="width: 100%; height: 100%">
@@ -213,6 +214,12 @@ export default class index extends PageBase {
   }
   private async onDeletePage(pageId: string) {
     this.closePage(pageId)
+  }
+  private async onPageNameChanged(pageId: string, name: string) {
+    let find = this.openPageEngines.find((o) => o.Id === pageId)
+    if (find) {
+      find.name = name
+    }
   }
   // **********顶部操作栏*****************************************
   private async onSaveCurrentPage() {

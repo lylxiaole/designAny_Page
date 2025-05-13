@@ -13,7 +13,7 @@
           <template #default="{ data }">
             <div v-if="data.type === 'page'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
-                @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <div class="verticalAlignCenter">
                     <el-image v-if="isLockingPage(data.id)" draggable="false" style="width: 8px; height: 8px" fit="contain"
@@ -35,7 +35,7 @@
             </div>
             <div v-if="data.type === 'group'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
-                @onValueChanged="(id, title) => onNodeNameChanged(id, title, data)" @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
                 <template #icon>
                   <span class="icon iconfont">&#xe626;</span>
                 </template>
@@ -280,13 +280,7 @@ export default class index extends ComponentBase {
   private allowDrag(draggingNode) {
     return true
   }
-  /**当节点名称改变后 */
-  private async onNodeNameChanged(id: string, newtitle: string, nodedata: any) {
-    let find = this.searchNodeById(id, this.treeData)
-    if (nodedata.type === 'page') {
-    } else {
-    }
-  }
+
   /**当Sure节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
     let find = this.searchNodeById(id, this.treeData)
@@ -294,6 +288,7 @@ export default class index extends ComponentBase {
     if (nodedata.type === 'page') {
       let data = this.makeDesignPageDCByNode(find)
       await UpdatePageName(data)
+      this.onPageNameChanged(find.id, newtitle)
     } else {
       let data = this.makeDesignPageGroupDCByNode(find)
       await UpdateGroupName(data)
@@ -397,7 +392,6 @@ export default class index extends ComponentBase {
           ElMessage.error('当前页面正在被其他人编辑，无法打开')
           return
         }
-
         this.onEditPage(this.currentRightClickNode.id)
         break
       case getLocale().t('opts.setDefaultPage'):
@@ -539,6 +533,9 @@ export default class index extends ComponentBase {
   private async onEditPage(pageId: string) {}
   @Emit('onDeletePage')
   private async onDeletePage(pageId: string) {}
+
+  @Emit('onPageNameChanged')
+  private async onPageNameChanged(pageId: string, name: string) {}
 }
 </script>
 
