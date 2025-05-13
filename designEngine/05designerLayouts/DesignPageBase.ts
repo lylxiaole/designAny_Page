@@ -19,7 +19,7 @@ export default class DesignPageBase extends EnginePage {
     if (!this.background_img || this.background_img.length < 1) {
       return this.background
     }
-    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '")'
+    return 'url("' + this.applicationContext.getFileApiAddr(this.background_img[0].uid) + '") no-repeat center center'
   }
 
   public allShells: DesignShell[] = []

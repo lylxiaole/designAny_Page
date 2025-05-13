@@ -1,6 +1,6 @@
 <template>
   <div :style="{ position: 'relative', width: width, height: height, left: left, top: top, background: backgroundCute, padding: '0px' }"
-    oncontextmenu="self.event.returnValue=false" style="border-radius: 0px"></div>
+    oncontextmenu="self.event.returnValue=false" style="border-radius: 0px;background-size:cover;"></div>
 </template>
 
 <script lang="ts">
