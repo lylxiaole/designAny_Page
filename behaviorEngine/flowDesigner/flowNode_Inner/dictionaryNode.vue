@@ -56,8 +56,8 @@ export default class dictionaryNode extends Vue {
 
   private allDictionary: any[] = []
 
-  private loadAllData() {
-    this.allDictionary = behaviorContext.allDictionary
+  private async loadAllData() {
+    this.allDictionary = await behaviorContext.getAllDictionary()
   }
 }
 </script>

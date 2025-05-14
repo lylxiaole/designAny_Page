@@ -296,6 +296,7 @@ export default class apiList extends ComponentBase {
   private currentRightClickNode: any = null
   private onTreeNodeRightClick(e: any, data: any) {
     // window.console.log('右击菜单树节点', data)
+
     e.stopPropagation()
     e.preventDefault()
     this.currentRightClickNode = data

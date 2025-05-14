@@ -40,8 +40,8 @@ export default class thirtyApiNode extends Vue {
 
   private currentSelectId: string = null
   private allApisTree: any[] = []
-  private loadAllApis() {
-    let allApis = behaviorContext.allThirtyApis
+  private async loadAllApis() {
+    let allApis = await behaviorContext.getAllThirtyApis()
     this.allApisTree = this.orgnizeTree(allApis)
   }
 
