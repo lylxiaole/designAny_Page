@@ -4,7 +4,7 @@
       <el-button style="height: 25px" @click="addDBHandle" size="small" type="primary">添加数据库</el-button>
     </el-row>
     <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
-      <div v-for="db in allDBS" :key="db.id" :style="dbItemStyle(db)" class="applicationItem" @click="selectDB(db)">
+      <div v-for="db in allDBS" :key="db.id" :style="dbItemStyle(db)" class="applicationItem verticalAlignCenter" @click="selectDB(db)">
         {{ db.databaseName }}
       </div>
     </el-row>
@@ -18,7 +18,7 @@
           <el-input v-model="dbForm.code" placeholder="数据库编码"></el-input>
         </el-form-item>
         <el-form-item label="数据库类型">
-          <el-select v-model="dbForm.type" placeholder="请选择数据库类型">
+          <el-select v-model="dbForm.type" placeholder="请选择数据库类型" style="width:150px">
             <el-option label="逻辑数据库" :value="0"></el-option>
           </el-select>
         </el-form-item>
@@ -26,7 +26,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="onCancelHandle">取 消</el-button>
-          <el-button type="primary" @click="onSureHandle">Sure</el-button>
+          <el-button type="primary" @click="onSureHandle">确定</el-button>
         </span>
       </template>
     </el-dialog>

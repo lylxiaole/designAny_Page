@@ -2,7 +2,7 @@
   <div style="height:100%;width:100%;position:relative">
     <el-row style="height:100%;display:block">
       <el-row style="height:60px;position:relative;display:block">
-        <el-button style="height:25px;right:15px;position:absolute;top:15px" @click="addColumnHandle" size="small" type="primary">新增字段</el-button>
+        <el-button style="height:25px;left:15px;position:absolute;top:15px" @click="addColumnHandle" size="small" type="primary">新增字段</el-button>
       </el-row>
       <el-row style="height:calc(100% - 60px)">
         <el-table size="small" :data="allColumns" :pagination="false" style="height:100%;" width="100%">
@@ -12,7 +12,7 @@
           </el-table-column>
           <el-table-column prop="type" label="字段类型" width="150">
             <template #default="scope">
-              <el-select v-model="scope.row.columnDataType" placeholder="Select" size="small" style="width: 100%">
+              <el-select v-model="scope.row.columnDataType" size="small" disabled style="width:120px">
                 <el-option key="1" label="String" :value="1" />
                 <el-option key="2" label="Boolean" :value="2" />
                 <el-option key="3" label="Number" :value="3" />
@@ -22,7 +22,7 @@
           </el-table-column>
           <el-table-column prop="isRequired" label="必填字段" width="150">
             <template #default="scope">
-              <el-switch v-model="scope.row.isRequired" />
+              <el-switch v-model="scope.row.isRequired" disabled />
             </template>
           </el-table-column>
 

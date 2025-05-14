@@ -4,9 +4,12 @@
       <el-button style="height: 25px" @click="addTableHandle" size="small" type="primary">添加表</el-button>
     </el-row>
     <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
-      <div v-for="table in allTables" :key="table.tableId" :style="dbItemStyle(table)" class="applicationItem" @click="selectTable(table)">
-        {{ table.tableName }}
-        <el-button size="small" style="margin-left: 35px" @click="(e) => deleteTable(e, table)">删除</el-button>
+      <div v-for="table in allTables" :key="table.tableId" :style="dbItemStyle(table)" class="applicationItem verticalAlignCenter"
+        @click="selectTable(table)">
+        <span style="float:left;width:calc(100% - 50px)">
+          {{ table.tableName }}
+        </span>
+        <el-button size="small" style="float:right;width:50px" @click="(e) => deleteTable(e, table)">删除</el-button>
       </div>
     </el-row>
     <!-- ********************************************************** -->
@@ -22,7 +25,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="onCancelHandle">取 消</el-button>
-          <el-button type="primary" @click="onSureHandle">Sure</el-button>
+          <el-button type="primary" @click="onSureHandle">确定</el-button>
         </span>
       </template>
     </el-dialog>

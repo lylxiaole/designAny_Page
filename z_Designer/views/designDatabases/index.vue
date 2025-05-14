@@ -3,7 +3,6 @@
     <dbList @onCurrentDBChanged="onCurrentDBChanged" style="width:250px;height:100%;float:left">
     </dbList>
     <tableIndex v-show="currentDB" :currentDB="currentDB" ref="tableIndex" style="width:calc(100% - 250px);height:100%;float:left"></tableIndex>
-    <!-- <applicationDetail :currentApplication="currentApplication" style="width:calc(100% - 250px);height:100%;float:left"></applicationDetail> -->
   </div>
 </template>
 

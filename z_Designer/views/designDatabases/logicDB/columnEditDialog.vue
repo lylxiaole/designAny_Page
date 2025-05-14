@@ -1,28 +1,30 @@
 <template>
-  <el-dialog title="编辑列" v-model="dialogVisible" width="30%" center>
-    <el-form ref="currentFrom" :inline="true" :model="columnForm">
+  <el-dialog title="编辑列" v-model="dialogVisible" width="400px" center>
+    <el-form ref="currentFrom" :inline="true" :model="columnForm" label-width="80">
       <el-form-item label="列名">
-        <el-input v-model="columnForm.columnName" placeholder="列名"></el-input>
+        <el-input v-model="columnForm.columnName" placeholder="列名" width="180px"></el-input>
       </el-form-item>
       <el-form-item label="列编码">
-        <el-input v-model="columnForm.columnCode" placeholder="列编码"></el-input>
+        <el-input v-model="columnForm.columnCode" placeholder="列编码" width="180px"></el-input>
       </el-form-item>
-      <el-form-item label="是否必填">
-        <el-switch v-model="columnForm.isRequired" />
-      </el-form-item>
+
       <el-form-item label="数据类型">
-        <el-select v-model="columnForm.columnDataType" placeholder="请选择数据类型">
+        <el-select v-model="columnForm.columnDataType" placeholder="请选择数据类型" style="width:180px">
           <el-option label="String" :value="1"></el-option>
           <el-option label="Boolean" :value="2"></el-option>
           <el-option label="Number" :value="3"></el-option>
           <el-option label="Json" :value="4"></el-option>
         </el-select>
       </el-form-item>
+
+      <el-form-item label="是否必填">
+        <el-switch v-model="columnForm.isRequired" />
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="onCancelHandle">取 消</el-button>
-        <el-button type="primary" @click="onSureHandle">Sure</el-button>
+        <el-button type="primary" @click="onSureHandle">确定</el-button>
       </span>
     </template>
   </el-dialog>

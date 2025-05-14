@@ -25,43 +25,16 @@ const routes: IRouteClass[] = [
           title: '后端工作流'
         },
         component: async () => require('./views/designApis/index.vue')
+      },
+      {
+        icon: 'icon-all-fill',
+        path: '/designDatabases',
+        name: 'designDatabases',
+        meta: {
+          title: '我的数据库'
+        },
+        component: async () => require('./views/designDatabases/index.vue')
       }
-      // {
-      //   icon: 'icon-all-fill',
-      //   path: '/designDatabases',
-      //   name: 'designDatabases',
-      //   meta: {
-      //     title: '我的数据库'
-      //   },
-      //   component: async () => import('./views/designDatabases/index.vue')
-      // },
-      // {
-      //   icon: 'icon-all-fill',
-      //   path: '/designThirtyApis',
-      //   name: 'designThirtyApis',
-      //   meta: {
-      //     title: getLocale().t('menu.HttpApi')
-      //   },
-      //   component: async () => require('./views/designThirtyApis/index.vue')
-      // },
-      // {
-      //   icon: 'icon-all-fill',
-      //   path: '/designDictionary',
-      //   name: 'designDictionary',
-      //   meta: {
-      //     title: getLocale().t('menu.Dictionarys')
-      //   },
-      //   component: async () => require('./views/designDictionary/index.vue')
-      // },
-      // {
-      //   icon: 'icon-all-fill',
-      //   path: '/designFunctions',
-      //   name: 'designFunctions',
-      //   meta: {
-      //     title: getLocale().t('menu.JSFuncs')
-      //   },
-      //   component: async () => require('./views/designFunctions/index.vue')
-      // }
     ]
   },
   {
