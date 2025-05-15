@@ -19,5 +19,5 @@ bin-release/
 node_modules
 package-lock.json
 yarn-error.log
-dist*
-dist/bundle.js
+dists*
+dists/bundle.js
