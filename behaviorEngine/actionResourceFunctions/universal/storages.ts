@@ -1,13 +1,14 @@
 import { getUuid } from '@common/utils'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import platform from '@design-any/interface/dist/enums/platform'
 import { getLocale } from '@common/baseConfigs'
+import fontActFuncBase from '../fontFuncBase'
 
 @resourceFuncAttr(getLocale().t('behav.StringCache'), '', funcGroup.storages, funcCode.windowLocalStorage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
-export class windowLocalStorage implements actFuncBase {
+export class windowLocalStorage implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage

@@ -1,7 +1,7 @@
 import { getUuid } from '@common/utils'
 import { EngineLayout, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import platform from '@design-any/interface/dist/enums/platform'
 
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
@@ -9,10 +9,11 @@ import { ElNotification } from 'element-plus'
 import { pageEmitter } from '@common/utils/eventBus'
 import { toRaw } from 'vue'
 import { getLocale } from '@common/baseConfigs'
+import fontActFuncBase from '../fontFuncBase'
 
 // *************************************************************************
 @resourceFuncAttr(getLocale().t('behav.MessageBox'), '', funcGroup.universalTool, funcCode.notificationDialog, platform.page, [], null)
-export class NotificationError implements actFuncBase {
+export class NotificationError implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -44,7 +45,7 @@ export class NotificationError implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.Pagejump'), '', funcGroup.universalTool, funcCode.leadToOtherPage, platform.page, [], null)
-export class leadToPage implements actFuncBase {
+export class leadToPage implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -56,7 +57,7 @@ export class leadToPage implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.Pagepopup'), '', funcGroup.universalTool, funcCode.pagePopup, platform.universal, [], null)
-export class pagePopup implements actFuncBase {
+export class pagePopup implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -69,7 +70,7 @@ export class pagePopup implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.PageContext'), '', funcGroup.resoucesInPage, funcCode.pageContext, platform.universal, [], null)
-export class pageContext implements actFuncBase {
+export class pageContext implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage

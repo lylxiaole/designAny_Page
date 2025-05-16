@@ -1,16 +1,17 @@
 import { getUuid } from '@common/utils'
 import { EngineLayout, EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import platform from '@design-any/interface/dist/enums/platform'
 
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { isPromise } from '@vue/shared'
 import { getLocale } from '@common/baseConfigs'
+import fontActFuncBase from '../fontFuncBase'
 
 // *************************************************************************
 @resourceFuncAttr(getLocale().t('behav.LayoutMethod'), '', funcGroup.resoucesInPage, funcCode.methodsInPage, platform.universal, [], null)
-export class methodsInPageMethod implements actFuncBase {
+export class methodsInPageMethod implements fontActFuncBase {
   currentActObj: actionObj
   currentBehavior: behavior
 
@@ -47,7 +48,7 @@ export class methodsInPageMethod implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.LayoutProperty'), '', funcGroup.resoucesInPage, funcCode.propertiesInPage, platform.universal, [{ key: getUuid(), name: 'input' }], { key: getUuid(), name: 'output' })
-export class propertiesInPageMethod implements actFuncBase {
+export class propertiesInPageMethod implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -70,7 +71,7 @@ export class propertiesInPageMethod implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.LayoutBehavior'), '', funcGroup.resoucesInPage, funcCode.behaviorsInPage, platform.universal, [], null)
-export class behaviorsInPageMethod implements actFuncBase {
+export class behaviorsInPageMethod implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -81,7 +82,7 @@ export class behaviorsInPageMethod implements actFuncBase {
 }
 // *************************************************************************
 @resourceFuncAttr(getLocale().t('behav.BehaviorInparam'), '', funcGroup.currentBehaviorInparam, funcCode.behaviorInparam, platform.universal, [], null)
-export class behaviorInparamMethod implements actFuncBase {
+export class behaviorInparamMethod implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage

@@ -1,7 +1,7 @@
 import { getUuid } from '@common/utils'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
+import { resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { actionObj, object_InParam } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import axios from 'axios'
@@ -10,9 +10,10 @@ import { JSFuncEntity, JSFuncGroupDC, AddOrUpdateFunc } from '@common/apis/desig
 import platform from '@design-any/interface/dist/enums/platform'
 import { getLocale } from '@common/baseConfigs'
 import { isArray } from 'element-plus/es/utils'
+import fontActFuncBase from '../fontFuncBase'
 
 @resourceFuncAttr(getLocale().t('behav.Dictionary'), '', funcGroup.universalTool, funcCode.dictionary, platform.universal, [], { key: getUuid(), name: 'output' })
-export class dictionarys implements actFuncBase {
+export class dictionarys implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -26,7 +27,7 @@ export class dictionarys implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.HttpApi'), '', funcGroup.universalTool, funcCode.thirtyApi, platform.universal, [], { key: getUuid(), name: 'output' })
-export class thirtyApis implements actFuncBase {
+export class thirtyApis implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -85,7 +86,7 @@ export class thirtyApis implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.Singleconditionjudgment'), '', funcGroup.universalTool, funcCode.oneParamJude, platform.universal, [{ key: getUuid(), name: 'inParam' }], { key: getUuid(), name: 'output' }, true)
-export class oneParamJude implements actFuncBase {
+export class oneParamJude implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -101,7 +102,7 @@ export class oneParamJude implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.FixedValue'), '', funcGroup.universalTool, funcCode.fixedVal, platform.universal, [], { key: getUuid(), name: 'output' })
-export class fixedValue implements actFuncBase {
+export class fixedValue implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
@@ -121,7 +122,7 @@ export class fixedValue implements actFuncBase {
 }
 
 @resourceFuncAttr(getLocale().t('behav.JSFunc'), '', funcGroup.universalTool, funcCode.jsFunction, platform.universal, [], null)
-export class jsFunction implements actFuncBase {
+export class jsFunction implements fontActFuncBase {
   currentActObj: actionObj
   currentLayout: EngineLayout
   currentPage: EnginePage
