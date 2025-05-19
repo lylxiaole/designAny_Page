@@ -13,42 +13,19 @@ export class ApiContentDC extends BaseClass {
   public content: string
 }
 export class DesignedAPIDC extends BaseClass {
-  public groupId: string
+  public userId: string
   public apiName: string
+  public type: number
+  public timerRule: string
   public desc: string
-  public index: number
-}
-export class DesignedAPIGroupDC extends BaseClass {
-  public parentGroupId: string
-  public groupName: string
-  public index: number
-  public childrenGroups: DesignedAPIGroupDC[]
-  public childrenAPIs: DesignedAPIDC[]
+  public enable: boolean
 }
 
-export async function UpdateNodesSort(nodes: any[]): Promise<boolean> {
-  let url = apiAddr() + `api/designApi/updateNodesSort`
-  const resp = await ajaxPost(url, nodes)
-  return resp.data
-}
-
-export async function AddApiGroup(dc: DesignedAPIGroupDC): Promise<DesignedAPIGroupDC> {
-  let url = apiAddr() + 'api/designApi/AddApiGroup'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
-export async function DeleteApiGroup(groupId: string): Promise<boolean> {
-  let url = apiAddr() + 'api/designApi/DeleteApiGroup'
-  const resp = await ajaxPost(url, groupId)
-  return resp.data
-}
-export async function UpdateApiGroup(dc: DesignedAPIGroupDC): Promise<boolean> {
-  let url = apiAddr() + 'api/designApi/UpdateApiGroup'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
-export async function GetGroupApisAll(): Promise<DesignedAPIGroupDC[]> {
-  let url = apiAddr() + 'api/designApi/GetGroupApisAll'
+export async function GetAllApis(type?: number): Promise<DesignedAPIDC> {
+  let url = apiAddr() + 'api/designApi/GetAllApis'
+  if (type) {
+    url += '?type=' + type
+  }
   const resp = await ajaxGet(url)
   return resp.data
 }

@@ -1,7 +1,8 @@
 <template>
   <div style="height:100%;width:100%;position:relative">
-    <apiList @onChooseApi="onChooseApi" style="width:250px;height:100%;float:left" />
-    <apiDetail ref="apiDetail" :currentApiContent="currentApiContent" style="width:calc(100% - 250px);height:100%;float:left" />
+    <!-- <apiList @onChooseApi="onChooseApi" style="width:250px;height:100%;float:left" />
+    <apiDetail ref="apiDetail" :currentApiContent="currentApiContent" style="width:calc(100% - 250px);height:100%;float:left" /> -->
+
   </div>
 </template>
 
@@ -30,7 +31,6 @@ export default class index extends PageBase {
     }
 
     this.currentApiContent = await GetApiContent(apiId)
-
     let behav: behavior = null
     if (this.currentApiContent && this.currentApiContent.content) {
       behav = JSON.parse(this.currentApiContent.content)
