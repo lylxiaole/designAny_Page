@@ -21,7 +21,7 @@ export class DesignedAPIDC extends BaseClass {
   public enable: boolean
 }
 
-export async function GetAllApis(type?: number): Promise<DesignedAPIDC> {
+export async function GetAllApis(type?: number): Promise<DesignedAPIDC[]> {
   let url = apiAddr() + 'api/designApi/GetAllApis'
   if (type) {
     url += '?type=' + type
