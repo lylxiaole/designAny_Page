@@ -34,11 +34,12 @@ import { EnginePage, EngineContainer } from '@design-any/interface/dist/LayoutIn
 import { deepClone, getUuid } from '@common/utils'
 import LogicFlow from '@logicflow/core'
 import { findFlowNode, flowNodeType, anchorType } from '../flowDesigner/flowTypes'
-import behaviorContext from '@behaviorEngine/01designerContext/context'
 import platform from '@design-any/interface/dist/enums/platform'
 
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 import { getLocale } from '@common/baseConfigs'
+import behaviorContext from '@behaviorEngine/01designerContext/context'
+import { getFuncObjsTree as wkgetFuncObjsTree } from '@common/apis/workflowApi'
 
 class TreeNodeDC {
   id: string
@@ -58,10 +59,14 @@ export default class index extends ComponentBase {
     this.currentFlow = flow
   }
 
-  currentPage: EnginePage
-  public async init(page: EnginePage, platform: platform) {
+  private currentPage: EnginePage
+  public async init(page: EnginePage, platf: platform) {
     this.currentPage = page
-    this.objGroup = getFuncObjsTree(platform)
+    if (platf == platform.server) {
+      this.objGroup = await wkgetFuncObjsTree()
+    } else {
+      this.objGroup = getFuncObjsTree(platf)
+    }
   }
   // **************************************************************
   mounted() {}

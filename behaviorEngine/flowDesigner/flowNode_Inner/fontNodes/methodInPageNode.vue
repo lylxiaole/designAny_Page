@@ -8,10 +8,10 @@
       </el-col>
     </el-row>
     <el-row style="width: 100%; height: 50%">
-      <el-col :span="6">Property:</el-col>
+      <el-col :span="6">Method:</el-col>
       <el-col :span="18">
-        <el-select v-model="currentPropField" placeholder="Select" size="small">
-          <el-option v-for="dprop in allProps" :key="dprop.field" :label="dprop.name" :value="dprop.field" />
+        <el-select v-model="currentMethodField" placeholder="Select" size="small">
+          <el-option v-for="method in allMethods" :key="method.field" :label="method.name" :value="method.field" />
         </el-select>
       </el-col>
     </el-row>
@@ -19,19 +19,19 @@
 </template>
 
 <script lang="ts">
-import { inject } from 'vue'
+import { inject, watch } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import { flowDesignNode } from '../flowTypes'
+import { flowDesignNode } from '../../flowTypes'
 import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
-@flowDesignNode(funcCode.propertiesInPage, flowNodeType.funcNormalNode)
+@flowDesignNode(funcCode.methodsInPage, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })
@@ -42,6 +42,7 @@ export default class propertyInPageNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
+
   // ***********布局*******************************
   private currentLayoutId: string = null
   private get currentLayout(): EngineLayout {
@@ -76,52 +77,60 @@ export default class propertyInPageNode extends Vue {
     }
     return trees
   }
+
   private onLayoutChange(nodedata, node, e: Event) {
-    this.currentPropField = null
+    this.currentMethodField = null
     this.actObj.resourceFilter.layoutId = nodedata.id
   }
   // *************方法*****************************
-  private currentPropField: string = null
-  private get allProps(): any[] {
+  private currentMethodField: string = null
+  private get allMethods(): any[] {
     if (!this.currentLayout) {
       return []
     }
 
     let res = []
-    for (let index = 0; index < this.currentLayout.properties.length; index++) {
-      const dprop = this.currentLayout.properties[index]
+    for (let index = 0; index < this.currentLayout.designerMethods.length; index++) {
+      const method = this.currentLayout.designerMethods[index]
       res.push({
-        field: dprop.field,
-        name: dprop.propertyName
+        field: method.methodField,
+        desc: method.description,
+        name: method.methodName
       })
     }
     return res
   }
 
-  @Watch('currentPropField')
-  private oncurrentPropFieldChanged(val) {
-    this.actObj.resourceFilter.propField = val
+  @Watch('currentMethodField')
+  private oncurrentMethodFieldChanged(val) {
+    this.actObj.resourceFilter.methodField = val
     if (!val) {
       this.actObj.inputParams = []
       this.actObj.outParam = null
     } else {
-      this.actObj.inputParams = []
+      let method = this.currentLayout.designerMethods.find((o) => o.methodField === val)
+      let inparams = []
+      for (let jndex = 0; jndex < method.inParams.length; jndex++) {
+        const inparam = method.inParams[jndex]
+        inparams.push({
+          key: makeParamKey(this.actObj.id, inparam.name),
+          name: inparam.name
+        } as any)
+      }
+      this.actObj.inputParams = inparams
 
-      this.actObj.inputParams.push({
-        key: makeParamKey(this.actObj.id, 'input'),
-        name: 'input'
-      } as any)
-      //出参
-      this.actObj.outParam = {
-        key: makeParamKey(this.actObj.id, 'output'),
-        name: 'output'
-      } as any
+      if (method.hasOutParam) {
+        this.actObj.outParam = {
+          key: makeParamKey(this.actObj.id, 'output'),
+          name: 'output'
+        } as any
+      }
     }
   }
 
   mounted() {
     this.currentLayoutId = this.actObj.resourceFilter.layoutId
-    this.currentPropField = this.actObj.resourceFilter.propField
+    this.currentMethodField = this.actObj.resourceFilter.methodField
   }
 }
 </script>

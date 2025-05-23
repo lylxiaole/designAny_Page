@@ -14,7 +14,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import { flowDesignNode } from '../flowTypes'
+import { flowDesignNode } from '../../flowTypes'
 import { actFuncBase, resourceFuncAttr, funcCode, funcGroup } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'

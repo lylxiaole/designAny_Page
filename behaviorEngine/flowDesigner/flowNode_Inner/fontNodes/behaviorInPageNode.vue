@@ -15,18 +15,18 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import { flowDesignNode } from '../flowTypes'
+import { flowDesignNode } from '../../flowTypes'
 import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
-@flowDesignNode(funcCode.behaviorsInParentPage, flowNodeType.funcNormalNode)
+@flowDesignNode(funcCode.behaviorsInPage, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })
-export default class behaviorInParentPageNode extends Vue {
+export default class behaviorInPageNode extends Vue {
   @Prop()
   private i18n: any
   @Prop()
@@ -42,11 +42,8 @@ export default class behaviorInParentPageNode extends Vue {
     }
 
     let res = []
-
-    let parentPage = this.currentPage.parentLayout as EnginePage
-
-    for (let index = 0; index < parentPage.behaviors.length; index++) {
-      const behavior = parentPage.behaviors[index]
+    for (let index = 0; index < this.currentPage.behaviors.length; index++) {
+      const behavior = this.currentPage.behaviors[index]
       res.push({
         id: behavior.id,
         desc: behavior.description,
@@ -64,9 +61,7 @@ export default class behaviorInParentPageNode extends Vue {
       this.actObj.outParam = null
       return
     }
-    let parentPage = this.currentPage.parentLayout as EnginePage
-
-    let behavior = parentPage.behaviors.find((o) => o.id === val)
+    let behavior = this.currentPage.behaviors.find((o) => o.id === val)
     let inparams = []
     if (behavior.inParams) {
       for (let jndex = 0; jndex < behavior.inParams.length; jndex++) {

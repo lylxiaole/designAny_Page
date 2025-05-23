@@ -14,14 +14,14 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
-import { flowDesignNode } from '../flowTypes'
+import { flowDesignNode } from '../../flowTypes'
 import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
-@flowDesignNode(funcCode.pagePopup, flowNodeType.funcNormalNode)
+@flowDesignNode(funcCode.leadToOtherPage, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })
@@ -47,12 +47,11 @@ export default class fixedValue extends Vue {
     for (let index = 0; index < allPage.length; index++) {
       const element = allPage[index]
       if (element.type === 'group') {
-        element.children = element.children.filter((o) => o.pageType === 1 || o.page === 'group')
+        element.children = element.children.filter((o) => o.pageType === 0 || o.page === 'group')
       }
     }
     return allPage
   }
-
   private onCurrentNodeChange(nodedata, node, obj) {
     if (nodedata.type === 'group') {
       throw '分组不能被选中'

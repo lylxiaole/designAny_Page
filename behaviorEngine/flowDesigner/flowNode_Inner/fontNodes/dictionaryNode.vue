@@ -11,7 +11,7 @@ import { inject, watch } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'
-import { flowDesignNode } from '../flowTypes'
+import { flowDesignNode } from '../../flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
