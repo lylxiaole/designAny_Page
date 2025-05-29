@@ -5,24 +5,28 @@
     </el-row>
     <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
       <div v-for="db in allDBS" :key="db.id" :style="dbItemStyle(db)" class="applicationItem verticalAlignCenter" @click="selectDB(db)">
-        {{ db.databaseName }}
+        <span style="float:left;width:calc(100% - 50px)">
+          {{ db.databaseName }}
+        </span>
+        <el-button size="small" style="float:right;width:50px" @click="(e) => deleteDatabase(e, db)">删除</el-button>
       </div>
     </el-row>
     <!-- ********************************************************** -->
     <el-dialog title="提示" v-model="dialogVisible" width="30%" center>
       <el-form ref="currentFrom" :inline="true" :model="dbForm" class="demo-form-inline">
         <el-form-item label="数据库名称">
-          <el-input v-model="dbForm.name" placeholder="数据库名称"></el-input>
+          <el-input v-model="dbForm.databaseName" placeholder="数据库名称"></el-input>
         </el-form-item>
         <el-form-item label="数据库编码">
-          <el-input v-model="dbForm.code" placeholder="数据库编码"></el-input>
+          <el-input v-model="dbForm.databaseCode" placeholder="数据库编码"></el-input>
         </el-form-item>
         <el-form-item label="数据库类型">
-          <el-select v-model="dbForm.type" placeholder="请选择数据库类型" style="width:150px">
-            <el-option label="逻辑数据库" :value="0"></el-option>
+          <el-select v-model="dbForm.databaseType" placeholder="请选择数据库类型" style="width:150px">
+            <el-option label="内置数据库" :value="0"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
+      <!-- ********************************************************** -->
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="onCancelHandle">取 消</el-button>
@@ -38,7 +42,9 @@ import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
 
 import ComponentBase from '@common/views/ComponentBase'
-import { GetDataBases, AddDataBase } from '@common/apis/designDB'
+import { GetDataBases, AddDataBase, DeleteDatabase } from '@common/apis/designDB'
+import { toRaw } from 'vue'
+import { ElMessageBox } from 'element-plus'
 
 @Options({})
 export default class dbList extends ComponentBase {
@@ -47,7 +53,6 @@ export default class dbList extends ComponentBase {
   mounted() {
     this.getAppList()
   }
-
   private async getAppList() {
     this.allDBS = await GetDataBases()
   }
@@ -55,9 +60,9 @@ export default class dbList extends ComponentBase {
   private dialogVisible: boolean = false
   @Ref('dbForm')
   private dbForm: any = {
-    name: '',
-    code: '',
-    type: 0
+    databaseName: '',
+    databaseCode: '',
+    databaseType: 0
   }
   private async addDBHandle() {
     this.dialogVisible = true
@@ -68,10 +73,7 @@ export default class dbList extends ComponentBase {
       return false
     }
     try {
-      let name = this.dbForm.name.trim()
-      let code = this.dbForm.code.trim()
-      let type = this.dbForm.type
-      let issuccess = await AddDataBase(name, code)
+      await AddDataBase(toRaw(this.dbForm))
       await this.getAppList()
     } catch (error) {
     } finally {
@@ -81,6 +83,22 @@ export default class dbList extends ComponentBase {
   private async onCancelHandle() {
     this.dialogVisible = false
   }
+
+  private async deleteDatabase(e, db) {
+    try {
+      await ElMessageBox.confirm('删除后不能恢复，是否要继续?', 'Warning', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        type: 'warning'
+      })
+      e.stopPropagation()
+      await DeleteDatabase(db)
+      this.currentDB = null
+      this.onCurrentDBChanged(null)
+      await this.getAppList()
+    } catch (error) {}
+  }
+
   // ***********************************************************************
   private dbItemStyle(db) {
     if (this.currentDB && this.currentDB.id === db.id) {

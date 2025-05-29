@@ -164,12 +164,11 @@ export class SearchPageResult<T> {
 }
 // **************************************************************
 
-export async function AddDataBase(databaseName: string, databaseCode: string): Promise<boolean> {
+export async function AddDataBase(data: DataBaseDC): Promise<boolean> {
   var database: DataBaseDC = new DataBaseDC()
-  database.databaseCode = databaseCode
-  database.databaseName = databaseName
+
   let url = apiAddr() + 'api/designDb/AddDataBase'
-  const resp = await ajaxPost(url, database)
+  const resp = await ajaxPost(url, data)
   return resp.data
 }
 export async function GetDataBases(): Promise<DataBaseDC[]> {

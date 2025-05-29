@@ -37,6 +37,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { GetTables, AddTable, DeleteTable } from '@common/apis/designDB'
+import { ElMessageBox } from 'element-plus'
 
 @Options({})
 export default class tableList extends ComponentBase {
@@ -71,7 +72,7 @@ export default class tableList extends ComponentBase {
       let name = this.tableForm.name.trim()
       let code = this.tableForm.code.trim()
 
-      let issuccess = await AddTable(this.currentDB.id, name, code)
+      await AddTable(this.currentDB.id, name, code)
       await this.refreshList()
     } catch (error) {
     } finally {
@@ -95,11 +96,18 @@ export default class tableList extends ComponentBase {
   }
   // ***********************************************************************
   private async deleteTable(e, table) {
-    e.stopPropagation()
-    await DeleteTable(table)
-    this.currentTable = null
-    this.onCurrentTableChanged(null)
-    await this.refreshList()
+    try {
+      await ElMessageBox.confirm('删除后不能恢复，是否要继续?', 'Warning', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        type: 'warning'
+      })
+      e.stopPropagation()
+      await DeleteTable(table)
+      this.currentTable = null
+      this.onCurrentTableChanged(null)
+      await this.refreshList()
+    } catch (error) {}
   }
   // ***********************************************************************
   @Emit('onCurrentTableChanged')

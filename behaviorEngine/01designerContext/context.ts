@@ -3,6 +3,7 @@ var behaviorContext = {
   allDictionary: [],
   allThirtyApis: [],
   allJSFuncs: [],
+  allDatabases: [],
   getAllDictionary: async () => {
     return []
   },
@@ -12,7 +13,9 @@ var behaviorContext = {
   getAllJSFuncs: async () => {
     return []
   },
-
+  getAllDatabases: async () => {
+    return []
+  },
   currentDesignPage: null,
   getFileApiAddr: (fileId) => {
     return behaviorContext.designerServerApiAddr + 'api/file/GetFile?fileId=' + fileId

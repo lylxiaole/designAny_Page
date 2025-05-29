@@ -17,16 +17,25 @@ import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInterface'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
-@flowDesignNode(funcCode.dataBaseOptions, flowNodeType.funcNormalNode)
+@flowDesignNode(funcCode.dataBaseAddOpt, flowNodeType.funcNormalNode)
 @Options({
   components: {}
 })
-export default class dataBaseOptionNode extends Vue {
+export default class dataBaseAddOptNode extends Vue {
   @Prop()
   private i18n: any
   @Prop()
   private actObj: actionObj
-  mounted() {}
+
+  private allDatabases: any[] = []
+
+  mounted() {
+    this.initData()
+  }
+
+  private async initData() {
+    this.allDatabases = await behaviorContext.getAllDatabases()
+  }
 }
 </script>
 
