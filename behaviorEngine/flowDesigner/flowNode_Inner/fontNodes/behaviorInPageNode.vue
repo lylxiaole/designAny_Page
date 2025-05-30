@@ -33,14 +33,12 @@ export default class behaviorInPageNode extends Vue {
   private actObj: actionObj
   @Prop()
   private currentPage: EnginePage
-
   // *************方法*****************************
   private currentBehaviorId: string = null
   private get allBehaviors(): any[] {
     if (!this.currentPage) {
       return []
     }
-
     let res = []
     for (let index = 0; index < this.currentPage.behaviors.length; index++) {
       const behavior = this.currentPage.behaviors[index]

@@ -77,7 +77,7 @@ export default class nodeDesignUI extends Vue {
 
     this.actObj = deepClone(actObj)
     let flowNodeVue = findFlowNodeInner(funcCode)
-    debugger
+
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage, i18n: getLocale().t })
 
     let app = createApp({

@@ -53,7 +53,7 @@
     </el-row>
     <!-- ***************************** -->
     <addApiDialog ref="addApiDialog" @onSure="onSureAddAPI" />
-    <behaviorDesigner ref="behaviorDesigner" />
+    <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
   </div>
 </template>
 
@@ -67,6 +67,7 @@ import addApiDialog from './addApiDialog.vue'
 import behaviorDesigner from '@behaviorEngine/behaviorDesigner/behaviorDesigner.vue'
 import platform from '@design-any/interface/dist/enums/platform'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
+import { ElMessage } from 'element-plus'
 
 @Options({
   components: { addApiDialog: addApiDialog, behaviorDesigner }
@@ -105,8 +106,13 @@ export default class apisTable extends ComponentBase {
     await DeleteAPI(row.id)
     this.refreshData()
   }
+
+  private currentDesigningApi: DesignedAPIDC = null
+  private currentApiContentDC: ApiContentDC = null
   private async onDesign(row: DesignedAPIDC) {
+    this.currentDesigningApi = row
     let data = await GetApiContent(row.id)
+    this.currentApiContentDC = data
 
     let behav: behavior = null
     if (data && data.content) {
@@ -116,6 +122,25 @@ export default class apisTable extends ComponentBase {
     }
 
     ;(this.$refs.behaviorDesigner as any).show(behav, null, platform.server)
+  }
+
+  // *************行为编辑功能************************
+  private async onSureBehavior(behav: behavior) {
+    debugger
+    if (this.currentApiContentDC) {
+      this.currentApiContentDC.content = JSON.stringify(behav)
+    } else {
+      this.currentApiContentDC = new ApiContentDC()
+      this.currentApiContentDC.apiId = this.currentDesigningApi.id
+      this.currentApiContentDC.content = JSON.stringify(behav)
+    }
+    //
+    try {
+      await UpdateSertAPIContent(this.currentApiContentDC)
+    } catch (error: any) {
+      ElMessage.error('更新API内容失败: ' + error.message)
+      return
+    }
   }
 }
 </script>
