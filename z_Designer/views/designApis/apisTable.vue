@@ -126,7 +126,6 @@ export default class apisTable extends ComponentBase {
 
   // *************行为编辑功能************************
   private async onSureBehavior(behav: behavior) {
-    debugger
     if (this.currentApiContentDC) {
       this.currentApiContentDC.content = JSON.stringify(behav)
     } else {

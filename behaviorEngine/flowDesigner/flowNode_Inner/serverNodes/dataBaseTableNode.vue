@@ -53,6 +53,10 @@ export default class dataBaseTableNode extends Vue {
   private get allTables() {
     return this.selectedDb ? this.selectedDb.tables : []
   }
+
+  private get selectedTable() {
+    return this.allTables.find((tab) => tab.tableId === this.selectedTableId)
+  }
   // *****************************************************
   mounted() {
     this.initData()
@@ -77,15 +81,19 @@ export default class dataBaseTableNode extends Vue {
       () => this.selectedTableId,
       (newVal: string, oldVal: string) => {
         this.actObj.resourceFilter.tableId = newVal
+        ///没选table时，清空输入输出参数
         if (!newVal) {
           this.actObj.inputParams = []
           this.actObj.outParam = null
           return
-        } else {
-          this.actObj.inputParams = []
-          this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, 'indata'), name: '新增数据' })
-          this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: '返回结果' }
         }
+        ///选了table时，设置输入输出参数
+        this.actObj.inputParams = []
+        for (let index = 0; index < this.selectedTable.columns.length; index++) {
+          const column = this.selectedTable.columns[index]
+          this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, column.columnCode), name: '字段:' + column.columnName })
+        }
+        this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: '数据' }
       }
     )
   }
