@@ -1241,10 +1241,10 @@
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz"
   integrity sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==
 
-"@design-any/interface@^0.0.695":
-  version "0.0.695"
-  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.695.tgz#c7f579d2d2a9eec25f23c8121944f850878e4400"
-  integrity sha512-T8EQBXC2O048kvyuxsrxurZiRA/fFpDLQeR04wlqtpE4+dFnh6+vVRSZTV1RGlkRB9opj3irhGKJh8yvMRv7hQ==
+"@design-any/interface@^0.0.696":
+  version "0.0.696"
+  resolved "https://registry.yarnpkg.com/@design-any/interface/-/interface-0.0.696.tgz#c9a95e24f2839239a60eec3c919131b833708cef"
+  integrity sha512-19yiGNE9kFIAZ3SEQC5EPzELUrE5h7iqJTFy9EYPwPXASpi5WMgwa98tFnnTFCkYiuYU7hpudfDzZymtTT8CCw==
 
 "@discoveryjs/json-ext@^0.5.0":
   version "0.5.7"

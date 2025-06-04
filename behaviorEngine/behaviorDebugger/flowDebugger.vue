@@ -40,6 +40,7 @@ import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import platform from '@design-any/interface/dist/enums/platform'
+import { excuteFactoryNext } from '@common/apis/workflowApi'
 
 @Options({
   components: { flowNodeDebuggerInfo }
@@ -139,7 +140,6 @@ export default class flowDebugger extends ComponentBase {
     this.onFlowCreated(this.currentFlow)
     this.clearNoUseEdge(this.currentFlow)
     // **********************************************
-    this.currentFactory.onActObjExcuted = this.onActObjExcuted
   }
   //清除无效连线
   private clearNoUseEdge(flow: LogicFlow) {
@@ -160,23 +160,25 @@ export default class flowDebugger extends ComponentBase {
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
   // ***********调试功能**************************
-  private onActObjExcuted(actobj: actionObj) {
+
+  private async nextStep() {
+    if (!this.currentFactory) {
+      return
+    }
+
+    let actobj = null
+    if (this.currentPlatform === platform.server) {
+      // this.currentFactory.excuteNextStepServer()
+      actobj = await excuteFactoryNext()
+    } else {
+      actobj = await this.currentFactory.excuteNextStep()
+    }
+
     try {
       let node = this.currentFlow.getNodeModelById(actobj.id)
       node.setActObj(actobj)
     } catch (error) {
       debugger
-    }
-  }
-  private nextStep() {
-    if (!this.currentFactory) {
-      return
-    }
-
-    if (this.currentPlatform === platform.server) {
-      // this.currentFactory.excuteNextStepServer()
-    } else {
-      this.currentFactory.excuteNextStep()
     }
   }
   private onReDo() {

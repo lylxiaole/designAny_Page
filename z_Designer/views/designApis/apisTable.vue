@@ -56,7 +56,7 @@
     <addApiDialog ref="addApiDialog" @onSure="onSureAddAPI" />
     <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
 
-    <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" custom-class="lyldrawer" size="90%" style="height: calc(100% - 50px);top:50px"
+    <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" custom-class="lyldrawer" size="90%" style="height:100%;top:0px"
       :with-header="true">
       <behaviorDebugger ref="behaviorDebugger" @onEditBehavior="onEditBehavior" />
     </el-drawer>
