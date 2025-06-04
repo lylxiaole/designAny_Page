@@ -46,6 +46,7 @@
           <template #default="{ row }">
             <el-button link type="primary" size="small" @click="onEdit(row)">{{$t('opts.edit')}}</el-button>
             <el-button link type="primary" size="small" @click="onDesign(row)">设计</el-button>
+            <el-button link type="primary" size="small" @click="onDebugger(row)">调试</el-button>
             <el-button link type="primary" size="small" @click="onDelete(row)">{{$t('opts.delete')}}</el-button>
           </template>
         </el-table-column>
@@ -54,6 +55,12 @@
     <!-- ***************************** -->
     <addApiDialog ref="addApiDialog" @onSure="onSureAddAPI" />
     <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
+
+    <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" custom-class="lyldrawer" size="90%" style="height: calc(100% - 50px);top:50px"
+      :with-header="true">
+      <behaviorDebugger ref="behaviorDebugger" @onEditBehavior="onEditBehavior" />
+    </el-drawer>
+
   </div>
 </template>
 
@@ -65,12 +72,15 @@ import { ApiContentDC, DesignedAPIDC } from '@common/apis/designApi'
 import { GetAllApis, AddAPI, DeleteAPI, UpdateAPI, UpdateSertAPIContent, GetApiContent, GetApiSimpleInfo } from '@common/apis/designApi'
 import addApiDialog from './addApiDialog.vue'
 import behaviorDesigner from '@behaviorEngine/behaviorDesigner/behaviorDesigner.vue'
+import behaviorDebugger from '@behaviorEngine/behaviorDebugger/behaviorDebugger.vue'
+
 import platform from '@design-any/interface/dist/enums/platform'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { ElMessage } from 'element-plus'
+import { deepClone } from '@common/utils'
 
 @Options({
-  components: { addApiDialog: addApiDialog, behaviorDesigner }
+  components: { addApiDialog: addApiDialog, behaviorDesigner, behaviorDebugger }
 })
 export default class apisTable extends ComponentBase {
   private apiType: number = -1
@@ -119,11 +129,30 @@ export default class apisTable extends ComponentBase {
       behav = JSON.parse(data.content)
     } else {
       behav = new behavior()
+      behav.id = row.id
     }
-
-    ;(this.$refs.behaviorDesigner as any).show(behav, null, platform.server)
+    behav.platform = platform.server
+    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(behav), null)
   }
 
+  private drawerShow: boolean = false
+  private async onDebugger(row: DesignedAPIDC) {
+    this.drawerShow = true
+    this.currentDesigningApi = row
+    let data = await GetApiContent(row.id)
+    this.currentApiContentDC = data
+    //
+    await this.$nextTick()
+    let behav: behavior = null
+    if (data && data.content) {
+      behav = JSON.parse(data.content)
+    } else {
+      behav = new behavior()
+      behav.id = row.id
+    }
+    behav.platform = platform.server
+    ;(this.$refs.behaviorDebugger as behaviorDebugger).setFlowData(deepClone(behav), null)
+  }
   // *************行为编辑功能************************
   private async onSureBehavior(behav: behavior) {
     if (this.currentApiContentDC) {

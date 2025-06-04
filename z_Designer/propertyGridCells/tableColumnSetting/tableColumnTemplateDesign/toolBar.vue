@@ -138,7 +138,7 @@ export default class toolBar extends Vue {
   }
 
   private onDesignBehavior(behav: behavior) {
-    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage, this.platform)
+    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage)
   }
   /*************定制化控制项**************************************************** */
   @Emit('onSave')

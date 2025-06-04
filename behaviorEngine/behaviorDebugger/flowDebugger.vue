@@ -39,6 +39,7 @@ import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
+import platform from '@design-any/interface/dist/enums/platform'
 
 @Options({
   components: { flowNodeDebuggerInfo }
@@ -48,6 +49,11 @@ export default class flowDebugger extends ComponentBase {
   private currentFactory: factory = null
   private currentSelected: NodeConfig | EdgeConfig = null
   private orginBehav: behavior = null
+
+  private get currentPlatform(): platform {
+    return this.orginBehav ? this.orginBehav.platform : null
+  }
+
   mounted() {}
   // ********初始化**************************************
   private silentConfig = {
@@ -135,14 +141,11 @@ export default class flowDebugger extends ComponentBase {
     // **********************************************
     this.currentFactory.onActObjExcuted = this.onActObjExcuted
   }
-
   //清除无效连线
   private clearNoUseEdge(flow: LogicFlow) {
     let alledges = flow.getGraphRawData().edges
-
     for (let index = 0; index < alledges.length; index++) {
       const edge = alledges[index]
-
       const sourceNodeModel = flow.getNodeModelById(edge.sourceNodeId)
       const sourceAnchor = sourceNodeModel?.getDefaultAnchor().find((anchor) => anchor.id === edge.sourceAnchorId)
       const targetNodeModel = flow.getNodeModelById(edge.targetNodeId)
@@ -169,7 +172,12 @@ export default class flowDebugger extends ComponentBase {
     if (!this.currentFactory) {
       return
     }
-    this.currentFactory.excuteNextStep()
+
+    if (this.currentPlatform === platform.server) {
+      // this.currentFactory.excuteNextStepServer()
+    } else {
+      this.currentFactory.excuteNextStep()
+    }
   }
   private onReDo() {
     this.setFlowData(this.orginBehav, behaviorContext.currentDesignPage)

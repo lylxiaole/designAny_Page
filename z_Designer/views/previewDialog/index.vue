@@ -14,7 +14,7 @@
       <!-- ********************************************************************* -->
       <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" custom-class="lyldrawer" size="90%"
         style="height: calc(100% - 50px);top:50px" :with-header="true">
-        <behaviorDebugger ref="behaviorDebugger" :currentPage="currentOpenEngine" @onEditBehavior="onEditBehavior" />
+        <behaviorDebugger ref="behaviorDebugger" @onEditBehavior="onEditBehavior" />
       </el-drawer>
       <!-- ********************************************************************* -->
       <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
@@ -180,7 +180,7 @@ export default class index extends PageBase {
       let pageengin = vueComp as EnginePage
       // **************************
       let findOrgain = pageengin.behaviors.find((o) => o.id === behav.id)
-      ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(findOrgain), container, behav.platform)
+      ;(this.$refs.behaviorDesigner as behaviorDesigner).show(deepClone(findOrgain), container)
       // **************************
       pageengin.destorymethod()
     } catch (error) {}

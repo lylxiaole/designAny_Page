@@ -209,7 +209,7 @@ export default class tooBar extends Vue {
   }
 
   private onDesignBehavior(behav: behavior) {
-    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage, this.platform)
+    ;(this.$refs.behaviorDesigner as behaviorDesigner).show(behav, this.currentPage)
   }
   // ***********************************************************
   private openHttpApiM() {

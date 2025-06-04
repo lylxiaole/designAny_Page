@@ -34,19 +34,19 @@ import platform from '@design-any/interface/dist/enums/platform'
 @Options({
   components: { flowDesign, resourceTree }
 })
-export default class behaviorSetting extends Vue {
+export default class behaviorDesigner extends Vue {
   currentPage: EnginePage = null
   /**当前正在设置的行为 */
   currentSettingBehavior: behavior = null
   // ****************************************************
   private windowVisible: boolean = false
-  public async show(behav: behavior, page: EnginePage, platform: platform) {
+  public async show(behav: behavior, page: EnginePage) {
     this.currentSettingBehavior = behav
     this.currentPage = page
     this.windowVisible = true
     await this.$nextTick()
     ;(this.$refs.flowDesign as flowDesign).setFlowData(behav, page)
-    ;(this.$refs.resourceTree as resourceTree).init(page, platform)
+    ;(this.$refs.resourceTree as resourceTree).init(page, behav.platform)
   }
 
   private onClose() {
