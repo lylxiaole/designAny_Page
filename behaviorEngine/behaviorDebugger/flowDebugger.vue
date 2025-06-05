@@ -207,7 +207,6 @@ export default class flowDebugger extends ComponentBase {
     let actobjs: actionObj[] = []
     if (this.currentPlatform === platform.server) {
       actobjs = await excuteFactoryNext(this.currentFactoryServerId)
-      debugger
     } else {
       actobjs = await this.currentFactory.excuteNextStep()
     }
@@ -226,7 +225,6 @@ export default class flowDebugger extends ComponentBase {
     if (this.currentPlatform === platform.server) {
       await excuteFactoryReDo(this.currentFactoryServerId)
     }
-
     this.setFlowData(this.orginBehav, behaviorContext.currentDesignPage)
   }
   private onNodeClick({ data, e, position }) {

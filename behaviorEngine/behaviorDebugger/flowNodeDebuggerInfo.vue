@@ -29,7 +29,7 @@
         </el-collapse>
       </div>
     </div>
-    <div v-if="isExcuted && (!inParams || inParams.length < 1)" style="width: 100%">
+    <div v-if="isExcuted && (!inParams || inParams.length < 1)" style="width: 100%;height: 300px">
       <div class="title">{{$t('tip.InpParams')}}:</div>
       <div class="content">{{$t('tip.NoInParamsJustforConnect')}}</div>
     </div>
@@ -48,13 +48,13 @@
         </div> -->
       </div>
     </div>
-    <div v-if="isExcuted && !outParam" style="width: 100%">
+    <div v-if="isExcuted && !outParam" style="width: 100%; height: 300px">
       <div class="title">{{$t('tip.OutParam')}}:</div>
       <div class="content">{{$t('tip.NoOutParamJustforConnect')}}</div>
     </div>
   </el-row>
   <!-- ********************************************************* -->
-  <el-row v-if="selectedNodeType === 'edge'">
+  <el-row v-if="selectedNodeType === 'edge'" style="width: 100%; height: 100%">
     <div v-if="edgeFilter" style="width: 100%">
       <div class="title">{{$t('tip.Filter')}}:</div>
       <div class="content">{{ edgeFilter }}</div>
