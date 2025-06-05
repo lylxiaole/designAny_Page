@@ -14,8 +14,8 @@ export async function initNewFactory(): Promise<string> {
   return resp.data
 }
 
-export async function keepFactory(): Promise<void> {
-  let url = apiAddr() + 'wkapi/funcNodes/keepFactory'
+export async function keepFactory(factoryId: string): Promise<void> {
+  let url = apiAddr() + 'wkapi/funcNodes/keepFactory?factoryId=' + factoryId
   const resp = await ajaxGet(url)
   return resp.data
 }
@@ -26,8 +26,8 @@ export async function excuteFactoryNext(factoryId: string): Promise<void> {
   return resp.data
 }
 
-export async function excuteBehaviorRestart(): Promise<void> {
-  let url = apiAddr() + 'wkapi/funcNodes/excuteBehaviorRestart'
+export async function excuteFactoryReDo(factoryId: string): Promise<void> {
+  let url = apiAddr() + 'wkapi/funcNodes/excuteFactoryReDo?factoryId=' + factoryId
   const resp = await ajaxGet(url)
   return resp.data
 }

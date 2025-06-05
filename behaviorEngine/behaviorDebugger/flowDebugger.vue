@@ -40,7 +40,7 @@ import { factory } from '@design-any/interface/dist/bahaviorEngine/actionFactory
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import platform from '@design-any/interface/dist/enums/platform'
-import { excuteFactoryNext } from '@common/apis/workflowApi'
+import { initNewFactory, excuteFactoryNext, keepFactory, excuteFactoryReDo } from '@common/apis/workflowApi'
 
 @Options({
   components: { flowNodeDebuggerInfo }
@@ -48,8 +48,10 @@ import { excuteFactoryNext } from '@common/apis/workflowApi'
 export default class flowDebugger extends ComponentBase {
   private currentFlow: LogicFlow = null
   private currentFactory: factory = null
-  private currentSelected: NodeConfig | EdgeConfig = null
+  //工厂Id,后端工厂的唯一id。只有调试后端工厂时会有用
+  private currentFactoryServerId: string = null
   private orginBehav: behavior = null
+  private currentSelected: NodeConfig | EdgeConfig = null
 
   private get currentPlatform(): platform {
     return this.orginBehav ? this.orginBehav.platform : null
@@ -78,20 +80,45 @@ export default class flowDebugger extends ComponentBase {
       ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
       return
     }
-
     this.orginBehav = deepClone(behav)
-    let flowdata = behav.flowData
-    // *****************************************
+    behaviorContext.currentDesignPage = currentPage
+    // **********************************************
     for (let index = 0; index < behav.actObjs.length; index++) {
       const actObj = behav.actObjs[index]
       let findFlowNode = behav.flowData.nodes.find((o) => o.id === actObj.id)
       findFlowNode.properties.actObj = actObj
     }
-    // *****************************************
-    behaviorContext.currentDesignPage = currentPage
+    // **********************************************
+    if (this.currentPlatform === platform.server) {
+      await this.createFactory_server(behav)
+    } else {
+      await this.createFactory_web(behav, currentPage)
+    }
+    // **********************************************
+    this.createFlowmap(behav)
+  }
+  //创建工厂，前端运行的
+  private async createFactory_web(behav: behavior, currentPage: EnginePage) {
     this.currentFactory = new factory(currentPage, currentPage, behav)
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
-    // **********清除行为运行状态**************************************
+  }
+  //创建工厂，后端运行的，用于自定义api
+  private async createFactory_server(behav: behavior) {
+    this.currentFactoryServerId = await initNewFactory()
+    this.keepServerFactory()
+    this.currentFactory = new factory(null, null, behav)
+    ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
+  }
+
+  private keepServerFactory() {
+    window.setInterval(async () => {
+      await keepFactory(this.currentFactoryServerId)
+    }, 10000) // 每10秒钟保持一次连接
+  }
+
+  private createFlowmap(behav: behavior) {
+    let flowdata = behav.flowData
+    // **********清除行为运行状态******************
     for (let index = 0; index < behav.actObjs.length; index++) {
       const element = behav.actObjs[index]
       element.excuted = false
@@ -139,7 +166,6 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
     this.clearNoUseEdge(this.currentFlow)
-    // **********************************************
   }
   //清除无效连线
   private clearNoUseEdge(flow: LogicFlow) {
@@ -160,7 +186,6 @@ export default class flowDebugger extends ComponentBase {
   @Emit('onFlowCreated')
   private onFlowCreated(flow) {}
   // ***********调试功能**************************
-
   private async nextStep() {
     if (!this.currentFactory) {
       return
@@ -168,8 +193,8 @@ export default class flowDebugger extends ComponentBase {
 
     let actobj = null
     if (this.currentPlatform === platform.server) {
-      // this.currentFactory.excuteNextStepServer()
-      actobj = await excuteFactoryNext()
+      actobj = await excuteFactoryNext(this.currentFactoryServerId)
+      debugger
     } else {
       actobj = await this.currentFactory.excuteNextStep()
     }
@@ -181,7 +206,11 @@ export default class flowDebugger extends ComponentBase {
       debugger
     }
   }
-  private onReDo() {
+  private async onReDo() {
+    if (this.currentPlatform === platform.server) {
+      await excuteFactoryReDo(this.currentFactoryServerId)
+    }
+
     this.setFlowData(this.orginBehav, behaviorContext.currentDesignPage)
   }
   private onNodeClick({ data, e, position }) {
@@ -190,7 +219,6 @@ export default class flowDebugger extends ComponentBase {
   private onEdgeClick({ data, e, position }) {
     this.currentSelected = data
   }
-
   private editBehaviorClick() {
     this.onEditBehavior(this.orginBehav, this.currentFactory.currentPage)
   }
