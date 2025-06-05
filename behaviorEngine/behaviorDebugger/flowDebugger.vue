@@ -58,6 +58,10 @@ export default class flowDebugger extends ComponentBase {
   }
 
   mounted() {}
+  unmounted() {
+    debugger
+    this.clearkeepServerFactory()
+  }
   // ********初始化**************************************
   private silentConfig = {
     isSilentMode: true,
@@ -104,16 +108,25 @@ export default class flowDebugger extends ComponentBase {
   }
   //创建工厂，后端运行的，用于自定义api
   private async createFactory_server(behav: behavior) {
-    this.currentFactoryServerId = await initNewFactory()
+    this.currentFactoryServerId = await initNewFactory(behav.id)
+
     this.keepServerFactory()
     this.currentFactory = new factory(null, null, behav)
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
   }
 
+  private keepServerFactoryInter: number = -1
   private keepServerFactory() {
-    window.setInterval(async () => {
+    this.keepServerFactoryInter = window.setInterval(async () => {
       await keepFactory(this.currentFactoryServerId)
     }, 10000) // 每10秒钟保持一次连接
+  }
+
+  private clearkeepServerFactory() {
+    if (this.keepServerFactoryInter !== -1) {
+      window.clearInterval(this.keepServerFactoryInter)
+      this.keepServerFactoryInter = -1
+    }
   }
 
   private createFlowmap(behav: behavior) {
@@ -191,17 +204,20 @@ export default class flowDebugger extends ComponentBase {
       return
     }
 
-    let actobj = null
+    let actobjs: actionObj[] = []
     if (this.currentPlatform === platform.server) {
-      actobj = await excuteFactoryNext(this.currentFactoryServerId)
+      actobjs = await excuteFactoryNext(this.currentFactoryServerId)
       debugger
     } else {
-      actobj = await this.currentFactory.excuteNextStep()
+      actobjs = await this.currentFactory.excuteNextStep()
     }
 
     try {
-      let node = this.currentFlow.getNodeModelById(actobj.id)
-      node.setActObj(actobj)
+      for (let index = 0; index < actobjs.length; index++) {
+        const actobj = actobjs[index]
+        let node = this.currentFlow.getNodeModelById(actobj.id)
+        node.setActObj(actobj)
+      }
     } catch (error) {
       debugger
     }

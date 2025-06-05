@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "@babel/plugin-syntax-top-level-await": "^7.14.5",
-    "@design-any/interface": "^0.0.696",
+    "@design-any/interface": "^0.0.697",
     "@element-plus/icons-vue": "^2.1.0",
     "@logicflow/core": "1.2.10",
     "@logicflow/extension": "^1.2.10",

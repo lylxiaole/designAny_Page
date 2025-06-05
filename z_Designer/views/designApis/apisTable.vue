@@ -56,8 +56,8 @@
     <addApiDialog ref="addApiDialog" @onSure="onSureAddAPI" />
     <behaviorDesigner ref="behaviorDesigner" @onSureBehavior="onSureBehavior" />
 
-    <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" custom-class="lyldrawer" size="90%" style="height:100%;top:0px"
-      :with-header="true">
+    <el-drawer v-model="drawerShow" :title="$t('tip.BehaviorDebugger')" destroy-on-close custom-class="lyldrawer" size="90%"
+      style="height:100%;top:0px" :with-header="true">
       <behaviorDebugger ref="behaviorDebugger" @onEditBehavior="onEditBehavior" />
     </el-drawer>
 
@@ -76,7 +76,7 @@ import behaviorDebugger from '@behaviorEngine/behaviorDebugger/behaviorDebugger.
 
 import platform from '@design-any/interface/dist/enums/platform'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { deepClone } from '@common/utils'
 
 @Options({
@@ -113,8 +113,16 @@ export default class apisTable extends ComponentBase {
     ;(this.$refs.addApiDialog as any).show(data)
   }
   private async onDelete(row: DesignedAPIDC) {
-    await DeleteAPI(row.id)
-    this.refreshData()
+    try {
+      await ElMessageBox.confirm('删除后不能恢复，是否要继续?', 'Warning', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        type: 'warning'
+      })
+
+      await DeleteAPI(row.id)
+      this.refreshData()
+    } catch (error) {}
   }
 
   private currentDesigningApi: DesignedAPIDC = null
@@ -137,19 +145,22 @@ export default class apisTable extends ComponentBase {
 
   private drawerShow: boolean = false
   private async onDebugger(row: DesignedAPIDC) {
-    this.drawerShow = true
     this.currentDesigningApi = row
     let data = await GetApiContent(row.id)
     this.currentApiContentDC = data
-    //
-    await this.$nextTick()
+
     let behav: behavior = null
     if (data && data.content) {
       behav = JSON.parse(data.content)
     } else {
       behav = new behavior()
       behav.id = row.id
+      ElMessage.error('该API没有行为定义,请先设计行为')
+      return
     }
+    //
+    this.drawerShow = true
+    await this.$nextTick()
     behav.platform = platform.server
     ;(this.$refs.behaviorDebugger as behaviorDebugger).setFlowData(deepClone(behav), null)
   }

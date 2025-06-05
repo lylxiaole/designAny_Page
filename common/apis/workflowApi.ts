@@ -8,8 +8,8 @@ export async function getFuncObjsTree(): Promise<any[]> {
   return resp.data
 }
 
-export async function initNewFactory(): Promise<string> {
-  let url = apiAddr() + 'wkapi/funcNodes/initNewFactory'
+export async function initNewFactory(apiId: string): Promise<string> {
+  let url = apiAddr() + 'wkapi/funcNodes/initNewFactory?apiId=' + apiId
   const resp = await ajaxGet(url)
   return resp.data
 }
@@ -20,7 +20,7 @@ export async function keepFactory(factoryId: string): Promise<void> {
   return resp.data
 }
 
-export async function excuteFactoryNext(factoryId: string): Promise<void> {
+export async function excuteFactoryNext(factoryId: string): Promise<any[]> {
   let url = apiAddr() + 'wkapi/funcNodes/excuteFactoryNext?factoryId=' + factoryId
   const resp = await ajaxGet(url)
   return resp.data
