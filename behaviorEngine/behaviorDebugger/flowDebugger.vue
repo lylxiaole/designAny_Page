@@ -59,7 +59,6 @@ export default class flowDebugger extends ComponentBase {
 
   mounted() {}
   unmounted() {
-    debugger
     this.clearkeepServerFactory()
   }
   // ********初始化**************************************
@@ -109,7 +108,6 @@ export default class flowDebugger extends ComponentBase {
   //创建工厂，后端运行的，用于自定义api
   private async createFactory_server(behav: behavior) {
     this.currentFactoryServerId = await initNewFactory(behav.id)
-
     this.keepServerFactory()
     this.currentFactory = new factory(null, null, behav)
     ;(this.$refs.flowNodeDebuggerInfo as flowNodeDebuggerInfo).startDebugger(this.currentFactory)
