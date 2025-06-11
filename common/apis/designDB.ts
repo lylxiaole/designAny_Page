@@ -173,7 +173,7 @@ export async function AddDataBase(data: DataBaseDC): Promise<boolean> {
 }
 export async function GetDataBases(): Promise<DataBaseDC[]> {
   let url = apiAddr() + 'api/designDb/GetDataBases'
-  const resp = await ajaxPost(url)
+  const resp = await ajaxGet(url)
   return resp.data
 }
 export async function UpdateDatabaseName(database: DataBaseDC): Promise<boolean> {
