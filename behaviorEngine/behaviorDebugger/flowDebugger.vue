@@ -219,6 +219,7 @@ export default class flowDebugger extends ComponentBase {
       debugger
     }
   }
+
   private async onReDo() {
     if (this.currentPlatform === platform.server) {
       await excuteFactoryReDo(this.currentFactoryServerId)

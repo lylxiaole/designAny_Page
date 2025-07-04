@@ -81,8 +81,7 @@ export class behaviorsInPageMethod implements fontActFuncBase {
   async excute(inparams: object_InParam[]) {
     let { behaviorId } = this.currentActObj.resourceFilter
   }
-}
-
+} 
 // *************************************************************************
 @resourceFuncAttr(getLocale().t('behav.MessageBox'), '', funcGroup.universalTool, funcCode.notificationDialog, platform.page, [], null)
 export class NotificationError implements fontActFuncBase {
