@@ -253,34 +253,3 @@ export async function DeleteColumn(col: ColumnDC): Promise<boolean> {
   const resp = await ajaxPost(url, col)
   return resp.data
 }
-// *****************Row**********************************
-export async function GetRow(dc: RowDC): Promise<RowDC> {
-  let url = apiAddr() + 'api/designDb/GetRow'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
-export async function UpsertTableData(dc: RowDC): Promise<boolean> {
-  let url = apiAddr() + 'api/designDb/UpsertTableData'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
-export async function FirstData(dc: RowDC): Promise<ExtRow> {
-  let url = apiAddr() + 'api/designDb/FirstData'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
-export async function SearchListData(dc: TableDC): Promise<ExtRow[]> {
-  let url = apiAddr() + 'api/designDb/SearchListData'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
-export async function SearchPageData(dc: TableDC): Promise<SearchPageResult<ExtRow>> {
-  let url = apiAddr() + 'api/designDb/SearchPageData'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
-export async function DeleteTableData(dc: TableDC): Promise<boolean> {
-  let url = apiAddr() + 'api/designDb/DeleteTableData'
-  const resp = await ajaxPost(url, dc)
-  return resp.data
-}
