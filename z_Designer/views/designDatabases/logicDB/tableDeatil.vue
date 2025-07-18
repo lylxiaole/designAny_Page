@@ -45,6 +45,8 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
 import { GetColumns, DeleteColumn } from '@common/apis/designDB'
 import columnEditDialog from './columnEditDialog.vue'
+import { ElMessageBox } from 'element-plus'
+
 @Options({
   components: { columnEditDialog }
 })
@@ -70,6 +72,7 @@ export default class tableDeatil extends PageBase {
   private addColumnHandle() {
     ;(this.$refs.columnEditDialog as columnEditDialog).addColumnDialog(this.currentTable.databaseId, this.currentTable.tableId)
   }
+
   private editColumnHandle(col) {
     ;(this.$refs.columnEditDialog as columnEditDialog).editColumnDialog(col)
   }
@@ -78,8 +81,15 @@ export default class tableDeatil extends PageBase {
     await this.refreshColumns()
   }
   private async rowdelete(col) {
-    await DeleteColumn(col)
-    this.refreshColumns()
+    try {
+      await ElMessageBox.confirm('删除后不能恢复，是否要继续?', 'Warning', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        type: 'warning'
+      })
+      await DeleteColumn(col)
+      this.refreshColumns()
+    } catch (err: any) {}
   }
 }
 </script>

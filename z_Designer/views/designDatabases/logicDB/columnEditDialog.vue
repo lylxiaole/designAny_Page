@@ -35,6 +35,7 @@ import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
 import { UpDateColumn, AddColumn } from '@common/apis/designDB'
+import { ElMessageBox } from 'element-plus'
 
 @Options({})
 export default class columnEditDialog extends PageBase {
@@ -68,12 +69,20 @@ export default class columnEditDialog extends PageBase {
     if (!valid) {
       return false
     }
+
+    if (!this.isAdd) {
+      await ElMessageBox.confirm('删除后不能恢复，是否要继续?', 'Warning', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        type: 'warning'
+      })
+    }
+
     try {
-      let issuccess = false
       if (this.isAdd) {
-        issuccess = await AddColumn(this.columnForm)
+        await AddColumn(this.columnForm)
       } else {
-        issuccess = await UpDateColumn(this.columnForm)
+        await UpDateColumn(this.columnForm)
       }
       this.onSureEdit()
     } catch (error: any) {

@@ -83,7 +83,6 @@ export default class dbList extends ComponentBase {
   private async onCancelHandle() {
     this.dialogVisible = false
   }
-
   private async deleteDatabase(e, db) {
     try {
       await ElMessageBox.confirm('删除后不能恢复，是否要继续?', 'Warning', {
