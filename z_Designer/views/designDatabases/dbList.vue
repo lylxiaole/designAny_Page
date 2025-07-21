@@ -1,133 +1,350 @@
 <template>
-  <div style="height:100%;width:100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
-    <el-row style="height: 3rem" class="middleAlign">
-      <el-button style="height: 25px" @click="addDBHandle" size="small" type="primary">添加数据库</el-button>
+  <div style="height: 100%; width: 100%" @mousedown="onClickBlankArea">
+    <el-row style="height: 35px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223)">
+      <el-button @click="createDB">新建数据库</el-button>
     </el-row>
-    <el-row style="height: calc(100% - 3rem); overflow-y: auto; display: block">
-      <div v-for="db in allDBS" :key="db.id" :style="dbItemStyle(db)" class="applicationItem verticalAlignCenter" @click="selectDB(db)">
-        <span style="float:left;width:calc(100% - 50px)">
-          {{ db.databaseName }}
-        </span>
-        <el-button size="small" style="float:right;width:50px" @click="(e) => deleteDatabase(e, db)">删除</el-button>
+    <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 35px)">
+      <div style="overflow: auto; width: 100%; height: 100%" @contextmenu.prevent="onTreeRightClick">
+        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all :expand-on-click-node="false" draggable
+          highlight-current>
+          <template #default="{ data }">
+            <div v-if="data.type === 'table'">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+                <template #icon>
+                  <el-image draggable="false" style="width: 20px; height: 20px" fit="contain" :src="normalPageIcon"></el-image>
+                </template>
+              </btreeNode>
+            </div>
+            <div v-if="data.type === 'db'">
+              <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
+                @onSureNodeName="(id, title) => onSureNodeName(id, title, data)">
+                <template #icon>
+                  <span class="icon iconfont">&#xe626;</span>
+                </template>
+              </btreeNode>
+            </div>
+          </template>
+        </el-tree>
+
+        <v-contextmenu ref="ctxMenu">
+          <v-contextmenu-item v-for="(menu, index) in rightMenus" :key="index" class="themeHover" style="padding-left: 5px"
+            @click="onRightMenuChoose(menu)">
+            <span class="icon iconfont gad-plc-menu-icon" v-html="getMenuIconByRightMenus(menu)"></span>
+            <span style="margin-left: 3px">&nbsp;&nbsp;{{ menu }}</span>
+          </v-contextmenu-item>
+        </v-contextmenu>
+
+        <addOrUpdateDBDialog ref="addOrUpdateDBDialog" @onSure="onSureAddOrUpdateDB" />
       </div>
     </el-row>
-    <!-- ********************************************************** -->
-    <el-dialog title="提示" v-model="dialogVisible" width="30%" center>
-      <el-form ref="currentFrom" :inline="true" :model="dbForm" class="demo-form-inline">
-        <el-form-item label="数据库名称">
-          <el-input v-model="dbForm.databaseName" placeholder="数据库名称"></el-input>
-        </el-form-item>
-        <el-form-item label="数据库编码">
-          <el-input v-model="dbForm.databaseCode" placeholder="数据库编码"></el-input>
-        </el-form-item>
-        <el-form-item label="数据库类型">
-          <el-select v-model="dbForm.databaseType" placeholder="请选择数据库类型" style="width:150px">
-            <el-option label="内置数据库" :value="0"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <!-- ********************************************************** -->
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="onCancelHandle">取 消</el-button>
-          <el-button type="primary" @click="onSureHandle">确定</el-button>
-        </span>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
-
+import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { GetDataBases, AddDataBase, DeleteDatabase } from '@common/apis/designDB'
-import { toRaw } from 'vue'
+import { GetDataBases, AddDataBase, DeleteDatabase, DataBaseDC, TableDC, DeleteTable } from '@common/apis/designDB'
+import btreeNode from '@common/components/Treenode/bTreeNode.vue'
+import { getLocale } from '@common/baseConfigs'
+
+import { normalPageIcon, customPageIcon, dialogPageIcon, icondotIcon } from '@/assets/designIcons'
 import { ElMessageBox } from 'element-plus'
 
-@Options({})
-export default class dbList extends ComponentBase {
-  private allDBS: any = []
-  private currentDB: any = null
+import addOrUpdateDBDialog from './addOrUpdateDBDialog.vue'
+
+class TreeNode {
+  id: string
+  label: string
+  type: string
+  dbId?: string
+  index: number
+  code: string
+  children: TreeNode[] = []
+}
+
+@Options({
+  components: {
+    btreeNode: btreeNode,
+    addOrUpdateDBDialog: addOrUpdateDBDialog
+  }
+})
+export default class index extends ComponentBase {
+  // *********************************
+  private normalPageIcon = normalPageIcon
+  private customPageIcon = customPageIcon
+  private dialogPageIcon = dialogPageIcon
+  private icondotIcon = icondotIcon
+
+  private rightMenus: string[] = []
+  private treeData: TreeNode[] = []
+  private allDBS: DataBaseDC[] = []
+
   mounted() {
-    this.getAppList()
+    this.refreshData()
   }
-  private async getAppList() {
+  private async refreshData() {
     this.allDBS = await GetDataBases()
-    debugger
+    this.treeData = this.cuteTree(this.allDBS)
   }
-  // ************添加应用***********************************************************
-  private dialogVisible: boolean = false
-  @Ref('dbForm')
-  private dbForm: any = {
-    databaseName: '',
-    databaseCode: '',
-    databaseType: 0
-  }
-  private async addDBHandle() {
-    this.dialogVisible = true
-  }
-  private async onSureHandle() {
-    let valid = await (this.$refs.currentFrom as any).validate()
-    if (!valid) {
-      return false
+  private cuteTree(dbs: DataBaseDC[]): TreeNode[] {
+    var res: TreeNode[] = []
+    for (let index = 0; index < dbs.length; index++) {
+      const db = dbs[index]
+      let dbtreenode: TreeNode = {
+        id: db.id,
+        label: db.databaseName,
+        type: 'db',
+        code: db.databaseCode,
+        index: index,
+        children: []
+      }
+      //
+      for (let jndex = 0; jndex < db.tables.length; jndex++) {
+        const table = db.tables[jndex]
+        dbtreenode.children.push({
+          id: table.tableId,
+          dbId: db.id,
+          label: table.tableName,
+          code: table.tableCode,
+          index: jndex,
+          type: 'table',
+          children: null
+        })
+      }
+      res.push(dbtreenode)
     }
-    try {
-      await AddDataBase(toRaw(this.dbForm))
-      await this.getAppList()
-    } catch (error) {
-    } finally {
-      this.dialogVisible = false
+    return res
+  }
+  // *********pageGroups管理********************************************
+  private searchNodeById(id: string, parentNodes: TreeNode[]): TreeNode {
+    for (let index = 0; index < parentNodes.length; index++) {
+      const node = parentNodes[index]
+      if (node.id === id) {
+        return node
+      }
+      let findnode = node.children.find((o) => o.id === id)
+      if (findnode) {
+        return findnode
+      }
+      let res = this.searchNodeById(id, node.children)
+      if (res) {
+        return res
+      }
+    }
+    return null
+  }
+  private deleteNodeById(id: string, parentNodes: TreeNode[]) {
+    for (let index = 0; index < parentNodes.length; index++) {
+      const node = parentNodes[index]
+      if (node.id === id) {
+        parentNodes.splice(index, 1)
+        continue
+      }
+      this.deleteNodeById(id, node.children)
     }
   }
-  private async onCancelHandle() {
-    this.dialogVisible = false
+  private cuteChildrenMaxIndex(node: TreeNode) {
+    let index = 0
+    for (let index = 0; index < node.children.length; index++) {
+      const childnode = node.children[index]
+      if (childnode.index > index) {
+        index = childnode.index
+      }
+    }
+    return index
   }
-  private async deleteDatabase(e, db) {
+  private cuteGroupMaxIndex(nodes: TreeNode[]) {
+    let index = 0
+    for (let index = 0; index < nodes.length; index++) {
+      const node = nodes[index]
+      if (node.index > index) {
+        index = node.index
+      }
+    }
+    return index
+  }
+  private makeTableDCByNode(node: TreeNode): TableDC {
+    let data: any = {
+      tableId: node.id,
+      databaseId: node.dbId,
+      tableName: node.label,
+      tableCode: node.code
+    }
+    return data
+  }
+  private makeDbDCByNode(node: TreeNode): DataBaseDC {
+    let data: any = {
+      id: node.id,
+      databaseName: node.label,
+      databaseCode: node.code
+    }
+    return data
+  }
+  // ***************树********************************************
+  private allowDrop(draggingNode, dropNode, type) {
+    return false
+  }
+  private allowDrag(draggingNode) {
+    return false
+  }
+  /**当Sure节点的新名称 */
+  private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
+    let find = this.searchNodeById(id, this.treeData)
+    find.label = newtitle
+    if (nodedata.type === 'page') {
+    } else {
+    }
+  }
+  // ***************右键弹窗**************************************
+  private currentRightClickNode: any = null
+  private onTreeNodeRightClick(e: any, data: any) {
+    // window.console.log('右击菜单树节点', data)
+    e.stopPropagation()
+    e.preventDefault()
+    this.currentRightClickNode = data
+    this.rightMenus = []
+    if (data.type === 'table') {
+      this.rightMenus = [getLocale().t('opts.edit'), getLocale().t('opts.delete')]
+    } else if (data.type === 'db') {
+      this.rightMenus = ['新建表', getLocale().t('opts.delete')]
+    }
+    ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
+  }
+  private onTreeRightClick(e: any) {
+    //window.console.log('右击菜单树', e)
+    e.stopPropagation()
+    e.preventDefault()
+    this.currentRightClickNode = null
+    this.rightMenus = ['新建数据库']
+    ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
+  }
+  private getMenuIconByRightMenus(rm: string): string {
+    let iconString
+    switch (rm) {
+      case getLocale().t('opts.edit'): {
+        iconString = '&#xe628;'
+        break
+      }
+      case getLocale().t('opts.delete'): {
+        iconString = '&#xe62b;'
+        break
+      }
+      case '新建表': {
+        iconString = '&#xe62b;'
+        break
+      }
+      case '新建数据库': {
+        iconString = '&#xe62b;'
+        break
+      }
+      default:
+        break
+    }
+    return iconString
+  }
+  private async onRightMenuChoose(menuName: string) {
+    //window.console.log('onRightMenuChoose:', menuName)
+    switch (menuName) {
+      case getLocale().t('opts.edit'):
+        this.deleteNode()
+        break
+      case getLocale().t('opts.delete'):
+        this.deleteNode()
+        break
+      case '新建数据库':
+        break
+      case '新建表':
+        break
+      default:
+        break
+    }
+  }
+  // *****************************************************
+  private async createDB() {
+    ;(this.$refs.addOrUpdateDBDialog as any).show()
+  }
+  private async onSureAddOrUpdateDB() {
+    this.refreshData()
+  }
+  private async deleteNode() {
     try {
       await ElMessageBox.confirm('删除后不能恢复，是否要继续?', 'Warning', {
         confirmButtonText: '是',
         cancelButtonText: '否',
         type: 'warning'
       })
-      e.stopPropagation()
-      await DeleteDatabase(db)
-      this.currentDB = null
-      this.onCurrentDBChanged(null)
-      await this.getAppList()
-    } catch (error) {}
-  }
-  // ***********************************************************************
-  private dbItemStyle(db) {
-    if (this.currentDB && this.currentDB.id === db.id) {
-      return { 'background-color': '#83c346', color: 'white' }
-    } else {
-      return { 'background-color': 'transparent', color: 'black' }
+    } catch (error) {
+      return
     }
-  }
-  private async selectDB(db) {
-    this.currentDB = db
-    this.onCurrentDBChanged(db)
-  }
 
-  @Emit('onCurrentDBChanged')
-  private onCurrentDBChanged(db: any) {}
+    let nodeId = this.currentRightClickNode.id
+    let nodeType = this.currentRightClickNode.type
+    if (nodeType === 'table') {
+      let table = this.makeTableDCByNode(this.currentRightClickNode)
+      await DeleteTable(table)
+      await this.refreshData()
+    } else if (nodeType === 'db') {
+      let db = this.makeDbDCByNode(this.currentRightClickNode)
+      await DeleteDatabase(db)
+      await this.refreshData()
+    }
+    this.deleteNodeById(nodeId, this.treeData)
+  }
+  private onClickBlankArea() {
+    ;(this.$refs.ctxMenu as any).hide()
+  }
+  // **************对外事件********************************
+  @Emit('onEditPage')
+  private async onEditPage(pageId: string) {}
 }
 </script>
 
-<style scoped>
-.applicationItem {
-  box-sizing: border-box;
-  padding: 4px 8px;
-  width: 100%;
-  height: 36px;
-  line-height: 36px;
+<style lang="less" scoped>
+/deep/.el-tree-node__content {
+  height: 32px !important;
+}
+.themeHover:hover {
+  background: #83c346;
   cursor: pointer;
+  color: white;
+}
+.rightMenuNode {
+  padding-left: 5px;
 }
 
-.applicationItem:hover {
-  background-color: #83c346;
+.pageListItem .iconfont {
+  color: #9e9e9e;
+}
+
+.pageListItem:hover .iconfont {
   color: white;
+}
+
+.pageFontHover:hover {
+  color: #ffffff;
+}
+
+.ant-tree-node-content-wrapper:hover .pageListItem {
+  background-color: rgba(121, 169, 229, 0.3);
+}
+
+.ant-tree-node-selected .pageListItem {
+  background-color: rgba(121, 169, 229, 0.3) !important;
+}
+
+.ant-tree-node-selected .pageFontHover {
+  color: #ffffff !important;
+}
+
+.gad-plc-menu-icon {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.gad-plc {
+  padding: 10px 0px;
+  position: relative;
 }
 </style>

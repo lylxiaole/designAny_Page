@@ -104,7 +104,6 @@ export default class index extends ComponentBase {
   private isLockingPage = (pageId: string) => {
     return this.lockingPages.indexOf(pageId) !== -1
   }
-
   // *********************************
   private normalPageIcon = normalPageIcon
   private customPageIcon = customPageIcon
@@ -129,7 +128,6 @@ export default class index extends ComponentBase {
       return this.treeData
     }
   }
-
   // *********pageGroups管理**************************************************
   private searchNodeById(id: string, parentNodes: TreeNodeDC[]): TreeNodeDC {
     for (let index = 0; index < parentNodes.length; index++) {
@@ -416,11 +414,13 @@ export default class index extends ComponentBase {
       parentGroupId: parentGroupId,
       index: index
     } as any)
+
     let newnode: TreeNodeDC = {
       id: res.id,
       parentGroupId: res.parentGroupId,
       label: res.name,
       type: 'group',
+      pageType: -1, //分组不需要page类型
       isDefault: false,
       index: res.index,
       children: []
@@ -459,7 +459,6 @@ export default class index extends ComponentBase {
     }
     datadc.children.push(newnode)
   }
-
   private async addCustomPage(pagetype: pageType) {
     ;(this.$refs.pluginPageChooser as any).show()
   }
