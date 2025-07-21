@@ -1,7 +1,5 @@
 <template>
   <div style="height:100%;width:100%;position:relative">
-    <!-- <apiList @onChooseApi="onChooseApi" style="width:250px;height:100%;float:left" />
-    <apiDetail ref="apiDetail" :currentApiContent="currentApiContent" style="width:calc(100% - 250px);height:100%;float:left" /> -->
     <apisTable />
   </div>
 </template>
@@ -9,8 +7,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import PageBase from '@common/views/PageBase'
-import apiDetail from './apiDetail.vue'
-import { GetApiContent, ApiContentDC } from '@common/apis/designApi'
+ import { GetApiContent, ApiContentDC } from '@common/apis/designApi'
 import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import apisTable from './apisTable.vue'
 

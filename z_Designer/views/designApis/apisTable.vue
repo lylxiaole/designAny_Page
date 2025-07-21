@@ -1,26 +1,20 @@
 <template>
   <div style="height: 100%; width: 100%" @click="onClickBlankArea">
-    <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223);padding:0px 20px" class="verticalAlignCenter">
-      <el-col :span="16">
-        <el-select v-model="apiType" placeholder="Select" size="small" style="width:150px">
-          <el-option :key="-1" label="全部" :value="-1" />
-          <el-option :key="0" label="Restful接口" :value="0" />
-          <el-option :key="1" label="定时服务" :value="1" />
-        </el-select>
-      </el-col>
+    <el-row style="height: 50px; width: 100%; border-bottom: 1px solid rgb(223, 223, 223);padding:0px 20px;justify-content:flex-end"
+      class="verticalAlignCenter">
+      <el-select v-model="apiType" placeholder="Select" size="small" style="width:150px">
+        <el-option :key="-1" label="全部" :value="-1" />
+        <el-option :key="0" label="Restful接口" :value="0" />
+        <el-option :key="1" label="定时服务" :value="1" />
+      </el-select>
       <!-- ****************************** -->
-      <el-col :span="4">
-        <el-button type="primary" size="small" @click="onSearch" style="margin-left: 10px">
-          查询
-        </el-button>
-      </el-col>
+      <el-button type="primary" size="small" @click="onSearch" style="margin-left: 10px">
+        查询
+      </el-button>
       <!-- ****************************** -->
-      <el-col :span="4">
-        <el-button type="primary" size="small" @click="onAddAPI" style="margin-left: 10px">
-          新增
-        </el-button>
-      </el-col>
-      <!-- ****************************** -->
+      <el-button type="primary" size="small" @click="onAddAPI" style="margin-left: 10px">
+        新增
+      </el-button>
     </el-row>
     <!-- ****************************** -->
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 50px)">
@@ -104,7 +98,11 @@ export default class apisTable extends ComponentBase {
     ;(this.$refs.addApiDialog as any).show()
   }
   private async onSureAddAPI(data: any) {
-    await AddAPI(data)
+    if (data.id) {
+      await UpdateAPI(data)
+    } else {
+      await AddAPI(data)
+    }
     this.refreshData()
   }
   // ******************************************************************

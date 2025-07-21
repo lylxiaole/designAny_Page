@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;width：100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
+  <div style="height:100%;width:100%;padding:8px;overflow:hidden;border-right:1px solid #808080;box-sizing:border-box">
     <el-row style="height: 3rem" class="middleAlign">
       <el-button style="height: 25px" @click="addDBHandle" size="small" type="primary">添加数据库</el-button>
     </el-row>
@@ -55,6 +55,7 @@ export default class dbList extends ComponentBase {
   }
   private async getAppList() {
     this.allDBS = await GetDataBases()
+    debugger
   }
   // ************添加应用***********************************************************
   private dialogVisible: boolean = false
@@ -97,7 +98,6 @@ export default class dbList extends ComponentBase {
       await this.getAppList()
     } catch (error) {}
   }
-
   // ***********************************************************************
   private dbItemStyle(db) {
     if (this.currentDB && this.currentDB.id === db.id) {
@@ -110,6 +110,7 @@ export default class dbList extends ComponentBase {
     this.currentDB = db
     this.onCurrentDBChanged(db)
   }
+
   @Emit('onCurrentDBChanged')
   private onCurrentDBChanged(db: any) {}
 }

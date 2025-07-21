@@ -51,6 +51,15 @@ export default class columnEditDialog extends PageBase {
   }
   mounted() {}
   public addColumnDialog(dataBaseId, tableId) {
+    this.columnForm = {
+      databaseId: '',
+      tableId: '',
+      columnName: '',
+      columnCode: '',
+      isRequired: true,
+      columnDataType: 1
+    }
+
     this.columnForm.databaseId = dataBaseId
     this.columnForm.tableId = tableId
     this.isAdd = true

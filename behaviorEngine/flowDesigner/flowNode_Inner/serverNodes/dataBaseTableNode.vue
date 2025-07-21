@@ -67,35 +67,35 @@ export default class dataBaseTableNode extends Vue {
     this.selectedDbId = this.actObj.resourceFilter.dbId
     this.selectedTableId = this.actObj.resourceFilter.tableId
     //监视数据库选项变化
-    this.$watch(
-      () => this.selectedDbId,
-      (newVal: string, oldVal: string) => {
-        if (newVal !== oldVal) {
-          this.selectedTableId = null
-        }
-        this.actObj.resourceFilter.dbId = newVal
-      }
-    )
+    this.$watch(() => this.selectedDbId, this.onselectedDbIdChanged)
     //监视表选项变化
-    this.$watch(
-      () => this.selectedTableId,
-      (newVal: string, oldVal: string) => {
-        this.actObj.resourceFilter.tableId = newVal
-        ///没选table时，清空输入输出参数
-        if (!newVal) {
-          this.actObj.inputParams = []
-          this.actObj.outParam = null
-          return
-        }
-        ///选了table时，设置输入输出参数
-        this.actObj.inputParams = []
-        for (let index = 0; index < this.selectedTable.columns.length; index++) {
-          const column = this.selectedTable.columns[index]
-          this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, column.columnCode), name: '字段:' + column.columnName })
-        }
-        this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: '数据' }
-      }
-    )
+    this.$watch(() => this.selectedTableId, this.onSelectedTableIdChanged)
+    //初始化一下table结构
+    this.onSelectedTableIdChanged(this.selectedTableId)
+  }
+
+  private onselectedDbIdChanged(newVal: string, oldVal: string) {
+    if (newVal !== oldVal) {
+      this.selectedTableId = null
+    }
+    this.actObj.resourceFilter.dbId = newVal
+  }
+
+  private onSelectedTableIdChanged(newVal: string) {
+    this.actObj.resourceFilter.tableId = newVal
+    ///没选table时，清空输入输出参数
+    if (!newVal) {
+      this.actObj.inputParams = []
+      this.actObj.outParam = null
+      return
+    }
+    ///选了table时，设置输入输出参数
+    this.actObj.inputParams = []
+    for (let index = 0; index < this.selectedTable.columns.length; index++) {
+      const column = this.selectedTable.columns[index]
+      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, column.columnCode), name: '字段:' + column.columnName })
+    }
+    this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: '数据' }
   }
 }
 </script>
