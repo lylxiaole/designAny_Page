@@ -5,8 +5,8 @@
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 35px)">
       <div style="overflow: auto; width: 100%; height: 100%" @contextmenu.prevent="onTreeRightClick">
-        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all :expand-on-click-node="false" draggable
-          highlight-current>
+        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all :expand-on-click-node="false"
+          :draggable="false" highlight-current>
           <template #default="{ data }">
             <div v-if="data.type === 'table'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
@@ -36,6 +36,7 @@
         </v-contextmenu>
 
         <addOrUpdateDBDialog ref="addOrUpdateDBDialog" @onSure="onSureAddOrUpdateDB" />
+        <addOrUpdateTableDialog ref="addOrUpdateTableDialog" @onSure="onSureAddOrUpdateTable" />
       </div>
     </el-row>
   </div>
@@ -45,7 +46,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
-import { GetDataBases, AddDataBase, DeleteDatabase, DataBaseDC, TableDC, DeleteTable } from '@common/apis/designDB'
+import { GetDataBases, AddDataBase, DeleteDatabase, DataBaseDC, TableDC, DeleteTable, UpdateTable, UpdateDatabaseName } from '@common/apis/designDB'
 import btreeNode from '@common/components/Treenode/bTreeNode.vue'
 import { getLocale } from '@common/baseConfigs'
 
@@ -53,6 +54,7 @@ import { normalPageIcon, customPageIcon, dialogPageIcon, icondotIcon } from '@/a
 import { ElMessageBox } from 'element-plus'
 
 import addOrUpdateDBDialog from './addOrUpdateDBDialog.vue'
+import addOrUpdateTableDialog from './addOrUpdateTableDialog.vue'
 
 class TreeNode {
   id: string
@@ -67,7 +69,8 @@ class TreeNode {
 @Options({
   components: {
     btreeNode: btreeNode,
-    addOrUpdateDBDialog: addOrUpdateDBDialog
+    addOrUpdateDBDialog: addOrUpdateDBDialog,
+    addOrUpdateTableDialog: addOrUpdateTableDialog
   }
 })
 export default class index extends ComponentBase {
@@ -165,22 +168,26 @@ export default class index extends ComponentBase {
     }
     return index
   }
-  private makeTableDCByNode(node: TreeNode): TableDC {
-    let data: any = {
-      tableId: node.id,
-      databaseId: node.dbId,
-      tableName: node.label,
-      tableCode: node.code
+  private findTableDCByNode(tableId: string): TableDC {
+    for (let index = 0; index < this.allDBS.length; index++) {
+      const db = this.allDBS[index]
+      for (let jndex = 0; jndex < db.tables.length; jndex++) {
+        const table = db.tables[jndex]
+        if (table.tableId == tableId) {
+          return table
+        }
+      }
     }
-    return data
+    return null
   }
-  private makeDbDCByNode(node: TreeNode): DataBaseDC {
-    let data: any = {
-      id: node.id,
-      databaseName: node.label,
-      databaseCode: node.code
+  private findDbDCByNode(dbId: string): DataBaseDC {
+    for (let index = 0; index < this.allDBS.length; index++) {
+      const db = this.allDBS[index]
+      if (db.id == dbId) {
+        return db
+      }
     }
-    return data
+    return null
   }
   // ***************树********************************************
   private allowDrop(draggingNode, dropNode, type) {
@@ -191,11 +198,16 @@ export default class index extends ComponentBase {
   }
   /**当Sure节点的新名称 */
   private async onSureNodeName(id: string, newtitle: string, nodedata: any) {
-    let find = this.searchNodeById(id, this.treeData)
-    find.label = newtitle
-    if (nodedata.type === 'page') {
+    if (nodedata.type === 'table') {
+      let table = this.findTableDCByNode(nodedata.id)
+      table.tableName = newtitle
+      await UpdateTable(table)
     } else {
+      let db = this.findDbDCByNode(nodedata.id)
+      db.databaseName = newtitle
+      await UpdateDatabaseName(db)
     }
+    this.refreshData()
   }
   // ***************右键弹窗**************************************
   private currentRightClickNode: any = null
@@ -208,7 +220,7 @@ export default class index extends ComponentBase {
     if (data.type === 'table') {
       this.rightMenus = [getLocale().t('opts.edit'), getLocale().t('opts.delete')]
     } else if (data.type === 'db') {
-      this.rightMenus = ['新建表', getLocale().t('opts.delete')]
+      this.rightMenus = ['新建表', getLocale().t('opts.edit'), getLocale().t('opts.delete')]
     }
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
@@ -248,14 +260,21 @@ export default class index extends ComponentBase {
     //window.console.log('onRightMenuChoose:', menuName)
     switch (menuName) {
       case getLocale().t('opts.edit'):
-        this.deleteNode()
+        if (this.currentRightClickNode.type === 'table') {
+          this.editTable(this.currentRightClickNode)
+        } else if (this.currentRightClickNode.type === 'db') {
+          this.editDB(this.currentRightClickNode)
+        }
         break
       case getLocale().t('opts.delete'):
         this.deleteNode()
         break
       case '新建数据库':
+        ;(this.$refs.addOrUpdateDBDialog as addOrUpdateDBDialog).show()
         break
       case '新建表':
+        let db = this.findDbDCByNode(this.currentRightClickNode)
+        ;(this.$refs.addOrUpdateTableDialog as addOrUpdateTableDialog).show(db)
         break
       default:
         break
@@ -265,8 +284,22 @@ export default class index extends ComponentBase {
   private async createDB() {
     ;(this.$refs.addOrUpdateDBDialog as any).show()
   }
+  private async editDB(node) {
+    let db = this.findDbDCByNode(node.id)
+    ;(this.$refs.addOrUpdateDBDialog as addOrUpdateDBDialog).show(db)
+  }
+  private async editTable(node) {
+    let table = this.findTableDCByNode(node.id)
+    let db = this.findDbDCByNode(table.databaseId)
+    ;(this.$refs.addOrUpdateTableDialog as addOrUpdateTableDialog).show(db, table)
+  }
   private async onSureAddOrUpdateDB() {
-    this.refreshData()
+    await this.refreshData()
+    this.$forceUpdate()
+  }
+  private async onSureAddOrUpdateTable() {
+    await this.refreshData()
+    this.$forceUpdate()
   }
   private async deleteNode() {
     try {
@@ -282,11 +315,11 @@ export default class index extends ComponentBase {
     let nodeId = this.currentRightClickNode.id
     let nodeType = this.currentRightClickNode.type
     if (nodeType === 'table') {
-      let table = this.makeTableDCByNode(this.currentRightClickNode)
+      let table = this.findTableDCByNode(this.currentRightClickNode.id)
       await DeleteTable(table)
       await this.refreshData()
     } else if (nodeType === 'db') {
-      let db = this.makeDbDCByNode(this.currentRightClickNode)
+      let db = this.findDbDCByNode(this.currentRightClickNode.id)
       await DeleteDatabase(db)
       await this.refreshData()
     }
@@ -296,8 +329,8 @@ export default class index extends ComponentBase {
     ;(this.$refs.ctxMenu as any).hide()
   }
   // **************对外事件********************************
-  @Emit('onEditPage')
-  private async onEditPage(pageId: string) {}
+  @Emit('onCurrentTableChanged')
+  private async onCurrentTableChanged(table: TableDC) {}
 }
 </script>
 

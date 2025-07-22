@@ -5,10 +5,10 @@
         <el-input v-model="dbForm.databaseName" placeholder="数据库名称"></el-input>
       </el-form-item>
       <el-form-item label="数据库编码">
-        <el-input v-model="dbForm.databaseCode" placeholder="数据库编码"></el-input>
+        <el-input :disabled="currentDb!==null" v-model="dbForm.databaseCode" placeholder="数据库编码"></el-input>
       </el-form-item>
       <el-form-item label="数据库类型">
-        <el-select v-model="dbForm.databaseType" placeholder="请选择数据库类型" style="width:150px">
+        <el-select v-model="dbForm.databaseType" :disabled="currentDb!==null" placeholder="请选择数据库类型" style="width:150px">
           <el-option label="内置数据库" :value="0"></el-option>
         </el-select>
       </el-form-item>
@@ -28,13 +28,14 @@ import { Options, Vue } from 'vue-class-component'
 import { Prop, Component, Emit, Ref } from 'vue-property-decorator'
 
 import ComponentBase from '@common/views/ComponentBase'
-import { GetDataBases, AddDataBase, DeleteDatabase } from '@common/apis/designDB'
+import { GetDataBases, AddDataBase, DeleteDatabase, DataBaseDC, UpdateDatabaseName } from '@common/apis/designDB'
 import { toRaw } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 @Options({})
 export default class dbList extends ComponentBase {
   private dialogVisible: boolean = false
+  private currentDb: DataBaseDC = null
 
   @Ref('dbForm')
   private dbForm: any = {
@@ -42,11 +43,14 @@ export default class dbList extends ComponentBase {
     databaseCode: '',
     databaseType: 0
   }
-  private async show(data?: any) {
+
+  public async show(data?: any) {
     this.dialogVisible = true
     if (data) {
       this.dbForm = data
+      this.currentDb = data
     } else {
+      this.currentDb = null
       this.dbForm = {
         databaseName: '',
         databaseCode: '',
@@ -60,7 +64,13 @@ export default class dbList extends ComponentBase {
       return false
     }
     try {
-      await AddDataBase(toRaw(this.dbForm))
+      if (this.currentDb) {
+        this.currentDb.databaseName = this.dbForm.databaseName
+        await UpdateDatabaseName(this.currentDb)
+      } else {
+        await AddDataBase(toRaw(this.dbForm))
+      }
+
       this.onSure()
       this.dialogVisible = false
     } catch (error: any) {
