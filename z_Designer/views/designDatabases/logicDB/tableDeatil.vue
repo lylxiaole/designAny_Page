@@ -53,6 +53,7 @@ import { ElMessageBox } from 'element-plus'
 export default class tableDeatil extends PageBase {
   @Prop({ default: null })
   private currentTable: any
+
   @Watch('currentTable')
   private async oncurrentTableChanged(val) {
     if (!val) {

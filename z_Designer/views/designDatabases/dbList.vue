@@ -5,8 +5,8 @@
     </el-row>
     <el-row style="overflow: hidden; width: 100%; bottom: 0px; height: calc(100% - 35px)">
       <div style="overflow: auto; width: 100%; height: 100%" @contextmenu.prevent="onTreeRightClick">
-        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" :data="treeData" default-expand-all :expand-on-click-node="false"
-          :draggable="false" highlight-current>
+        <el-tree node-key="id" @node-contextmenu="onTreeNodeRightClick" @current-change="onCurrentNodeChanged" :data="treeData" default-expand-all
+          :expand-on-click-node="false" :draggable="false" highlight-current>
           <template #default="{ data }">
             <div v-if="data.type === 'table'">
               <btreeNode :value="data.label" style="margin-left: 3px; z-index: 1" :nodeKey="data.id"
@@ -55,6 +55,7 @@ import { ElMessageBox } from 'element-plus'
 
 import addOrUpdateDBDialog from './addOrUpdateDBDialog.vue'
 import addOrUpdateTableDialog from './addOrUpdateTableDialog.vue'
+import { toRaw } from 'vue'
 
 class TreeNode {
   id: string
@@ -89,6 +90,7 @@ export default class index extends ComponentBase {
   }
   private async refreshData() {
     this.allDBS = await GetDataBases()
+    this.treeData = []
     this.treeData = this.cuteTree(this.allDBS)
   }
   private cuteTree(dbs: DataBaseDC[]): TreeNode[] {
@@ -224,6 +226,15 @@ export default class index extends ComponentBase {
     }
     ;(this.$refs.ctxMenu as any).show({ top: e.clientY, left: e.clientX })
   }
+  private onCurrentNodeChanged(e: any, node: any) {
+    if (node.data.type === 'db') {
+      this.onCurrentTableChanged(null)
+    } else {
+      let table = this.findTableDCByNode(node.data.id)
+      this.onCurrentTableChanged(table)
+    }
+  }
+
   private onTreeRightClick(e: any) {
     //window.console.log('右击菜单树', e)
     e.stopPropagation()
@@ -295,10 +306,12 @@ export default class index extends ComponentBase {
   }
   private async onSureAddOrUpdateDB() {
     await this.refreshData()
+
     this.$forceUpdate()
   }
   private async onSureAddOrUpdateTable() {
     await this.refreshData()
+
     this.$forceUpdate()
   }
   private async deleteNode() {

@@ -1,8 +1,9 @@
 <template>
   <div style="height:100%;width:100%;position:relative">
-    <dbList @onCurrentDBChanged="onCurrentDBChanged" style="width:250px;height:100%;float:left">
+    <dbList @onCurrentTableChanged="onCurrentTableChanged" style="width:250px;height:100%;float:left">
     </dbList>
-    <tableIndex v-show="currentDB" :currentDB="currentDB" ref="tableIndex" style="width:calc(100% - 250px);height:100%;float:left"></tableIndex>
+    <tableDeatil v-show="currentTable" :currentTable="currentTable" ref="tableIndex" style="width:calc(100% - 250px);height:100%;float:left">
+    </tableDeatil>
   </div>
 </template>
 
@@ -12,20 +13,22 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import PageBase from '@common/views/PageBase'
 import dbList from './dbList.vue'
 import tableIndex from './logicDB/tableIndex.vue'
+import { GetDataBases, AddDataBase, DeleteDatabase, DataBaseDC, TableDC, DeleteTable, UpdateTable, UpdateDatabaseName } from '@common/apis/designDB'
+import tableDeatil from './logicDB/tableDeatil.vue'
 
 @Options({
   components: {
     dbList: dbList,
-    tableIndex: tableIndex
+    tableDeatil: tableDeatil
   }
 })
 export default class index extends PageBase {
-  private currentDB: any = null
+  private currentTable: any = null
 
   mounted() {}
 
-  private async onCurrentDBChanged(db: any) {
-    this.currentDB = db
+  private async onCurrentTableChanged(table: TableDC) {
+    this.currentTable = table
   }
 }
 </script>

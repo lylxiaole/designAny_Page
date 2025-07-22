@@ -29,10 +29,13 @@ export default class bTreeNode extends Vue {
   private currentValue: string = ''
   private oldValue: string = ''
 
-  mounted() {
+  @Watch('value', { immediate: true })
+  private onValueChanged(val) {
     this.currentValue = deepClone(this.value)
     this.oldValue = deepClone(this.value)
   }
+
+  mounted() {}
 
   private onNodevalChanged(e: any) {
     // window.console.log(this.currentValue)
