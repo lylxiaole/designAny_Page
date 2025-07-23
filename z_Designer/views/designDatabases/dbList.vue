@@ -234,7 +234,6 @@ export default class index extends ComponentBase {
       this.onCurrentTableChanged(table)
     }
   }
-
   private onTreeRightClick(e: any) {
     //window.console.log('右击菜单树', e)
     e.stopPropagation()
@@ -284,7 +283,7 @@ export default class index extends ComponentBase {
         ;(this.$refs.addOrUpdateDBDialog as addOrUpdateDBDialog).show()
         break
       case '新建表':
-        let db = this.findDbDCByNode(this.currentRightClickNode)
+        let db = this.findDbDCByNode(this.currentRightClickNode.id)
         ;(this.$refs.addOrUpdateTableDialog as addOrUpdateTableDialog).show(db)
         break
       default:

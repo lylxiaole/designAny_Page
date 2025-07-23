@@ -19,9 +19,6 @@
       </el-col>
     </el-row>
     <!-- ********************************************* -->
-    <el-row style="width:100%"></el-row>
-    <!-- ********************************************* -->
-    <el-row style="width:100%"></el-row>
   </el-row>
 </template>
 
@@ -67,31 +64,31 @@ export default class dataBaseAddOptNode extends Vue {
     this.selectedDbId = this.actObj.resourceFilter.dbId
     this.selectedTableId = this.actObj.resourceFilter.tableId
     //监视数据库选项变化
-    this.$watch(
-      () => this.selectedDbId,
-      (newVal: string, oldVal: string) => {
-        if (newVal !== oldVal) {
-          this.selectedTableId = null
-        }
-        this.actObj.resourceFilter.dbId = newVal
-      }
-    )
+    this.$watch(() => this.selectedDbId, this.onselectedDbIdChanged)
     //监视表选项变化
-    this.$watch(
-      () => this.selectedTableId,
-      (newVal: string, oldVal: string) => {
-        this.actObj.resourceFilter.tableId = newVal
-        if (!newVal) {
-          this.actObj.inputParams = []
-          this.actObj.outParam = null
-          return
-        } else {
-          this.actObj.inputParams = []
-          this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, 'indata'), name: '新增数据' })
-          this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: '返回结果' }
-        }
-      }
-    )
+    this.$watch(() => this.selectedTableId, this.onSelectedTableIdChanged)
+    //初始化一下table结构
+    this.onSelectedTableIdChanged(this.selectedTableId)
+  }
+
+  private onselectedDbIdChanged(newVal: string, oldVal: string) {
+    if (newVal !== oldVal) {
+      this.selectedTableId = null
+    }
+    this.actObj.resourceFilter.dbId = newVal
+  }
+
+  private onSelectedTableIdChanged(newVal: string) {
+    this.actObj.resourceFilter.tableId = newVal
+    if (!newVal) {
+      this.actObj.inputParams = []
+      this.actObj.outParam = null
+      return
+    } else {
+      this.actObj.inputParams = []
+      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, 'indata'), name: '新增数据' })
+      this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: '返回结果' }
+    }
   }
 }
 </script>
