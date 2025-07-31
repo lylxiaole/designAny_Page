@@ -1,7 +1,7 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <div style="width: 100%; height: 100%">
     <!-- ********************************************* -->
-    <el-row style="width:100%">
+    <el-row style="width:100%;height:25px">
       <el-col :span="6">数据库:</el-col>
       <el-col :span="18">
         <el-select v-model="selectedDbId" placeholder="Select" size="small" style="width: 100%">
@@ -10,7 +10,7 @@
       </el-col>
     </el-row>
     <!-- ********************************************* -->
-    <el-row style="width:100%">
+    <el-row style="width:100%;height:25px;margin-top:3px;">
       <el-col :span="6">表:</el-col>
       <el-col :span="18">
         <el-select v-model="selectedTableId" placeholder="Select" size="small" style="width: 100%">
@@ -18,12 +18,20 @@
         </el-select>
       </el-col>
     </el-row>
-
-
-
-    
     <!-- ********************************************* -->
-  </el-row>
+    <div style="height:1px;width:100%;margin-top:3px;border-top:1px solid #cdcdcd"></div>
+    <!-- ********************************************* -->
+    <el-row style="width:100%;margin-top:3px;">
+      <el-col :span="6">搜索条件:</el-col>
+      <el-col :span="18">
+        <template v-for="(filter,index) in searchFilters" :key="index">
+          <searchFilterEditor :filter="filter" :allInparams="allInParams" :columns="currentColumns" />
+        </template>
+        <button @click="onAddFilter">新增</button>
+      </el-col>
+
+    </el-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -38,9 +46,11 @@ import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
+import searchFilterEditor, { seacrchFilter } from './utils/searchFilterEditor.vue'
+
 @flowDesignNode(funcCode.dataBaseSearchOpt, flowNodeType.funcNormalNode)
 @Options({
-  components: {}
+  components: { searchFilterEditor }
 })
 export default class dataBaseSearchOptNode extends Vue {
   @Prop()
@@ -53,20 +63,44 @@ export default class dataBaseSearchOptNode extends Vue {
   private get selectedDb() {
     return this.allDatabases.find((db) => db.id === this.selectedDbId)
   }
-  // ********表********************************************
+  // ********表*****************************************
   private selectedTableId: string = null
   private get allTables() {
     return this.selectedDb ? this.selectedDb.tables : []
+  }
+  // ********搜索条件*************************************
+  private searchFilters: seacrchFilter[] = []
+  private get allInParams() {
+    if (!this.actObj) {
+      return []
+    }
+
+    return this.actObj.inputParams
+  }
+  private get currentColumns() {
+    if (!this.selectedTableId) {
+      return
+    }
+    var table = this.allTables.find((o) => o.tableId === this.selectedTableId)
+    if (!table) {
+      return
+    }
+    return table.columns
   }
   // *****************************************************
   mounted() {
     this.initData()
   }
   private async initData() {
-    //
+    //初始化
     this.allDatabases = await behaviorContext.getAllDatabases()
     this.selectedDbId = this.actObj.resourceFilter.dbId
     this.selectedTableId = this.actObj.resourceFilter.tableId
+    if (this.actObj.resourceFilter.searchFilters) {
+      this.searchFilters = this.actObj.resourceFilter.searchFilters
+    } else {
+      this.searchFilters = []
+    }
     //监视数据库选项变化
     this.$watch(() => this.selectedDbId, this.onselectedDbIdChanged)
     //监视表选项变化
@@ -74,14 +108,12 @@ export default class dataBaseSearchOptNode extends Vue {
     //初始化一下table结构
     this.onSelectedTableIdChanged(this.selectedTableId)
   }
-
   private onselectedDbIdChanged(newVal: string, oldVal: string) {
     if (newVal !== oldVal) {
       this.selectedTableId = null
     }
     this.actObj.resourceFilter.dbId = newVal
   }
-
   private onSelectedTableIdChanged(newVal: string) {
     this.actObj.resourceFilter.tableId = newVal
     this.actObj.inputParams = []
@@ -91,6 +123,25 @@ export default class dataBaseSearchOptNode extends Vue {
     } else {
       this.actObj.outParam = { key: makeParamKey(this.actObj.id, 'output'), name: '返回结果' }
     }
+    this.makeSeachInparams(newVal)
+  }
+  private makeSeachInparams(tableId) {
+    this.actObj.inputParams = []
+    if (!tableId) {
+      return
+    }
+    var table = this.allTables.find((o) => o.tableId === tableId)
+    if (!table) {
+      return
+    }
+    for (let index = 0; index < table.columns.length; index++) {
+      const col = table.columns[index]
+      this.actObj.inputParams.push({ key: makeParamKey(this.actObj.id, col.columnCode), name: '条件-' + col.columnName })
+    }
+  }
+  // *****************************************************
+  private onAddFilter() {
+    this.searchFilters.push({ columnCode: null, filter: null, inParamId: null, filterEnd: null })
   }
 }
 </script>
