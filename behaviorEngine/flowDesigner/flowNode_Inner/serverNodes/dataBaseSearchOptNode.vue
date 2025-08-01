@@ -22,14 +22,14 @@
     <div style="height:1px;width:100%;margin-top:3px;border-top:1px solid #cdcdcd"></div>
     <!-- ********************************************* -->
     <el-row style="width:100%;margin-top:3px;">
-      <el-col :span="6">搜索条件:</el-col>
-      <el-col :span="18">
-        <template v-for="(filter,index) in searchFilters" :key="index">
-          <searchFilterEditor :filter="filter" :allInparams="allInParams" :columns="currentColumns" />
-        </template>
-        <button @click="onAddFilter">新增</button>
-      </el-col>
-
+      <div style="width:100%;height:25px;position:relative">
+        <span style="float:left;margin-left:8px;font-weight:600">筛选条件:</span>
+        <el-button @click="onAddFilter" size="small" style="float:right;margin-right:8px">新增</el-button>
+      </div>
+      <template v-for="(filter,index) in searchFilters" :key="index">
+        <searchFilterEditor :filter="filter" :allInparams="allInParams" :columns="currentColumns" :isLast="index===(searchFilters.length-1)"
+          @onDelete="onDeleteSearchFilter(index)" />
+      </template>
     </el-row>
   </div>
 </template>
@@ -87,6 +87,11 @@ export default class dataBaseSearchOptNode extends Vue {
     }
     return table.columns
   }
+
+  @Watch('searchFilters', { deep: true })
+  private onsearchFilterschanged(val: any) {
+    this.actObj.resourceFilter.searchFilters = val
+  }
   // *****************************************************
   mounted() {
     this.initData()
@@ -142,6 +147,9 @@ export default class dataBaseSearchOptNode extends Vue {
   // *****************************************************
   private onAddFilter() {
     this.searchFilters.push({ columnCode: null, filter: null, inParamId: null, filterEnd: null })
+  }
+  private onDeleteSearchFilter(index) {
+    this.searchFilters.splice(index, 1)
   }
 }
 </script>

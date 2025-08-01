@@ -1,14 +1,14 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <el-row style="width: 100%; height: 30px;margin-top:3px">
     <!-- // -->
-    <el-col :span="6">
-      <el-select v-model="selectedColumnCode" placeholder="列名" size="small" style="width: 100%">
+    <el-col :span="6" class="flexHorilanLayout verticalAlignCenter">
+      <el-select v-model="selectedColumnCode" placeholder="列名" size="small" style="width: 90%">
         <el-option v-for="col in columns" :key="col.columnId" :label="col.columnName" :value="col.columnCode" />
       </el-select>
     </el-col>
     <!-- // -->
-    <el-col :span="6">
-      <el-select v-model="filterString" placeholder="筛选条件" size="small" style="width: 100%">
+    <el-col :span="6" class="flexHorilanLayout verticalAlignCenter">
+      <el-select v-model="filterString" placeholder="筛选条件" size="small" style="width: 90%">
         <el-option label="大于" value=">" />
         <el-option label="小于" value="<" />
         <el-option label="等于" value="=" />
@@ -16,17 +16,21 @@
       </el-select>
     </el-col>
     <!-- // -->
-    <el-col :span="6">
-      <el-select v-model="selecedInparamId" placeholder="入参" size="small" style="width: 100%">
+    <el-col :span="6" class="flexHorilanLayout verticalAlignCenter">
+      <el-select v-model="selecedInparamId" placeholder="入参" size="small" style="width: 90%">
         <el-option v-for="inparam in allInparams" :key="inparam.key" :label="inparam.name" :value="inparam.key" />
       </el-select>
     </el-col>
     <!-- // -->
-    <el-col :span="6">
-      <el-select :span="6" v-model="filterEndString" placeholder="" size="small" style="width: 100%">
+    <el-col :span="3" class="flexHorilanLayout verticalAlignCenter">
+      <el-select v-if="!isLast" v-model="filterEndString" placeholder="" size="small" style="width: 90%">
         <el-option label="且" value="and" />
         <el-option label="或" value="or" />
       </el-select>
+    </el-col>
+    <!-- // -->
+    <el-col :span="3" class="flexHorilanLayout verticalAlignCenter">
+      <el-button type="info" :icon="deleteIcon" circle @click="onDelete" style="height:25px;width:25px" />
     </el-col>
   </el-row>
 </template>
@@ -41,18 +45,20 @@ import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 import { flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
-
+import { Delete } from '@element-plus/icons-vue'
 export class seacrchFilter {
   columnCode: string
   filter: string
-  inParamId: any
+  inParamId: string
   filterEnd: string
 }
 
 @Options({
-  components: {}
+  components: { Delete }
 })
 export default class searchFilterEditor extends Vue {
+  private deleteIcon: any = Delete
+
   @Prop()
   private columns: any[]
 
@@ -61,6 +67,9 @@ export default class searchFilterEditor extends Vue {
 
   @Prop()
   private filter: seacrchFilter
+
+  @Prop()
+  private isLast: boolean
 
   private get selectedColumnCode() {
     if (!this.filter) {
@@ -121,6 +130,9 @@ export default class searchFilterEditor extends Vue {
   }
 
   mounted() {}
+  //**************************** */
+  @Emit('onDelete')
+  private onDelete() {}
 }
 </script>
 
