@@ -12,7 +12,7 @@
         <el-option label="大于" value=">" />
         <el-option label="小于" value="<" />
         <el-option label="等于" value="=" />
-        <el-option label="包含于" value="in" />
+        <el-option label="包含" value="Contains" />
       </el-select>
     </el-col>
     <!-- // -->
