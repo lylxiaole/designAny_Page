@@ -112,7 +112,6 @@ class VueHtmlNodeModel extends HtmlResize.model {
   }
   getAnchorStyle(anchorInfo) {
     const style = super.getAnchorStyle(anchorInfo)
-
     if (anchorInfo.type === anchorType.inParam || anchorInfo.type === anchorType.justIn) {
       style.fill = 'red'
       style.hover.fill = 'red'

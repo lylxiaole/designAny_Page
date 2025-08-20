@@ -40,36 +40,36 @@ export default class nodeDesignUI extends Vue {
     this.$forceUpdate()
   }
 
-  public get inParamAnchors(): any[] {
-    if (!this.nodeModel) {
-      return []
-    }
+  // public get inParamAnchors(): any[] {
+  //   if (!this.nodeModel) {
+  //     return []
+  //   }
 
-    var inparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.inParam || o.type === anchorType.justIn)
-    return inparamsAnchors
-  }
-  public get inParamHeight() {
-    if (!this.inParamAnchors || this.inParamAnchors.length < 1) {
-      return '0px'
-    } else {
-      return 100 / this.inParamAnchors.length + '%'
-    }
-  }
-  public get outParamAnchors(): any[] {
-    if (!this.nodeModel) {
-      return []
-    }
+  //   var inparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.inParam || o.type === anchorType.justIn)
+  //   return inparamsAnchors
+  // }
+  // public get inParamHeight() {
+  //   if (!this.inParamAnchors || this.inParamAnchors.length < 1) {
+  //     return '0px'
+  //   } else {
+  //     return 100 / this.inParamAnchors.length + '%'
+  //   }
+  // }
+  // public get outParamAnchors(): any[] {
+  //   if (!this.nodeModel) {
+  //     return []
+  //   }
 
-    var outparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.outParam || o.type === anchorType.justOut)
-    return outparamsAnchors
-  }
-  public get outParamHeight() {
-    if (!this.outParamAnchors || this.outParamAnchors.length < 1) {
-      return '0px'
-    } else {
-      return 100 / this.outParamAnchors.length + '%'
-    }
-  }
+  //   var outparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.outParam || o.type === anchorType.justOut)
+  //   return outparamsAnchors
+  // }
+  // public get outParamHeight() {
+  //   if (!this.outParamAnchors || this.outParamAnchors.length < 1) {
+  //     return '0px'
+  //   } else {
+  //     return 100 / this.outParamAnchors.length + '%'
+  //   }
+  // }
 
   mounted() {
     let { actObj } = this.nodeModel.getProperties()
@@ -77,9 +77,7 @@ export default class nodeDesignUI extends Vue {
 
     this.actObj = deepClone(actObj)
     let flowNodeVue = findFlowNodeInner(funcCode)
-
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage, i18n: getLocale().t })
-
     let app = createApp({
       render: () => r
     })

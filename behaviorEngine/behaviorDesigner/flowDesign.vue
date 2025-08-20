@@ -202,7 +202,7 @@ export default class flowDesign extends ComponentBase {
     this.currentFlow.register(onParamJudeNode)
     this.currentFlow.register(funcNormalNode)
     this.currentFlow.register(defaultEdge)
-
+    //
     this.currentFlow.setDefaultEdgeType('defaultEdge')
     this.currentFlow.render(flowdata)
     this.currentFlow.translateCenter()
