@@ -3,7 +3,8 @@ import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
 //节点类型
 export enum flowNodeType {
   funcNormalNode = 'funcNormalNode',
-  onParamJudeNode = 'onParamJudeNode'
+  onParamJudeNode = 'onParamJudeNode',
+  paramNode = 'paramNode'
 }
 //锚点类型
 export enum anchorType {

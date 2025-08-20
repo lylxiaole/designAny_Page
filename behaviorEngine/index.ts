@@ -2,9 +2,9 @@ import behaviorContext from './01designerContext/context'
 export { behaviorContext }
 
 //加载所有action 方法
-const actFuncModulesFiles = require.context('./actionResourceFunctions', true, /\.(ts|js)$/)
+const actFuncModulesFiles = require.context('./actionFuncs', true, /\.(ts|js)$/)
 //加载所有流程节点
-const flowNodeModulesFiles = require.context('./flowDesigner/flowNode_Inner', true, /\.(vue)$/)
+const flowNodeModulesFiles = require.context('./actionDesignNodes', true, /\.(vue)$/)
 
 export async function init(apiAddr, getAllDictionary, getAllThirtyApis, getGroupFuncsAll, getAllDatabases) {
   behaviorContext.designerServerApiAddr = apiAddr

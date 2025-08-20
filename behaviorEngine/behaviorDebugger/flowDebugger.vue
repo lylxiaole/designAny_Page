@@ -169,6 +169,8 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.register(funcNormalDebugNode)
     this.currentFlow.register(onParamJudeDebugNode)
     this.currentFlow.register(defaultEdge)
+
+    //
     this.currentFlow.setDefaultEdgeType('defaultEdge')
     this.currentFlow.on('node:click', this.onNodeClick)
     this.currentFlow.on('edge:click', this.onEdgeClick)
