@@ -30,8 +30,9 @@ import LogicFlow, { EdgeConfig, GraphConfigData, NodeConfig } from '@logicflow/c
 import '@logicflow/core/dist/style/index.css'
 import flowNodeDebuggerInfo from './flowNodeDebuggerInfo.vue'
 
-import funcNormalDebugNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalDebugNode'
-import onParamJudeDebugNode from '@behaviorEngine/flowDesigner/flowNodes/onParamJudeDebugNode'
+import funcNormalDebugNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalNode'
+import onParamJudeDebugNode from '@behaviorEngine/flowDesigner/flowNodes/onParamJudeNode'
+import paramNode from '@behaviorEngine/flowDesigner/flowNodes/paramNode'
 
 import defaultEdge from '@behaviorEngine/flowDesigner/flowEdges/defaultEdge'
 
@@ -168,6 +169,8 @@ export default class flowDebugger extends ComponentBase {
     // **********************************************
     this.currentFlow.register(funcNormalDebugNode)
     this.currentFlow.register(onParamJudeDebugNode)
+    this.currentFlow.register(paramNode)
+
     this.currentFlow.register(defaultEdge)
     //
     this.currentFlow.setDefaultEdgeType('defaultEdge')
@@ -178,7 +181,18 @@ export default class flowDebugger extends ComponentBase {
     this.currentFlow.translateCenter()
     this.onFlowCreated(this.currentFlow)
     this.clearNoUseEdge(this.currentFlow)
+    this.setNodesDebugging(this.currentFlow)
   }
+
+  private setNodesDebugging(flow: LogicFlow) {
+    let allnodes = flow.getGraphRawData().nodes
+    for (let index = 0; index < allnodes.length; index++) {
+      const node = allnodes[index]
+      const sourceNodeModel = flow.getNodeModelById(node.id)
+      sourceNodeModel.setIsDebugging(true)
+    }
+  }
+
   //清除无效连线
   private clearNoUseEdge(flow: LogicFlow) {
     let alledges = flow.getGraphRawData().edges

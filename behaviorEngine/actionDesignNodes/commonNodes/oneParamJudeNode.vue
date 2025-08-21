@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%">
+  <div style="width: 100%; height: 100%;" class="funcNodeUI">
     <el-row style="width: 100%; height: 50%">
       <el-col :span="6">Judgment:</el-col>
       <el-col :span="18">

@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <el-row style="width: 100%; height: 100%;" class="funcNodeUI">
     <el-col>Func:</el-col>
     <el-col>
       <el-tree-select node-key="id" size="small" :check-on-click-node="true" v-model="currentSelectId" :data="allFuncsTree"

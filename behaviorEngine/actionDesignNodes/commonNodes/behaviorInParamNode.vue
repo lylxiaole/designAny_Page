@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <el-row style="width: 100%; height: 100%;" class="funcNodeUI">
     <el-col :span="6">{{i18n('tip.paramName')}}:</el-col>
     <el-col :span="18">
       <el-input v-model="actObj.resourceFilter.behaviorName" placeholder="Please Input Behavior Name" size="small" />

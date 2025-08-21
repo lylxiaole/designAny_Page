@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <el-row style="width: 100%; height: 100%;" class="funcNodeUI">
     <!-- ********************************************* -->
     <el-row style="width:100%">
       <el-col :span="6">数据库:</el-col>

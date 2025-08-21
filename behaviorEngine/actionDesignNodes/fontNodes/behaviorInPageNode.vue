@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <el-row style="width: 100%; height: 100%;" class="funcNodeUI">
     <el-col :span="6">Behavior:</el-col>
     <el-col :span="18">
       <el-select v-model="currentBehaviorId" placeholder="Select" size="small">

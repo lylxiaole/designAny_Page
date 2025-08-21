@@ -1,23 +1,29 @@
 <template>
-  <div style="border: 1px solid #cdcdcd; background: #fff; width: 100%; height: 100%; position: relative; box-sizing: border-box">
-    <div style="width: 100%; height: 15px" class="verticalAlignCenter flexHorilanLayout">
-      <img v-if="!isExcuted" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/待执行.png')" />
-      <img v-if="isExcuted && excutedSuccess === true" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
-      <img v-if="isExcuted && excutedSuccess === false" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行失败.png')" />
+  <div style="background: transparent; width: 100%; height: 100%; position: relative; box-sizing: border-box">
+    <div style="width:100%; height:30px;">
+      <div class="verticalAlignCenter flexHorilanLayout" style="width: 100%; height: 15px">
+        <div style="height: 15px; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
+          {{ actObj ? actObj.name : '' }}
+        </div>
+        <div v-if="isDebugging" style="height: 15px" class="verticalAlignCenter flexHorilanLayout">
+          <img v-if="!isExcuted" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/待执行.png')" />
+          <img v-if="isExcuted && excutedSuccess === true" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行完成.png')" />
+          <img v-if="isExcuted && excutedSuccess === false" width="15px" height="15px" :src="require('@behaviorEngine/assets/imgs/执行失败.png')" />
+        </div>
+      </div>
+      <!-- ********************************************** -->
+      <div v-if="isDebugging&&isExcuted && excutedSuccess === false && excutedMsg" style="width: 100%; height: 15px; color: red"
+        class="verticalAlignCenter flexHorilanLayout">
+        {{ excutedMsg }}
+      </div>
     </div>
     <!-- ********************************************** -->
-    <div v-if="isExcuted && excutedSuccess === false && excutedMsg" style="width: 100%; height: 15px; color: red"
-      class="verticalAlignCenter flexHorilanLayout">{{ excutedMsg }}</div>
-    <!-- ********************************************** -->
-    <el-row style="width: 100%; height: calc(100% - 30px); box-sizing: border-box; position: relative; padding: 5px"
+    <el-row style="width:100%; height:calc(100% - 30px); box-sizing: border-box; position: relative; padding: 5px"
       class="topnodediv verticalAlignCenter flexHorilanLayout">
-      <el-row style="height: 25px; width: 100%; font-size: 14px; font-weight: 600" class="verticalAlignCenter flexHorilanLayout">
-        {{ actObj ? actObj.name : '' }}
-      </el-row>
       <!-- **************************************************** -->
-      <div style="width: 100%; height: calc(100% - 25px); box-sizing: border-box; padding: 0px 10px" ref="renderContainer"></div>
+      <div style="width: 100%; height: 100%;" ref="renderContainer"></div>
       <!-- **************************************************** -->
-      <div style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px" class="mengban"></div>
+      <div v-if="isDebugging" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px" class="mengban"></div>
     </el-row>
   </div>
 </template>
@@ -40,10 +46,11 @@ import { getLocale } from '@common/baseConfigs'
 @Options({
   components: {}
 })
-export default class nodeDebugUI extends Vue {
+export default class nodeBaseUI extends Vue {
   @Prop()
   private nodeModel: HtmlNodeModel
 
+  private isDebugging: boolean = false
   private actObj: actionObj = null
 
   private onactObjchanged(val: actionObj) {
@@ -51,38 +58,7 @@ export default class nodeDebugUI extends Vue {
     this.nodeModel.updateAnchor()
     this.$forceUpdate()
   }
-
-  // public get inParamAnchors(): any[] {
-  //   if (!this.nodeModel) {
-  //     return []
-  //   }
-
-  //   var inparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.inParam || o.type === anchorType.justIn)
-  //   return inparamsAnchors
-  // }
-  // public get inParamHeight() {
-  //   if (!this.inParamAnchors || this.inParamAnchors.length < 1) {
-  //     return '0px'
-  //   } else {
-  //     return 100 / this.inParamAnchors.length + '%'
-  //   }
-  // }
-  // public get outParamAnchors(): any[] {
-  //   if (!this.nodeModel) {
-  //     return []
-  //   }
-
-  //   var outparamsAnchors = this.nodeModel.anchors.filter((o) => o.type === anchorType.outParam || o.type === anchorType.justOut)
-  //   return outparamsAnchors
-  // }
-  // public get outParamHeight() {
-  //   if (!this.outParamAnchors || this.outParamAnchors.length < 1) {
-  //     return '0px'
-  //   } else {
-  //     return 100 / this.outParamAnchors.length + '%'
-  //   }
-  // }
-
+  /**********调试信息******************* */
   public get isExcuted(): boolean {
     if (!this.actObj) {
       return false
@@ -119,7 +95,7 @@ export default class nodeDebugUI extends Vue {
   mounted() {
     let { actObj } = this.nodeModel.getProperties()
     let funcCode = actObj.funcCode
-    // ********clear***********
+    // ********清除数据*********************
     let cloneobj = deepClone(actObj) as actionObj
     cloneobj.excuted = false
     cloneobj.excutedMsg = null
@@ -131,10 +107,10 @@ export default class nodeDebugUI extends Vue {
     if (cloneobj.outParam) {
       cloneobj.outParam.val = null
     }
-    // *******************
+    // *****************************
     this.actObj = cloneobj
     this.onactObjchanged(this.actObj)
-    // *******************
+    // *****************************
     let flowNodeVue = findFlowNodeInner(funcCode)
     let r = h(flowNodeVue, { actObj: this.actObj, currentPage: behaviorContext.currentDesignPage, i18n: getLocale().t })
     let app = createApp({
@@ -153,5 +129,12 @@ export default class nodeDebugUI extends Vue {
 <style lang="less" scoped>
 .topnodediv {
   font-size: 12px;
+}
+
+/deep/ .funcNodeUI {
+  box-sizing: border-box;
+  padding: 5px 5%;
+  background: #fff;
+  border: 1px solid #cdcdcd;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <el-row style="width: 100%; height: 100%;" class="funcNodeUI">
     <el-row style="width: 100%; height: 50%">
       <el-col :span="6">ValueType:</el-col>
       <el-col :span="18">
@@ -27,7 +27,7 @@ import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import { flowDesignNode, flowNodeType } from '@behaviorEngine/flowDesigner/flowTypes'
 import { funcCode } from '@design-any/interface/dist/bahaviorEngine/actFunc'
- import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
+import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 @flowDesignNode(funcCode.fixedVal, flowNodeType.funcNormalNode)

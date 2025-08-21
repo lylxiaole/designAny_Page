@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width: 100%; height: 100%">
+  <el-row style="width: 100%; height: 100%;" class="funcNodeUI">
     <el-select v-model="selectKey" placeholder="Select" size="small">
       <el-option v-for="dic in allDictionary" :key="dic.id" :label="dic.key" :value="dic.key" />
     </el-select>

@@ -18,8 +18,10 @@ import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
 import LogicFlow, { GraphConfigData, NodeConfig } from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
-import funcNormalNode from '../flowDesigner/flowNodes/funcNormalDesignNode'
-import onParamJudeNode from '../flowDesigner/flowNodes/onParamJudeDesignNode'
+import funcNormalNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalNode'
+import onParamJudeNode from '@behaviorEngine/flowDesigner/flowNodes/onParamJudeNode'
+import paramNode from '@behaviorEngine/flowDesigner/flowNodes/paramNode'
+
 import defaultEdge from '../flowDesigner/flowEdges/defaultEdge'
 import flowNodeInfo from './flowNodeInfo.vue'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
@@ -201,6 +203,7 @@ export default class flowDesign extends ComponentBase {
 
     this.currentFlow.register(onParamJudeNode)
     this.currentFlow.register(funcNormalNode)
+    this.currentFlow.register(paramNode)
     this.currentFlow.register(defaultEdge)
     //
     this.currentFlow.setDefaultEdgeType('defaultEdge')
@@ -214,6 +217,16 @@ export default class flowDesign extends ComponentBase {
     this.currentFlow.on('edge:click', this.onEdgeClick)
 
     this.clearNoUseEdge(this.currentFlow)
+    this.setNodesDebugging(this.currentFlow)
+  }
+
+  private setNodesDebugging(flow: LogicFlow) {
+    let allnodes = flow.getGraphRawData().nodes
+    for (let index = 0; index < allnodes.length; index++) {
+      const node = allnodes[index]
+      const sourceNodeModel = flow.getNodeModelById(node.id)
+      sourceNodeModel.setIsDebugging(false)
+    }
   }
   //清除无效连线
   private clearNoUseEdge(flow: LogicFlow) {
@@ -280,9 +293,7 @@ export default class flowDesign extends ComponentBase {
     }
     // ********************
     let flowNode = findFlowNode(newObj.funcCode)
-
     let position = this.currentFlow.dnd.clientToLocalPoint(this.currentMousePoint)
-
     let dragData: NodeConfig = {
       id: newObj.id,
       type: flowNode,

@@ -7,6 +7,7 @@ import { HtmlResize } from '@logicflow/extension'
 import '@logicflow/extension/lib/style/index.css'
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
+import nodeBaseUI from './nodeBaseUI.vue'
 
 const anchorSize = 10
 //一般性的流程节点
@@ -14,10 +15,28 @@ class VueHtmlNode extends HtmlResize.view {
   protected isMounted: boolean = false
   protected r: any
   protected app: any
+  protected isDebugging: any
 
   constructor(props) {
     super(props)
     this.isMounted = false
+    //绘制节点
+    this.r = h(nodeBaseUI as any, {
+      nodeModel: props.model,
+      isDebugging: this.isDebugging
+    })
+
+    this.app = createApp({
+      render: () => this.r
+    })
+    this.app.use(ElementPlus)
+    //
+    props.model.setActObj = (newactObj) => {
+      this.r.component.proxy.actObj = newactObj
+    }
+    props.model.setIsDebugging = (val) => {
+      this.r.component.proxy.isDebugging = val
+    }
   }
 
   getAnchorShape(anchorData) {
@@ -141,12 +160,12 @@ class VueHtmlNodeModel extends HtmlResize.model {
 
     // *********显示入参锚点********************************
     if (inParams && inParams.length > 0) {
-      let agvHeight = height / inParams.length
+      let agvHeight = (height - 30) / inParams.length
       for (let index = 0; index < inParams.length; index++) {
         let inParam = inParams[index]
         anchors.push({
           x: x - width / 2 - anchorSize / 2,
-          y: y - height / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
+          y: y - (height - 30) / 2 + index * agvHeight + agvHeight / 2 - anchorSize / 2,
           id: `${inParam.key}`,
           name: inParam.name,
           edgeAddable: false,
@@ -168,7 +187,7 @@ class VueHtmlNodeModel extends HtmlResize.model {
     if (outParam) {
       anchors.push({
         x: x + width / 2 - anchorSize,
-        y: y - anchorSize / 2,
+        y: y - anchorSize / 2 + 30 / 2,
         id: outParam.key,
         name: outParam.name,
         type: anchorType.outParam
@@ -176,7 +195,7 @@ class VueHtmlNodeModel extends HtmlResize.model {
     } else {
       anchors.push({
         x: x + width / 2 - anchorSize,
-        y: y - anchorSize / 2,
+        y: y - anchorSize / 2 + 30 / 2,
         id: makeParamKey(actObj.id, 'output'),
         name: 'NoOutput',
         type: anchorType.justOut
