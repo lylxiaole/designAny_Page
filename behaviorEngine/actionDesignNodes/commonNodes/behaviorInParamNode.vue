@@ -1,10 +1,8 @@
 <template>
-  <el-row style="width: 100%; height: 100%;" class="funcNodeUI">
-    <el-col :span="6">{{i18n('tip.paramName')}}:</el-col>
-    <el-col :span="18">
-      <el-input v-model="actObj.resourceFilter.behaviorName" placeholder="Please Input Behavior Name" size="small" />
-    </el-col>
-  </el-row>
+  <div style="width: 100%; height: 100%; border-radius:10px;background:#FFD700" class="verticalAlignCenter flexHorilanLayout">
+    <!-- <el-col :span="6">{{i18n('tip.paramName')}}:</el-col> -->
+    <el-input style="margin:0px 10px" v-model="actObj.resourceFilter.behaviorName" placeholder="输入参数名称" size="small" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,7 +18,7 @@ import { EnginePage, EngineLayout } from '@design-any/interface/dist/LayoutInter
 import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
 
-@flowDesignNode(funcCode.behaviorInparam, flowNodeType.funcNormalNode)
+@flowDesignNode(funcCode.behaviorInparam, flowNodeType.paramNode)
 @Options({
   components: {}
 })
