@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%; border-radius:10px;background:#FFD700" class="verticalAlignCenter flexHorilanLayout">
+  <div style="width: 100%; height: 100%; border-radius:10px;background:#99CC66" class="verticalAlignCenter flexHorilanLayout">
     <!-- <el-col :span="6">{{i18n('tip.paramName')}}:</el-col> -->
     <el-input style="margin:0px 10px" v-model="actObj.resourceFilter.behaviorName" placeholder="输入参数名称" size="small" />
   </div>
