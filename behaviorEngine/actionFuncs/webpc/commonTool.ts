@@ -18,6 +18,8 @@ export class behaviorInparamMethod implements fontActFuncBase {
   currentPage: EnginePage
   currentBehavior: behavior
   async excute(inparams: object_InParam[]) {
-    let { behaviorName } = this.currentActObj.resourceFilter
+    let { inparamName } = this.currentActObj.resourceFilter
+    let inparam = this.currentBehavior.inParams.find((o) => o.key == this.currentActObj.id)
+    return inparam.val
   }
 }

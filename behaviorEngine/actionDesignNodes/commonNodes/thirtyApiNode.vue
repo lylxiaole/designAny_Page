@@ -6,7 +6,6 @@
 </template>
 
 <script lang="ts">
-import { inject } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import { deepClone, getUuid } from '@common/utils'

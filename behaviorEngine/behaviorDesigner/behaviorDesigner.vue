@@ -56,6 +56,8 @@ export default class behaviorDesigner extends Vue {
     let data = (this.$refs.flowDesign as flowDesign).getFlowData()
     this.currentSettingBehavior.actObjs = data.allObjs
     this.currentSettingBehavior.flowData = data.flowData
+    this.currentSettingBehavior.inParams = data.inparams
+    //
     this.windowVisible = false
     this.onSureBehavior(this.currentSettingBehavior)
   }

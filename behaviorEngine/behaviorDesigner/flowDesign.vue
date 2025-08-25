@@ -16,6 +16,8 @@ import { Component, Emit, Watch, Prop } from 'vue-property-decorator'
 import ComponentBase from '@common/views/ComponentBase'
 import { deepClone, getUuid } from '@common/utils'
 import { actionObj } from '@design-any/interface/dist/bahaviorEngine/actObject'
+import { behavior, param } from '@design-any/interface/dist/bahaviorEngine/behavior'
+
 import LogicFlow, { GraphConfigData, NodeConfig } from '@logicflow/core'
 import '@logicflow/core/dist/style/index.css'
 import funcNormalNode from '@behaviorEngine/flowDesigner/flowNodes/funcNormalNode'
@@ -28,9 +30,9 @@ import { makeParamKey } from '@behaviorEngine/flowDesigner/common'
 
 import { findFlowNode, flowNodeType, anchorType } from '../flowDesigner/flowTypes'
 
-import { behavior } from '@design-any/interface/dist/bahaviorEngine/behavior'
 import { EnginePage } from '@design-any/interface/dist/LayoutInterface'
 import behaviorContext from '@behaviorEngine/01designerContext/context'
+import { funcCode } from '@design-any/interface'
 
 @Options({
   components: { flowNodeInfo }
@@ -54,13 +56,21 @@ export default class flowDesign extends ComponentBase {
   // *********保存时，获取流程数据，转换成行为列表***********
   public getFlowData(): any {
     let graphData = this.currentFlow.getGraphRawData()
-
+    let inparams: param[] = []
     let allObjs: actionObj[] = []
     //组织流程节点顺序关系
     for (let index = 0; index < graphData.nodes.length; index++) {
       //假设每个遍历的节点都是目标节点
       const targetNode = graphData.nodes[index]
       let targetActObj = targetNode.properties.actObj as actionObj
+      ///入参节点
+      if (targetActObj.funcCode === funcCode.behaviorInparam) {
+        let inpname = targetActObj.resourceFilter.inparamName
+        inparams.push({
+          key: targetActObj.id,
+          name: inpname
+        })
+      }
       // *******遍历所有连线，找寻来源节点、锚点的对应关系**********************************
       let preObjIds = []
       //获取目标节点所有入参的连线
@@ -141,7 +151,7 @@ export default class flowDesign extends ComponentBase {
       element.properties.actObj = null
     }
     // ***********************************************
-    return { allObjs: allObjs, flowData: graphData }
+    return { allObjs: allObjs, flowData: graphData, inparams: inparams }
   }
   public async setFlowData(behav: behavior, page: EnginePage) {
     let flowdata = behav.flowData
