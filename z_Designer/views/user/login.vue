@@ -29,8 +29,8 @@
     <div style="height: 2rem; z-index: 2; position: absolute; bottom: 2rem; width: 100%">
       <div class="flexHorilanLayout" style="height: 1rem; font-size: 12px; color: #cdcdcd">Email&nbsp;&nbsp;&nbsp;742923150@qq.com</div>
       <div class="flexHorilanLayout" style="height: 1rem; font-size: 12px; color: #cdcdcd">
-        Github&nbsp;&nbsp;&nbsp;
-        <a href="https://github.com/design-any/DesignAny-LowCode-Publish">https://github.com/design-any/DesignAny-LowCode-Publish</a>
+        Gitee&nbsp;&nbsp;&nbsp;
+        <a href="https://gitee.com/lyl_low-code_production/design-any">https://gitee.com/lyl_low-code_production/design-any</a>
       </div>
     </div>
   </div>
